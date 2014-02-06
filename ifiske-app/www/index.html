@@ -28,9 +28,8 @@
 </head>
 <body>
 <div class="app">
-	<h1>PhoneGap</h1>
-	<div id="deviceready" class="blink">
-		<p class="event listening">Connecting to Device</p>
+	<div id="deviceready">
+		<p class="event listening blink">Connecting to Device</p>
 		<div class="event received">
 			<div id="nav-content">
 			</div>
@@ -39,27 +38,33 @@
 </div>
 
 <script type="text/javascript" src="phonegap.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/handlebars.js"></script>
+<script type="text/javascript" src="js/templates.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript">
 app.initialize();
 </script>
 <script type="text/javascript">
-window.onload = function(){
-	var source = document.getElementById('entry-template').innerHTML;
-	var template = Handlebars.compile(source);
-	var context = {title: "Test title", body: "body content"}
-	var html = template(context);
-	document.getElementById('template-content').innerHTML = html;
-};
+$(document).ready(function(){
+	var context = {
+nav_elems: [
+			  {text: "start-thing", target: "js/index.js"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text:"text2",target:"target2"}
+			  ],
+				  body: "body content"};
+	var html = Handlebars.getTemplate('nav')(context);
+	document.getElementById('nav-content').innerHTML = html;
+});
 </script>
-<script id="nav-template" type="text/x-handlebars-template" src="templates/entry-template">
-<nav>
-		 <h1>{{title}}</h1>
-		 <div class="body">
-			 {{body}}
-		 </div>
-	 </nav>
 </script>
 </body>
 </html>

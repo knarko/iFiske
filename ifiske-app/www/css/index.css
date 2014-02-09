@@ -31,12 +31,6 @@ body{
 	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
 	-webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-	background-color:#E4E4E4;
-	background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-	background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-	background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-	background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #A7A7A7), color-stop(0.51, #E4E4E4));
-	background-attachment:fixed;
 	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
 	font-size:12px;
 	text-transform:uppercase;
@@ -68,18 +62,15 @@ h1 {
 .event {
 	color:#FFFFFF;
 	font-size:12px;
-	margin:0px 30px;
-	padding:2px 0px;
 }
 
 .event.listening {
 	background-color:#333333;
-	display:block;
+	display:none;
 }
 
 .event.received {
-	background-color:#4B946A;
-	display:none;
+	display:block;
 }
 
 @keyframes fade {
@@ -98,7 +89,16 @@ h1 {
 	animation:fade 3000ms infinite;
 	-webkit-animation:fade 3000ms infinite;
 }
-nav ul li{
-	display: inline-block;
-	margin: 5px;
+#logosearch{
+	background-image: url("../img/logo-xs.png");
+	background-repeat:no-repeat;
+	background-position: left center;
+	height:40px;
+	text-align:right;
+	border:none;
+	width:100%;
+}
+#map{
+	transition: height 0.4s;
+	height:300px;
 }

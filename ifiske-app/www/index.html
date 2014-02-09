@@ -25,6 +25,8 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 <link rel="stylesheet" type="text/css" href="css/index.css" />
 <title>iFiske</title>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="app">
@@ -47,6 +49,20 @@ app.initialize();
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
+function GoogleMap(){
+	this.initialize = function(){
+		var map = showMap();
+	}
+	var showMap=function(){
+		var mapOptions = {
+			zoom: 4,
+					center: new google.maps.LatLng(-33,151),
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		return map;
+	}
+};
 	var context = {
 nav_elems: [
 			  {text: "start-thing", target: "js/index.js"},
@@ -63,6 +79,12 @@ nav_elems: [
 				  body: "body content"};
 	var html = Handlebars.getTemplate('nav')(context);
 	document.getElementById('nav-content').innerHTML = html;
+	var map = new GoogleMap();
+	map.initialize();
+	window.map = map;
+	$("#map").click(function(){
+		$(this).css("height",($(window).height() - $("#logosearch").height()) + "px");
+		});
 });
 </script>
 </script>

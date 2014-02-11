@@ -43,51 +43,10 @@
 <script type="text/javascript" src="lib/jquery.js"></script>
 <script type="text/javascript" src="lib/handlebars.js"></script>
 <script type="text/javascript" src="js/templates.js"></script>
+<script type="text/javascript" src="js/GoogleMaps.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript">
 app.initialize();
-</script>
-<script type="text/javascript">
-$(document).ready(function(){
-function GoogleMap(){
-	this.initialize = function(){
-		var map = showMap();
-	}
-	var showMap=function(){
-		var mapOptions = {
-			zoom: 4,
-					center: new google.maps.LatLng(-33,151),
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-		}
-		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-		return map;
-	}
-};
-	var context = {
-nav_elems: [
-			  {text: "start-thing", target: "js/index.js"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text: "text1", target: "target1"},
-			  {text:"text2",target:"target2"}
-			  ],
-				  body: "body content"};
-	var html = Handlebars.getTemplate('nav')(context);
-	document.getElementById('nav-content').innerHTML = html;
-	map = new GoogleMap();
-	map.initialize();
-	window.map = map;
-	$("#map").click(function(){
-		$(this).css("height",($(window).height() - $("#logosearch").height()) + "px");
-		google.maps.event.trigger(map, "resize");
-		});
-});
-</script>
 </script>
 </body>
 </html>

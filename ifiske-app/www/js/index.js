@@ -47,3 +47,29 @@ var app = {
 		console.log('Received Event: ' + id);
 	}
 };
+
+$(document).ready(function(){
+	var context = {
+nav_elems: [
+			  {text: "start-thing", target: "js/index.js"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text: "text1", target: "target1"},
+			  {text:"text2",target:"target2"}
+			  ],
+				  body: "body content"};
+	var html = Handlebars.getTemplate('nav')(context);
+	document.getElementById('nav-content').innerHTML = html;
+	map = new GoogleMap();
+	map.initialize();
+	window.map = map;
+	$("#map").click(function(){
+		$(this).css("height",($(window).height() - $("#logosearch").height()) + "px");
+		google.maps.event.trigger(map, "resize");
+		});
+});

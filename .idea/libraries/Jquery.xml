@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Jquery" type="javaScript">
+    <properties>
+      <option name="frameworkName" value="jQuery" />
+      <option name="frameworkVersion" value="2.1.0" />
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/ifiske-app/www/jquery.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/ifiske-app/www/jquery.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

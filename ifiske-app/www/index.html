@@ -40,8 +40,8 @@
 </div>
 
 <script type="text/javascript" src="phonegap.js"></script>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/handlebars.js"></script>
+<script type="text/javascript" src="lib/jquery.js"></script>
+<script type="text/javascript" src="lib/handlebars.js"></script>
 <script type="text/javascript" src="js/templates.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript">
@@ -79,11 +79,12 @@ nav_elems: [
 				  body: "body content"};
 	var html = Handlebars.getTemplate('nav')(context);
 	document.getElementById('nav-content').innerHTML = html;
-	var map = new GoogleMap();
+	map = new GoogleMap();
 	map.initialize();
 	window.map = map;
 	$("#map").click(function(){
 		$(this).css("height",($(window).height() - $("#logosearch").height()) + "px");
+		google.maps.event.trigger(map, "resize");
 		});
 });
 </script>

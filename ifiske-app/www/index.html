@@ -22,10 +22,10 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-
-        <script src="./jquery.js"></script>
+        <script src="jquery.js"></script>
+        <script src="spec/lib/usercalls.js"/>
         <title>iFiske</title>
     </head>
     <body>
@@ -47,20 +47,20 @@
             </div>
             <ul>
                 <li><label>Login</label></li>
-                <input id="user" type="email" placeholder="username"/>
-                <input id="passw" type="password" placeholder="password"/>
-                <button id="submit">Submit</button>
+                <li><input id="user" type="email" placeholder="username"/></li>
+                <li><input id="passw" type="password" placeholder="password"/></li>
+                <li><button id="submit">Submit</button></li>
             </ul>
             <div id="content"></div>
         </div>
 
-        <script type="text/javascript">
-        </script>
-
         <!--script type="text/javascript" src="phonegap.js"></script-->
+
         <script type="text/javascript" src="js/index.js"></script>
+
         <script type="text/javascript">
             app.initialize();
         </script>
+
     </body>
 </html>

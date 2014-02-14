@@ -48,15 +48,6 @@ var app = {
 	}
 };
 
-<<<<<<< HEAD
-$(document).ready(function()
-{
-    $("#submit").on("click", function() {
-       login();
-    })
-});
-
-=======
 $(document).ready(function(){
 	var context = {
 nav_elems: [
@@ -82,4 +73,3 @@ nav_elems: [
 		google.maps.event.trigger(map, "resize");
 		});
 });
->>>>>>> master

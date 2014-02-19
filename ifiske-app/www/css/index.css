@@ -89,16 +89,83 @@ h1 {
 	animation:fade 3000ms infinite;
 	-webkit-animation:fade 3000ms infinite;
 }
+
+#navbar {
+	position: absolute;
+	height: 40px;
+	background: #feffff; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #feffff 0%, #ddf1f9 35%, #a0d8ef 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#feffff), color-stop(35%,#ddf1f9), color-stop(100%,#a0d8ef)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(-45deg,  #feffff 0%,#ddf1f9 35%,#a0d8ef 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  #feffff 0%,#ddf1f9 35%,#a0d8ef 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  #feffff 0%,#ddf1f9 35%,#a0d8ef 100%); /* IE10+ */
+	background: linear-gradient(135deg,  #feffff 0%,#ddf1f9 35%,#a0d8ef 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	width: 100%;
+}
+
+#searchform {
+	float: left;
+	height: 40px;
+}
+
 #logosearch{
 	background-image: url("../img/logo-xs.png");
 	background-repeat:no-repeat;
-	background-position: left center;
+	background-color: transparent;
+	/*background-position: left center;*/
 	height:40px;
 	text-align:right;
 	border:none;
-	width:100%;
+	/*width:100%;*/
+	width: 100%;
+}
+#info{
+	background-image: url("../img/info_icon.png");
+	background-repeat: no-repeat;
+	float: right;
+	height: 40px;
+	border: none;
+	width: 40px;
 }
 #map{
+	position: static;
+	margin-top: 40px;
 	transition: height 0.4s;
 	height:300px;
 }
+
+#filter {
+	background-color: black;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	opacity: 0.7;
+	z-index: 300;
+	display: none;
+}
+
+#about {
+	position: fixed;
+	margin-top: 30%;
+	height: auto;
+	width: 50%;
+	margin-left: 25%;
+	margin-right: 25%;
+	color: black;
+	border: solid black 1px;
+	display: none;
+	text-transform: none;
+	border-radius:3px;
+	z-index: 9001;
+	opacity: 1;
+	background: white;
+}
+#about h1 {
+	margin-bottom: 5%;
+}
+
+#about span {
+	display: block;
+}
+

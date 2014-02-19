@@ -65,11 +65,40 @@ nav_elems: [
 				  body: "body content"};
 	var html = Handlebars.getTemplate('nav')(context);
 	document.getElementById('nav-content').innerHTML = html;
-	map = new GoogleMap();
+	/*map = new GoogleMap();
 	map.initialize();
 	window.map = map;
 	$("#map").click(function(){
 		$(this).css("height",($(window).height() - $("#logosearch").height()) + "px");
 		google.maps.event.trigger(map, "resize");
-		});
+		});*/
+
+	$isShowed = false;
+	$("#info").click(function() {
+		if ($("#bodydiv").find("#about").length == 0)
+		{
+			$("#bodydiv").append("<div id=about></div>");
+			$("#about").load("about.html");
+		}
+		$(".app").prepend("<div id=filter></div>")
+		$("#filter").fadeIn("fast", "linear");
+ 		showAbout($isShowed);
+	})
+
+	$(".app").on("click", "#filter", function() {
+		$("#filter").fadeOut("fast", "linear");
+		showAbout($isShowed);
+		$("#filter").remove();
+	})	
 });
+
+function showAbout(isShowing) {
+	//alert("gets here");
+	if (isShowing == false) {
+			$("#about").fadeIn("slow", "linear");
+			$isShowed = true;
+	} else if (isShowing == true) {
+		$("#about").fadeOut("fast", "linear");
+		$isShowed = false;
+	}
+}

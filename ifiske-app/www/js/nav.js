@@ -4,12 +4,14 @@
  * context is an object containing all that we need to recreate the view
  * context does also contain the target.
  */
-
-var init = function(){
+Navigate = {};
+Navigate.init = function(){
 	localStorage.navigation = [];
+	var template = Handlebars.getTemplate(start);
+	$("#content").html = template(default_context);
 };
 
-var go = function(target,context){
+Navigate.to = function(target,context){
 	//Save context
 	localStorage.navigation.push(context);
 	//Load handlebar template
@@ -19,9 +21,11 @@ var go = function(target,context){
 	$("#content").html = template(new_context);
 };
 
-var back = function(){
+Navigate.back = function(){
 	//Get target context
 	context = localStorage.navigation.pop();
+	if(context == null)
+		return;
 	//Load handlebar template
 	template = Handlebars.getTemplate(context.target);
 	//display page

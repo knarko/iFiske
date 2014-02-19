@@ -7,27 +7,28 @@
 Navigate = {};
 Navigate.init = function(){
 	localStorage.navigation = [];
-	var template = Handlebars.getTemplate(start);
-	$("#content").html = template(default_context);
+	var template = Handlebars.getTemplate("start");
+	history.pushState({"path": "start"},null,"#TODO");
+	history.pushState({"path": "start"},null,"#TODO");
+	$("#content").html(template());
 };
 
-Navigate.to = function(target,context){
+Navigate.to = function(target){ //,context){
 	//Save context
-	localStorage.navigation.push(context);
+	history.pushState({"path": target},null,"#TODO");
 	//Load handlebar template
 	template = Handlebars.getTemplate(target);
-	new_context = template.createDefaultContext();
 	//display page
-	$("#content").html = template(new_context);
+	$("#content").html(template());
 };
 
-Navigate.back = function(){
+Navigate.back = function(e){
+	if(e.state == null)
+		return 1;
 	//Get target context
-	context = localStorage.navigation.pop();
-	if(context == null)
-		return;
+	console.log(e);
 	//Load handlebar template
-	template = Handlebars.getTemplate(context.target);
+	template = Handlebars.getTemplate(e.state.path);
 	//display page
-	$("#content").html = template(context);
+	$("#content").html(template());
 };

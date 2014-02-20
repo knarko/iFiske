@@ -7,6 +7,7 @@ html, body {
 	padding: 0;
 	width: 100%;
 	height: 100%;
+	background-color: lightgreen;
 }
 
 body{
@@ -32,47 +33,30 @@ body{
 	}
 }
 
-h1 {
-	font-size:24px;
-	font-weight:normal;
-	margin:0px;
-	overflow:visible;
-	padding:0px;
-	text-align:center;
-}
-
-.event {
-	color:#FFFFFF;
-	font-size:12px;
-}
-
 .event.listening {
-	background-color:#333333;
-	display:none;
-}
-
-.event.received {
 	display:block;
 }
 
-@keyframes fade {
-	from { opacity: 1.0; }
-	50% { opacity: 0.4; }
-	to { opacity: 1.0; }
+.event.received {
+	display:none;
 }
 
-@-webkit-keyframes fade {
-	from { opacity: 1.0; }
-	50% { opacity: 0.4; }
-	to { opacity: 1.0; }
+.button{
+	margin: 10px;
+	background-color: cyan;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 15px;
+	color:royalblue;
+}
+#find_fish{
+	padding:20px;
+	margin-bottom: 15px;
 }
 
-.blink {
-	animation:fade 3000ms infinite;
-	-webkit-animation:fade 3000ms infinite;
-}
 #header{
 	width:100%;
+	overflow: auto;
 }
 #header form{
 	width: calc(100% - 99px);
@@ -89,8 +73,4 @@ h1 {
 	text-align:right;
 	border:none;
 	font-size:20px;
-}
-#login{
-	height: 100px;
-	background-color: red;
 }

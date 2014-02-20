@@ -1,8 +1,12 @@
 {{> header}}
 <div id="menu">
-
-<div id="login" onclick="Navigate.to('test');"></div>
-<div id="register"></div>
-<div id="showcards"></div>
-<div id="reg_catch"></div>
+	<div id="find_fish" class="button" onclick="Navigate.to('fish');">Hitta Fiskevatten</div>
+	<div class="not-logged-in">
+		<div id="login" class="button" onclick="Navigate.to('login');">Logga in</div>
+		<div id="register" class="button" onclick="Navigate.to('register_user')">Registrera</div>
+	</div>
+	<div id="logged-in">
+		<div id="showcards" class="button" onclick="Navigate.to('mycards')">Mina Fiskekort</div>
+		<div id="reg_catch" class="button" onclick="Navigate.to('register_catch')">Registrera fångst</div>
+	</div>
 </div>

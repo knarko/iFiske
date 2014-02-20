@@ -7,7 +7,6 @@
  */
 Navigate = {};
 Navigate.init = function(){
-	localStorage.navigation = [];
 	var template = Handlebars.getTemplate("start");
 	history.pushState({"path": "start"},null,"#INIT");
 	history.pushState({"path": "start"},null,"#START");
@@ -26,4 +25,5 @@ Navigate.back = function(e){
 		return 1;
 	template = Handlebars.getTemplate(e.state.path);
 	$("#content").html(template());
+	e.stopPropogation();
 };

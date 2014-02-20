@@ -1,12 +1,12 @@
 {{> header}}
 <div id="menu">
-	<div id="find_fish" class="button" onclick="Navigate.to('fish');">Hitta Fiskevatten</div>
+	{{{button target="search" text="Hitta Fiskevatten" id="find_fish"}}}
 	<div class="not-logged-in">
-		<div id="login" class="button" onclick="Navigate.to('login');">Logga in</div>
-		<div id="register" class="button" onclick="Navigate.to('register_user')">Registrera</div>
+		{{{button target="login" text="Logga in"}}}
+		{{{button target="register_user" text="Registrera"}}}
 	</div>
 	<div id="logged-in">
-		<div id="showcards" class="button" onclick="Navigate.to('mycards')">Mina Fiskekort</div>
-		<div id="reg_catch" class="button" onclick="Navigate.to('register_catch')">Registrera fångst</div>
+		{{{button target="my_cards" text="Mina Fiskekort"}}}
+		{{{button target="register_catch" text="Registrera Fångst"}}}
 	</div>
 </div>

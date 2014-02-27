@@ -48,8 +48,4 @@ $(document).ready(function(){
 	window.addEventListener('popstate', function(e){
 								  Navigate.back(e);
 	});
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> master

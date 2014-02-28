@@ -16,7 +16,7 @@ var app = {
 	// function, we must explicity call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
 		app.receivedEvent('deviceready');
-		document.addEventListener('backbutton', app.onBackKeyDown, false);
+		//document.addEventListener('backbutton', app.onBackKeyDown, false);
 		//Moved from index.html
 		//var db = window.openDatabase("test", "1.0", "Test DB", 1000000);
 		console.log("placeholder, opening db");

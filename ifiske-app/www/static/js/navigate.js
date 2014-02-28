@@ -8,8 +8,7 @@
 Navigate = {};
 Navigate.init = function(){
 	var template = Handlebars.getTemplate("start");
-	history.pushState({"path": "start"},null,"#INIT");
-	history.pushState({"path": "start"},null,"#START");
+	history.replaceState({"path": "start"},null,"#");
 	$("#content").html(template());
 };
 
@@ -22,8 +21,8 @@ Navigate.to = function(target){
 
 Navigate.back = function(e){
 	if(e.state == null)
-		return 1;
+		return;
+	console.log(e);
 	template = Handlebars.getTemplate(e.state.path);
 	$("#content").html(template());
-	e.stopPropogation();
 };

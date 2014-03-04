@@ -125,3 +125,30 @@ body{
 	display: block;
 }
 
+#registerbar {
+	background-color: #006993;
+	width: 95%;
+	height: 40%;
+	margin-top: 2%;
+	color: white;
+	text-align: left;
+	padding: 10px;
+}
+
+#register-form p {
+	text-align: left;
+}
+
+#register-form input {
+	float: left;
+}
+
+#register-form label {
+	text-align: right;
+	float: left;
+	width: 30%;
+	vertical-align: center;
+	font-size: inherit;
+}
+
+

@@ -5,24 +5,25 @@
  *
  * TODO: Make sure that more context are saved, so that we may restore lists on back
  */
-Navigate = {};
-Navigate.init = function(){
-	var template = Handlebars.getTemplate("start");
-	history.replaceState({"path": "start"},null,"#");
-	$("#content").html(template());
-};
+Navigate = {
+	init: function(){
+		var template = Handlebars.getTemplate("start");
+		history.replaceState({"path": "start"},null,"#");
+		$("#content").html(template());
+	},
 
-Navigate.to = function(target){
-	//TODO: save more context
-	history.pushState({"path": target},null,"#"+target);
-	template = Handlebars.getTemplate(target);
-	$("#content").html(template());
-};
+	to: function(target){
+		//TODO: save more context
+		history.pushState({"path": target},null,"#"+target);
+		template = Handlebars.getTemplate(target);
+		$("#content").html(template());
+	},
 
-Navigate.back = function(e){
-	if(e.state == null)
-		return;
-	console.log(e);
-	template = Handlebars.getTemplate(e.state.path);
-	$("#content").html(template());
-};
+	back: function(e){
+		if(e.state == null)
+			return;
+		console.log(e);
+		template = Handlebars.getTemplate(e.state.path);
+		$("#content").html(template());
+	}
+}

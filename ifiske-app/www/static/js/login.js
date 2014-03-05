@@ -37,8 +37,8 @@ function login(user, password) {
 
 
 function logout() {
-    delete localStorage.user;
-    delete localStorage.password;
+    delete localStorage[USER];
+    delete localStorage[PASSWORD];
 }
 
 function parse(xml_response)

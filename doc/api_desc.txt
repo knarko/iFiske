@@ -1,0 +1,41 @@
+get_areas
+	data
+		user_areas
+			region* id, name, long, lat, quantity
+				area* id, name, keywords, regid, orgid, long, lat
+					description
+					products
+						product* smsdisplay, vat, saleschannel, id, typetitle, areaid, name, price, ruleid, sortorder, headline, important, notes, smscode
+					species
+						fish* name, fid, level, cmt
+
+get_fishdata
+	data
+		fishdata
+			fishes* ID, fishsort, fish_max, name, icon_url, picture, fish_ingress, fish_geo, fish_description, fish_tips, fish_size, fish_latin, fish_record
+
+get_organisations
+	data
+		organisations
+			organisation* ID, lan, title, homepage, contact, descr
+
+table regions
+	int primary key id, text name, real long, real lat, int quantity
+
+table areas
+	int primary key id, text name, int foreign key region_id, int foreign key org_id, real long, real lat
+
+table area_keywords
+	int foreign key area_id, text keyword
+
+table products
+	int primary key id, int smsdisplay, int vat, int saleschannel, int foreign key area_id, text name, int price, int foreign rule_id, int sortorder, text headline, text important, text notes, text smscode
+
+table species_areas
+	int foreign key species_id, int foreign key area_id, text cmt, int level
+
+table species
+	int primary key id, text name, text latin
+
+table organisations
+	int primary key id, text name, text region, text description, text homepage, text contact

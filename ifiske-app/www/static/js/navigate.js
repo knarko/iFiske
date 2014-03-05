@@ -16,7 +16,7 @@ Navigate = {
 		//TODO: save more context
 		history.pushState({"path": target},null,"#"+target);
 		template = Handlebars.getTemplate(target);
-		$("#content").html(template());
+		$("#content").html(template(localStorage));
 	},
 
 	back: function(e){

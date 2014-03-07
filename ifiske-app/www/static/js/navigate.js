@@ -4,8 +4,9 @@
  * to back, call window.history.back()
  *
  * TODO: Make sure that more context are saved, so that we may restore lists on back
+ * TODO: Render all templates with a context
  */
-Navigate = {
+Navigate = Object.freeze({
 	init: function(){
 		var template = Handlebars.getTemplate("start");
 		history.replaceState({"path": "start"},null,"#");
@@ -26,4 +27,4 @@ Navigate = {
 		template = Handlebars.getTemplate(e.state.path);
 		$("#content").html(template());
 	}
-}
+});

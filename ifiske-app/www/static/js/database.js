@@ -10,7 +10,7 @@ Database = Object.freeze(
 		var successCallback = function(){console.log("success")};
 		this.DB.transaction(function(tx){
 			tx.executeSql('DROP TABLE IF EXISTS Regions');
-			tx.executeSql('CREATE TABLE IF NOT EXISTS Regions (id int, name text, long real, lat real, quantity int, PRIMARY KEY (id))'); //, text name, real long, real lat, int quantity)');
+			tx.executeSql('CREATE TABLE IF NOT EXISTS Regions (id int, name text, long real, lat real, quantity int, PRIMARY KEY (id))');
 			tx.executeSql('DROP TABLE IF EXISTS Areas');
 			tx.executeSql('CREATE TABLE IF NOT EXISTS Areas (id int,name text, region_id int, org_id int,long real,lat real, PRIMARY KEY (id), FOREIGN KEY (region_id) REFERENCES Regions(id), FOREIGN KEY (org_id) REFERENCES Organisations(id))');
 			tx.executeSql('DROP TABLE IF EXISTS Area_keywords');

@@ -1,10 +1,11 @@
 
+//TODO: Merge into Navigate
 function infoClick() {
 	if ($("#content").find("#about").length == 0) {
 		$("#content").prepend("<div id=about></div>");
 		$("#about").load("about.html");
 	}
-	
+
 	$('html').prepend("<div id=filter onclick=filterClick()></div>")
 	$("#filter").fadeIn("fast", "linear");
 	showAbout();
@@ -12,7 +13,7 @@ function infoClick() {
 
 function filterClick() {
 	$("#filter").fadeOut("fast", "linear");
-	showAbout();	
+	showAbout();
 	$("#filter").remove();
 }
 

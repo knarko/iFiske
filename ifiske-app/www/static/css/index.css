@@ -16,8 +16,6 @@ body{
 	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
 	background-color: #5AAAC9;
 	font-size:12px;
-	padding:5px;
-	box-sizing: border-box;
 }
 .event.listening {
 	display:block;
@@ -30,6 +28,8 @@ body{
 	height:100%;                   /* text area height */
 	width:100%;                   /* text area width */
 	text-align:center;
+	padding:5px;
+	box-sizing: border-box;
 	/* offset horizontal: half of text area width */
 }
 /* Landscape layout (with min-width) */
@@ -101,7 +101,7 @@ body{
 	display: none;
 }
 
-#about {
+#popup {
 	position: fixed;
 	margin-top: 20%;
 	height: auto;
@@ -117,11 +117,11 @@ body{
 	opacity: 1;
 	background: white;
 }
-#about h1 {
+#popup h1 {
 	margin-bottom: 5%;
 }
 
-#about span {
+#popup span {
 	display: block;
 }
 

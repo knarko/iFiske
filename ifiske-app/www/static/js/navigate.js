@@ -26,5 +26,19 @@ Navigate = Object.freeze({
 		console.log(e);
 		template = Handlebars.getTemplate(e.state.path);
 		$("#content").html(template());
+	},
+
+	popup: function(target) {
+		var popupdiv = $("#popup");
+		popupdiv.html(Handlebars.getTemplate(target)());
+
+		var filter = $("#filter");
+		filter.click(function(){
+			popupdiv.fadeOut("fast", "linear");
+			filter.fadeOut("fast", "linear");
+		});
+
+		filter.fadeIn("fast", "linear");
+		popupdiv.fadeIn("fast", "linear");
 	}
 });

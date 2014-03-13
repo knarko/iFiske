@@ -33,6 +33,7 @@ var USER = Object.freeze({
     logout: function() {
 	localStorage.removeItem('user');
 	localStorage.removeItem('password');
+	Navigate.init();
     },
 
     register: function() {

@@ -24,8 +24,7 @@ var Navigate = Object.freeze({
      * context:   Hash containing variables for target template (optional)
      */
     to: function(target, context) {
-	history.pushState({"path": target, context: context},
-			  null, "#"+target);
+	history.pushState({path: target, context: context}, null, "#"+target);
 	this.navigate(target, context);
     },
 

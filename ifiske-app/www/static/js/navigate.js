@@ -11,6 +11,9 @@ Navigate = Object.freeze({
 		var template = Handlebars.getTemplate("start");
 		history.replaceState({"path": "start"},null,"#");
 		$("#content").html(template());
+		$("#filter").click(function(){
+			$("#filter #popupdiv")fadeOut("fast", "linear").off('click');
+		}).off('click');
 	},
 
 	to: function(target){
@@ -33,11 +36,7 @@ Navigate = Object.freeze({
 		popupdiv.html(Handlebars.getTemplate(target)());
 
 		var filter = $("#filter");
-		filter.click(function(){
-			popupdiv.fadeOut("fast", "linear");
-			filter.fadeOut("fast", "linear");
-		});
-
+		filter.on('click');
 		filter.fadeIn("fast", "linear");
 		popupdiv.fadeIn("fast", "linear");
 	}

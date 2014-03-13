@@ -6,10 +6,10 @@
  * TODO: Make sure that more context are saved, so that we may restore lists on back
  * TODO: Render all templates with a context
  */
-Navigate = Object.freeze({
+Navigate = Object.freeze( {
 	init: function(){
 		var template = Handlebars.getTemplate("start");
-		history.replaceState({"path": "start"},null,"#");
+		history.replaceState({path: "start"}, null, "#");
 		$("#content").html(template());
 	},
 
@@ -21,8 +21,9 @@ Navigate = Object.freeze({
 	},
 
 	back: function(e){
-		if(e.state == null)
+		if(e.state == null){
 			return;
+		}
 		console.log(e);
 		template = Handlebars.getTemplate(e.state.path);
 		$("#content").html(template());
@@ -33,12 +34,11 @@ Navigate = Object.freeze({
 		popupdiv.html(Handlebars.getTemplate(target)());
 
 		var filter = $("#filter");
-		filter.click(function(){
-			popupdiv.fadeOut("fast", "linear");
-			filter.fadeOut("fast", "linear");
-		});
-
 		filter.fadeIn("fast", "linear");
 		popupdiv.fadeIn("fast", "linear");
+	},
+
+	closePopup: function(){
+		$("#filter, #popup").fadeOut("fast", "linear");
 	}
 });

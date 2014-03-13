@@ -27,9 +27,10 @@ var Navigate = Object.freeze({
      * e:    history entry to navigate to
      */
     back: function(e) {
-        if(e.state == null)
-            return;
-        this.navigate(e.state.path, e.state.context);
+        if(e.state != null){
+            this.closePopup();
+            this.navigate(e.state.path, e.state.context);
+        }
     },
 
     /** navigate

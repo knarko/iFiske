@@ -16,15 +16,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 	app.receivedEvent('deviceready');
-	//document.addEventListener('backbutton', app.onBackKeyDown, false);
-	//Moved from index.html
 	//var db = window.openDatabase("test", "1.0", "Test DB", 1000000);
-	console.log("placeholder, opening db");
-    },
-
-    onBackKeyDown: function() {
-	window.history.back();
-	return false;
     },
 
     // Update DOM on a Received Event

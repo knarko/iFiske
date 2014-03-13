@@ -1,13 +1,17 @@
 {{> header}}
 <div id="menu">
-	{{{button target="search" text="Hitta Fiskevatten" id="find_fish"}}}
-	<div class="not-logged-in">
-		{{{button target="login" text="Logga in"}}}
-		{{{button target="register_user" text="Registrera"}}}
-	</div>
-	<div id="logged-in">
-		{{{button target="my_cards" text="Mina Fiskekort"}}}
-		{{{button target="register_catch" text="Registrera Fångst"}}}
-	</div>
-		<button id="info" onclick="Navigate.popup('about');" value="hidden"></button>
+  {{{button id="search" target="search" text="Hitta Fiskevatten" id="find_fish"}}}
+  {{#if user}}
+  <div id="logged-in">
+    {{{button id="my_cards" target="my_cards" text="Mina Fiskekort"}}}
+    {{{button id="register_catch" target="register_catch" text="Registrera Fångst"}}}
+    {{{button id="logout" ontouchend="USER.logout()" text="Logga ut"}}}
+  </div>
+  {{else}}
+  <div class="not-logged-in">
+    {{{button id="login" target="login" text="Logga in"}}}
+    {{{button id="register" target="register_user" text="Registrera"}}}
+  </div>
+  {{/if}}
+  <button id="info" onclick="Navigate.popup('about');"></button>
 </div>

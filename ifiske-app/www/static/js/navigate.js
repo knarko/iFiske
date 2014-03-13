@@ -3,7 +3,7 @@
  * to go forward, call Navigate.to('target')
  * to back, call window.history.back()
  */
-Navigate = Object.freeze({
+var Navigate = Object.freeze({
     /** init
      * Initial app state. Loads start screen and adds initial history entry.
      */
@@ -13,7 +13,7 @@ Navigate = Object.freeze({
 
 	//TODO: FUGLY
 	$("#filter").click(function(){
-	    $("#filter #popupdiv")fadeOut("fast", "linear").off('click');
+	    $("#filter #popupdiv").fadeOut("fast", "linear").off('click');
 	}).off('click');
 
     },

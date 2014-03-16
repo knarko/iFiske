@@ -1,0 +1,26 @@
+#header{
+    overflow:hidden;
+}
+
+#header > div {
+    height:40px;
+}
+ 
+#header #logo {
+    float:left;
+    margin-right:10px;
+}
+
+#header #search-div {
+    overflow:hidden;
+}
+
+#header #search {
+    height:100%;
+}
+
+#header hr {
+    border-style:solid;
+    border-width:4px;
+    margin-bottom:15px;
+}

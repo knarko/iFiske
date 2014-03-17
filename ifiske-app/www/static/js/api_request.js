@@ -14,6 +14,7 @@ var API = Object.freeze( {
      * success_func.
      **/
     request: function(args, success_func)
+    alert(success_func);
     {
         args.option = 'com_ifiskeapi';
         args.view = 'api';

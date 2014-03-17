@@ -1,2 +1,13 @@
-Hitta Fiskevatten
-Placeholder
+{{> header }}
+<div class="column-row">
+	<div class="column-div first-column">Fiskevatten
+	<button class="sort_desc" id="sort_waters"></button></div>
+	
+	<div class="column-div">Län
+	<button class="sort_desc" id="sort_region"></button></div> 
+</div>
+
+{{#list data }} 
+	<div class="list-div first-column">{{timestamp}}</div>
+
+{{/list}}

@@ -29,9 +29,9 @@ body {
     height:100%;                   /* text area height */
     width:100%;                   /* text area width */
     text-align:center;
-    padding:5pt;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    padding: 0 2% 0 2%;
 }
 
 /* Landscape layout (with min-width) */
@@ -39,6 +39,15 @@ body {
     .app {}
 }
 
+#footer
+{
+    //height: 5%;
+    width: 100%;
+    background-color: #99b;
+    padding: 7px 0 7px 0;
+    position: absolute;
+    bottom: 0;
+}
 
 /*Global*/
 .theme_dark {

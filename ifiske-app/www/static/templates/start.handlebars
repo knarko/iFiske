@@ -15,4 +15,12 @@
   {{/if}}
   <button id="info" onclick="Navigate.popup('about');"></button>
 </div>
-{{!> footer}}
+
+<div id="footer">
+    {{#if user}}
+        Inloggad som {{user}}
+    {{else}}
+        Ingen användare inloggad
+    {{/if}}
+</div>
+

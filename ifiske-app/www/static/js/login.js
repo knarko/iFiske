@@ -1,54 +1,42 @@
-var USER = Object.freeze( {
+var USER = Object.freeze({
 
-	login: function(user, password)
-	{
-		API.request(
-						{
-			action: 'login',
-			uid: user,
-			pw: password
-		},
-		function(e) {
-			err = $(e).find('error')[0];
+    /**
+     * login
+     * Sends login API request
+     * user:      username (API uid)
+     * password:  password (API pw)
+     */
+    login: function(user, password) {
+        API.request(
+            {
+            action: 'login',
+            uid: user,
+            pw: password
+        },
+        function(e) {
+            // Locate XML error object
+            err = $(e).find('error')[0];
 
-			if (err == null) {
-				localStorage.setItem('user', user);
-				localStorage.setItem('password', password);
-				Navigate.to('start');
-			} else {
-				//Handle failed login
-				console.log("Login error code: " + err.getAttribute('id'));
-			}
-		}
-					  );
-	},
+            if (err == null) {
+                localStorage.setItem('user', user);
+                localStorage.setItem('password', password);
+                // Avoids back stack entry
+                Navigate.init();
+            } else {
+                // Handle failed login
+                console.log('Login error code: ' + err.getAttribute('id'));
+            }
+        }
+        );
+    },
 
-	logout: function()
-	{
-		localStorage.removeItem('user');
-		localStorage.removeItem('password');
-	},
+    logout: function() {
+        localStorage.removeItem('user');
+        localStorage.removeItem('password');
+        Navigate.init();
+    },
 
-	register: function()
-	{
-		// TODO: NYI
-	}
+    register: function() {
+        // TODO: NYI
+    }
 });
-
-
-/*
-	var STATUS_TIME	= "timeStamp";
-	var STATUS_LOGIN = "loggedIn";
-
-
-	function parse(xml_response)
-	{
-	$(xml_response).find("subscription").each(function() {
-//TODO: fixus everythingus
-$.each(this.attributes, function(i ,attrib) {
-localStorage.setItem(attrib.name, $(this).attr(attrib.name));
-})
-})
-localStorage.setItem(STATUS_TIME, new Date().getTime());
-localStorage.setItem(STATUS_LOGIN, true);
-}*/

@@ -35,7 +35,57 @@ var USER = Object.freeze({
         Navigate.init();
     },
 
-    register: function() {
-        // TODO: NYI
+    /** register
+     * Sends a registration API request. 
+     * username: 
+     * password: 
+     * fullname: 
+     * email: 
+     * phone: 
+     */
+    register: function(username, password, fullname, email, phone) {
+	
+	username = username.trim();
+	password = password.trim();
+	fullname = fullname.trim();
+	email = email.trim();
+	phone = phone.trim();
+
+	var invalid = false;
+
+	if ((/^[a-z\d]{6,}$/i).test(username)) {
+	    // Handle error
+	    console.log("invalid username");
+	    invalid = true;
+	}
+	if ((/^.{8,}$/).test(password)) {
+	    // Handle error
+	    console.log("invalid password");
+	    invalid = true; 
+	}
+	if ((/^\d{8,}$/).test(phone)) {
+	    // Handle error
+	    console.log("invalid phone number");
+	    invalid = true;
+	}
+	
+	if (invalid) 
+	    break;
+		
+	/*
+	  API.request(
+	    {
+		action: 'user_register',
+		username: username,
+		password: password,
+		fullname: fullname,
+		email: email,
+		phone: phone 
+	    },
+	    function(e) {
+		console.log(e);
+            }
+        );
+	*/
     }
 });

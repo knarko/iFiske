@@ -1,5 +1,4 @@
 var USER = Object.freeze({
-
     /**
      * login
      * Sends login API request

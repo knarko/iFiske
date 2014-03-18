@@ -1,14 +1,12 @@
-#header{
-    overflow:hidden;
-}
-
 #header > div {
-    height:40px;
+    height:40pt;
 }
  
 #header #logo {
+    height:40pt;
+    width:100pt;
     float:left;
-    margin-right:10px;
+    margin-right:10pt;
 }
 
 #header #search-div {
@@ -21,6 +19,6 @@
 
 #header hr {
     border-style:solid;
-    border-width:4px;
-    margin-bottom:15px;
+    border-width:4pt;
+    margin-bottom:15pt;
 }

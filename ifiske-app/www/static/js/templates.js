@@ -24,7 +24,7 @@ Handlebars.registerHelper('list', function(items, options) {
 
 Handlebars.registerHelper('button', function(options){
     var h = options.hash;
-    h.class = (h.class + " " || "") + "button theme_dark";
+    h.class = "button " + (h.class|| "");
     h.ontouchend = (h.ontouchend || "Navigate.to('" + h.target + "');");
     h.onclick = h.ontouchend;
     delete h.target;

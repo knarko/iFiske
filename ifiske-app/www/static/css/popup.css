@@ -16,10 +16,10 @@
     margin-left: 17%;
     margin-right: 17%;
     color: black;
-    border: solid black 1px;
+    border: solid black 1pt;
     display: none;
     text-transform: none;
-    border-radius:3px;
+    border-radius:3pt;
     z-index: 9001;
     opacity: 1;
     background: white;
@@ -39,8 +39,8 @@
     vertical-align: bottom;
     background-repeat: no-repeat;
     float: right;
-    height: 40px;
+    height: 40pt;
     border: none;
-    width: 40px;
+    width: 40pt;
 }
 

@@ -1,7 +1,9 @@
 {{>header}}
 <form id="login-form">
-  <input type="text" id="username" placeholder="Användarnamn"/>
-  <input type="password" id="password" placeholder="Lösenord"/>
+  <input id="username" class="text_input" type="text" 
+	 placeholder="Användarnamn"/>
+  <input id="password" class="text_input" type="password" 
+	 placeholder="Lösenord"/>
   {{{button ontouchend="USER.login($('#username').val(),$('#password').val())" text="Logga in!"}}}
 </form>
 {{user}}

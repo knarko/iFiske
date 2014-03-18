@@ -8,8 +8,8 @@ var Navigate = Object.freeze({
      * Initial app state. Loads start screen and adds initial history entry.
      */
     init: function() {
-        history.replaceState({path: "start"}, null, "#");
-        this.navigate("start");
+        history.replaceState({path: 'start'}, null, '#');
+        this.navigate('start');
     },
 
     /** to
@@ -18,7 +18,7 @@ var Navigate = Object.freeze({
      * context:   Hash containing variables for target template (optional)
      */
     to: function(target, context) {
-        history.pushState({path: target, context: context}, null, "#"+target);
+        history.pushState({path: target, context: context}, null, '#'+target);
         this.navigate(target, context);
     },
 
@@ -40,7 +40,7 @@ var Navigate = Object.freeze({
      */
     navigate: function(target, context) {
         target = Handlebars.getTemplate(target);
-        $("#content").html(target($.extend({}, localStorage, context || {})));
+        $('#content').html(target($.extend({}, localStorage, context || {})));
     },
 
     /** popup
@@ -48,11 +48,11 @@ var Navigate = Object.freeze({
      * target:    template to popup
      */
     popup: function(target) {
-        history.pushState({path: "popup"}, null, "#popup");
-        $("#popup").html(Handlebars.getTemplate(target)());
-        $("#filter, #popup").fadeIn("fast", "linear");
+        history.pushState({path: 'popup'}, null, '#popup');
+        $('#popup').html(Handlebars.getTemplate(target)());
+        $('#filter, #popup').fadeIn('fast', 'linear');
     },
     closePopup: function() {
-        $("#filter, #popup").fadeOut("fast", "linear");
+        $('#filter, #popup').fadeOut('fast', 'linear');
     }
 });

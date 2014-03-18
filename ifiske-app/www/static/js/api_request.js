@@ -15,19 +15,19 @@ var API = Object.freeze( {
      **/
     request: function(args, success_func)
     {
-	args.option = 'com_ifiskeapi';
-	args.view = 'api';
-	args.format = 'raw';
+        args.option = 'com_ifiskeapi';
+        args.view = 'api';
+        args.format = 'raw';
 
-	$.ajax( {
-	    url: 'https://www.ifiske.se/index.php',
-	    dataType: "xml",
-	    data: args,
-	    success: success_func,
-	    error: function(e) {
-		console.log(e);
-	    }
-	});
+        $.ajax( {
+            url: 'https://www.ifiske.se/index.php',
+            dataType: 'xml',
+            data: args,
+            success: success_func,
+            error: function(e) {
+                console.log(e);
+            }
+        });
     },
 
     /**
@@ -36,8 +36,8 @@ var API = Object.freeze( {
      **/
     auth_request: function(args, success_func)
     {
-	args.uid = localStorage.getItem('user');
-	args.pw = localStorage.getItem('password');
-	api_request(args, success_func);
+        args.uid = localStorage.getItem('user');
+        args.pw = localStorage.getItem('password');
+        api_request(args, success_func);
     }
 });

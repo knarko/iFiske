@@ -39,5 +39,57 @@ var API = Object.freeze( {
         args.uid = localStorage.getItem('user');
         args.pw = localStorage.getItem('password');
         api_request(args, success_func);
+    },
+    /**
+     * getAreas
+     * Gets all areas and calls a callback with the resulting object
+     * callback: A function accepting an Object containing regions and areas as input
+     **/
+    getAreas: function(callback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_areas"}, requestCallback);
+    },
+    xmlparser: function(xmldata) {
+        var regions   = [],
+        areas         = [],
+        organisations = [];
+
+        if($(xmldata).find('user_areas')){
+
+            $.each(
+                $(xmldata).find('user_areas').children(),
+                function() {
+                    regions.push([
+                        parseInt($(this).attr('id')),
+                        $(this).attr('name'),
+                        parseFloat($(this).attr('long')),
+                        parseFloat($(this).attr('lat')),
+                        parseInt($(this).attr('quantity'))
+                    ]);
+
+                    $.each(
+                        $(this).children(),
+                        function() {
+                            areas.push([
+                                parseInt($(this).attr('id')),
+                                $(this).attr('name'),
+                                parseInt($(this).attr('regID')),
+                                parseInt($(this).attr('orgID')),
+                                parseFloat($(this).attr('long')),
+                                parseFloat($(this).attr('lat'))
+                            ]);
+                        }
+                    );
+
+                }
+            );
+            return {regions: regions, areas: areas};
+        } else {
+            return false;
+        }
     }
 });

@@ -68,6 +68,7 @@ Database = Object.freeze({
                 tx.executeSql(query, entry);
             }
         }, errorCallback, successCallback);
+        callback();
     },
 
     /**

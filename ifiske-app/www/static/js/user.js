@@ -17,7 +17,7 @@ var USER = Object.freeze({
             err = $(e).find('error')[0];
 
             if (err == null) {
-                localStorage.setItem('user', user);
+                localStorage.setItem('user', user.toLowerCase());
                 localStorage.setItem('password', password);
                 // Avoids back stack entry
                 Navigate.init();
@@ -43,8 +43,7 @@ var USER = Object.freeze({
      * email: 
      * phone: 
      */
-    register: function(username, password, fullname, email, phone) {
-	
+    register: function(username, password, fullname, email, phone) {	
 	username = username.trim();
 	password = password.trim();
 	fullname = fullname.trim();

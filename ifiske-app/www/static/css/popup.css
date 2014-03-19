@@ -16,10 +16,10 @@
     margin-left: 17%;
     margin-right: 17%;
     color: black;
-    border: solid black 1pt;
+    border: solid black 1px;
     display: none;
     text-transform: none;
-    border-radius:3pt;
+    border-radius:3px;
     z-index: 9001;
     opacity: 1;
     background: white;
@@ -32,15 +32,14 @@
     display: block;
 }
 
-/* Move to info.css? */
 #info{
     background-color: #5AAAC9;
     background-image: url("../img/info_icon.png");
     vertical-align: bottom;
     background-repeat: no-repeat;
     float: right;
-    height: 40pt;
+    height: 80px;
     border: none;
-    width: 40pt;
+    width: 80px;
 }
 

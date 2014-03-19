@@ -14,7 +14,6 @@ body {
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:12pt;
 }
 
 .event.listening {
@@ -29,9 +28,10 @@ body {
     height:100%;                   /* text area height */
     width:100%;                   /* text area width */
     text-align:center;
-    padding:5pt;
+    padding:15px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    background-color: #5AAAC9;
 }
 
 /* Landscape layout (with min-width) */
@@ -39,23 +39,25 @@ body {
     .app {}
 }
 
-
-/*Global*/
-.theme_dark {
-    background-color: #006993;
-    border-color: #006993;
+#footer
+{
+    //height: 5%;
+    width: 100%;
+    background-color: #99b;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
-.theme_light {
-    background-color: #5AAAC9;
-    border-color: #5AAAC9;
-}
+
 
 .button {
-    margin-bottom: 10pt;
-    font-size: 25pt;
+//006993 - 5AAAC9;
+    background-color:#006993;
+    margin-bottom: 10px;
+    font-size: 25px;
     font-weight: bold;
-    padding: 15pt;
+    padding: 15px;
     color: #FFFFFF;
 }
 
@@ -63,7 +65,7 @@ body {
     box-sizing: border-box;
     width: 100%;
     margin: 0pt auto 10pt auto;
-    height: 40pt;
+    height: 40px;
     padding: 0em 0.5em 0em 0.5em;
-    border-width:0pt;
+    border-width:0px;
 }

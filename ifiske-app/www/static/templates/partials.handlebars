@@ -2,14 +2,19 @@
   <div id="header">
     <img id="logo" src="static/img/logo-xs.png"/>
     <div id="search-div">
-      <input id="search" class="text_input" type="search" placeholder="Snabbsök"/>
+      <input id="search" type="search" placeholder="Snabbsök"/>
+      <div id="search-bottom-bar"></div>
     </div>
-    <hr class="theme_dark"/>
+    <hr/>
   </div>
 </script>
 
 <script id="footer-partial" type="text/x-handlebars-template">
-  <div id="footer">
-    {{this}}
-  </div>
+    <div id="footer">
+        {{#if user}}
+            user is: {{user}}
+        {{else}}
+            user is not logged in
+        {{/if}}
+    </div>
 </script>

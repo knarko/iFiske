@@ -9,7 +9,11 @@ Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
     testUpdater: function(){
-        API.getAreas(function(data){Database.updateTable('Regions',data.regions);Database.updateTable('Areas', data.areas);});
+        API.getAreas(function(data){
+            Database.updateTable('Regions',data.regions);
+            Database.updateTable('Areas', data.areas);
+            Database.updateTable('Area_keywords', data.area_keywords);
+        });
     },
 
     //Initialies the database
@@ -59,6 +63,9 @@ Database = Object.freeze({
             case 'Regions':
                 query = 'INSERT INTO Regions (id, name, long, lat, quantity) VALUES (?,?,?,?,?);';
             break;
+            case 'Area_keywords':
+                query = 'INSERT INTO Area_keywords (area_id, keyword) VALUES (?,?);';
+            break;
             default:
                 throw Error('Not yet implemented');
         }
@@ -68,13 +75,11 @@ Database = Object.freeze({
                 tx.executeSql(query, entry);
             }
         }, errorCallback, successCallback);
-        callback();
+        if (callback)
+            callback();
     },
 
-    /**
-     * nameSearch
-     **/
-    nameSearch: function(searchstring, callback) {
+    search: function(searchstring, callback) {
         var errorCallback = function(err){console.log(err)};
         var querySuccess = function(tx, results){
             callback(results);
@@ -83,8 +88,19 @@ Database = Object.freeze({
             console.log('success');
         };
         this.DB.transaction(function(tx){
-            var result = tx.executeSql('SELECT * FROM Areas WHERE name LIKE ?', ['%' + searchstring + '%'], querySuccess);
+            tx.executeSql([
+                'SELECT * ',
+                'FROM Areas ',
+                'WHERE name LIKE ?',
+                'UNION',
+                'SELECT DISTINCT Areas.*',
+                'FROM Area_keywords',
+                'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
+                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
+                ['%' + searchstring + '%', '%' + searchstring + '%'],
+                querySuccess);
         },errorCallback, successCallback);
+
     }
 });
 

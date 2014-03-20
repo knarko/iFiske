@@ -57,6 +57,7 @@ var API = Object.freeze( {
         var regions   = [],
         areas         = [],
         organisations = [];
+        area_keywords = [];
 
         if($(xmldata).find('user_areas')){
 
@@ -82,12 +83,20 @@ var API = Object.freeze( {
                                 parseFloat($(this).attr('long')),
                                 parseFloat($(this).attr('lat'))
                             ]);
+                            var id = $(this).attr('id');
+                            if($(this).attr('keywords') != ""){
+                                var keywords = $(this).attr('keywords').split(', ');
+                                for (var i in keywords) {
+                                    console.log(keywords[i]);
+                                    area_keywords.push([id,keywords[i]]);
+                                }
+                            }
                         }
                     );
 
                 }
             );
-            return {regions: regions, areas: areas};
+            return {regions: regions, areas: areas, area_keywords: area_keywords};
         } else {
             return false;
         }

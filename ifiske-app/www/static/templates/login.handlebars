@@ -1,4 +1,4 @@
-{{> header }}
+{{>header}}
 <form id="login-form">
   <input id="username" class="text_input" type="text" 
 	 placeholder="Användarnamn"/>
@@ -6,3 +6,4 @@
 	 placeholder="Lösenord"/>
   {{{button ontouchend="USER.login($('#username').val(),$('#password').val())" text="Logga in!"}}}
 </form>
+{{user}}

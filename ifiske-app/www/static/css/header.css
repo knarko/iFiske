@@ -1,0 +1,46 @@
+#header > div {
+    height:40px;
+}
+ 
+#header #logo {
+    height:40px;
+    width:100px;
+    float:left;
+    margin-right:10px;
+}
+
+#header #search-div {
+    overflow:hidden;
+}
+
+#header #search {
+    height:100%;
+    width:100%;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 1.5em;
+    background-color: #5AAAC9;
+    border:0px solid #006993;
+    border-bottom-width: 3px;
+    padding: 13px 10px 0px 10px;
+    outline: 0;
+}
+
+#search-div ::-webkit-input-placeholder {
+    color: #DDDDDD;
+    font-style: italic;
+}
+
+#header #search-bottom-bar {
+    height:7px;
+    border:0px solid #006993;
+    border-width:0px 3px 0px 3px;
+    position: relative;
+    margin-top: -10px;
+}
+
+#header hr {
+    margin: 3px 0px 8px 0px;
+    border-width: 0px;
+    border-top: 3px solid #006993;
+}

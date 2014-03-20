@@ -87,7 +87,6 @@ var API = Object.freeze( {
                             if($(this).attr('keywords') != ""){
                                 var keywords = $(this).attr('keywords').split(', ');
                                 for (var i in keywords) {
-                                    console.log(keywords[i]);
                                     area_keywords.push([id,keywords[i]]);
                                 }
                             }

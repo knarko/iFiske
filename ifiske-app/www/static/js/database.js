@@ -1,31 +1,18 @@
-Database = Object.freeze(
-    {
+/**
+ * Database
+ * An object that contains the database functions
+ *
+ * TODO: Look into using callbacks
+ * TODO: Maybe move some functions around to other objects?
+ **/
+Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
-
-    getData: function() {
-        API.request({
-            action: "get_areas"
-        },
-        function(e){
-            if (e != null) {
-                var regions = [];
-                $.each(
-                    $(e).find('user_areas')[0].children,
-                    function(){
-                        kitten = $(this);
-                        var region = {
-                            id: parseInt($(this).attr('id')),
-                            name: $(this).attr('name'),
-                            long: parseFloat($(this).attr('long')),
-                            lat: parseFloat($(this).attr('lat')),
-                            quantity: parseInt($(this).attr('quantity'))
-                        }
-                        regions.push(region);
-                    });
-                    console.log(regions);
-                    Database.updateRegions(regions);
-            }
+    testUpdater: function(){
+        API.getAreas(function(data){
+            Database.updateTable('Regions',data.regions);
+            Database.updateTable('Areas', data.areas);
+            Database.updateTable('Area_keywords', data.area_keywords);
         });
     },
 
@@ -55,27 +42,65 @@ Database = Object.freeze(
                            );
     },
 
-    //Updates a table in the database
-    updateTable: function(table, data){
+    /**
+     * updateTable
+     * inserts values into a table
+     * table: A string containing the name of the table to update
+     * dataset: An array of arrays, each containing all the values to insert to a row
+     * callback: function to call when done
+     *
+     * TODO: Create better link between the parsing and this function, since they are highly dependant on each other.
+     * TODO: Actually use the callback
+     **/
+    updateTable: function(table, dataset, callback){
+        var query = '';
         var errorCallback = function(err){console.log(err)};
         var successCallback = function(){console.log("success")};
-        this.DB.transaction(function(tx){
-
-        }, errorCallback, successCallback);
-    },
-    updateRegions: function(regions){
-        //Adds entries to Regions
-        //var regions = API.getRegions();
-        //regions = [{id:1, name:"Fiskeskålen FVO", long:1.2, lat:1.3, quantity:1},{id:2, name:"Fisasdeskålen FVO", long:1.2222, lat:112.3, quantity:51}]
-        var errorCallback = function(err){console.log(err)};
-        var successCallback = function(){console.log("success")};
-        for(var i in regions){
-            var r = regions[i];
-            console.log(r);
-            this.DB.transaction(function(tx){
-                tx.executeSql('INSERT INTO Regions (id,name,long,lat,quantity) VALUES (?,?,?,?,?);', [r.id, r.name, r.long, r.lat, r.quantity]);
-            }, errorCallback, successCallback);
+        switch(table){
+            case 'Areas':
+                query = 'INSERT INTO Areas (id, name, region_id, org_id, long, lat) VALUES (?,?,?,?,?,?);';
+            break;
+            case 'Regions':
+                query = 'INSERT INTO Regions (id, name, long, lat, quantity) VALUES (?,?,?,?,?);';
+            break;
+            case 'Area_keywords':
+                query = 'INSERT INTO Area_keywords (area_id, keyword) VALUES (?,?);';
+            break;
+            default:
+                throw Error('Not yet implemented');
         }
+        this.DB.transaction(function(tx){
+            for(var i in dataset){
+                var entry = dataset[i];
+                tx.executeSql(query, entry);
+            }
+        }, errorCallback, successCallback);
+        if (callback)
+            callback();
+    },
+
+    search: function(searchstring, callback) {
+        var errorCallback = function(err){console.log(err)};
+        var querySuccess = function(tx, results){
+            callback(results);
+        };
+        var successCallback = function(){
+            console.log('success');
+        };
+        this.DB.transaction(function(tx){
+            tx.executeSql([
+                'SELECT * ',
+                'FROM Areas ',
+                'WHERE name LIKE ?',
+                'UNION',
+                'SELECT DISTINCT Areas.*',
+                'FROM Area_keywords',
+                'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
+                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
+                ['%' + searchstring + '%', '%' + searchstring + '%'],
+                querySuccess);
+        },errorCallback, successCallback);
+
     }
 });
 

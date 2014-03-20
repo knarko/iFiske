@@ -30,11 +30,16 @@
 }
 
 #header #search-bottom-bar {
-    height:10px;
+    height:7px;
     border:0px solid #006993;
     border-width:0px 3px 0px 3px;
     position: relative;
     margin-top: -10px;
+}
+
+#search-div ::-webkit-input-placeholder {
+    color: #DDDDDD;
+    font-style: italic;
 }
 
 #header hr {

@@ -54,10 +54,13 @@ var API = Object.freeze( {
         API.request({action: "get_areas"}, requestCallback);
     },
     xmlparser: function(xmldata) {
-        var regions   = [],
+        //TODO: Use Database.tableDefinition
+        var
+        regions       = [],
         areas         = [],
-        organisations = [];
-        area_keywords = [];
+        organisations = [],
+        area_keywords = [],
+        products      = [];
 
         if($(xmldata).find('user_areas')){
 
@@ -81,8 +84,10 @@ var API = Object.freeze( {
                                 parseInt($(this).attr('regID')),
                                 parseInt($(this).attr('orgID')),
                                 parseFloat($(this).attr('long')),
-                                parseFloat($(this).attr('lat'))
+                                parseFloat($(this).attr('lat')),
+                                $(this).text().trim()
                             ]);
+                            kitten = $(this);
                             var id = $(this).attr('id');
                             if($(this).attr('keywords') != ""){
                                 var keywords = $(this).attr('keywords').split(', ');
@@ -90,12 +95,33 @@ var API = Object.freeze( {
                                     area_keywords.push([id,keywords[i]]);
                                 }
                             }
+                            $.each(
+                                $(this).children('products').children(),
+                                function() {
+                                    kitten = $(this);
+                                    products.push([
+                                        parseInt($(this).attr('ID')),
+                                        parseInt($(this).attr('SMSdisplay')),
+                                        parseInt($(this).attr('vat')),
+                                        parseInt($(this).attr('saleschannel')),
+                                        parseInt($(this).attr('areaID')),
+                                        $(this).attr('name'),
+                                        parseInt($(this).attr('price')),
+                                        parseInt($(this).attr('ruleid')),
+                                        parseInt($(this).attr('sortorder')),
+                                        $(this).attr('headline'),
+                                        $(this).attr('important'),
+                                        $(this).attr('notes'),
+                                        $(this).attr('SMSCode')
+                                    ]);
+                                }
+                            );
                         }
                     );
 
                 }
             );
-            return {regions: regions, areas: areas, area_keywords: area_keywords};
+            return {regions: regions, areas: areas, area_keywords: area_keywords, products: products};
         } else {
             return false;
         }

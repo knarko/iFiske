@@ -13,7 +13,25 @@ Database = Object.freeze({
             Database.updateTable('Regions',data.regions);
             Database.updateTable('Areas', data.areas);
             Database.updateTable('Area_keywords', data.area_keywords);
+            Database.updateTable('Products', data.products);
         });
+    },
+
+    tableDefinition: {
+        Regions: [
+            'id', 'name', 'long', 'lat', 'quantity'
+        ],
+        Areas: [
+            'id', 'name', 'region_id', 'org_id', 'long', 'lat', 'description'
+        ],
+        Area_keywords: [
+            'area_id', 'keyword'
+        ],
+        Products: [
+            'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
+            'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
+            'smscode'
+        ]
     },
 
     //Initialies the database
@@ -33,8 +51,8 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Areas');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Areas (',
-                'id int,name text, region_id int, org_id int,long real,',
-                'lat real,',
+                'id int, name text, region_id int, org_id int,long real,',
+                'lat real, description text,',
                 'PRIMARY KEY (id),',
                 'FOREIGN KEY (region_id) REFERENCES Regions(id),',
                 'FOREIGN KEY (org_id) REFERENCES Organisations(id))'
@@ -101,16 +119,11 @@ Database = Object.freeze({
      **/
     updateTable: function(table, dataset, callback){
         var query = 'INSERT INTO ';
-        var tabledef = {
-            Regions: ['id', 'name', 'long', 'lat', 'quantity'],
-            Areas: ['id', 'name', 'region_id', 'org_id', 'long', 'lat'],
-            Area_keywords: ['area_id', 'keyword']
-        }
         var errorCallback = function(err){console.log(err)};
         var successCallback = function(){console.log("success")};
-        if (tabledef[table]) {
-            query += table + ' (' + tabledef[table] + ') VALUES (?'
-            + Array(tabledef[table].length).join(',?') + ');';
+        if (this.tableDefinition[table]) {
+            query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
+            + Array(this.tableDefinition[table].length).join(',?') + ');';
         } else {
             throw Error('Not yet implemented');
         }

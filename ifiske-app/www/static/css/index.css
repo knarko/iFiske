@@ -1,153 +1,73 @@
 * {
-	-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
 html, body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
-body{
-	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-	-webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-	background-color: #5AAAC9;
-	font-size:12px;
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
 }
+
 .event.listening {
-	display:block;
+    display:block;
 }
 .event.received {
-	display:none;
+    display:none;
 }
+
 /* Portrait layout (default) */
 .app {
-	height:100%;                   /* text area height */
-	width:100%;                   /* text area width */
-	text-align:center;
-	padding:5px;
-	box-sizing: border-box;
-	/* offset horizontal: half of text area width */
+    height:100%;                   /* text area height */
+    width:100%;                   /* text area width */
+    text-align:center;
+    padding:15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #5AAAC9;
 }
+
 /* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-	.app {
-	}
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400pt) {
+    .app {}
 }
 
-/*Global*/
-.button{
-	margin: 10px;
-	background-color: #006993;
-	font-size: 25px;
-	font-weight: bold;
-	padding: 15px;
-	color: #FFFFFF;
+#footer
+{
+    //height: 5%;
+    width: 100%;
+    background-color: #99b;
+    position: absolute;
+    padding: 7px 0 7px 0;
+    left: 0;
+    bottom: 0;
 }
 
-/*Header rules*/
-#header{
-	width: calc(100% - 10px);
-	overflow:hidden;
-	height:40px;
-}
-#header img{
-	margin-right: 5px;
-}
-#header > div{
-	width: calc(100% - 104px);
-	height:100%;
-	overflow:auto;
-}
-#header div input{
-	height:100%;
-	width: 100%;
-	border:none;
-}
-#header > *{
-	display:inline-block;
-}
-#header input:focus{
-	outline:none;
-}
-#header hr{
-	width:100%;
-	border-width: 0px 0px 1px 0px;
-	border-color: #FFF;
+
+
+.button {
+//006993 - 5AAAC9;
+    background-color:#006993;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px;
+    color: #FFFFFF;
 }
 
-#info{
-	margin-right: 10px;
-	background-color: #5AAAC9;
-	background-image: url("../img/info_icon.png");
-	vertical-align: bottom;
-	background-repeat: no-repeat;
-	float: right;
-	height: 40px;
-	border: none;
-	width: 40px;
-}
-
-#filter {
-	background-color: black;
-	height: 100%;
-	width: 100%;
-	position: fixed;
-	opacity: 0.7;
-	z-index: 300;
-	display: none;
-}
-
-#popup {
-	position: fixed;
-	margin-top: 20%;
-	height: auto;
-	width: 66%;
-	margin-left: 17%;
-	margin-right: 17%;
-	color: black;
-	border: solid black 1px;
-	display: none;
-	text-transform: none;
-	border-radius:3px;
-	z-index: 9001;
-	opacity: 1;
-	background: white;
-}
-#popup h1 {
-	margin-bottom: 5%;
-}
-
-#popup span {
-	display: block;
-}
-
-#registerbar {
-	background-color: #006993;
-	width: 95%;
-	height: 40%;
-	margin-top: 2%;
-	color: white;
-	text-align: left;
-	padding: 10px;
-}
-
-#register-form p {
-	text-align: left;
-}
-
-#register-form input {
-	float: left;
-}
-
-#register-form label {
-	text-align: right;
-	float: left;
-	width: 30%;
-	vertical-align: center;
-	font-size: inherit;
+.text_input {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0pt auto 10pt auto;
+    height: 40px;
+    padding: 0em 0.5em 0em 0.5em;
+    border-width:0px;
 }
 

@@ -1,17 +1,16 @@
-/*
+/**
  * Navigation system for the app
  * to go forward, call Navigate.to('target')
  * to back, call window.history.back()
- *
- * TODO: Make sure that more context are saved, so that we may restore lists on back
- * TODO: Render all templates with a context
  */
-Navigate = Object.freeze({
-	init: function(){
-		var template = Handlebars.getTemplate("start");
-		history.replaceState({"path": "start"},null,"#");
-		$("#content").html(template());
-	},
+var Navigate = Object.freeze({
+    /** init
+     * Initial app state. Loads start screen and adds initial history entry.
+     */
+    init: function() {
+        history.replaceState({path: 'start'}, null, '#');
+        this.navigate('start');
+    },
 
 	to: function(target){
 		//TODO: save more context
@@ -142,26 +141,36 @@ Navigate = Object.freeze({
 		}
 	},
 
-	back: function(e){
-		if(e.state == null)
-			return;
-		console.log(e);
-		template = Handlebars.getTemplate(e.state.path);
-		$("#content").html(template());
-	},
+    /** back
+     * Navigates to previous history entry
+     * e:    history entry to navigate to
+     */
+    back: function(e) {
+        if(e.state != null){
+            this.closePopup();
+            this.navigate(e.state.path, e.state.context);
+        }
+    },
 
-	popup: function(target) {
-		var popupdiv = $("#popup");
-		popupdiv.html(Handlebars.getTemplate(target)());
-
-		var filter = $("#filter");
-		filter.click(function(){
-			popupdiv.fadeOut("fast", "linear");
-			filter.fadeOut("fast", "linear");
-		});
-
-		filter.fadeIn("fast", "linear");
-		popupdiv.fadeIn("fast", "linear");
-	}
-
+    /** navigate
+     *
+     * target:
+     * context:
+     */
+    navigate: function(target, context) {
+        target = Handlebars.getTemplate(target);
+        $('#content').html(target($.extend({}, localStorage, context || {})));
+    },
+    /** popup
+     * Spawns a popup containing target template.
+     * target:    template to popup
+     */
+    popup: function(target) {
+        history.pushState({path: 'popup'}, null, '#popup');
+        $('#popup').html(Handlebars.getTemplate(target)());
+        $('#filter, #popup').fadeIn('fast', 'linear');
+    },
+    closePopup: function() {
+        $('#filter, #popup').fadeOut('fast', 'linear');
+    }
 });

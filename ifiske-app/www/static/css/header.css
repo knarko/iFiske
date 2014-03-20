@@ -13,11 +13,6 @@
     overflow:hidden;
 }
 
-#header ::-webkit-input-placeholder {
-    color: #DDDDDD;
-    font-style: italic;
-}
-
 #header #search {
     height:100%;
     width:100%;
@@ -27,10 +22,17 @@
     background-color: #5AAAC9;
     border:0px solid #006993;
     border-bottom-width: 3px;
+    padding: 13px 10px 0px 10px;
+    outline: 0;
+}
+
+#search-div ::-webkit-input-placeholder {
+    color: #DDDDDD;
+    font-style: italic;
 }
 
 #header #search-bottom-bar {
-    height:10px;
+    height:7px;
     border:0px solid #006993;
     border-width:0px 3px 0px 3px;
     position: relative;

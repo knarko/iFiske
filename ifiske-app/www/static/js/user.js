@@ -1,90 +1,79 @@
-var USER = Object.freeze({
-    /**
-     * login
-     * Sends login API request
-     * user:      username (API uid)
-     * password:  password (API pw)
-     */
-    login: function(user, password) {
-        API.request(
-            {
-            action: 'login',
-            uid: user,
-            pw: password
-        },
-        function(e) {
-            // Locate XML error object
-            err = $(e).find('error')[0];
+var User = Object.freeze({
 
-            if (err == null) {
-                localStorage.setItem('user', user.toLowerCase());
-                localStorage.setItem('password', password);
-                // Avoids back stack entry
-                Navigate.init();
-            } else {
-                // Handle failed login
-                console.log('Login error code: ' + err.getAttribute('id'));
-            }
-        }
-        );
+    /** login
+     * Attempts to log in the user. Displays error message on failure. 
+     * form:    the login form
+     */
+    login: function(form) {
+	API.login(
+	    form.username.value, 
+	    form.password.value, 
+	    function(xml) {
+		if ($(xml).find('error')[0]) {
+		    form.password.value = '';
+		    $(form).find('#error-span').css('display', 'inline-block');
+		    return;
+		}
+
+		localStorage.setItem('user', user.toLowerCase());
+		localStorage.setItem('password', password);
+		// Avoid back stack entry
+		Navigate.init();
+	    });
     },
 
+    /** logout
+     * Clears local authentication data.
+     */
     logout: function() {
         localStorage.removeItem('user');
         localStorage.removeItem('password');
+	// Avoid back stack entry
         Navigate.init();
     },
 
-    /** register
-     * Sends a registration API request. 
-     * username: 
-     * password: 
-     * fullname: 
-     * email: 
-     * phone: 
+    /** validate_register_form
+     * Validates the registration form. Displays potential errors.
+     * Calls API.register(...) on success.
      */
-    register: function(username, password, fullname, email, phone) {	
-	username = username.trim();
-	password = password.trim();
-	fullname = fullname.trim();
-	email = email.trim();
-	phone = phone.trim();
+    validate_register_form: function(form) {
 
-	var invalid = false;
+	// Remove leading and trailing white spaces
+	var username = form.username.value.trim();
+	var password = form.password.value.trim();
+	var fullname = form.fullname.value.trim();
+	var email = form.email.value.trim();
 
+	// Remove all occurances of white spaces and -
+	var phone = form.phone.value.replace(/[\s-]/g,'');
+
+	var valid = true;
+
+	// username should contain only a-z (case insensitive)
+	// and/or digits, and be at least 6 characters long.
 	if ((/^[a-z\d]{6,}$/i).test(username)) {
-	    // Handle error
 	    console.log("invalid username");
-	    invalid = true;
+	    valid = false;
 	}
+	// password should be at least 8 characters long.
 	if ((/^.{8,}$/).test(password)) {
-	    // Handle error
 	    console.log("invalid password");
-	    invalid = true; 
+	    valid = false;
 	}
+	// phone should contain only digits, and be at least 8
+	// characters long
 	if ((/^\d{8,}$/).test(phone)) {
-	    // Handle error
 	    console.log("invalid phone number");
-	    invalid = true;
+	    valid = false;
 	}
 	
-	if (invalid) 
-	    break;
-		
-	/*
-	  API.request(
-	    {
-		action: 'user_register',
-		username: username,
-		password: password,
-		fullname: fullname,
-		email: email,
-		phone: phone 
-	    },
-	    function(e) {
-		console.log(e);
-            }
-        );
-	*/
+	if (valid)
+	    console.log("validated!");/*
+	    API.register(username, password, fullname, email, phone,
+			 // Callback
+			 function() {
+			     
+			 });
+				      */
     }
 });

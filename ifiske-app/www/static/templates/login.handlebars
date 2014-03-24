@@ -1,8 +1,9 @@
 {{> header }}
-<form id="login-form">
+<form id="login-form" onsubmit="User.login(this)">
   <input id="username" class="text_input" type="text" 
 	 placeholder="Användarnamn"/>
   <input id="password" class="text_input" type="password" 
 	 placeholder="Lösenord"/>
-  {{{button ontouchend="USER.login($('#username').val(),$('#password').val())" text="Logga in!"}}}
+  <span id="error-span">Ogiltigt användarnamn eller lösenord</span>
+  {{{button ontouchend="$(this).parent().submit()" text="Logga in!"}}}
 </form>

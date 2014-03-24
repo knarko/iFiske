@@ -13,7 +13,7 @@ var API = Object.freeze( {
      * server-side errors here. All error handling should be placed inside
      * success_func.
      **/
-    request: function(args, success_func)
+    request: function(args, callback)
     {
         args.option = 'com_ifiskeapi';
         args.view = 'api';
@@ -23,23 +23,23 @@ var API = Object.freeze( {
             url: 'https://www.ifiske.se/index.php',
             dataType: 'xml',
             data: args,
-            success: success_func,
+            success: callback,
             error: function(e) {
                 console.log(e);
             }
         });
     },
 
-    /**
-     * auth_request
+    /** auth_request
      * Convenience method wrapper for requests requiring authentication
      **/
-    auth_request: function(args, success_func)
+    auth_request: function(args, callback)
     {
         args.uid = localStorage.getItem('user');
         args.pw = localStorage.getItem('password');
-        api_request(args, success_func);
+	this.request(args, callback);
     },
+
     /**
      * getAreas
      * Gets all areas and calls a callback with the resulting object
@@ -125,5 +125,36 @@ var API = Object.freeze( {
         } else {
             return false;
         }
+
+    /** login
+     * Sends login API request
+     */
+    login: function(user, password, callback) {
+	this.request(
+            {
+		action: 'login',
+		uid: user,
+		pw: password
+            },
+	    callback
+	);
+    },
+
+    /** register
+     * Sends a registration API request.
+     */
+    register: function(username, password, fullname, email, phone, callback) {
+	this.request(
+	    {
+		action: 'user_register',
+		username: username,
+		password: password,
+		fullname: fullname,
+		email: email,
+		phone: phone 
+	    },
+            callback
+	);
     }
+
 });

@@ -12,3 +12,7 @@
 	 placeholder="Bekräfta Lösenord"/>
 </form>
 {{{button text="Registrera"}}}
+
+<script>
+  $(".text_input").on("change input", function() { $(this).removeClass("text_input_error");});
+</script>

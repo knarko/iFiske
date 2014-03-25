@@ -33,15 +33,54 @@ var app = {
 };
 
     //TODO: Implement general search function 
-var search = function(thing){
+var search = function(query){
+    if (query === undefined)
+    {
+        query = "";
+    }
+    else
+    {
+        query = $("input#search").val();
+    }
+
     console.log('in search');
-    return false;
+
+    //template = Handlebars.getTemplate(target);
+
+    //$("#id").val()
+    Database.search(query, function(result) {
+
+        var sqlresults = {};
+        var resArray = new Array;
+        var dict = {};
+
+        // Builds a structure like { search : [ { name : "asdf", region : "asdf"} ] useful for melding with context
+
+        for (var indicies = 0; indicies != result.rows.length; indicies++)
+        {
+            dict = {};
+            dict['name'] = result.rows.item(indicies).name;
+            dict['region'] = result.rows.item(indicies).region;
+
+            resArray[indicies] = dict;
+        }
+        sqlresults['search'] = resArray;
+
+        $.extend({}, sqlresults, context || {});
+        Navigate.navigate(target, sqlresults);
+    });
+    //fo (int i = 0; i < sqlresults.rows.length; i++) {
+    //    console.log(sqlresults.rows.item(i));
+    //}
+
+    //return false;
 }
 
 $(document).ready(function(){
 
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
+    //TODO: Pass context to footer partial possible?
     //Handlebars.registerPartial('footer', $(Handlebars.getTemplate('partials')()).filter('#footer-partial').html().trim());
     Navigate.init();
     window.addEventListener('popstate', function(e){

@@ -19,15 +19,6 @@ var Navigate = Object.freeze({
      */
     to: function(target, context) {
         history.pushState({path: target, context: context}, null, '#'+target);
-
-		template = Handlebars.getTemplate(target);
-		if (target == "search")
-		{
-            // TODO: replace with real sql query results
-            
-            var sqlresults = {};
-            $.extend({}, sqlresults, context || {})
-		}
         this.navigate(target, context);
     },
 

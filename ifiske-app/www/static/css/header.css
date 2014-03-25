@@ -39,6 +39,11 @@
     margin-top: -10px;
 }
 
+#search-div ::-webkit-input-placeholder {
+    color: #DDDDDD;
+    font-style: italic;
+}
+
 #header hr {
     margin: 3px 0px 8px 0px;
     border-width: 0px;

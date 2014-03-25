@@ -139,7 +139,11 @@ Database = Object.freeze({
     search: function(searchstring, callback) {
         var errorCallback = function(err){console.log(err)};
         var querySuccess = function(tx, results){
-            callback(results);
+            var resultsArray = []
+            for(var i = 0; i < results.rows.length; ++i){
+                resultsArray.push(results.rows.item(i));
+            }
+            callback(resultsArray);
         };
         var successCallback = function(){
             console.log('success');

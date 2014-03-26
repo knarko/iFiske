@@ -31,12 +31,6 @@ var app = {
     }
 };
 
-//TODO: Implement general search function
-var search = function(thing){
-    console.log('in search');
-    return false;
-}
-
 $(document).ready(function(){
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());

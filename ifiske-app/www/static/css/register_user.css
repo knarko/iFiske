@@ -1,10 +1,9 @@
-
+7
 #register-form .input_field {
     position: relative;
     display: inline-block;
     width:100%;
 }
-
 
 #register-form label {
     text-align:left;
@@ -22,7 +21,3 @@
     opacity:1;
     height:12px;
 }
-/*
-#register-form input:valid + label {
-    opacity:0;
-}*/

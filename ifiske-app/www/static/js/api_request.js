@@ -53,6 +53,7 @@ var API = Object.freeze( {
         }
         API.request({action: "get_areas"}, requestCallback);
     },
+    
     xmlparser: function(xmldata) {
         //TODO: Use Database.tableDefinition
         var
@@ -125,7 +126,7 @@ var API = Object.freeze( {
         } else {
             return false;
         }
-
+    },
     /** login
      * Sends login API request
      */

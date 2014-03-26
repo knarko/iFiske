@@ -1,18 +1,40 @@
 {{> header }}
-<form id="register-form">
-  <input id="name" class="text_input" type="text" 
-	 placeholder="Namn"/>
-  <input id="username" class="text_input" type="text" 
-	 placeholder="Användarnamn"/>
-  <input id="email" class="text_input" type="email" 
-	 placeholder="Email"/>
-  <input id="password" class="text_input" type="password" 
-	 placeholder="Lösenord"/>
-  <input id="password_confirm" class="text_input" type="password" 
-	 placeholder="Bekräfta Lösenord"/>
-</form>
-{{{button text="Registrera"}}}
+<form id="register-form" onsubmit="User.validate_register(this)">
+  <div class="input_field">
+    <input id="fullname" class="text_input" type="text" 
+	   placeholder="För- och efternamn" autofocus/>
+    <label>Får inte vara tomt.</label>
+  </div>
 
-<script>
-  $(".text_input").on("change input", function() { $(this).removeClass("text_input_error");});
-</script>
+  <div class="input_field">
+    <input id="username" class="text_input" type="text" 
+	   placeholder="Användarnamn" pattern="[a-zA-Z\d]{6,}"/>
+    <label>Minst 6 tecken. Får endast innehålla a-z, 0-9.</label>
+  </div>
+
+  <div class="input_field">
+    <input id="email" class="text_input" type="email" 
+	   placeholder="Email"/>
+    <label>Inte en godkänd email-adress.</label>
+  </div>
+
+  <div class="input_field">
+    <input id="phone" class="text_input" type="tel"
+	   placeholder="Telefonnummer" pattern="\d{8,}"/>
+    <label>Telefonnummer får endast innehålla siffror, minst 8 tecken.</label>
+  </div>
+
+  <div class="input_field">
+    <input id="password" class="text_input" type="password" 
+	   placeholder="Lösenord" pattern=".{8,}" onchange="User.validate_password_confirm(this)"/>
+    <label>Ditt lösenord är för kort.</label>
+  </div>
+
+  <div class="input_field">
+    <input id="password_confirm" class="text_input" type="password" 
+	   placeholder="Bekräfta Lösenord" onchange="User.validate_password_confirm(this)"/>
+    <label>Dina lösenord matchar inte.</label>
+  </div>  
+
+  {{{button ontouchend="$(this).parent().submit()" text="Registrera"}}}
+</form>

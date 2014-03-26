@@ -16,7 +16,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        //var db = window.openDatabase('test', '1.0', 'Test DB', 1000000);
     },
 
     // Update DOM on a Received Event
@@ -32,7 +31,7 @@ var app = {
     }
 };
 
-    //TODO: Implement general search function 
+//TODO: Implement general search function
 var search = function(thing){
     console.log('in search');
     return false;
@@ -46,4 +45,5 @@ $(document).ready(function(){
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    Database.update();
 });

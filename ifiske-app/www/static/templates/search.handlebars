@@ -1,3 +1,12 @@
-{{>header}}
-Hitta Fiskevatten
-Placeholder
+{{> header }}
+<div class="list">
+    <div class="list-header">
+        Fiskevatten
+    </div>
+    <div class="list-content">
+        {{#list searchresults}}
+        {{name}}
+        <button class="list-icon water_arrow"></button>
+        {{/list}}
+    </div>
+</div>

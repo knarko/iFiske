@@ -5,9 +5,12 @@ var User = Object.freeze({
      * form:    the login form
      */
     login: function(form) {
+	var user = form.username.value.toLowerCase();
+	var password = form.password.value;
+
 	API.login(
-	    form.username.value, 
-	    form.password.value, 
+	    user,
+	    password,
 	    function(xml) {
 		if ($(xml).find('error')[0]) {
 		    form.password.value = '';
@@ -15,8 +18,8 @@ var User = Object.freeze({
 		    return;
 		}
 
-		localStorage.setItem('user', user.toLowerCase());
-		localStorage.setItem('password', password);
+		localStorage.setItem('user', user);
+		localStorage.setItem('password', password);	
 		// Avoid back stack entry
 		Navigate.init();
 	    });
@@ -48,14 +51,7 @@ var User = Object.freeze({
      * Calls API.register(...) on success.
      */
     validate_register: function(form) {
-
-	/*
-	  API.register(username, password, fullname, email, phone,
-	  // Callback
-	  function() {
-	  
-	  });
-	*/
+	console.log("hello");
     }
 
 });

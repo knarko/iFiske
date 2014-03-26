@@ -32,7 +32,7 @@ var app = {
     }
 };
 
-    //TODO: Implement general search function 
+    //TODO: Implement general search function
 var search = function(thing){
     console.log('in search');
     return false;
@@ -46,4 +46,6 @@ $(document).ready(function(){
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    Database.init();
+    Database.testUpdater();
 });

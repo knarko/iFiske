@@ -36,7 +36,6 @@ var User = Object.freeze({
 
 
     validate_password_confirm: function(e) {
-<<<<<<< HEAD
 	var pwc = e.parentNode.password_confirm;
 	
 	if (pwc.value.trim() !== "" &&
@@ -45,15 +44,6 @@ var User = Object.freeze({
 	} else {
 	    pwc.setCustomValidity("");
 	}
-=======
-        var pwc = e.parentNode.parentNode.password_confirm;
-
-        if (pwc.value !== e.parentNode.parentNode.password.value) {
-            pwc.setCustomValidity('Passwords must match!');
-        } else {
-            pwc.setCustomValidity('');
-        }
->>>>>>> master
     },
 
     /** validate_register_form

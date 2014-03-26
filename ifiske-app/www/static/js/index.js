@@ -16,7 +16,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        Database.update();
     },
 
     // Update DOM on a Received Event
@@ -46,4 +45,5 @@ $(document).ready(function(){
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    Database.update();
 });

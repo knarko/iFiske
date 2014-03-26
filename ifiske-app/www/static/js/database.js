@@ -9,19 +9,25 @@ Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
-    update: function(reset, callback) {
+    update: function(callback) {
         callback = callback || function(){};
-        if(reset){
-            this.clean(Database.init);
-        } else {
-            this.init()
-        }
-        API.getAreas(function(data) {
-            Database.updateTable('Regions',data.regions);
-            Database.updateTable('Areas', data.areas);
-            Database.updateTable('Area_keywords', data.area_keywords);
-            Database.updateTable('Products', data.products);
-            callback();
+        API.getUpdates(function(timestamp){
+            if (timestamp != localStorage.getItem('db_updated')) {
+                localStorage.setItem('db_updated', timestamp);
+
+                Database.clean(function() {
+                    Database.init(function() {
+                        API.getAreas(function(data) {
+                            Database.updateTable('Regions',data.regions);
+                            Database.updateTable('Areas',data.areas);
+                            Database.updateTable('Area_keywords', data.area_keywords);
+                            Database.updateTable('Products', data.products);
+                            localStorage.setItem('db_updated');
+                            callback();
+                        });
+                    });
+                });
+            }
         });
     },
 

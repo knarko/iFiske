@@ -15,9 +15,8 @@ var User = Object.freeze({
 		if ($(xml).find('error')[0]) {
 		    form.password.value = '';
 		    $(form).find('#error-span').css('display', 'inline-block');
-		    return false;
+		    return;
 		}
-
 		localStorage.setItem('user', user);
 		localStorage.setItem('password', password);	
 		// Avoid back stack entry

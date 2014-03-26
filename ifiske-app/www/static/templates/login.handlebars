@@ -1,5 +1,5 @@
 {{> header }}
-<form id="login-form" onsubmit="return User.login(this)">
+<form id="login-form" onsubmit="User.login(this); return false;">
   <input id="username" class="text_input" type="text" 
 	 placeholder="Användarnamn"/>
   <input id="password" class="text_input" type="password" 

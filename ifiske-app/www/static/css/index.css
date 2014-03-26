@@ -35,7 +35,7 @@ body {
 }
 
 /* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400pt) {
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {}
 }
 
@@ -69,8 +69,12 @@ body {
 .text_input {
     box-sizing: border-box;
     width: 100%;
-    margin: 0pt auto 10pt auto;
+    margin: 0px auto 10px auto;
     height: 40px;
     padding: 0em 0.5em 0em 0.5em;
     border-width:0px;
+}
+
+.text_input_error {
+    outline: orange dotted 3px;
 }

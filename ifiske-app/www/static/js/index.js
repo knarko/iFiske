@@ -39,7 +39,6 @@ var search = function(thing){
 }
 
 $(document).ready(function(){
-
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
     //Handlebars.registerPartial('footer', $(Handlebars.getTemplate('partials')()).filter('#footer-partial').html().trim());

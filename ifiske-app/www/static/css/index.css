@@ -41,7 +41,6 @@ body {
 
 #footer
 {
-    //height: 5%;
     width: 100%;
     background-color: #99b;
     position: absolute;
@@ -71,6 +70,3 @@ body {
     border-width:0px;
 }
 
-.text_input_error {
-    outline: orange dotted 3px;
-}

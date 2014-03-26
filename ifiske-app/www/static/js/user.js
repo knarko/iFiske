@@ -15,7 +15,7 @@ var User = Object.freeze({
 		if ($(xml).find('error')[0]) {
 		    form.password.value = '';
 		    $(form).find('#error-span').css('display', 'inline-block');
-		    return;
+		    return false;
 		}
 
 		localStorage.setItem('user', user);

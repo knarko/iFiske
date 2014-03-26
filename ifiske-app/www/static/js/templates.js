@@ -24,9 +24,9 @@ Handlebars.registerHelper('list', function(items, options) {
 
 Handlebars.registerHelper('button', function(options){
     var h = options.hash;
-    h.class = "button " + (h.class|| "");
+    h.class = "button " + (h.class || "");
     h.ontouchend = (h.ontouchend || "Navigate.to('" + h.target + "');");
-    h.onclick = h.ontouchend;
+    h.onclick = h.ontouchend;//Only for debugging in a web browser
     delete h.target;
     return $('<div/>', options.hash)[0].outerHTML;
 });

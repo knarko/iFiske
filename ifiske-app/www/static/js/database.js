@@ -8,12 +8,26 @@
 Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
-    testUpdater: function(){
-        API.getAreas(function(data){
-            Database.updateTable('Regions',data.regions);
-            Database.updateTable('Areas', data.areas);
-            Database.updateTable('Area_keywords', data.area_keywords);
-            Database.updateTable('Products', data.products);
+
+    update: function(callback) {
+        callback = callback || function(){};
+        API.getUpdates(function(timestamp){
+            if (timestamp != localStorage.getItem('db_updated')) {
+                localStorage.setItem('db_updated', timestamp);
+
+                Database.clean(function() {
+                    Database.init(function() {
+                        API.getAreas(function(data) {
+                            Database.updateTable('Regions',data.regions);
+                            Database.updateTable('Areas',data.areas);
+                            Database.updateTable('Area_keywords', data.area_keywords);
+                            Database.updateTable('Products', data.products);
+                            localStorage.setItem('db_updated');
+                            callback();
+                        });
+                    });
+                });
+            }
         });
     },
 
@@ -34,21 +48,37 @@ Database = Object.freeze({
         ]
     },
 
-    //Initialies the database
-    //TODO: Use external SQL.schema instead
-    init: function(){
+    clean: function(callback) {
+        callback = callback || function(){};
         var errorCallback = function(err){console.log(err)};
-        var successCallback = function(){console.log("success")};
         this.DB.transaction(
             function(tx) {
             tx.executeSql('DROP TABLE IF EXISTS Regions');
+            tx.executeSql('DROP TABLE IF EXISTS Areas');
+            tx.executeSql('DROP TABLE IF EXISTS Area_keywords');
+            tx.executeSql('DROP TABLE IF EXISTS Products');
+            tx.executeSql('DROP TABLE IF EXISTS Species_areas');
+            tx.executeSql('DROP TABLE IF EXISTS Species');
+            tx.executeSql('DROP TABLE IF EXISTS Organisations');
+        },
+        errorCallback,
+        callback
+        );
+    },
+
+    //Initialies the database
+    //TODO: Use external SQL.schema instead
+    init: function(callback){
+        callback = callback || function(){};
+        var errorCallback = function(err){console.log(err)};
+        Database.DB.transaction(
+            function(tx) {
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Regions (',
                 'id int, name text, long real, lat real, quantity int,',
                 'PRIMARY KEY (id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Areas');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Areas (',
                 'id int, name text, region_id int, org_id int,long real,',
@@ -58,14 +88,12 @@ Database = Object.freeze({
                 'FOREIGN KEY (org_id) REFERENCES Organisations(id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Area_keywords');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Area_keywords (',
                 'area_id int, keyword text,',
                 'FOREIGN KEY (area_id) REFERENCES Areas(id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Products');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Products (',
                 'id int, smsdisplay int, vat int, saleschannel int,',
@@ -77,7 +105,6 @@ Database = Object.freeze({
                 'FOREIGN KEY (rule_id) REFERENCES Rules(id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Species_areas (',
                 'species_id int, area_id int, cmt text, level int,',
@@ -85,14 +112,12 @@ Database = Object.freeze({
                 'FOREIGN KEY (area_id) REFERENCES Areas(id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Species (',
                 'id int, name text, latin text,',
                 'PRIMARY KEY (id))'
             ].join('\n'));
 
-            tx.executeSql('DROP TABLE IF EXISTS Organisations');
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Organisations (',
                 'id int, name text, region region, description text,',
@@ -101,23 +126,24 @@ Database = Object.freeze({
             ].join('\n'));
         },
         errorCallback,
-        successCallback
+        callback
         );
     },
 
     /**
      * updateTable
      * inserts values into a table
-     * table: A string containing the name of the table to update
+     * table: A string containing the name of the table to update, corresponding to a name in tableDefinition
      * dataset: An array of arrays, each containing all the values to insert
      * to a row
-     * callback: function to call when done
+     * callback: callback function
      *
      * TODO: Create better link between the parsing and this function,
      * they are highly dependant on each other.
      * TODO: Actually use the callback
      **/
     updateTable: function(table, dataset, callback){
+        callback = callback || function(){};
         var query = 'INSERT INTO ';
         var errorCallback = function(err){console.log(err)};
         var successCallback = function(){console.log("success")};
@@ -132,14 +158,18 @@ Database = Object.freeze({
                 tx.executeSql(query, dataset[i]);
             }
         }, errorCallback, successCallback);
-        if (callback)
-            callback();
+        callback();
     },
 
     search: function(searchstring, callback) {
+        callback = callback || function(){};
         var errorCallback = function(err){console.log(err)};
         var querySuccess = function(tx, results){
-            callback(results);
+            var resultsArray = []
+            for(var i = 0; i < results.rows.length; ++i){
+                resultsArray.push(results.rows.item(i));
+            }
+            callback(resultsArray);
         };
         var successCallback = function(){
             console.log('success');
@@ -157,7 +187,7 @@ Database = Object.freeze({
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
         },errorCallback, successCallback);
-
     }
+
 });
 

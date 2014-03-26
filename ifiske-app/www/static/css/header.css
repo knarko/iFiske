@@ -1,7 +1,7 @@
 #header > div {
     height:40px;
 }
- 
+
 #header #logo {
     height:40px;
     width:100px;
@@ -13,7 +13,7 @@
     overflow:hidden;
 }
 
-#header #search {
+#header #searchfield {
     height:100%;
     width:100%;
     color: #FFFFFF;
@@ -37,6 +37,11 @@
     border-width:0px 3px 0px 3px;
     position: relative;
     margin-top: -10px;
+}
+
+#search-div ::-webkit-input-placeholder {
+    color: #DDDDDD;
+    font-style: italic;
 }
 
 #header hr {

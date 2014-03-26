@@ -53,7 +53,16 @@ var API = Object.freeze( {
         }
         API.request({action: "get_areas"}, requestCallback);
     },
-    
+
+    getUpdates: function(callback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_db_lastmod"}, requestCallback);
+    },
+
     xmlparser: function(xmldata) {
         //TODO: Use Database.tableDefinition
         var
@@ -63,7 +72,7 @@ var API = Object.freeze( {
         area_keywords = [],
         products      = [];
 
-        if($(xmldata).find('user_areas')){
+        if ($(xmldata).find('user_areas').length != 0) {
 
             $.each(
                 $(xmldata).find('user_areas').children(),
@@ -123,6 +132,8 @@ var API = Object.freeze( {
                 }
             );
             return {regions: regions, areas: areas, area_keywords: area_keywords, products: products};
+        } else if($(xmldata).find('last_modification').length != 0){
+            return parseInt($(xmldata).find('last_modification').attr('timestamp'));
         } else {
             return false;
         }
@@ -152,7 +163,7 @@ var API = Object.freeze( {
 		password: password,
 		fullname: fullname,
 		email: email,
-		phone: phone 
+		phone: phone
 	    },
             callback
 	);

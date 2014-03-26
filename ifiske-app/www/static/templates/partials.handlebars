@@ -2,7 +2,10 @@
   <div id="header">
     <img id="logo" src="static/img/logo-xs.png"/>
     <div id="search-div">
-      <input id="search" type="search" placeholder="Snabbsök"/>
+      <form onsubmit="Search.go($('#searchfield').val());return false;">
+	<input id="searchfield" type="search" placeholder="Snabbsök"/>
+	<button type="submit" style="visibility: hidden"/>
+      </form>
       <div id="search-bottom-bar"></div>
     </div>
     <hr/>

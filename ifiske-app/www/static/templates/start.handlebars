@@ -1,6 +1,6 @@
 {{> header}}
 <div id="menu">
-  {{{button id="search" target="search" text="Hitta Fiskevatten" id="find_fish"}}}
+  {{{button text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()"}}}
   {{#if user}}
   <div id="logged-in">
     {{{button id="my_cards" target="my_cards" text="Mina Fiskekort"}}}

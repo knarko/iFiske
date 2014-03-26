@@ -1,91 +1,41 @@
-.column-row {
+.list {
     width: 100%;
-    display: inline-block;
-    background-color: black;
     color: white;
-    padding: 10px 0;
-}
-
-.column-div {
-    vertical-align: middle;
-    width: 49%;
-    float: left;
+    margin-top: 10px;
+    font-size: 120%;
     text-align: left;
 }
-
-.first-column {
-    padding-left: 2%;
-}
-
-.column-row {
-    width: 100%;
+.list-header > *{
     display: inline-block;
-    background-color: black;
-    color: white;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    margin-top: 10px;
-    margin-bottom: 0;
-    padding: 10px 0;
-    line-height: 1;
-    font-size: 120%;
 }
-.list-wrapper {
+.list-content {
     font-size: 120%;
     line-height: 1;
     height: calc(100% - 110px);
     overflow: auto;
 }
 
-.list-wrapper li {
-    float: left;
+.list-content li {
     width: 96%;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #CCCCCC;
-    font-size: 120%;
-    line-height: 100%;
+    background-color: #006993;
+    font-size: 1.2em;
     padding: 10px 2%;
     margin-bottom: 3px;
-
 }
 
-
-.list-wrapper ul {
+.list-content ul {
     margin-top: 0;
     list-style: none;
     text-align: left;
     padding-left: 0;
 }
 
-
-.list-div {
-    float: left;
-    width: 49%;
-    vertical-align: middle;
-}
-
-
-
-.sort_asc {
+.list-icon {
     padding-left: 10px;
     vertical-align: middle;
     border: none;
     height: auto;
     width: auto;
-    background-image: url("../img/icon_arrow_sort_up.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: transparent;
-}
-
-.sort_desc {
-    padding-left: 10px;
-    vertical-align: middle;
-    border: none;
-    height: auto;
-    width: auto;
-    background-image: url("../img/icon_arrow_sort_down.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -93,14 +43,8 @@
     padding: 0;
 }
 
-#water_arrow {
-    vertical-align: middle;
-    border: none;
+.water_arrow {
     background-image: url("../img/icon_arrow_right.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: transparent;
     height: 30px;
     width: 30px;
     float: right;

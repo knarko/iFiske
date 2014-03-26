@@ -1,15 +1,20 @@
 {{> header }}
 <div class="column-row">
-	<div class="column-div first-column">Fiskevatten
-	<button class="sort_desc" id="sort_waters"></button></div>
-	
-	<div class="column-div">Län
-	<button class="sort_desc" id="sort_region"></button></div> 
-</div>
+    <div class="column-div first-column">
+        Fiskevatten
+        <button class="sort_desc" id="sort_waters"/>
+    </div>
 
-{{#list waters }} 
-	<div class="list-div first-column">{{name}}</div>
-	<div class="list-div">{{region}}
-		<button id="water_arrow"></button>
-	</div>
-{{/list}}
+    <div class="column-div">
+        Län
+        <button class="sort_desc" id="sort_region"/>
+    </div>
+</div>
+<div class="list-wrapper">
+    {{#list searchresults}}
+    <div class="list-div first-column">{{name}}</div>
+    <div class="list-div">{{region}}
+        <button id="water_arrow"></button>
+    </div>
+    {{/list}}
+</div>

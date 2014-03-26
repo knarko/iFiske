@@ -39,6 +39,12 @@ body {
     .app {}
 }
 
+#content {
+    height: 100%;
+    overflow: hidden;
+}
+
+
 #footer
 {
     //height: 5%;

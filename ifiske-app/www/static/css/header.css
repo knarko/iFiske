@@ -1,7 +1,7 @@
 #header > div {
     height:40px;
 }
- 
+
 #header #logo {
     height:40px;
     width:100px;
@@ -13,7 +13,7 @@
     overflow:hidden;
 }
 
-#header #search {
+#header #searchfield {
     height:100%;
     width:100%;
     color: #FFFFFF;

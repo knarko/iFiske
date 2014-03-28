@@ -1,0 +1,34 @@
+#register-form {
+}
+
+#register-form .input_field {
+    position: relative;
+    display: inline-block;
+    width:100%;
+}
+
+#register-form .text_input {
+    margin: 15px 0px 3px 0px;
+}
+
+#register-form .button {
+    margin-top: 15px;
+}
+
+#register-form label {
+    font-size: 12px;
+    position: absolute;
+    font-weight: bold;
+    left: 0;
+    top: 0;
+    transition: all .2s linear;
+    color: #006993;
+}
+
+#register-form input:invalid + label {
+    opacity:1;
+}
+
+#register-form input:valid + label {
+    opacity:0;
+}

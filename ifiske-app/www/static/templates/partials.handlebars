@@ -1,7 +1,23 @@
 <script id="header-partial" type="text/x-handlebars-template">
   <div id="header">
-    <img src="static/img/logo-xs.png"/><div><input type="search" placeholder="Sök fiskevatten"/></div>
-    <button id="info" onclick="infoClick()" value="hidden"></button>
+    <img id="logo" src="static/img/logo-xs.png"/>
+    <div id="search-div">
+      <form onsubmit="Search.go($('#searchfield').val());return false;">
+      <input id="searchfield" type="search" spellcheck="false" placeholder="Snabbsök"/>
+      <button type="submit" style="visibility: hidden"/>
+      </form>
+      <div id="search-bottom-bar"></div>
+    </div>
+    <hr/>
   </div>
 </script>
 
+<script id="footer-partial" type="text/x-handlebars-template">
+    <div id="footer">
+        {{#if user}}
+            user is: {{user}}
+        {{else}}
+            user is not logged in
+        {{/if}}
+    </div>
+</script>

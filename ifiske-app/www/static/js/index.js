@@ -16,7 +16,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        //var db = window.openDatabase('test', '1.0', 'Test DB', 1000000);
     },
 
     // Update DOM on a Received Event
@@ -31,16 +30,14 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-var search = function(thing){
-    console.log('in search');
-    return false;
-}
 
 $(document).ready(function(){
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
+    //Handlebars.registerPartial('footer', $(Handlebars.getTemplate('partials')()).filter('#footer-partial').html().trim());
     Navigate.init();
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    Database.update();
 });

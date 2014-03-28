@@ -1,0 +1,9 @@
+#error-span {
+    display: none;
+    background-color:#006993;
+    color: orange;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 5px 30px 5px 30px;
+    margin-bottom: 10px;
+}

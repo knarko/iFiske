@@ -24,14 +24,13 @@ var Navigate = Object.freeze({
         history.pushState({path: target, context: context}, null, '#'+target);
 
         //template = Handlebars.getTemplate(target);
-        
+
         // TODO: Testar en alternativ lösning i index.js som körs via en onclick
-        if (target == "search")
+        /*if (target == "search")
         {
+            var sqlresults = {};
             //$("#id").val()
             Database.search("", function(result) {
-
-                var sqlresults = {};
 
                 var resArray = new Array;
                 var dict = {};
@@ -45,18 +44,16 @@ var Navigate = Object.freeze({
                     resArray[hax] = dict;
                 }
                 sqlresults['search'] = resArray;
-
-                $.extend({}, sqlresults, context || {});
-                Navigate.navigate(target, sqlresults);
             });
-            //fo (int i = 0; i < sqlresults.rows.length; i++) {
-            //    console.log(sqlresults.rows.item(i));
-            //}
+
+            this.navigate(target, $.extend({}, sqlresults, context || {}));
 		}
         else
         {
             this.navigate(target, context);
-        }
+        }*/
+        this.navigate(target, context);
+        return false;
     },
     /** back
      * Navigates to previous history entry

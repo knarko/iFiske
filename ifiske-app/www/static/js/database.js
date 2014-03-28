@@ -91,12 +91,16 @@ Database = Object.freeze({
             tx.executeSql([
                 'SELECT * ',
                 'FROM Areas ',
-                'WHERE name LIKE ?',
+                'WHERE Areas.name LIKE ?',
                 'UNION',
-                'SELECT DISTINCT Areas.*',
-                'FROM Area_keywords',
+                'SELECT DISTINCT Areas.* ',
+                'FROM Area_keywords ',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
+                'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
+                'UNION',
+                'SELECT * ',
+                'FROM Regions, Areas ',
+                'WHERE Regions.id = Areas.region_id'].join('\n'),
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
         },errorCallback, successCallback);

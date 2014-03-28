@@ -30,7 +30,8 @@ var app = {
         console.log('Received Event: ' + id);
     },
 
-    search : function(query) {
+    search: function(query)
+    {
         if (query === undefined)
         {
             query = "";
@@ -39,6 +40,7 @@ var app = {
         {
             query = $("input#search").val();
         }
+
         var target = "search";
         Database.search(query, function(result) {
             var sqlresults = {};
@@ -49,28 +51,30 @@ var app = {
             {
                 dict = {};
                 dict['name'] = result.rows.item(indicies).name;
-                dict['region'] = result.rows.item(indicies).region_id;
+                //dict['region'] = result.rows.item(indicies);
+                dict['region'] = "placeholder";
 
                 resArray[indicies] = dict;
             }
             sqlresults['search'] = resArray;
             Navigate.navigate(target, sqlresults);
         });
+    },
+    
+    searchsubmission: function(e)
+    {
+        $('input#search').on('keyup', function(e) {
+            if (e.which == 13 && e.keyCode == 13) {
+                e.preventDefault();
+                console.log("enter pressed, search submission");
+                var query = $("input#search").val();
+                app.search(query);
+                return false;
+            }
+        });
     }
 };
 
-var searchsubmission = function(e)
-{
-    $('input#search').on('keyup', function(e) {
-        if (e.which == 13 && e.keyCode == 13) {
-            e.preventDefault();
-            console.log("enter pressed, search submission");
-            var query = $("input#search").val();
-            app.search(query);
-            return false;
-        }
-    });
-};
 
 $(document).ready(function(){
     //TODO: Move all partials to js/templates

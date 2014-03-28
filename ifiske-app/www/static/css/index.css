@@ -71,7 +71,7 @@ body {
     border-width:0px;
 }
 
-#error-span {
+.error-span {
     display: none;
     clear: left;
     background-color:#006993;

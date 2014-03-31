@@ -2,7 +2,7 @@
   <div id="header">
     <img id="logo" src="static/img/logo-xs.png"/>
     <div id="search-div">
-      <input id="search" type="search" spellcheck="false" placeholder="Snabbsök"/>
+      <input id="search" type="search" spellcheck="false" placeholder="Snabbsök" onkeypress="return app.searchsubmission(event)" />
       <div id="search-bottom-bar"></div>
     </div>
     <hr/>

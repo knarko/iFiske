@@ -28,47 +28,57 @@ var app = {
         //receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    search: function(query)
+    {
+        if (query === undefined)
+        {
+            query = "";
+        }
+        else
+        {
+            query = $("input#search").val();
+        }
+
+        Database.search(query, function(result) {
+
+            var sqlresults = {};
+            var resArray = new Array;
+            var dict = {};
+
+            // Builds a structure like { search : [ { name : "asdf", region : "asdf"} ] useful for melding with context
+
+            for (var indicies = 0; indicies != result.rows.length; indicies++)
+            {
+                dict = {};
+                dict['name'] = result.rows.item(indicies).name;
+                dict['region'] = result.rows.item(indicies).region;
+
+                resArray[indicies] = dict;
+            }
+            sqlresults['search'] = resArray;
+
+            $.extend({}, sqlresults, context || {});
+            Navigate.navigate(target, sqlresults);
+        });
+
+        return false;
+    },
+
+    searchsubmission: function(e)
+    {
+        $('input#search').on('keyup', function(e) {
+            if (e.which == 13 && e.keyCode == 13) {
+                e.preventDefault();
+                console.log("enter pressed, search submission");
+                var query = $("input#search").val();
+                app.search(query);
+                return false;
+            }
+        });
     }
 };
-
-var search = function(query){
-    if (query === undefined)
-    {
-        query = "";
-    }
-    else
-    {
-        query = $("input#search").val();
-    }
-
-    console.log('in search');
-
-    //template = Handlebars.getTemplate(target);
-
-    //$("#id").val()
-    Database.search(query, function(result) {
-
-        var sqlresults = {};
-        var resArray = new Array;
-        var dict = {};
-
-        // Builds a structure like { search : [ { name : "asdf", region : "asdf"} ] useful for melding with context
-        for (var indicies = 0; indicies != result.rows.length; indicies++)
-        {
-            dict = {};
-            dict['name'] = result.rows.item(indicies).name;
-            dict['region'] = result.rows.item(indicies).region;
-
-            resArray[indicies] = dict;
-        }
-        sqlresults['search'] = resArray;
-
-        $.extend({}, sqlresults, context || {});
-        Navigate.navigate(target, sqlresults);
-    });
-
-    return false;
-}
 
 $(document).ready(function(){
 

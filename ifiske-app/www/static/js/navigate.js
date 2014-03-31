@@ -24,6 +24,7 @@ var Navigate = Object.freeze({
         history.pushState({path: target, context: context}, null, '#'+target);
 
         this.navigate(target, context);
+        return false;
     },
     /** back
      * Navigates to previous history entry

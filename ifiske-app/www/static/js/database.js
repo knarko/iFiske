@@ -56,7 +56,7 @@ Database = Object.freeze({
         var query = '';
         var errorCallback = function(err){console.log(err)};
         var successCallback = function(){console.log("success")};
-        switch(table){
+        switch(table) {
             case 'Areas':
                 query = 'INSERT INTO Areas (id, name, region_id, org_id, long, lat) VALUES (?,?,?,?,?,?);';
             break;
@@ -91,13 +91,18 @@ Database = Object.freeze({
             tx.executeSql([
                 'SELECT * ',
                 'FROM Areas ',
-                'WHERE name LIKE ?',
+                'WHERE Areas.name LIKE ?',
                 'UNION',
-                'SELECT DISTINCT Areas.*',
-                'FROM Area_keywords',
+                'SELECT DISTINCT Areas.* ',
+                'FROM Area_keywords ',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
-                ['%' + searchstring + '%', '%' + searchstring + '%'],
+                'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
+                'UNION',
+                'SELECT Areas.* ',
+                'FROM Regions ',
+                'INNER JOIN Areas ON Areas.region_id = Regions.id ',
+                'WHERE Areas.region_id = Regions.id AND Regions.name = ?'].join('\n'),
+                ['%' + searchstring + '%', '%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
         },errorCallback, successCallback);
 

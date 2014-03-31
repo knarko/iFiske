@@ -16,7 +16,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        //var db = window.openDatabase('test', '1.0', 'Test DB', 1000000);
     },
 
     // Update DOM on a Received Event
@@ -32,7 +31,6 @@ var app = {
     }
 };
 
-    //TODO: Implement general search function 
 var search = function(query){
     if (query === undefined)
     {
@@ -55,7 +53,6 @@ var search = function(query){
         var dict = {};
 
         // Builds a structure like { search : [ { name : "asdf", region : "asdf"} ] useful for melding with context
-
         for (var indicies = 0; indicies != result.rows.length; indicies++)
         {
             dict = {};
@@ -69,11 +66,8 @@ var search = function(query){
         $.extend({}, sqlresults, context || {});
         Navigate.navigate(target, sqlresults);
     });
-    //fo (int i = 0; i < sqlresults.rows.length; i++) {
-    //    console.log(sqlresults.rows.item(i));
-    //}
 
-    //return false;
+    return false;
 }
 
 $(document).ready(function(){

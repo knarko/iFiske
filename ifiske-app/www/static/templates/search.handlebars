@@ -7,14 +7,14 @@
 	<button class="sort_desc" id="sort_region"></button></div> 
 </div>
 
+{{#if search }}
 <div class="vertscroll">
-{{ #if search }}
-{{ #list search }} 
+{{#list search }} 
     <div class="list-div first-column">
         <div id="name">{{ name }}</div>
         <div id="region">{{ region }}</div>
         <button id="water_arrow"></button>
     </div>
-{{ /list }}
-{{ /if }}
+{{/list }}
 </div>
+{{/if }}

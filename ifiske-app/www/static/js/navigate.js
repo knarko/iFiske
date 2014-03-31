@@ -23,40 +23,7 @@ var Navigate = Object.freeze({
     to: function(target, context) {
         history.pushState({path: target, context: context}, null, '#'+target);
 
-        //template = Handlebars.getTemplate(target);
-        
-        // TODO: Testar en alternativ lösning i index.js som körs via en onclick
-        if (target == "search")
-        {
-            //$("#id").val()
-            Database.search("", function(result) {
-
-                var sqlresults = {};
-
-                var resArray = new Array;
-                var dict = {};
-
-                // Builds a structure like { search : [ { name : "asdf", region : "asdf"} ] useful for melding with context
-
-                for (var hax = 0; hax != result.rows.length; hax++)
-                {
-                    dict = {};
-                    dict['name'] = result.rows.item(hax).name;
-                    resArray[hax] = dict;
-                }
-                sqlresults['search'] = resArray;
-
-                $.extend({}, sqlresults, context || {});
-                Navigate.navigate(target, sqlresults);
-            });
-            //fo (int i = 0; i < sqlresults.rows.length; i++) {
-            //    console.log(sqlresults.rows.item(i));
-            //}
-		}
-        else
-        {
-            this.navigate(target, context);
-        }
+        this.navigate(target, context);
     },
     /** back
      * Navigates to previous history entry

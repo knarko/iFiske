@@ -2,7 +2,6 @@
  * Database
  * An object that contains the database functions
  *
- * TODO: Look into using callbacks
  * TODO: Maybe move some functions around to other objects?
  **/
 Database = Object.freeze({
@@ -22,7 +21,6 @@ Database = Object.freeze({
                             Database.updateTable('Areas',data.areas);
                             Database.updateTable('Area_keywords', data.area_keywords);
                             Database.updateTable('Products', data.products);
-                            localStorage.setItem('db_updated');
                             callback();
                         });
                     });
@@ -67,7 +65,6 @@ Database = Object.freeze({
     },
 
     //Initialies the database
-    //TODO: Use external SQL.schema instead
     init: function(callback){
         callback = callback || function(){};
         var errorCallback = function(err){console.log(err)};
@@ -140,13 +137,12 @@ Database = Object.freeze({
      *
      * TODO: Create better link between the parsing and this function,
      * they are highly dependant on each other.
-     * TODO: Actually use the callback
      **/
     updateTable: function(table, dataset, callback){
         callback = callback || function(){};
         var query = 'INSERT INTO ';
         var errorCallback = function(err){console.log(err)};
-        var successCallback = function(){console.log("success")};
+        var successCallback = function(){callback();};
         if (this.tableDefinition[table]) {
             query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
             + Array(this.tableDefinition[table].length).join(',?') + ');';
@@ -158,7 +154,6 @@ Database = Object.freeze({
                 tx.executeSql(query, dataset[i]);
             }
         }, errorCallback, successCallback);
-        callback();
     },
 
     search: function(searchstring, callback) {

@@ -1,40 +1,42 @@
 {{> header }}
-<form id="register-form" onsubmit="User.validate_register(this)">
-  <div class="input_field">
+<form id="register-form" onsubmit="User.validate_register(this); return false;">
+
     <input id="fullname" class="text_input" type="text" 
-	   placeholder="För- och efternamn" autofocus/>
-    <label>Får inte vara tomt.</label>
-  </div>
+	   placeholder="För- och efternamn" autofocus pattern="\s*\S.{3,}\S\s*"/>
+    <label>Namn måste vara minst 5 tecken.</label>
 
-  <div class="input_field">
+
+
     <input id="username" class="text_input" type="text" 
-	   placeholder="Användarnamn" pattern="[a-zA-Z\d]{6,}"/>
-    <label>Minst 6 tecken. Får endast innehålla a-z, 0-9.</label>
-  </div>
+	   placeholder="Användarnamn" pattern="\s*[a-zA-Z\d]{6,}\s*"/>
+    <label>Användarnamn måste vara minst 6 tecken (a-z0-9).</label>
 
-  <div class="input_field">
-    <input id="email" class="text_input" type="email" 
-	   placeholder="Email"/>
+
+
+    <input id="email" class="text_input" type="text" 
+	   placeholder="Email" pattern="\s*[a-zA-Z0-9._-]+(\+[a-zA-Z0-9._-]+)*@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}\s*"/>
     <label>Inte en godkänd email-adress.</label>
-  </div>
 
-  <div class="input_field">
+
+
     <input id="phone" class="text_input" type="tel"
-	   placeholder="Telefonnummer" pattern="\d{8,}"/>
+	   placeholder="Telefonnummer" pattern="\s*\d{8,}\s*"/>
     <label>Telefonnummer får endast innehålla siffror, minst 8 tecken.</label>
-  </div>
 
-  <div class="input_field">
+
+
     <input id="password" class="text_input" type="password" 
-	   placeholder="Lösenord" pattern=".{8,}" onchange="User.validate_password_confirm(this)"/>
+	   placeholder="Lösenord" pattern="\s*\S.{6,}\S\s*" oninput="User.validate_password_confirm(this)"/>
     <label>Ditt lösenord är för kort.</label>
-  </div>
 
-  <div class="input_field">
+
+
     <input id="password_confirm" class="text_input" type="password" 
-	   placeholder="Bekräfta Lösenord" onchange="User.validate_password_confirm(this)"/>
+	   placeholder="Bekräfta Lösenord" oninput="User.validate_password_confirm(this)"/>
     <label>Dina lösenord matchar inte.</label>
-  </div>  
 
+  <span class="error-span">Ett konto med angivet användarnamn eller lösenord finns redan.</span>
   {{{button ontouchend="$(this).parent().submit()" text="Registrera"}}}
 </form>
+
+{{{button target="register_confirm" text="Bekräfta SMS-kod"}}}

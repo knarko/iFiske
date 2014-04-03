@@ -3,10 +3,11 @@
     <img id="logo" src="static/img/logo-xs.png"/>
     <div id="search-div">
       <form onsubmit="Search.go($('#searchfield').val());return false;">
-      <input id="searchfield" type="search" spellcheck="false" placeholder="Snabbsök"/>
-      <button type="submit" style="visibility: hidden"/>
+	<input id="searchfield" type="search" placeholder="Snabbsök"/>
+	<div id="search-bottom-bar"></div>
+      
+	<button type="submit" style="visibility: hidden"/>
       </form>
-      <div id="search-bottom-bar"></div>
     </div>
     <hr/>
   </div>

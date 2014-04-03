@@ -19,10 +19,10 @@
     color: #FFFFFF;
     font-weight: bold;
     font-size: 1.5em;
-    background-color: #5AAAC9;
+    background-color: transparent;
     border:0px solid #006993;
     border-bottom-width: 3px;
-    padding: 13px 10px 0px 10px;
+    //padding: 13px 10px 0px 10px;
     outline: 0;
 }
 

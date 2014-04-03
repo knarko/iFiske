@@ -22,7 +22,6 @@ Database = Object.freeze({
                             Database.updateTable('Areas',data.areas);
                             Database.updateTable('Area_keywords', data.area_keywords);
                             Database.updateTable('Products', data.products);
-                            localStorage.setItem('db_updated');
                             callback();
                         });
                     });
@@ -146,7 +145,7 @@ Database = Object.freeze({
         callback = callback || function(){};
         var query = 'INSERT INTO ';
         var errorCallback = function(err){console.log(err)};
-        var successCallback = function(){console.log("success")};
+        var successCallback = function(){callback();};
         if (this.tableDefinition[table]) {
             query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
             + Array(this.tableDefinition[table].length).join(',?') + ');';
@@ -158,7 +157,6 @@ Database = Object.freeze({
                 tx.executeSql(query, dataset[i]);
             }
         }, errorCallback, successCallback);
-        callback();
     },
 
     search: function(searchstring, callback) {

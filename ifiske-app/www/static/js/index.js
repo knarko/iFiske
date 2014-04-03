@@ -34,7 +34,6 @@ var app = {
 $(document).ready(function(){
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
-    //TODO: Pass context to footer partial possible?
     //Handlebars.registerPartial('footer', $(Handlebars.getTemplate('partials')()).filter('#footer-partial').html().trim());
     Navigate.init();
     window.addEventListener('popstate', function(e){

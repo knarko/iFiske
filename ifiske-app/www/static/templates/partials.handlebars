@@ -2,8 +2,12 @@
   <div id="header">
     <img id="logo" src="static/img/logo-xs.png"/>
     <div id="search-div">
-      <input id="search" type="search" spellcheck="false" placeholder="Snabbsök" onkeypress="return app.searchsubmission(event)" />
-      <div id="search-bottom-bar"></div>
+      <form onsubmit="Search.go($('#searchfield').val());return false;">
+	<input id="searchfield" type="search" placeholder="Snabbsök"/>
+	<div id="search-bottom-bar"></div>
+      
+	<button type="submit" style="visibility: hidden"/>
+      </form>
     </div>
     <hr/>
   </div>

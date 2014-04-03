@@ -1,14 +1,42 @@
 {{> header }}
-<form id="register-form">
-  <input id="name" class="text_input" type="text" 
-	 placeholder="Namn"/>
-  <input id="username" class="text_input" type="text" 
-	 placeholder="Användarnamn"/>
-  <input id="email" class="text_input" type="email" 
-	 placeholder="Email"/>
-  <input id="password" class="text_input" type="password" 
-	 placeholder="Lösenord"/>
-  <input id="password_confirm" class="text_input" type="password" 
-	 placeholder="Bekräfta Lösenord"/>
+<form id="register-form" onsubmit="User.validate_register(this); return false;">
+
+    <input id="fullname" class="text_input" type="text" 
+	   placeholder="För- och efternamn" autofocus pattern="\s*\S.{3,}\S\s*"/>
+    <label>Namn måste vara minst 5 tecken.</label>
+
+
+
+    <input id="username" class="text_input" type="text" 
+	   placeholder="Användarnamn" pattern="\s*[a-zA-Z\d]{6,}\s*"/>
+    <label>Användarnamn måste vara minst 6 tecken (a-z0-9).</label>
+
+
+
+    <input id="email" class="text_input" type="text" 
+	   placeholder="Email" pattern="\s*[a-zA-Z0-9._-]+(\+[a-zA-Z0-9._-]+)*@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}\s*"/>
+    <label>Inte en godkänd email-adress.</label>
+
+
+
+    <input id="phone" class="text_input" type="tel"
+	   placeholder="Telefonnummer" pattern="\s*\d{8,}\s*"/>
+    <label>Telefonnummer får endast innehålla siffror, minst 8 tecken.</label>
+
+
+
+    <input id="password" class="text_input" type="password" 
+	   placeholder="Lösenord" pattern="\s*\S.{6,}\S\s*" oninput="User.validate_password_confirm(this)"/>
+    <label>Ditt lösenord är för kort.</label>
+
+
+
+    <input id="password_confirm" class="text_input" type="password" 
+	   placeholder="Bekräfta Lösenord" oninput="User.validate_password_confirm(this)"/>
+    <label>Dina lösenord matchar inte.</label>
+
+  <span class="error-span">Ett konto med angivet användarnamn eller lösenord finns redan.</span>
+  {{{button ontouchend="$(this).parent().submit()" text="Registrera"}}}
 </form>
-{{{button text="Registrera"}}}
+
+{{{button target="register_confirm" text="Bekräfta SMS-kod"}}}

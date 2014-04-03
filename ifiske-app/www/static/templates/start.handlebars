@@ -1,11 +1,12 @@
 {{> header}}
 <div id="menu">
-  {{{button id="search" ontouchend="app.search()" text="Hitta Fiskevatten" id="find_fish"}}}
+    <!--{{{button id="search" ontouchend="app.search()" text="Hitta Fiskevatten" id="find_fish"}}}-->
+  {{{button text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()"}}}
   {{#if user}}
   <div id="logged-in">
     {{{button id="my_cards" target="my_cards" text="Mina Fiskekort"}}}
     {{{button id="register_catch" target="register_catch" text="Registrera Fångst"}}}
-    {{{button id="logout" ontouchend="USER.logout()" text="Logga ut"}}}
+    {{{button id="logout" ontouchend="User.logout()" text="Logga ut"}}}
   </div>
   {{else}}
   <div class="not-logged-in">

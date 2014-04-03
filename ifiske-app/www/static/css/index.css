@@ -25,23 +25,29 @@ body {
 
 /* Portrait layout (default) */
 .app {
-    height:100%;                   /* text area height */
-    width:100%;                   /* text area width */
+    background-image: url(../img/wow.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    
+    height:auto;
+    min-height:100%;
+    width:100%;
     text-align:center;
     padding:15px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #5AAAC9;
+    //background-color: #5AAAC9;
 }
 
+
 /* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400pt) {
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {}
 }
 
 #footer
 {
-    //height: 5%;
     width: 100%;
     background-color: #99b;
     position: absolute;
@@ -51,9 +57,10 @@ body {
 }
 
 .button {
-//006993 - 5AAAC9;
+    clear:left;
+    //006993 - 5AAAC9;
     background-color:#006993;
-    margin-bottom: 10px;
+    margin-top: 10px;
     font-size: 25px;
     font-weight: bold;
     padding: 15px;
@@ -63,8 +70,18 @@ body {
 .text_input {
     box-sizing: border-box;
     width: 100%;
-    margin: 0pt auto 10pt auto;
+    margin: 5px auto 0px auto;
     height: 40px;
     padding: 0em 0.5em 0em 0.5em;
     border-width:0px;
+}
+
+.error-span {
+    display: none;
+    clear: left;
+    background-color:#006993;
+    color: orange;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 5px 30px 5px 30px;
 }

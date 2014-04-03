@@ -1,90 +1,100 @@
-var USER = Object.freeze({
-    /**
-     * login
-     * Sends login API request
-     * user:      username (API uid)
-     * password:  password (API pw)
-     */
-    login: function(user, password) {
-        API.request(
-            {
-            action: 'login',
-            uid: user,
-            pw: password
-        },
-        function(e) {
-            // Locate XML error object
-            err = $(e).find('error')[0];
+var User = Object.freeze({
 
-            if (err == null) {
-                localStorage.setItem('user', user.toLowerCase());
+    /** login
+     * Attempts to log in the user. Displays error message on failure.
+     * form:    the login form
+     */
+    login: function(form) {
+        var user = form.username.value.toLowerCase();
+        var password = form.password.value;
+
+        API.login(
+            user,
+            password,
+            function(xml) {
+                if ($(xml).find('error')[0]) {
+                    form.password.value = '';
+                    $(form).find('.error-span').css('display', 'block');
+                    return;
+                }
+                localStorage.setItem('user', user);
                 localStorage.setItem('password', password);
-                // Avoids back stack entry
+                // Avoid back stack entry
                 Navigate.init();
-            } else {
-                // Handle failed login
-                console.log('Login error code: ' + err.getAttribute('id'));
-            }
-        }
-        );
+            });
     },
 
+    /** logout
+     * Clears local authentication data.
+     */
     logout: function() {
         localStorage.removeItem('user');
         localStorage.removeItem('password');
+        // Avoid back stack entry
         Navigate.init();
     },
 
-    /** register
-     * Sends a registration API request. 
-     * username: 
-     * password: 
-     * fullname: 
-     * email: 
-     * phone: 
-     */
-    register: function(username, password, fullname, email, phone) {	
-	username = username.trim();
-	password = password.trim();
-	fullname = fullname.trim();
-	email = email.trim();
-	phone = phone.trim();
 
-	var invalid = false;
-
-	if ((/^[a-z\d]{6,}$/i).test(username)) {
-	    // Handle error
-	    console.log("invalid username");
-	    invalid = true;
-	}
-	if ((/^.{8,}$/).test(password)) {
-	    // Handle error
-	    console.log("invalid password");
-	    invalid = true; 
-	}
-	if ((/^\d{8,}$/).test(phone)) {
-	    // Handle error
-	    console.log("invalid phone number");
-	    invalid = true;
-	}
+    validate_password_confirm: function(e) {
+	var pwc = e.parentNode.password_confirm;
 	
-	if (invalid) 
-	    break;
-		
-	/*
-	  API.request(
-	    {
-		action: 'user_register',
-		username: username,
-		password: password,
-		fullname: fullname,
-		email: email,
-		phone: phone 
-	    },
-	    function(e) {
-		console.log(e);
-            }
-        );
-	*/
+	if (pwc.value.trim() !== "" &&
+	    pwc.value.trim() !== e.parentNode.password.value.trim()) {
+	    pwc.setCustomValidity("Passwords must match!");
+	} else {
+	    pwc.setCustomValidity("");
+	}
+    },
+
+    /** validate_register_form
+     * Invalidates the registration form. Displays potential errors.
+     * Calls API.register(...) on success.
+     */
+    validate_register: function(form) {
+	var username = form.username.value.trim();
+	var password = form.password.value.trim();
+	var fullname = form.fullname.value.trim();
+	var email = form.email.value.trim();
+	var phone = form.phone.value.trim();
+
+	API.register(
+	    username,
+	    password,
+	    fullname,
+	    email,
+	    phone,
+	    function(xml) {
+		$.each(
+		    $(xml).find('user'), 
+		    function() {
+			switch($(this).attr('result')) {
+			case '1':
+			    console.log("Username already exists");
+			    $(form).find('.error-span').css('display', 'block');
+			    break;
+			case '2':
+			    console.log("Invalid username");
+			    break;
+			case '3':
+			    console.log("Invalid name, username or password");
+			    break;
+			case '4':
+			    console.log("Invalid email");
+			    break;
+			case '5':
+			    console.log("Invalid password");
+			    break;
+			case '6': 
+			    console.log("Invalid phone number");
+			    break;
+			default:
+			    console.log("Unknown error encountered");
+			}
+		    }
+		);
+	    }
+
+	);
     }
+
 });

@@ -1,0 +1,23 @@
+7
+#register-form .input_field {
+    position: relative;
+    display: inline-block;
+    width:100%;
+}
+
+#register-form label {
+    text-align:left;
+    float:left;
+    font-size:0.7em;
+    font-weight: bold;
+    transition: all .2s linear;
+    color: #006993;
+    margin-bottom:5px;
+    height:0px;
+    opacity:0;
+}
+
+#register-form input:invalid + label {
+    opacity:1;
+    height:12px;
+}

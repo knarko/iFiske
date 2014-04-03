@@ -81,7 +81,6 @@ var app = {
 };
 
 $(document).ready(function(){
-
     //TODO: Move all partials to js/templates
     Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
     //TODO: Pass context to footer partial possible?
@@ -90,4 +89,5 @@ $(document).ready(function(){
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    Database.update();
 });

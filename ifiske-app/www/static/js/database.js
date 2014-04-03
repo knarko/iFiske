@@ -129,6 +129,18 @@ Database = Object.freeze({
 
     /**
      * updateTable
+{{> header }}
+<div class="list">
+    <div class="list-header">
+        Fiskevatten
+    </div>
+    <div class="list-content">
+        {{#list searchresults}}
+        {{name}}
+        <button class="list-icon water_arrow"></button>
+        {{/list}}
+    </div>
+</div>
      * inserts values into a table
      * table: A string containing the name of the table to update, corresponding to a name in tableDefinition
      * dataset: An array of arrays, each containing all the values to insert
@@ -143,12 +155,14 @@ Database = Object.freeze({
         var query = 'INSERT INTO ';
         var errorCallback = function(err){console.log(err)};
         var successCallback = function(){callback();};
+
         if (this.tableDefinition[table]) {
             query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
             + Array(this.tableDefinition[table].length).join(',?') + ');';
         } else {
             throw Error('Not yet implemented');
         }
+
         this.DB.transaction(function(tx){
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);

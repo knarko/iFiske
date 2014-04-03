@@ -34,7 +34,6 @@ var Navigate = Object.freeze({
     },
 
     /** navigate
-     *
      * target:
      * context:
      */
@@ -52,6 +51,7 @@ var Navigate = Object.freeze({
         $('#popup').html(Handlebars.getTemplate(target)());
         $('#filter, #popup').fadeIn('fast', 'linear');
     },
+
     closePopup: function() {
         $('#filter, #popup').fadeOut('fast', 'linear');
     }

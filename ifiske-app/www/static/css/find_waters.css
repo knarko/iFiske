@@ -5,9 +5,11 @@
     font-size: 120%;
     text-align: left;
 }
+
 .list-header > *{
     display: inline-block;
 }
+
 .list-content {
     font-size: 120%;
     line-height: 1;
@@ -49,3 +51,4 @@
     width: 30px;
     float: right;
 }
+

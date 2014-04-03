@@ -1,4 +1,7 @@
 {{> header }}
 
 {{{button text="info" ontouchend="Navigate.popup('about');"}}}
+{{#if user}}
+{{{button id="logout" ontouchend="User.logout()" text="Logga ut"}}}
+{{/if}}
 

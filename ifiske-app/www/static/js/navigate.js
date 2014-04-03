@@ -10,9 +10,6 @@ var Navigate = Object.freeze({
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
         this.navigate('start');
-
-        Database.init();
-        Database.testUpdater();
     },
 
     /** to
@@ -22,10 +19,9 @@ var Navigate = Object.freeze({
      */
     to: function(target, context) {
         history.pushState({path: target, context: context}, null, '#'+target);
-
         this.navigate(target, context);
-        return false;
     },
+
     /** back
      * Navigates to previous history entry
      * e:    history entry to navigate to
@@ -55,6 +51,7 @@ var Navigate = Object.freeze({
         $('#popup').html(Handlebars.getTemplate(target)());
         $('#filter, #popup').fadeIn('fast', 'linear');
     },
+
     closePopup: function() {
         $('#filter, #popup').fadeOut('fast', 'linear');
     }

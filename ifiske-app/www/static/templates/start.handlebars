@@ -1,6 +1,8 @@
 {{> header}}
 <div id="menu">
+
   {{{button text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()"}}}
+
   {{#if user}}
   <div id="logged-in">
     {{{button id="my_cards" target="my_cards" text="Mina Fiskekort"}}}
@@ -14,6 +16,7 @@
   </div>
   {{/if}}
   <button id="info" onclick="Navigate.popup('about');"></button>
+  <button id="settings" onclick="Navigate.to('settings');"/>
 </div>
 
 <div id="footer">

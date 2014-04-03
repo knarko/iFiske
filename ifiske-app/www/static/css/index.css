@@ -85,3 +85,19 @@ body {
     font-size: 1em;
     padding: 5px 30px 5px 30px;
 }
+
+#settings {
+    margin-bottom: 3%;
+    position: absolute;
+    bottom: 0;
+    background-image: url("../img/icon_settings.png");
+    background-color: transparent;
+    background-position: center center;
+    background-size:cover;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;   
+    float: left;
+    border: none;
+}

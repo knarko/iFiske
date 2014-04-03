@@ -14,7 +14,7 @@ var User = Object.freeze({
             function(xml) {
                 if ($(xml).find('error')[0]) {
                     form.password.value = '';
-                    $(form).find('#error-span').css('display', 'block');
+                    $(form).find('.error-span').css('display', 'block');
                     return;
                 }
                 localStorage.setItem('user', user);
@@ -70,7 +70,7 @@ var User = Object.freeze({
 			switch($(this).attr('result')) {
 			case '1':
 			    console.log("Username already exists");
-			    $(form).find('#error-span').css('display', 'block');
+			    $(form).find('.error-span').css('display', 'block');
 			    break;
 			case '2':
 			    console.log("Invalid username");

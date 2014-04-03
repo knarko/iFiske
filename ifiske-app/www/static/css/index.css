@@ -25,6 +25,11 @@ body {
 
 /* Portrait layout (default) */
 .app {
+    background-image: url(../img/wow.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    
     height:auto;
     min-height:100%;
     width:100%;
@@ -32,7 +37,7 @@ body {
     padding:15px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #5AAAC9;
+    //background-color: #5AAAC9;
 }
 
 

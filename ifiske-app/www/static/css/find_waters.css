@@ -15,7 +15,7 @@
     overflow: auto;
 }
 
-.list-content~li {
+.list-content li {
     width: 96%;
     background-color: #006993;
     font-size: 1.2em;

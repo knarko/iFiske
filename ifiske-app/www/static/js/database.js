@@ -49,7 +49,6 @@ Database = Object.freeze({
 
     clean: function(callback) {
         callback = callback || function(){};
-        var errorCallback = function(err){console.log(err)};
         this.DB.transaction(
             function(tx) {
             tx.executeSql('DROP TABLE IF EXISTS Regions');
@@ -60,7 +59,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
         },
-        errorCallback,
+	Debug.log,
         callback
         );
     },
@@ -69,7 +68,6 @@ Database = Object.freeze({
     //TODO: Use external SQL.schema instead
     init: function(callback){
         callback = callback || function(){};
-        var errorCallback = function(err){console.log(err)};
         Database.DB.transaction(
             function(tx) {
             tx.executeSql([
@@ -124,8 +122,8 @@ Database = Object.freeze({
                 'PRIMARY KEY (id))'
             ].join('\n'));
         },
-        errorCallback,
-        callback
+	    Debug.log,
+            callback
         );
     },
 
@@ -144,7 +142,6 @@ Database = Object.freeze({
     updateTable: function(table, dataset, callback){
         callback = callback || function(){};
         var query = 'INSERT INTO ';
-        var errorCallback = function(err){console.log(err)};
         var successCallback = function(){callback();};
         if (this.tableDefinition[table]) {
             query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
@@ -156,21 +153,31 @@ Database = Object.freeze({
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);
             }
-        }, errorCallback, successCallback);
+        }, Debug.log, successCallback);
+    },
+    
+    getArea: function(id, callback) {
+	var querySuccess = function(tx, result) {
+	    callback && callback(result);
+	}
+	this.DB.transaction(function(tx) {
+	    tx.executeSql([
+		'SELECT *',
+		'FROM Areas',
+		'WHERE id = ?'].join(' '),
+			  [id],
+			  querySuccess);
+	}, Debug.log);
     },
 
     search: function(searchstring, callback) {
         callback = callback || function(){};
-        var errorCallback = function(err){console.log(err)};
         var querySuccess = function(tx, results){
-            var resultsArray = []
+            var resultsArray = [];
             for(var i = 0; i < results.rows.length; ++i){
                 resultsArray.push(results.rows.item(i));
             }
             callback(resultsArray);
-        };
-        var successCallback = function(){
-            console.log('success');
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
@@ -184,7 +191,7 @@ Database = Object.freeze({
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
-        },errorCallback, successCallback);
+        }, Debug.log);
     }
 
 });

@@ -30,3 +30,12 @@ Handlebars.registerHelper('button', function(options){
     delete h.target;
     return $('<div/>', options.hash)[0].outerHTML;
 });
+
+Handlebars.registerHelper('concat', function(strs) {
+    var r = "";
+    strs = strs.hash;
+    for (i in strs) {
+       r += strs[i];
+    }
+    return r;
+});

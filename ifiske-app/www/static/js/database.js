@@ -154,7 +154,11 @@ Database = Object.freeze({
 
     getArea: function(id, callback) {
         var querySuccess = function(tx, result) {
-            callback && callback(result);
+            if (result.rows.length == 1) {
+                callback && callback(result.rows.item(0));
+            } else {
+                callback && callback(null);
+            }
         }
         this.DB.transaction(function(tx) {
             tx.executeSql([

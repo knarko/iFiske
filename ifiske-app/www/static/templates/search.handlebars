@@ -5,7 +5,7 @@
     </div>
     <div class="list-content">
         {{#list searchresults}}
-        {{{button ontouchend="Area.go({{id}});" text=name }}}
+        {{{button ontouchend=(concat a="Area.go(" b=id c=");") text=name }}}
         {{/list}}
     </div>
 </div>

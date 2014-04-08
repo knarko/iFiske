@@ -9,7 +9,6 @@ Database = Object.freeze({
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
     update: function(callback) {
-        callback = callback || function(){};
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
                 localStorage.setItem('db_updated', timestamp);
@@ -21,7 +20,7 @@ Database = Object.freeze({
                             Database.updateTable('Areas',data.areas);
                             Database.updateTable('Area_keywords', data.area_keywords);
                             Database.updateTable('Products', data.products);
-                            callback();
+                            callback && callback();
                         });
                     });
                 });
@@ -47,7 +46,6 @@ Database = Object.freeze({
     },
 
     clean: function(callback) {
-        callback = callback || function(){};
         this.DB.transaction(
             function(tx) {
             tx.executeSql('DROP TABLE IF EXISTS Regions');
@@ -58,14 +56,13 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
         },
-	Debug.log,
+        Debug.log,
         callback
         );
     },
 
     //Initialies the database
     init: function(callback){
-        callback = callback || function(){};
         Database.DB.transaction(
             function(tx) {
             tx.executeSql([
@@ -120,8 +117,8 @@ Database = Object.freeze({
                 'PRIMARY KEY (id))'
             ].join('\n'));
         },
-	    Debug.log,
-            callback
+        Debug.log,
+        callback
         );
     },
 
@@ -137,9 +134,10 @@ Database = Object.freeze({
      * they are highly dependant on each other.
      **/
     updateTable: function(table, dataset, callback){
-        callback = callback || function(){};
         var query = 'INSERT INTO ';
-        var successCallback = function(){callback();};
+        var successCallback = function(){
+            callback && callback();
+        };
         if (this.tableDefinition[table]) {
             query += table + ' (' + this.tableDefinition[table] + ') VALUES (?'
             + Array(this.tableDefinition[table].length).join(',?') + ');';
@@ -152,29 +150,28 @@ Database = Object.freeze({
             }
         }, Debug.log, successCallback);
     },
-    
+
     getArea: function(id, callback) {
-	var querySuccess = function(tx, result) {
-	    callback && callback(result);
-	}
-	this.DB.transaction(function(tx) {
-	    tx.executeSql([
-		'SELECT *',
-		'FROM Areas',
-		'WHERE id = ?'].join(' '),
-			  [id],
-			  querySuccess);
-	}, Debug.log);
+        var querySuccess = function(tx, result) {
+            callback && callback(result);
+        }
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Areas',
+                'WHERE id = ?'].join(' '),
+                [id],
+                querySuccess);
+        }, Debug.log);
     },
 
     search: function(searchstring, callback) {
-        callback = callback || function(){};
         var querySuccess = function(tx, results){
             var resultsArray = [];
             for(var i = 0; i < results.rows.length; ++i){
                 resultsArray.push(results.rows.item(i));
             }
-            callback(resultsArray);
+            callback && callback(resultsArray);
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
@@ -188,6 +185,44 @@ Database = Object.freeze({
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
+        },Debug.log, successCallback);
+    },
+
+    getProductById: function(product_id, callback) {
+        var querySuccess = function(tx, results) {
+            var result = null;
+            if (results.rows.length == 1) {
+                result = results.rows.item(0);
+            }
+            callback && callback(result);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT DISTINCT *',
+                'FROM Products',
+                'WHERE id = ?'
+            ].join('\n'),
+            [product_id],
+            querySuccess);
+        }, Debug.log);
+    },
+
+    getProductsByArea: function(area_id, callback) {
+        var querySuccess = function(tx, results) {
+            var resultsArray = []
+            for(var i = 0; i < results.rows.length; ++i){
+                resultsArray.push(results.rows.item(i));
+            }
+            callback && callback(resultsArray);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT DISTINCT *',
+                'FROM Products',
+                'WHERE area_id = ?'
+            ].join('\n'),
+            [area_id],
+            querySuccess);
         }, Debug.log);
     }
 

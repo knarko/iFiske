@@ -53,11 +53,12 @@ $(document).ready(function(){
 var timeout;
 
 function open_fb() {
-    window.location="https://www.facebook.com/fiskekort";
+    window.open('https://www.facebook.com/fiskekort', '_system');
 }
 
 function try_open_fb() 
 {
+    window.open('fb://profile/215728895115467', '_system');
     timeout = setTimeout('open_fb()', 300);
 }
 /* <a href="#" onclick="window.open('fb://profile/215728895115467', '_system');">

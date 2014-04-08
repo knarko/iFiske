@@ -2,7 +2,6 @@
  * Database
  * An object that contains the database functions
  *
- * TODO: Look into using callbacks
  * TODO: Maybe move some functions around to other objects?
  **/
 Database = Object.freeze({
@@ -65,7 +64,6 @@ Database = Object.freeze({
     },
 
     //Initialies the database
-    //TODO: Use external SQL.schema instead
     init: function(callback){
         callback = callback || function(){};
         Database.DB.transaction(
@@ -137,7 +135,6 @@ Database = Object.freeze({
      *
      * TODO: Create better link between the parsing and this function,
      * they are highly dependant on each other.
-     * TODO: Actually use the callback
      **/
     updateTable: function(table, dataset, callback){
         callback = callback || function(){};

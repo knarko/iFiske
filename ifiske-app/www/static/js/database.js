@@ -190,7 +190,6 @@ Database = Object.freeze({
             }
             callback && callback(result);
         };
-        var successCallback = undefined;
         this.DB.transaction(function(tx) {
             tx.executeSql([
                 'SELECT DISTINCT *',
@@ -199,7 +198,7 @@ Database = Object.freeze({
             ].join('\n'),
             [product_id],
             querySuccess);
-        }, errorCallback, successCallback);
+        }, errorCallback);
     },
 
     getProductsByArea: function(area_id, callback) {
@@ -211,7 +210,6 @@ Database = Object.freeze({
             }
             callback && callback(resultsArray);
         };
-        var successCallback = undefined;
         this.DB.transaction(function(tx) {
             tx.executeSql([
                 'SELECT DISTINCT *',
@@ -220,7 +218,7 @@ Database = Object.freeze({
             ].join('\n'),
             [area_id],
             querySuccess);
-        }, errorCallback, successCallback);
+        }, errorCallback);
     }
 
 });

@@ -57,7 +57,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
         },
-        errorCallback,
+	Debug.log,
         callback
         );
     },
@@ -119,8 +119,8 @@ Database = Object.freeze({
                 'PRIMARY KEY (id))'
             ].join('\n'));
         },
-        errorCallback,
-        callback
+	    Debug.log,
+            callback
         );
     },
 
@@ -151,20 +151,31 @@ Database = Object.freeze({
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);
             }
-        }, errorCallback, successCallback);
+        }, Debug.log, successCallback);
+    },
+
+    getArea: function(id, callback) {
+	var querySuccess = function(tx, result) {
+	    callback && callback(result);
+	}
+	this.DB.transaction(function(tx) {
+	    tx.executeSql([
+		'SELECT *',
+		'FROM Areas',
+		'WHERE id = ?'].join(' '),
+			  [id],
+			  querySuccess);
+	}, Debug.log);
     },
 
     search: function(searchstring, callback) {
         var errorCallback = function(err){console.log(err)};
         var querySuccess = function(tx, results){
-            var resultsArray = []
+            var resultsArray = [];
             for(var i = 0; i < results.rows.length; ++i){
                 resultsArray.push(results.rows.item(i));
             }
             callback && callback(resultsArray);
-        };
-        var successCallback = function(){
-            console.log('success');
         };
         this.DB.transaction(function(tx){
             tx.executeSql([

@@ -5,8 +5,7 @@
     </div>
     <div class="list-content">
         {{#list searchresults}}
-        {{name}}
-        <button class="list-icon water_arrow"></button>
+        {{{button ontouchend="Area.go({{id}});" text=name }}}
         {{/list}}
     </div>
 </div>

@@ -176,11 +176,11 @@ Database = Object.freeze({
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
-                'SELECT * ',
-                'FROM Areas ',
+                'SELECT id, name',
+                'FROM Areas',
                 'WHERE name LIKE ?',
                 'UNION',
-                'SELECT DISTINCT Areas.*',
+                'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),

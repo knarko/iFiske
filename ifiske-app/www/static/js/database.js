@@ -185,7 +185,7 @@ Database = Object.freeze({
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
-        },Debug.log, successCallback);
+        },Debug.log);
     },
 
     getProductById: function(product_id, callback) {

@@ -88,13 +88,23 @@ body {
 
 #settings {
     background-image: url("../img/icon_settings.png");
+    float: right;
+}
+
+#facebook {
+    background-image: url("../img/fb.png");
+    float: left;
+    padding: 3px;
+}
+
+.img
+{
     background-color: transparent;
     background-position: center center;
     background-size:cover;
     vertical-align: bottom;
     background-repeat: no-repeat;
     height: 40px;
-    width: 40px;   
-    float: right;
+    width: 40px; 
     border: none;
 }

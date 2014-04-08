@@ -6,5 +6,5 @@ div#footer
     position: absolute;
     left: 0;
     bottom: 0;
+    vertical-align: middle;
 }
-

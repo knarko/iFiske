@@ -40,4 +40,26 @@ $(document).ready(function(){
         Navigate.back(e);
     });
     Database.update();
+
+
+    /*$("#facebook").click(function() {
+        window.open('fb://profile/215728895115467', '_system');  
+        alert("gets here");            
+        window.open('https://www.facebook.com/fiskekort', '_system');   
+        alert("gets here 2");
+    })*/
+    
 });
+var timeout;
+
+function open_fb() {
+    window.location="https://www.facebook.com/fiskekort";
+}
+
+function try_open_fb() 
+{
+    timeout = setTimeout('open_fb()', 300);
+}
+/* <a href="#" onclick="window.open('fb://profile/215728895115467', '_system');">
+      <button class="img" id="facebook" />
+    </a>*/

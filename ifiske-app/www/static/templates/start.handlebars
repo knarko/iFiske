@@ -21,6 +21,9 @@
     {{else}}
         Ingen användare inloggad
     {{/if}}
-    <button id="settings" onclick="Navigate.to('settings');"/>
+    <a href="window.open('fb://profile/215728895115467', '_system';)" onclick="try_open_fb();"">
+      <button class="img" id="facebook" />
+    </a>
+    <button class="img" id="settings" ontouchend="Navigate.to('settings');"/>
 </div>
 

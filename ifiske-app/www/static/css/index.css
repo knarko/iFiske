@@ -29,7 +29,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    
+    position: relative;
     height:auto;
     min-height:100%;
     width:100%;
@@ -46,20 +46,49 @@ body {
     .app {}
 }
 
+#bottom {
+	display: block;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;	
+}
+
+#settings {
+    background-image: url("../img/icon_settings.png");
+    float: right;
+}
+
+#facebook {
+    background-image: url("../img/fb.png");
+    float: left;
+}
+
+.img
+{
+    background-color: transparent;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px; 
+    border: none;
+    margin: 1%;
+}
+
 #footer
 {
     width: 100%;
     background-color: #99b;
-    position: absolute;
     padding: 7px 0 7px 0;
-    left: 0;
-    bottom: 0;
+    float: left;
 }
 
 .button {
-    clear:left;
+    clear: left;
     //006993 - 5AAAC9;
-    background-color:#006993;
+    background-color: #006993;
     margin-top: 10px;
     font-size: 25px;
     font-weight: bold;
@@ -73,38 +102,15 @@ body {
     margin: 5px auto 0px auto;
     height: 40px;
     padding: 0em 0.5em 0em 0.5em;
-    border-width:0px;
+    border-width: 0px;
 }
 
 .error-span {
     display: none;
     clear: left;
-    background-color:#006993;
+    background-color: #006993;
     color: orange;
     font-weight: bold;
     font-size: 1em;
     padding: 5px 30px 5px 30px;
-}
-
-#settings {
-    background-image: url("../img/icon_settings.png");
-    float: right;
-}
-
-#facebook {
-    background-image: url("../img/fb.png");
-    float: left;
-    padding: 3px;
-}
-
-.img
-{
-    background-color: transparent;
-    background-position: center center;
-    background-size:cover;
-    vertical-align: bottom;
-    background-repeat: no-repeat;
-    height: 40px;
-    width: 40px; 
-    border: none;
 }

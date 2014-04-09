@@ -38,10 +38,16 @@ Database = Object.freeze({
         Area_keywords: [
             'area_id', 'keyword'
         ],
+        Organisations: [
+            'id', 'name', 'region', 'description', 'homepage', 'contact'
+        ],
         Products: [
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
+        ],
+        Files: [
+            'id', 'filename'
         ]
     },
 
@@ -54,6 +60,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Products');
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
+            tx.executeSql('DROP TABLE IF EXISTS Files');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
         },
         Debug.log,
@@ -115,6 +122,13 @@ Database = Object.freeze({
                 'id int, name text, region region, description text,',
                 'homepage text, contact text,',
                 'PRIMARY KEY (id))'
+            ].join('\n'));
+
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Files (',
+                'id int, filename text,',
+                'PRIMARY KEY (id, filename),',
+                'FOREIGN KEY (id) REFERENCES Organisations(id));'
             ].join('\n'));
         },
         Debug.log,

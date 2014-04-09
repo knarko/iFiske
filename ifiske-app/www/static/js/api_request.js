@@ -37,7 +37,7 @@ var API = Object.freeze( {
     {
         args.uid = localStorage.getItem('user');
         args.pw = localStorage.getItem('password');
-	this.request(args, callback);
+        this.request(args, callback);
     },
 
     /**
@@ -52,6 +52,24 @@ var API = Object.freeze( {
             }
         }
         API.request({action: "get_areas"}, requestCallback);
+    },
+
+    getFiles: function(org_id, callback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_files", org: org_id}, requestCallback);
+    },
+
+    getOrganisations: function(callback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_organisations"}, requestCallback);
     },
 
     getUpdates: function(callback) {
@@ -70,7 +88,8 @@ var API = Object.freeze( {
         areas         = [],
         organisations = [],
         area_keywords = [],
-        products      = [];
+        products      = [],
+        files         = [];
 
         if ($(xmldata).find('user_areas').length != 0) {
 
@@ -108,7 +127,6 @@ var API = Object.freeze( {
                             $.each(
                                 $(this).children('products').children(),
                                 function() {
-                                    kitten = $(this);
                                     products.push([
                                         parseInt($(this).attr('ID')),
                                         parseInt($(this).attr('SMSdisplay')),
@@ -134,6 +152,33 @@ var API = Object.freeze( {
             return {regions: regions, areas: areas, area_keywords: area_keywords, products: products};
         } else if($(xmldata).find('last_modification').length != 0){
             return parseInt($(xmldata).find('last_modification').attr('timestamp'));
+        } else if ($(xmldata).find('organisations').length != 0) {
+            $.each(
+                $(xmldata).find('organisations').children(),
+                function() {
+                    organisations.push([
+                        parseInt($(this).attr('id')),
+                        $(this).attr('name'),
+                        parseInt($(this).attr('lan')),
+                        $(this).attr('descr'),
+                        $(this).attr('homepage'),
+                        $(this).attr('contact')
+                    ]);
+                }
+            );
+        return organisations;
+        } else if ($(xmldata).find('photos').length != 0) {
+            $.each(
+                $(xmldata).find('photos').children(),
+                function() {
+                    var photo = $(this).attr('src').split('/');
+                    photosArray.push([
+                        parseInt(photo[4]),
+                        photo[5]
+                    ]);
+                }
+            );
+            return photosArray;
         } else {
             return false;
         }
@@ -142,31 +187,31 @@ var API = Object.freeze( {
      * Sends login API request
      */
     login: function(user, password, callback) {
-	this.request(
+        this.request(
             {
-		action: 'login',
-		uid: user,
-		pw: password
-            },
-	    callback
-	);
+            action: 'login',
+            uid: user,
+            pw: password
+        },
+        callback
+        );
     },
 
     /** register
      * Sends a registration API request.
      */
     register: function(username, password, fullname, email, phone, callback) {
-	this.request(
-	    {
-		action: 'user_register',
-		username: username,
-		password: password,
-		fullname: fullname,
-		email: email,
-		phone: phone
-	    },
-            callback
-	);
+        this.request(
+            {
+            action: 'user_register',
+            username: username,
+            password: password,
+            fullname: fullname,
+            email: email,
+            phone: phone
+        },
+        callback
+        );
     }
 
 });

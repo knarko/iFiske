@@ -225,6 +225,27 @@ Database = Object.freeze({
             [area_id],
             querySuccess);
         }, Debug.log);
+    },
+    
+    //TODO Make a function for removing subscriptions.
+    //This one should be used to get all of the users fishinglicenses.
+    getSubscriptions: function(callback) {
+        var querySuccess = function(tx, results) {
+            var resultsArray = [];
+            for(var i = 0; i < results.rows.length; ++i){
+                resultsArray.push(results.rows.item(i));
+            }
+            callback && callback(resultsArray);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT DISTINCT *',
+                'FROM Products',
+                'WHERE area_id = ?'
+            ].join('\n'),
+            [area_id],
+            querySuccess);
+        }, Debug.log);
     }
 
 });

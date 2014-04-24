@@ -5,7 +5,6 @@
   <div id="logged-in">
     {{{button text="Mina Fiskekort" id="my_cards" ontouchend="License.fetch()"}}}
     {{{button id="register_catch" target="register_catch" text="Registrera Fångst"}}}
-    {{{button id="logout" ontouchend="User.logout()" text="Logga ut"}}}
   </div>
   {{else}}
   <div class="not-logged-in">
@@ -13,14 +12,22 @@
     {{{button id="register" target="register_user" text="Registrera"}}}
   </div>
   {{/if}}
-  <button id="info" onclick="Navigate.popup('about');"></button>
 </div>
 
-<div id="footer">
-    {{#if user}}
-        Inloggad som {{user}}
-    {{else}}
-        Ingen användare inloggad
-    {{/if}}
-</div>
+<div id="bottom">
+  <div id="links">
+    <a onclick="try_open_fb();"">
+      <button class="img" id="facebook" />
+    </a>
+    <button class="img" id="settings" ontouchend="Navigate.to('settings');"/>
+  </div>
 
+  <div id="footer">
+      {{#if user}}
+          Inloggad som {{user}}
+      {{else}}
+          Ingen användare inloggad
+      {{/if}}
+
+  </div>
+</div>

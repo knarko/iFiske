@@ -39,4 +39,16 @@ $(document).ready(function(){
         Navigate.back(e);
     });
     Database.update();
+    
 });
+var timeout;
+
+function open_fb() {
+    window.open('https://www.facebook.com/fiskekort', '_system');
+}
+
+function try_open_fb() 
+{
+    window.open('fb://profile/215728895115467', '_system');
+    timeout = setTimeout('open_fb()', 300);
+}

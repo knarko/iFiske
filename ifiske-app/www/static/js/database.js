@@ -126,9 +126,10 @@ Database = Object.freeze({
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Subscriptions (',
                 'id int, title text, product_title text, org_id int,',
-                'rule_id int, area_id int, validFrom int, validTo int',
+                'rule_id int, area_id int, validFrom int, validTo int,',
                 'fullname text, email text, ref_our int, ref_their int,',
-                'mobile int, code int, pdf_id text, purchased_at int,'
+                'mobile int, code int, pdf_id text, purchased_at int,',
+                'PRIMARY KEY (id))'
             ].join('\n'));
 
         },
@@ -254,9 +255,10 @@ Database = Object.freeze({
         };
         this.DB.transaction(function(tx) {
             tx.executeSql([
-                'SELECT DISTINCT *',
-                'FROM Subscriptions'
+                'SELECT *',
+                'FROM Subscriptions;'
             ].join('\n'),
+            [],
             querySuccess);
         }, Debug.log);
     }

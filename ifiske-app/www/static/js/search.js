@@ -1,5 +1,5 @@
 //TODO: Go through and look if this can be moved to other object
-Search = Object.freeze({
+var Search = Object.freeze({
     go: function(target) {
         target = target || '';
         Database.search(target, function(result) {

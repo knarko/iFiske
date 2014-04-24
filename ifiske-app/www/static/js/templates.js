@@ -30,3 +30,8 @@ Handlebars.registerHelper('button', function(options){
     delete h.target;
     return $('<div/>', options.hash)[0].outerHTML;
 });
+
+Handlebars.registerHelper('printdate', function(unixtimestamp, options)
+    {
+      return Date(options.fn(unixtimestamp*1000));
+    });

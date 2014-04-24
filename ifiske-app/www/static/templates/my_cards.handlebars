@@ -1,14 +1,16 @@
 {{> header }}
 <div class="list">
     <div class="list-header">
-      {{!head}}
+      Mina Fiskekort
     </div>
     <div class="list-content">
         {{#if cards}}
         {{#list cards}}
-        {{name}}
+        {{product_title}}
+        <br>
+        {{#printdate validTo}}{{/printdate}}
         {{/list}}
-        {{#else}}
+        {{else}}
         <p>inga kort här just nu</p>
         {{/if}}
     </div>

@@ -42,6 +42,11 @@ Database = Object.freeze({
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
+        ],
+        Subscriptions: [
+            'id', 'title', 'product_title', 'org_id', 'rule_id', 'area_id',
+            'validFrom', 'validTo', 'fullname', 'email', 'ref_our',
+            'ref_their', 'mobile', 'code', 'pdf_id', 'purchased_at'
         ]
     },
 
@@ -55,6 +60,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
+            tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
         Debug.log,
         callback
@@ -116,6 +122,15 @@ Database = Object.freeze({
                 'homepage text, contact text,',
                 'PRIMARY KEY (id))'
             ].join('\n'));
+
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Subscriptions (',
+                'id int, title text, product_title text, org_id int,',
+                'rule_id int, area_id int, validFrom int, validTo int',
+                'fullname text, email text, ref_our int, ref_their int,',
+                'mobile int, code int, pdf_id text, purchased_at int,'
+            ].join('\n'));
+
         },
         Debug.log,
         callback
@@ -226,7 +241,7 @@ Database = Object.freeze({
             querySuccess);
         }, Debug.log);
     },
-    
+
     //TODO Make a function for removing subscriptions.
     //This one should be used to get all of the users fishinglicenses.
     getSubscriptions: function(callback) {
@@ -240,10 +255,8 @@ Database = Object.freeze({
         this.DB.transaction(function(tx) {
             tx.executeSql([
                 'SELECT DISTINCT *',
-                'FROM Products',
-                'WHERE area_id = ?'
+                'FROM Subscriptions'
             ].join('\n'),
-            [area_id],
             querySuccess);
         }, Debug.log);
     }

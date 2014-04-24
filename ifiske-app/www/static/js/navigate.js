@@ -41,7 +41,6 @@ var Navigate = Object.freeze({
     navigate: function(target, context) {
         target = Handlebars.getTemplate(target);
         $('#content').html(target($.extend({}, localStorage, context || {})));
-        console.log($.extend({}, localStorage, context || {}));
     },
 
     /** popup

@@ -5,6 +5,7 @@ function expand() {
 	    	'<div id="search-bottom-bar"></div>' + 
 	    	'<button type="submit" style="visibility: hidden"/>' + 
 			'</form>')
-		$("#searchform").next().slideToggle("slow");
-		$("#search-icon").visibility("hidden");
+
+		$("#searchfield").stop().animate({width: 'toggle'}, "slow", "linear");
+		$("#search-bottom-bar").slideToggle("slow");
 }

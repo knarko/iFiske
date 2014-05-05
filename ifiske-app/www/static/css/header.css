@@ -32,8 +32,15 @@
     margin: 1%; 
 }
 
+/*#header #searchform {
+    position: relative;
+}*/
+
 
 #header #searchfield {
+    /*position: absolute;
+    right: 0;*/
+    display: none;
     height:100%;
     width:100%;
     color: #FFFFFF;
@@ -52,6 +59,7 @@
 }
 
 #header #search-bottom-bar {
+    display: none;
     height:7px;
     border:0px solid #006993;
     border-width:0px 3px 0px 3px;

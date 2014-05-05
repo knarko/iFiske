@@ -1,13 +1,8 @@
 <script id="header-partial" type="text/x-handlebars-template">
   <div id="header">
     <img id="logo" src="static/img/logo-xs.png"/>
-    <div id="search-div">
-      <form onsubmit="Search.go($('#searchfield').val());return false;">
-	<input id="searchfield" type="search" placeholder="Snabbsök"/>
-	<div id="search-bottom-bar"></div>
-      
-	<button type="submit" style="visibility: hidden"/>
-      </form>
+    <div id="search-div"> 
+       <a onclick="expand();"><button id="search-icon" class="img"/></a>
     </div>
     <hr/>
   </div>

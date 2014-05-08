@@ -11,15 +11,15 @@ Database = Object.freeze({
     update: function(callback) {
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
-                localStorage.setItem('db_updated', timestamp);
 
-                Database.clean(function() {
-                    Database.init(function() {
-                        API.getAreas(function(data) {
+                API.getAreas(function(data) {
+                    Database.clean(function() {
+                        Database.init(function() {
                             Database.updateTable('Regions',data.regions);
                             Database.updateTable('Areas',data.areas);
                             Database.updateTable('Area_keywords', data.area_keywords);
                             Database.updateTable('Products', data.products);
+                            localStorage.setItem('db_updated', timestamp);
                             callback && callback();
                         });
                     });

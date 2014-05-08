@@ -9,7 +9,7 @@ var Navigate = Object.freeze({
      */
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
-        Start.go();
+        start.go();
     },
 
     /** to
@@ -31,7 +31,7 @@ var Navigate = Object.freeze({
         if(e.state != null){
             this.closePopup();
             //TODO: Get callback and args from historystack
-            this.navigate(e.state.path, window[e.state.path] [1]);
+            this.navigate(e.state.path, window[e.state.path], e.state.args);
         }
     },
 

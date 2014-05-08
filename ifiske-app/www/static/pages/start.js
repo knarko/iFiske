@@ -1,4 +1,4 @@
-var Start = Object.freeze({
+var start = Object.freeze({
     go: function () {
         Navigate.to('start', this.onload)
     },

@@ -1,4 +1,4 @@
-var Area = Object.freeze({
+var area = Object.freeze({
     go: function(id) {
         Navigate.to('area', this.onload, [id]);
     },

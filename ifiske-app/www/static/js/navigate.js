@@ -9,6 +9,7 @@ var Navigate = Object.freeze({
      */
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
+        window.myhistory = {callbacks: []};
         Start.go();
     },
 
@@ -19,6 +20,7 @@ var Navigate = Object.freeze({
      */
     to: function(target, callback) {
         history.pushState({path: target}, null, '#'+target);
+        window.myhistory.callbacks.push(callback);
         this.navigate(target, callback);
     },
 
@@ -29,7 +31,8 @@ var Navigate = Object.freeze({
     back: function(e) {
         if(e.state != null){
             this.closePopup();
-            this.navigate(e.state.path, e.state.callback);
+            var callback = window.myhistory.pop();
+            this.navigate(e.state.path, callback);
         }
     },
 

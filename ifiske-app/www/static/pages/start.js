@@ -3,7 +3,9 @@ var Start = Object.freeze({
         Navigate.to('start', this.onload)
     },
     onload: function(text) {
-        if(localStorage.user)
+        if(localStorage.user) {
             $(text).find('.logged-in, .not-logged-in').toggle();
+            $(text).find('.username').text(localStorage.user);
+        }
     }
 });

@@ -1,17 +1,26 @@
 var Search = Object.freeze({
-    go: function(target) {
-        Navigate.to('search', this);
+    go: function() {
+        Navigate.to('search', this.onload);
     },
-    onload: function() {
-        target = target || '';
-        Database.search(target, function(result) {
+    onload: function(text) {
+        var searchstring = $("#searchfield").val();
+        Database.search(searchstring, function(result) {
             $.each(
                 result,
                 function () {
-                    $("#search-list").appendChild(createButton(this));
+                    $(text).find(".list-content").append(createButton(this));
                 }
             );
         });
 
     }
 });
+var createButton = function (props) {
+    var btn = document.createElement('div');
+    btn.classList.add('button');
+    $(btn).bind('touchend', function () {
+        Area.go(props.id);
+    });
+    $(btn).text(props.name);
+    return btn;
+};

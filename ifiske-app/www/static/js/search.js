@@ -1,6 +1,7 @@
 var Search = Object.freeze({
     go: function(target) {
-        Navigate.to('search', this);
+
+        Navigate.to('search', this.onload);
     },
     onload: function() {
         target = target || '';

@@ -1,5 +1,5 @@
 <div id="menu">
-  <div class="button" text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()" />
+    <div class="button" ontouchend="Search.go()">Hitta Fiskevatten</div>
   <div class="logged-in">
     <div class="button" ontouchend="Navigate.to('my_cards');">Mina Fiskekort</div>
     <div class="button">Registrera faangst</div>
@@ -9,3 +9,15 @@
       <div class="button" ontouchend="Register.go()">Registrera</div>
   </div>
 </div>
+<div id="bottom">
+  <div id="links">
+      <button class="img" id="facebook" ontouchend="try_open_fb();">
+    <button class="img" id="settings" ontouchend="Navigate.to('settings');"/>
+  </div>
+
+  <div id="footer">
+      <p class="logged-in">Inloggad som <span class="username"></span></p>
+      <p class="not-logged-in">Ingen användare inloggad</p>
+  </div>
+</div>
+

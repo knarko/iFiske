@@ -46,11 +46,6 @@ body {
     .app {}
 }
 
-
-#header {
-    display:table-row;
-}
-
 #content {
     display:table-row;
 }

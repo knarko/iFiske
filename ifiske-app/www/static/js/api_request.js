@@ -158,7 +158,7 @@ var API = Object.freeze( {
                 function() {
                     organisations.push([
                         parseInt($(this).attr('id')),
-                        $(this).attr('name'),
+                        $(this).attr('title'),
                         parseInt($(this).attr('lan')),
                         $(this).attr('descr'),
                         $(this).attr('homepage'),

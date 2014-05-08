@@ -22,6 +22,10 @@ Database = Object.freeze({
                             Database.updateTable('Products', data.products);
                             callback && callback();
                         });
+                       API.getOrganisations(function(data) {
+                            Database.updateTable('Organisations', data);
+                        });
+                        //TODO: Add Subscriptions
                     });
                 });
             }
@@ -119,9 +123,10 @@ Database = Object.freeze({
 
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Organisations (',
-                'id int, name text, region region, description text,',
+                'id int, name text, region int, description text,',
                 'homepage text, contact text,',
-                'PRIMARY KEY (id))'
+                'PRIMARY KEY (id),',
+                'FOREIGN KEY (region) REFERENCES Regions(id))'
             ].join('\n'));
 
             tx.executeSql([
@@ -176,9 +181,12 @@ Database = Object.freeze({
         }
         this.DB.transaction(function(tx) {
             tx.executeSql([
-                'SELECT *',
+                'SELECT DISTINCT Areas.*, Organisations.*',
                 'FROM Areas',
-                'WHERE id = ?'].join(' '),
+                'JOIN Organisations',
+                'ON Areas.org_id = Organisations.id',
+                'WHERE Areas.id = ?'
+            ].join(' '),
                 [id],
                 querySuccess);
         }, Debug.log);

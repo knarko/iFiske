@@ -41,9 +41,6 @@ var Navigate = Object.freeze({
      * context:
      */
     navigate: function(target, callback, args) {
-        console.log(target);
-        console.log(callback);
-        console.log(args);
         var newContent = document.createElement('div');
         newContent.id = target;
         args = args || [];

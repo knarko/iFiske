@@ -1,14 +1,18 @@
 var search = Object.freeze({
     go: function() {
-        Navigate.to('search', this.onload);
+        if($("#search").length == 0)
+            Navigate.to('search', this.onload);
+        this.onload($("#content"));
     },
     onload: function(text) {
         var searchstring = $("#searchfield").val();
         Database.search(searchstring, function(result) {
+            var list = $(text).find(".list-content")
+            $(list).empty();
             $.each(
                 result,
                 function () {
-                    $(text).find(".list-content").append(createButton(this));
+                    list.append(createButton(this));
                 }
             );
         });

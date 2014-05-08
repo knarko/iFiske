@@ -27,7 +27,7 @@
         <img id="logo" src="static/img/logo-xs.png"/>
         <div id="search-div">
           <form onsubmit="search.go();return false;">
-            <input id="searchfield" type="search" placeholder="Snabbsök"/>
+            <input id="searchfield" type="search" placeholder="Snabbsök" autocomplete="off"/>
             <div id="search-bottom-bar"></div>
 
             <button type="submit" style="visibility: hidden"/>
@@ -47,13 +47,15 @@
     <script type="text/javascript" src="static/js/navigate.js"></script>
     <script type="text/javascript" src="static/js/api_request.js"></script>
     <script type="text/javascript" src="static/js/database.js"></script>
-    <script type="text/javascript" src="static/js/user.js"></script>
+    <!--    <script type="text/javascript" src="static/js/user.js"></script>-->
     <script type="text/javascript" src="static/js/index.js"></script>
 
     <!-- PAGES -->
     <script type="text/javascript" src="static/pages/start.js"></script>
     <script type="text/javascript" src="static/pages/search.js"></script>
     <script type="text/javascript" src="static/pages/area.js"></script>
+    <script type="text/javascript" src="static/pages/login.js"></script>
+    <script type="text/javascript" src="static/pages/register.js"></script>
 
 
     <script type="text/javascript">

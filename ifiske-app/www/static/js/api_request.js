@@ -54,7 +54,7 @@ var API = Object.freeze( {
         API.request({action: "get_areas"}, requestCallback);
     },
 
-    getFiles: function(org_id, callback) {
+    getPhotos: function(org_id, callback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
@@ -89,7 +89,7 @@ var API = Object.freeze( {
         organisations = [],
         area_keywords = [],
         products      = [],
-        files         = [];
+        photos        = [];
 
         if ($(xmldata).find('user_areas').length != 0) {
 
@@ -171,14 +171,11 @@ var API = Object.freeze( {
             $.each(
                 $(xmldata).find('photos').children(),
                 function() {
-                    var photo = $(this).attr('src').split('/');
-                    photosArray.push([
-                        parseInt(photo[4]),
-                        photo[5]
-                    ]);
+                    photos.push($(this).attr('src'));
                 }
             );
-            return photosArray;
+            asdf = photos;
+            return photos;
         } else {
             return false;
         }

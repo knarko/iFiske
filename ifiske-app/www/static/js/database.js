@@ -13,17 +13,23 @@ Database = Object.freeze({
             if (timestamp != localStorage.getItem('db_updated')) {
 
                 API.getAreas(function(data) {
-                    Database.clean(function() {
-                        Database.init(function() {
-                            Database.updateTable('Regions',data.regions);
-                            Database.updateTable('Areas',data.areas);
-                            Database.updateTable('Area_keywords', data.area_keywords);
-                            Database.updateTable('Products', data.products);
-                            localStorage.setItem('db_updated', timestamp);
-                            callback && callback();
+                    API.getOrganisations(function(organisations) {
+                        uniqueOrgs = organisations.sort().filter(function(elem, pos, self) {
+                            if(pos == 0)
+                                return true;
+                            return self[pos-1][0] != elem[0];
                         });
-                       API.getOrganisations(function(data) {
-                            Database.updateTable('Organisations', data);
+                        data.organisations = uniqueOrgs;
+                        Database.clean(function() {
+                            Database.init(function() {
+                                Database.updateTable('Regions',data.regions);
+                                Database.updateTable('Areas',data.areas);
+                                Database.updateTable('Organisations', data.organisations);
+                                Database.updateTable('Area_keywords', data.area_keywords);
+                                Database.updateTable('Products', data.products);
+                                localStorage.setItem('db_updated', timestamp);
+                                callback && callback();
+                            });
                         });
                         //TODO: Add Subscriptions
                     });
@@ -66,6 +72,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Files');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
+            tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
         Debug.log,
         callback
@@ -187,8 +194,8 @@ Database = Object.freeze({
                 'ON Areas.org_id = Organisations.id',
                 'WHERE Areas.id = ?'
             ].join(' '),
-                [id],
-                querySuccess);
+            [id],
+            querySuccess);
         }, Debug.log);
     },
 

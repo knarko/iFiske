@@ -1,14 +1,18 @@
-var Search = Object.freeze({
+var search = Object.freeze({
     go: function() {
-        Navigate.to('search', this.onload);
+        if($("#search").length == 0)
+            Navigate.to('search', this.onload);
+        this.onload($("#content"));
     },
     onload: function(text) {
         var searchstring = $("#searchfield").val();
         Database.search(searchstring, function(result) {
+            var list = $(text).find(".list-content")
+            $(list).empty();
             $.each(
                 result,
                 function () {
-                    $(text).find(".list-content").append(createButton(this));
+                    list.append(createButton(this));
                 }
             );
         });
@@ -19,7 +23,7 @@ var createButton = function (props) {
     var btn = document.createElement('div');
     btn.classList.add('button');
     $(btn).bind('touchend', function () {
-        Area.go(props.id);
+        area.go(props.id);
     });
     $(btn).text(props.name);
     return btn;

@@ -9,8 +9,7 @@ var Navigate = Object.freeze({
      */
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
-        window.myhistory = {callbacks: []};
-        Start.go();
+        start.go();
     },
 
     /** to
@@ -18,10 +17,10 @@ var Navigate = Object.freeze({
      * target:    Name of screen to load
      * context:   Hash containing variables for target template (optional)
      */
-    to: function(target, callback) {
-        history.pushState({path: target}, null, '#'+target);
-        window.myhistory.callbacks.push(callback);
-        this.navigate(target, callback);
+    to: function(target, callback, args) {
+        history.pushState({path: target, args: args}, null, '#'+target);
+        //TODO: Save callback and args for back/forward
+        this.navigate(target, callback, args);
     },
 
     /** back
@@ -31,8 +30,8 @@ var Navigate = Object.freeze({
     back: function(e) {
         if(e.state != null){
             this.closePopup();
-            var callback = window.myhistory.pop();
-            this.navigate(e.state.path, callback);
+            //TODO: Get callback and args from historystack
+            this.navigate(e.state.path, window[e.state.path].onload, e.state.args);
         }
     },
 
@@ -41,12 +40,15 @@ var Navigate = Object.freeze({
      * target:
      * context:
      */
-    navigate: function(target, callback) {
-        var a = document.createElement('div');
-        $(a).load('static/pages/' + target + '.html', function() {
-            callback(a);
+    navigate: function(target, callback, args) {
+        var newContent = document.createElement('div');
+        newContent.id = target;
+        args = args || [];
+        args.unshift(newContent);
+        $(newContent).load('static/pages/' + target + '.html', function() {
+            callback.apply(this, args);
         });
-        $('#content').html(a);
+        $('#content').html(newContent);
     },
 
 

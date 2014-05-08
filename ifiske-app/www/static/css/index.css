@@ -25,11 +25,11 @@ body {
 
 /* Portrait layout (default) */
 .app {
-    background-image: url(../img/wow.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    position: relative;
+    background-image:url(../img/wow.png);
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:cover;
+    position:relative;
     height:auto;
     min-height:100%;
     width:100%;
@@ -38,6 +38,7 @@ body {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color:#FFFFFF;
+    display:table;
 }
 
 /* Landscape layout (with min-width) */
@@ -45,4 +46,12 @@ body {
     .app {}
 }
 
+
+#header {
+    display:table-row;
+}
+
+#content {
+    display:table-row;
+}
 

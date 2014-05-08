@@ -261,7 +261,26 @@ Database = Object.freeze({
             [],
             querySuccess);
         }, Debug.log);
-    }
+    },
 
+    getSubscriptionByid: function(uid, callback) {
+        var querySuccess = function(tx, results) {
+            var result;
+            if (results.rows.length == 1)
+            {
+              result = results.rows.item(0);
+            }
+            callback && callback(result);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions',
+                'WHERE id = ?;'
+            ].join('\n'),
+            [uid],
+            querySuccess);
+        }, Debug.log);
+    }
 });
 

@@ -31,12 +31,19 @@ Handlebars.registerHelper('button', function(options){
     return $('<div/>', options.hash)[0].outerHTML;
 });
 
+Handlebars.registerHelper('testbutton', function(options)
+{
+
+  attr = JSON.parse(options.fn(this));
+  attr.onclick = attr.ontouchend;
+  return $('<div>', attr)[0].outerHTML;
+
+});
+
 Handlebars.registerHelper('printdate', function(unixtimestamp, options)
     {
-      //var datum = new Date(options.fn(unixtimestamp*1000));
       var datum = new Date(unixtimestamp*1000);
       var months = [ "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December" ];
       return "Utgår: " + months[datum.getMonth()] + " " + datum.getDate() + " " + datum.getFullYear() + " " + datum.getHours() + ":" + datum.getMinutes();
-      //return "Expires: " + datum.getMonth() + " " + datum.getDate() + datum.getFullYear() + " " + datum.getHours() + ":" + datum.getMinutes();
     });

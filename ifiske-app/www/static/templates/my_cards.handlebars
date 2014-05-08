@@ -6,9 +6,15 @@
     <div class="list-content">
         {{#if cards}}
         {{#list cards}}
-        {{product_title}}
+        {{#testbutton}}
+          {
+            "text"  : "{{product_title}}",
+            "class" : "button",
+            "ontouchend"  : "Subs.go({{id}})"
+          }
+        {{/testbutton}}
         <br>
-        {{#printdate validTo}}{{/printdate}}
+        {{!#printdate validTo}}{{!/printdate}}
         {{/list}}
         {{else}}
         <p>inga kort här just nu</p>

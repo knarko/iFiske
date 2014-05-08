@@ -39,3 +39,8 @@ Handlebars.registerHelper('concat', function(strs) {
     }
     return r;
 });
+
+Handlebars.registerHelper('parse', function(text) {
+    var retval = text.replace('&#10;','<br/>');
+    return retval;
+});

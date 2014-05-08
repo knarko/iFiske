@@ -1,36 +1,36 @@
-.list {
+#find-waters .list {
     width: 100%;
     color: white;
     margin-top: 10px;
     font-size: 120%;
     text-align: left;
 }
-.list-header > *{
+#find-waters .list-header > *{
     display: inline-block;
 }
-.list-content {
+#find-waters .list-content {
     font-size: 120%;
     line-height: 1;
     height: calc(100% - 110px);
     overflow: auto;
 }
 
-.list-content li {
+#find-waters .list-content li {
     margin-bottom: 3px;
 }
 
-.list-content .button {
+#find-waters .list-content .button {
 margin-top: 0px;
 }
 
-.list-content ul {
+#find-waters .list-content ul {
     margin-top: 0;
     list-style: none;
     text-align: left;
     padding-left: 0;
 }
 
-.list-icon {
+#find-waters .list-icon {
     padding-left: 10px;
     vertical-align: middle;
     border: none;
@@ -43,7 +43,7 @@ margin-top: 0px;
     padding: 0;
 }
 
-.water_arrow {
+#find-waters .water_arrow {
     background-image: url("../img/icon_arrow_right.png");
     height: 30px;
     width: 30px;

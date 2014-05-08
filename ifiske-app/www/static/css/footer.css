@@ -1,10 +1,46 @@
-div#footer
+/*div#footer
 {
     width: 100%;
-    background-color: #55a;
+    background-color:#55a;
     padding: 7px 0 7px 0px;
     position: absolute;
     left: 0;
     bottom: 0;
     vertical-align: middle;
+}*/
+
+#footer {
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
+
+#footer #settings_icon {
+    background-image: url("../img/icon_settings.png");
+    float: right;
+}
+
+#footer #facebook_icon {
+    background-image: url("../img/fb.png");
+    float: left;
+}
+
+#footer .footer_icon
+{
+    background-color: transparent;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+    border: none;
+    margin: 1%;
+}
+
+#footer p {
+    margin:0px;
+}
+

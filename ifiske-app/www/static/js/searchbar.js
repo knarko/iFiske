@@ -6,6 +6,16 @@ function expand() {
 	    	'<button type="submit" style="visibility: hidden"/>' + 
 			'</form>')
 
-		$("#searchfield").stop().animate({width: 'toggle'}, "slow", "linear");
-		$("#search-bottom-bar").slideToggle("slow");
+		$("#searchfield").stop().animate({width: 'toggle'}, {
+			step: function() {
+				$(this).css('-webkit-transform', "translate3d(0px, 0px, 0px)"); 
+			},
+			duration: 285 },
+			"linear");
+		$("#search-bottom-bar").slideToggle({
+			duration: 300, 
+			step: function() {
+				$(this).css('-webkit-transform', "translate3d(0px, 0px, 0px)"); 
+			}
+		});
 }

@@ -1,23 +1,25 @@
 <div id="menu">
-    <div class="button" ontouchend="search.go()">Hitta Fiskevatten</div>
+  <div class="button" ontouchend="search.go()">Hitta Fiskevatten</div>
+  
   <div class="logged-in">
-    <div class="button" ontouchend="Navigate.to('my_cards');">Mina Fiskekort</div>
-    <div class="button">Registrera faangst</div>
+    <div class="button" ontouchend="Navigate.to('my_cards');">
+      Mina Fiskekort
+    </div>
+    <div class="button">Registrera fångst</div>
   </div>
+  
   <div class="not-logged-in">
-      <div class="button" ontouchend="login.go();">Logga in</div>
-      <div class="button" ontouchend="register.go()">Registrera</div>
+    <div class="button" ontouchend="login.go();">Logga in</div>
+    <div class="button" ontouchend="register.go()">Registrera</div>
   </div>
 </div>
-<div id="bottom">
-  <div id="links">
-      <button class="img" id="facebook" ontouchend="try_open_fb();">
-    <button class="img" id="settings" ontouchend="Navigate.to('settings');"/>
-  </div>
 
-  <div id="footer">
-      <p class="logged-in">Inloggad som <span class="username"></span></p>
-      <p class="not-logged-in">Ingen användare inloggad</p>
-  </div>
+<div id="footer">
+  <button class="footer_icon" id="facebook_icon" 
+	  ontouchend="try_open_fb();"/>
+  <button class="footer_icon" id="settings_icon" 
+	  ontouchend="Navigate.to('settings');"/>
+
+  <p class="logged-in">Inloggad som <span class="username"></span></p>
 </div>
 

@@ -1,9 +1,12 @@
-#start #start_table {
+#start {
     display:table;
+    height:100%;
+    width:100%;
 }
 
 #start #menu {
     display:table-row;
+    width:100%;
 }
 
 #start .button {

@@ -31,7 +31,7 @@ var Navigate = Object.freeze({
         if(e.state != null){
             this.closePopup();
             //TODO: Get callback and args from historystack
-            this.navigate(e.state.path, window[e.state.path], e.state.args);
+            this.navigate(e.state.path, window[e.state.path].onload, e.state.args);
         }
     },
 

@@ -33,5 +33,10 @@ Handlebars.registerHelper('button', function(options){
 
 Handlebars.registerHelper('printdate', function(unixtimestamp, options)
     {
-      return Date(options.fn(unixtimestamp*1000));
+      //var datum = new Date(options.fn(unixtimestamp*1000));
+      var datum = new Date(unixtimestamp*1000);
+      var months = [ "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December" ];
+      return "Utgår: " + months[datum.getMonth()] + " " + datum.getDate() + " " + datum.getFullYear() + " " + datum.getHours() + ":" + datum.getMinutes();
+      //return "Expires: " + datum.getMonth() + " " + datum.getDate() + datum.getFullYear() + " " + datum.getHours() + ":" + datum.getMinutes();
     });

@@ -16,6 +16,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
     },
 
     // Update DOM on a Received Event
@@ -40,6 +41,8 @@ $(document).ready(function(){
         Navigate.back(e);
     });
     Database.update();
+
+    window.addEventListener("orientationchange", orientationChange, true);
     
 });
 var timeout;
@@ -48,8 +51,19 @@ function open_fb() {
     window.open('https://www.facebook.com/fiskekort', '_system');
 }
 
-function try_open_fb() 
-{
+function try_open_fb() {
     window.open('fb://profile/215728895115467', '_system');
     timeout = setTimeout('open_fb()', 300);
+}
+
+function orientationChange(e) {
+    var e = window.orientation;
+    if (window.orientation == -90 || window.orientation == 90)
+    {
+        $("#popup").css('height', '70%');
+    }
+    else
+    {
+      $("#popup").css('height', '50%');  
+    }
 }

@@ -51,6 +51,7 @@ var Navigate = Object.freeze({
         history.pushState({path: 'popup'}, null, '#popup');
         $('#popup').html(Handlebars.getTemplate(target)());
         $('#filter, #popup').fadeIn('fast', 'linear');
+        
     },
     closePopup: function() {
         $('#filter, #popup').fadeOut('fast', 'linear');

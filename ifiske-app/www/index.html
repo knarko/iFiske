@@ -7,6 +7,8 @@
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
 
+    <link rel="stylesheet" type="text/css" href="static/css/start.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/footer.css" />
     <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <link rel="stylesheet" type="text/css" href="static/css/popup.css" />
     <link rel="stylesheet" type="text/css" href="static/css/header.css" />
@@ -25,16 +27,17 @@
 
       <div id="header">
         <img id="logo" src="static/img/logo-xs.png"/>
-        <div id="search-div">
+        
+	<div id="search-div">
           <form onsubmit="Search.go();return false;">
             <input id="searchfield" type="search" placeholder="Snabbsök"/>
             <div id="search-bottom-bar"></div>
-
             <button type="submit" style="visibility: hidden"/>
-            </form>
-          </div>
-          <hr/>
-     </div>
+          </form>
+        </div>
+
+        <hr/>
+      </div>
 
       <div id="content"></div>
     </div>

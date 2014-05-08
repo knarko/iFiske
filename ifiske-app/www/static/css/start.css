@@ -1,0 +1,61 @@
+#start #start_table {
+    display:table;
+}
+
+#start #menu {
+    display:table-row;
+}
+
+#start .button {
+    clear: left;
+    background-color: #006993;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px;
+    color: #FFFFFF;
+}
+
+#start .logged-in {
+    display: none;
+}
+
+#start #footer {
+    display:table-row;
+}
+
+#footer #settings_icon {
+    background-image: url("../img/icon_settings.png");
+    float: right;
+}
+
+#footer #facebook_icon {
+    background-image: url("../img/fb.png");
+    float: left;
+}
+
+#footer .footer_icon
+{
+    background-color: transparent;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+    border: none;
+}
+
+#footer p {
+    margin:0px;
+}
+
+/*
+#footer {
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+*/

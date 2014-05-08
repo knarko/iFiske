@@ -7,8 +7,6 @@ function expand() {
 			'</form>')
 		$("#searchfield").css('visibility', "visible");
 
-		
-
 		$("#searchfield").stop().animate({width: 'toggle'}, {
 			step: function() {
 				$(this).css('-webkit-transform', "translate3d(0px, 0px, 0px)"); 

@@ -1,10 +1,11 @@
 
 function expand() {
-		$("#search-div").prepend('<form id="searchform" onsubmit="Search.go($("#searchfield").val());return false;">' + 
+		$("#search-div").prepend('<form id="searchform" onsubmit="Search.go($(&quot;#searchfield&quot;).val());return false;">' + 
 	     	'<input id="searchfield" type="search" placeholder="Snabbsök"/>' + 
 	    	'<div id="search-bottom-bar"></div>' + 
 	    	'<button type="submit" style="visibility: hidden"/>' + 
 			'</form>')
+		$("#searchfield").css('visibility', "visible");
 
 		$("#searchfield").stop().animate({width: 'toggle'}, {
 			step: function() {

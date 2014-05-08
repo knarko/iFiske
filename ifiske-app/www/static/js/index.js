@@ -43,6 +43,13 @@ $(document).ready(function(){
     Database.update();
 
     window.addEventListener("orientationchange", orientationChange, true);
+
+    $("#searchfield").live('focus', function(e) {
+            alert("hejsan");
+            //e.preventDefault();
+            e.stopPropagation();
+            window.scrollTo(0,0);
+        })
     
 });
 var timeout;

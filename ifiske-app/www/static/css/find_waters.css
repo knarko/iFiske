@@ -16,11 +16,11 @@
 }
 
 .list-content li {
-    width: 96%;
-    background-color: #006993;
-    font-size: 1.2em;
-    padding: 10px 2%;
     margin-bottom: 3px;
+}
+
+.list-content .button {
+margin-top: 0px;
 }
 
 .list-content ul {

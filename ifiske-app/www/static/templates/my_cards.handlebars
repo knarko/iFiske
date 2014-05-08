@@ -1,3 +1,15 @@
-{{>header}}
-Mina Fiskekort
-Placeholder
+{{> header }}
+<div class="list">
+    <div class="list-header">
+        Fiskevatten
+    </div>
+    <div class="list-content">
+        {{#if cards}}
+        {{#list cards}}
+        {{name}}
+        {{/list}}
+        {{#else}}
+        <p>inga kort här just nu</p>
+        {{/if}}
+    </div>
+</div>

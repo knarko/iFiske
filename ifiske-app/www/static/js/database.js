@@ -13,15 +13,25 @@ Database = Object.freeze({
             if (timestamp != localStorage.getItem('db_updated')) {
 
                 API.getAreas(function(data) {
-                    Database.clean(function() {
-                        Database.init(function() {
-                            Database.updateTable('Regions',data.regions);
-                            Database.updateTable('Areas',data.areas);
-                            Database.updateTable('Area_keywords', data.area_keywords);
-                            Database.updateTable('Products', data.products);
-                            localStorage.setItem('db_updated', timestamp);
-                            callback && callback();
+                    API.getOrganisations(function(organisations) {
+                        uniqueOrgs = organisations.sort().filter(function(elem, pos, self) {
+                            if(pos == 0)
+                                return true;
+                            return self[pos-1][0] != elem[0];
                         });
+                        data.organisations = uniqueOrgs;
+                        Database.clean(function() {
+                            Database.init(function() {
+                                Database.updateTable('Regions',data.regions);
+                                Database.updateTable('Areas',data.areas);
+                                Database.updateTable('Organisations', data.organisations);
+                                Database.updateTable('Area_keywords', data.area_keywords);
+                                Database.updateTable('Products', data.products);
+                                localStorage.setItem('db_updated', timestamp);
+                                callback && callback();
+                            });
+                        });
+                        //TODO: Add Subscriptions
                     });
                 });
             }
@@ -38,11 +48,17 @@ Database = Object.freeze({
         Area_keywords: [
             'area_id', 'keyword'
         ],
+        Organisations: [
+            'id', 'name', 'region', 'description', 'homepage', 'contact'
+        ],
         Products: [
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
-        ]
+        ] /*,
+        Files: [
+            'id', 'filename'
+        ]*/
     },
 
     clean: function(callback) {
@@ -54,7 +70,9 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Products');
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
+//          tx.executeSql('DROP TABLE IF EXISTS Files');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
+            tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
         Debug.log,
         callback
@@ -112,10 +130,20 @@ Database = Object.freeze({
 
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Organisations (',
-                'id int, name text, region region, description text,',
+                'id int, name text, region int, description text,',
                 'homepage text, contact text,',
-                'PRIMARY KEY (id))'
+                'PRIMARY KEY (id),',
+                'FOREIGN KEY (region) REFERENCES Regions(id))'
             ].join('\n'));
+
+            /* Removed files from table since we don't cache anymore
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Files (',
+                'id int, filename text,',
+                'PRIMARY KEY (id, filename),',
+                'FOREIGN KEY (id) REFERENCES Organisations(id));'
+            ].join('\n'));
+            */
         },
         Debug.log,
         callback
@@ -144,6 +172,7 @@ Database = Object.freeze({
         } else {
             throw Error('Not yet implemented');
         }
+
         this.DB.transaction(function(tx){
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);
@@ -153,15 +182,22 @@ Database = Object.freeze({
 
     getArea: function(id, callback) {
         var querySuccess = function(tx, result) {
-            callback && callback(result);
+            if (result.rows.length == 1) {
+                callback && callback(result.rows.item(0));
+            } else {
+                callback && callback(null);
+            }
         }
         this.DB.transaction(function(tx) {
             tx.executeSql([
-                'SELECT *',
+                'SELECT DISTINCT Areas.*, Organisations.*',
                 'FROM Areas',
-                'WHERE id = ?'].join(' '),
-                [id],
-                querySuccess);
+                'JOIN Organisations',
+                'ON Areas.org_id = Organisations.id',
+                'WHERE Areas.id = ?'
+            ].join(' '),
+            [id],
+            querySuccess);
         }, Debug.log);
     },
 
@@ -175,11 +211,11 @@ Database = Object.freeze({
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
-                'SELECT * ',
-                'FROM Areas ',
+                'SELECT id, name',
+                'FROM Areas',
                 'WHERE name LIKE ?',
                 'UNION',
-                'SELECT DISTINCT Areas.*',
+                'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),

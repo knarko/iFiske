@@ -9,7 +9,7 @@ var Navigate = Object.freeze({
      */
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
-        this.navigate('start');
+        Start.go();
     },
 
     /** to
@@ -17,9 +17,9 @@ var Navigate = Object.freeze({
      * target:    Name of screen to load
      * context:   Hash containing variables for target template (optional)
      */
-    to: function(target, context) {
-        history.pushState({path: target, context: context}, null, '#'+target);
-        this.navigate(target, context);
+    to: function(target, callback) {
+        history.pushState({path: target}, null, '#'+target);
+        this.navigate(target, callback);
     },
 
     /** back
@@ -29,7 +29,7 @@ var Navigate = Object.freeze({
     back: function(e) {
         if(e.state != null){
             this.closePopup();
-            this.navigate(e.state.path, e.state.context);
+            this.navigate(e.state.path, e.state.callback);
         }
     },
 
@@ -38,11 +38,14 @@ var Navigate = Object.freeze({
      * target:
      * context:
      */
-    navigate: function(target, context) {
-        target = Handlebars.getTemplate(target);
-        $('#content').html(target($.extend({}, localStorage, context || {})));
-        kitten = $.extend({}, localStorage, context || {});
+    navigate: function(target, callback) {
+        var a = document.createElement('div');
+        $(a).load('static/pages/' + target + '.html', function() {
+            callback(a);
+        });
+        $('#content').html(a);
     },
+
 
     /** popup
      * Spawns a popup containing target template.

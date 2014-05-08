@@ -1,18 +1,16 @@
 var Area = Object.freeze({
     go: function(id) {
-                Navigate.to('area', Area.onLoad);
+        Navigate.to('area', this.onLoad);
     },
-    onload: function() {
+    onload: function(text) {
         Database.getArea(id, function(area) {
             if(area != null) {
-        API.getPhotos(area.org_id, function(photos) {
-            area.photos = photos;
-        });
+                API.getPhotos(area.org_id, function(photos) {
+                    area.photos = photos;
+                });
             } else {
                 throw Error('Tried going to an Area that did not exist');
             };
         });
     }
 });
-target = "Area";
-window[target].onload();

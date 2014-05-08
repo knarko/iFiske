@@ -1,19 +1,16 @@
 {{> header}}
 <div id="menu">
-  {{{button text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()"}}}
-  {{#if user}}
-  <div id="logged-in">
-    {{{button text="Mina Fiskekort" id="my_cards" target="my_cards"}}}<!-- ontouchend="Database.-->
-    {{{button id="register_catch" target="register_catch" text="Registrera Fångst"}}}
+  <div class="button" text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()" />
+  <div class="logged-in">
+    <div class="button" id="my_cards" ontouchend="Navigate.to('my_cards');">Mina Fiskekort</div>
+    <div class="button" id="register_catch" text="Registrera Fångst" />
   </div>
-  {{else}}
   <div class="not-logged-in">
-    {{{button id="login" target="login" text="Logga in"}}}
-    {{{button id="register" target="register_user" text="Registrera"}}}
+    <div class="button" id="login" target="login" text="Logga in" />
+    <div class="button" id="register" target="register_user" text="Registrera" />
   </div>
-  {{/if}}
 </div>
-
+<!--
 <div id="bottom">
   <div id="links">
     <a onclick="try_open_fb();"">
@@ -31,3 +28,4 @@
 
   </div>
 </div>
+-->

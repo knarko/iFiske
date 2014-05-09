@@ -3,10 +3,10 @@ var area = Object.freeze({
         Navigate.to('area', this.onload, [id]);
     },
     onload: function(text, id) {
-        Database.getArea(id, function(area) {
+        Database.getArea(id, function(result) {
             if(area != null) {
                 var photosdiv = $(text).find("#photos");
-                API.getPhotos(area.org_id, function(photos) {
+                API.getPhotos(result.org_id, function(photos) {
                     if(photos) {
                         var photo = document.createElement('img');
                         photo.src = photos[0];
@@ -18,17 +18,17 @@ var area = Object.freeze({
                       photo.src = this;
                       photosdiv.append(photo);
                       });
-                    */
+                      */
                 });
-                $(text).find('.area-name').text(area.name);
-                $(text).find('.area-description').html(parse(area.description));
+                $(text).find('.area-name').text(result.name);
+                $(text).find('.area-description').html(area.parse(result.description));
             } else {
                 throw Error('Tried going to an Area that did not exist');
             };
         });
+    },
+    parse: function (text) {
+        return text.replace(/&#10;/g,'<br/>');
     }
 });
 
-function parse (text) {
-    return text.replace(/&#10;/g,'<br/>');
-}

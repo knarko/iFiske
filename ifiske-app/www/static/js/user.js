@@ -1,27 +1,39 @@
 var User = Object.freeze({
 
     /** login
-     * Attempts to log in the user. Displays error message on failure.
+     * Attempts to log in. Displays error message on failure.
      * form:    the login form
+     *          should contain a username and password input field
      */
     login: function(form) {
         var user = form.username.value.toLowerCase();
         var password = form.password.value;
 
-        API.login(
+        API.authenticate (
             user,
             password,
             function(xml) {
-                if ($(xml).find('error')[0]) {
+		xml = $(xml)
+                
+		// If no error messages were recieved from the server
+		if (xml.find('error').length == 0) {
+		    /* Set localStorage values used for further authenticated
+		       requests */
+		    localStorage.setItem('password', password);
+		    localStorage.setItem(
+			'user', 
+			xml.find('user')[0].getAttribute('username')
+		    );
+		    
+		    // Avoid back stack entry
+                    Navigate.init();
+            
+		} else {
+		    /* Clear the password input field and display error msg */
                     form.password.value = '';
                     $(form).find('.error-span').css('display', 'block');
-                    return;
                 }
-                localStorage.setItem('user', user);
-                localStorage.setItem('password', password);
-                // Avoid back stack entry
-                Navigate.init();
-            });
+	    });
     },
 
     /** logout
@@ -47,8 +59,8 @@ var User = Object.freeze({
     },
 
     /** validate_register_form
-     * Invalidates the registration form. Displays potential errors.
-     * Calls API.register(...) on success.
+     * Validates the registration form. Triggers display of error messages.
+     * Calls API.register() on success.
      */
     validate_register: function(form) {
 	var username = form.username.value.trim();
@@ -69,26 +81,26 @@ var User = Object.freeze({
 		    function() {
 			switch($(this).attr('result')) {
 			case '1':
-			    console.log("Username already exists");
+			    Debug.log("Username already exists");
 			    $(form).find('.error-span').css('display', 'block');
 			    break;
 			case '2':
-			    console.log("Invalid username");
+			    Debug.log("Invalid username");
 			    break;
 			case '3':
-			    console.log("Invalid name, username or password");
+			    Debug.log("Invalid name, username or password");
 			    break;
 			case '4':
-			    console.log("Invalid email");
+			    Debug.log("Invalid email");
 			    break;
 			case '5':
-			    console.log("Invalid password");
+			    Debug.log("Invalid password");
 			    break;
 			case '6': 
-			    console.log("Invalid phone number");
+			    Debug.log("Invalid phone number");
 			    break;
 			default:
-			    console.log("Unknown error encountered");
+			    Debug.log("Unknown error encountered");
 			}
 		    }
 		);

@@ -27,11 +27,3 @@ var my_cards = Object.freeze({
         area.go(parseInt($(e.target).attr('data-id')));
     }
 });
-Database.getSubscriptionByid(id, function (result) {
-    if (result != null) {
-        Navigate.to('card', {card: result});
-
-    } else {
-        throw Error('No such subscription ID');
-    }
-});

@@ -1,0 +1,8 @@
+#search .list {
+    width:100%;
+    color:white;
+    font-size:120%;
+    text-align:left;
+    overflow:auto;
+    height:100%;
+}

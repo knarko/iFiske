@@ -1,13 +1,18 @@
-#area #photos {
-    background-color: green;
-    height:100px;
-    width:100%;
+#area #area-box {
+    background-color: rgba(255,255,255,0.3);
+    color: #070707;
+    /*color: rgb(26,28,34);*/
+    text-align: left;
+    padding: 4px;
 }
 
-#area #area-description {
-    background-color:lightgreen;
-    height:800px;
-    width:100%;
+#area #area-box h1 {
+    margin: 0px 0px 4px 0px ;
+    font-size:1.4em;
+    color: #006993;
+}
+#area #area-box p {
+    margin: 0;
 }
 
 #area #photos img{

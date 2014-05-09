@@ -16,3 +16,12 @@
     font-size: 1em;
     padding: 5px 30px 5px 30px;
 }
+
+#login .button {
+    background-color: #006993;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px;
+    color: #FFFFFF;
+}

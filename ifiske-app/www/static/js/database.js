@@ -56,9 +56,9 @@ Database = Object.freeze({
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
         ] /*,
-        Files: [
+            Files: [
             'id', 'filename'
-        ]*/
+            ]*/
     },
 
     clean: function(callback) {
@@ -70,7 +70,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Products');
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
-//          tx.executeSql('DROP TABLE IF EXISTS Files');
+            //          tx.executeSql('DROP TABLE IF EXISTS Files');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
             tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
@@ -137,13 +137,13 @@ Database = Object.freeze({
             ].join('\n'));
 
             /* Removed files from table since we don't cache anymore
-            tx.executeSql([
-                'CREATE TABLE IF NOT EXISTS Files (',
-                'id int, filename text,',
-                'PRIMARY KEY (id, filename),',
-                'FOREIGN KEY (id) REFERENCES Organisations(id));'
-            ].join('\n'));
-            */
+               tx.executeSql([
+               'CREATE TABLE IF NOT EXISTS Files (',
+               'id int, filename text,',
+               'PRIMARY KEY (id, filename),',
+               'FOREIGN KEY (id) REFERENCES Organisations(id));'
+               ].join('\n'));
+               */
         },
         Debug.log,
         callback
@@ -203,11 +203,7 @@ Database = Object.freeze({
 
     search: function(searchstring, callback) {
         var querySuccess = function(tx, results){
-            var resultsArray = [];
-            for(var i = 0; i < results.rows.length; ++i){
-                resultsArray.push(results.rows.item(i));
-            }
-            callback && callback(resultsArray);
+            callback && callback(results);
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
@@ -218,7 +214,9 @@ Database = Object.freeze({
                 'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
+                'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
+                'ORDER BY name'
+            ].join('\n'),
                 ['%' + searchstring + '%', '%' + searchstring + '%'],
                 querySuccess);
         },Debug.log);

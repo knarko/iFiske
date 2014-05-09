@@ -30,7 +30,7 @@ body {
     background-position:center center;
     background-size:cover;
     position:relative;
-    height:auto;
+    height:100%;
     min-height:100%;
     width:100%;
     text-align:center;
@@ -48,5 +48,5 @@ body {
 
 #content {
     display:table-row;
+    height:100%;
 }
-

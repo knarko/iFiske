@@ -9,19 +9,30 @@ var login = Object.freeze({
         var user = form.username.value.toLowerCase();
         var password = form.password.value;
 
-        API.login(
+        API.authenticate (
             user,
             password,
             function(xml) {
-                if ($(xml).find('error')[0]) {
+                xml = $(xml)
+
+                // If no error messages were recieved from the server
+                if (xml.find('error').length == 0) {
+                    /* Set localStorage values used for further authenticated
+                       requests */
+                    localStorage.setItem('password', password);
+                    localStorage.setItem(
+                        'user',
+                        xml.find('user')[0].getAttribute('username')
+                    );
+
+                    // Avoid back stack entry
+                    Navigate.init();
+
+                } else {
+                    /* Clear the password input field and display error msg */
                     form.password.value = '';
                     $(form).find('.error-span').css('display', 'block');
-                    return;
                 }
-                localStorage.setItem('user', user);
-                localStorage.setItem('password', password);
-                // Avoid back stack entry
-                Navigate.init();
             });
     }
 });

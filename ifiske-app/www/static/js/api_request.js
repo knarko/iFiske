@@ -10,8 +10,10 @@ var API = Object.freeze( {
      *
      * Notes:
      * - Due to inconsistent server-side error handling we cannot check for
-     * server-side errors here. All error handling should be placed inside
-     * success_func.
+     * any server-side errors here. All error messages/codes in the returned
+     * xml should be handled in the callback function.
+     * - Use auth_request for requests requiring authentication data if the
+     * user is already logged in.
      **/
     request: function(args, callback)
     {
@@ -24,6 +26,7 @@ var API = Object.freeze( {
             dataType: 'xml',
             data: args,
             success: callback,
+
             error: function(e) {
                 console.log(e);
             }
@@ -40,8 +43,7 @@ var API = Object.freeze( {
         this.request(args, callback);
     },
 
-    /**
-     * getAreas
+    /** getAreas
      * Gets all areas and calls a callback with the resulting object
      * callback: A function accepting an Object containing regions and areas as input
      **/
@@ -166,7 +168,7 @@ var API = Object.freeze( {
                     ]);
                 }
             );
-        return organisations;
+            return organisations;
         } else if ($(xmldata).find('photos').length != 0) {
             $.each(
                 $(xmldata).find('photos').children(),
@@ -180,13 +182,13 @@ var API = Object.freeze( {
             return false;
         }
     },
-    /** login
-     * Sends login API request
-     */
-    login: function(user, password, callback) {
+
+    /** authenticate
+    */
+    authenticate: function(user, password, callback) {
         this.request(
             {
-            action: 'login',
+            action: 'authenticate',
             uid: user,
             pw: password
         },
@@ -195,8 +197,7 @@ var API = Object.freeze( {
     },
 
     /** register
-     * Sends a registration API request.
-     */
+    */
     register: function(username, password, fullname, email, phone, callback) {
         this.request(
             {

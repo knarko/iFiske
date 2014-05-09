@@ -30,6 +30,5 @@ var createButton = function (props) {
     ].join('');
 };
 var buttonclick = function(e) {
-    katt = e;
-    area.go($(e.target).attr('data-id'));
+    area.go(parseInt($(e.target).attr('data-id')));
 }

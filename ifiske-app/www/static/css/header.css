@@ -1,22 +1,22 @@
 #header {
-    display:table-row;
-    height:40px;
-}
-
-#header > div {
-    height:40px;
+    width:100%;
+    height:30px;
 }
 
 #header #logo {
-    height:40px;
-    width:100px;
+    background-image: url("../img/logo-thin-arrow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width:90px;
+    height:100%;
     float:left;
-    margin-right:10px;
+    margin-right:6px;
 }
 
 #header #search-div {
     overflow:hidden;
 }
+
 
 #header #searchfield {
     height:100%;
@@ -27,8 +27,13 @@
     background-color: transparent;
     border:0px solid #006993;
     border-bottom-width: 3px;
-    //padding: 13px 10px 0px 10px;
+    padding: 0px 0px 0px 5px;
     outline: 0;
+}
+
+#searchfield ::-webkit-input-placeholder {
+    color: #FF12FF;
+    font-style: italic;
 }
 
 #header #search-div ::-webkit-input-placeholder {
@@ -41,16 +46,5 @@
     border:0px solid #006993;
     border-width:0px 3px 0px 3px;
     position: relative;
-    margin-top: -10px;
-}
-
-#header #search-div ::-webkit-input-placeholder {
-    color: #DDDDDD;
-    font-style: italic;
-}
-
-#header hr {
-    margin: 3px 0px 8px 0px;
-    border-width: 0px;
-    border-top: 3px solid #006993;
+    margin-top: -7px;
 }

@@ -27,19 +27,21 @@
       <div id="popup"></div>
 
       <div id="header">
-        <img id="logo" src="static/img/logo-xs.png"/>
+	<div id="logo" ontouchend="history.back();"></div>
+        <!--img id="logo" src="static/img/logo-xs.png"/-->
+	
 	<div id="search-div">
           <form onsubmit="search.go();return false;">
             <input id="searchfield" type="search" placeholder="Snabbsök"/>
             <div id="search-bottom-bar"></div>
-            <button type="submit" style="visibility: hidden"/>
           </form>
         </div>
 
-        <hr/>
       </div>
+        <hr id="header-hr"/>
 
-      <div id="content"></div>
+      <div id="content">
+      </div>
     </div>
 
     <script type="text/javascript" src="phonegap.js"></script>

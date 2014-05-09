@@ -1,7 +1,8 @@
 /**
  * Navigation system for the app
- * to go forward, call Navigate.to('target')
- * to back, call window.history.back()
+ * used by all pages to manage history and loading
+ * use by calling Navigate.to('page', onloadfunc, [*args]);
+ * to back, call window.history.back() which will be
  */
 var Navigate = Object.freeze({
     /** init
@@ -9,36 +10,37 @@ var Navigate = Object.freeze({
      */
     init: function() {
         history.replaceState({path: 'start'}, null, '#');
+        //TODO: Init start.go differently. Now it will call navigate.to, which will create a back stack entry.
         start.go();
     },
 
     /** to
      * Navigates to target template and adds history entry.
-     * target:    Name of screen to load
-     * context:   Hash containing variables for target template (optional)
+     * target: The target page to load into #content
+     * callback: The callback to call when done
+     * args: arguments for the callback
      */
     to: function(target, callback, args) {
         history.pushState({path: target, args: args}, null, '#'+target);
-        //TODO: Save callback and args for back/forward
         this.navigate(target, callback, args);
     },
 
     /** back
      * Navigates to previous history entry
-     * e:    history entry to navigate to
+     * e: History event
      */
     back: function(e) {
         if(e.state != null){
             this.closePopup();
-            //TODO: Get callback and args from historystack
             this.navigate(e.state.path, window[e.state.path].onload, e.state.args);
         }
     },
 
     /** navigate
-     *
-     * target:
-     * context:
+     * Internal function used in Navigate to load a page and call neccessary callbacks
+     * target: The target page to load into #content
+     * callback: The callback to call when done
+     * args: arguments for the callback
      */
     navigate: function(target, callback, args) {
         var newContent = document.createElement('div');
@@ -51,15 +53,20 @@ var Navigate = Object.freeze({
         $('#content').html(newContent);
     },
 
-
     /** popup
      * Spawns a popup containing target template.
-     * target:    template to popup
+     * target: Page to popup
+     * callback: The callback to call when done
+     * args: Arguments for the callback
      */
-    popup: function(target) {
+    popup: function(target, callback, args) {
+        callback = callback || function(){};
+        args = args || [];
         history.pushState({path: 'popup'}, null, '#popup');
-        $('#popup').html(Handlebars.getTemplate(target)());
-        $('#filter, #popup').fadeIn('fast', 'linear');
+        $('#popup').load('static/pages/' + target + '.html', function() {
+            callback.apply(this, args);
+            $('#filter, #popup').fadeIn('fast', 'linear');
+        });
     },
     closePopup: function() {
         $('#filter, #popup').fadeOut('fast', 'linear');

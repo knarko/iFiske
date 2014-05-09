@@ -23,7 +23,11 @@ var area = Object.freeze({
 
 		$(text).find('.area-name').text(result.name);
 		$(text).find('.area-description').html(
-		    area.parse(result.description.replace(/(&#10;(&nbsp;)*){3,}/g,"&#10;&#10;"))
+		    area.parse(
+			result.description.replace(
+			    /(&#10;(&nbsp;)*){3,}/g,"&#10;&#10;"
+			)
+		    )
 		);
                 
             } else {

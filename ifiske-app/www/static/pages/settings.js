@@ -3,7 +3,9 @@ var settings = Object.freeze({
         Navigate.to('settings', this.onload);
     },
     onload: function (text) {
-
+        if(localStorage.user) {
+            $(text).find('.logged-in, .not-logged-in').toggle();
+        }
     },
 
     logout: function() {

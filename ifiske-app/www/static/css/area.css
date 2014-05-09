@@ -18,3 +18,13 @@
 #area #photos img{
     width:100%;
 }
+
+#area #card-button {
+    width:120px;
+    height:40px;
+    font-weight:bold;
+    color:white;
+    background-color:#006993;
+    float:right;
+    display:inline-block;
+}

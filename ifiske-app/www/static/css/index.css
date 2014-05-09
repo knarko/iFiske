@@ -50,3 +50,9 @@ body {
     display:table-row;
     height:100%;
 }
+
+#header-hr {
+    margin: 3px 0px 8px 0px;
+    border-width: 0px;
+    border-top: 3px solid #006993;
+}

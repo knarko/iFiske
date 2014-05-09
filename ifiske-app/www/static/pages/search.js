@@ -7,7 +7,7 @@ var search = Object.freeze({
     onload: function(text) {
         var searchstring = $("#searchfield").val();
         Database.search(searchstring, function(result) {
-            var list = $(text).find(".list-content")
+            var list = $(text).find("#search-list")
             $(list).empty();
             $.each(
                 result,

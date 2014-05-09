@@ -15,7 +15,7 @@ var search = Object.freeze({
                 newlist.push(createButton(result.rows.item(i)));
             }
             list.html(newlist.join(''));
-            $('.button').bind('touchend', buttonclick)
+            $('.button').bind('touchend', buttonclick);
         });
 
     }

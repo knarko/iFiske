@@ -1,10 +1,10 @@
-#area #area-img {
+#area #photos {
     background-color: green;
     height:100px;
     width:100%;
 }
 
-#area #area-info {
+#area #area-description {
     background-color:lightgreen;
     height:800px;
     width:100%;

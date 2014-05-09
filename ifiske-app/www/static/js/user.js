@@ -19,6 +19,10 @@ var User = Object.freeze({
                 }
                 localStorage.setItem('user', user);
                 localStorage.setItem('password', password);
+                //Fetch all user subscriptions
+                API.getSubscriptions(function(data) {
+                    Database.updateTable('Subscriptions', data);
+                });
                 // Avoid back stack entry
                 Navigate.init();
             });
@@ -37,7 +41,7 @@ var User = Object.freeze({
 
     validate_password_confirm: function(e) {
 	var pwc = e.parentNode.password_confirm;
-	
+
 	if (pwc.value.trim() !== "" &&
 	    pwc.value.trim() !== e.parentNode.password.value.trim()) {
 	    pwc.setCustomValidity("Passwords must match!");
@@ -65,7 +69,7 @@ var User = Object.freeze({
 	    phone,
 	    function(xml) {
 		$.each(
-		    $(xml).find('user'), 
+		    $(xml).find('user'),
 		    function() {
 			switch($(this).attr('result')) {
 			case '1':
@@ -84,7 +88,7 @@ var User = Object.freeze({
 			case '5':
 			    console.log("Invalid password");
 			    break;
-			case '6': 
+			case '6':
 			    console.log("Invalid phone number");
 			    break;
 			default:

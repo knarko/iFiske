@@ -3,7 +3,7 @@
   {{{button text="Hitta Fiskevatten" id="find_fish" ontouchend="Search.go()"}}}
   {{#if user}}
   <div id="logged-in">
-    {{{button id="my_cards" target="my_cards" text="Mina Fiskekort"}}}
+    {{{button text="Mina Fiskekort" id="my_cards" ontouchend="License.fetch('my_cards')"}}}
     {{{button id="register_catch" target="register_catch" text="Registrera Fångst"}}}
   </div>
   {{else}}

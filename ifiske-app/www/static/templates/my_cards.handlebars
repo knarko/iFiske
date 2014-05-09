@@ -1,3 +1,23 @@
-{{>header}}
-Mina Fiskekort
-Placeholder
+{{> header }}
+<div class="list">
+    <div class="list-header">
+      Mina Fiskekort
+    </div>
+    <div class="list-content">
+        {{#if cards}}
+        {{#list cards}}
+        {{#testbutton}}
+          {
+            "text"  : "{{product_title}}",
+            "class" : "button",
+            "ontouchend"  : "Subs.go({{id}})"
+          }
+        {{/testbutton}}
+        <br>
+        {{!#printdate validTo}}{{!/printdate}}
+        {{/list}}
+        {{else}}
+        <p>inga kort här just nu</p>
+        {{/if}}
+    </div>
+</div>

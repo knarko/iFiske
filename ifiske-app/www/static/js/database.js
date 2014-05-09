@@ -42,6 +42,11 @@ Database = Object.freeze({
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
+        ],
+        Subscriptions: [
+            'id', 'title', 'product_title', 'org_id', 'rule_id', 'area_id',
+            'validFrom', 'validTo', 'fullname', 'email', 'ref_our',
+            'ref_their', 'mobile', 'code', 'pdf_id', 'purchased_at'
         ]
     },
 
@@ -55,6 +60,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
+            tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
         Debug.log,
         callback
@@ -116,6 +122,16 @@ Database = Object.freeze({
                 'homepage text, contact text,',
                 'PRIMARY KEY (id))'
             ].join('\n'));
+
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Subscriptions (',
+                'id int, title text, product_title text, org_id int,',
+                'rule_id int, area_id int, validFrom int, validTo int,',
+                'fullname text, email text, ref_our int, ref_their int,',
+                'mobile int, code int, pdf_id text, purchased_at int,',
+                'PRIMARY KEY (id))'
+            ].join('\n'));
+
         },
         Debug.log,
         callback
@@ -144,6 +160,7 @@ Database = Object.freeze({
         } else {
             throw Error('Not yet implemented');
         }
+
         this.DB.transaction(function(tx){
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);
@@ -224,7 +241,46 @@ Database = Object.freeze({
             [area_id],
             querySuccess);
         }, Debug.log);
-    }
+    },
 
+    //TODO Make a function for removing subscriptions.
+    //This one should be used to get all of the users fishinglicenses.
+    getSubscriptions: function(callback) {
+        var querySuccess = function(tx, results) {
+            var resultsArray = [];
+            for(var i = 0; i < results.rows.length; ++i){
+                resultsArray.push(results.rows.item(i));
+            }
+            callback && callback(resultsArray);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions;'
+            ].join('\n'),
+            [],
+            querySuccess);
+        }, Debug.log);
+    },
+
+    getSubscriptionByid: function(uid, callback) {
+        var querySuccess = function(tx, results) {
+            var result;
+            if (results.rows.length == 1)
+            {
+              result = results.rows.item(0);
+            }
+            callback && callback(result);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions',
+                'WHERE id = ?;'
+            ].join('\n'),
+            [uid],
+            querySuccess);
+        }, Debug.log);
+    }
 });
 

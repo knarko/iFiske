@@ -21,7 +21,9 @@ var area = Object.freeze({
                     */
                 });
                 $(text).find('.area-name').text(area.name);
-                $(text).find('.area-description').html(parse(area.description));
+		$(text).find('.area-description').html(
+		    parse(area.description.replace(/(&#10;(&nbsp;)*){3,}/g,"&#10;&#10;"))
+		);
             } else {
                 throw Error('Tried going to an Area that did not exist');
             };

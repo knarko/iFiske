@@ -55,10 +55,12 @@ Database = Object.freeze({
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
-        ] /*,
-            Files: [
-            'id', 'filename'
-            ]*/
+        ],
+        Subscriptions: [
+            'id', 'title', 'product_title', 'org_id', 'rule_id', 'area_id',
+            'validFrom', 'validTo', 'fullname', 'email', 'ref_our',
+            'ref_their', 'mobile', 'code', 'pdf_id', 'purchased_at'
+        ]
     },
 
     clean: function(callback) {
@@ -70,7 +72,6 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Products');
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
-            //          tx.executeSql('DROP TABLE IF EXISTS Files');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
             tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
@@ -136,14 +137,14 @@ Database = Object.freeze({
                 'FOREIGN KEY (region) REFERENCES Regions(id))'
             ].join('\n'));
 
-            /* Removed files from table since we don't cache anymore
-               tx.executeSql([
-               'CREATE TABLE IF NOT EXISTS Files (',
-               'id int, filename text,',
-               'PRIMARY KEY (id, filename),',
-               'FOREIGN KEY (id) REFERENCES Organisations(id));'
-               ].join('\n'));
-               */
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Subscriptions (',
+                'id int, title text, product_title text, org_id int,',
+                'rule_id int, area_id int, validFrom int, validTo int,',
+                'fullname text, email text, ref_our int, ref_their int,',
+                'mobile int, code int, pdf_id text, purchased_at int,',
+                'PRIMARY KEY (id))'
+            ].join('\n'));
         },
         Debug.log,
         callback
@@ -217,8 +218,8 @@ Database = Object.freeze({
                 'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
                 'ORDER BY name'
             ].join('\n'),
-                ['%' + searchstring + '%', '%' + searchstring + '%'],
-                querySuccess);
+            ['%' + searchstring + '%', '%' + searchstring + '%'],
+            querySuccess);
         },Debug.log);
     },
 
@@ -258,7 +259,37 @@ Database = Object.freeze({
             [area_id],
             querySuccess);
         }, Debug.log);
-    }
+    },
 
+    getSubscriptions: function(callback) {
+        var querySuccess = function(tx, results) {
+            if (results.rows.length != 0)
+                callback && callback(results);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions;'
+            ].join('\n'),
+            [],
+            querySuccess);
+        }, Debug.log);
+    },
+
+    getSubscriptionByid: function(uid, callback) {
+        var querySuccess = function(tx, results) {
+            if (results.rows.length == 1)
+                callback && callback(results.rows.item(0));
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions',
+                'WHERE id = ?;'
+            ].join('\n'),
+            [uid],
+            querySuccess);
+        }, Debug.log);
+    }
 });
 

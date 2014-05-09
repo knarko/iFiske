@@ -2,29 +2,34 @@ var search = Object.freeze({
     go: function() {
         if($("#search").length == 0)
             Navigate.to('search', this.onload);
-        this.onload($("#content"));
+        else
+            this.onload($("#content"));
     },
     onload: function(text) {
         var searchstring = $("#searchfield").val();
         Database.search(searchstring, function(result) {
             var list = $(text).find("#search-list")
-            $(list).empty();
-            $.each(
-                result,
-                function () {
-                    list.append(createButton(this));
-                }
-            );
+            list.empty();
+            var newlist = [];
+            for(var i = 0; i < result.rows.length; ++i) {
+                newlist.push(createButton(result.rows.item(i)));
+            }
+            list.html(newlist.join(''));
+            $('.button').bind('touchend', buttonclick)
         });
 
     }
 });
 var createButton = function (props) {
-    var btn = document.createElement('div');
-    btn.classList.add('button');
-    $(btn).bind('touchend', function () {
-        area.go(props.id);
-    });
-    $(btn).text(props.name);
-    return btn;
+    return [
+        '<div class="button" data-id="',
+        props.id,
+        '">',
+        props.name,
+        '</div>'
+    ].join('');
 };
+var buttonclick = function(e) {
+    katt = e;
+    area.go($(e.target).attr('data-id'));
+}

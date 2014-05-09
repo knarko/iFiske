@@ -1,0 +1,15 @@
+#area #photos {
+    background-color: green;
+    height:100px;
+    width:100%;
+}
+
+#area #area-description {
+    background-color:lightgreen;
+    height:800px;
+    width:100%;
+}
+
+#area #photos img{
+    width:100%;
+}

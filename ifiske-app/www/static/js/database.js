@@ -268,8 +268,10 @@ Database = Object.freeze({
         };
         this.DB.transaction(function(tx) {
             tx.executeSql([
-                'SELECT *',
-                'FROM Subscriptions;'
+                'SELECT Areas.name, Subscriptions.*',
+                'FROM Subscriptions',
+                'JOIN Areas',
+                'ON Areas.id = Subscriptions.area_id'
             ].join('\n'),
             [],
             querySuccess);

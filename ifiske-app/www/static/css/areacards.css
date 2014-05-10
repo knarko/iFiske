@@ -1,4 +1,4 @@
-#my_cards .button {
+#areacards .button {
     background-color: #006993;
     margin-bottom: 10px;
     font-size: 17px;
@@ -7,13 +7,4 @@
     color: #FFFFFF;
     text-align: left;
     overflow:hidden;
-}
-
-#my_cards .button h1 {
-    margin: 0;
-    font-size: 20px;
-}
-
-#my_cards .date {
-    float: right;
 }

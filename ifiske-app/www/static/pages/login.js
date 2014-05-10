@@ -25,6 +25,11 @@ var login = Object.freeze({
                         xml.find('user')[0].getAttribute('username')
                     );
 
+                //Fetch all user subscriptions
+                API.getSubscriptions(function(data) {
+                    Database.updateTable('Subscriptions', data);
+                });
+
                     // Avoid back stack entry
                     Navigate.init();
 

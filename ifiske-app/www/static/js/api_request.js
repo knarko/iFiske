@@ -83,6 +83,19 @@ var API = Object.freeze( {
         API.request({action: "get_db_lastmod"}, requestCallback);
     },
 
+    getSubscriptions: function(callback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null)
+                callback(API.xmlparser(xmldata));
+        }
+        API.request({
+            action:  'get_subscriptions',
+            uid:     localStorage.getItem('user'),
+            pw:      localStorage.getItem('password')
+        },
+        requestCallback);
+    },
+
     xmlparser: function(xmldata) {
         //TODO: Use Database.tableDefinition
         var
@@ -91,7 +104,8 @@ var API = Object.freeze( {
         organisations = [],
         area_keywords = [],
         products      = [],
-        photos        = [];
+        photos        = [],
+        subscriptions = [];
 
         if ($(xmldata).find('user_areas').length != 0) {
 
@@ -152,8 +166,10 @@ var API = Object.freeze( {
                 }
             );
             return {regions: regions, areas: areas, area_keywords: area_keywords, products: products};
+
         } else if($(xmldata).find('last_modification').length != 0){
             return parseInt($(xmldata).find('last_modification').attr('timestamp'));
+
         } else if ($(xmldata).find('organisations').length != 0) {
             $.each(
                 $(xmldata).find('organisations').children(),
@@ -169,6 +185,7 @@ var API = Object.freeze( {
                 }
             );
             return organisations;
+
         } else if ($(xmldata).find('photos').length != 0) {
             $.each(
                 $(xmldata).find('photos').children(),
@@ -178,6 +195,33 @@ var API = Object.freeze( {
             );
             asdf = photos;
             return photos;
+
+        } else if ($(xmldata).find('subscriptions').length != 0) {
+            $.each(
+                $(xmldata).find('subscriptions').children(),
+                function() {
+                    subscriptions.push([
+                        parseInt($(this).attr('id')),
+                        $(this).attr('title'),
+                        $(this).attr('product_title'),
+                        parseInt($(this).attr('orgid')),
+                        parseInt($(this).attr('ruleID')),
+                        parseInt($(this).attr('areaid')),
+                        parseInt($(this).attr('validFrom')),
+                        parseInt($(this).attr('validTo')),
+                        $(this).attr('fullname'),
+                        $(this).attr('email'),
+                        parseInt($(this).attr('ref_our')),
+                        parseInt($(this).attr('ref_their')),
+                        parseInt($(this).attr('mobile')),
+                        parseInt($(this).attr('code')),
+                        $(this).attr('PDFid'),
+                        parseInt($(this).attr('purchased_at')),
+                    ]);
+                }
+            );
+            return subscriptions;
+
         } else {
             return false;
         }
@@ -199,8 +243,7 @@ var API = Object.freeze( {
     /** register
     */
     register: function(username, password, fullname, email, phone, callback) {
-        this.request(
-            {
+        API.request({
             action: 'user_register',
             username: username,
             password: password,
@@ -211,5 +254,4 @@ var API = Object.freeze( {
         callback
         );
     }
-
 });

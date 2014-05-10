@@ -29,6 +29,7 @@ var area = Object.freeze({
 			)
 		    )
 		);
+		$(text).find('#card-button').attr("data-id",result.id);
                 
             } else {
                 throw Error('Tried going to an Area that did not exist');

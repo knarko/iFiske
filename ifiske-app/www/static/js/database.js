@@ -244,11 +244,8 @@ Database = Object.freeze({
 
     getProductsByArea: function(area_id, callback) {
         var querySuccess = function(tx, results) {
-            var resultsArray = []
-            for(var i = 0; i < results.rows.length; ++i){
-                resultsArray.push(results.rows.item(i));
-            }
-            callback && callback(resultsArray);
+            if (results.rows.length != 0)
+                callback && callback(results);
         };
         this.DB.transaction(function(tx) {
             tx.executeSql([

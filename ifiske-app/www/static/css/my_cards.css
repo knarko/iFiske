@@ -1,12 +1,7 @@
 #my_cards .button {
-    background-color: #006993;
-    margin-bottom: 10px;
     font-size: 17px;
-    font-weight: bold;
     padding: 15px;
-    color: #FFFFFF;
     text-align: left;
-    overflow:hidden;
 }
 
 #my_cards .button h1 {

@@ -15,7 +15,6 @@ var my_cards = Object.freeze({
         });
     },
     createCard: function (props) {
-        console.log(props);
         var from = new Date(props.validFrom);
         var to = new Date(props.validTo);
         return [
@@ -37,7 +36,7 @@ var my_cards = Object.freeze({
         ].join('');
     },
     buttonclick: function (e) {
-        area.go(parseInt($(e.target).attr('data-id')));
+        card.go(parseInt($(e.target).attr('data-id')));
     },
     months: [
         'Januari',

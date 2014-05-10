@@ -1,12 +1,11 @@
 var card = Object.freeze({
-    go: function () {
-        Navigate.to('card', this.onload);
+    go: function (id) {
+        Navigate.to('card', this.onload, [id]);
     },
-    onload: function (text) {
+    onload: function (text, id) {
         Database.getSubscriptionByid(id, function (result) {
             if (result != null) {
-                Navigate.to('card', {card: result});
-
+                //TODO: Actually show the card
             } else {
                 throw Error('No such subscription ID');
             }

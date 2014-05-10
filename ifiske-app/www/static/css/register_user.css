@@ -20,14 +20,6 @@
     opacity:1;
     height:12px;
 }
-#register .button {
-    background-color: #006993;
-    margin-bottom: 10px;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 15px;
-    color: #FFFFFF;
-}
 #register .error-span {
     display: none;
     clear: left;

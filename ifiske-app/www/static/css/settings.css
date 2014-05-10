@@ -1,12 +1,3 @@
-#settings .button {
-    clear: left;
-    background-color: #006993;
-    margin-bottom: 10px;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 15px;
-    color: #FFFFFF;
-}
 
 #settings .logged-in {
     display: none;

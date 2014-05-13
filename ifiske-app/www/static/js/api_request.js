@@ -28,7 +28,8 @@ var API = Object.freeze( {
             success: callback,
 
             error: function(e) {
-                console.log(e);
+                navigator.notification.activityStop();
+                navigator.notification.alert('Fel i anslutning till server', function(){},'Fel');
             }
         });
     },

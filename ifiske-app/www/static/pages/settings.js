@@ -16,7 +16,11 @@ var settings = Object.freeze({
         Navigate.init();
     },
     force_update: function () {
+        navigator.notification.activityStart('Uppdaterar...', 'Laddar ned...');
         localStorage.setItem('db_updated', 1);
-        Database.update();
+        Database.update(function() {
+            navigator.notification.activityStop();
+            navigator.notification.alert("Intern databas uppdaterad", function(){},"Klar!");
+        });
     }
 });

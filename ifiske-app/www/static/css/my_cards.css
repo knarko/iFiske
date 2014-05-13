@@ -1,0 +1,14 @@
+#my_cards .button {
+    font-size: 17px;
+    padding: 15px;
+    text-align: left;
+}
+
+#my_cards .button h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+#my_cards .date {
+    float: right;
+}

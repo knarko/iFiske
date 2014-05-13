@@ -1,0 +1,23 @@
+<div id="menu">
+  <div class="button" ontouchend="search.go()">Hitta Fiskevatten</div>
+
+  <div class="logged-in">
+    <div class="button" ontouchend="my_cards.go();">Mina Fiskekort</div>
+    <div class="button">Registrera fångst</div>
+  </div>
+
+  <div class="not-logged-in">
+    <div class="button" ontouchend="login.go();">Logga in</div>
+    <div class="button" ontouchend="register.go()">Registrera</div>
+  </div>
+</div>
+
+<div id="footer">
+  <button class="footer_icon" id="facebook_icon"
+	  ontouchend="try_open_fb();"/>
+  <button class="footer_icon" id="settings_icon"
+	  ontouchend="settings.go();"/>
+
+  <p class="logged-in">Inloggad som <span class="username"></span></p>
+</div>
+

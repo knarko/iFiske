@@ -29,8 +29,11 @@ var area_cards = Object.freeze({
 		});
 
 		cardlist.on('touchend', '.web', function() {
-		    // TODO: Purchase through Web
-		    console.log($(this));
+		    navigator.app.loadUrl(
+			'http://ifiske.se/mobile/index.php?p=5&i=' + 
+			    $(this).parent().attr('data-id'), 
+			{openExternal: true}
+		    );
 		});
 		
 		cardlist.html(items.join(''));

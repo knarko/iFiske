@@ -14,9 +14,6 @@
 #area #area-box p {
     margin: 0;
 }
-#area #photos {
-    height: 250px;
-}
 
 #area #photos img{
     width:100%;
@@ -31,4 +28,19 @@
     display:inline-block;
     padding:10px 0 10px 0;
     text-align:center;
+}
+#area .aspectwrapper {
+    display: inline-block; /* shrink to fit */
+    width: 100%; /* whatever width you like */
+    position: relative; /* so .content can use position: absolute */
+}
+#area .aspectwrapper::after {
+    padding-top:38.461538461%; /* percentage of containing block _width_ */
+    display: block;
+    content: '';
+}
+#area #photos {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0; /* follow the parent's edges */
+    overflow: hidden;
 }

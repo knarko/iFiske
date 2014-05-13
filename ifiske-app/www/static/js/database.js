@@ -1,8 +1,6 @@
 /**
  * Database
  * An object that contains the database functions
- *
- * TODO: Maybe move some functions around to other objects?
  **/
 Database = Object.freeze({
     //TODO: Size calculation

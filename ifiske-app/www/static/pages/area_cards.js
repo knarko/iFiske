@@ -4,6 +4,7 @@ var area_cards = Object.freeze({
     },
     onload: function (text, id) {
 	Database.getProductsByArea(id, function(result) {
+	    var cardlist = $('#cardlist');
 
 	    if (result != null || result.rows.length == 0) {
 		var items = [];
@@ -14,18 +15,16 @@ var area_cards = Object.freeze({
 		    );
 		}
 		
-		var cardlist = $('#cardlist');
-
 		/* Event listeners on cardlist listening to touchend
 		   events fired by license buttons */
 		cardlist.on('touchend', '.rules', function() {
-		    // Navigate to rules for the given rule id
-		    console.log($(this));
+		    // TODO: Navigate to rules for the given rule id
+		    Debug.log('Rules');
 		});
 
 		cardlist.on('touchend', '.sms', function() {
 		    // TODO: Purchase through SMS
-		    console.log($(this));
+		    Debug.log('SMS purchase');
 		});
 
 		cardlist.on('touchend', '.web', function() {
@@ -37,7 +36,6 @@ var area_cards = Object.freeze({
 		});
 		
 		cardlist.html(items.join(''));
-	    
 	    } else {
 		cardlist.text('Inga fiskekort kunde hittas');
 		Debug.log('No cards found for Area Id ' + id);

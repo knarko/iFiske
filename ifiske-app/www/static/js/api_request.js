@@ -15,7 +15,7 @@ var API = Object.freeze( {
      * - Use auth_request for requests requiring authentication data if the
      * user is already logged in.
      **/
-    request: function(args, callback)
+    request: function(args, callback, errorCallback)
     {
         args.option = 'com_ifiskeapi';
         args.view = 'api';
@@ -28,8 +28,10 @@ var API = Object.freeze( {
             success: callback,
 
             error: function(e) {
-                navigator.notification.activityStop();
-                navigator.notification.alert('Fel i anslutning till server', function(){},'Fel');
+                if (errorCallback)
+                    errorCallback(e);
+                else
+                    console.log(e);
             }
         });
     },
@@ -37,54 +39,54 @@ var API = Object.freeze( {
     /** auth_request
      * Convenience method wrapper for requests requiring authentication
      **/
-    auth_request: function(args, callback)
+    auth_request: function(args, callback, errorCallback)
     {
         args.uid = localStorage.getItem('user');
         args.pw = localStorage.getItem('password');
-        this.request(args, callback);
+        this.request(args, callback, errorCallback);
     },
 
     /** getAreas
      * Gets all areas and calls a callback with the resulting object
      * callback: A function accepting an Object containing regions and areas as input
      **/
-    getAreas: function(callback) {
+    getAreas: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_areas"}, requestCallback);
+        API.request({action: "get_areas"}, requestCallback, errorCallback);
     },
 
-    getPhotos: function(org_id, callback) {
+    getPhotos: function(org_id, callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_files", org: org_id}, requestCallback);
+        API.request({action: "get_files", org: org_id}, requestCallback, errorCallback);
     },
 
-    getOrganisations: function(callback) {
+    getOrganisations: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_organisations"}, requestCallback);
+        API.request({action: "get_organisations"}, requestCallback, errorCallback);
     },
 
-    getUpdates: function(callback) {
+    getUpdates: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_db_lastmod"}, requestCallback);
+        API.request({action: "get_db_lastmod"}, requestCallback, errorCallback);
     },
 
-    getSubscriptions: function(callback) {
+    getSubscriptions: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null)
                 callback(API.xmlparser(xmldata));
@@ -94,7 +96,7 @@ var API = Object.freeze( {
             uid:     localStorage.getItem('user'),
             pw:      localStorage.getItem('password')
         },
-        requestCallback);
+        requestCallback, errorCallback);
     },
 
     xmlparser: function(xmldata) {
@@ -230,20 +232,21 @@ var API = Object.freeze( {
 
     /** authenticate
     */
-    authenticate: function(user, password, callback) {
+    authenticate: function(user, password, callback, errorCallback) {
         this.request(
             {
             action: 'authenticate',
             uid: user,
             pw: password
         },
-        callback
+        callback,
+        errorCallback
         );
     },
 
     /** register
     */
-    register: function(username, password, fullname, email, phone, callback) {
+    register: function(username, password, fullname, email, phone, callback, errorCallback) {
         API.request({
             action: 'user_register',
             username: username,
@@ -252,7 +255,8 @@ var API = Object.freeze( {
             email: email,
             phone: phone
         },
-        callback
+        callback,
+        errorCallback
         );
     }
 });

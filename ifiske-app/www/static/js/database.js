@@ -249,7 +249,8 @@ Database = Object.freeze({
             tx.executeSql([
                 'SELECT DISTINCT *',
                 'FROM Products',
-                'WHERE area_id = ?'
+                'WHERE area_id = ?',
+                'ORDER BY sortorder'
             ].join('\n'),
             [area_id],
             querySuccess);

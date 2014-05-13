@@ -6,7 +6,7 @@ Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
-    update: function(callback) {
+    update: function(callback, errorCallback) {
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
 
@@ -30,10 +30,10 @@ Database = Object.freeze({
                             });
                         });
                         //TODO: Add Subscriptions
-                    });
-                });
+                    }, errorCallback);
+                }, errorCallback);
             }
-        });
+        }, errorCallback);
     },
 
     tableDefinition: {
@@ -213,7 +213,7 @@ Database = Object.freeze({
                 'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
+                'WHERE Area_keywords.keyword LIKE ?',
                 'ORDER BY name'
             ].join('\n'),
             ['%' + searchstring + '%', '%' + searchstring + '%'],
@@ -249,7 +249,8 @@ Database = Object.freeze({
             tx.executeSql([
                 'SELECT DISTINCT *',
                 'FROM Products',
-                'WHERE area_id = ?'
+                'WHERE area_id = ?',
+                'ORDER BY sortorder'
             ].join('\n'),
             [area_id],
             querySuccess);

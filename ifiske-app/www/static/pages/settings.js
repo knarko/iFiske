@@ -14,13 +14,29 @@ var settings = Object.freeze({
 
         // Avoid back stack entry
         Navigate.init();
+        if(navigator.notification)
+            navigator.notification.alert('Du har loggat ut!', function(){}, 'Utloggad!');
     },
     force_update: function () {
-        navigator.notification.activityStart('Uppdaterar...', 'Laddar ned...');
+        if (navigator.notification) {
+            navigator.notification.activityStop();
+            navigator.notification.activityStart('Uppdaterar...', 'Laddar ned...');
+        }
         localStorage.setItem('db_updated', 1);
         Database.update(function() {
-            navigator.notification.activityStop();
-            navigator.notification.alert("Intern databas uppdaterad", function(){},"Klar!");
+            console.log('hi!');
+            if(navigator.notification) {
+                navigator.notification.activityStop();
+                navigator.notification.alert("Intern databas uppdaterad", function(){},"Klar!");
+            }
+        },
+        function (err) {
+            if (navigator.notification) {
+                navigator.notification.activityStop();
+                navigator.notification.alert('Fel i anslutning till server', function(){},'Fel');
+            } else {
+                console.log(err);
+            }
         });
     }
 });

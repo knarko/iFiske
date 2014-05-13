@@ -16,40 +16,75 @@ var area_cards = Object.freeze({
 		
 		var cardlist = $('#cardlist');
 
-		/* Add an event listener to cardlist listening to touchend
-		   events fired by children matching the selector */
-		cardlist.on('touchend','.card',function(a) {
-		    console.log(a);
+		/* Event listeners on cardlist listening to touchend
+		   events fired by license buttons */
+		cardlist.on('touchend', '.rules', function() {
+		    // Navigate to rules for the given rule id
 		    console.log($(this));
 		});
+
+		cardlist.on('touchend', '.sms', function() {
+		    // TODO: Purchase through SMS
+		    console.log($(this));
+		});
+
+		cardlist.on('touchend', '.web', function() {
+		    // TODO: Purchase through Web
+		    console.log($(this));
+		});
+		
 		cardlist.html(items.join(''));
 	    
 	    } else {
-		//TODO: default message
+		cardlist.text('Inga fiskekort kunde hittas');
 		Debug.log('No cards found for Area Id ' + id);
 	    }
 	});
     },
-
     /* Create a div representing a fishing license */
     createLicense: function(row) {
-	var license = ['<div class="license" data-id="',
-		       row.id,
+	var license = ['<div class="license"', 
+		       'data-id="', row.id, '" ',
+		       'data-sms-code="', row.smscode, '" ',
+		       'data-rule-id="', row.ruleid, 
 		       '">',
+
 		       '<h1>',
+		       '<span class="price">',
+		       row.price, ':-',
+		       '</span>',
 		       row.name,
 		       '</h1>',
-		       '<div class="button">Web-Köp</div>',
-		       '<div class="button">SMS-Köp</div>',
+		       
+		       '<h2>',
+		       row.headline,
+		       '</h2>',
+
+		       '<p>',
+		       row.typetitle,
+		       '</p>',
+
+		       '<p>',
+		       row.notes,
+		       '</p>',
+		       
+		       '<p class="important">',
+		       row.important,
+		       '</p>',
+
+		       '<div class="button web">Web-Köp</div>',
+		       '<div class="button sms">SMS-Köp</div>',
+		       '<div class="button rules">Regler</div>',
 		       '</div>'];
+
 	switch(row.saleschannel) {
 	case 0: // Sold in all channels
 	    break;
 	case 1: // Sold only through SMS
-	    delete license[license.length-3];
+	    delete license[license.length-4];
 	    break;
 	case 2: // Sold only through Web
-	    delete license[license.length-2];
+	    delete license[license.length-3];
 	    break;
 	case 4: // Refer to other sellers
 	    //TODO;
@@ -57,6 +92,7 @@ var area_cards = Object.freeze({
 	default:
 	    return undefined;
 	}
+
 	
 	return license.join('');
 	

@@ -1,9 +1,8 @@
 .button {
     background-color: #006993;
+    font-weight: bold;
+    color: #FFFFFF;
     margin-bottom: 10px;
     font-size: 25px;
-    font-weight: bold;
     padding: 15px;
-    color: #FFFFFF;
-    overflow:hidden;
 }

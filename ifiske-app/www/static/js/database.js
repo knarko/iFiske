@@ -6,7 +6,7 @@ Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
-    update: function(callback) {
+    update: function(callback, errorCallback) {
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
 
@@ -30,10 +30,10 @@ Database = Object.freeze({
                             });
                         });
                         //TODO: Add Subscriptions
-                    });
-                });
+                    }, errorCallback);
+                }, errorCallback);
             }
-        });
+        }, errorCallback);
     },
 
     tableDefinition: {

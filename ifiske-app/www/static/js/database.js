@@ -213,7 +213,7 @@ Database = Object.freeze({
                 'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?',
+                'WHERE Area_keywords.keyword LIKE ?',
                 'ORDER BY name'
             ].join('\n'),
             ['%' + searchstring + '%', '%' + searchstring + '%'],

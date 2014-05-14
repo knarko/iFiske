@@ -53,4 +53,5 @@
     <gap:plugin name="org.apache.cordova.dialogs" version="0.2.6" />
     <access origin="http://127.0.0.1*" />
     <access origin="https://www.ifiske.se/*" subdomains="true" />
+    <access origin="http://www.ifiske.se/*" subdomains="true" />
 </widget>

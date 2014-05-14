@@ -1,3 +1,19 @@
+#area_cards {
+    display:table;
+    color:white;
+    height:100%;
+    width:100%;
+}
+#area_cards #area_cards_header {
+    display:table-row;
+    height:25px;
+    font-size:18px;
+    font-weight:bold;
+}
+#area_cards #cardlist {
+    height:100%;
+    overflow:auto;
+}
 #area_cards .license {
     border: 1px solid #006993;
     background-color: rgba(255,255,255,0.3);
@@ -25,7 +41,9 @@
 #area_cards .license p {
     margin: 4px 0px 4px 0px;
 }
-   
+#area_cards .license .important {
+    color: red;
+}
 #area_cards .license .button {
     margin: 0;
     padding: 5px;

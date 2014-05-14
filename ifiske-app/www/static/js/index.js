@@ -32,9 +32,6 @@ var app = {
 };
 
 $(document).ready(function(){
-    //TODO: Move all partials to js/templates
-    Handlebars.registerPartial('header', $(Handlebars.getTemplate('partials')()).filter('#header-partial').html().trim());
-    //Handlebars.registerPartial('footer', $(Handlebars.getTemplate('partials')()).filter('#footer-partial').html().trim());
     Navigate.init();
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
@@ -50,8 +47,10 @@ function open_fb() {
     window.open('https://www.facebook.com/fiskekort', '_system');
 }
 
-function try_open_fb() {
-    window.open('fb://page/215728895115467', '_system');
+
+function try_open_fb()
+{
+    window.open('fb://profile/215728895115467', '_system');
     timeout = setTimeout('open_fb()', 300);
 }
 
@@ -66,3 +65,4 @@ function orientationChange(e) {
       $("#popup").css('height', '50%');  
     }
 }
+

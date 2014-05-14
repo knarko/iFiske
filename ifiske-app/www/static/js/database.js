@@ -1,31 +1,39 @@
 /**
  * Database
  * An object that contains the database functions
- *
- * TODO: Maybe move some functions around to other objects?
  **/
 Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
-    update: function(callback) {
+    update: function(callback, errorCallback) {
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
 
                 API.getAreas(function(data) {
-                    Database.clean(function() {
-                        Database.init(function() {
-                            Database.updateTable('Regions',data.regions);
-                            Database.updateTable('Areas',data.areas);
-                            Database.updateTable('Area_keywords', data.area_keywords);
-                            Database.updateTable('Products', data.products);
-                            localStorage.setItem('db_updated', timestamp);
-                            callback && callback();
+                    API.getOrganisations(function(organisations) {
+                        uniqueOrgs = organisations.sort().filter(function(elem, pos, self) {
+                            if(pos == 0)
+                                return true;
+                            return self[pos-1][0] != elem[0];
                         });
-                    });
-                });
+                        data.organisations = uniqueOrgs;
+                        Database.clean(function() {
+                            Database.init(function() {
+                                Database.updateTable('Regions',data.regions);
+                                Database.updateTable('Areas',data.areas);
+                                Database.updateTable('Organisations', data.organisations);
+                                Database.updateTable('Area_keywords', data.area_keywords);
+                                Database.updateTable('Products', data.products);
+                                localStorage.setItem('db_updated', timestamp);
+                                callback && callback();
+                            });
+                        });
+                        //TODO: Add Subscriptions
+                    }, errorCallback);
+                }, errorCallback);
             }
-        });
+        }, errorCallback);
     },
 
     tableDefinition: {
@@ -38,10 +46,18 @@ Database = Object.freeze({
         Area_keywords: [
             'area_id', 'keyword'
         ],
+        Organisations: [
+            'id', 'name', 'region', 'description', 'homepage', 'contact'
+        ],
         Products: [
             'id', 'smsdisplay', 'vat', 'saleschannel', 'area_id', 'name',
             'price', 'rule_id', 'sortorder', 'headline', 'important', 'notes',
             'smscode'
+        ],
+        Subscriptions: [
+            'id', 'title', 'product_title', 'org_id', 'rule_id', 'area_id',
+            'validFrom', 'validTo', 'fullname', 'email', 'ref_our',
+            'ref_their', 'mobile', 'code', 'pdf_id', 'purchased_at'
         ]
     },
 
@@ -55,6 +71,7 @@ Database = Object.freeze({
             tx.executeSql('DROP TABLE IF EXISTS Species_areas');
             tx.executeSql('DROP TABLE IF EXISTS Species');
             tx.executeSql('DROP TABLE IF EXISTS Organisations');
+            tx.executeSql('DROP TABLE IF EXISTS Subscriptions');
         },
         Debug.log,
         callback
@@ -112,8 +129,18 @@ Database = Object.freeze({
 
             tx.executeSql([
                 'CREATE TABLE IF NOT EXISTS Organisations (',
-                'id int, name text, region region, description text,',
+                'id int, name text, region int, description text,',
                 'homepage text, contact text,',
+                'PRIMARY KEY (id),',
+                'FOREIGN KEY (region) REFERENCES Regions(id))'
+            ].join('\n'));
+
+            tx.executeSql([
+                'CREATE TABLE IF NOT EXISTS Subscriptions (',
+                'id int, title text, product_title text, org_id int,',
+                'rule_id int, area_id int, validFrom int, validTo int,',
+                'fullname text, email text, ref_our int, ref_their int,',
+                'mobile int, code int, pdf_id text, purchased_at int,',
                 'PRIMARY KEY (id))'
             ].join('\n'));
         },
@@ -144,6 +171,7 @@ Database = Object.freeze({
         } else {
             throw Error('Not yet implemented');
         }
+
         this.DB.transaction(function(tx){
             for(var i in dataset){
                 tx.executeSql(query, dataset[i]);
@@ -153,38 +181,43 @@ Database = Object.freeze({
 
     getArea: function(id, callback) {
         var querySuccess = function(tx, result) {
-            callback && callback(result);
+            if (result.rows.length == 1) {
+                callback && callback(result.rows.item(0));
+            } else {
+                callback && callback(null);
+            }
         }
         this.DB.transaction(function(tx) {
             tx.executeSql([
-                'SELECT *',
+                'SELECT DISTINCT Areas.*, Organisations.*',
                 'FROM Areas',
-                'WHERE id = ?'].join(' '),
-                [id],
-                querySuccess);
+                'JOIN Organisations',
+                'ON Areas.org_id = Organisations.id',
+                'WHERE Areas.id = ?'
+            ].join(' '),
+            [id],
+            querySuccess);
         }, Debug.log);
     },
 
     search: function(searchstring, callback) {
         var querySuccess = function(tx, results){
-            var resultsArray = [];
-            for(var i = 0; i < results.rows.length; ++i){
-                resultsArray.push(results.rows.item(i));
-            }
-            callback && callback(resultsArray);
+            callback && callback(results);
         };
         this.DB.transaction(function(tx){
             tx.executeSql([
-                'SELECT * ',
-                'FROM Areas ',
+                'SELECT id, name',
+                'FROM Areas',
                 'WHERE name LIKE ?',
                 'UNION',
-                'SELECT DISTINCT Areas.*',
+                'SELECT DISTINCT Areas.id, Areas.name',
                 'FROM Area_keywords',
                 'INNER JOIN Areas ON Areas.id = Area_keywords.area_id',
-                'WHERE Area_keywords.keyword OR Areas.name LIKE ?'].join('\n'),
-                ['%' + searchstring + '%', '%' + searchstring + '%'],
-                querySuccess);
+                'WHERE Area_keywords.keyword LIKE ?',
+                'ORDER BY name'
+            ].join('\n'),
+            ['%' + searchstring + '%', '%' + searchstring + '%'],
+            querySuccess);
         },Debug.log);
     },
 
@@ -209,22 +242,52 @@ Database = Object.freeze({
 
     getProductsByArea: function(area_id, callback) {
         var querySuccess = function(tx, results) {
-            var resultsArray = []
-            for(var i = 0; i < results.rows.length; ++i){
-                resultsArray.push(results.rows.item(i));
-            }
-            callback && callback(resultsArray);
+            if (results.rows.length != 0)
+                callback && callback(results);
         };
         this.DB.transaction(function(tx) {
             tx.executeSql([
                 'SELECT DISTINCT *',
                 'FROM Products',
-                'WHERE area_id = ?'
+                'WHERE area_id = ?',
+                'ORDER BY sortorder'
             ].join('\n'),
             [area_id],
             querySuccess);
         }, Debug.log);
-    }
+    },
 
+    getSubscriptions: function(callback) {
+        var querySuccess = function(tx, results) {
+            if (results.rows.length != 0)
+                callback && callback(results);
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT Areas.name, Subscriptions.*',
+                'FROM Subscriptions',
+                'JOIN Areas',
+                'ON Areas.id = Subscriptions.area_id'
+            ].join('\n'),
+            [],
+            querySuccess);
+        }, Debug.log);
+    },
+
+    getSubscriptionByid: function(uid, callback) {
+        var querySuccess = function(tx, results) {
+            if (results.rows.length == 1)
+                callback && callback(results.rows.item(0));
+        };
+        this.DB.transaction(function(tx) {
+            tx.executeSql([
+                'SELECT *',
+                'FROM Subscriptions',
+                'WHERE id = ?;'
+            ].join('\n'),
+            [uid],
+            querySuccess);
+        }, Debug.log);
+    }
 });
 

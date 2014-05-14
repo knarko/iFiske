@@ -10,10 +10,12 @@ var API = Object.freeze( {
      *
      * Notes:
      * - Due to inconsistent server-side error handling we cannot check for
-     * server-side errors here. All error handling should be placed inside
-     * success_func.
+     * any server-side errors here. All error messages/codes in the returned
+     * xml should be handled in the callback function.
+     * - Use auth_request for requests requiring authentication data if the
+     * user is already logged in.
      **/
-    request: function(args, callback)
+    request: function(args, callback, errorCallback)
     {
         args.option = 'com_ifiskeapi';
         args.view = 'api';
@@ -24,8 +26,12 @@ var API = Object.freeze( {
             dataType: 'xml',
             data: args,
             success: callback,
+
             error: function(e) {
-                console.log(e);
+                if (errorCallback)
+                    errorCallback(e);
+                else
+                    console.log(e);
             }
         });
     },
@@ -33,34 +39,64 @@ var API = Object.freeze( {
     /** auth_request
      * Convenience method wrapper for requests requiring authentication
      **/
-    auth_request: function(args, callback)
+    auth_request: function(args, callback, errorCallback)
     {
         args.uid = localStorage.getItem('user');
         args.pw = localStorage.getItem('password');
-	this.request(args, callback);
+        this.request(args, callback, errorCallback);
     },
 
-    /**
-     * getAreas
+    /** getAreas
      * Gets all areas and calls a callback with the resulting object
      * callback: A function accepting an Object containing regions and areas as input
      **/
-    getAreas: function(callback) {
+    getAreas: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_areas"}, requestCallback);
+        API.request({action: "get_areas"}, requestCallback, errorCallback);
     },
 
-    getUpdates: function(callback) {
+    getPhotos: function(org_id, callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
                 callback(API.xmlparser(xmldata));
             }
         }
-        API.request({action: "get_db_lastmod"}, requestCallback);
+        API.request({action: "get_files", org: org_id}, requestCallback, errorCallback);
+    },
+
+    getOrganisations: function(callback, errorCallback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_organisations"}, requestCallback, errorCallback);
+    },
+
+    getUpdates: function(callback, errorCallback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null) {
+                callback(API.xmlparser(xmldata));
+            }
+        }
+        API.request({action: "get_db_lastmod"}, requestCallback, errorCallback);
+    },
+
+    getSubscriptions: function(callback, errorCallback) {
+        var requestCallback = function(xmldata) {
+            if (xmldata != null)
+                callback(API.xmlparser(xmldata));
+        }
+        API.request({
+            action:  'get_subscriptions',
+            uid:     localStorage.getItem('user'),
+            pw:      localStorage.getItem('password')
+        },
+        requestCallback, errorCallback);
     },
 
     xmlparser: function(xmldata) {
@@ -70,7 +106,9 @@ var API = Object.freeze( {
         areas         = [],
         organisations = [],
         area_keywords = [],
-        products      = [];
+        products      = [],
+        photos        = [],
+        subscriptions = [];
 
         if ($(xmldata).find('user_areas').length != 0) {
 
@@ -108,7 +146,6 @@ var API = Object.freeze( {
                             $.each(
                                 $(this).children('products').children(),
                                 function() {
-                                    kitten = $(this);
                                     products.push([
                                         parseInt($(this).attr('ID')),
                                         parseInt($(this).attr('SMSdisplay')),
@@ -132,41 +169,94 @@ var API = Object.freeze( {
                 }
             );
             return {regions: regions, areas: areas, area_keywords: area_keywords, products: products};
+
         } else if($(xmldata).find('last_modification').length != 0){
             return parseInt($(xmldata).find('last_modification').attr('timestamp'));
+
+        } else if ($(xmldata).find('organisations').length != 0) {
+            $.each(
+                $(xmldata).find('organisations').children(),
+                function() {
+                    organisations.push([
+                        parseInt($(this).attr('id')),
+                        $(this).attr('title'),
+                        parseInt($(this).attr('lan')),
+                        $(this).attr('descr'),
+                        $(this).attr('homepage'),
+                        $(this).attr('contact')
+                    ]);
+                }
+            );
+            return organisations;
+
+        } else if ($(xmldata).find('photos').length != 0) {
+            $.each(
+                $(xmldata).find('photos').children(),
+                function() {
+                    photos.push($(this).attr('src'));
+                }
+            );
+            asdf = photos;
+            return photos;
+
+        } else if ($(xmldata).find('subscriptions').length != 0) {
+            $.each(
+                $(xmldata).find('subscriptions').children(),
+                function() {
+                    subscriptions.push([
+                        parseInt($(this).attr('id')),
+                        $(this).attr('title'),
+                        $(this).attr('product_title'),
+                        parseInt($(this).attr('orgid')),
+                        parseInt($(this).attr('ruleID')),
+                        parseInt($(this).attr('areaid')),
+                        parseInt($(this).attr('validFrom')),
+                        parseInt($(this).attr('validTo')),
+                        $(this).attr('fullname'),
+                        $(this).attr('email'),
+                        parseInt($(this).attr('ref_our')),
+                        parseInt($(this).attr('ref_their')),
+                        parseInt($(this).attr('mobile')),
+                        parseInt($(this).attr('code')),
+                        $(this).attr('PDFid'),
+                        parseInt($(this).attr('purchased_at')),
+                    ]);
+                }
+            );
+            return subscriptions;
+
         } else {
             return false;
         }
     },
-    /** login
-     * Sends login API request
-     */
-    login: function(user, password, callback) {
-	this.request(
+
+    /** authenticate
+    */
+    authenticate: function(user, password, callback, errorCallback) {
+        this.request(
             {
-		action: 'login',
-		uid: user,
-		pw: password
-            },
-	    callback
-	);
+            action: 'authenticate',
+            uid: user,
+            pw: password
+        },
+        callback,
+        errorCallback
+        );
     },
 
     /** register
-     * Sends a registration API request.
-     */
-    register: function(username, password, fullname, email, phone, callback) {
-	this.request(
-	    {
-		action: 'user_register',
-		username: username,
-		password: password,
-		fullname: fullname,
-		email: email,
-		phone: phone
-	    },
-            callback
-	);
+    */
+    register: function(username, password, fullname, email, phone, callback, errorCallback) {
+        API.request({
+            action: 'user_register',
+            username: username,
+            password: password,
+            fullname: fullname,
+            email: email,
+            phone: phone
+        },
+        callback,
+        errorCallback
+        );
     }
-
 });

@@ -1,11 +1,11 @@
-
 function expand() {
-		$("#search-div").prepend('<form id="searchform" onsubmit="Search.go($(&quot;#searchfield&quot;).val());return false;">' + 
-	     	'<input id="searchfield" type="search" placeholder="Snabbsök"/>' + 
-	    	'<div id="search-bottom-bar"></div>' + 
-	    	'<button type="submit" style="visibility: hidden"/>' + 
-			'</form>')
+		$("#search-div").prepend('<form onsubmit="search.go();return false;">' + 
+            '<input id="searchfield" type="search" placeholder="Snabbsök"/>' +
+            '<div id="search-bottom-bar"></div>' +
+          '</form>' +
+        '</div>')
 		$("#searchfield").css('visibility', "visible");
+		$("#search-icon").css('visibility', "hidden")
 
 		$("#searchfield").stop().animate({width: 'toggle'}, {
 			step: function() {
@@ -13,6 +13,7 @@ function expand() {
 			},
 			duration: 285 },
 			"linear");
+		
 		$("#search-bottom-bar").slideToggle({
 			duration: 300, 
 			step: function() {

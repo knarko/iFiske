@@ -1,0 +1,9 @@
+<form id="login-form" onsubmit="login.auth(this); return false;">
+  <input id="username" class="text_input" type="text"
+	 placeholder="Användarnamn" autofocus/>
+  <input id="password" class="text_input" type="password"
+	 placeholder="Lösenord"/>
+  <button type="submit" style="visibility: hidden"/>
+  <span class="error-span">Ogiltigt användarnamn eller lösenord</span>
+  <div class="button" ontouchend="$(this).parent().submit()">Logga in!</div>
+</form>

@@ -1,0 +1,19 @@
+#login .text_input {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 5px auto 0px auto;
+    height: 40px;
+    padding: 0em 0.5em 0em 0.5em;
+    border-width: 0px;
+}
+
+#login .error-span {
+    display: none;
+    clear: left;
+    background-color: #006993;
+    color: orange;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 5px 30px 5px 30px;
+}
+

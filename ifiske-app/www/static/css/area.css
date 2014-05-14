@@ -1,0 +1,47 @@
+#area #area-box {
+    background-color: rgba(255,255,255,0.3);
+    color: #070707;
+    /*color: rgb(26,28,34);*/
+    text-align: left;
+    padding: 4px;
+}
+
+#area #area-box h1 {
+    margin: 0px 0px 4px 0px ;
+    font-size:1.4em;
+    color: #006993;
+}
+#area #area-box p {
+    margin: 0;
+}
+
+#area #photos img{
+    width:100%;
+}
+
+#area #card-button {
+    width:120px;
+    font-weight:bold;
+    color:white;
+    background-color:#006993;
+    float:right;
+    display:inline-block;
+    padding:10px 0 10px 0;
+    text-align:center;
+    margin-left:6px;
+}
+#area .aspectwrapper {
+    display: inline-block; /* shrink to fit */
+    width: 100%; /* whatever width you like */
+    position: relative; /* so .content can use position: absolute */
+}
+#area .aspectwrapper::after {
+    padding-top:38.461538461%; /* percentage of containing block _width_ */
+    display: block;
+    content: '';
+}
+#area #photos {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0; /* follow the parent's edges */
+    overflow: hidden;
+}

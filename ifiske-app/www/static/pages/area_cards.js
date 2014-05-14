@@ -22,8 +22,7 @@ var area_cards = Object.freeze({
 		/* Event listeners on cardlist listening to touchend
 		   events fired by license buttons */
 		cardlist.on('touchend', '.rules', function() {
-		    // TODO: Navigate to rules for the given rule id
-		    Debug.log('Rules');
+		    rule.go($(this).parent().attr('data-rule-id'));
 		});
 
 		/* TODO: SMS plugin
@@ -53,7 +52,7 @@ var area_cards = Object.freeze({
 	var license = ['<div class="license"', 
 		       'data-id="', row.id, '" ',
 		       'data-sms-code="', row.smscode, '" ',
-		       'data-rule-id="', row.ruleid, 
+		       'data-rule-id="', row.rule_id, 
 		       '">',
 
 		       '<h1>',

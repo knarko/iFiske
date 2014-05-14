@@ -9,13 +9,27 @@ var settings = Object.freeze({
     },
 
     logout: function() {
-        localStorage.removeItem('user');
-        localStorage.removeItem('password');
+        var logout = function(){
+            localStorage.removeItem('user');
+            localStorage.removeItem('password');
 
-        // Avoid back stack entry
-        Navigate.init();
-        if(navigator.notification)
-            navigator.notification.alert('Du har loggat ut!', function(){}, 'Utloggad!');
+            // Avoid back stack entry
+            Navigate.init();
+        }
+        if(navigator.notification) {
+            navigator.notification.confirm(
+                'Är du säker på att du vill logga ut?',
+                function(button){
+                    if(button == 1)
+                        logout();
+                },
+                'Logga ut',
+                ['Ja','Nej']
+            );
+
+        } else {
+            logout();
+        }
     },
     force_update: function () {
         if (navigator.notification) {

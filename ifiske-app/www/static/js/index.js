@@ -42,13 +42,6 @@ $(document).ready(function(){
     Database.update();
 
     window.addEventListener("orientationchange", orientationChange, true);
-
-    $("#searchfield").live('focus', function(e) {
-            alert("hejsan");
-            //e.preventDefault();
-            e.stopPropagation();
-            window.scrollTo(0,0);
-        })
     
 });
 var timeout;
@@ -58,7 +51,7 @@ function open_fb() {
 }
 
 function try_open_fb() {
-    window.open('fb://profile/215728895115467', '_system');
+    window.open('fb://page/215728895115467', '_system');
     timeout = setTimeout('open_fb()', 300);
 }
 

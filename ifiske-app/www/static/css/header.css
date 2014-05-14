@@ -33,7 +33,6 @@
 }
 
 #header #searchfield {
-    visibility: hidden;
     display: none;
     height:100%;
     width:100%;

@@ -55,7 +55,7 @@ var settings = Object.freeze({
     },
     reportBug: function () {
         navigator.app.loadUrl(
-            'https://github.com/ifiske/ifiske/issues/new',
+            'https://github.com/ifiske/ifiske/issues',
 			{openExternal: true}
 		    );
     }

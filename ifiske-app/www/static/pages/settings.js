@@ -52,5 +52,11 @@ var settings = Object.freeze({
                 console.log(err);
             }
         });
+    },
+    reportBug: function () {
+        navigator.app.loadUrl(
+            'https://github.com/ifiske/ifiske/issues/new',
+			{openExternal: true}
+		    );
     }
 });

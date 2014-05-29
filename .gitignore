@@ -1,3 +1,4 @@
+# Idea IDE:s
 .idea
 # ANDROID / ECLIPSE
 
@@ -19,8 +20,6 @@
 android/bin/
 android/gen/
 android/assets/
-ifiske-app/platforms/
-ifiske-app/plugins/
 
 # generated files
 bin/

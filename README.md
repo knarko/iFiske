@@ -1,8 +1,8 @@
-# iFiske
+# [iFiske](http://ifiske.se)
 This is the GitHub repo for the iFiske fishing license app for phones and tablets. 
 The app is developed in [PhoneGap](http://phonegap.com) using JavaSript and HTML.
 
-For more information, visit <http://www.ifiske.se>!
+For more information, visit <http://ifiske.se>!
 ## Table of contents
 - [Quick start](#quick-start)
  - [Building locally](#building-locally)

@@ -5,19 +5,21 @@ The app is developed in [PhoneGap](http://phonegap.com) using JavaSript and HTML
 For more information, visit <http://www.ifiske.se>!
 ## Table of contents
 - [Quick start](#quick-start)
+ - [Building locally](#building-locally)
+ - [Project structure](#project-structure)
 - [Bug reports and feature requests](#bug-reports-and-feature-requests)
 - [Contact information](#contact-us)
 - [License](#license)
 
 ## Quick start
-### Building locallly
+### Building locally
 Install [phonegap](http://phonegap.com) (version 3.3.0 or later).
 ````Shell
 git clone https://github.com/ifiske/ifiske
 cd ifiske
 phonegap run <platform>
 ````
-### Structure
+### Project structure
 The [wiki](http://github.com/ifiske/iFiske/wiki/Folder-structure) contains more detailed information regarding the project structure. 
 ```
 ifiske/

@@ -1,20 +1,23 @@
-
-/** API
+/**
  * Functions managing API requests.
+ * @class API
  */
 var API = Object.freeze( {
-    /** request
-     * Sends API requests
-     * args:          Hash containing request arguments (name -> value)
-     * success_func:  Function to be called on request success
+    /**
+     * Sends a request to the server API
      *
-     * Notes:
-     * - Due to inconsistent server-side error handling we cannot check for
+     * Due to inconsistent server-side error handling we cannot check for
      * any server-side errors here. All error messages/codes in the returned
      * xml should be handled in the callback function.
-     * - Use auth_request for requests requiring authentication data if the
+     *
+     * Use auth_request for requests requiring authentication data if the
      * user is already logged in.
-     **/
+     *
+     * @method request
+     * @param {Object} args Contains request arguments (name -> value)
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     request: function(args, callback, errorCallback)
     {
         args.option = 'com_ifiskeapi';
@@ -36,9 +39,13 @@ var API = Object.freeze( {
         });
     },
 
-    /** auth_request
+    /**
      * Convenience method wrapper for requests requiring authentication
-     **/
+     * @method auth_request
+     * @param {Object} args
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     auth_request: function(args, callback, errorCallback)
     {
         args.uid = localStorage.getItem('user');
@@ -46,10 +53,12 @@ var API = Object.freeze( {
         this.request(args, callback, errorCallback);
     },
 
-    /** getAreas
+    /**
      * Gets all areas and calls a callback with the resulting object
-     * callback: A function accepting an Object containing regions and areas as input
-     **/
+     * @method getAreas
+     * @param {Function} callback accepts an Object containing regions and areas as input
+     * @param {Function} errorCallback
+     */
     getAreas: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
@@ -59,6 +68,14 @@ var API = Object.freeze( {
         API.request({action: "get_areas"}, requestCallback, errorCallback);
     },
 
+    /**
+     * Gets all photos for an organisation
+     * @method getPhotos
+     * @param {Integer} org_id
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     * @return
+     */
     getPhotos: function(org_id, callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
@@ -68,6 +85,12 @@ var API = Object.freeze( {
         API.request({action: "get_files", org: org_id}, requestCallback, errorCallback);
     },
 
+    /**
+     * Gets all organisations
+     * @method getOrganisations
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     getOrganisations: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
@@ -77,6 +100,13 @@ var API = Object.freeze( {
         API.request({action: "get_organisations"}, requestCallback, errorCallback);
     },
 
+    /**
+     * Gets the time of last update from the server
+     * @method getUpdates
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     * @return
+     */
     getUpdates: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null) {
@@ -86,6 +116,13 @@ var API = Object.freeze( {
         API.request({action: "get_db_lastmod"}, requestCallback, errorCallback);
     },
 
+    /**
+     * Gets all subscriptions from the server
+     * @method getSubscriptions
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     * @return
+     */
     getSubscriptions: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
             if (xmldata != null)
@@ -99,6 +136,15 @@ var API = Object.freeze( {
         requestCallback, errorCallback);
     },
 
+    /**
+     * Parses the XML data
+     *
+     * For now, uses the XML data to check which function it was called from, and how to
+     * parse that data
+     * @method xmlparser
+     * @param {} xmldata
+     * @return {Array or Object} Returns parsed javascript Object or Array.
+     */
     xmlparser: function(xmldata) {
         //TODO: Use Database.tableDefinition
         var
@@ -196,7 +242,6 @@ var API = Object.freeze( {
                     photos.push($(this).attr('src'));
                 }
             );
-            asdf = photos;
             return photos;
 
         } else if ($(xmldata).find('subscriptions').length != 0) {
@@ -230,8 +275,14 @@ var API = Object.freeze( {
         }
     },
 
-    /** authenticate
-    */
+    /**
+     * Used to authenticate a user
+     * @method authenticate
+     * @param {String} user
+     * @param {String} password
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     authenticate: function(user, password, callback, errorCallback) {
         this.request(
             {
@@ -244,8 +295,17 @@ var API = Object.freeze( {
         );
     },
 
-    /** register
-    */
+    /**
+     * Registers a new user
+     * @method register
+     * @param {String} username
+     * @param {String} password
+     * @param {String} fullname
+     * @param {String} email
+     * @param {String} phone
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     register: function(username, password, fullname, email, phone, callback, errorCallback) {
         API.request({
             action: 'user_register',

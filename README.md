@@ -2,7 +2,7 @@
 This is the GitHub repo for the iFiske fishing license app for phones and tablets. 
 The app is developed in [PhoneGap](http://phonegap.com) using JavaSript and HTML.
 
-For more information, visit <http://ifiske.se>!
+For more information, visit [ifiske.se](http://ifiske.se)!
 ## Table of contents
 - [Quick start](#quick-start)
  - [Building locally](#building-locally)
@@ -55,11 +55,9 @@ ifiske/
 ## Bug reports and feature requests
 Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.
 ## Contact us
-Filip Marko
-- <http://github.com/knarko>
+[Filip Marko](http://github.com/knarko)
 
-Gustav Bylund
-- <http://github.com/maistho>
+[Gustav Bylund](http://github.com/maistho)
 
 ## License
 Code and documentation copyright 2013-2014 Jighead AB. Code and docs released under [the Apache License](LICENSE).

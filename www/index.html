@@ -29,14 +29,14 @@
   <body>
     <div id="deviceready"></div>
 
-    <div id="filter" ontouchend="history.back();"></div>
+    <div id="filter"></div>
 
     <div class="app">
       <div id="popup"></div>
       <div id="header">
-	<div id="logo" ontouchend="history.back();"></div>
+	<div id="logo"></div>
         <div id="search-div">
-          <form onsubmit="search.go();return false;">
+          <form id="searchform">
             <input id="searchfield" type="search" placeholder="Snabbsök"/>
             <div id="search-bottom-bar"></div>
           </form>

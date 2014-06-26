@@ -1,6 +1,6 @@
 # iFiske
-This is the GitHub repo for iFiske fishing card application for phones and tablets. 
-The app uses phonegap and is written mainly in JS/HTML.
+This is the GitHub repo for the iFiske fishing license app for phones and tablets. 
+The app is developed in [PhoneGap](http://phonegap.com) using JavaSript and HTML.
 
 For more information, visit <http://www.ifiske.se>!
 ## Table of contents

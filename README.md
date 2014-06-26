@@ -18,7 +18,7 @@ cd ifiske
 phonegap run <platform>
 ````
 ### Structure
-The [wiki](https://github.com/ifiske/iFiske/wiki/Folder-structure) contains more detailed information regarding the project structure. 
+The [wiki](http://github.com/ifiske/iFiske/wiki/Folder-structure) contains more detailed information regarding the project structure. 
 ```
 ifiske/
 ├── doc/
@@ -51,8 +51,11 @@ ifiske/
                 └── <page_name>.js
 ```
 ## Bug reports and feature requests
-Create an [issue](https://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.
+Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.
 ## Contact us
-
+Filip Marko
+- <http://github.com/knarko>
+Gustav Bylund
+- <http://github.com/maistho>
 ## License
 Code and documentation copyright 2013-2014 Jighead AB. Code and docs released under [the Apache License](LICENSE).

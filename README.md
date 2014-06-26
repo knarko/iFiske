@@ -55,7 +55,9 @@ Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [
 ## Contact us
 Filip Marko
 - <http://github.com/knarko>
+
 Gustav Bylund
 - <http://github.com/maistho>
+
 ## License
 Code and documentation copyright 2013-2014 Jighead AB. Code and docs released under [the Apache License](LICENSE).

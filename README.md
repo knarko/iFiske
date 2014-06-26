@@ -30,27 +30,26 @@ ifiske/
     ├── config.xml
     ├── icon.png
     ├── index.html
-    └── static/
+    ├── css/
+    |   ├── global.css
+    |   ├── header.css
+    |   ├── index.css
+    |   └── popup.css
+    ├── js/
+    |   ├── api_request.js
+    |   ├── database.js
+    |   ├── debug.js
+    |   ├── index.js
+    |   └── navigate.js
+    ├── img/
+    ├── lib/
+    └── pages/
         ├── css/
-        |   ├── global.css
-        |   ├── header.css
-        |   ├── index.css
-        |   └── popup.css
-        ├── js/
-        |   ├── api_request.js
-        |   ├── database.js
-        |   ├── debug.js
-        |   ├── index.js
-        |   └── navigate.js
-        ├── img/
-        ├── lib/
-        └── pages/
-            ├── css/
-            |   └── <page_name>.css
-            ├── html/
-            |   └── <page_name>.html
-            └── js/
-                └── <page_name>.js
+        |   └── <page_name>.css
+        ├── html/
+        |   └── <page_name>.html
+        └── js/
+            └── <page_name>.js
 ```
 ## Bug reports and feature requests
 Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.

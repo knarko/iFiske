@@ -22,12 +22,12 @@
 }
 
 #start #footer #settings_icon {
-    background-image: url("../img/icon_settings.png");
+    background-image: url("../../img/icon_settings.png");
     float: right;
 }
 
 #start #footer #facebook_icon {
-    background-image: url("../img/fb.png");
+    background-image: url("../../img/fb.png");
     float: left;
 }
 

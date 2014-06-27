@@ -1,3 +1,8 @@
+/**
+ * @class card
+ * @extends Page
+ * @module Pages
+ */
 var card = Object.freeze({
     go: function (id) {
         Navigate.to('card', this.onload, [id]);

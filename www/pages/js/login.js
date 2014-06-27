@@ -1,3 +1,8 @@
+/**
+ * @class login
+ * @extends Page
+ * @module Pages
+ */
 var login = Object.freeze({
     go: function () {
         Navigate.to('login', this.onload);
@@ -5,6 +10,11 @@ var login = Object.freeze({
     onload: function (text) {
 
     },
+    /**
+     * Authenticates the user
+     * @method auth
+     * @param form
+     */
     auth: function (form) {
         var user = form.username.value.toLowerCase();
         var password = form.password.value;

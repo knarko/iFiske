@@ -1,11 +1,18 @@
 /**
- * Database
  * An object that contains the database functions
+ * @class Database
+ * @module Globals
  **/
 Database = Object.freeze({
     //TODO: Size calculation
     DB: window.openDatabase("fiskebasen", "1.0", "fiskebasen", 10000000),
 
+    /**
+     * Updates the database if there has been any new updates
+     * @method update
+     * @param {Function} callback
+     * @param {Function} errorCallback
+     */
     update: function(callback, errorCallback) {
         API.getUpdates(function(timestamp){
             if (timestamp != localStorage.getItem('db_updated')) {
@@ -61,6 +68,11 @@ Database = Object.freeze({
         ]
     },
 
+    /**
+     * Drops all tables in the database
+     * @method clean
+     * @param {Function} callback
+     */
     clean: function(callback) {
         this.DB.transaction(
             function(tx) {
@@ -78,7 +90,11 @@ Database = Object.freeze({
         );
     },
 
-    //Initialies the database
+    /**
+     * Initialies the tables in the database
+     * @method init
+     * @param {Function} callback
+     */
     init: function(callback){
         Database.DB.transaction(
             function(tx) {
@@ -150,16 +166,18 @@ Database = Object.freeze({
     },
 
     /**
-     * updateTable
      * inserts values into a table
-     * table: A string containing the name of the table to update, corresponding to a name in tableDefinition
-     * dataset: An array of arrays, each containing all the values to insert
-     * to a row
-     * callback: callback function
      *
      * TODO: Create better link between the parsing and this function,
      * they are highly dependant on each other.
-     **/
+     * @method updateTable
+     * @param {String} table
+     * A string containing the name of the table to update, corresponding to a
+     * key name in tableDefinition
+     * @param {Array} dataset
+     * An array of arrays, each containing all the values to insert to a row
+     * @param {Function} callback
+     */
     updateTable: function(table, dataset, callback){
         var query = 'INSERT INTO ';
         var successCallback = function(){
@@ -179,6 +197,12 @@ Database = Object.freeze({
         }, Debug.log, successCallback);
     },
 
+    /**
+     * Gets information about an area
+     * @method getArea
+     * @param {Integer} id
+     * @param {Function} callback
+     */
     getArea: function(id, callback) {
         var querySuccess = function(tx, result) {
             if (result.rows.length == 1) {
@@ -200,8 +224,16 @@ Database = Object.freeze({
         }, Debug.log);
     },
 
+    /**
+     * Searches the database using a query
+     *
+     * The query is matched vs area.name and area.keyword
+     * @method search
+     * @param {String} searchstring
+     * @param {Function} callback
+     */
     search: function(searchstring, callback) {
-        var querySuccess = function(tx, results){
+        var querySuccess = function(tx, results) {
             callback && callback(results);
         };
         this.DB.transaction(function(tx){
@@ -221,6 +253,12 @@ Database = Object.freeze({
         },Debug.log);
     },
 
+    /**
+     * Gets information about a product
+     * @method getProductById
+     * @param {Integer} product_id
+     * @param {Function} callback
+     */
     getProductById: function(product_id, callback) {
         var querySuccess = function(tx, results) {
             var result = null;
@@ -240,6 +278,12 @@ Database = Object.freeze({
         }, Debug.log);
     },
 
+    /**
+     * Gets all products from an area
+     * @method getProductsByArea
+     * @param {Integer} area_id
+     * @param {Function} callback
+     */
     getProductsByArea: function(area_id, callback) {
         var querySuccess = function(tx, results) {
             if (results.rows.length != 0)
@@ -257,6 +301,11 @@ Database = Object.freeze({
         }, Debug.log);
     },
 
+    /**
+     * Gets all subscriptions
+     * @method getSubscriptions
+     * @param {Function} callback
+     */
     getSubscriptions: function(callback) {
         var querySuccess = function(tx, results) {
             if (results.rows.length != 0)
@@ -274,6 +323,12 @@ Database = Object.freeze({
         }, Debug.log);
     },
 
+    /**
+     * Gets information about a Subscription
+     * @method getSubscriptionByid
+     * @param {Integer} uid
+     * @param {Function} callback
+     */
     getSubscriptionByid: function(uid, callback) {
         var querySuccess = function(tx, results) {
             if (results.rows.length == 1)

@@ -9,7 +9,7 @@ var my_licenses = Object.freeze({
     },
     onload: function(text) {
         Database.getSubscriptions(function (result) {
-            var list = $(text).find("#licenses-list");
+            var list = $(text).find("#license_list");
             list.empty();
             var newlist = [];
             for(var i = 0; i < result.rows.length; ++i) {

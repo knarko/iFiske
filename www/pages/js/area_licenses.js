@@ -1,43 +1,43 @@
 /**
- * @class area_cards
+ * @class area_licenses
  * @extends Page
  * @module Pages
  */
-var area_cards = Object.freeze({
+var area_licenses = Object.freeze({
     go: function(id) {
-        Navigate.to('area_cards', this.onload, [id]);
+        Navigate.to('area_licenses', this.onload, [id]);
     },
     onload: function (text, id) {
         Database.getArea(id, function(area) {
-            $('#area_cards_header').text(area.name);
+            $('#area_licenses_header').text(area.name);
         });
-        $('#area_cards_header').text();
+        $('#area_licenses_header').text();
         Database.getProductsByArea(id, function(result) {
-            var cardlist = $('#cardlist');
+            var license_list = $('#license_list');
 
             if (result != null || result.rows.length == 0) {
                 var items = [];
 
                 for (var i = 0; i < result.rows.length; ++i) {
-                    items[items.length] = area_cards.createLicense(
+                    items[items.length] = area_licenses.createLicense(
                         result.rows.item(i)
                     );
                 }
 
-                /* Event listeners on cardlist listening to touchend
+                /* Event listeners on license_list listening to touchend
                    events fired by license buttons */
-                cardlist.on('touchend', '.rules', function() {
+                license_list.on('touchend', '.rules', function() {
                     rule.go($(this).parent().attr('data-rule-id'));
                 });
 
                 /* TODO: SMS plugin
-                   cardlist.on('touchend', '.sms', function() {
+                   license_list.on('touchend', '.sms', function() {
 
                    Debug.log('SMS purchase');
                    });
                    */
 
-                cardlist.on('touchend', '.web', function() {
+                license_list.on('touchend', '.web', function() {
                     navigator.app.loadUrl(
                         'http://ifiske.se/mobile/index.php?p=5&i=' +
                         $(this).parent().attr('data-id'),
@@ -45,10 +45,10 @@ var area_cards = Object.freeze({
                     );
                 });
 
-                cardlist.html(items.join(''));
+                license_list.html(items.join(''));
             } else {
-                cardlist.text('Inga fiskekort kunde hittas');
-                Debug.log('No cards found for Area Id ' + id);
+                license_list.text('Inga fiskekort kunde hittas');
+                Debug.log('No licenses found for Area Id ' + id);
             }
         });
     },

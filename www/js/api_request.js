@@ -1,6 +1,7 @@
 /**
  * Functions managing API requests.
  * @class API
+ * @module Globals
  */
 var API = Object.freeze( {
     /**

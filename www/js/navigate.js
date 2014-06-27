@@ -4,6 +4,7 @@
  * use by calling Navigate.to('page', onloadfunc, [*args]);
  * to back, call window.history.back() which will be
  * @class Navigate
+ * @module Globals
  */
 var Navigate = Object.freeze({
     /**

@@ -1,6 +1,7 @@
 /**
  * app namespace
  * @class app
+ * @module Globals
  */
 var app = {
     /**

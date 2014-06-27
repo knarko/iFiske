@@ -1,6 +1,7 @@
 /**
  * Debug Object for finding Debug lines easier
  * @class Debug
+ * @module Globals
  */
 Debug = Object.freeze({
     /**

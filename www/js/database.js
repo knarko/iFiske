@@ -1,6 +1,7 @@
 /**
  * An object that contains the database functions
  * @class Database
+ * @module Globals
  **/
 Database = Object.freeze({
     //TODO: Size calculation

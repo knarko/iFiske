@@ -58,6 +58,8 @@ $(document).ready(function(){
     $('#searchform').submit(search.go);
     Database.update();
 
+    window.addEventListener("orientationchange", orientationChange, true);
+
 });
 var timeout;
 
@@ -78,3 +80,16 @@ function try_open_fb()
     window.open('fb://profile/215728895115467', '_system');
     timeout = setTimeout('open_fb()', 300);
 }
+
+function orientationChange(e) {
+    var e = window.orientation;
+    if (window.orientation == -90 || window.orientation == 90)
+    {
+        $("#popup").css('height', '70%');
+    }
+    else
+    {
+      $("#popup").css('height', '50%');
+    }
+}
+

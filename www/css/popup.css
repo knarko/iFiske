@@ -1,18 +1,16 @@
 #popup {
     position: fixed;
-    margin-top: 20%;
-    height: auto;
-    width: 66%;
-    margin-left: 17%;
-    margin-right: 17%;
+    height: 50%;
+    overflow: overlay;
+    font-size: smaller;
     color: black;
-    border: solid black 1px;
-    display: none;
-    text-transform: none;
     border-radius:3px;
     z-index: 9001;
-    opacity: 1;
     background: white;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 #filter {

@@ -14,10 +14,30 @@
 }
 
 #header #search-div {
+    color: black;
+    float; left;
     overflow:hidden;
 }
 
+#search-icon {
+    background-image: url("../img/ic_btn_search.png");
+    float: right;
+}
+
+.img {
+    background-color: transparent;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 40px;
+    border: none;
+    margin: 1%;
+}
+
 #header #searchfield {
+    display: none;
     height:100%;
     width:100%;
     color: #FFFFFF;
@@ -41,6 +61,7 @@
 }
 
 #header #search-bottom-bar {
+    display: none;
     height:7px;
     border:0px solid #006993;
     border-width:0px 3px 0px 3px;

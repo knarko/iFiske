@@ -1,31 +1,31 @@
 /**
- * @class my_cards
+ * @class my_licenses
  * @extends Page
  * @module Pages
  */
-var my_cards = Object.freeze({
+var my_licenses = Object.freeze({
     go: function() {
-        Navigate.to('my_cards', this.onload);
+        Navigate.to('my_licenses', this.onload);
     },
     onload: function(text) {
         Database.getSubscriptions(function (result) {
-            var list = $(text).find("#cards-list");
+            var list = $(text).find("#licenses-list");
             list.empty();
             var newlist = [];
             for(var i = 0; i < result.rows.length; ++i) {
-                newlist.push(my_cards.createCard(result.rows.item(i)));
+                newlist.push(my_licenses.createLicense(result.rows.item(i)));
             }
             list.html(newlist.join(''));
-            $('.button').bind('touchend', my_cards.buttonclick);
+            $('.button').bind('touchend', my_licenses.buttonclick);
         });
     },
     /**
-     * Creates a new fishing card
-     * @method createCard
+     * Creates a new fishing license
+     * @method createLicense
      * @param {Object} props
      * @return {String}
      */
-    createCard: function (props) {
+    createLicense: function (props) {
         var from = new Date(props.validFrom);
         var to = new Date(props.validTo);
         return [
@@ -38,11 +38,11 @@ var my_cards = Object.freeze({
             '</span><span class="date">fran ',
             from.getDate(),
             ' ',
-            my_cards.months[from.getMonth()],
+            my_licenses.months[from.getMonth()],
             '</span><br/><span class="date">till ',
             to.getDate(),
             ' ',
-            my_cards.months[to.getMonth()],
+            my_licenses.months[to.getMonth()],
             '</div>'
         ].join('');
     },
@@ -52,7 +52,7 @@ var my_cards = Object.freeze({
      * @param {Event} e
      */
     buttonclick: function (e) {
-        card.go(parseInt($(e.target).attr('data-id')));
+        license.go(parseInt($(e.target).attr('data-id')));
     },
     months: [
         'Januari',

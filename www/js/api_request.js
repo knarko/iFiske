@@ -75,7 +75,6 @@ var API = Object.freeze( {
      * @param {Integer} org_id
      * @param {Function} callback
      * @param {Function} errorCallback
-     * @return
      */
     getPhotos: function(org_id, callback, errorCallback) {
         var requestCallback = function(xmldata) {
@@ -106,7 +105,6 @@ var API = Object.freeze( {
      * @method getUpdates
      * @param {Function} callback
      * @param {Function} errorCallback
-     * @return
      */
     getUpdates: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {
@@ -122,7 +120,6 @@ var API = Object.freeze( {
      * @method getSubscriptions
      * @param {Function} callback
      * @param {Function} errorCallback
-     * @return
      */
     getSubscriptions: function(callback, errorCallback) {
         var requestCallback = function(xmldata) {

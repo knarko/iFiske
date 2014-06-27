@@ -202,7 +202,6 @@ Database = Object.freeze({
      * @method getArea
      * @param {Integer} id
      * @param {Function} callback
-     * @return
      */
     getArea: function(id, callback) {
         var querySuccess = function(tx, result) {
@@ -284,7 +283,6 @@ Database = Object.freeze({
      * @method getProductsByArea
      * @param {Integer} area_id
      * @param {Function} callback
-     * @return
      */
     getProductsByArea: function(area_id, callback) {
         var querySuccess = function(tx, results) {

@@ -1,11 +1,20 @@
+/**
+ * @class register
+ * @extends Page
+ * @module Pages
+ */
 var register = Object.freeze({
     go: function () {
         Navigate.to('register', this.onload);
     },
     onload: function (text) {
-
     },
 
+    /**
+     * Validates password confirmation
+     * @method validate_password_confirm
+     * @param {Event} e
+     */
     validate_password_confirm: function(e) {
         var pwc = e.parentNode.password_confirm;
 
@@ -17,9 +26,12 @@ var register = Object.freeze({
         }
     },
 
-    /** validate_register_form
+    /**
      * Invalidates the registration form. Displays potential errors.
+     *
      * Calls API.register(...) on success.
+     * @method validate_register
+     * @param form
      */
     validate_register: function(form) {
         var
@@ -69,5 +81,4 @@ var register = Object.freeze({
 
         );
     }
-
 });

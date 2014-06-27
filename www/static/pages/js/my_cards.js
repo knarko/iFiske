@@ -1,3 +1,8 @@
+/**
+ * @class my_cards
+ * @extends Page
+ * @module Pages
+ */
 var my_cards = Object.freeze({
     go: function() {
         Navigate.to('my_cards', this.onload);
@@ -14,6 +19,12 @@ var my_cards = Object.freeze({
             $('.button').bind('touchend', my_cards.buttonclick);
         });
     },
+    /**
+     * Creates a new fishing card
+     * @method createCard
+     * @param {Object} props
+     * @return {String}
+     */
     createCard: function (props) {
         var from = new Date(props.validFrom);
         var to = new Date(props.validTo);
@@ -35,6 +46,11 @@ var my_cards = Object.freeze({
             '</div>'
         ].join('');
     },
+    /**
+     * Listener for buttonclick
+     * @method buttonclick
+     * @param {Event} e
+     */
     buttonclick: function (e) {
         card.go(parseInt($(e.target).attr('data-id')));
     },

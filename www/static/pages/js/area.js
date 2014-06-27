@@ -1,3 +1,8 @@
+/**
+ * @class area
+ * @extends Page
+ * @module Pages
+ */
 var area = Object.freeze({
     go: function(id) {
         Navigate.to('area', this.onload, [id]);
@@ -12,7 +17,7 @@ var area = Object.freeze({
                         photo.src = photos[0];
                         photosdiv.append(photo);
                     }
-                    /** Only add one image for now
+                    /* Only add one image for now
                       $.each(photos, function () {
                       var photo = document.createElement('img');
                       photo.src = this;
@@ -21,21 +26,27 @@ var area = Object.freeze({
                       */
                 });
 
-		$(text).find('.area-name').text(result.name);
-		$(text).find('.area-description').html(
-		    area.parse(
-			result.description.replace(
-			    /(&#10;(&nbsp;)*){3,}/g,"&#10;&#10;"
-			)
-		    )
-		);
-		$(text).find('#card-button').attr("data-id",result.id);
-                
+                $(text).find('.area-name').text(result.name);
+                $(text).find('.area-description').html(
+                    area.parse(
+                        result.description.replace(
+                            /(&#10;(&nbsp;)*){3,}/g,"&#10;&#10;"
+                )
+                )
+                );
+                $(text).find('#card-button').attr("data-id",result.id);
+
             } else {
                 throw Error('Tried going to an Area that did not exist');
             };
         });
     },
+    /**
+     * Parses text and creates newlines
+     * @method parse
+     * @param {String} text
+     * @returns {String} Parsed text
+     */
     parse: function (text) {
         return text.replace(/&#10;/g,'<br/>');
     }

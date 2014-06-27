@@ -8,35 +8,36 @@
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
     <meta name="format-detection" content="telephone=no" />
-    
+
     <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <link rel="stylesheet" type="text/css" href="static/css/header.css" />
     <link rel="stylesheet" type="text/css" href="static/css/popup.css" />
     <link rel="stylesheet" type="text/css" href="static/css/global.css" />
 
     <!-- PAGES -->
-    <link rel="stylesheet" type="text/css" href="static/css/start.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/area.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/login.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/register_user.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/search.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/settings.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/my_cards.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/area_cards.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/start.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/area.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/login.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/register.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/search.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/settings.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/my_cards.css" />
+    <link rel="stylesheet" type="text/css" href="static/pages/css/area_cards.css" />
+
   </head>
 
   <body>
     <div id="deviceready"></div>
 
-    <div id="filter" ontouchend="history.back();"></div>
+    <div id="filter"></div>
 
     <div class="app">
       <div id="popup"></div>
       <div id="header">
-	<div id="logo" ontouchend="history.back();"></div>
-    <div id="search-div"> 
-    <button ontouchend="expand();" id="search-icon" class="img"></button>
-    </div>
+          <div id="logo"></div>
+          <div id="search-div">
+              <button ontouchend="expand();" id="search-icon" class="img"></button>
+          </div>
       </div>
       <hr id="header-hr"/>
       <div id="content"></div>
@@ -55,15 +56,17 @@
     <script src="static/js/searchbar.js"></script>
 
     <!-- PAGES -->
-    <script src="static/pages/start.js"></script>
-    <script src="static/pages/search.js"></script>
-    <script src="static/pages/area.js"></script>
-    <script src="static/pages/login.js"></script>
-    <script src="static/pages/register.js"></script>
-    <script src="static/pages/settings.js"></script>
-    <script src="static/pages/my_cards.js"></script>
-    <script src="static/pages/card.js"></script>
-    <script src="static/pages/area_cards.js"></script>
+    <script src="static/pages/js/rule.js"></script>
+    <script src="static/pages/js/start.js"></script>
+    <script src="static/pages/js/search.js"></script>
+    <script src="static/pages/js/area.js"></script>
+    <script src="static/pages/js/login.js"></script>
+    <script src="static/pages/js/register.js"></script>
+    <script src="static/pages/js/settings.js"></script>
+    <script src="static/pages/js/my_cards.js"></script>
+    <script src="static/pages/js/card.js"></script>
+    <script src="static/pages/js/area_cards.js"></script>
+
 
     <script>app.initialize();</script>
   </body>

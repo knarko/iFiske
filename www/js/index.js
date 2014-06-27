@@ -36,6 +36,8 @@ $(document).ready(function(){
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+    $('#filter, #logo').click(history.back);
+    $('#searchform').submit(search.go);
     Database.update();
 
     window.addEventListener("orientationchange", orientationChange, true);

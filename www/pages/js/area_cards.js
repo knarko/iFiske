@@ -3,6 +3,10 @@ var area_cards = Object.freeze({
 	Navigate.to('area_cards', this.onload, [id]);
     },
     onload: function (text, id) {
+	Database.getArea(id, function(area) {
+	    $('#area_cards_header').text(area.name);
+	});
+	$('#area_cards_header').text();
 	Database.getProductsByArea(id, function(result) {
 	    var cardlist = $('#cardlist');
 
@@ -18,14 +22,15 @@ var area_cards = Object.freeze({
 		/* Event listeners on cardlist listening to touchend
 		   events fired by license buttons */
 		cardlist.on('touchend', '.rules', function() {
-		    // TODO: Navigate to rules for the given rule id
-		    Debug.log('Rules');
+		    rule.go($(this).parent().attr('data-rule-id'));
 		});
 
-		cardlist.on('touchend', '.sms', function() {
-		    // TODO: Purchase through SMS
+		/* TODO: SMS plugin
+		  cardlist.on('touchend', '.sms', function() {
+		    
 		    Debug.log('SMS purchase');
 		});
+		*/
 
 		cardlist.on('touchend', '.web', function() {
 		    navigator.app.loadUrl(
@@ -47,7 +52,7 @@ var area_cards = Object.freeze({
 	var license = ['<div class="license"', 
 		       'data-id="', row.id, '" ',
 		       'data-sms-code="', row.smscode, '" ',
-		       'data-rule-id="', row.ruleid, 
+		       'data-rule-id="', row.rule_id, 
 		       '">',
 
 		       '<h1>',
@@ -61,11 +66,11 @@ var area_cards = Object.freeze({
 		       row.headline,
 		       '</h2>',
 
-		       '<p>',
+		       '<p class="typetitle">',
 		       row.typetitle,
 		       '</p>',
 
-		       '<p>',
+		       '<p class="notes">',
 		       row.notes,
 		       '</p>',
 		       
@@ -74,7 +79,9 @@ var area_cards = Object.freeze({
 		       '</p>',
 
 		       '<div class="button web">Web-Köp</div>',
-		       '<div class="button sms">SMS-Köp</div>',
+		       // TODO: replace with sms plugin
+		       '<a href="sms:72456?body=', row.smscode, '">',
+		       '<div class="button sms">SMS-Köp</div></a>',
 		       '<div class="button rules">Regler</div>',
 		       '</div>'];
 
@@ -82,10 +89,14 @@ var area_cards = Object.freeze({
 	case 0: // Sold in all channels
 	    break;
 	case 1: // Sold only through SMS
-	    delete license[license.length-4];
+	    delete license[license.length-7];
 	    break;
 	case 2: // Sold only through Web
 	    delete license[license.length-3];
+	    // TODO: replace once sms plugin is used
+	    delete license[license.length-4];
+	    delete license[license.length-5];
+	    delete license[license.length-6];
 	    break;
 	case 4: // Refer to other sellers
 	    //TODO;

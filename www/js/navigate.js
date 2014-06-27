@@ -47,7 +47,7 @@ var Navigate = Object.freeze({
         newContent.id = target;
         args = args || [];
         args.unshift(newContent);
-        $(newContent).load('static/pages/' + target + '.html', function() {
+        $(newContent).load('static/pages/html/' + target + '.html', function() {
             callback.apply(this, args);
         });
         $('#content').html(newContent);
@@ -63,7 +63,7 @@ var Navigate = Object.freeze({
         callback = callback || function(){};
         args = args || [];
         history.pushState({path: 'popup'}, null, '#popup');
-        $('#popup').load('static/pages/' + target + '.html', function() {
+        $('#popup').load('static/pages/html/' + target + '.html', function() {
             callback.apply(this, args);
             $('#filter, #popup').fadeIn('fast', 'linear');
         });

@@ -1,3 +1,8 @@
+/**
+ * @class settings
+ * @extends Page
+ * @module Pages
+ */
 var settings = Object.freeze({
     go: function () {
         Navigate.to('settings', this.onload);
@@ -8,10 +13,14 @@ var settings = Object.freeze({
         }
     },
 
+    /**
+     * Logs out by removing username and password from localstorage
+     * @method logout
+     */
     logout: function() {
         var logout = function(){
-            localStorage.removeItem('user');
             localStorage.removeItem('password');
+            localStorage.removeItem('user');
 
             // Avoid back stack entry
             Navigate.init();
@@ -31,6 +40,10 @@ var settings = Object.freeze({
             logout();
         }
     },
+    /**
+     * Forces an update
+     * @method force_update
+     */
     force_update: function () {
         if (navigator.notification) {
             navigator.notification.activityStop();
@@ -53,6 +66,10 @@ var settings = Object.freeze({
             }
         });
     },
+    /**
+     * Links to bug report page
+     * @method reportBug
+     */
     reportBug: function () {
         navigator.app.loadUrl(
             'https://github.com/ifiske/ifiske/issues',

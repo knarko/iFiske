@@ -26,6 +26,8 @@
     <preference name="phonegap-version" value="3.4.0" />
     <icon src="icon.png" />
     <!--
+         This is removed to only use the single icon provided in icon.png
+         More icons of different sizes should be created and used
     <icon gap:density="ldpi" gap:platform="android" src="res/icon/android/icon-36-ldpi.png" />
     <icon gap:density="mdpi" gap:platform="android" src="res/icon/android/icon-48-mdpi.png" />
     <icon gap:density="hdpi" gap:platform="android" src="res/icon/android/icon-72-hdpi.png" />

@@ -31,7 +31,7 @@
     display: block;
 }
 
-#popup #info{
+#popup #info {
     background-color: transparent;
     background-image: url("../img/info_icon.png");
     background-position: center center;
@@ -43,5 +43,4 @@
     border: none;
     width: 40px;
 }
-
 

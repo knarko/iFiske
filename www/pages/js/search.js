@@ -1,3 +1,8 @@
+/**
+ * @class search
+ * @extends Page
+ * @module Pages
+ */
 var search = Object.freeze({
     go: function() {
         if($("#search").length == 0)
@@ -19,6 +24,12 @@ var search = Object.freeze({
         });
 
     },
+    /**
+     * Creates a button string
+     * @method createButton
+     * @param {Object} props
+     * @return String
+     */
     createButton: function (props) {
         return [
             '<div class="button" data-id="',
@@ -28,6 +39,11 @@ var search = Object.freeze({
             '</div>'
         ].join('');
     },
+    /**
+     * Listener for buttonclick
+     * @method buttonclick
+     * @param {Event} e
+     */
     buttonclick: function(e) {
         area.go(parseInt($(e.target).attr('data-id')));
     }

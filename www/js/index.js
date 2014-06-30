@@ -51,10 +51,10 @@ var app = {
 
 $(document).ready(function(){
     Navigate.init();
-    
     window.addEventListener('popstate', function(e){
         Navigate.back(e);
     });
+
     $('#filter, #logo').on('touchend', function() { history.back() });
     $('#searchform').submit(search.go);
     Database.update();

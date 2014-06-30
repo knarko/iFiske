@@ -5,10 +5,11 @@
  */
 var search = Object.freeze({
     go: function() {
-        if($("#search").length == 0)
-            Navigate.to('search', this.onload);
-        else
-            this.onload($("#content"));
+        if($("#search").length == 0) {
+	    Navigate.to('search', search.onload);
+	} else {
+            search.onload($("#content"));
+	}
     },
     onload: function(text) {
         var searchstring = $("#searchfield").val();

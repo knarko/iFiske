@@ -20,7 +20,7 @@ cd ifiske
 phonegap run <platform>
 ````
 ### Project structure
-The [wiki](http://github.com/ifiske/iFiske/wiki/Folder-structure) contains more detailed information regarding the project structure. 
+The [wiki](http://github.com/ifiske/iFiske/wiki/Project-structure) contains more detailed information regarding the project structure. 
 ```
 ifiske/
 ├── doc/

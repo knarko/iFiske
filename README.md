@@ -20,43 +20,13 @@ cd ifiske
 phonegap run <platform>
 ````
 ### Project structure
-The [wiki](http://github.com/ifiske/iFiske/wiki/Folder-structure) contains more detailed information regarding the project structure. 
-```
-ifiske/
-├── doc/
-├── platforms/
-├── plugins/
-└── www/
-    ├── config.xml
-    ├── icon.png
-    ├── index.html
-    ├── css/
-    |   ├── global.css
-    |   ├── header.css
-    |   ├── index.css
-    |   └── popup.css
-    ├── js/
-    |   ├── api_request.js
-    |   ├── database.js
-    |   ├── debug.js
-    |   ├── index.js
-    |   └── navigate.js
-    ├── img/
-    ├── lib/
-    └── pages/
-        ├── css/
-        |   └── <page_name>.css
-        ├── html/
-        |   └── <page_name>.html
-        └── js/
-            └── <page_name>.js
-```
+The app consists of a single-page application. Content is divided into [pages](http://github.com/ifiske/iFiske/wiki/Pages) that are loaded and replaced when needed. 
+The [wiki](http://github.com/ifiske/iFiske/wiki/Project-structure) contains more detailed information regarding the project structure. 
 ## Bug reports and feature requests
-Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.
+Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.
 ## Contact us
 [Filip Marko](http://github.com/knarko)
 
 [Gustav Bylund](http://github.com/maistho)
-
 ## License
-Code and documentation copyright 2013-2014 Jighead AB. Code and docs released under [the Apache License](LICENSE).
+Code and docs released under [the Apache License](LICENSE).

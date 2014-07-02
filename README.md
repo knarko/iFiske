@@ -20,7 +20,7 @@ cd ifiske
 phonegap run <platform>
 ````
 ### Project structure
-The app consists of a single-page application. Content is divided into [pages](http://github.com/ifiske/iFiske/wiki/Project-structure) that are loaded and replaced when needed. 
+The app consists of a single-page application. Content is divided into [pages](http://github.com/ifiske/iFiske/wiki/Pages) that are loaded and replaced when needed. 
 The [wiki](http://github.com/ifiske/iFiske/wiki/Project-structure) contains more detailed information regarding the project structure. 
 ## Bug reports and feature requests
 Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.

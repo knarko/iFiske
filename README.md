@@ -52,7 +52,7 @@ ifiske/
             └── <page_name>.js
 ```
 ## Bug reports and feature requests
-Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact us](#contact-us) directly.
+Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.
 ## Contact us
 [Filip Marko](http://github.com/knarko)
 

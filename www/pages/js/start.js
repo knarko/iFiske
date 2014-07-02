@@ -31,5 +31,15 @@ var start = Object.freeze({
             $(text).find('.logged-in, .not-logged-in').toggle();
             $(text).find('.username').text(localStorage.user);
         }
+    },
+    /**
+     * Tries opening the facebook app, falls back to browser if failed.
+     * @method open_fb
+     */
+    open_fb: function () {
+        window.open('fb://profile/215728895115467', '_system');
+        timeout = setTimeout(function () {
+            window.open('https://www.facebook.com/fiskekort', '_system');
+        }, 300);
     }
 });

@@ -58,24 +58,4 @@ $(document).ready(function(){
     $('#filter, #logo').on('touchend', function() { history.back() });
     $('#searchform').submit(search.go);
     Database.update();
-
 });
-var timeout;
-
-/**
- * Opens a browser window to facebook
- * @method open_fb
- */
-function open_fb() {
-    window.open('https://www.facebook.com/fiskekort', '_system');
-}
-
-/**
- * Tries opening the facebook app, falls back to browser if failed.
- * @method try_open_fb
- */
-function try_open_fb()
-{
-    window.open('fb://profile/215728895115467', '_system');
-    timeout = setTimeout('open_fb()', 300);
-}

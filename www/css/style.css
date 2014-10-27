@@ -1,0 +1,6 @@
+ion-view {
+	background-image: url("/img/bg-login.png");
+	background-size: 100%;
+	background-position: bottom;
+	background-repeat: no-repeat;
+}

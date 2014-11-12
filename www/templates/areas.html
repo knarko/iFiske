@@ -1,0 +1,12 @@
+<ion-view title="Areas">
+<ion-content class="padding">
+<div class="card" ng-repeat="item in items" ui-sref="areadetail({id:item.ID})">
+	<div class="item item-text-wrap tinted-background" ng-style="item.image">
+		<div class="">
+			<h2>{{item.t}}</h2>
+			<p>{{item.region_name}}</p>
+		</div>
+	</div>
+</div>
+</ion-content>
+</ion-view>

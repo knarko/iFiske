@@ -22,7 +22,6 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
 	$urlRouterProvider.otherwise('/login');
 	// Ionic uses AngularUI Router which uses the concept of states
 	// Learn more here: https://github.com/angular-ui/ui-router
@@ -34,9 +33,19 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services'])
 			url: '/login',
 			templateUrl: 'templates/login.html'
 		})
+	.state('areas', {
+		url: '/areas',
+		templateUrl: 'templates/areas.html',
+		controller: 'AreasCtrl'
+	})
+	.state('areadetail', {
+		url: '/area/:id',
+		templateUrl: 'templates/area.detail.html',
+		controller: 'AreaDetailCtrl'
+	})
 	.state('register', {
 		url: '/register',
-		templateUrl: 'templates/register.html'
+		templateUrl: 'templates/register.html',
 	})
 	.state('main', {
 		url: '/',

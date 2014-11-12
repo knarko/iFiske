@@ -33,3 +33,9 @@ ion-view {
 div.bar.bar-transparent {
 	background: none;
 }
+
+
+.tinted-background {
+	background-color: grey;
+	background-blend-mode: screen;
+}

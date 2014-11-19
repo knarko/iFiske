@@ -1,9 +1,18 @@
 <ion-view title="AreaDetail">
 <ion-content class="padding">
-<div class="card" ng-style="area.image"></div>
 <div class="card">
-	{{area.t}}
-	hej
+	<img class="area-image" src={{area.img}}>
+</div>
+<div class="card">
+	<div class="row">
+		<div class="col">
+			<h2>{{area.t}}</h2>
+		</div>
+		<div class="col">
+			<button class="button button-positive pull-right">Köp Fiskekort</button>
+		</div>
+	</div>
+	<p>{{area.d}}</p>
 </div>
 </ion-content>
 </ion-view>

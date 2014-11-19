@@ -7827,3 +7827,6 @@ div.bar.bar-transparent {
 .tinted-background {
   background-color: grey;
   background-blend-mode: screen; }
+
+.area-image {
+  width: 100%; }

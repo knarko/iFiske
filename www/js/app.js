@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api'])
 
 .run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {

@@ -7,6 +7,8 @@
   ],
   "watchPatterns": [
     "www/**/*",
+    "!www/.#*",
+    "!www/**/.#*",
     "!www/lib/**/*"
   ]
 }

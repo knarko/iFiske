@@ -84,10 +84,12 @@
 			return api_call({m: 'get_baits'});
 		    }
 		    ,get_organizations: function(orgid) {
-			return api_call({m: 'get_organizations', orgid: orgid});
+			return api_call({m: 'get_organizations'
+					 ,orgid: orgid});
 		    }
 		    ,get_org_modified: function(orgid) {
-			return api_call({m: 'get_org_modified', orgid: orgid});
+			return api_call({m: 'get_org_modified'
+					 ,orgid: orgid});
 		    }
 		    ,get_areas: function(areaid) {
 			return api_call({m: 'get_areas'
@@ -102,19 +104,24 @@
 					 ,areaid: areaid});
 		    }
 		    ,get_rules: function(ruleid) {
-			return api_call({m: 'get_rules', ruleid: ruleid});
+			return api_call({m: 'get_rules'
+					 ,ruleid: ruleid});
 		    }
 		    ,get_photos: function(orgid, areaid) {
-			return api_call({m: 'get_photos', orgid: orgid, areaid: areaid});
+			return api_call({m: 'get_photos'
+					 ,orgid: orgid
+					 ,areaid: areaid});
 		    }
 		    ,get_map_pois: function(orgid) {
-			return api_call({m: 'get_map_pois', orgid: orgid});
+			return api_call({m: 'get_map_pois'
+					 ,orgid: orgid});
 		    }
 		    ,get_map_poi_types : function() {
 			return api_call({m: 'get_map_poi_types'});
 		    }
 		    ,get_map_polygons: function(orgid) {
-			return api_call({m: 'get_map_polygons', orgid: orgid});
+			return api_call({m: 'get_map_polygons'
+					 ,orgid: orgid});
 		    }
 		    ,user_get_favorites: function() {
 			return session_api_call({m: 'user_get_favorites'});

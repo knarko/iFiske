@@ -43,30 +43,33 @@
 			return api_call({m: 'get_counties'})
 		    }
 		    ,user_register: function(username, fullname, password, email, phone) {
-			return api_call({m: 'user_register' 
-					 ,username: username
-					 ,fullname: fullname
-					 ,password: password
-					 ,email: email
-					 ,phone: phone
-					});
+			return api_call(
+			    { m: 'user_register' 
+			     ,username: username
+			     ,fullname: fullname
+			     ,password: password
+			     ,email: email
+			     ,phone: phone
+			    });
 		    }
 		    ,user_confirm: function(username, pin) {
-			return api_call({m: 'user_confirm'
-					 ,username: username
-					 ,pin: pin}
-				       );
+			return api_call(
+			    { m: 'user_confirm'
+			      ,username: username
+			      ,pin: pin}
+			);
 		    }
 		    ,user_info: function() {
 			return session_api_call({m: 'user_info'});
 		    }
 		    // ToDo: is username & email the same parameter? should it be?
 		    ,user_login: function(username, email, password) {
-			return api_call({m: 'user_login'
-					 ,username: username
-					 ,email: email
-					 ,password: password
-					}); 
+			return api_call(
+			    { m: 'user_login'
+			      ,username: username
+			      ,email: email
+			      ,password: password
+			    }); 
 		    }
 		    ,user_logout: function() {
 			return session_api_call({m: 'user_logout'});
@@ -84,44 +87,62 @@
 			return api_call({m: 'get_baits'});
 		    }
 		    ,get_organizations: function(orgid) {
-			return api_call({m: 'get_organizations'
-					 ,orgid: orgid});
+			return api_call(
+			    { m: 'get_organizations'
+			      ,orgid: orgid
+			    });
 		    }
 		    ,get_org_modified: function(orgid) {
-			return api_call({m: 'get_org_modified'
-					 ,orgid: orgid});
+			return api_call(
+			    { m: 'get_org_modified'
+			      ,orgid: orgid
+			    });
 		    }
 		    ,get_areas: function(areaid) {
-			return api_call({m: 'get_areas'
-					 ,areaid: areaid});
+			return api_call(
+			    { m: 'get_areas'
+			      ,areaid: areaid
+			    });
 		    }
 		    ,get_areas_modified: function(areaid) {
-			return api_call({m: 'get_areas_modified'
-					 ,areaid: areaid});
+			return api_call(
+			    { m: 'get_areas_modified'
+			      ,areaid: areaid
+			    });
 		    }
 		    ,get_products: function(areaid) {
-			return api_call({m: 'get_products'
-					 ,areaid: areaid});
+			return api_call(
+			    { m: 'get_products'
+			      ,areaid: areaid
+			    });
 		    }
 		    ,get_rules: function(ruleid) {
-			return api_call({m: 'get_rules'
-					 ,ruleid: ruleid});
+			return api_call(
+			    { m: 'get_rules'
+			      ,ruleid: ruleid
+			    });
 		    }
 		    ,get_photos: function(orgid, areaid) {
-			return api_call({m: 'get_photos'
-					 ,orgid: orgid
-					 ,areaid: areaid});
+			return api_call(
+			    { m: 'get_photos'
+			      ,orgid: orgid
+			      ,areaid: areaid
+			    });
 		    }
 		    ,get_map_pois: function(orgid) {
-			return api_call({m: 'get_map_pois'
-					 ,orgid: orgid});
+			return api_call(
+			    { m: 'get_map_pois'
+			      ,orgid: orgid
+			    });
 		    }
 		    ,get_map_poi_types : function() {
 			return api_call({m: 'get_map_poi_types'});
 		    }
 		    ,get_map_polygons: function(orgid) {
-			return api_call({m: 'get_map_polygons'
-					 ,orgid: orgid});
+			return api_call(
+			    { m: 'get_map_polygons'
+			      ,orgid: orgid
+			    });
 		    }
 		    ,user_get_favorites: function() {
 			return session_api_call({m: 'user_get_favorites'});

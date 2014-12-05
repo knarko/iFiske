@@ -32,7 +32,8 @@
 		 */
 		var session_api_call = function(params) {
 		    // ToDo: use service for localstorage?
-		    return api_call(angular.extend(params, {session: localstorage['session']}));
+		    var session = window.localStorage.getItem('session');
+		    return api_call(angular.extend(params, {session: session}));
 		}
 		
 		return {
@@ -56,23 +57,29 @@
 			return api_call(
 			    { m: 'user_confirm'
 			      ,username: username
-			      ,pin: pin}
-			);
+			      ,pin: pin
+			    });
 		    }
 		    ,user_info: function() {
 			return session_api_call({m: 'user_info'});
 		    }
-		    // ToDo: is username & email the same parameter? should it be?
-		    ,user_login: function(username, email, password) {
+		    ,user_login: function(username, password) {
 			return api_call(
 			    { m: 'user_login'
 			      ,username: username
-			      ,email: email
 			      ,password: password
+			    })
+			    .success(function(data) {
+				if(data.status === 'success') {
+				    window.localStorage.setItem('session', data.data.response);
+				}
 			    }); 
 		    }
 		    ,user_logout: function() {
-			return session_api_call({m: 'user_logout'});
+			session_api_call({m: 'user_logout'})
+			    .then(function(data) {
+				window.localStorage.removeItem('session');
+			    });
 		    }
 		    ,user_procuts: function() {
 			return session_api_call({m: 'user_products'});

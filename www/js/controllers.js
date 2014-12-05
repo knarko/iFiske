@@ -11,7 +11,7 @@ angular.module('ifiske.controllers', [])
 	$ionicLoading.show();
 	$http.get('https://www.ifiske.se/api/v2/api.php?m=get_areas')
 		.success(function(data) {
-			$scope.items = data.data.response;
+			$scope.areas = data.data.response;
 			$ionicLoading.hide();
 		});
 

@@ -1,16 +1,23 @@
-<ion-view>
+<ion-view title="">
     <ion-content class="padding">
 	<img src="img/logo.png" width="100%"></img>
 	<div class="list ">
 	    <label class="item item-input">
-		<span class="input-label">E-Mailadress</span>
-		<input type="email" placeholder="Användarnamn">
+		<span class="input-label">Användarnamn</span>
+		<input type="text" placeholder="Användarnamn" ng-model="user.username">
 	    </label>
 	    <label class="item item-input">
 		<span class="input-label">Lösenord</span>
-		<input type="password" placeholder="Lösenord">
+		<input type="password" placeholder="Lösenord" ng-model="user.password">
 	    </label>
-
+	</div>
+	<div class="padding">
+	    <button class="button button-block button-positive" ng-click="signIn(user)">
+		Logga in
+            </button>
+            <p class="text-center">
+		<a>Glömt lösenord</a>
+            </p>
 	</div>
     </ion-content>
     <div class="bar bar-footer bar-transparent">

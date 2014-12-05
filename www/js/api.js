@@ -24,6 +24,10 @@
 			    cache: false
 			}
 		    )
+		    // ToDo: Proper logging
+			.success(function(data) {
+			    console.log(data); 
+			})
 		}
 
 		/**

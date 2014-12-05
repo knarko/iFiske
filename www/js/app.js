@@ -7,58 +7,58 @@
 // 'ifiske.controllers' is found in controllers.js
 angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api'])
 
-    .run(function($ionicPlatform) {
+.run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
-	    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-	    // for form inputs)
-	    if(window.cordova && window.cordova.plugins.Keyboard) {
-		cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-	    }
-	    if(window.StatusBar) {
-		// org.apache.cordova.statusbar required
-		StatusBar.styleDefault();
-	    }
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		if(window.cordova && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+		}
+		if(window.StatusBar) {
+			// org.apache.cordova.statusbar required
+			StatusBar.styleDefault();
+		}
 	});
-    })
+})
 
-    .config(function($stateProvider, $urlRouterProvider) {
 
+.config(function($stateProvider, $urlRouterProvider) {
+	$urlRouterProvider.otherwise('/login');
 	// Ionic uses AngularUI Router which uses the concept of states
 	// Learn more here: https://github.com/angular-ui/ui-router
 	// Set up the various states which the app can be in.
 	// Each state's controller can be found in controllers.js
 	$stateProvider
-	    
-	    .state('login', {
-		url: '/login',
-		templateUrl: 'templates/login.html'
-	    })
-	    .state('register', {
+
+		.state('login', {
+			url: '/login',
+			templateUrl: 'templates/login.html'
+		})
+	.state('register', {
 		url: '/register',
 		templateUrl: 'templates/register.html',
-	    })
+	})
 
-	    .state('main', {
+	.state('main', {
 		abstract: true,
 		url: '/main',
 		templateUrl: 'templates/main.html'
-	    })
-	    .state('main.home', {
+	})
+	.state('main.home', {
 		url: '/home',
 		templateUrl: 'templates/home.html',
 		controller: 'HomeCtrl'
-	    })
-	    .state('main.areas', {
+	})
+	.state('main.areas', {
 		url: '/areas',
 		templateUrl: 'templates/areas.html',
 		controller: 'AreasCtrl'
-	    })
-	    .state('main.areadetail', {
+	})
+	.state('main.areadetail', {
 		url: '/area/:id',
 		templateUrl: 'templates/area.detail.html',
 		controller: 'AreaDetailCtrl'
-	    })
-	
-	$urlRouterProvider.otherwise('/login');
-    });
+	})
+
+});
 

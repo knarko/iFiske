@@ -14,6 +14,9 @@ angular.module('ifiske.controllers', [])
 			$scope.areas = data.data.response;
 			$ionicLoading.hide();
 		});
+	$scope.clearSearch = function() {
+		//todo: clear search field
+	};
 
 }])
 

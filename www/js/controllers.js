@@ -1,6 +1,12 @@
 
 angular.module('ifiske.controllers', [])
-
+.controller('HomeCtrl', ['$scope', '$http', '$ionicPopover', function($scope, $http, $ionicPopover) {
+    $ionicPopover.fromTemplateUrl('templates/popover.html', function(popover) {
+	$scope.popover = popover;
+    });
+    
+    
+}])
 .controller('AreasCtrl', ['$scope', 'Areas', '$http', '$ionicLoading', function($scope, Areas, $http, $ionicLoading) {
 	$ionicLoading.show();
 	$http.get('https://www.ifiske.se/api/v2/api.php?m=get_areas')

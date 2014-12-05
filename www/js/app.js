@@ -5,62 +5,24 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api'])
 
-.run(function($ionicPlatform) {
+    .run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
-		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-		// for form inputs)
-		if(window.cordova && window.cordova.plugins.Keyboard) {
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-		}
-		if(window.StatusBar) {
-			// org.apache.cordova.statusbar required
-			StatusBar.styleDefault();
-		}
+	    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+	    // for form inputs)
+	    if(window.cordova && window.cordova.plugins.Keyboard) {
+		cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+	    }
+	    if(window.StatusBar) {
+		// org.apache.cordova.statusbar required
+		StatusBar.styleDefault();
+	    }
 	});
-})
-
-.directive('ionSearch', function() {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: {
-                getData: '&source',
-                model: '=?',
-                search: '=?filter'
-            },
-            link: function(scope, element, attrs) {
-                attrs.minLength = attrs.minLength || 0;
-                scope.placeholder = attrs.placeholder || '';
-                scope.search = {value: ''};
-
-                if (attrs.class)
-                    element.addClass(attrs.class);
-
-                if (attrs.source) {
-                    scope.$watch('search.value', function (newValue, oldValue) {
-                        if (newValue.length > attrs.minLength) {
-                            scope.getData({str: newValue}).then(function (results) {
-                                scope.model = results;
-                            });
-                        } else {
-                            scope.model = [];
-                        }
-                    });
-                }
-
-                scope.clearSearch = function() {
-                    scope.search.value = '';
-                };
-            },
-            template: '<div class="item-input-wrapper">' +
-                        '<i class="icon ion-search"></i>' +
-                        '<input type="search" placeholder="{{placeholder}}" ng-model="search.value">' +
-                        '<i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>' +
-                      '</div>'
-        };
     })
+
+    .config(function($stateProvider, $urlRouterProvider) {
+
 
 .config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/login');
@@ -70,28 +32,35 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services'])
 	// Each state's controller can be found in controllers.js
 	$stateProvider
 
-		.state('login', {
-			url: '/login',
-			templateUrl: 'templates/login.html'
-		})
-	.state('areas', {
+	    .state('login', {
+		url: '/login',
+		templateUrl: 'templates/login.html'
+	    })
+	    .state('register', {
+		url: '/register',
+		templateUrl: 'templates/register.html',
+	    })
+
+	    .state('main', {
+		abstract: true,
+		url: '/main',
+		templateUrl: 'templates/main.html'
+	    })
+	    .state('main.home', {
+		url: '/home',
+		templateUrl: 'templates/home.html',
+		controller: 'HomeCtrl'
+	    })
+	    .state('main.areas', {
 		url: '/areas',
 		templateUrl: 'templates/areas.html',
 		controller: 'AreasCtrl'
-	})
-	.state('areadetail', {
+	    })
+	    .state('main.areadetail', {
 		url: '/area/:id',
 		templateUrl: 'templates/area.detail.html',
 		controller: 'AreaDetailCtrl'
-	})
-	.state('register', {
-		url: '/register',
-		templateUrl: 'templates/register.html',
-	})
-	.state('main', {
-		url: '/',
-		templateUrl: 'templates/main.html',
-	});
+	    })
 
-});
+    });
 

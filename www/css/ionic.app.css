@@ -7834,3 +7834,6 @@ div.bar.bar-transparent {
 .card-area {
   margin-top: 5px;
   margin-bottom: 5px; }
+
+ion-popover-view.popover {
+  height: 110px; }

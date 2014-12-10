@@ -2,73 +2,29 @@
 
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="iso-8859-1" />
     <title>iFiske</title>
 
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
     <meta name="format-detection" content="telephone=no" />
-
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/header.css" />
-    <link rel="stylesheet" type="text/css" href="css/popup.css" />
-    <link rel="stylesheet" type="text/css" href="css/global.css" />
-
-    <!-- PAGES -->
-    <link rel="stylesheet" type="text/css" href="pages/css/start.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/area.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/login.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/register.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/search.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/settings.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/my_licenses.css" />
-    <link rel="stylesheet" type="text/css" href="pages/css/area_licenses.css" />
-
+    <link href="css/ionic.app.css" rel="stylesheet">
   </head>
 
-  <body>
-    <div id="deviceready"></div>
+  <body ng-app="ifiske" animation="slide-left-right-ios7">
+    <ion-nav-bar class="bar-positive nav-title-slide-ios7">
+      <ion-nav-back-button class="button button-clear icon ion-arrow-left-c"></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
 
-    <!-- Removes the popup when clicked -->
-    <div id="filter"></div>
 
-    <div class="app">
-      <div id="popup"></div>
-      <div id="header">
-        <div id="logo"></div>
-        <div id="search-div">
-          <form id="searchform">
-            <input id="searchfield" type="search" placeholder="Snabbsök"/>
-            <div id="search-bottom-bar"></div>
-          </form>
-        </div>
-      </div>
-      <hr id="header-hr"/>
-      <div id="content"></div>
-    </div>
+    <!-- Ionic scripts -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic/js/angular/angular-resource.js"></script>
+    <script src="cordova.js"></script>
 
-    <!-- LIBS -->
-    <script src="phonegap.js"></script>
-    <script src="lib/jquery.js"></script>
-
-    <!-- GLOBALS -->
-    <script src="js/navigate.js"></script>
-    <script src="js/api_request.js"></script>
-    <script src="js/database.js"></script>
-    <script src="js/debug.js"></script>
-    <script src="js/index.js"></script>
-
-    <!-- PAGES -->
-    <script src="pages/js/start.js"></script>
-    <script src="pages/js/search.js"></script>
-    <script src="pages/js/area.js"></script>
-    <script src="pages/js/login.js"></script>
-    <script src="pages/js/register.js"></script>
-    <script src="pages/js/settings.js"></script>
-    <script src="pages/js/my_licenses.js"></script>
-    <script src="pages/js/license.js"></script>
-    <script src="pages/js/area_licenses.js"></script>
-
-    <script>app.initialize();</script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
   </body>
 </html>

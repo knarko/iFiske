@@ -2,7 +2,6 @@
 angular.module('ifiske.controllers', [])
     .controller('HomeCtrl', ['$scope', '$state', '$ionicPopover', function($scope, $state, $ionicPopover) {
 	var popoverContent = [];
-	// ToDo: This is all ugly, find a better solution
 	if (window.localStorage.getItem('session')) {
 	    popoverContent.push({
 		name: 'Min sida', 

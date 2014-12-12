@@ -7,7 +7,7 @@
 		<i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>'
 	    </div>
 	</div>
-	<div class="card card-area" ng-repeat="area in areas" ui-sref="areadetail(area)">
+	<div class="card card-area" ng-repeat="area in areas" ui-sref="main.areadetail(area)">
 	    <div class="item item-text-wrap" ng-style="area.image">
 		<div class="">
 		    <h2>{{area.t}}</h2>

@@ -1,53 +1,49 @@
 <ion-view  hide-back-button="true">
-    <ion-nav-buttons side="right">
-	<button class="button button-clear icon ion-person" ng-click="popover.show($event)">
-	</button>
-    </ion-nav-buttons>
-    
-    <ion-content class="padding">
-	
-	<div class="list list-inset">
-	    <label class="item item-input">
+<ion-nav-buttons side="right">
+<button class="button button-clear icon ion-person" ng-click="popover.show($event)">
+</button>
+</ion-nav-buttons>
+
+<ion-content class="padding">
+
+<div class="list list-inset">
+	<label class="item item-input">
 		<i class="icon ion-search placeholder-icon"></i>
 		<input type="search" placeholder="Sök">
-	    </label>
-	</div>
+	</label>
+</div>
 
-	<div class="list list-inset">
-	    <div class="item item-button-left" ui-sref="main.areas">
+<div class="list list-inset">
+	<div class="item item-button-left" ui-sref="main.areas">
 		<button class="button button-positive button-clear">
-		    <i class="icon ion-search"></i>
+			<i class="icon icon-icon_fishingareas"></i>
 		</button>
-		Sök fiskevatten
-	    </div>
-	    <div class="item item-button-left">
+		Fiskevatten
+	</div>
+	<div class="item item-button-left">
 		<button class="button button-positive button-clear">
-		    <i class="icon ion-card"></i>
+			<i class="icon ion-card"></i>
 		</button>
 		Mina fiskekort
-	    </div>
-	    <div class="item item-button-left">
-		<button class="button button-positive button-clear">
-		    <i class="icon ion-map"></i>
-		</button>
-		Mina favoritvatten
-	    </div>
-	    <div class="item item-button-left">
-		<button class="button button-positive button-clear">
-		    <i class="icon ion-waterdrop"></i>
-		</button>
-		Fiskarter
-	    </div>
-	    <div class="item item-button-left">
-		<button class="button button-positive button-clear">
-		    <i class="icon ion-waterdrop"></i>
-		</button>
-		Fiskemetoder
-	    </div>
 	</div>
-    </ion-content>
-    Om denna app...
-    Kontakta iFiske
-    Användarvillkor
-
+	<div class="item item-button-left">
+		<button class="button button-positive button-clear">
+			<i class="icon icon-icon_fish"></i>
+		</button>
+		Arter
+	</div>
+	<div class="item item-button-left">
+		<button class="button button-positive button-clear">
+			<i class="icon icon-icon_bait"></i>
+		</button>
+		Metoder
+	</div>
+	<div class="item item-button-left">
+		<button class="button button-positive button-clear">
+			<i class="icon icon-icon_paper"></i>
+		</button>
+		Fångstrapporter
+	</div>
+</div>
+</ion-content>
 </ion-view>

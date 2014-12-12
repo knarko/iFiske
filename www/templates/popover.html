@@ -1,8 +1,7 @@
 <ion-popover-view>
     <ion-content>
-        <div class="list">
-            <a class="item" ng-bind="var1" ng-click="func1()"></a>
-            <a class="item" ng-bind="var2" ng-click="func2()"></a>
-        </div>
+        <list ng-repeat="t in popoverContent">
+            <a class="item" ng-bind="t.name" ng-click="t.route()"></a>
+        </list>
     </ion-content>
 </ion-popover-view>

@@ -1,29 +1,41 @@
 
 angular.module('ifiske.controllers', [])
     .controller('HomeCtrl', ['$scope', '$state', '$ionicPopover', function($scope, $state, $ionicPopover) {
-
+	var popoverContent = [];
 	// ToDo: This is all ugly, find a better solution
 	if (window.localStorage.getItem('session')) {
-	    $scope.var1 = "Min sida";
-	    $scope.func1 = function() {
-		$scope.popover.remove();
-		$state.go("main.userinfo");
-	    };
-	    $scope.var2 = "Logga ut";
-	    $scope.func2 = function() {
-		console.log("Logout");
-	    };
+	    popoverContent.push({
+		name: 'Min sida', 
+		route: function() {
+		    $scope.popover.remove();
+		    $state.go("main.userinfo");
+		}
+	    });
+	    popoverContent.push({
+		name: 'Logga ut', 
+		route: function() {
+		    $scope.popover.remove();
+		    $state.go("home");
+		}
+	    });
+
 	} else {
-	    $scope.var1 = "Logga in";
-	    $scope.func1 = function() {
-		$scope.popover.remove();
-		$state.go("login");
-	    };
-	    $scope.var2 = "Registrera";
-	    $scope.func2 = function() {
-		console.log("Registrera");
-	    };
+	    popoverContent.push({
+		name: 'Logga in', 
+		route: function() {
+		    $scope.popover.remove();
+		    $state.go("main.login");
+		}
+	    });
+	    popoverContent.push({
+		name: 'Registrera', 
+		route: function() {
+		    $scope.popover.remove();
+		    $state.go("main.register");
+		}
+	    });
 	}
+	$scope.popoverContent = popoverContent;
 
 	
 	$ionicPopover.fromTemplateUrl('templates/popover.html', {
@@ -62,7 +74,7 @@ angular.module('ifiske.controllers', [])
 	    API.user_login(user.username, user.password)
 		.success(function(data) {
 		    console.log(data.status);
-		    data.status === "success" && $state.go('main.home');
+		    data.status === "success" && $state.go('home');
 		})
 	}
     }])

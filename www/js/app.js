@@ -1,5 +1,3 @@
-// Ionic Starter App
-
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'ifiske' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -23,31 +21,49 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
 
 
     .config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('/login');
+	$urlRouterProvider.otherwise('/main/login');
+
 	// Ionic uses AngularUI Router which uses the concept of states
 	// Learn more here: https://github.com/angular-ui/ui-router
 	// Set up the various states which the app can be in.
-	// Each state's controller can be found in controllers.js
-	$stateProvider
 
-	    .state('login', {
+	$stateProvider
+	    .state('menu', {
+		url: '/menu',
+		abstract: true,
+		templateUrl: 'templates/menu.html',
+	    })
+	    .state('menu.home', {
+		url: '/home',
+		templateUrl: 'templates/home.html',
+		controller: 'HomeCtrl'
+	    })
+	    .state('menu.info', {
+		url: '/info',
+		templateUrl: 'templates/info.html'
+	    })
+	    .state('menu.contact', {
+		url: '/contact',
+		templateUrl: 'templates/contact.html'
+	    })
+	    .state('menu.legal', {
+		url: '/legal',
+		templateUrl: 'templates/legal.html'
+	    })
+
+	    .state('main', {
+		url: '/main',
+		abstract: true,
+		templateUrl: 'templates/main.html'
+	    })
+	    .state('main.login', {
 		url: '/login',
 		templateUrl: 'templates/login.html',
 		controller: 'LoginCtrl'
 	    })
-	    .state('register', {
+	    .state('main.register', {
 		url: '/register',
 		templateUrl: 'templates/register.html',
-	    })
-	    .state('main', {
-		abstract: true,
-		url: '/main',
-		templateUrl: 'templates/main.html'
-	    })
-	    .state('main.home', {
-		url: '/home',
-		templateUrl: 'templates/home.html',
-		controller: 'HomeCtrl'
 	    })
 	    .state('main.userinfo', {
 		url: '/userinfo',
@@ -62,6 +78,22 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
 		url: '/area/:id',
 		templateUrl: 'templates/area.detail.html',
 		controller: 'AreaDetailCtrl'
+	    })
+	    .state('main.cards', {
+		url: '/cards',
+		templateUrl: 'templates/cards.html'
+	    })
+	    .state('main.favorites', {
+		url: '/favorites',
+		templateUrl: 'templates/favorites.html'
+	    })
+	    .state('main.fishes', {
+		url: '/fishes',
+		templateUrl: 'templates/fishes.html'
+	    })
+	    .state('main.methods', {
+		url: '/methods',
+		templateUrl: 'templates/methods.html'
 	    })
 
     });

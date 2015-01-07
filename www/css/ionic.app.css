@@ -13,7 +13,7 @@ $energized:                       #f0b840 !default;
 $assertive:                       #ef4e3a !default;
 $royal:                           #8a6de9 !default;
 $dark:                            #444 !default;
-*/
+ */
 /*!
   Ionicons, v1.5.2
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -7895,3 +7895,16 @@ div.bar.bar-transparent {
 
 ion-popover-view.popover {
   height: 110px; }
+
+p.important {
+  color: red; }
+
+p.note {
+  white-space: normal; }
+
+.pull-right {
+  float: right; }
+
+.item-body.item-nopad {
+  padding-top: 0;
+  padding-bottom: 0; }

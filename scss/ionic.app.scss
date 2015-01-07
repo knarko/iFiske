@@ -13,7 +13,7 @@ $energized:                       #f0b840 !default;
 $assertive:                       #ef4e3a !default;
 $royal:                           #8a6de9 !default;
 $dark:                            #444 !default;
-*/
+ */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -28,31 +28,46 @@ $positive: #59BEE7 !default;
 
 
 ion-view {
-	background-image: url("/img/bg-login.png");
-	background-size: 100%;
-	background-position: bottom;
-	background-repeat: no-repeat;
+    background-image: url("/img/bg-login.png");
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
 }
 
 div.bar.bar-transparent {
-	background: none;
+    background: none;
 }
 
 
 .tinted-background {
-	background-color: grey;
-	background-blend-mode: screen;
+    background-color: grey;
+    background-blend-mode: screen;
 }
 
 .area-image {
-	width: 100%;
+    width: 100%;
 }
 
 .card-area {
-margin-top: 5px;
-margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 ion-popover-view.popover {
-	height: 110px;
+    height: 110px;
+}
+
+p.important {
+    color: red;
+}
+p.note {
+    white-space: normal;
+}
+
+.pull-right {
+    float: right;
+}
+.item-body.item-nopad {
+    padding-top: 0;
+    padding-bottom: 0;
 }

@@ -45,8 +45,8 @@ angular.module('ifiske.controllers', [])
 
 
 }])
-.controller('AreasCtrl', ['$scope', '$http', function($scope, $http) {
-    $http.get('js/get_areas.json')
+.controller('AreasCtrl', ['$scope', '$http', 'API', function($scope, $http, API) {
+    API.get_areas()
     .success(function(data) {
         $scope.areas = data.data.response;
     });
@@ -56,21 +56,19 @@ angular.module('ifiske.controllers', [])
 
 }])
 
-.controller('AreaDetailCtrl', ['$scope', '$http','$stateParams', function($scope, $http, $stateParams) {
-    $http.get('js/get_areas.json')
+.controller('AreaDetailCtrl', ['$scope', 'API','$stateParams', function($scope, API, $stateParams) {
+    API.get_areas($stateParams.id)
     .success(function(data) {
         $scope.area = data.data.response[$stateParams.id];
         $scope.area.img = 'img/test.jpg';
     });
-    katt = $scope;
 }])
 
-.controller('AreaDetailCardCtrl', ['$scope', '$http', '$stateParams', function($scope, $http, $stateParams) {
-    $http.get('js/get_products.json')
+.controller('AreaDetailCardCtrl', ['$scope', 'API', '$stateParams', function($scope, API, $stateParams) {
+    API.get_products($stateParams.id)
     .success(function(data) {
         $scope.products = data.data.response;
     });
-    katt = $scope;
 }])
 
 .controller('LoginCtrl', ['$scope', '$state', 'API', function($scope, $state, API) {

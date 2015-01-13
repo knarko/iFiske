@@ -1,14 +1,14 @@
 (function(angular, undefined) {
     'use strict';
-    
+
     angular.module('ifiske.api', [])
 	.provider('API', function APIProvider() {
-	    
+
 	    this.base_url = 'http://www.ifiske.se/api/v2/api.php';
-	    
+
 	    this.$get = ['$http', function($http) {
 		var base_url = this.base_url;
-		
+
 		/**
 		 * # api_call #
 		 * handles http requests
@@ -21,12 +21,12 @@
 			    url: base_url,
 			    params: params,
 			    timeout: 2000,
-			    cache: false
+			    cache: true
 			}
 		    )
 		    // ToDo: Proper logging
 			.success(function(data) {
-			    console.log(data); 
+			    console.log(data);
 			})
 		}
 
@@ -39,7 +39,7 @@
 		    var session = window.localStorage.getItem('session');
 		    return api_call(angular.extend(params, {session: session}));
 		}
-		
+
 		return {
 		    get_municipalities: function() {
 			return api_call({m: 'get_municipalities'});
@@ -49,7 +49,7 @@
 		    }
 		    ,user_register: function(username, fullname, password, email, phone) {
 			return api_call(
-			    { m: 'user_register' 
+			    { m: 'user_register'
 			     ,username: username
 			     ,fullname: fullname
 			     ,password: password
@@ -77,7 +77,7 @@
 				if(data.status === 'success') {
 				    window.localStorage.setItem('session', data.data.response);
 				}
-			    }); 
+			    });
 		    }
 		    ,user_logout: function() {
 			session_api_call({m: 'user_logout'})
@@ -169,7 +169,7 @@
 		    ,get_engine_policies: function() {
 			return api_call({m: 'get_engine_policies'});
 		    }
-		    
+
 		    /*
 		      : function() {
 			return api_call({m: ''});

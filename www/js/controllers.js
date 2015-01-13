@@ -45,10 +45,20 @@ angular.module('ifiske.controllers', [])
 
 
 }])
-.controller('AreasCtrl', ['$scope', '$http', 'API', function($scope, $http, API) {
-    API.get_areas()
-    .success(function(data) {
-        $scope.areas = data.data.response;
+.controller('AreasCtrl', ['$scope', '$http', 'API', 'DB', function($scope, $http, API, DB) {
+    DB.init()
+    .then(function(data) {
+        console.log(data);
+    }, function(err) {
+        console.log(err);
+    });
+
+    DB.search('')
+    .then(function(data) {
+        $scope.areas = data;
+        katt = $scope;
+    }, function(err) {
+         console.log(err);
     });
     $scope.clearSearch = function() {
         //todo: clear search field
@@ -56,11 +66,13 @@ angular.module('ifiske.controllers', [])
 
 }])
 
-.controller('AreaDetailCtrl', ['$scope', 'API','$stateParams', function($scope, API, $stateParams) {
-    API.get_areas($stateParams.id)
-    .success(function(data) {
-        $scope.area = data.data.response[$stateParams.id];
-        $scope.area.img = 'img/test.jpg';
+.controller('AreaDetailCtrl', ['$scope', 'API','$stateParams', 'DB', function($scope, API, $stateParams, DB) {
+    DB.getArea($stateParams.id)
+    .then(function(data) {
+        $scope.area = data;
+        //$scope.area.img = 'img/test.jpg';
+    }, function(err) {
+        console.log(err);
     });
 }])
 

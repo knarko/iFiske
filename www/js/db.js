@@ -7,7 +7,6 @@ String.prototype.repeat = function(count) {
     }
     return result + pattern;
 };
-var katt;
 (function(angular, undefined) {
     'use strict';
 
@@ -222,7 +221,6 @@ var katt;
                             'WHERE id = ?'
                         ].join(' '), [id])
                         .then( function (data) {
-                            katt = data;
                             fulfill(createObject(data)[0]);
                         }, reject);
                     });

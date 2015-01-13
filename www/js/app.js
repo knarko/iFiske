@@ -19,12 +19,8 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         API.get_areas()
         .success(function(data) {
             DB.insertArea(data.data.response)
-            .then(function() {;
-                  DB.getArea()
-                  .then(function(data) {
-                      $scope.areas = data;
-                      katt = $scope;
-                  });
+            .then(function() {
+                console.log('inserted data');
             }, function(err) {
                 console.log(err)
             });

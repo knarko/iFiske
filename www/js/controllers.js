@@ -56,7 +56,6 @@ angular.module('ifiske.controllers', [])
     DB.search('')
     .then(function(data) {
         $scope.areas = data;
-        katt = $scope;
     }, function(err) {
          console.log(err);
     });

@@ -61,7 +61,8 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.contact', {
         url: '/contact',
-        templateUrl: 'templates/contact.html'
+        templateUrl: 'templates/contact.html',
+	controller: 'ContactCtrl'
     })
     .state('menu.legal', {
         url: '/legal',

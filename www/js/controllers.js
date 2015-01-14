@@ -107,3 +107,10 @@ angular.module('ifiske.controllers', [])
         $scope.tos = data.data.response;
     });
 }])
+
+.controller('ContactCtrl', ['$scope', '$state', 'API', function($scope, $state, API) {
+    API.get_contact_info()
+    .success(function(data) {
+        $scope.contactInfo = data.data.response;
+    });
+}])

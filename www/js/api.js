@@ -169,12 +169,6 @@
 		    ,get_engine_policies: function() {
 			return api_call({m: 'get_engine_policies'});
 		    }
-
-		    /*
-		      : function() {
-			return api_call({m: ''});
-		    }
-		    */
 		}
 	    }];
 	})

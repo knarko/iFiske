@@ -41,11 +41,11 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         url: '/menu',
         abstract: true,
         templateUrl: 'templates/menu.html',
+	controller: 'MenuCtrl'
     })
     .state('menu.home', {
         url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
+        templateUrl: 'templates/home.html'
     })
     .state('menu.info', {
         url: '/info',

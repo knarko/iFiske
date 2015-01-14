@@ -4,16 +4,17 @@
         <div class="item-input-wrapper">
 	    <i class="icon ion-search"></i>
 	    <input type="search" placeholder="Sök fiskevatten" ng-model="search.value" />
-	    <i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>	    
+	    <i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
         </div>
     </ion-header-bar>
 
     <ion-content header-shrink>
 	<div style="height: 43px;"></div>
 	<ion-list>
-	    <ion-item ng-repeat="area in areas" ui-sref="main.areadetail({id: area.ID })">
+	    <ion-item ng-repeat="area in areas | filter:search" ui-sref="main.areadetail({id: area.ID })">
 		<h2>{{area.t}}</h2>
 	    </ion-item>
+        <ion-infinite-scroll ng-if="moreData" on-infinite="moreAreas()"></ion-infinite-scroll>
 	</ion-list>
     </ion-content>
 </ion-view>

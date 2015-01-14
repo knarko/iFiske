@@ -3,7 +3,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'infinite-scroll'])
 
 .run(function($ionicPlatform, API, DB) {
     $ionicPlatform.ready(function() {
@@ -16,6 +16,14 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+
+        DB.init()
+        .then(function(data) {
+            console.log('Initialized DB');
+        }, function(err) {
+            console.log(err);
+        });
+
         API.get_areas()
         .success(function(data) {
             DB.insertArea(data.data.response)
@@ -41,7 +49,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         url: '/menu',
         abstract: true,
         templateUrl: 'templates/menu.html',
-	controller: 'MenuCtrl'
+        controller: 'MenuCtrl'
     })
     .state('menu.home', {
         url: '/home',
@@ -58,7 +66,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     .state('menu.legal', {
         url: '/legal',
         templateUrl: 'templates/legal.html',
-	controller: 'LegalCtrl'
+        controller: 'LegalCtrl'
     })
     .state('main', {
         url: '/main',

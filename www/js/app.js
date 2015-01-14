@@ -57,9 +57,9 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.legal', {
         url: '/legal',
-        templateUrl: 'templates/legal.html'
+        templateUrl: 'templates/legal.html',
+	controller: 'LegalCtrl'
     })
-
     .state('main', {
         url: '/main',
         abstract: true,

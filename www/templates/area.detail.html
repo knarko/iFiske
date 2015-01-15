@@ -13,7 +13,7 @@
                 <button class="button button-positive pull-right" ui-sref="main.areadetailcards({id: area.ID})">Köp Fiskekort</button>
             </div>
         </div>
-        <p>{{area.d}}</p>
+        <p ng-bind-html="area.d"></p>
     </div>
 </div>
 </ion-content>

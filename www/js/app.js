@@ -20,7 +20,13 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         DB.init()
         .then(function() {
             console.log('Initialized DB system');
-            DB.populate();
+            DB.populate()
+            .then(function(){
+                console.log('Populated all the things');
+            },
+            function(err) {
+                console.log(err);
+            });
         }, function(err) {
             console.log(err);
         });
@@ -53,7 +59,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     .state('menu.contact', {
         url: '/contact',
         templateUrl: 'templates/contact.html',
-	controller: 'ContactCtrl'
+        controller: 'ContactCtrl'
     })
     .state('menu.legal', {
         url: '/legal',
@@ -78,8 +84,13 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         url: '/userinfo',
         templateUrl: 'templates/userinfo.html',
     })
+    .state('main.counties', {
+        url: '/counties',
+        templateUrl: 'templates/counties.html',
+        controller: 'CountiesCtrl'
+    })
     .state('main.areas', {
-        url: '/areas',
+        url: '/areas/:id',
         templateUrl: 'templates/areas.html',
         controller: 'AreasCtrl'
     })

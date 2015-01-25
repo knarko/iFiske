@@ -44,7 +44,16 @@ angular.module('ifiske.controllers', [])
     });
 }])
 
-.controller('AreasCtrl', ['$scope', '$http', 'API', 'DB', function($scope, $http, API, DB) {
+.controller('CountiesCtrl', ['$scope', 'DB', function($scope, DB) {
+    DB.getCounties()
+    .then(function(data) {
+        $scope.counties = data;
+    }, function(err) {
+        console.log(err);
+    });
+}])
+
+.controller('AreasCtrl', ['$scope', '$stateParams', 'DB', function($scope, $stateParams, DB) {
     var areaData = [];
     $scope.areas = [];
     $scope.search = {};
@@ -53,7 +62,7 @@ angular.module('ifiske.controllers', [])
     .then(function(data) {
         areaData = data;
         console.log(areaData);
-        for(var i = length; i < 20; ++i) {
+        for(var i = 0; i < 20 && i < areaData.length; ++i) {
             $scope.areas.push(areaData[i]);
         }
     }, function(err) {

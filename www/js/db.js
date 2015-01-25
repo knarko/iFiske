@@ -13,7 +13,7 @@ String.prototype.repeat = function(count) {
     angular.module('ifiske.db', [])
     .provider('DB', function DBProvider() {
 
-        this.$get = [ '$cordovaSQLite', 'API', function($cordovaSQLite, API) {
+        this.$get = [ '$cordovaSQLite', 'API', '$q', function($cordovaSQLite, API, $q) {
 
             if (window.sqlitePlugin) {
                 var db = $cordovaSQLite.openDB('fiskebasen.db');
@@ -104,6 +104,29 @@ String.prototype.repeat = function(count) {
                 });
 
             };
+            var populateCounty = function(countyData) {
+                return new Promise(function (fulfill, reject) {
+                    db.transaction(function(tx) {
+                        tx.executeSql('DELETE FROM County;');
+
+                        for (var cid in countyData) {
+                            var county = countyData[cid];
+                            var newCounty = [
+                                county.ID,
+                                county.s,
+                                county.t,
+                                county.d
+                            ];
+                            var query = 'INSERT INTO County VALUES(?' + ',?'.repeat(newCounty.length-1) + ')';
+
+                            tx.executeSql(query, newCounty);
+                        }
+                    },
+                    reject,
+                    fulfill);
+                });
+
+            };
 
             return {
 
@@ -117,6 +140,7 @@ String.prototype.repeat = function(count) {
                             function(tx) {
                             tx.executeSql('DROP TABLE IF EXISTS Area');
                             tx.executeSql('DROP TABLE IF EXISTS Product');
+                            tx.executeSql('DROP TABLE IF EXISTS County');
                         },
                         reject,
                         fulfill
@@ -144,6 +168,12 @@ String.prototype.repeat = function(count) {
                                 'ID int, t text, t2 text, no text, im text, pf text, ai int, ri int,',
                                 'ch int, price int, mod int, dp int, so int, hl text,',
                                 'PRIMARY KEY (ID));'
+                            ].join(' '));
+
+                            tx.executeSql([
+                                'CREATE TABLE IF NOT EXISTS County (',
+                                'ID int, s text, t text, d text,',
+                                'PRIMARY KEY(ID));'
                             ].join(' '));
                             /*
                                tx.executeSql([
@@ -195,25 +225,36 @@ String.prototype.repeat = function(count) {
                 },
 
                 populate: function() {
-                    var areas = API.get_areas()
-                    .success(function(data) {
-                        populateArea(data.data.response)
-                        .then(function() {
-                            console.log('Populated Area');
-                        }, function(err) {
-                            console.log(err)
-                        });
-                    });
-                    var products = API.get_products()
-                    .success(function(data) {
-                        populateProduct(data.data.response)
-                        .then(function() {
-                            console.log('Populated Product');
-                        }, function(err) {
-                            console.log(err);
-                        });
-                    });
-                    return $q.all(areas, products);
+                    return $q.all(
+                        API.get_areas()
+                        .success(function(data) {
+                            populateArea(data.data.response)
+                            .then(function() {
+                                console.log('Populated Area');
+                            }, function(err) {
+                                console.log(err)
+                            });
+                        }),
+                        API.get_products()
+                        .success(function(data) {
+                            populateProduct(data.data.response)
+                            .then(function() {
+                                console.log('Populated Product');
+                            }, function(err) {
+                                console.log(err);
+                            });
+                        }),
+                        API.get_counties()
+                        .success(function(data) {
+                            populateCounty(data.data.response)
+                            .then(function() {
+                                console.log('Populated County');
+                            }, function(err) {
+                                console.log(err);
+                            });
+                        })
+
+                    );
                 },
 
 
@@ -242,15 +283,16 @@ String.prototype.repeat = function(count) {
                  * @method search
                  * @param {String} searchstring
                  */
-                search: function(searchstring) {
+                search: function(searchstring, county_id) {
                     return new Promise( function (fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT *',
                             'FROM Area',
                             'WHERE t LIKE ?',
+                            (county_id ? 'AND c1 = ?':''),
                             'ORDER BY t'
                         ].join(' '),
-                        ['%' + searchstring + '%'])
+                        county_id ? ['%' + searchstring + '%', county_id]:['%' + searchstring + '%'])
                         .then(function(data) {
                             fulfill(createObject(data));
                         }, reject);
@@ -290,6 +332,20 @@ String.prototype.repeat = function(count) {
                             'ORDER BY so'
                         ].join(' '),
                         [area_id])
+                        .then(function(data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
+                getCounties: function() {
+                    return new Promise(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT DISTINCT County.*',
+                            'FROM County',
+                            'JOIN Area ON Area.c1 = County.ID',
+                            'ORDER BY County.t'
+                        ].join(' '))
                         .then(function(data) {
                             fulfill(createObject(data));
                         }, reject);

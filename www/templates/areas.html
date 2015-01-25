@@ -3,7 +3,7 @@
     <ion-header-bar class="bar-positive item-input-inset search-bar">
         <div class="item-input-wrapper">
 	    <i class="icon ion-search"></i>
-	    <input type="search" placeholder="Sök fiskevatten" ng-model="search.value" />
+	    <input type="search" placeholder="Sök fiskevatten" ng-model="search[queryBy]" />
 	    <i ng-if="search.value.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
         </div>
     </ion-header-bar>

@@ -47,6 +47,8 @@ angular.module('ifiske.controllers', [])
 .controller('AreasCtrl', ['$scope', '$http', 'API', 'DB', function($scope, $http, API, DB) {
     var areaData = [];
     $scope.areas = [];
+    $scope.search = {};
+    $scope.queryBy = '$';
     DB.search('')
     .then(function(data) {
         areaData = data;

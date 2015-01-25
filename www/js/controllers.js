@@ -77,16 +77,18 @@ angular.module('ifiske.controllers', [])
     DB.getArea($stateParams.id)
     .then(function(data) {
         $scope.area = data;
-        //$scope.area.img = 'img/test.jpg';
+        $scope.area.img = 'img/test.jpg';
     }, function(err) {
         console.log(err);
     });
 }])
 
-.controller('AreaDetailCardCtrl', ['$scope', 'API', '$stateParams', function($scope, API, $stateParams) {
-    API.get_products($stateParams.id)
-    .success(function(data) {
-        $scope.products = data.data.response;
+.controller('AreaDetailCardCtrl', ['$scope', 'DB', '$stateParams', function($scope, DB, $stateParams) {
+    DB.getProductsByArea($stateParams.id)
+    .then(function(data) {
+        $scope.products = data;
+    }, function(err) {
+         console.log(err);
     });
 }])
 

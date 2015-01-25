@@ -18,20 +18,11 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         }
 
         DB.init()
-        .then(function(data) {
-            console.log('Initialized DB');
+        .then(function() {
+            console.log('Initialized DB system');
+            DB.populate();
         }, function(err) {
             console.log(err);
-        });
-
-        API.get_areas()
-        .success(function(data) {
-            DB.insertArea(data.data.response)
-            .then(function() {
-                console.log('inserted data');
-            }, function(err) {
-                console.log(err)
-            });
         });
     });
 })

@@ -19,7 +19,7 @@
 			{
 			    method:'get',
 			    url: base_url,
-			    params: params,
+			    params: angular.extend(params, {'key': '0123456789abcdef'}),
 			    timeout: 2000,
 			    cache: true
 			}

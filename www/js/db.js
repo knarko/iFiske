@@ -26,50 +26,71 @@ String.prototype.repeat = function(count) {
 
             var tableDef = {
                 'Area': [
-                    'ID',
-                    't',
-                    'kw',
-                    'note',
-                    'c1',
-                    'c2',
-                    'c3',
-                    'm1',
-                    'm2',
-                    'm3',
-                    'lat',
-                    'lng',
-                    'zoom',
-                    'pnt',
-                    'car',
-                    'eng',
-                    'hcp',
-                    'map',
-                    'wsc',
-                    'mod',
-                    'd'
+                    ['ID',    'int'],
+                    ['t',     'text'],
+                    ['kw',    'text'],
+                    ['note',  'text'],
+                    ['c1',    'int'],
+                    ['c2',    'int'],
+                    ['c3',    'int'],
+                    ['m1',    'int'],
+                    ['m2',    'int'],
+                    ['m3',    'int'],
+                    ['lat',   'real'],
+                    ['lng',   'real'],
+                    ['zoom',  'text'],
+                    ['pnt',   'int'],
+                    ['car',   'int'],
+                    ['eng',   'int'],
+                    ['hcp',   'int'],
+                    ['map',   'text'],
+                    ['wsc',   'int'],
+                    ['mod',   'int'],
+                    ['d',     'text']
                 ],
                 'Product': [
-                    'ID',
-                    't',
-                    't2',
-                    'no',
-                    'im',
-                    'pf',
-                    'ai',
-                    'ri',
-                    'ch',
-                    'price',
-                    'mod',
-                    'dp',
-                    'so',
-                    'hl'
+                    ['ID',     'int'],
+                    ['t',      'text'],
+                    ['t2',     'text'],
+                    ['no',     'text'],
+                    ['im',     'text'],
+                    ['pf',     'text'],
+                    ['ai',     'int'],
+                    ['ri',     'int'],
+                    ['ch',     'int'],
+                    ['price',  'int'],
+                    ['mod',    'int'],
+                    ['dp',     'int'],
+                    ['so',     'int'],
+                    ['hl',     'text']
                 ],
                 'County': [
-                    'ID',
-                    's',
-                    't',
-                    'd'
+                    ['ID',  'int'],
+                    ['s',   'text'],
+                    ['t',   'text'],
+                    ['d',   'text']
+                ],
+                'Municipality': [
+                    ['ID',    'int'],
+                    ['cID',   'int'],
+                    ['name',  'text']
+                ],
+                'Fish': [
+                    ['ID',    'int'],
+                    ['t',     'text'],
+                    ['d',     'text'],
+                    ['mod',   'int'],
+                    ['so',    'int'],
+                    ['max',   'int'],
+                    ['icon',  'text'],
+                    ['img',   'text'],
+                    ['in',    'text'],
+                    ['geo',   'text'],
+                    ['size',  'text'],
+                    ['lat',   'text'],
+                    ['rec',   'text']
                 ]
+
             };
 
             var createObject = function(data) {
@@ -89,7 +110,7 @@ String.prototype.repeat = function(count) {
                             var singleData = data[id];
                             var insertData = [];
                             for (var i = 0; i < tableDef[table].length; ++i) {
-                                insertData.push(singleData[tableDef[table][i]]);
+                                insertData.push(singleData[tableDef[table][i][0]]);
                             }
                             var query = [
                                 'INSERT INTO',
@@ -125,6 +146,9 @@ String.prototype.repeat = function(count) {
                         reject,
                         fulfill
                         );
+                    })
+                    .then(function() {
+                        console.log('Removed all tables');
                     });
                 },
 
@@ -135,69 +159,19 @@ String.prototype.repeat = function(count) {
                 init: function(){
                     return new Promise(function(fulfill, reject) {
                         db.transaction( function (tx) {
-                            tx.executeSql([
-                                'CREATE TABLE IF NOT EXISTS Area (',
-                                'ID int, t text, kw text, note text, c1 int, c2 int, c3 int,',
-                                'm1 int, m2 int, m3 int, lat real, lng real, zoom text, pnt int,',
-                                'car int, eng int, hcp int, map text, wsc int, mod int, d text,',
-                                'PRIMARY KEY (ID));'
-                            ].join(' '));
-
-                            tx.executeSql([
-                                'CREATE TABLE IF NOT EXISTS Product (',
-                                'ID int, t text, t2 text, no text, im text, pf text, ai int, ri int,',
-                                'ch int, price int, mod int, dp int, so int, hl text,',
-                                'PRIMARY KEY (ID));'
-                            ].join(' '));
-
-                            tx.executeSql([
-                                'CREATE TABLE IF NOT EXISTS County (',
-                                'ID int, s text, t text, d text,',
-                                'PRIMARY KEY(ID));'
-                            ].join(' '));
-                            /*
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Region (',
-                               'id int, name text, long real, lat real, quantity int,',
-                               'PRIMARY KEY (id))'
-                               ].join('\n'));
-
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Area_keyword (',
-                               'area_id int, keyword text,',
-                               'FOREIGN KEY (area_id) REFERENCES Areas(id))'
-                               ].join('\n'));
-
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Species_area (',
-                               'species_id int, area_id int, cmt text, level int,',
-                               'FOREIGN KEY (species_id) REFERENCES Species(id),'Vilket som skulle kunna vara,
-                               'FOREIGN KEY (area_id) REFERENCES Areas(id))'
-                               ].join('\n'));
-
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Specie (',
-                               'id int, name text, latin text,',
-                               'PRIMARY KEY (id))'
-                               ].join('\n'));
-
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Organisation (',
-                               'id int, name text, region int, description text,',
-                               'homepage text, contact text,',
-                               'PRIMARY KEY (id),',
-                               'FOREIGN KEY (region) REFERENCES Regions(id))'
-                               ].join('\n'));
-
-                               tx.executeSql([
-                               'CREATE TABLE IF NOT EXISTS Subscription (',
-                               'id int, title text, product_title text, org_id int,',
-                               'rule_id int, area_id int, validFrom int, validTo int,',
-                               'fullname text, email text, ref_our int, ref_their int,',
-                               'mobile int, code int, pdf_id text, purchased_at int,',
-                               'PRIMARY KEY (id))'
-                               ].join('\n'));
-                               */
+                            for(var table in tableDef) {
+                                var query = [
+                                    'CREATE TABLE IF NOT EXISTS',
+                                    table,
+                                    '(',
+                                    '"' + tableDef[table].join('___"').split(',').join('" ').split('___').join(', '),
+                                    ', PRIMARY KEY(',
+                                    '"' + tableDef[table][0][0] + '"',
+                                    '));'
+                                ].join(' ');
+                                console.log(query);
+                                tx.executeSql(query);
+                            }
                         },
                         reject,
                         fulfill);
@@ -232,8 +206,25 @@ String.prototype.repeat = function(count) {
                             }, function(err) {
                                 console.log(err);
                             });
+                        }),
+                        API.get_municipalities()
+                        .success(function(data) {
+                            populateTable('Municipality', data.data.response)
+                            .then(function() {
+                                console.log('Populated Municipality');
+                            }, function(err) {
+                                console.log(err);
+                            });
+                        }),
+                        API.get_fishes()
+                        .success(function(data) {
+                            populateTable('Fish', data.data.response)
+                            .then(function() {
+                                console.log('Populated Fish');
+                            }, function(err) {
+                                console.log(err);
+                            });
                         })
-
                     );
                 },
 

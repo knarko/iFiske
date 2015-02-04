@@ -56,6 +56,7 @@ angular.module('ifiske.controllers', [])
 .controller('AreasCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate' ,'DB', function($scope, $stateParams, $ionicScrollDelegate ,DB) {
     $scope.search = {};
     $scope.queryBy = '$';
+    $scope.county = $stateParams.county;
     DB.search('', $stateParams.id)
     .then(function(data) {
             $scope.areas = data;

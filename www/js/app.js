@@ -50,7 +50,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-    // Abstract menu state. "Root" state once past the login state. 
+    // Abstract menu state. "Root" state once past the login state.
     .state('menu', {
         url: '/menu',
         abstract: true,
@@ -89,7 +89,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         controller: 'CountiesCtrl'
     })
     .state('menu.areas', {
-        url: '/areas/:id',
+        url: '/areas/:id?county',
         templateUrl: 'templates/areas.html',
         controller: 'AreasCtrl'
     })

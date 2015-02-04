@@ -1,7 +1,7 @@
-<ion-view title="Län">
+<ion-view title="Hitta fiskevatten">
     <ion-content>
 	<ion-list>
-	    <ion-item ng-repeat="county in counties" ui-sref="menu.areas({id: county.ID })">
+	    <ion-item ng-repeat="county in counties" ui-sref="menu.areas({id: county.ID, county: county.t})">
 		<h2>{{county.t}}</h2>
 	    </ion-item>
 	</ion-list>

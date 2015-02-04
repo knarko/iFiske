@@ -13,11 +13,12 @@ For more information about iFiske, visit [ifiske.se](http://ifiske.se)!
 
 ## Quick start
 ### Building locally
-Install [Ionic](http://ionicframework.com) (version 1.3.2).
+Install [Ionic](http://ionicframework.com) (version 1.3.7).
 ````Shell
 git clone https://github.com/ifiske/ifiske
 cd ifiske
-ionic run <platform>
+ionic setup sass
+ionic serve
 ````
 ## Bug reports and feature requests
 Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.

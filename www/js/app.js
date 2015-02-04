@@ -35,7 +35,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
 
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/main/login');
+    $urlRouterProvider.otherwise('/login');
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -66,61 +66,65 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         templateUrl: 'templates/legal.html',
         controller: 'LegalCtrl'
     })
-    .state('main', {
+
+
+/*    .state('main', {
         url: '/main',
         abstract: true,
         templateUrl: 'templates/main.html'
     })
-    .state('main.login', {
+*/
+
+    .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-    .state('main.register', {
+    .state('menu.register', {
         url: '/register',
         templateUrl: 'templates/register.html',
     })
-    .state('main.userinfo', {
+    .state('menu.userinfo', {
         url: '/userinfo',
         templateUrl: 'templates/userinfo.html',
     })
-    .state('main.counties', {
+    .state('menu.counties', {
         url: '/counties',
         templateUrl: 'templates/counties.html',
         controller: 'CountiesCtrl'
     })
-    .state('main.areas', {
+    .state('menu.areas', {
         url: '/areas/:id',
         templateUrl: 'templates/areas.html',
         controller: 'AreasCtrl'
     })
-    .state('main.areadetail', {
+    .state('menu.areadetail', {
         url: '/area/:id',
         templateUrl: 'templates/area.detail.html',
         controller: 'AreaDetailCtrl'
     })
-    .state('main.areadetailcards', {
+    .state('menu.areadetailcards', {
         url: '/area/:id/cards',
         templateUrl: 'templates/area.detail.cards.html',
         controller: 'AreaDetailCardCtrl'
     })
-    .state('main.cards', {
+    .state('menu.cards', {
         url: '/cards',
         templateUrl: 'templates/cards.html'
     })
-    .state('main.favorites', {
+    .state('menu.favorites', {
         url: '/favorites',
         templateUrl: 'templates/favorites.html'
     })
-    .state('main.fishes', {
+    .state('menu.fishes', {
         url: '/fishes',
         templateUrl: 'templates/fishes.html'
     })
-    .state('main.methods', {
+    .state('menu.methods', {
         url: '/methods',
         templateUrl: 'templates/methods.html'
     })
-    .state('main.report', {
+    .state('menu.report', {
         url: '/report',
         templateUrl: 'templates/report.html'
     })

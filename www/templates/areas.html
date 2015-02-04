@@ -11,7 +11,7 @@
     <ion-content header-shrink>
 	<div style="height: 43px;"></div>
 	<ion-list>
-	    <ion-item ng-repeat="area in areas | filter:search" ui-sref="main.areadetail({id: area.ID })">
+	    <ion-item ng-repeat="area in areas | filter:search" ui-sref="menu.areadetail({id: area.ID })">
 		<h2>{{area.t}}</h2>
 	    </ion-item>
 	</ion-list>

@@ -35,13 +35,22 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
 
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/login');
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
-    // Set up the various states which the app can be in.
+
+    // ToDo: Not if logged in
+    // Set default/fallback url
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
+    // The login state. Shown as default.
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl'
+    })
+    // Abstract menu state. "Root" state once past the login state. 
     .state('menu', {
         url: '/menu',
         abstract: true,
@@ -65,20 +74,6 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         url: '/legal',
         templateUrl: 'templates/legal.html',
         controller: 'LegalCtrl'
-    })
-
-
-/*    .state('main', {
-        url: '/main',
-        abstract: true,
-        templateUrl: 'templates/main.html'
-    })
-*/
-
-    .state('login', {
-        url: '/login',
-        templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl'
     })
     .state('menu.register', {
         url: '/register',

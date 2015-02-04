@@ -40,17 +40,21 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     // Learn more here: https://github.com/angular-ui/ui-router
 
     // ToDo: Not if logged in
-    // Set default/fallback url
+    // Default/fallback url
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-    // The login state. Shown as default.
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-    // Abstract menu state. "Root" state once past the login state. 
+    .state('register', {
+        url: '/register',
+        templateUrl: 'templates/register.html',
+    })
+	
+    // Abstract menu state. "Root" state once we're past the login state. 
     .state('menu', {
         url: '/menu',
         abstract: true,
@@ -74,10 +78,6 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         url: '/legal',
         templateUrl: 'templates/legal.html',
         controller: 'LegalCtrl'
-    })
-    .state('menu.register', {
-        url: '/register',
-        templateUrl: 'templates/register.html',
     })
     .state('menu.userinfo', {
         url: '/userinfo',

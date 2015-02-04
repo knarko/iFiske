@@ -53,7 +53,7 @@ angular.module('ifiske.controllers', [])
     });
 }])
 
-.controller('AreasCtrl', ['$scope', '$stateParams', 'DB', function($scope, $stateParams, DB) {
+.controller('AreasCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate' ,'DB', function($scope, $stateParams, $ionicScrollDelegate ,DB) {
     $scope.search = {};
     $scope.queryBy = '$';
     DB.search('', $stateParams.id)
@@ -64,6 +64,9 @@ angular.module('ifiske.controllers', [])
     });
     $scope.clearSearch = function() {
         //todo: clear search field
+    };
+    $scope.scrollTop = function() {
+        $ionicScrollDelegate.scrollTop();
     };
 
 }])

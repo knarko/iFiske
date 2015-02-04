@@ -54,32 +54,16 @@ angular.module('ifiske.controllers', [])
 }])
 
 .controller('AreasCtrl', ['$scope', '$stateParams', 'DB', function($scope, $stateParams, DB) {
-    var areaData = [];
-    $scope.areas = [];
     $scope.search = {};
     $scope.queryBy = '$';
-    DB.search('')
+    DB.search('', $stateParams.id)
     .then(function(data) {
-        areaData = data;
-        console.log(areaData);
-        for(var i = 0; i < 20 && i < areaData.length; ++i) {
-            $scope.areas.push(areaData[i]);
-        }
+            $scope.areas = data;
     }, function(err) {
         console.log(err);
     });
     $scope.clearSearch = function() {
         //todo: clear search field
-    };
-    $scope.moreData = true;
-
-    $scope.moreAreas = function() {
-        var length = $scope.areas.length;
-        for(var i = length; i < length+20 && i < areaData.length; ++i) {
-            console.log(i);
-            $scope.areas.push(areaData[i]);
-        }
-        $scope.$broadcast('scroll.infiniteScrollComplete');
     };
 
 }])

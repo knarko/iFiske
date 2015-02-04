@@ -5,7 +5,7 @@
 // 'ifiske.controllers' is found in controllers.js
 angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova'])
 
-.run(function($ionicPlatform, API, DB) {
+.run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -31,10 +31,10 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
             console.log(err);
         });
     });
-})
+}])
 
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/main/login');
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -125,5 +125,5 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         templateUrl: 'templates/report.html'
     })
 
-})
+}])
 

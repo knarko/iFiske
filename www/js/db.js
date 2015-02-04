@@ -23,6 +23,55 @@ String.prototype.repeat = function(count) {
                 console.log('Not supported on this device, sorry');
             }
 
+
+            var tableDef = {
+                'Area': [
+                    'ID',
+                    't',
+                    'kw',
+                    'note',
+                    'c1',
+                    'c2',
+                    'c3',
+                    'm1',
+                    'm2',
+                    'm3',
+                    'lat',
+                    'lng',
+                    'zoom',
+                    'pnt',
+                    'car',
+                    'eng',
+                    'hcp',
+                    'map',
+                    'wsc',
+                    'mod',
+                    'd'
+                ],
+                'Product': [
+                    'ID',
+                    't',
+                    't2',
+                    'no',
+                    'im',
+                    'pf',
+                    'ai',
+                    'ri',
+                    'ch',
+                    'price',
+                    'mod',
+                    'dp',
+                    'so',
+                    'hl'
+                ],
+                'County': [
+                    'ID',
+                    's',
+                    't',
+                    'd'
+                ]
+            };
+
             var createObject = function(data) {
                 var retval = [];
                 for(var i = 0; i < data.rows.length; ++i) {
@@ -31,39 +80,25 @@ String.prototype.repeat = function(count) {
                 return retval;
             };
 
-            var populateArea = function(areaData) {
+            var populateTable = function(table, data) {
                 return new Promise(function (fulfill, reject) {
                     db.transaction(function(tx) {
-                        tx.executeSql('DELETE FROM Area;');
+                        tx.executeSql('DELETE FROM ' + table + ';');
 
-                        for (var aid in areaData) {
-                            var area = areaData[aid];
-                            var insertArea = [
-                                area.ID,
-                                area.t,
-                                area.kw,
-                                area.note,
-                                area.c1,
-                                area.c2,
-                                area.c3,
-                                area.m1,
-                                area.m2,
-                                area.m3,
-                                area.lat,
-                                area.lng,
-                                area.zoom,
-                                area.pnt,
-                                area.car,
-                                area.eng,
-                                area.hcp,
-                                area.map,
-                                area.wsc,
-                                area.mod,
-                                area.d
-                            ];
-                            var query = 'INSERT INTO Area VALUES(?' + ',?'.repeat(insertArea.length-1) + ')';
+                        for (var id in data) {
+                            var singleData = data[id];
+                            var insertData = [];
+                            for (var i = 0; i < tableDef[table].length; ++i) {
+                                insertData.push(singleData[tableDef[table][i]]);
+                            }
+                            var query = [
+                                'INSERT INTO',
+                                table,
+                                'VALUES(?',
+                                ',?'.repeat(insertData.length-1),
+                                ')'].join(' ');
 
-                            tx.executeSql(query, insertArea);
+                                tx.executeSql(query, insertData);
                         }
                     },
                     reject,
@@ -71,62 +106,7 @@ String.prototype.repeat = function(count) {
                 });
 
             };
-            var populateProduct = function(productData) {
-                return new Promise(function (fulfill, reject) {
-                    db.transaction(function(tx) {
-                        tx.executeSql('DELETE FROM Product;');
 
-                        for (var pid in productData) {
-                            var product = productData[pid];
-                            var newProduct = [
-                                product.ID,
-                                product.t,
-                                product.t2,
-                                product.no,
-                                product.im,
-                                product.pf,
-                                product.ai,
-                                product.ri,
-                                product.ch,
-                                product.price,
-                                product.mod,
-                                product.dp,
-                                product.so,
-                                product.hl,
-                            ];
-                            var query = 'INSERT INTO Product VALUES(?' + ',?'.repeat(newProduct.length-1) + ')';
-
-                            tx.executeSql(query, newProduct);
-                        }
-                    },
-                    reject,
-                    fulfill);
-                });
-
-            };
-            var populateCounty = function(countyData) {
-                return new Promise(function (fulfill, reject) {
-                    db.transaction(function(tx) {
-                        tx.executeSql('DELETE FROM County;');
-
-                        for (var cid in countyData) {
-                            var county = countyData[cid];
-                            var newCounty = [
-                                county.ID,
-                                county.s,
-                                county.t,
-                                county.d
-                            ];
-                            var query = 'INSERT INTO County VALUES(?' + ',?'.repeat(newCounty.length-1) + ')';
-
-                            tx.executeSql(query, newCounty);
-                        }
-                    },
-                    reject,
-                    fulfill);
-                });
-
-            };
 
             return {
 
@@ -138,9 +118,9 @@ String.prototype.repeat = function(count) {
                     return new Promise(function (fulfill, reject) {
                         db.transaction(
                             function(tx) {
-                            tx.executeSql('DROP TABLE IF EXISTS Area');
-                            tx.executeSql('DROP TABLE IF EXISTS Product');
-                            tx.executeSql('DROP TABLE IF EXISTS County');
+                            for(var table in tableDef){
+                                tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
+                            }
                         },
                         reject,
                         fulfill
@@ -228,7 +208,7 @@ String.prototype.repeat = function(count) {
                     return $q.all(
                         API.get_areas()
                         .success(function(data) {
-                            populateArea(data.data.response)
+                            populateTable('Area', data.data.response)
                             .then(function() {
                                 console.log('Populated Area');
                             }, function(err) {
@@ -237,7 +217,7 @@ String.prototype.repeat = function(count) {
                         }),
                         API.get_products()
                         .success(function(data) {
-                            populateProduct(data.data.response)
+                            populateTable('Product', data.data.response)
                             .then(function() {
                                 console.log('Populated Product');
                             }, function(err) {
@@ -246,7 +226,7 @@ String.prototype.repeat = function(count) {
                         }),
                         API.get_counties()
                         .success(function(data) {
-                            populateCounty(data.data.response)
+                            populateTable('County', data.data.response)
                             .then(function() {
                                 console.log('Populated County');
                             }, function(err) {

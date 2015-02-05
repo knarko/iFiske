@@ -89,7 +89,6 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
         controller: 'CountiesCtrl'
     })
     .state('menu.areas', {
-	// url: '/areas/:id?county',
 	url: '/areas',
 	params: {'id': true, 'county': true},
         templateUrl: 'templates/areas.html',

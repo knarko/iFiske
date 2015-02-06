@@ -5,12 +5,11 @@ angular.module('ngCordovaSms', [])
         restrict: 'A',
         link: function (scope, el, attrs) {
             el.on('click', function(e) {
-                console.log(attrs);
-                var message = 'FISKA XXX Gustav Bylund';
-                $cordovaSms.send('0730262686', message, 'INTENT', function() {
+                var message = 'FISKA' + attrs.ngCordovaSms + ' Förnamn Efternamn';
+                $cordovaSms.send('72456', message, 'INTENT', function() {
                     console.log('succuess');
                 }, function(err) {
-                                console.log(err)
+                    console.log(err)
                 });
                 e.preventDefault();
             });

@@ -108,6 +108,7 @@ angular.module('ifiske.controllers', [])
             console.log(data.status);
             data.status === "success" && $state.go('home');
         })
+	// ToDo: Handle failed login
     }
 }])
 

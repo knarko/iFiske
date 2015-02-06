@@ -7108,3 +7108,10 @@ p.note {
 .item-body.item-nopad {
   padding-top: 0;
   padding-bottom: 0; }
+
+.card-list-divider {
+  margin-top: 2em;
+  text-align: center; }
+
+.card-list-divider:first-child {
+  margin-top: 0; }

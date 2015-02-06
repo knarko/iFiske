@@ -1,20 +1,24 @@
 <ion-view title="Fishing Cards">
 <ion-content class="padding">
-<!-- TODO: make sorting actually work, doesn't right now -->
-<div class="list card" ng-repeat="product in products | orderBy : so">
+<div class="card-list-divider" ng-repeat-start="product in products | orderBy:predicate" ng-show="product.hl">
+    <h4>{{product.hl}}</h4>
+</div>
+
+<div class="list card" ng-repeat-end>
     <div class="item item-icon-left">
         <i class="icon ion-card"></i>
+        <h2 class="pull-right" ng-show="product.price">Pris: {{product.price}} :-</h2>
         <h2>{{product.t}}</h2>
     </div>
     <div class="item item-body item-nopad">
         <p ng-show="product.im" class="important"><i class="icon ion-alert assertive"></i>  {{product.im}}</p>
         <p ng-show="product.no" class="note">{{product.no}}</p>
         <div class="row">
-            <div class="col">
-                Pris: {{product.price}} :-
+            <div class="col" ng-if="product.ch == 0 || product.ch == 1">
+                <a ui-sref="#"><button class="button button-positive pull-right">SMS-köp</button></a>
             </div>
-            <div class="col">
-                <a href="https://www.ifiske.se/mobile/index.php?p=5&i={{product.ID}}" target="_blank"><button class="button button-positive pull-right">Gå till köp</button></a>
+            <div class="col" ng-if="product.ch == 0 || product.ch == 2">
+                <a href="https://www.ifiske.se/mobile/index.php?p=5&i={{product.ID}}" target="_blank"><button class="button button-positive pull-right">Webb-köp</button></a>
             </div>
         </div>
     </div>

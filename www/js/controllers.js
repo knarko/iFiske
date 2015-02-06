@@ -2,7 +2,7 @@
 angular.module('ifiske.controllers', [])
 .controller('MenuCtrl', ['$scope', '$state', '$ionicPopover', function($scope, $state, $ionicPopover) {
     var popoverContent = [];
-    
+
     // If logged in
     if (window.localStorage.getItem('session')) {
 	// User info
@@ -92,6 +92,7 @@ angular.module('ifiske.controllers', [])
 }])
 
 .controller('AreaDetailCardCtrl', ['$scope', 'DB', '$stateParams', function($scope, DB, $stateParams) {
+    $scope.predicate = "so"
     DB.getProductsByArea($stateParams.id)
     .then(function(data) {
         $scope.products = data;

@@ -7079,6 +7079,10 @@ ion-view {
   background-position: bottom;
   background-repeat: no-repeat; }
 
+ion-view.abstract-bg {
+  background-image: url("../img/bg-abstract.jpg");
+  background-size: cover; }
+
 div.bar.bar-transparent {
   background: none; }
 

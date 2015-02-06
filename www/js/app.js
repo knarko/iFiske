@@ -63,7 +63,8 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.home', {
         url: '/home',
-        templateUrl: 'templates/home.html'
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
     })
     .state('menu.info', {
         url: '/info',
@@ -90,7 +91,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.areas', {
 	url: '/areas',
-	params: {'id': true, 'county': true},
+	params: {'id': false, 'county': false, 'search': ''},
         templateUrl: 'templates/areas.html',
         controller: 'AreasCtrl'
     })

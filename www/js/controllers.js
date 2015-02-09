@@ -120,10 +120,12 @@ angular.module('ifiske.controllers', [])
         API.user_login(user.username, user.password)
         .success(function(data) {
             console.log(data.status);
-            data.status === "success" && $state.go('home');
-        })
-	// ToDo: Handle failed login
-    }
+            if (data.status === "success") {
+                $state.go('home');
+            }
+        });
+        // ToDo: Handle failed login
+    };
 }])
 
 .controller('LegalCtrl', ['$scope', '$state', 'API', function($scope, $state, API) {
@@ -138,4 +140,4 @@ angular.module('ifiske.controllers', [])
     .success(function(data) {
         $scope.contactInfo = data.data.response;
     });
-}])
+}]);

@@ -60,7 +60,6 @@ String.prototype.repeat = function(count) {
                     ['ch',     'int'],
                     ['price',  'int'],
                     ['mod',    'int'],
-                    ['dp',     'int'],
                     ['so',     'int'],
                     ['hl',     'text']
                 ],
@@ -169,7 +168,6 @@ String.prototype.repeat = function(count) {
                                     '"' + tableDef[table][0][0] + '"',
                                     '));'
                                 ].join(' ');
-                                console.log(query);
                                 tx.executeSql(query);
                             }
                         },

@@ -2,7 +2,7 @@
 angular.module('ifiske.controllers', [])
 .controller('MenuCtrl', ['$scope', '$state', '$ionicPopover', function($scope, $state, $ionicPopover) {
     var popoverContent = [];
-    
+
     // If logged in
     if (window.localStorage.getItem('session')) {
 	// User info
@@ -47,11 +47,23 @@ angular.module('ifiske.controllers', [])
 
 
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
-        scope: $scope,
+        scope: $scope
     }).then(function(popover) {
         $scope.popover = popover;
     });
 }])
+
+.controller('HomeCtrl', ['$scope', '$state', function($scope, $state) {
+
+    $scope.myFunc = function($event) {
+        if($event.keyCode == 13 && !$event.shiftKey) { //if enter-key
+            $state.go('menu.areas', {search: $event.srcElement.value});
+        }
+
+    };
+
+}])
+
 
 .controller('CountiesCtrl', ['$scope', 'DB', function($scope, DB) {
     DB.getCounties()
@@ -63,7 +75,8 @@ angular.module('ifiske.controllers', [])
 }])
 
 .controller('AreasCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate' ,'DB', function($scope, $stateParams, $ionicScrollDelegate ,DB) {
-    $scope.search = {};
+
+    $scope.search = {'$': $stateParams.search};
     $scope.queryBy = '$';
     $scope.county = $stateParams.county;
     DB.search('', $stateParams.id)
@@ -92,6 +105,7 @@ angular.module('ifiske.controllers', [])
 }])
 
 .controller('AreaDetailCardCtrl', ['$scope', 'DB', '$stateParams', function($scope, DB, $stateParams) {
+    $scope.predicate = "so"
     DB.getProductsByArea($stateParams.id)
     .then(function(data) {
         $scope.products = data;

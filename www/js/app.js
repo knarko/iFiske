@@ -3,7 +3,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms'])
 
 .run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
     $ionicPlatform.ready(function() {
@@ -63,7 +63,8 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.home', {
         url: '/home',
-        templateUrl: 'templates/home.html'
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
     })
     .state('menu.info', {
         url: '/info',
@@ -90,7 +91,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifi
     })
     .state('menu.areas', {
 	url: '/areas',
-	params: {'id': true, 'county': true},
+	params: {'id': false, 'county': false, 'search': ''},
         templateUrl: 'templates/areas.html',
         controller: 'AreasCtrl'
     })

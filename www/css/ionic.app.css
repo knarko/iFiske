@@ -7079,6 +7079,10 @@ ion-view {
   background-position: bottom;
   background-repeat: no-repeat; }
 
+ion-view.abstract-bg {
+  background-image: url("../img/bg-abstract.jpg");
+  background-size: cover; }
+
 div.bar.bar-transparent {
   background: none; }
 
@@ -7108,3 +7112,10 @@ p.note {
 .item-body.item-nopad {
   padding-top: 0;
   padding-bottom: 0; }
+
+.card-list-divider {
+  margin-top: 2em;
+  text-align: center; }
+
+.card-list-divider:first-child {
+  margin-top: 0; }

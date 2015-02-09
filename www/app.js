@@ -3,7 +3,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.services', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms'])
 
 .run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
     $ionicPlatform.ready(function() {

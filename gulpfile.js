@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
@@ -10,10 +11,10 @@ var sh = require('shelljs');
 var paths = {
     sass: ['./scss/**/*.scss'],
     scripts: [
+        './www/app.js',
         './www/components/**/*.js',
         './www/services/**/*.js',
-        './www/directives/**/*.js',
-        './www/app.js'
+        './www/directives/**/*.js'
     ]
 };
 
@@ -21,7 +22,9 @@ gulp.task('default', ['sass', 'scripts']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
+    .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });

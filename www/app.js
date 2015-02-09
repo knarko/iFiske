@@ -1,7 +1,6 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'ifiske' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'ifiske.services' is found in services.js
 // 'ifiske.controllers' is found in controllers.js
 angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms'])
 
@@ -124,7 +123,8 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.d
     .state('menu.report', {
         url: '/report',
         templateUrl: 'components/report/report.html'
-    })
+    });
 
-}])
+}]);
 
+angular.module('ifiske.controllers', []);

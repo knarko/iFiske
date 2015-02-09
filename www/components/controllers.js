@@ -45,12 +45,13 @@ angular.module('ifiske.controllers', [])
     }
     $scope.popoverContent = popoverContent;
 
-
-    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    $ionicPopover.fromTemplateUrl('components/menu/popover.html', {
         scope: $scope
     }).then(function(popover) {
         $scope.popover = popover;
     });
+
+
 }])
 
 .controller('HomeCtrl', ['$scope', '$state', function($scope, $state) {

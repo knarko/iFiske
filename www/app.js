@@ -46,84 +46,84 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.d
     $stateProvider
     .state('login', {
         url: '/login',
-        templateUrl: 'templates/login.html',
+        templateUrl: 'components/login/login.html',
         controller: 'LoginCtrl'
     })
     .state('register', {
         url: '/register',
-        templateUrl: 'templates/register.html',
+        templateUrl: 'components/register/register.html',
     })
 
     // Abstract menu state. "Root" state once we're past the login state.
     .state('menu', {
         url: '/menu',
         abstract: true,
-        templateUrl: 'templates/menu.html',
+        templateUrl: 'components/menu/menu.html',
         controller: 'MenuCtrl'
     })
     .state('menu.home', {
         url: '/home',
-        templateUrl: 'templates/home.html',
+        templateUrl: 'components/home/home.html',
         controller: 'HomeCtrl'
     })
     .state('menu.info', {
         url: '/info',
-        templateUrl: 'templates/info.html'
+        templateUrl: 'components/info/info.html'
     })
     .state('menu.contact', {
         url: '/contact',
-        templateUrl: 'templates/contact.html',
+        templateUrl: 'components/contact/contact.html',
         controller: 'ContactCtrl'
     })
     .state('menu.legal', {
         url: '/legal',
-        templateUrl: 'templates/legal.html',
+        templateUrl: 'components/legal/legal.html',
         controller: 'LegalCtrl'
     })
     .state('menu.userinfo', {
         url: '/userinfo',
-        templateUrl: 'templates/userinfo.html',
+        templateUrl: 'components/user/user.html',
     })
     .state('menu.counties', {
         url: '/counties',
-        templateUrl: 'templates/counties.html',
+        templateUrl: 'components/counties/counties.html',
         controller: 'CountiesCtrl'
     })
     .state('menu.areas', {
 	url: '/areas',
 	params: {'id': false, 'county': false, 'search': ''},
-        templateUrl: 'templates/areas.html',
+        templateUrl: 'components/area_list/area_list.html',
         controller: 'AreasCtrl'
     })
     .state('menu.areadetail', {
         url: '/area/:id',
-        templateUrl: 'templates/area.detail.html',
+        templateUrl: 'components/area/area.html',
         controller: 'AreaDetailCtrl'
     })
     .state('menu.areadetailcards', {
         url: '/area/:id/cards',
-        templateUrl: 'templates/area.detail.cards.html',
+        templateUrl: 'components/area_cards/area_cards.html',
         controller: 'AreaDetailCardCtrl'
     })
     .state('menu.cards', {
         url: '/cards',
-        templateUrl: 'templates/cards.html'
+        templateUrl: 'components/cards/cards.html'
     })
     .state('menu.favorites', {
         url: '/favorites',
-        templateUrl: 'templates/favorites.html'
+        templateUrl: 'components/favorites/favorites.html'
     })
     .state('menu.fishes', {
         url: '/fishes',
-        templateUrl: 'templates/fishes.html'
+        templateUrl: 'components/fishes/fishes.html'
     })
     .state('menu.methods', {
         url: '/methods',
-        templateUrl: 'templates/methods.html'
+        templateUrl: 'components/methods/methods.html'
     })
     .state('menu.report', {
         url: '/report',
-        templateUrl: 'templates/report.html'
+        templateUrl: 'components/report/report.html'
     })
 
 }])

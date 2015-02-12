@@ -303,8 +303,12 @@
                 getProductsByArea: function(area_id) {
                     return new Promise(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
-                            'SELECT DISTINCT *',
+                            'SELECT DISTINCT Product.*,',
+                            'Rule.t as rule_t,',
+                            'Rule.ver as rule_ver,',
+                            'Rule.d as rule_d',
                             'FROM Product',
+                            'JOIN Rule ON Rule.ID = Product.ri',
                             'WHERE ai = ?',
                             'ORDER BY so'
                         ].join(' '),
@@ -328,6 +332,7 @@
                         }, reject);
                     });
                 }
+
             };
         }];
     });

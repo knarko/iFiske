@@ -6,7 +6,7 @@
     <ion-content>
     <button class="button button-full button-positive" ng-click="showTerms($event)">{{showingterms && 'Göm regler för SMS-köp' || 'Visa regler för SMS-köp'}}</button>
     <div class="padding">
-        <div class="animate-hide" ng-show="showingterms">
+        <div class="animate-hide proper-text" ng-show="showingterms">
             <p ng-bind-html="smsterms"></p>
         </div>
         <p>När du klickar på knappen kommer din vanliga sms-app att öppnas med ett förskrivet SMS till 72456.</p>

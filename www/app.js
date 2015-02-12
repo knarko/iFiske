@@ -50,8 +50,10 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 
 	var defaultUrl = '/login';
 	if (window.localStorage.getItem('session')) {
-	    $urlRouterProvider.otherwise('/menu/home');
+        defaultUrl = '/menu/home';
 	}
+	    $urlRouterProvider.otherwise(defaultUrl);
+
 
 	$stateProvider
 	    .state('login', {

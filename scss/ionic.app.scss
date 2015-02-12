@@ -85,4 +85,12 @@ p.note {
 }
 .input-label {
     width: 100%;
+    padding-left: 6px
+}
+.label-error {
+    border-bottom: 2px solid orange;
+}
+.error-message {
+    color: orange;
+
 }

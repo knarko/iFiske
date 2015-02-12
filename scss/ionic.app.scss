@@ -83,6 +83,7 @@ p.note {
 .card-list-divider:first-child {
     margin-top: 0;
 }
+
 .input-label {
     width: 100%;
     padding-left: 6px
@@ -94,3 +95,19 @@ p.note {
     color: orange;
 
 }
+
+.animate-hide {
+    transition: all 0.2s linear;
+    max-height: 1000px;
+    opacity: 1;
+    line-height: 1.5em;
+    text-align: justify;
+
+}
+.animate-hide.ng-hide {
+    transition: all 0.2s linear;
+    overflow: hidden;
+    max-height:0;
+    opacity: 0;
+}
+

@@ -2,7 +2,8 @@
 // 'ifiske' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages'])
+
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages', 'ionic.utils'])
     .constant('$ionicLoadingConfig', {
 	template: '<i class="icon ion-loading-b"></i>'
 	// hideOnStateChange: true
@@ -18,6 +19,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		// org.apache.cordova.statusbar required
 		StatusBar.styleDefault();
             }
+
 
             DB.init()
 		.then(function() {

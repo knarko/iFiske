@@ -15,7 +15,7 @@
         <p ng-show="product.no" class="note">{{product.no}}</p>
         <div class="row">
             <div class="col" ng-if="product.ch == 0 || product.ch == 1">
-                <a ng-cordova-sms="{{product.pf}}"><button class="button button-positive pull-right">SMS-köp</button></a>
+                <a ng-click="openModal({{product}})"><button class="button button-positive pull-right">SMS-köp</button></a>
             </div>
             <div class="col" ng-if="product.ch == 0 || product.ch == 2">
                 <a href="https://www.ifiske.se/mobile/index.php?p=5&i={{product.ID}}" target="_blank" ng-in-app-browser><button class="button button-positive pull-right">Webb-köp</button></a>

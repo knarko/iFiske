@@ -15,12 +15,14 @@ String.prototype.repeat = function(count) {
 
         this.$get = [ '$cordovaSQLite', 'API', '$q', function($cordovaSQLite, API, $q) {
 
+            var db;
             if (window.sqlitePlugin) {
-                var db = $cordovaSQLite.openDB('fiskebasen.db');
+                db = $cordovaSQLite.openDB('fiskebasen.db');
             } else if (window.openDatabase) {
-                var db = window.openDatabase('fiskebasen.db', '1.0', 'fiskebasen', 10*1024*1024);
+                db = window.openDatabase('fiskebasen.db', '1.0', 'fiskebasen', 10*1024*1024);
             } else {
                 console.log('Not supported on this device, sorry');
+                return undefined;
             }
 
 

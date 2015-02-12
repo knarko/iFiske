@@ -2,7 +2,7 @@
 // 'ifiske' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.controllers' is found in controllers.js
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms'])
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ionic.utils'])
 
 .run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
     $ionicPlatform.ready(function() {

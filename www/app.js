@@ -3,7 +3,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.controllers' is found in controllers.js
 angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages'])
-
+    .constant('$ionicLoadingConfig', {
+	template: '<i class="icon ion-loading-b"></i>'
+	// hideOnStateChange: true
+    })
     .run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
 	$ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

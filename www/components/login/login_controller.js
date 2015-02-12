@@ -1,14 +1,16 @@
 angular.module('ifiske.controllers')
-.controller('LoginCtrl', ['$scope', '$state', 'API', function($scope, $state, API) {
-    $scope.user = {};
-    $scope.signIn = function(user) {
-        API.user_login(user.username, user.password)
-        .success(function(data) {
-            console.log(data.status);
-            if (data.status === "success") {
-                $state.go('home');
-            }
-        });
-        // ToDo: Handle failed login
-    };
-}]);
+    .controller('LoginCtrl', ['$scope', '$state', 'API', '$ionicLoading', function($scope, $state, API, $ionicLoading) {
+	$scope.user = {};
+	$scope.signIn = function(user) {
+	    $ionicLoading.show();
+            API.user_login(user.username, user.password)
+		.success(function(data) {
+		    $ionicLoading.hide();
+		    if (data.status === "success") {
+			$state.go('menu.home');
+		    }
+		});
+
+            // ToDo: Handle failed login
+	};
+    }]);

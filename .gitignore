@@ -61,3 +61,4 @@ IOS/www/
 node_modules
 
 www/all.js
+www/css/*

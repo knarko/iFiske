@@ -84,6 +84,18 @@ p.note {
     margin-top: 0;
 }
 
+.input-label {
+    width: 100%;
+    padding-left: 6px
+}
+.label-error {
+    border-bottom: 2px solid orange;
+}
+.error-message {
+    color: orange;
+
+}
+
 .animate-hide {
     transition: all 0.2s linear;
     max-height: 1000px;
@@ -98,3 +110,4 @@ p.note {
     max-height:0;
     opacity: 0;
 }
+

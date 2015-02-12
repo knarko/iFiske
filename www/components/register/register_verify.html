@@ -1,0 +1,22 @@
+<ion-view view-title="Verifiera konto">
+    <ion-content>
+	<div class="list list-inset">
+	    <form name="verifyForm">
+		<label for="vercode" class="input-label">Verifieringskod:</label>
+		<label ng-class="{'label-error': verifyForm.vercode.$invalid &&
+				 verifyForm.vercode.$dirty}" class="item item-input">
+		    <input id="vercode" name="vercode" ng-model="vercode" type="text" 
+			   placeholder="" required>
+		    <!-- ng-pattern="/^[a-zA-Z]{3}[0-9]{3}$/" -->
+		</label>
+		<div class="error-message" ng-messages="verifyForm.vercode.$error" 
+		     ng-if="verifyForm.vercode.$dirty">
+		    <p ng-message="pattern">Fel format</p>
+		</div>
+
+		<button ui-sref="register.verify" ng-disabled="verifyForm.$invalid"
+			class="button button-block button-positive">Verifiera</button>
+	    </form>
+	</div>
+    </ion-content>
+</ion-view>

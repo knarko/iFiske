@@ -1,12 +1,3 @@
-String.prototype.repeat = function(count) {
-    if (count < 1) return '';
-    var result = '', pattern = this.valueOf();
-    while (count > 1) {
-        if (count & 1) result += pattern;
-        count >>= 1, pattern += pattern;
-    }
-    return result + pattern;
-};
 (function(angular, undefined) {
     'use strict';
 
@@ -186,7 +177,7 @@ String.prototype.repeat = function(count) {
                             .then(function() {
                                 console.log('Populated Area');
                             }, function(err) {
-                                console.log(err)
+                                console.log(err);
                             });
                         }),
                         API.get_products()

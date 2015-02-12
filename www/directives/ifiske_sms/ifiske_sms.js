@@ -9,10 +9,10 @@ angular.module('ngCordovaSms', [])
                 $cordovaSms.send('72456', message, 'INTENT', function() {
                     console.log('succuess');
                 }, function(err) {
-                    console.log(err)
+                    console.log(err);
                 });
                 e.preventDefault();
             });
         }
-    }
+    };
 }]);

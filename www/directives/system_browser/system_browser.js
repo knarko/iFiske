@@ -9,5 +9,5 @@ angular.module('inAppBrowser', [])
                 e.preventDefault();
             });
         }
-    }
+    };
 }]);

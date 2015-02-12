@@ -40,14 +40,18 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 
     .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+	// Cache views in the forward stack
 	$ionicConfigProvider.views.forwardCache(true);
 
-	// Ionic uses AngularUI Router which uses the concept of states
-	// Learn more here: https://github.com/angular-ui/ui-router
+	/**
+	 * Ionic uses AngularUI Router. Learn more here:
+	 * https://github.com/angular-ui/ui-router
+	 */
 
-	// ToDo: Not if logged in
-	// Default/fallback url
-	$urlRouterProvider.otherwise('/login');
+	var defaultUrl = '/login';
+	if (window.localStorage.getItem('session')) {
+	    $urlRouterProvider.otherwise('/menu/home');
+	}
 
 	$stateProvider
 	    .state('login', {

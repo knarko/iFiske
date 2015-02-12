@@ -81,6 +81,12 @@
                     ['size',  'text'],
                     ['lat',   'text'],
                     ['rec',   'text']
+                ],
+                'Rule': [
+                    ['ID', 'int'],
+                    ['ver', 'int'],
+                    ['d', 'text'],
+                    ['t', 'text']
                 ]
 
             };
@@ -212,6 +218,15 @@
                             populateTable('Fish', data.data.response)
                             .then(function() {
                                 console.log('Populated Fish');
+                            }, function(err) {
+                                console.log(err);
+                            });
+                        }),
+                        API.get_rules()
+                        .success(function(data) {
+                            populateTable('Rule', data.data.response)
+                            .then(function() {
+                                console.log('Populated Rule');
                             }, function(err) {
                                 console.log(err);
                             });

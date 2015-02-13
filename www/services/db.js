@@ -81,6 +81,12 @@
                     ['size',  'text'],
                     ['lat',   'text'],
                     ['rec',   'text']
+                ],
+                'Rule': [
+                    ['ID', 'int'],
+                    ['ver', 'int'],
+                    ['d', 'text'],
+                    ['t', 'text']
                 ]
 
             };
@@ -215,6 +221,15 @@
                             }, function(err) {
                                 console.log(err);
                             });
+                        }),
+                        API.get_rules()
+                        .success(function(data) {
+                            populateTable('Rule', data.data.response)
+                            .then(function() {
+                                console.log('Populated Rule');
+                            }, function(err) {
+                                console.log(err);
+                            });
                         })
                     );
                 },
@@ -288,8 +303,12 @@
                 getProductsByArea: function(area_id) {
                     return new Promise(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
-                            'SELECT DISTINCT *',
+                            'SELECT DISTINCT Product.*,',
+                            'Rule.t as rule_t,',
+                            'Rule.ver as rule_ver,',
+                            'Rule.d as rule_d',
                             'FROM Product',
+                            'JOIN Rule ON Rule.ID = Product.ri',
                             'WHERE ai = ?',
                             'ORDER BY so'
                         ].join(' '),
@@ -313,6 +332,7 @@
                         }, reject);
                     });
                 }
+
             };
         }];
     });

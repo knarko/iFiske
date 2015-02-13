@@ -23,9 +23,9 @@ angular.module('ifiske.controllers')
         $scope.modal = modal;
     });
 
-    $scope.openModal = function(card) {
+    $scope.openModal = function(product) {
         $scope.modal.show();
-        $scope.product = card;
+        $scope.product = product;
     };
 
     $scope.closeModal = function() {
@@ -34,11 +34,29 @@ angular.module('ifiske.controllers')
 
     $scope.$on('$destroy', function() {
         $scope.modal.remove();
+        $scope.rules_modal.remove();
     });
 
     $scope.showingterms = false;
     $scope.showTerms = function($event) {
         $scope.showingterms = !$scope.showingterms;
+    };
+
+    //Rules modal
+    $ionicModal.fromTemplateUrl('components/area_cards/rules_modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.rules_modal = modal;
+    });
+
+    $scope.openRulesModal = function(product) {
+        $scope.rules_modal.show();
+        $scope.product = product;
+    };
+
+    $scope.closeRulesModal = function() {
+        $scope.rules_modal.hide();
     };
 
 }]);

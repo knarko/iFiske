@@ -1,7 +1,12 @@
 <ion-popover-view>
     <ion-content>
-        <list ng-repeat="t in popoverContent">
-            <a class="item" ng-bind="t.name" ng-click="t.route()"></a>
-        </list>
+	<list ng-if="sessionData.token">
+	    <a class="item" ng-click="userinfo();">Min sida</a>
+	    <a class="item" ng-click="logout();">Logga ut</a>
+	</list>
+	<list ng-if="!sessionData.token">
+	    <a class="item" ng-click="login();">Logga in</a>
+	    <a class="item" ng-click="register();">Registrera</a>
+	</list>
     </ion-content>
 </ion-popover-view>

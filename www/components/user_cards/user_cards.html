@@ -1,0 +1,16 @@
+<ion-view title="Mina fiskekort">
+<ion-content class="padding">
+<div class="list card" ng-repeat="product in products">
+    <div class="item item-icon-left">
+        <i class="icon ion-card"></i>
+        <h2>{{product.ot}}</h2>
+    </div>
+    <div class="item item-body">
+        <h2>{{product.t}}</h2>
+        <p>Namn: {{product.fullname}}</p>
+        <p>Kod: {{product.code}}</p>
+        <p> Gäller från {{product.fr | date:'medium'}} till {{product.to | date:'medium'}}</p>
+    </div>
+</div>
+</ion-content>
+</ion-view>

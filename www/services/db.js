@@ -6,6 +6,7 @@
 
         this.$get = [ '$cordovaSQLite', 'API', '$q', function($cordovaSQLite, API, $q) {
 
+
             var db;
             if (window.sqlitePlugin) {
                 db = $cordovaSQLite.openDB('fiskebasen.db');
@@ -83,10 +84,22 @@
                     ['rec',   'text']
                 ],
                 'Rule': [
-                    ['ID', 'int'],
-                    ['ver', 'int'],
-                    ['d', 'text'],
-                    ['t', 'text']
+                    ['ID',   'int'],
+                    ['ver',  'int'],
+                    ['d',    'text'],
+                    ['t',    'text']
+                ],
+                'User_Product': [
+                    ['ID',        'int'],
+                    ['at',        'int'],
+                    ['code',      'int'],
+                    ['fr',        'int'],
+                    ['fullname',  'text'],
+                    ['ot',        'text'],
+                    ['ref1',      'int'],
+                    ['ref2',      'int'],
+                    ['t',         'text'],
+                    ['to',        'int']
                 ]
 
             };
@@ -178,7 +191,7 @@
                 populate: function() {
                     return $q.all(
                         API.get_areas()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('Area', data.data.response)
                             .then(function() {
                                 console.log('Populated Area');
@@ -187,7 +200,7 @@
                             });
                         }),
                         API.get_products()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('Product', data.data.response)
                             .then(function() {
                                 console.log('Populated Product');
@@ -196,7 +209,7 @@
                             });
                         }),
                         API.get_counties()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('County', data.data.response)
                             .then(function() {
                                 console.log('Populated County');
@@ -205,7 +218,7 @@
                             });
                         }),
                         API.get_municipalities()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('Municipality', data.data.response)
                             .then(function() {
                                 console.log('Populated Municipality');
@@ -214,7 +227,7 @@
                             });
                         }),
                         API.get_fishes()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('Fish', data.data.response)
                             .then(function() {
                                 console.log('Populated Fish');
@@ -223,10 +236,19 @@
                             });
                         }),
                         API.get_rules()
-                        .success(function(data) {
+                        .then(function(data) {
                             populateTable('Rule', data.data.response)
                             .then(function() {
                                 console.log('Populated Rule');
+                            }, function(err) {
+                                console.log(err);
+                            });
+                        }),
+                        API.user_products()
+                        .then(function(data) {
+                            populateTable('User_Product', data.data.response)
+                            .then(function() {
+                                console.log('Populated User_Product');
                             }, function(err) {
                                 console.log(err);
                             });
@@ -326,6 +348,17 @@
                             'FROM County',
                             'JOIN Area ON Area.c1 = County.ID',
                             'ORDER BY County.t'
+                        ].join(' '))
+                        .then(function(data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
+                getUserProducts: function() {
+                    return new Promise(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM User_Product'
                         ].join(' '))
                         .then(function(data) {
                             fulfill(createObject(data));

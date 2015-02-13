@@ -79,7 +79,7 @@
                             username: username,
                             password: password
                     })
-                    .success(function(data) {
+                    .then(function(data) {
                         if(data.status === 'success') {
                             sessionData.setToken(data.data.response);
                             //window.localStorage.setItem('session', data.data.response);

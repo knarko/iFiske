@@ -4,7 +4,7 @@ angular.module('ifiske.controllers')
 	$scope.signIn = function(user) {
 	    $ionicLoading.show();
             API.user_login(user.username, user.password)
-		.success(function(data) {
+		.then(function(data) {
 		    $ionicLoading.hide();
 		    if (data.status === "success") {
 			$state.go('menu.home');

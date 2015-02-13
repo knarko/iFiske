@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-.controller('AreaDetailCtrl', ['$scope', 'API','$stateParams', 'DB', function($scope, API, $stateParams, DB) {
+.controller('AreaDetailCtrl', ['$scope', '$stateParams', 'DB', function($scope, $stateParams, DB) {
     DB.getArea($stateParams.id)
     .then(function(data) {
         $scope.area = data;

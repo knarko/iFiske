@@ -17,15 +17,15 @@ angular.module('ifiske.controllers')
     $scope.logout = function() {
 	$scope.popover.hide();
 	API.user_logout();
-	$state.go('login');
+	$state.go('start.login');
     }
     $scope.login = function() {
 	$scope.popover.hide();
-	$state.go('login');
+	$state.go('start.login');
     }
     $scope.register = function() {
 	$scope.popover.hide();
-	$state.go('register.account_details');
+	$state.go('start.register.account_details');
     }
 
 

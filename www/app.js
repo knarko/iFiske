@@ -48,33 +48,40 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 	 * https://github.com/angular-ui/ui-router
 	 */
 
-	var defaultUrl = '/login';
+	var defaultUrl = '/start/login';
 	if (window.localStorage.getItem('session')) {
 	    defaultUrl = '/menu/home';
 	}
 	$urlRouterProvider.otherwise(defaultUrl);
 
+	
+
 	$stateProvider
-	    .state('login', {
+	// Abstract pre-menu state. Needed for navigation between login and register views.
+	    .state('start', {
+		url: '/start',
+		abstract: true,
+		templateUrl: 'components/start/start.html'
+	    })
+	    .state('start.login', {
 		url: '/login',
 		templateUrl: 'components/login/login.html',
 		controller: 'LoginCtrl'
 	    })
-	    .state('register', {
+	    .state('start.register', {
 		url: '/register',
-		abstract: true,
 		templateUrl: 'components/register/register.html',
 		controller: 'RegisterCtrl'
 	    })
-	    .state('register.accountDetails', {
+	    .state('start.register.accountDetails', {
 		url: '/account_details',
 		templateUrl: 'components/register/register_account_details.html'
 	    })
-	    .state('register.userDetails', {
+	    .state('start.register.userDetails', {
 		url: '/user_details',
 		templateUrl: 'components/register/register_user_details.html'
 	    })
-	    .state('register.verify', {
+	    .state('start.register.verify', {
 		url: '/verify',
 		templateUrl: 'components/register/register_verify.html'
 	    })

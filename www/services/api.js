@@ -1,12 +1,12 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.api', ['ionic.utils'])
+    angular.module('ifiske.api', ['ifiske.utils'])
     .provider('API', function APIProvider() {
 
-        this.base_url = 'http://www.ifiske.se/api/v2/api.php';
+        this.base_url = 'https://www.ifiske.se/api/v2/api.php';
 
-        this.$get = ['$http', 'sessionData', function($http, sessionData) {
+        this.$get = ['$http', 'sessionData', 'localStorage', function($http, sessionData, localStorage) {
             var base_url = this.base_url;
 
             /**
@@ -15,18 +15,25 @@
              * returns a $http object for the requested api call
              */
             var api_call = function(params) {
-                return $http(
-                    {
-                    method:'get',
-                    url: base_url,
-                    params: angular.extend(params, {'key': '0123456789abcdef'}),
-                    timeout: 2000,
-                    cache: true
-                }
-                )
-                // ToDo: Proper logging
-                .success(function(data) {
-                    //console.log(data);
+                return new Promise(function(fulfill, reject) {
+                    $http(
+                        {
+                        method:'get',
+                        url: base_url,
+                        params: angular.extend(params, {'key': '0123456789abcdef'}),
+                        timeout: 2000,
+                        cache: true
+                    }
+                    )
+                    // ToDo: Proper logging
+                    .success(function(data) {
+                        if(data.status === 'error') {
+                            reject(data.message);
+                        } else {
+                            fulfill(data);
+                        }
+                    })
+                    .error(reject);
                 });
             };
 
@@ -35,9 +42,8 @@
              * wrapper for api_call - inserts the session token into params
              */
             var session_api_call = function(params) {
-                // ToDo: use service for localstorage?
-                var session = window.localStorage.getItem('session');
-                return api_call(angular.extend(params, {session: session}));
+                var session = sessionData.token;
+                return api_call(angular.extend(params, {s: session}));
             };
 
             return {
@@ -75,7 +81,7 @@
                     })
                     .success(function(data) {
                         if(data.status === 'success') {
-			    sessionData.setToken(data.data.response);
+                            sessionData.setToken(data.data.response);
                             //window.localStorage.setItem('session', data.data.response);
                         }
                     });
@@ -84,10 +90,10 @@
                     session_api_call({m: 'user_logout'})
                     .then(function(data) {
                         sessionData.deleteToken();
-			//window.localStorage.removeItem('session');
+                        //window.localStorage.removeItem('session');
                     });
                 },
-                user_procuts: function() {
+                user_products: function() {
                     return session_api_call({m: 'user_products'});
                 },
                 get_fishes: function() {

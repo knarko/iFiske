@@ -1,12 +1,12 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.api', [])
+    angular.module('ifiske.api', ['ionic.utils'])
     .provider('API', function APIProvider() {
 
         this.base_url = 'http://www.ifiske.se/api/v2/api.php';
 
-        this.$get = ['$http', function($http) {
+        this.$get = ['$http', 'sessionData', function($http, sessionData) {
             var base_url = this.base_url;
 
             /**
@@ -75,14 +75,16 @@
                     })
                     .success(function(data) {
                         if(data.status === 'success') {
-                            window.localStorage.setItem('session', data.data.response);
+			    sessionData.setToken(data.data.response);
+                            //window.localStorage.setItem('session', data.data.response);
                         }
                     });
                 },
                 user_logout: function() {
                     session_api_call({m: 'user_logout'})
                     .then(function(data) {
-                        window.localStorage.removeItem('session');
+                        sessionData.deleteToken();
+			//window.localStorage.removeItem('session');
                     });
                 },
                 user_procuts: function() {

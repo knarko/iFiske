@@ -11,6 +11,8 @@
 		<input type="password" placeholder="Lösenord" ng-model="user.password">
 	    </label>
 
+        <p ng-show="error">{{error}}</p>
+
 
 	    <button class="button button-block button-positive" ng-click="signIn(user)">
 		Logga in

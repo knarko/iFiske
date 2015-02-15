@@ -6,7 +6,7 @@
 
         this.base_url = 'https://www.ifiske.se/api/v2/api.php';
 
-        this.$get = ['$http', 'sessionData', 'localStorage', function($http, sessionData, localStorage) {
+        this.$get = ['$http', 'sessionData', 'localStorage', '$q', function($http, sessionData, localStorage, $q) {
             var base_url = this.base_url;
 
             /**
@@ -15,7 +15,7 @@
              * returns a $http object for the requested api call
              */
             var api_call = function(params) {
-                return new Promise(function(fulfill, reject) {
+                return $q(function(fulfill, reject) {
                     $http(
                         {
                         method:'get',
@@ -53,9 +53,9 @@
                 get_counties: function() {
                     return api_call({m: 'get_counties'});
                 },
-		user_exists: function(username) {
-		    return api_call({m: 'user_exists', username: username});
-		},
+                user_exists: function(username) {
+                    return api_call({m: 'user_exists', username: username});
+                },
                 user_register: function(username, fullname, password, email, phone) {
                     return api_call(
                         { m: 'user_register',
@@ -83,10 +83,10 @@
                             password: password
                     })
                     .then(function(data) {
-                        if(data.status === 'success') {
-                            sessionData.setToken(data.data.response);
-                            //window.localStorage.setItem('session', data.data.response);
-                        }
+                        sessionData.setToken(data.data.response);
+
+                        //needed for chaining of promises, should be done some other way perhaps?
+                        return data;
                     });
                 },
                 user_logout: function() {

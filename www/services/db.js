@@ -113,7 +113,7 @@
             };
 
             var populateTable = function(table, data) {
-                return new Promise(function (fulfill, reject) {
+                return $q(function (fulfill, reject) {
                     db.transaction(function(tx) {
                         tx.executeSql('DELETE FROM ' + table + ';');
 
@@ -147,7 +147,7 @@
                  * @method clean
                  */
                 clean: function() {
-                    return new Promise(function (fulfill, reject) {
+                    return $q(function (fulfill, reject) {
                         db.transaction(
                             function(tx) {
                             for(var table in tableDef){
@@ -168,7 +168,7 @@
                  * @method init
                  */
                 init: function(){
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         db.transaction( function (tx) {
                             for(var table in tableDef) {
                                 var query = [
@@ -263,7 +263,7 @@
                  * @param {Integer} id
                  */
                 getArea: function(id) {
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT *',
                             'FROM Area',
@@ -283,7 +283,7 @@
                  * @param {String} searchstring
                  */
                 search: function(searchstring, county_id) {
-                    return new Promise( function (fulfill, reject) {
+                    return $q( function (fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT *',
                             'FROM Area',
@@ -304,7 +304,7 @@
                  * @param {Integer} product_id
                  */
                 getProduct: function(product_id) {
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT DISTINCT *',
                             'FROM Product',
@@ -323,7 +323,7 @@
                  * @param {Integer} area_id
                  */
                 getProductsByArea: function(area_id) {
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT DISTINCT Product.*,',
                             'Rule.t as rule_t,',
@@ -342,7 +342,7 @@
                 },
 
                 getCounties: function() {
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT DISTINCT County.*',
                             'FROM County',
@@ -356,7 +356,7 @@
                 },
 
                 getUserProducts: function() {
-                    return new Promise(function(fulfill, reject) {
+                    return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT * FROM User_Product'
                         ].join(' '))

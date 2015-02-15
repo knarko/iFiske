@@ -53,6 +53,9 @@
                 get_counties: function() {
                     return api_call({m: 'get_counties'});
                 },
+		user_exists: function(username) {
+		    return api_call({m: 'user_exists', username: username});
+		},
                 user_register: function(username, fullname, password, email, phone) {
                     return api_call(
                         { m: 'user_register',

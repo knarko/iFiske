@@ -1,11 +1,6 @@
 angular.module('ifiske.controllers')
-.controller('AreaDetailCardCtrl', ['$scope', 'DB', '$stateParams', '$ionicModal', 'localStorage', 'API', function($scope, DB, $stateParams, $ionicModal, localStorage, API) {
-    API.get_sms_terms()
-    .then(function(terms) {
-        //TODO: move somewhere else.
-        localStorage.set('sms_terms', terms.data.response);
-        $scope.smsterms = localStorage.get('sms_terms');
-    });
+.controller('AreaDetailCardCtrl', ['$scope', 'DB', '$stateParams', '$ionicModal', 'localStorage', 'localStorage', function($scope, DB, $stateParams, $ionicModal, localStorage, localStorage) {
+    $scope.smsterms = localStorage.get('sms_terms');
     $scope.predicate = "so";
     DB.getProductsByArea($stateParams.id)
     .then(function(data) {

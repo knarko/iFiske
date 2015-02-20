@@ -150,12 +150,12 @@
                     return $q(function (fulfill, reject) {
                         db.transaction(
                             function(tx) {
-                            for(var table in tableDef){
-                                tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
-                            }
-                        },
-                        reject,
-                        fulfill
+                                for(var table in tableDef){
+                                    tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
+                                }
+                            },
+                            reject,
+                            fulfill
                         );
                     })
                     .then(function() {
@@ -189,71 +189,78 @@
                 },
 
                 populate: function() {
-                    return $q.all(
+                    return $q.all([
                         API.get_areas()
                         .then(function(data) {
-                            populateTable('Area', data.data.response)
-                            .then(function() {
-                                console.log('Populated Area');
-                            }, function(err) {
-                                console.log(err);
-                            });
+                            return populateTable('Area', data.data.response);
+                        })
+                        .then(function() {
+                            console.log('Populated Area');
+                        }, function(err) {
+                            console.log(err);
+                            return $q.reject(err);
                         }),
                         API.get_products()
                         .then(function(data) {
-                            populateTable('Product', data.data.response)
+                            return populateTable('Product', data.data.response)
                             .then(function() {
                                 console.log('Populated Product');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         }),
                         API.get_counties()
                         .then(function(data) {
-                            populateTable('County', data.data.response)
+                            return populateTable('County', data.data.response)
                             .then(function() {
                                 console.log('Populated County');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         }),
                         API.get_municipalities()
                         .then(function(data) {
-                            populateTable('Municipality', data.data.response)
+                            return populateTable('Municipality', data.data.response)
                             .then(function() {
                                 console.log('Populated Municipality');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         }),
                         API.get_fishes()
                         .then(function(data) {
-                            populateTable('Fish', data.data.response)
+                            return populateTable('Fish', data.data.response)
                             .then(function() {
                                 console.log('Populated Fish');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         }),
                         API.get_rules()
                         .then(function(data) {
-                            populateTable('Rule', data.data.response)
+                            return populateTable('Rule', data.data.response)
                             .then(function() {
                                 console.log('Populated Rule');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         }),
                         API.user_products()
                         .then(function(data) {
-                            populateTable('User_Product', data.data.response)
+                            return populateTable('User_Product', data.data.response)
                             .then(function() {
                                 console.log('Populated User_Product');
                             }, function(err) {
                                 console.log(err);
+                                return $q.reject(err);
                             });
                         })
-                    );
+                    ]);
                 },
 
 

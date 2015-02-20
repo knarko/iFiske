@@ -18,12 +18,12 @@
                 return $q(function(fulfill, reject) {
                     $http(
                         {
-                        method:'get',
-                        url: base_url,
-                        params: angular.extend(params, {'key': '0123456789abcdef'}),
-                        timeout: 2000,
-                        cache: true
-                    }
+                            method:'get',
+                            url: base_url,
+                            params: angular.extend(params, {'key': '0123456789abcdef'}),
+                            timeout: 5000,
+                            cache: true
+                        }
                     )
                     // ToDo: Proper logging
                     .success(function(data) {
@@ -33,7 +33,13 @@
                             fulfill(data);
                         }
                     })
-                    .error(reject);
+                    .error(function(data, status, headers, config, statusText) {
+                        if (status === 0) {
+                            reject(new Error('Request timeout'));
+                        } else {
+                            reject(data);
+                        }
+                    });
                 });
             };
 
@@ -64,14 +70,14 @@
                             password: password,
                             email: email,
                             phone: phone
-                    });
+                        });
                 },
                 user_confirm: function(username, pin) {
                     return api_call(
                         { m: 'user_confirm',
                             username: username,
                             pin: pin
-                    });
+                        });
                 },
                 user_info: function() {
                     return session_api_call({m: 'user_info'});
@@ -81,13 +87,13 @@
                         { m: 'user_login',
                             username: username,
                             password: password
-                    })
-                    .then(function(data) {
-                        sessionData.setToken(data.data.response);
+                        })
+                        .then(function(data) {
+                            sessionData.setToken(data.data.response);
 
-                        //needed for chaining of promises, should be done some other way perhaps?
-                        return data;
-                    });
+                            //needed for chaining of promises, should be done some other way perhaps?
+                            return data;
+                        });
                 },
                 user_logout: function() {
                     session_api_call({m: 'user_logout'})
@@ -100,7 +106,7 @@
                     return session_api_call({m: 'user_products'});
                 },
                 get_fishes: function() {
-                    return session_api_call({m: 'get_fishes'});
+                    return api_call({m: 'get_fishes'});
                 },
                 get_techniques: function() {
                     return api_call({m: 'get_techniques'});
@@ -112,50 +118,50 @@
                     return api_call(
                         { m: 'get_organizations',
                             orgid: orgid
-                    });
+                        });
                 },
                 get_org_modified: function(orgid) {
                     return api_call(
                         { m: 'get_org_modified',
                             orgid: orgid
-                    });
+                        });
                 },
                 get_areas: function(areaid) {
                     return api_call(
                         { m: 'get_areas',
                             areaid: areaid
-                    });
+                        });
                 },
                 get_areas_modified: function(areaid) {
                     return api_call(
                         { m: 'get_areas_modified',
                             areaid: areaid
-                    });
+                        });
                 },
                 get_products: function(areaid) {
                     return api_call(
                         { m: 'get_products',
                             areaid: areaid
-                    });
+                        });
                 },
                 get_rules: function(ruleid) {
                     return api_call(
                         { m: 'get_rules',
                             ruleid: ruleid
-                    });
+                        });
                 },
                 get_photos: function(orgid, areaid) {
                     return api_call(
                         { m: 'get_photos',
                             orgid: orgid,
                             areaid: areaid
-                    });
+                        });
                 },
                 get_map_pois: function(orgid) {
                     return api_call(
                         { m: 'get_map_pois',
                             orgid: orgid
-                    });
+                        });
                 },
                 get_map_poi_types : function() {
                     return api_call({m: 'get_map_poi_types'});
@@ -164,7 +170,7 @@
                     return api_call(
                         { m: 'get_map_polygons',
                             orgid: orgid
-                    });
+                        });
                 },
                 user_get_favorites: function() {
                     return session_api_call({m: 'user_get_favorites'});

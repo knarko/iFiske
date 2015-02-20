@@ -3,12 +3,25 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.controllers' is found in controllers.js
 
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages', 'ifiske.utils'])
+angular.module('ifiske', [
+    'ionic',
+    'ifiske.controllers',
+    'ifiske.directives',
+    'ifiske.api',
+    'ifiske.db',
+    'ifiske.utils',
+    'ifiske.update',
+    'ionic.ion.headerShrink',
+    'ngCordova',
+    'inAppBrowser',
+    'ngCordovaSms',
+    'ngMessages'
+])
 .constant('$ionicLoadingConfig', {
     template: '<i class="icon ion-loading-b"></i>'
     // hideOnStateChange: true
 })
-.run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
+.run(['$ionicPlatform', 'Update', function($ionicPlatform, Update) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -20,19 +33,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
             StatusBar.styleDefault();
         }
 
-
-        DB.init()
-        .then(function() {
-            console.log('Initialized DB system');
-            DB.populate()
-            .then(function(){
-                console.log('Populated all the things');
-            }, function(err) {
-                console.log(err);
-            });
-        }, function(err) {
-            console.log(err);
-        });
+        Update.update();
     });
 }])
 

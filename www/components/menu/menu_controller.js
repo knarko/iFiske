@@ -18,14 +18,14 @@ angular.module('ifiske.controllers')
 	API.user_logout();
 
 	$state.go('start.login');
-    }
+    };
     $scope.login = function() {
 	$scope.popover.hide();
 	$state.go('start.login');
-    }
+    };
     $scope.register = function() {
 	$scope.popover.hide();
 	$state.go('start.register.account_details');
-    }
+    };
 
 }]);

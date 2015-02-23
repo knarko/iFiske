@@ -1,13 +1,7 @@
 angular.module('ifiske.controllers')
-    .controller('Area2Ctrl', ['$scope', '$state', '$ionicHistory', 'localStorage', '$rootScope', '$ionicViewSwitcher', function($scope, $state, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher) {
-	var hist = $ionicHistory.currentHistoryId();
+    .controller('Area2Ctrl', ['$scope', '$ionicHistory', 'localStorage', '$rootScope', '$ionicViewSwitcher', function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher) {
 
-	$scope.test2 = function() {
-	    console.log('------');
-	};
-
-	
-	$scope.test = function() {
+	$scope.tabsBack = function() {
 	    // If the current view is at the top of its history stack
 	    if(!$ionicHistory.viewHistory().currentView.index) {
 		/** 
@@ -17,7 +11,7 @@ angular.module('ifiske.controllers')
 		 */
 		$ionicViewSwitcher.nextDirection('back');
 		$scope.$emit('$ionicHistory.change', {
-		    historyId: localStorage.get('haxParentId')
+		    historyId: localStorage.get('homeHistoryId')
 		});
 	    } else {
 		// Default back action
@@ -25,11 +19,3 @@ angular.module('ifiske.controllers')
 	    }
 	};
     }])
-   /* .run([$rootScope, $ionicHistory, function( $ionicHistory){
-	//var prevGoBack = $rootScope.ionicGoBack;
-	$rootScope.$ionicGoBack = function() {
-	    
-	    //$ionicHistory.goBack();
-	};
-    }]);*/
-

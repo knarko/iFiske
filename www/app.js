@@ -128,7 +128,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		templateUrl: 'components/area_list/area_list.html',
 		controller: 'AreasCtrl'
 	    })
-	    .state('menu.areadetail', {
+	    /*.state('menu.areadetail', {
 		url: '/area/:id',
 		templateUrl: 'components/area/area.html',
 		controller: 'AreaDetailCtrl'
@@ -137,7 +137,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		url: '/area/:id/cards',
 		templateUrl: 'components/area_cards/area_cards.html',
 		controller: 'AreaDetailCardCtrl'
-	    })
+	    })*/
 	    .state('menu.cards', {
 		url: '/cards',
 		templateUrl: 'components/user_cards/user_cards.html',
@@ -162,20 +162,21 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 
 
 
-	    .state('area2', {
+	    .state('areadetail2', {
 		abstract:true,
+		url: '/areadetail/:id',
 		templateUrl: 'components/area2/area.html',
 		controller: 'Area2Ctrl'
 	    })
-	    .state('area2.a', {
+	    .state('areadetail2.a', {
 		url: '/a',
 		views: {
 		    'a': {
-			template: '<ion-view><ion-content><p ng-click="test();">A</p><p ui-sref="area2.aa">Aa</p></ion-content></ion-view>'		
+			template: '<ion-view><ion-content><p>A</p></ion-content></ion-view>'		
 		    }
 		}
 	    })
-	    .state('area2.aa', {
+	    /*.state('area2.aa', {
 		url: '/a',
 		views: {
 		    'a': {
@@ -190,16 +191,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 			template: '<ion-view><ion-content><p ng-click="test();">B</p></ion-content></ion-view>'
 		    }
 		}
-	    })
-	    .state('area2.c', {
-		url: '/c',
-		views: {
-		    'c': {
-			template: '<ion-view><ion-content><p ng-click="">C</p></ion-content></ion-view>'
-	
-		    }
-		}
-	    })
+	    })*/
     }]);
 
 angular.module('ifiske.controllers', []);

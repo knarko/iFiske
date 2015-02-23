@@ -1,6 +1,8 @@
 angular.module('ifiske.controllers')
 .controller('HomeCtrl', ['$scope', '$state', '$ionicHistory', 'localStorage', function($scope, $state, $ionicHistory, localStorage) {
-    localStorage.set('haxParentId', $ionicHistory.currentHistoryId());
+
+    // Current history stack Id. See area_controller for usage.
+    localStorage.set('homeHistoryId', $ionicHistory.currentHistoryId());
 
     $scope.myFunc = function($event) {
         if($event.keyCode == 13 && !$event.shiftKey) { //if enter-key

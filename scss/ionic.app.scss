@@ -122,3 +122,16 @@ p.note {
     line-height: 1.5em;
     white-space: pre-wrap;
 }
+
+.row {
+    flex-wrap: wrap;
+}
+
+.fishcard {
+    margin: 0 !important;
+    border-radius: 0;
+}
+.fishcard .item-title {
+    padding-bottom: 0;
+    padding-top: 0;
+}

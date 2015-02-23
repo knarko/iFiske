@@ -55,7 +55,7 @@ angular.module('ifiske', [
 	}
 	$urlRouterProvider.otherwise(defaultUrl);
 
-	
+
 
 	$stateProvider
 	// Abstract pre-menu state. Needed for navigation between login and register views.
@@ -148,7 +148,14 @@ angular.module('ifiske', [
     })
     .state('menu.fishes', {
         url: '/fishes',
-        templateUrl: 'components/fishes/fishes.html'
+        templateUrl: 'components/fishes/fishes.html',
+        controller: 'FishesCtrl'
+    })
+    .state('menu.fishdetail', {
+        url: '/fishdetail/:id',
+        params: {'id': false, 'fish': false},
+        templateUrl: 'components/fish_detail/fish_detail.html',
+        controller: 'FishDetailCtrl'
     })
     .state('menu.methods', {
         url: '/methods',

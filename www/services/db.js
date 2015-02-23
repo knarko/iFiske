@@ -371,7 +371,30 @@
                             fulfill(createObject(data));
                         }, reject);
                     });
-                }
+                },
+
+                getFishes: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM Fish'
+                        ].join(' '))
+                        .then(function(data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
+                getFish: function(id) {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM Fish',
+                            'WHERE id = ?'
+                        ].join(' '), [id])
+                        .then(function(data) {
+                            fulfill(createObject(data)[0]);
+                        }, reject);
+                    });
+                },
 
             };
         }];

@@ -190,6 +190,15 @@ angular.module('ifiske', [
                 templateUrl: 'components/area/area.html'
             }
         }
+    })
+    .state('areadetail2.cards', {
+        url: '/cards',
+        views: {
+            'cards': {
+                controller: 'AreaDetailCardCtrl',
+                templateUrl: 'components/area_cards/area_cards.html'
+            }
+        }
     });
 }]);
 

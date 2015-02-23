@@ -179,7 +179,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		url: '/a',
 		views: {
 		    'a': {
-			template: '<ion-view><ion-content>AaAAAAAAAAAA</ion-content></ion-view>'
+			template: '<ion-view><ion-content><p ng-click="test();">AaAAAAAAAAAA</p></ion-content></ion-view>'
 		    }
 		}
 	    })
@@ -195,7 +195,7 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		url: '/c',
 		views: {
 		    'c': {
-			template: '<ion-view><ion-content><p ng-click="test();">C</p></ion-content></ion-view>'
+			template: '<ion-view><ion-content><p ng-click="">C</p></ion-content></ion-view>'
 	
 		    }
 		}

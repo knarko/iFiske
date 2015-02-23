@@ -57,6 +57,8 @@ angular.module('ifiske', [
 
 
 
+
+
     $stateProvider
     // Abstract pre-menu state. Needed for navigation between login and register views.
     .state('start', {
@@ -208,7 +210,21 @@ angular.module('ifiske', [
         views: {
             'c': {
                 template: '<ion-view><ion-content><p ng-click="">C</p></ion-content></ion-view>'
+            }
+        }
+    })
 
+    .state('areadetail2', {
+        abstract:true,
+        url: '/areadetail/:id',
+        templateUrl: 'components/area2/area.html',
+        controller: 'Area2Ctrl'
+    })
+    .state('areadetail2.a', {
+        url: '/a',
+        views: {
+            'a': {
+                template: '<ion-view><ion-content><p>A</p></ion-content></ion-view>'
             }
         }
     });
@@ -216,3 +232,19 @@ angular.module('ifiske', [
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
+/*.state('area2.aa', {
+url: '/a',
+views: {
+'a': {
+template: '<ion-view><ion-content><p ng-click="test();">AaAAAAAAAAAA</p></ion-content></ion-view>'
+}
+}
+})
+.state('area2.b', {
+url: '/b',
+views: {
+'b': {
+template: '<ion-view><ion-content><p ng-click="test();">B</p></ion-content></ion-view>'
+}
+}
+})*/

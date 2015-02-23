@@ -6,8 +6,10 @@ angular.module('ifiske.controllers')
         DB.getFish($stateParams.id)
         .then(function(data) {
             $scope.fish = data;
+    console.log($scope.fish);
         }, function(err) {
             console.log(err);
         });
     }
+    console.log($scope.fish);
 }]);

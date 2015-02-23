@@ -38,55 +38,55 @@ angular.module('ifiske', [
     });
 }])
 
-
 .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     // Cache views in the forward stack
     $ionicConfigProvider.views.forwardCache(true);
-
+    $ionicConfigProvider.tabs.position('bottom');
     /**
      * Ionic uses AngularUI Router. Learn more here:
      * https://github.com/angular-ui/ui-router
      */
 
 
-	var defaultUrl = '/start/login';
-	if (window.localStorage.getItem('session')) {
-	    defaultUrl = '/menu/home';
-	}
-	$urlRouterProvider.otherwise(defaultUrl);
+    var defaultUrl = '/start/login';
+    if (window.localStorage.getItem('session')) {
+        defaultUrl = '/menu/home';
+    }
+    $urlRouterProvider.otherwise(defaultUrl);
 
 
 
-	$stateProvider
-	// Abstract pre-menu state. Needed for navigation between login and register views.
-	    .state('start', {
-		url: '/start',
-		abstract: true,
-		templateUrl: 'components/start/start.html'
-	    })
-	    .state('start.login', {
-		url: '/login',
-		templateUrl: 'components/login/login.html',
-		controller: 'LoginCtrl'
-	    })
-	    .state('start.register', {
-		url: '/register',
-		templateUrl: 'components/register/register.html',
-		controller: 'RegisterCtrl'
-	    })
-	    .state('start.register.accountDetails', {
-		url: '/account_details',
-		templateUrl: 'components/register/register_account_details.html'
-	    })
-	    .state('start.register.userDetails', {
-		url: '/user_details',
-		templateUrl: 'components/register/register_user_details.html'
-	    })
-	    .state('start.register.verify', {
-		url: '/verify',
-		templateUrl: 'components/register/register_verify.html'
-	    })
+    $stateProvider
+    // Abstract pre-menu state. Needed for navigation between login and register views.
+    .state('start', {
+        url: '/start',
+        abstract: true,
+        templateUrl: 'components/start/start.html'
+    })
+    .state('start.login', {
+        url: '/login',
+        templateUrl: 'components/login/login.html',
+        controller: 'LoginCtrl'
+    })
+    .state('start.register', {
+        url: '/register',
+        templateUrl: 'components/register/register.html',
+        controller: 'RegisterCtrl'
+    })
+    .state('start.register.accountDetails', {
+        url: '/account_details',
+        templateUrl: 'components/register/register_account_details.html'
+    })
+    .state('start.register.userDetails', {
+        url: '/user_details',
+        templateUrl: 'components/register/register_user_details.html'
+    })
+    .state('start.register.verify', {
+        url: '/verify',
+        templateUrl: 'components/register/register_verify.html'
+    })
+
     // Abstract menu state. "Root" state once we're past the login state.
     .state('menu', {
         url: '/menu',
@@ -172,8 +172,46 @@ angular.module('ifiske', [
     .state('menu.report', {
         url: '/report',
         templateUrl: 'components/report/report.html'
-    });
+    })
 
+    .state('area2', {
+        abstract:true,
+        templateUrl: 'components/area2/area.html',
+        controller: 'Area2Ctrl'
+    })
+    .state('area2.a', {
+        url: '/a',
+        views: {
+            'a': {
+                template: '<ion-view><ion-content><p ng-click="test();">A</p><p ui-sref="area2.aa">Aa</p></ion-content></ion-view>'
+            }
+        }
+    })
+    .state('area2.aa', {
+        url: '/a',
+        views: {
+            'a': {
+                template: '<ion-view><ion-content><p ng-click="test();">AaAAAAAAAAAA</p></ion-content></ion-view>'
+            }
+        }
+    })
+    .state('area2.b', {
+        url: '/b',
+        views: {
+            'b': {
+                template: '<ion-view><ion-content><p ng-click="test();">B</p></ion-content></ion-view>'
+            }
+        }
+    })
+    .state('area2.c', {
+        url: '/c',
+        views: {
+            'c': {
+                template: '<ion-view><ion-content><p ng-click="">C</p></ion-content></ion-view>'
+
+            }
+        }
+    });
 }]);
 
 angular.module('ifiske.controllers', []);

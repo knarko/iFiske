@@ -11,6 +11,7 @@
 
             var updateFunc = function(updateTime) {
                 $ionicLoading.show();
+                //TODO: if an error occurs, tell the user and stop the spinning
 
                 var currentTime = Date.now();
 

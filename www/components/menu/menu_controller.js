@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-.controller('MenuCtrl', ['$scope', '$state', '$ionicPopover', 'sessionData', 'API', function($scope, $state, $ionicPopover, sessionData, API) {
+.controller('MenuCtrl', ['$scope', '$state', '$ionicPopover', 'sessionData', 'API', 'Update', function($scope, $state, $ionicPopover, sessionData, API, Update) {
 
     $scope.sessionData = sessionData;
 
@@ -26,6 +26,10 @@ angular.module('ifiske.controllers')
     $scope.register = function() {
 	$scope.popover.hide();
 	$state.go('start.register.account_details');
+    };
+
+    $scope.update = function() {
+        Update.forcedUpdate();
     };
 
 }]);

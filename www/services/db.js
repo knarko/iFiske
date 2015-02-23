@@ -100,8 +100,20 @@
                     ['ref2',      'int'],
                     ['t',         'text'],
                     ['to',        'int']
+                ],
+                'Technique': [
+                    ['ID',       'int'],
+                    ['t',        'text'],
+                    ['d',        'text'],
+                    ['so',       'int'],
+                    ['de',       'text'],
+                    ['da',       'text'],
+                    ['icon',     'text'],
+                    ['img1',     'text'],
+                    ['img2',     'text'],
+                    ['img3',     'text'],
+                    ['youtube',  'text']
                 ]
-
             };
 
             var createObject = function(data) {
@@ -259,6 +271,16 @@
                                 console.log(err);
                                 return $q.reject(err);
                             });
+                        }),
+                        API.get_techniques()
+                        .then(function(data) {
+                            return populateTable('Technique', data.data.response)
+                            .then(function() {
+                                console.log('Populated Technique');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
                         })
                     ]);
                 },
@@ -395,6 +417,28 @@
                         }, reject);
                     });
                 },
+
+                getTechniques: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM Technique'
+                        ].join(' '))
+                        .then(function(data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+                getTechnique: function(id) {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM Technique',
+                            'WHERE ID = ?'
+                        ].join(' '), [id])
+                        .then(function(data) {
+                            fulfill(createObject(data)[0]);
+                        }, reject);
+                    });
+                }
 
             };
         }];

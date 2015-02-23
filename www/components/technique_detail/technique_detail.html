@@ -1,0 +1,40 @@
+<ion-view title="{{tech.t}}">
+<ion-content>
+<div class="card list">
+    <div class="item">
+        <h2>{{tech.t}}</h2>
+    </div>
+    <div ng-if="tech.img1" class="item item-image">
+        <ion-slide-box does-continue="true" auto-play="true">
+        <ion-slide>
+        <img src="{{image_endpoint}}{{tech.img1}}" />
+        </ion-slide>
+        <ion-slide>
+        <img src="{{image_endpoint}}{{tech.img2}}" />
+        </ion-slide>
+        <ion-slide>
+        <img src="{{image_endpoint}}{{tech.img3}}" />
+        </ion-slide>
+    </div>
+    <div ng-if="tech.d" class="item item-divider">
+        <p>Beskrivning (Grunderna)</p>
+    </div>
+    <div ng-if="tech.d" class="item item-body">
+        <p ng-bind-html="tech.d | nobrs" />
+    </div>
+    <div ng-if="tech.de" class="item item-divider">
+        Utrustning
+    </div>
+    <div ng-if="tech.de" class="item item-body">
+        <p ng-bind-html="tech.de | nobrs" />
+    </div>
+    <div ng-if="tech.da" class="item item-divider">
+        Avancerade tips
+    </div>
+    <div ng-if="tech.da" class="item item-body">
+        <p ng-bind-html="tech.da|nobrs" />
+    </div>
+
+</div>
+        </ion-content>
+</ion-view>

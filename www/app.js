@@ -11,6 +11,7 @@ angular.module('ifiske', [
     'ifiske.db',
     'ifiske.utils',
     'ifiske.update',
+    'ifiske.filters',
     'ionic.ion.headerShrink',
     'ngCordova',
     'inAppBrowser',
@@ -157,9 +158,16 @@ angular.module('ifiske', [
         templateUrl: 'components/fish_detail/fish_detail.html',
         controller: 'FishDetailCtrl'
     })
-    .state('menu.methods', {
-        url: '/methods',
-        templateUrl: 'components/methods/methods.html'
+    .state('menu.techniques', {
+        url: '/techniques',
+        templateUrl: 'components/techniques/techniques.html',
+        controller: 'TechniquesCtrl'
+    })
+    .state('menu.techniquedetail', {
+        url: '/techniquedetail/:id',
+        params: {'id': false, 'tech': false},
+        templateUrl: 'components/technique_detail/technique_detail.html',
+        controller: 'TechniqueDetailCtrl'
     })
     .state('menu.report', {
         url: '/report',

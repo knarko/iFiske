@@ -1,0 +1,12 @@
+<ion-view title="Fiskemetoder">
+<ion-content>
+<ion-list>
+<ion-item ng-repeat="tech in techniques | orderBy:sortorder" class="list" ui-sref="menu.techniquedetail({tech: tech, id: tech.ID})">
+<div class="item item-avatar">
+    <img src="{{image_endpoint}}{{tech.icon}}" />
+    <h2>{{tech.t}}</h2>
+</div>
+</ion-item>
+</ion-list>
+</ion-content>
+</ion-view>

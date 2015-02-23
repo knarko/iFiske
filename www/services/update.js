@@ -50,6 +50,7 @@
                             $ionicLoading.hide();
                         }, function(err) {
                             console.log('Still error, handle it!', err);
+                            $ionicLoading.hide();
                         });
                     });
                     API.get_terms_of_service()

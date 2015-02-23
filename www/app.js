@@ -3,49 +3,50 @@
 // the 2nd parameter is an array of 'requires'
 // 'ifiske.controllers' is found in controllers.js
 
-angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages', 'ifiske.utils'])
-.constant('$ionicLoadingConfig', {
-    template: '<i class="icon ion-loading-b"></i>'
-    // hideOnStateChange: true
-})
-.run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if(window.ionic && window.ionic.Keyboard) {
-            window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if(window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
+angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'ifiske.api', 'ifiske.db', 'ionic.ion.headerShrink', 'ngCordova', 'inAppBrowser', 'ngCordovaSms', 'ngMessages', 'ifiske.utils'])//, 'treeTabs'])
+
+// Default Loading template
+    .constant('$ionicLoadingConfig', {
+	template: '<i class="icon ion-loading-b"></i>'
+    })
+    .run(['$ionicPlatform', 'API', 'DB', function($ionicPlatform, API, DB) {
+	$ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if(window.ionic && window.ionic.Keyboard) {
+		window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if(window.StatusBar) {
+		// org.apache.cordova.statusbar required
+		StatusBar.styleDefault();
+            }
 
 
-        DB.init()
-        .then(function() {
-            console.log('Initialized DB system');
-            DB.populate()
-            .then(function(){
-                console.log('Populated all the things');
-            }, function(err) {
-                console.log(err);
-            });
-        }, function(err) {
-            console.log(err);
-        });
-    });
-}])
+            DB.init()
+		.then(function() {
+		    console.log('Initialized DB system');
+		    DB.populate()
+			.then(function(){
+			    console.log('Populated all the things');
+			}, function(err) {
+			    console.log(err);
+			});
+		}, function(err) {
+		    console.log(err);
+		});
+	});
+    }])
 
 
-.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
-    // Cache views in the forward stack
-    $ionicConfigProvider.views.forwardCache(true);
-
-    /**
-     * Ionic uses AngularUI Router. Learn more here:
-     * https://github.com/angular-ui/ui-router
-     */
+	// Cache views in the forward stack
+	$ionicConfigProvider.views.forwardCache(true);
+	$ionicConfigProvider.tabs.position('bottom');
+	/**
+	 * Ionic uses AngularUI Router. Learn more here:
+	 * https://github.com/angular-ui/ui-router
+	 */
 
 
 	var defaultUrl = '/start/login';
@@ -85,80 +86,121 @@ angular.module('ifiske', ['ionic', 'ifiske.controllers', 'ifiske.directives', 'i
 		url: '/verify',
 		templateUrl: 'components/register/register_verify.html'
 	    })
-    // Abstract menu state. "Root" state once we're past the login state.
-    .state('menu', {
-        url: '/menu',
-        abstract: true,
-        templateUrl: 'components/menu/menu.html',
-        controller: 'MenuCtrl'
-    })
-    .state('menu.home', {
-        url: '/home',
-        templateUrl: 'components/home/home.html',
-        controller: 'HomeCtrl'
-    })
-    .state('menu.info', {
-        url: '/info',
-        templateUrl: 'components/info/info.html'
-    })
-    .state('menu.contact', {
-        url: '/contact',
-        templateUrl: 'components/contact/contact.html',
-        controller: 'ContactCtrl'
-    })
-    .state('menu.legal', {
-        url: '/legal',
-        templateUrl: 'components/legal/legal.html',
-        controller: 'LegalCtrl'
-    })
-    .state('menu.userinfo', {
-        url: '/userinfo',
-        templateUrl: 'components/user/user.html',
-    })
-    .state('menu.counties', {
-        url: '/counties',
-        templateUrl: 'components/counties/counties.html',
-        controller: 'CountiesCtrl'
-    })
-    .state('menu.areas', {
-        url: '/areas',
-        params: {'id': false, 'county': false, 'search': ''},
-        templateUrl: 'components/area_list/area_list.html',
-        controller: 'AreasCtrl'
-    })
-    .state('menu.areadetail', {
-        url: '/area/:id',
-        templateUrl: 'components/area/area.html',
-        controller: 'AreaDetailCtrl'
-    })
-    .state('menu.areadetailcards', {
-        url: '/area/:id/cards',
-        templateUrl: 'components/area_cards/area_cards.html',
-        controller: 'AreaDetailCardCtrl'
-    })
-    .state('menu.cards', {
-        url: '/cards',
-        templateUrl: 'components/user_cards/user_cards.html',
-        controller: 'UserCardsCtrl'
-    })
-    .state('menu.favorites', {
-        url: '/favorites',
-        templateUrl: 'components/favorites/favorites.html'
-    })
-    .state('menu.fishes', {
-        url: '/fishes',
-        templateUrl: 'components/fishes/fishes.html'
-    })
-    .state('menu.methods', {
-        url: '/methods',
-        templateUrl: 'components/methods/methods.html'
-    })
-    .state('menu.report', {
-        url: '/report',
-        templateUrl: 'components/report/report.html'
-    });
+	
+	// Abstract menu state. "Root" state once we're past the login state.
+	    .state('menu', {
+		url: '/menu',
+		abstract: true,
+		templateUrl: 'components/menu/menu.html',
+		controller: 'MenuCtrl'
+	    })
+	    .state('menu.home', {
+		url: '/home',
+		templateUrl: 'components/home/home.html',
+		controller: 'HomeCtrl'
+	    })
+	    .state('menu.info', {
+		url: '/info',
+		templateUrl: 'components/info/info.html'
+	    })
+	    .state('menu.contact', {
+		url: '/contact',
+		templateUrl: 'components/contact/contact.html',
+		controller: 'ContactCtrl'
+	    })
+	    .state('menu.legal', {
+		url: '/legal',
+		templateUrl: 'components/legal/legal.html',
+		controller: 'LegalCtrl'
+	    })
+	    .state('menu.userinfo', {
+		url: '/userinfo',
+		templateUrl: 'components/user/user.html',
+	    })
+	    .state('menu.counties', {
+		url: '/counties',
+		templateUrl: 'components/counties/counties.html',
+		controller: 'CountiesCtrl'
+	    })
+	    .state('menu.areas', {
+		url: '/areas',
+		params: {'id': false, 'county': false, 'search': ''},
+		templateUrl: 'components/area_list/area_list.html',
+		controller: 'AreasCtrl'
+	    })
+	    .state('menu.areadetail', {
+		url: '/area/:id',
+		templateUrl: 'components/area/area.html',
+		controller: 'AreaDetailCtrl'
+	    })
+	    .state('menu.areadetailcards', {
+		url: '/area/:id/cards',
+		templateUrl: 'components/area_cards/area_cards.html',
+		controller: 'AreaDetailCardCtrl'
+	    })
+	    .state('menu.cards', {
+		url: '/cards',
+		templateUrl: 'components/user_cards/user_cards.html',
+		controller: 'UserCardsCtrl'
+	    })
+	    .state('menu.favorites', {
+		url: '/favorites',
+		templateUrl: 'components/favorites/favorites.html'
+	    })
+	    .state('menu.fishes', {
+		url: '/fishes',
+		templateUrl: 'components/fishes/fishes.html'
+	    })
+	    .state('menu.methods', {
+		url: '/methods',
+		templateUrl: 'components/methods/methods.html'
+	    })
+	    .state('menu.report', {
+		url: '/report',
+		templateUrl: 'components/report/report.html'
+	    })
 
-}]);
+
+
+	    .state('area2', {
+		abstract:true,
+		templateUrl: 'components/area2/area.html',
+		controller: 'Area2Ctrl'
+	    })
+	    .state('area2.a', {
+		url: '/a',
+		views: {
+		    'a': {
+			template: '<ion-view><ion-content><p ng-click="test();">A</p><p ui-sref="area2.aa">Aa</p></ion-content></ion-view>'		
+		    }
+		}
+	    })
+	    .state('area2.aa', {
+		url: '/a',
+		views: {
+		    'a': {
+			template: '<ion-view><ion-content>AaAAAAAAAAAA</ion-content></ion-view>'
+		    }
+		}
+	    })
+	    .state('area2.b', {
+		url: '/b',
+		views: {
+		    'b': {
+			template: '<ion-view><ion-content><p ng-click="test();">B</p></ion-content></ion-view>'
+		    }
+		}
+	    })
+	    .state('area2.c', {
+		url: '/c',
+		views: {
+		    'c': {
+			template: '<ion-view><ion-content><p ng-click="test();">C</p></ion-content></ion-view>'
+	
+		    }
+		}
+	    })
+    }]);
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);

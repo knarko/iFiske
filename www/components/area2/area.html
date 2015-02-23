@@ -1,0 +1,22 @@
+<ion-view title="area2">
+    <!-- As of 2015-02-15 the Ionic docs suggests placing named ion-nav-views inside each tab. 
+	 Placing the tag outside the ion-tabs directive places the content in the parent
+	 nav stack instead of a nav stack unique to each tab. This enables the back button and 
+	 animations from the parent state, but each tab change will now add a history entry.
+      -->
+    <ion-nav-bar class="bar-calm" align-title="center">
+	<ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-tabs class="tabs-positive tabs-icon-only">
+	<ion-tab title="a" ui-sref="^.a">
+	    <ion-nav-view name="a"></ion-nav-view>
+	</ion-tab>
+	<ion-tab title="b" ui-sref="^.b">
+	    <ion-nav-view name="b"></ion-nav-view>
+	</ion-tab>
+	<ion-tab title="c" ui-sref="^.c">
+	    <ion-nav-view name="c"></ion-nav-view>
+	</ion-tab>
+    </ion-tabs>
+</ion-view>

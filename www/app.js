@@ -118,6 +118,10 @@ angular.module('ifiske', [
         templateUrl: 'components/legal/legal.html',
         controller: 'LegalCtrl'
     })
+    .state('menu.about', {
+	url: '/about',
+	templateUrl: 'components/about/about.html'
+    })
     .state('menu.userinfo', {
         url: '/userinfo',
         templateUrl: 'components/user/user.html',

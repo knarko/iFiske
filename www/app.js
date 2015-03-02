@@ -57,8 +57,6 @@ angular.module('ifiske', [
 
 
 
-
-
     $stateProvider
     // Abstract pre-menu state. Needed for navigation between login and register views.
     .state('start', {

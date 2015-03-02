@@ -10,8 +10,8 @@
 		</label>
 		<div class="error-message" ng-messages="registerForm.username.$error" 
 		     ng-if="registerForm.username.$dirty">
-		    <p ng-message="pattern">Mellan 5 och 25 tecken</p>
 		    <p ng-message="required">Du måste välja ett användarnamn</p>
+		    <p ng-message="pattern">Mellan 5 och 25 tecken</p>
 		</div>
 
 		<label for="password" class="input-label">Lösenord:</label>
@@ -22,11 +22,12 @@
 		</label>
 		<div class="error-message" ng-messages="registerForm.password.$error"
 		     ng-if="registerForm.password.$dirty">
-		    <p ng-message="pattern">Mellan 6 och 16 tecken</p>
 		    <p ng-message="required">Du måste ange ett lösenord</p>
+		    <p ng-message="pattern">Mellan 6 och 16 tecken</p>
 		</div>
 
-		<button ui-sref="^.userDetails" ng-disabled="registerForm.$invalid"
+		<button ng-click="accountDetails(registerForm)" 
+			ng-disabled="registerForm.$invalid" 
 			class="button button-block button-positive">Nästa</button>
 
 	    </form>

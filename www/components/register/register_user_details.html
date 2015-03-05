@@ -2,7 +2,16 @@
     <ion-content>
 	<div class="list list-inset">
 
+
 	    <form name="registerForm" id="register-form">
+
+		<!-- ToDo: restyle, reposition? -->
+		<div class="error-message" ng-messages="registerForm.$error" 
+		     ng-messages-multiple>
+		    <p ng-message="userExists">E-postadressen eller användarnamnet är upptaget</p>
+		    <p ng-message="invalidEmail">Ogiltig e-postadress</p>
+		</div>
+
 		<label for="fullname" class="input-label">För- och efternamn:</label>
 		<label ng-class="{'label-error': registerForm.fullname.$invalid &&
 				 registerForm.fullname.$dirty}" class="item item-input">
@@ -11,8 +20,8 @@
 		</label>
 		<div class="error-message" ng-messages="registerForm.fullname.$error" 
 		     ng-if="registerForm.fullname.$dirty">
+		    <p ng-message="required">Du måste ange ett namn</p>
 		    <p ng-message="pattern">Mellan 5 och 50 tecken</p>
-		    <p ng-message="required">Har du inget namn?</p>
 		</div>
 
 
@@ -24,26 +33,26 @@
 		</label>
 		<div class="error-message" ng-messages="registerForm.email.$error" 
 		     ng-if="registerForm.email.$dirty">
-		    <p ng-message="email">Ogiltig epost-adress</p>
-		    <p ng-message="required">Du måste ange en epost-adress</p>
+		    <p ng-message="required">Du måste ange en e-postadress</p>
+		    <p ng-message="email">Ogiltig e-postadress</p>
 		</div>
-
 
 		<label for="phone" class="input-label">Mobilnummer:</label>
 		<label ng-class="{'label-error': registerForm.phone.$invalid &&
 				 registerForm.phone.$dirty}" class="item item-input">
-		    <input id="phone" name="phone" ng-model="phone" type="text" 
-			  placeholder="t.ex. 0761234556" ng-pattern="/[0-9]{5,50}/" required>
+		    <input id="phone" name="phone" ng-model="phone" type="tel" 
+			  placeholder="t.ex. 0761234567" ng-pattern="/^[\d]{5,25}$/"
+			  required>
 		</label>
 		<div class="error-message" ng-messages="registerForm.phone.$error" 
 		     ng-if="registerForm.phone.$dirty">
-		    <p ng-message="pattern">Mellan x och y siffror</p>
+		    <p ng-message="haha">haha</p>
 		    <p ng-message="required">Du måste ange ett mobilnummer</p>
+		    <p ng-message="pattern">Mellan 5 och 25 siffror</p>
 		</div>
-
-
+		
 		<!-- ToDo: Note about country code formatting - see api description -->
-		<button ui-sref="^.verify" ng-disabled="registerForm.$invalid"
+		<button ng-click="userDetails(registerForm)" ng-disabled="registerForm.$invalid"
 			class="button button-block button-positive">Nästa</button>
 	    </form>
 	</div>

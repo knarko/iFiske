@@ -42,20 +42,23 @@ angular.module('ifiske', [
 
     // Cache views in the forward stack
     $ionicConfigProvider.views.forwardCache(true);
+
+    // Clear back button default text
+    $ionicConfigProvider.backButton.previousTitleText(false).text('');
+
+    // Tabs position
     $ionicConfigProvider.tabs.position('bottom');
+
     /**
      * Ionic uses AngularUI Router. Learn more here:
      * https://github.com/angular-ui/ui-router
      */
-
 
     var defaultUrl = '/start/login';
     if (window.localStorage.getItem('session')) {
         defaultUrl = '/menu/home';
     }
     $urlRouterProvider.otherwise(defaultUrl);
-
-
 
 
 
@@ -114,6 +117,10 @@ angular.module('ifiske', [
         url: '/legal',
         templateUrl: 'components/legal/legal.html',
         controller: 'LegalCtrl'
+    })
+    .state('menu.about', {
+	url: '/about',
+	templateUrl: 'components/about/about.html'
     })
     .state('menu.userinfo', {
         url: '/userinfo',

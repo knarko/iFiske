@@ -135,6 +135,7 @@ p.note {
     padding-bottom: 0;
     padding-top: 0;
 }
+
 .product.active {
     border-color: green;
     color: green;
@@ -153,4 +154,8 @@ p.note {
     background-color: transparent;
     background-color: transparent;
     border:0;
+}
+
+#about-text p {
+    margin-bottom: 1em;
 }

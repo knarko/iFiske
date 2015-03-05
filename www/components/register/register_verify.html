@@ -1,20 +1,23 @@
-<ion-view view-title="Verifiera konto">
+<ion-view view-title="Aktivera konto">
     <ion-content>
 	<div class="list list-inset">
 	    <form name="verifyForm">
-		<label for="vercode" class="input-label">Verifieringskod:</label>
+		<p class="text-center">
+		    <strong>Vi har skickat ett SMS till nummer {{phone}} med en aktiveringskod</strong>
+		</p>
+		
+		<label for="vercode" class="input-label">Aktiveringskod:</label>
 		<label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 				 verifyForm.vercode.$dirty}" class="item item-input">
 		    <input id="vercode" name="vercode" ng-model="vercode" type="text" 
-			   placeholder="" required>
-		    <!-- ng-pattern="/^[a-zA-Z]{3}[0-9]{3}$/" -->
+			   placeholder="1234" ng-pattern="/^\d{4}$/" required>
 		</label>
 		<div class="error-message" ng-messages="verifyForm.vercode.$error" 
 		     ng-if="verifyForm.vercode.$dirty">
-		    <p ng-message="pattern">Fel format</p>
+		    <p ng-message="verified">Ogiltig aktiveringskod</p>
 		</div>
-
-		<button ui-sref="start.login" ng-disabled="verifyForm.$invalid"
+		
+		<button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid"
 			class="button button-block button-positive">Verifiera</button>
 	    </form>
 	</div>

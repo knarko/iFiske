@@ -318,18 +318,19 @@
                  */
                 getArea: function(id) {
                     return $q(function(fulfill, reject) {
-                        $q.all([$cordovaSQLite.execute(db, [
+                        $cordovaSQLite.execute(db, [
                             'SELECT *',
                             'FROM Area',
                             'WHERE id = ?'
-                        ].join(' '), [id]),
-                        API.get_photos(id)
-                        ])
-                        .then( function (data) {
-                            var object = createObject(data[0])[0];
-                            object.images = data[1].data.response;
-                            fulfill(object);
-                        }, reject);
+                        ].join(' '), [id])
+                        .then( function (area) {
+                            var object = createObject(area)[0];
+                            API.get_photos(object.orgid)
+                            .then(function(images) {
+                                object.images = images.data.response;
+                                fulfill(object);
+                            }, reject);
+                        });
                     });
                 },
 

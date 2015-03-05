@@ -20,16 +20,15 @@
 		</button>
 	    </form>
 
-	    <p class="text-center">
-		<a>Glömt lösenord</a>
-	    </p>
+
+	    <button ui-sref="^.register.accountDetails" id="register-button" class="button button-balanced button-block"> Skapa nytt konto </button>
+
 	</div>
     </ion-content>
 
     <div class="bar bar-footer bar-transparent">
-	<button class="button button-outline button-positive" 
-		ui-sref="^.register.accountDetails"> Skapa nytt konto...</button>
-	<button class="button button-outline button-positive" 
-		ui-sref="menu.home">Hoppa över...</button>
+	<button class="button button-positive button-margin"> Glömt lösenord </button>
+	<button class="button button-positive button-margin"
+		ui-sref="menu.home"> Hoppa över <i class="icon ion-arrow-right-b"></i></button>
     </div>
 </ion-view>

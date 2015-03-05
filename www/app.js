@@ -14,7 +14,7 @@ angular.module('ifiske', [
     'ifiske.filters',
     'ionic.ion.headerShrink',
     'ngCordova',
-    'inAppBrowser',
+    'systemBrowser',
     'ngCordovaSms',
     'ngMessages'
 ])

@@ -1,5 +1,5 @@
-angular.module('inAppBrowser', [])
-.directive('ngInAppBrowser', ['$cordovaInAppBrowser', function($cordovaInAppBrowser) {
+angular.module('systemBrowser', [])
+.directive('systemBrowser', ['$cordovaInAppBrowser', function($cordovaInAppBrowser) {
     'use strict';
     return {
         restrict: 'A',

@@ -137,16 +137,6 @@ angular.module('ifiske', [
         templateUrl: 'components/area_list/area_list.html',
         controller: 'AreasCtrl'
     })
-    .state('menu.areadetail', {
-        url: '/area/:id',
-        templateUrl: 'components/area/area.html',
-        controller: 'AreaDetailCtrl'
-    })
-    .state('menu.areadetailcards', {
-        url: '/area/:id/cards',
-        templateUrl: 'components/area_cards/area_cards.html',
-        controller: 'AreaDetailCardCtrl'
-    })
     .state('menu.cards', {
         url: '/cards',
         templateUrl: 'components/user_cards/user_cards.html',

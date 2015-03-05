@@ -1,5 +1,11 @@
 angular.module('ifiske.controllers')
-.controller('MenuCtrl', ['$scope', '$state', '$ionicPopover', 'sessionData', 'API', 'Update', function($scope, $state, $ionicPopover, sessionData, API, Update) {
+.controller('MenuCtrl', [
+    '$scope',
+    '$state',
+    '$ionicPopover',
+    'sessionData',
+    'Update',
+    function($scope, $state, $ionicPopover, sessionData, Update) {
 
     $scope.sessionData = sessionData;
 
@@ -15,7 +21,7 @@ angular.module('ifiske.controllers')
     };
     $scope.logout = function() {
 	$scope.popover.hide();
-	API.user_logout();
+	Update.user_logout();
 
 	$state.go('start.login');
     };

@@ -15,10 +15,8 @@
         <p ng-show="product.no" class="note" ng-bind-html="product.no"></p>
         <div class="padding-vertical spaced-buttons">
             <button ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
-            <div class="pull-right spaced-buttons">
-                <button ng-if="product.ch == 0 || product.ch == 1" ng-click="openModal({{product}})" class="button button-positive">SMS-köp</button>
-                <button ng-if="product.ch == 0 || product.ch == 2" href="https://www.ifiske.se/mobile/index.php?p=5&i={{product.ID}}" target="_blank" system-browser class="button button-positive">Webb-köp</button>
-            </div>
+            <button ng-if="product.ch == 0 || product.ch == 1" ng-click="openModal({{product}})" class="button button-positive pull-right">SMS-köp</button>
+            <button ng-if="product.ch == 0 || product.ch == 2" href="https://www.ifiske.se/mobile/index.php?p=5&i={{product.ID}}" target="_blank" system-browser class="button button-positive pull-right">Webb-köp</button>
         </div>
     </div>
 </div>

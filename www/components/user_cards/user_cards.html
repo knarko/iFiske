@@ -1,15 +1,15 @@
 <ion-view title="Mina fiskekort">
 <ion-content class="padding">
-<div class="list card" ng-repeat="product in products">
+<div class="list card product" ng-repeat="product in products | orderBy:pred" ng-class="{'expired': (product.to*1000 < now), 'active': (product.to*1000 > now)}">
     <div class="item item-icon-left">
         <i class="icon ion-card"></i>
         <h2>{{product.ot}}</h2>
     </div>
-    <div class="item item-body">
+    <div class="item item-body" >
         <h2>{{product.t}}</h2>
         <p>Namn: {{product.fullname}}</p>
         <p>Kod: {{product.code}}</p>
-        <p> Gäller från {{product.fr | date:'medium'}} till {{product.to | date:'medium'}}</p>
+        <p> Gäller från {{product.fr * 1000 | date:'medium'}} till {{product.to * 1000 | date:'medium'}}</p>
     </div>
 </div>
 </ion-content>

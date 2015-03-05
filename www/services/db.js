@@ -21,6 +21,7 @@
             var tableDef = {
                 'Area': [
                     ['ID',    'int'],
+                    ['orgid', 'int'],
                     ['t',     'text'],
                     ['kw',    'text'],
                     ['note',  'text'],
@@ -113,6 +114,20 @@
                     ['img2',     'text'],
                     ['img3',     'text'],
                     ['youtube',  'text']
+                ],
+                'Organization': [
+                    ['ID',     'int'],
+                    ['t',      'text'],
+                    ['d',      'text'],
+                    ['cp',     'text'],
+                    ['url',    'text'],
+                    ['co',     'int'],
+                    ['mod',    'int'],
+                    ['vat',    'int'],
+                    ['dp',     'int'],
+                    ['fva',    'int'],
+                    ['org',    'int'],
+                    ['ml',     'int']
                 ]
             };
 
@@ -281,6 +296,16 @@
                                 console.log(err);
                                 return $q.reject(err);
                             });
+                        }),
+                        API.get_organizations()
+                        .then(function(data) {
+                            return populateTable('Organization', data.data.response)
+                            .then(function() {
+                                console.log('Populated Organization');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
                         })
                     ]);
                 },
@@ -436,6 +461,17 @@
                     return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
                             'SELECT * FROM Technique',
+                            'WHERE ID = ?'
+                        ].join(' '), [id])
+                        .then(function(data) {
+                            fulfill(createObject(data)[0]);
+                        }, reject);
+                    });
+                },
+                getOrganization: function(id) {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT * FROM Organization',
                             'WHERE ID = ?'
                         ].join(' '), [id])
                         .then(function(data) {

@@ -144,6 +144,10 @@ p.note {
     border-color: red;
     color: red;
 }
+.product.inactive {
+    border-color: orange;
+    color: orange;
+}
 .card.product {
     box-shadow: 0px 0px 30px 1px inset;
     border-width: 2px;

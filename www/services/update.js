@@ -280,6 +280,9 @@
                         .then(function() {
                             updateFunc();
                         });
+                    },
+                    last_update: function() {
+                        return localStorage.get(LAST_UPDATE);
                     }
                 };
             }];

@@ -189,6 +189,15 @@ angular.module('ifiske', [
             }
         }
     })
+    .state('areadetail2.fishinfo', {
+        url: '/fishinfo',
+        views: {
+            'fishinfo': {
+                controller: 'AreaFishInfoCtrl',
+                templateUrl: 'components/area_fish/area_fish.html'
+            }
+        }
+    })
     .state('areadetail2.cards', {
         url: '/cards',
         views: {

@@ -1,6 +1,14 @@
 angular.module('ifiske.controllers')
-.controller('Area2Ctrl', ['$scope', '$ionicHistory', 'localStorage', '$rootScope', '$ionicViewSwitcher', function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher) {
+.controller('Area2Ctrl', [
+    '$scope',
+    '$ionicHistory',
+    'localStorage',
+    '$rootScope',
+    '$ionicViewSwitcher',
+    '$stateParams',
+    function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher, $stateParams) {
 
+        console.log($stateParams);
     $scope.tabsBack = function() {
         // If the current view is at the top of its history stack
         if(!$ionicHistory.viewHistory().currentView.index) {

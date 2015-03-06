@@ -177,3 +177,25 @@ p.note {
 .product .item-body {
     padding-top: 0;
 }
+.lvl {
+    background-image: url(../img/levels.gif);
+    height: 16px;
+    width: 26px;
+    display: inline-block;
+    background-size: 27px;
+}
+.lvl.lvl-1 {
+    background-position: 0px 0px;
+}
+.lvl.lvl-2 {
+    background-position: 0px -17px;
+}
+.lvl.lvl-3 {
+    background-position: 0px -33px;
+}
+.lvl.lvl-4 {
+    background-position: 0px -50px;
+}
+.lvl.lvl-5 {
+    background-position: 0px -66px;
+}

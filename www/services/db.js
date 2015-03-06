@@ -102,6 +102,19 @@
                     ['t',         'text'],
                     ['to',        'int']
                 ],
+                'User_Info': [
+                    ['ID',        'int'],
+                    ['username',  'text'],
+                    ['loggedin',  'text'],
+                    ['IP1',       'text'],
+                    ['IP2',       'text'],
+                    ['name',      'text'],
+                    ['email',     'text'],
+                    ['created',   'text']
+                ],
+                'User_Number': [
+                    ['number', 'text']
+                ],
                 'Technique': [
                     ['ID',       'int'],
                     ['t',        'text'],
@@ -395,7 +408,30 @@
                             fulfill(createObject(data)[0]);
                         }, reject);
                     });
-                }
+                },
+                getUserInfo: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM User_Info'
+                        ].join(' '))
+                        .then( function (user) {
+                            fulfill(createObject(user)[0]);
+                        }, reject);
+                    });
+                },
+                getUserNumbers: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM User_Number'
+                        ].join(' '))
+                        .then( function (data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
 
             };
         }];

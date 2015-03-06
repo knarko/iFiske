@@ -112,18 +112,46 @@
                                 console.log(err);
                                 return $q.reject(err);
                             });
+                        }),
+                        API.user_info()
+                        .then(function(data) {
+                            var numbers = data.data.response.numbers;
+                            var numArr = [];
+                            for(var i = 0; i < numbers.length; ++i) {
+                                numArr.push({'number': numbers[i]});
+                            }
+                            return $q.all([
+                                DB.populateTable('User_Info', [data.data.response])
+                            .then(function() {
+                                console.log('Populated User_Info');
+                            }, function(err) {
+                                console.log(data.data.response);
+                                console.log(err);
+                                return $q.reject(err);
+                            }),
+                            DB.populateTable('User_Number', numArr)
+                            .then(function() {
+                                console.log('Populated User_Numbers');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            }),
+                            ]);
                         })
                     ]);
                 };
 
                 var cleanUser = function() {
                     return $q.all([
-                        DB.cleanTable('User_Product')
-                        .then(function() {
-                        }, function(err) {
-                            console.log('Could not remove user data from database!', err);
-                        })
-                    ]);
+                        DB.cleanTable('User_Product'),
+                        DB.cleanTable('User_Number'),
+                        DB.cleanTable('User_Info')
+                    ])
+                    .then(function() {
+                        console.log('Removed user info from database');
+                    }, function(err) {
+                        console.log('Could not remove user data from database!', err);
+                    });
                 };
 
 

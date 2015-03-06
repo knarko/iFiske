@@ -6,21 +6,21 @@
 	    </div>
 	    <div class="item">
 		<h2>Användarnamn</h2>
-		<p>knarko</p>
+        <p>{{user.username}}</p>
 	    </div>
 	    <div class="item">
 		<h2>Namn</h2>
-		<p>Filip Lindman Marko</p>
+        <p>{{user.name}}</p>
 	    </div>
 	    <div class="item">
 		<h2>E-mail</h2>
-		<p>zeengai@gmail.com</p>
+        <p>{{user.email}}</p>
 	    </div>
 	    <div class="item item-divider">
 		Mobilnummer
 	    </div>
-	    <div class="item">
-		<p>0768630333</p>
+	    <div ng-repeat="number in numbers" class="item">
+            <p>{{number.number}}</p>
 	    </div>
 	</div>
     </ion-content>

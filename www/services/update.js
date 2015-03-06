@@ -20,13 +20,29 @@
                     return $q.all([
                         API.get_areas()
                         .then(function(data) {
-                            return DB.populateTable('Area', data.data.response);
-                        })
-                        .then(function() {
-                            console.log('Populated Area');
-                        }, function(err) {
-                            console.log(err);
-                            return $q.reject(err);
+                            var fishArr = [];
+                            for(var key in data.data.response) {
+                                var fishes = data.data.response[key].fish;
+                                for(var fishKey in fishes) {
+                                    fishArr.push({
+                                        'ID': key+'_'+fishKey,
+                                        fid: fishKey,
+                                        aid: key,
+                                        amount: fishes[fishKey][0],
+                                        comment: fishes[fishKey][1]
+                                    });
+                                }
+                            }
+                            return $q.all([
+                                DB.populateTable('Area', data.data.response),
+                                DB.populateTable('Area_Fish', fishArr)
+                            ])
+                            .then(function() {
+                                console.log('Populated Area');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
                         }),
                         API.get_products()
                         .then(function(data) {
@@ -122,20 +138,20 @@
                             }
                             return $q.all([
                                 DB.populateTable('User_Info', [data.data.response])
-                            .then(function() {
-                                console.log('Populated User_Info');
-                            }, function(err) {
-                                console.log(data.data.response);
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
-                            DB.populateTable('User_Number', numArr)
-                            .then(function() {
-                                console.log('Populated User_Numbers');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
+                                .then(function() {
+                                    console.log('Populated User_Info');
+                                }, function(err) {
+                                    console.log(data.data.response);
+                                    console.log(err);
+                                    return $q.reject(err);
+                                }),
+                                DB.populateTable('User_Number', numArr)
+                                .then(function() {
+                                    console.log('Populated User_Numbers');
+                                }, function(err) {
+                                    console.log(err);
+                                    return $q.reject(err);
+                                }),
                             ]);
                         })
                     ]);

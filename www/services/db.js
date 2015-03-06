@@ -43,6 +43,13 @@
                     ['mod',   'int'],
                     ['d',     'text']
                 ],
+                'Area_Fish': [
+                    ['ID', 'text'],
+                    ['aid', 'int'],
+                    ['fid', 'int'],
+                    ['amount', 'int'],
+                    ['comment', 'text']
+                ],
                 'Product': [
                     ['ID',     'int'],
                     ['t',      'text'],
@@ -260,6 +267,20 @@
                                 fulfill(object);
                             }, reject);
                         });
+                    });
+                },
+
+                getAreaFishes: function(aid) {
+                    return $q( function (fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM Area_Fish',
+                            'JOIN Fish ON Area_Fish.fid = Fish.ID',
+                            'WHERE Area_Fish.aid = ?'
+                        ].join(' '), [aid])
+                        .then(function(data) {
+                            fulfill(createObject(data));
+                        }, reject);
                     });
                 },
 

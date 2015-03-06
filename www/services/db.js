@@ -102,6 +102,19 @@
                     ['t',         'text'],
                     ['to',        'int']
                 ],
+                'User_Info': [
+                    ['ID',        'int'],
+                    ['username',  'text'],
+                    ['loggedin',  'text'],
+                    ['IP1',       'text'],
+                    ['IP2',       'text'],
+                    ['name',      'text'],
+                    ['email',     'text'],
+                    ['created',   'text']
+                ],
+                'User_Number': [
+                    ['number', 'text']
+                ],
                 'Technique': [
                     ['ID',       'int'],
                     ['t',        'text'],
@@ -139,35 +152,45 @@
                 return retval;
             };
 
-            var populateTable = function(table, data) {
-                return $q(function (fulfill, reject) {
-                    db.transaction(function(tx) {
-                        tx.executeSql('DELETE FROM ' + table + ';');
-
-                        for (var id in data) {
-                            var singleData = data[id];
-                            var insertData = [];
-                            for (var i = 0; i < tableDef[table].length; ++i) {
-                                insertData.push(singleData[tableDef[table][i][0]]);
-                            }
-                            var query = [
-                                'INSERT INTO',
-                                table,
-                                'VALUES(?',
-                                ',?'.repeat(insertData.length-1),
-                                ')'].join(' ');
-
-                                tx.executeSql(query, insertData);
-                        }
-                    },
-                    reject,
-                    fulfill);
-                });
-
-            };
 
 
             return {
+                populateTable: function(table, data) {
+                    return $q(function (fulfill, reject) {
+                        db.transaction(function(tx) {
+                            tx.executeSql('DELETE FROM ' + table + ';');
+
+                            for (var id in data) {
+                                var singleData = data[id];
+                                var insertData = [];
+                                for (var i = 0; i < tableDef[table].length; ++i) {
+                                    insertData.push(singleData[tableDef[table][i][0]]);
+                                }
+                                var query = [
+                                    'INSERT INTO',
+                                    table,
+                                    'VALUES(?',
+                                    ',?'.repeat(insertData.length-1),
+                                    ')'].join(' ');
+
+                                    tx.executeSql(query, insertData);
+                            }
+                        },
+                        reject,
+                        fulfill);
+                    });
+
+                },
+
+                cleanTable: function(table) {
+                    return $q(function (fulfill, reject) {
+                        db.transaction(function(tx) {
+                            tx.executeSql('DELETE FROM ' + table + ';');
+                        },
+                        reject,
+                        fulfill);
+                    });
+                },
 
                 /**
                  * Drops all tables in the database
@@ -215,100 +238,6 @@
                     });
                 },
 
-                populate: function() {
-                    return $q.all([
-                        API.get_areas()
-                        .then(function(data) {
-                            return populateTable('Area', data.data.response);
-                        })
-                        .then(function() {
-                            console.log('Populated Area');
-                        }, function(err) {
-                            console.log(err);
-                            return $q.reject(err);
-                        }),
-                        API.get_products()
-                        .then(function(data) {
-                            return populateTable('Product', data.data.response)
-                            .then(function() {
-                                console.log('Populated Product');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_counties()
-                        .then(function(data) {
-                            return populateTable('County', data.data.response)
-                            .then(function() {
-                                console.log('Populated County');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_municipalities()
-                        .then(function(data) {
-                            return populateTable('Municipality', data.data.response)
-                            .then(function() {
-                                console.log('Populated Municipality');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_fishes()
-                        .then(function(data) {
-                            return populateTable('Fish', data.data.response)
-                            .then(function() {
-                                console.log('Populated Fish');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_rules()
-                        .then(function(data) {
-                            return populateTable('Rule', data.data.response)
-                            .then(function() {
-                                console.log('Populated Rule');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.user_products()
-                        .then(function(data) {
-                            return populateTable('User_Product', data.data.response)
-                            .then(function() {
-                                console.log('Populated User_Product');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_techniques()
-                        .then(function(data) {
-                            return populateTable('Technique', data.data.response)
-                            .then(function() {
-                                console.log('Populated Technique');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        }),
-                        API.get_organizations()
-                        .then(function(data) {
-                            return populateTable('Organization', data.data.response)
-                            .then(function() {
-                                console.log('Populated Organization');
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            });
-                        })
-                    ]);
-                },
 
 
                 /**
@@ -479,7 +408,30 @@
                             fulfill(createObject(data)[0]);
                         }, reject);
                     });
-                }
+                },
+                getUserInfo: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM User_Info'
+                        ].join(' '))
+                        .then( function (user) {
+                            fulfill(createObject(user)[0]);
+                        }, reject);
+                    });
+                },
+                getUserNumbers: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM User_Number'
+                        ].join(' '))
+                        .then( function (data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
 
             };
         }];

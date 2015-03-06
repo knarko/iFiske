@@ -125,6 +125,7 @@ angular.module('ifiske', [
     })
     .state('menu.userinfo', {
         url: '/userinfo',
+        controller: 'UserCtrl',
         templateUrl: 'components/user/user.html',
     })
     .state('menu.counties', {

@@ -27,7 +27,7 @@
     </div>
     <div ng-if="org.cp" class="item item-body">
         <p ng-bind-html="org.cp | nobrs"></p>
-        <a href="{{org.url}}" system-browser>{{org.url}}</a>
+        <a href="{{org.url}}" system-browser ng-if="org.url">{{org.url}}</a>
     </div>
 </div>
 </ion-content>

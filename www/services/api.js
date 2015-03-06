@@ -99,7 +99,6 @@
                     session_api_call({m: 'user_logout'})
                     .then(function(data) {
                         sessionData.deleteToken();
-                        //window.localStorage.removeItem('session');
                     });
                 },
                 user_products: function() {

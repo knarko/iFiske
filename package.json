@@ -17,6 +17,7 @@
   },
   "cordovaPlugins": [
     "org.apache.cordova.inappbrowser",
-    "https://github.com/cordova-sms/cordova-sms-plugin"
+    "https://github.com/cordova-sms/cordova-sms-plugin",
+    "https://github.com/whiteoctober/cordova-plugin-app-version.git"
   ]
 }

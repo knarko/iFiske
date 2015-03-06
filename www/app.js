@@ -120,7 +120,8 @@ angular.module('ifiske', [
     })
     .state('menu.about', {
 	url: '/about',
-	templateUrl: 'components/about/about.html'
+	templateUrl: 'components/about/about.html',
+	controller: 'AboutCtrl'
     })
     .state('menu.userinfo', {
         url: '/userinfo',

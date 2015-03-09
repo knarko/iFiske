@@ -52,8 +52,9 @@
     <gap:splash gap:platform="ios" height="1024" src="res/screen/ios/screen-ipad-portrait.png" width="768" />
     <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
-    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.6" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.2.4" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.4" />
+    <gap:plugin name="org.apache.cordova.plugin.sms" version="0.1.0" />
+    <gap:plugin name="org.apache.cordova.statusbar" version="0.1.9" />
     <access origin="http://127.0.0.1*" />
     <access origin="https://www.ifiske.se/*" subdomains="true" />
     <access origin="http://www.ifiske.se/*" subdomains="true" />

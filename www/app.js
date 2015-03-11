@@ -16,13 +16,14 @@ angular.module('ifiske', [
     'ngCordova',
     'systemBrowser',
     'ngCordovaSms',
-    'ngMessages'
+    'ngMessages',
+    'ImgCache'
 ])
 .constant('$ionicLoadingConfig', {
     template: '<i class="icon ion-loading-b"></i>'
     // hideOnStateChange: true
 })
-.run(['$ionicPlatform', 'Update', function($ionicPlatform, Update) {
+.run(['$ionicPlatform', 'Update', 'ImgCache', function($ionicPlatform, Update, ImgCache) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -34,11 +35,20 @@ angular.module('ifiske', [
             StatusBar.styleDefault();
         }
 
+        ImgCache.$init();
         Update.update();
     });
 }])
 
-.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', 'ImgCacheProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ImgCacheProvider) {
+
+    ImgCacheProvider.setOptions({
+        debug: true,
+        usePersistentCache: true
+    });
+    ImgCacheProvider.manualInit = true;
+
+
 
     // Cache views in the forward stack
     $ionicConfigProvider.views.forwardCache(true);
@@ -119,9 +129,9 @@ angular.module('ifiske', [
         controller: 'LegalCtrl'
     })
     .state('menu.about', {
-	url: '/about',
-	templateUrl: 'components/about/about.html',
-	controller: 'AboutCtrl'
+        url: '/about',
+        templateUrl: 'components/about/about.html',
+        controller: 'AboutCtrl'
     })
     .state('menu.userinfo', {
         url: '/userinfo',

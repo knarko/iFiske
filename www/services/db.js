@@ -265,7 +265,9 @@
                             .then(function(images) {
                                 object.images = images.data.response;
                                 fulfill(object);
-                            }, reject);
+                            }, function(err) {
+                                fulfill(object);
+                            });
                         });
                     });
                 },

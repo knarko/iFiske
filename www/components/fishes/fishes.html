@@ -3,8 +3,8 @@
 <div class="row">
     <div ng-repeat="fish in fishes | orderBy:sortorder" class="col col-50 card fishcard">
         <div class="item-image" ui-sref="menu.fishdetail({fish: fish, id: fish.ID})">
-            <img ng-if="fish.img" src="{{image_endpoint}}{{fish.img}}" />
-            <img ng-if="!fish.img" src="{{image_endpoint}}{{default_img}}" />
+            <img ng-if="fish.img" ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
+            <img ng-if="!fish.img" ic-src="{{image_endpoint}}{{default_img}}" img-cache />
             <p>{{fish.t}}</p>
         </div>
 

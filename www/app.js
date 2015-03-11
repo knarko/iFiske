@@ -179,13 +179,12 @@ angular.module('ifiske', [
         abstract:true,
         url: '/areadetail/:id',
         templateUrl: 'components/area2/area.html',
-        controller: 'Area2Ctrl'
+        controller: 'AreaCtrl'
     })
     .state('areadetail2.info', {
         url: '/info',
         views: {
             'info': {
-                controller: 'AreaDetailCtrl',
                 templateUrl: 'components/area/area.html'
             }
         }
@@ -194,7 +193,6 @@ angular.module('ifiske', [
         url: '/fishinfo',
         views: {
             'fishinfo': {
-                controller: 'AreaFishInfoCtrl',
                 templateUrl: 'components/area_fish/area_fish.html'
             }
         }
@@ -203,7 +201,6 @@ angular.module('ifiske', [
         url: '/cards',
         views: {
             'cards': {
-                controller: 'AreaDetailCardCtrl',
                 templateUrl: 'components/area_cards/area_cards.html'
             }
         }

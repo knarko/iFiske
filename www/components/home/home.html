@@ -21,7 +21,7 @@
                 </button>
                 Fiskevatten
             </div>
-            <div class="item item-button-left" ui-sref="menu.cards">
+            <div ng-if="loggedIn.token" class="item item-button-left" ui-sref="menu.cards">
                 <button class="button button-positive button-clear">
                     <i class="icon ion-card"></i>
                 </button>

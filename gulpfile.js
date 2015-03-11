@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var uglify = require('gulp-uglify');
 
 var paths = {
     sass: ['./scss/**/*.scss'],
@@ -24,6 +25,10 @@ gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
     .pipe(concat('all.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./www/'))
+    .pipe(rename('all.min.js'))
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);

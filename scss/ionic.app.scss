@@ -122,6 +122,7 @@ p.note {
 }
 
 .row {
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 

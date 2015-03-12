@@ -121,9 +121,18 @@ p.note {
     white-space: pre-wrap;
 }
 
-.row {
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+.wrap-grid>div {
+    display: block;
+    float:left;
+}
+.wrap-grid>div.c-50 {
+    width: 50%;
+}
+.wrap-grid>div.c-33 {
+    width: 33.3333%;
+}
+.wrap-grid>div.c-25 {
+    width: 25%;
 }
 
 .fishcard {

@@ -4,7 +4,7 @@
     <description>
         App för iFiske
     </description>
-	 <author email="maistho@gmail.com" href="http://www.ifiske.se">
+    <author email="maistho@gmail.com" href="http://www.ifiske.se">
         iFiske
     </author>
     <feature name="http://api.phonegap.com/1.0/device" />
@@ -62,5 +62,17 @@
     <access origin="http://127.0.0.1*" />
     <access origin="https://www.ifiske.se/*" subdomains="true" />
     <access origin="http://www.ifiske.se/*" subdomains="true" />
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="File">
+        <param name="ios-package" value="CDVFile" />
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
 </widget>
 

@@ -16,7 +16,7 @@
 		<label ng-class="{'label-error': registerForm.fullname.$invalid &&
 				 registerForm.fullname.$dirty}" class="item item-input">
 		    <input id="fullname" name="fullname" ng-model="fullname" type="text" 
-			  placeholder="t.ex. Erik Johansson" ng-pattern="/.{5,50}/" required>
+			  placeholder="t.ex. Erik Johansson" ng-pattern="/^.{5,50}$/" required>
 		</label>
 		<div class="error-message" ng-messages="registerForm.fullname.$error" 
 		     ng-if="registerForm.fullname.$dirty">

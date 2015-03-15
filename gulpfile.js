@@ -24,10 +24,7 @@ gulp.task('default', ['sass', 'scripts']);
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
-    .pipe(concat('all.js'))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./www/'))
-    .pipe(rename('all.min.js'))
+    .pipe(concat('all.min.js'))
     .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))

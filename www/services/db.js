@@ -317,9 +317,14 @@
                 getProduct: function(product_id) {
                     return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
-                            'SELECT DISTINCT *',
+                            'SELECT DISTINCT Product.*,',
+                            'Rule.t as rule_t,',
+                            'Rule.ver as rule_ver,',
+                            'Rule.d as rule_d',
                             'FROM Product',
-                            'WHERE ID = ?'
+                            'JOIN Rule ON Rule.ID = Product.ri',
+                            'WHERE ID = ?',
+                            'ORDER BY so'
                         ].join(' '),
                         [product_id])
                         .then(function(data) {

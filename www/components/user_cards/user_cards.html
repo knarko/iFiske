@@ -10,6 +10,11 @@
 		<p>Namn: {{product.fullname}}</p>
 		<p> Gäller från {{product.fr * 1000 | date:'short'}} till {{product.to * 1000 | date:'short'}}</p>
 	    </div>
+        <div class="item item-bodY" >
+
+            <button ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
+            <button class="button button-energized">Visa PDF</button>
+        </div>
 	</div>
     </ion-content>
 </ion-view>

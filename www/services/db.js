@@ -107,7 +107,9 @@
                     ['ref1',      'int'],
                     ['ref2',      'int'],
                     ['t',         'text'],
-                    ['to',        'int']
+                    ['to',        'int'],
+                    ['pid',       'int'],
+                    ['pdf',       'text']
                 ],
                 'User_Info': [
                     ['ID',        'int'],
@@ -374,7 +376,9 @@
                 getUserProducts: function() {
                     return $q(function(fulfill, reject) {
                         $cordovaSQLite.execute(db, [
-                            'SELECT * FROM User_Product'
+                            'SELECT User_Product.*',
+                            'FROM User_Product',
+                            'JOIN Product ON Product.ID = User_Product.pid'
                         ].join(' '))
                         .then(function(data) {
                             fulfill(createObject(data));

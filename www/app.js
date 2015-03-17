@@ -118,6 +118,10 @@ angular.module('ifiske', [
         url: '/info',
         templateUrl: 'components/info/info.html'
     })
+    .state('menu.bugs', {
+        url: '/info',
+        templateUrl: 'components/menu/report.html'
+    })
     .state('menu.contact', {
         url: '/contact',
         templateUrl: 'components/contact/contact.html',

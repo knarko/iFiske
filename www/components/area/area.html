@@ -16,8 +16,8 @@
         <button class="button button-positive pull-right" ui-sref="areadetail2.cards" ng-if="products.length">Köp Fiskekort</button>
         <p ng-bind-html="area.d | nobrs"></p>
     </div>
-    <div ng-if="org.d" class="item item-divider">
-        <p>Organisationsinfo</p>
+    <div ng-if="org.t" class="item item-divider">
+      <p>{{org.t}}</p>
     </div>
     <div ng-if="org.d" class="item item-body">
         <p ng-bind-html="org.d | nobrs"></p>

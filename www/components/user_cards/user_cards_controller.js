@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     '$ionicModal',
     function($scope, $stateParams, DB, $ionicModal) {
         $scope.pred = '-to';
+        $scope.endpoint = 'https://www.ifiske.se';
         $scope.now = Date.now();
         DB.getUserProducts()
         .then(function(data) {

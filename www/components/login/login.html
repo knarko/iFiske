@@ -11,9 +11,9 @@
 		    <input name="password" id="password" type="password" placeholder="Lösenord" 
 			   ng-model="user.password"></label>
 		
-		<div class="error-message" ng-messages="loginForm.$error">
-		    <p ng-message="loginError">Ogiltigt användarnamn eller lösenord</p>
-		</div>
+		<ng-messages class="error-message" for="loginForm.$error">
+		    <div ng-message="loginError">Ogiltigt användarnamn eller lösenord</div>
+		</ng-messages>
 	    	
 		<button class="button button-block button-positive" ng-click="signIn(loginForm)">
 		    Logga in

@@ -66,7 +66,8 @@
 		    <input id="email" name="email" ng-model="email" type="email" 
 			   placeholder="t.ex. mail@example.com" 
 			   ng-blur="checkEmail(registerForm.email);"
-			   ng-change="registerForm.email.$setValidity('emailTaken',true);"
+			   ng-change="registerForm.email.$setValidity('emailTaken',true);
+				      registerForm.email.$setValidity('invalidEmail',true);"
 			   required>
 
 		</label>
@@ -83,8 +84,9 @@
 		<label ng-class="{'label-error': registerForm.phone.$invalid &&
 				 registerForm.phone.$dirty}" class="item item-input">
 		    <input id="phone" name="phone" ng-model="phone" type="tel" 
-			  placeholder="t.ex. 0761234567" ng-pattern="/^[\d]{5,25}$/"
-			  required>
+			   placeholder="t.ex. 0761234567" ng-pattern="/^[\d]{5,25}$/"
+			   ng-change="registerForm.phone.$setValidity('invalidPhone',true);"
+			   required>
 		</label>
 		<ng-messages for="registerForm.phone.$error" class="error-message"
 		     ng-if="registerForm.phone.$dirty">
@@ -95,7 +97,7 @@
 		
 		
 		<p id="register-disclaimer">
-		    Genom att registrera ett konto godkänner du våra användarvillkor
+		    Genom att registrera ett konto godkänner du våra <a href="http://www.ifiske.se/index.php/sv/om-oss/policy" system-browser>användarvillkor</a></p>
 		</p>
 
 		<button ng-click="register(registerForm);" ng-disabled="registerForm.$invalid" 

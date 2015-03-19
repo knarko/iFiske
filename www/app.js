@@ -89,13 +89,9 @@ angular.module('ifiske', [
         templateUrl: 'components/register/register.html',
         controller: 'RegisterCtrl'
     })
-    .state('start.register.accountDetails', {
-        url: '/account_details',
-        templateUrl: 'components/register/register_account_details.html'
-    })
-    .state('start.register.userDetails', {
-        url: '/user_details',
-        templateUrl: 'components/register/register_user_details.html'
+    .state('start.register.details', {
+        url: '/details',
+	templateUrl: 'components/register/register_details.html'
     })
     .state('start.register.verify', {
         url: '/verify',

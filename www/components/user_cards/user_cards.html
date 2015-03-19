@@ -12,8 +12,8 @@
 	    </div>
         <div class="item item-bodY" >
 
-            <button ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
-            <button class="button button-energized">Visa PDF</button>
+            <button ng-if="product.rule_t" ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
+            <a class="button button-energized" href="{{endpoint}}{{product.pdf}}" system-browser>Visa PDF</a>
         </div>
 	</div>
     </ion-content>

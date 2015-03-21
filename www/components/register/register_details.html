@@ -1,0 +1,109 @@
+<ion-view view-title="Nytt konto">
+    <ion-content>
+	<div class="list list-inset register-list">
+		
+	    <form name="registerForm" id="register-form" novalidate>
+		
+		<ng-messages for="formErrors" class="error-message">
+		    <div class="text-center" ng-message="registrationError">
+			Registreringen misslyckades, försök igen
+		    </div>
+		</ng-messages>
+
+		<!-- ToDo: Create input directive -->
+
+		<!-- Username -->
+		<label for="username" class="input-label">Användarnamn:</label>
+		<label ng-class="{'label-error': registerForm.username.$invalid &&
+				 registerForm.username.$dirty}" class="item item-input">
+		    <input id="username" name="username" ng-model="username"
+			   type="text" ng-pattern="/^.{5,25}$/" 
+			   ng-blur="checkUsername(registerForm.username);"
+			   ng-change="registerForm.username.$setValidity('nameTaken',true);"
+			   required>
+		</label>
+		<ng-messages for="registerForm.username.$error" class="error-message"
+		     ng-if="registerForm.username.$dirty">
+		    <div ng-message="required">Du måste välja ett användarnamn</div>
+		    <div ng-message="pattern">Mellan 5 och 25 tecken</div>
+		    <div ng-message="nameTaken">Användarnamnet är upptaget</div>
+		</ng-messages>
+
+
+		<!-- Password -->
+		<label for="password" class="input-label">Lösenord:</label>
+		<label ng-class="{'label-error': registerForm.password.$invalid &&
+				 registerForm.password.$dirty}" class="item item-input">
+		    <input id="password" name="password" ng-model="password" 
+			   type="password" ng-pattern="/^.{6,16}$/" required>
+		</label>
+		<ng-messages for="registerForm.password.$error" class="error-message"
+		     ng-if="registerForm.password.$dirty">
+		    <div ng-message="required">Du måste ange ett lösenord</div>
+		    <div ng-message="pattern">Mellan 6 och 16 tecken</div>
+		</ng-messages>
+
+		
+		<!-- Fullname -->
+		<label for="fullname" class="input-label">För- och efternamn:</label>
+		<label ng-class="{'label-error': registerForm.fullname.$invalid &&
+				 registerForm.fullname.$dirty}" class="item item-input">
+		    <input id="fullname" name="fullname" ng-model="fullname" type="text" 
+			   placeholder="t.ex. Erik Johansson" ng-pattern="/^.{5,50}$/" 
+			   required>
+		</label>
+		<ng-messages for="registerForm.fullname.$error" class="error-message" 
+		     ng-if="registerForm.fullname.$dirty">
+		    <div ng-message="required">Du måste ange ett namn</div>
+		    <div ng-message="pattern">Mellan 5 och 50 tecken</div>
+		</ng-messages>
+
+
+		<!-- Email -->
+		<label for="email" class="input-label">E-postadress:</label>
+		<label ng-class="{'label-error': registerForm.email.$invalid &&
+				 registerForm.email.$dirty}" class="item item-input">
+		    <input id="email" name="email" ng-model="email" type="email" 
+			   placeholder="t.ex. mail@example.com" 
+			   ng-blur="checkEmail(registerForm.email);"
+			   ng-change="registerForm.email.$setValidity('emailTaken',true);
+				      registerForm.email.$setValidity('invalidEmail',true);"
+			   required>
+
+		</label>
+		<ng-messages for="registerForm.email.$error" class="error-message" 
+		     ng-if="registerForm.email.$dirty">
+		    <div ng-message="required">Du måste ange en e-postadress</div>
+		    <div ng-message="email">Ogiltig e-postadress</div>
+		    <div ng-message="emailTaken">E-mailadressen är redan registrerad</div>
+		    <div ng-message="invalidEmail">Ogiltig e-postadress</div>
+		</ng-messages>
+
+		<!-- Phone -->
+		<label for="phone" class="input-label">Mobilnummer:</label>
+		<label ng-class="{'label-error': registerForm.phone.$invalid &&
+				 registerForm.phone.$dirty}" class="item item-input">
+		    <input id="phone" name="phone" ng-model="phone" type="tel" 
+			   placeholder="t.ex. 0761234567" ng-pattern="/^[\d]{5,25}$/"
+			   ng-change="registerForm.phone.$setValidity('invalidPhone',true);"
+			   required>
+		</label>
+		<ng-messages for="registerForm.phone.$error" class="error-message"
+		     ng-if="registerForm.phone.$dirty">
+		    <div ng-message="required">Du måste ange ett mobilnummer</div>
+		    <div ng-message="pattern">Mellan 5 och 25 siffror</div>
+		    <div ng-message="invalidPhone">Ogiltigt mobilnummer</div>
+		</ng-messages>
+		
+		
+		<p id="register-disclaimer">
+		    Genom att registrera ett konto godkänner du våra <a href="http://www.ifiske.se/index.php/sv/om-oss/policy" system-browser>användarvillkor</a></p>
+		</p>
+
+		<button ng-click="register(registerForm);" ng-disabled="registerForm.$invalid" 
+			class="button button-block button-positive">Nästa</button>
+
+	    </form>
+	</div>
+    </ion-content>
+</ion-view>

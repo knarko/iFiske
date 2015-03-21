@@ -94,6 +94,18 @@ p.note {
 .error-message {
     color: orange;
 }
+.error-message > div {
+    padding: 0px 5px 0px 5px;
+    background-color: white;
+}
+.register-list {
+    margin-top: 10px;
+}
+#register-disclaimer {
+    text-align: center;
+    margin: 10px 5px 10px 5px;
+}
+
 .animate-hide {
     transition: all 0.2s linear;
     max-height: 1000px;

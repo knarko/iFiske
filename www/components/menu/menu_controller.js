@@ -31,7 +31,7 @@ angular.module('ifiske.controllers')
     };
     $scope.register = function() {
 	$scope.popover.hide();
-	$state.go('start.register.account_details');
+	$state.go('start.register.details');
     };
 
     $scope.update = function() {

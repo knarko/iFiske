@@ -12,13 +12,13 @@
     </ion-nav-bar>
 
     <ion-tabs class="tabs-positive tabs-icon-only">
-	<ion-tab title="info" ui-sref="^.info">
+	<ion-tab title="Information" ui-sref="^.info">
 	    <ion-nav-view name="info"></ion-nav-view>
 	</ion-tab>
-    <ion-tab title="cards" ui-sref="^.cards" ng-if="products.length">
+    <ion-tab title="Fiskekort" ui-sref="^.cards" ng-if="products.length">
 	    <ion-nav-view name="cards"></ion-nav-view>
 	</ion-tab>
-	<ion-tab title="fishinfo" ui-sref="^.fishinfo" ng-if="fishes.length">
+	<ion-tab title="Fiskar" ui-sref="^.fishinfo" ng-if="fishes.length">
 	    <ion-nav-view name="fishinfo"></ion-nav-view>
 	</ion-tab>
     </ion-tabs>

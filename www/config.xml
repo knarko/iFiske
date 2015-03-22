@@ -104,5 +104,10 @@
         <param name="ios-package" value="CDVFileTransfer" />
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
+    <!-- Remove unused permission that we get from sms-plugin -->
+    <gap:config-file platform="android" parent="/manifest" mode="delete">
+        <uses-permission android:name="android.permission.SEND_SMS" />
+    </gap:config-file>
+
 </widget>
 

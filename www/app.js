@@ -20,7 +20,7 @@ angular.module('ifiske', [
     'ImgCache'
 ])
 .constant('$ionicLoadingConfig', {
-    template: '<i class="icon ion-loading-b"></i>'
+    template: '<ion-spinner></ion-spinner>'
     // hideOnStateChange: true
 })
 .run(['$ionicPlatform', 'Update', 'ImgCache', function($ionicPlatform, Update, ImgCache) {

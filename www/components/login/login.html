@@ -2,19 +2,19 @@
     <ion-content class="padding has-header">
 	<img src="img/logo.png" width="100%"></img>
 	<div class="list padding">
-	    
+
 	    <form name="loginForm" id="login-form">
 		<label class="item item-input">
-		    <input name="username" id="username" type="text" placeholder="Användarnamn" 
+		    <input name="username" id="username" type="text" placeholder="Användarnamn"
 			   ng-model="user.username"></label>
 		<label class="item item-input">
-		    <input name="password" id="password" type="password" placeholder="Lösenord" 
+		    <input name="password" id="password" type="password" placeholder="Lösenord"
 			   ng-model="user.password"></label>
-		
+
 		<ng-messages class="error-message" for="loginForm.$error">
 		    <div ng-message="loginError">Ogiltigt användarnamn eller lösenord</div>
 		</ng-messages>
-	    	
+
 		<button class="button button-block button-positive" ng-click="signIn(loginForm)">
 		    Logga in
 		</button>
@@ -26,7 +26,7 @@
 	</div>
     </ion-content>
 
-    <div class="bar bar-footer bar-transparent">
+    <div class="bar bar-footer bar-transparent hide-on-keyboard-open">
 	<button class="button button-positive button-margin"> Glömt lösenord </button>
 	<button class="button button-positive button-margin"
 		ui-sref="menu.home"> Hoppa över <i class="icon ion-arrow-right-b"></i></button>

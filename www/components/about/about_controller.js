@@ -1,6 +1,6 @@
 angular.module('ifiske.controllers')
     .controller('AboutCtrl', ['$scope','$cordovaAppVersion', '$ionicPlatform', 'Update', function($scope, $cordovaAppVersion, $ionicPlatform, Update) {
-	$scope.version = $scope.dbDate = 'Ok\u00E4nt';
+	$scope.version = $scope.dbDate = 'Okänt';
     $scope.dbDate = Update.last_update();
 
 	$ionicPlatform.ready(function() {

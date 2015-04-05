@@ -4,17 +4,53 @@ angular.module('ifiske.controllers')
     'leafletData',
     'DB',
     function($scope, leafletData, DB) {
-        $scope.defaults = {
-            tileLayer: 'http://api.tiles.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
-        };
-        leafletData.getMap().then(function(map) {
-            DB.search('').then(function(data){
-                var markers = new L.MarkerClusterGroup();
-                for(var i = 0; i < data.length; ++i) {
-                    markers.addLayer(new L.Marker([data[i].lat, data[i].lng]).bindPopup(data[i].t));
-                }
-                map.addLayer(markers);
+        $scope.test= 'hej';
+        DB.search('').then(function(areas){
+            $scope.markers = areas.map(function(a) {
+                return {
+                    layer: 'fishareas',
+                    lat: a.lat,
+                    lng: a.lng,
+                    getMessageScope: function(){
+                        var new_scope = $scope.$new();
+                        new_scope.area = a;
+                        return new_scope;
+                    },
+                    message: '<a ui-sref="areadetail2.info({id: area.ID })">{{area.t}}</a>'
+                };
             });
+        });
+        angular.extend($scope, {
+            center: {
+                lat: 60.0,
+                lng: 60.0,
+                zoom: 3
+            },
+            layers: {
+                baselayers: {
+                    mapbox: {
+                        name: 'Mapbox',
+                        type: 'xyz',
+                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        layerOptions: {
+                            maptype: 'mapbox.outdoors',
+                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                        }
+                    }
+                },
+                overlays: {
+                    fishareas: {
+                        name: 'Fiskeområden',
+                        type: 'markercluster',
+                        visible: true,
+                        layerOptions: {
+                            chunkedLoading: true,
+                            showCoverageOnHover: false,
+                            removeOutsideVisibleBounds: true
+                        }
+                    }
+                }
+            }
         });
     }
 ]);

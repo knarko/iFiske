@@ -14,6 +14,7 @@
     "angular-messages": "~1.3.12",
     "angular-imgcache.js": "~0.1.0",
     "leaflet": "~0.7.3",
-    "angular-leaflet-directive": "~0.7.11"
+    "angular-leaflet-directive": "~0.7.11",
+    "leaflet.markercluster": "~0.4.0"
   }
 }

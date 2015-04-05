@@ -4,6 +4,9 @@ angular.module('ifiske.controllers')
     'leafletData',
     'DB',
     function($scope, leafletData, DB) {
+        $scope.defaults = {
+            tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        };
         leafletData.getMap().then(function(map) {
             DB.search('').then(function(data){
                 var markers = new L.MarkerClusterGroup();

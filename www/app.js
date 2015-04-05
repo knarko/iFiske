@@ -17,7 +17,8 @@ angular.module('ifiske', [
     'systemBrowser',
     'ngCordovaSms',
     'ngMessages',
-    'ImgCache'
+    'ImgCache',
+    'leaflet-directive'
 ])
 .constant('$ionicLoadingConfig', {
     template: '<ion-spinner></ion-spinner>'
@@ -168,6 +169,11 @@ angular.module('ifiske', [
         params: {'id': false, 'fish': false},
         templateUrl: 'components/fish_detail/fish_detail.html',
         controller: 'FishDetailCtrl'
+    })
+    .state('menu.map', {
+        url: '/map',
+        templateUrl: 'components/map/map.html',
+        controller: 'MapCtrl'
     })
     .state('menu.techniques', {
         url: '/techniques',

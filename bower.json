@@ -8,13 +8,14 @@
   "resolutions": {
     "angular-ui-router": "0.2.13",
     "angular-sanitize": "1.3.6",
-    "angular-animate": "1.3.6"
+    "angular-animate": "1.3.6",
+    "angular-leaflet-directive": "master"
   },
   "dependencies": {
     "angular-messages": "~1.3.12",
     "angular-imgcache.js": "~0.1.0",
     "leaflet": "~0.7.3",
-    "angular-leaflet-directive": "~0.7.11",
+    "angular-leaflet-directive": "https://github.com/tombatossals/angular-leaflet-directive.git#master",
     "leaflet.markercluster": "~0.4.0"
   }
 }

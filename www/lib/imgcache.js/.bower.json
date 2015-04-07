@@ -1,6 +1,5 @@
 {
   "name": "imgcache.js",
-  "version": "0.7.6",
   "homepage": "https://github.com/chrisben/imgcache.js",
   "authors": [
     {
@@ -29,13 +28,14 @@
     "test",
     "tests"
   ],
-  "_release": "0.7.6",
+  "_release": "67792d803d",
   "_resolution": {
-    "type": "version",
-    "tag": "v0.7.6",
-    "commit": "eda4928a7ae29a8c143789fee9c141a374d8b891"
+    "type": "branch",
+    "branch": "master",
+    "commit": "67792d803dd438d3c7b8dab784dd8e2d1bedf7e8"
   },
-  "_source": "git://github.com/chrisben/imgcache.js.git",
-  "_target": "*",
-  "_originalSource": "imgcache.js"
+  "_source": "git://github.com/maistho/imgcache.js.git",
+  "_target": "master",
+  "_originalSource": "maistho/imgcache.js",
+  "_direct": true
 }

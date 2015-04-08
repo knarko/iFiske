@@ -44,7 +44,7 @@ angular.module('ifiske.controllers')
                         type: 'markercluster',
                         visible: true,
                         layerOptions: {
-			    disableClusteringAtZoom: 9,
+                            disableClusteringAtZoom: 9,
                             chunkedLoading: true,
                             showCoverageOnHover: false,
                             removeOutsideVisibleBounds: true

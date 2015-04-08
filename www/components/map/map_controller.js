@@ -22,9 +22,9 @@ angular.module('ifiske.controllers')
         });
         angular.extend($scope, {
             center: {
-                lat: 60.0,
-                lng: 60.0,
-                zoom: 3
+                lat: 62.0,
+                lng: 15.0,
+                zoom: 5
             },
             layers: {
                 baselayers: {
@@ -44,6 +44,7 @@ angular.module('ifiske.controllers')
                         type: 'markercluster',
                         visible: true,
                         layerOptions: {
+			    disableClusteringAtZoom: 9,
                             chunkedLoading: true,
                             showCoverageOnHover: false,
                             removeOutsideVisibleBounds: true

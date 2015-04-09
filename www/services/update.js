@@ -113,6 +113,36 @@
                                 console.log(err);
                                 return $q.reject(err);
                             });
+                        }),
+                        API.get_map_pois()
+                        .then(function(data) {
+                            return DB.populateTable('Poi', data.data.response)
+                            .then(function() {
+                                console.log('Populated Poi');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
+                        }),
+                        API.get_map_poi_types()
+                        .then(function(data) {
+                            return DB.populateTable('Poi_Type', data.data.response)
+                            .then(function() {
+                                console.log('Populated Poi_Type');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
+                        }),
+                        API.get_map_polygons()
+                        .then(function(data) {
+                            return DB.populateTable('Polygon', data.data.response)
+                            .then(function() {
+                                console.log('Populated Polygon');
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            });
                         })
                     ]);
                 };

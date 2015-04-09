@@ -197,6 +197,14 @@ angular.module('ifiske', [
         templateUrl: 'components/area2/area.html',
         controller: 'AreaCtrl'
     })
+    .state('areadetail2.map', {
+        url: '/map',
+        views: {
+            'map': {
+                templateUrl: 'components/area2/map.html'
+            }
+        }
+    })
     .state('areadetail2.info', {
         url: '/info',
         views: {

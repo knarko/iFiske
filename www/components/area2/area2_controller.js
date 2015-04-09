@@ -11,6 +11,8 @@ angular.module('ifiske.controllers')
     '$ionicModal',
     function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher, $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal) {
 
+        $scope.map = {};
+
         $scope.tabsBack = function() {
             // If the current view is at the top of its history stack
             if(!$ionicHistory.viewHistory().currentView.index) {
@@ -31,6 +33,7 @@ angular.module('ifiske.controllers')
 
         $scope.image_endpoint = 'http://www.ifiske.se';
 
+        var icons = {};
         // Areainfo
         DB.getArea($stateParams.id)
         .then(function(area) {
@@ -43,6 +46,44 @@ angular.module('ifiske.controllers')
             .then(function(org) {
                 $scope.org = org;
             });
+            DB.getPoiTypes()
+            .then(function(poi_types) {
+                for(var i = 0; i < poi_types.length; ++i) {
+                    var type = poi_types[i];
+                    icons[type.ID] = {
+                        iconUrl: 'http://www.ifiske.se/'+type.icon
+                    };
+                }
+                DB.getPois(area.orgid)
+                .then(function(pois) {
+                    console.log(pois);
+                    $scope.map.markers = pois.map(function(poi) {
+                        return {
+                            layer: 'pois',
+                            lat: poi.la,
+                            lng: poi.lo,
+                            icon: icons[poi.type],
+                            message: poi.t
+                        };
+                    });
+                }, function(err) {
+                    console.log(err);
+                });
+                DB.getPolygons(area.orgid)
+                .then(function(polygons) {
+                    console.log(polygons);
+                    $scope.map.paths = polygons.map(function(poly) {
+                        return {
+                            latlngs: JSON.parse('[' + poly.poly + ']'),
+                            color: poly.c,
+                            weight: 2
+                        };
+                    });
+                }, function(err) {
+                     console.log(err);
+                });
+
+            });
         }, function(err) {
             console.log(err);
         });
@@ -52,7 +93,7 @@ angular.module('ifiske.controllers')
             console.log(fishes);
             $scope.fishes = fishes;
         }, function(err) {
-             console.log(err);
+            console.log(err);
         });
 
         DB.getProductsByArea($stateParams.id)
@@ -109,5 +150,39 @@ angular.module('ifiske.controllers')
             $scope.rules_modal.remove();
         });
 
+        //Map
+        angular.extend($scope.map, {
+            center: {
+                lat: 62.0,
+                lng: 15.0,
+                zoom: 5
+            },
+            layers: {
+                baselayers: {
+                    mapbox: {
+                        name: 'Mapbox',
+                        type: 'xyz',
+                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        layerOptions: {
+                            maptype: 'mapbox.outdoors',
+                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                        }
+                    }
+                },
+                overlays: {
+                    pois: {
+                        name: 'Fiskeområden',
+                        type: 'markercluster',
+                        visible: true,
+                        layerOptions: {
+                            disableClusteringAtZoom: 9,
+                            chunkedLoading: true,
+                            showCoverageOnHover: false,
+                            removeOutsideVisibleBounds: true
+                        }
+                    }
+                }
+            }
+        });
     }
 ]);

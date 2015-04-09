@@ -150,7 +150,32 @@
                     ['fva',    'int'],
                     ['org',    'int'],
                     ['ml',     'int']
+                ],
+                'Poi': [
+                    ['ID',     'int'],
+                    ['orgid',  'int'],
+                    ['type',   'int'],
+                    ['price',  'int'],
+                    ['t',      'text'],
+                    ['d',      'text'],
+                    ['la',     'real'],
+                    ['lo',     'real']
+                ],
+                'Poi_Type': [
+                    ['ID',     'int'],
+                    ['t',      'text'],
+                    ['icon',      'text'],
+                ],
+                'Polygon': [
+                    ['ID',     'int'],
+                    ['orgid',  'int'],
+                    ['t',      'text'],
+                    ['c',      'text'],
+                    ['ver',      'int'],
+                    ['mod',      'int'],
+                    ['poly',      'text']
                 ]
+
             };
 
             var createObject = function(data) {
@@ -468,7 +493,43 @@
                     });
                 },
 
+                getPois: function(id) {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM Poi',
+                            'WHERE orgid = ?'
+                        ].join(' '), [id])
+                        .then( function (data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
 
+                getPoiTypes: function() {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM Poi_Type'
+                        ].join(' '))
+                        .then( function (data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                },
+
+                getPolygons: function(id) {
+                    return $q(function(fulfill, reject) {
+                        $cordovaSQLite.execute(db, [
+                            'SELECT *',
+                            'FROM Polygon',
+                            'WHERE orgid = ?'
+                        ].join(' '), [id])
+                        .then( function (data) {
+                            fulfill(createObject(data));
+                        }, reject);
+                    });
+                }
             };
         }];
     });

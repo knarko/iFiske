@@ -112,7 +112,7 @@ angular.module('ifiske.controllers')
 
 
         //SMS-modal
-        $ionicModal.fromTemplateUrl('components/area_cards/modal.html', {
+        $ionicModal.fromTemplateUrl('components/area/sms_modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
@@ -131,7 +131,7 @@ angular.module('ifiske.controllers')
         $scope.showingterms = false;
 
         //Rules modal
-        $ionicModal.fromTemplateUrl('components/area_cards/rules_modal.html', {
+        $ionicModal.fromTemplateUrl('components/area/rules_modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {

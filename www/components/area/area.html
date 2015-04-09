@@ -1,34 +1,28 @@
-<ion-view title="{{area.t}}" class="abstract-bg" cache-view="false">
-<ion-content>
-<div class="card list">
-    <div class="item item-image">
-        <ion-slide-box does-continue="true" auto-play="true" ng-if="images.length > 1">
-        <ion-slide ng-repeat="img in images track by $index">
-        <img ng-src="{{image_endpoint + img}}" />
-        </ion-slide>
-        </ion-slide-box>
-        <img ng-src="{{image_endpoint + images[0]}}" ng-if="images.length == 1" />
-    </div>
-    <div ng-if="area.d" class="item item-divider">
-        <h2>{{area.t}}</h2>
-    </div>
-    <div ng-if="area.d" class="item item-body">
-        <button class="button button-positive pull-right" ui-sref="areadetail2.cards" ng-if="products.length">Köp Fiskekort</button>
-        <p ng-bind-html="area.d | nobrs"></p>
-    </div>
-    <div ng-if="org.t" class="item item-divider">
-      <p>{{org.t}}</p>
-    </div>
-    <div ng-if="org.d" class="item item-body">
-        <p ng-bind-html="org.d | nobrs"></p>
-    </div>
-    <div ng-if="org.cp" class="item item-divider">
-        <p>Kontaktinformation</p>
-    </div>
-    <div ng-if="org.cp" class="item item-body">
-        <p ng-bind-html="org.cp | nobrs"></p>
-        <a href="{{org.url}}" system-browser ng-if="org.url">{{org.url}}</a>
-    </div>
-</div>
-</ion-content>
+<ion-view title="areatabs" cache-view="false">
+
+    <!-- This navbar is separate from the one used in the menu state. As of beta.14
+	 ionic does not support ion-tabs as a subview of ion-side-menu. In order to
+	 support proper navigation between states, this navbar has a custom back
+	 button. -->
+
+    <ion-nav-bar class="bar-calm" align-title="center">
+	<ion-nav-buttons>
+	    <button class="button button-clear" ng-click="tabsBack()"><i class="icon ion-arrow-left-c"></i></button>
+	</ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-tabs class="tabs-positive tabs-icon-only">
+	<ion-tab title="Information" ui-sref="^.info">
+	    <ion-nav-view name="info"></ion-nav-view>
+	</ion-tab>
+    <ion-tab title="Fiskekort" ui-sref="^.cards" ng-if="products.length">
+	    <ion-nav-view name="cards"></ion-nav-view>
+	</ion-tab>
+	<ion-tab title="Fiskar" ui-sref="^.fishinfo" ng-if="fishes.length">
+	    <ion-nav-view name="fishinfo"></ion-nav-view>
+	</ion-tab>
+	<ion-tab title="Karta" ui-sref="^.map" ng-if="map">
+	    <ion-nav-view name="map"></ion-nav-view>
+	</ion-tab>
+    </ion-tabs>
 </ion-view>

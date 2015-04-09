@@ -191,41 +191,41 @@ angular.module('ifiske', [
         templateUrl: 'components/report/report.html'
     })
 
-    .state('areadetail2', {
+    .state('area', {
         abstract:true,
-        url: '/areadetail/:id',
-        templateUrl: 'components/area2/area.html',
+        url: '/area/:id',
+        templateUrl: 'components/area/area.html',
         controller: 'AreaCtrl'
     })
-    .state('areadetail2.map', {
+    .state('area.map', {
         url: '/map',
         views: {
             'map': {
-                templateUrl: 'components/area2/map.html'
+                templateUrl: 'components/area/map.html'
             }
         }
     })
-    .state('areadetail2.info', {
+    .state('area.info', {
         url: '/info',
         views: {
             'info': {
-                templateUrl: 'components/area/area.html'
+                templateUrl: 'components/area/info.html'
             }
         }
     })
-    .state('areadetail2.fishinfo', {
+    .state('area.fishinfo', {
         url: '/fishinfo',
         views: {
             'fishinfo': {
-                templateUrl: 'components/area_fish/area_fish.html'
+                templateUrl: 'components/area/fish.html'
             }
         }
     })
-    .state('areadetail2.cards', {
+    .state('area.cards', {
         url: '/cards',
         views: {
             'cards': {
-                templateUrl: 'components/area_cards/area_cards.html'
+                templateUrl: 'components/area/cards.html'
             }
         }
     });

@@ -9,10 +9,14 @@ angular.module('ifiske.controllers')
     'DB',
     '$ionicSlideBoxDelegate',
     '$ionicModal',
-    function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher, $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal) {
 
-        $scope.map = {};
+    '$state',
+    function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher, $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, $state) {
 
+        $scope.map = {
+            center: {}
+        };
+        $scope.image_endpoint = 'http://www.ifiske.se';
         $scope.tabsBack = function() {
             // If the current view is at the top of its history stack
             if(!$ionicHistory.viewHistory().currentView.index) {
@@ -31,84 +35,87 @@ angular.module('ifiske.controllers')
             }
         };
 
-        $scope.image_endpoint = 'http://www.ifiske.se';
+        $scope.$on('$ionicView.beforeEnter', function(e){
+            //We need to fetch stateparams from the $state since it doesn't update for some reason...
+            $stateParams = $state.$current.locals["@"].$stateParams;
 
-        var icons = {};
-        // Areainfo
-        DB.getArea($stateParams.id)
-        .then(function(area) {
-            $scope.map.center = {
-                lat: area.lat,
-                lng: area.lng,
-                zoom: Number(area.zoom) ? Number(area.zoom) : 9
-            };
-            $scope.images = area.images;
+            var icons = {};
+            // Areainfo
+            DB.getArea($stateParams.id)
+            .then(function(area) {
+                $scope.map.center = {
+                    lat: area.lat,
+                    lng: area.lng,
+                    zoom: Number(area.zoom) ? Number(area.zoom) : 9
+                };
+                $scope.images = area.images;
 
-            $ionicSlideBoxDelegate.update();
-            $scope.area = area;
+                $ionicSlideBoxDelegate.update();
+                $scope.area = area;
 
-            DB.getOrganization(area.orgid)
-            .then(function(org) {
-                $scope.org = org;
-            });
-            DB.getPoiTypes()
-            .then(function(poi_types) {
-                for(var i = 0; i < poi_types.length; ++i) {
-                    var type = poi_types[i];
-                    icons[type.ID] = {
-                        iconUrl: 'http://www.ifiske.se/'+type.icon,
-                        iconAnchor:   [16, 37] // point of the icon which will correspond to marker's location
-                    };
-                }
-                DB.getPois(area.orgid)
-                .then(function(pois) {
-                    $scope.map.markers = pois.map(function(poi) {
-                        return {
-                            layer: 'pois',
-                            lat: poi.la,
-                            lng: poi.lo,
-                            icon: icons[poi.type],
-                            message: poi.t
-                        };
-                    });
-                }, function(err) {
-                    console.error(err);
+                DB.getOrganization(area.orgid)
+                .then(function(org) {
+                    $scope.org = org;
                 });
-                DB.getPolygons(area.orgid)
-                .then(function(polygons) {
-                    $scope.map.paths = polygons.map(function(poly) {
-                        return {
-                            latlngs: JSON.parse('[' + poly.poly + ']'),
-                            color: poly.c,
-                            weight: 2,
-                            opacity: 0.5,
-                            fillColor: poly.c,
-                            type: 'polygon'
+                DB.getPoiTypes()
+                .then(function(poi_types) {
+                    for(var i = 0; i < poi_types.length; ++i) {
+                        var type = poi_types[i];
+                        icons[type.ID] = {
+                            iconUrl: 'http://www.ifiske.se/'+type.icon,
+                            iconAnchor:   [16, 37] // point of the icon which will correspond to marker's location
                         };
+                    }
+                    DB.getPois(area.orgid)
+                    .then(function(pois) {
+                        $scope.map.markers = pois.map(function(poi) {
+                            return {
+                                layer: 'pois',
+                                lat: poi.la,
+                                lng: poi.lo,
+                                icon: icons[poi.type],
+                                message: poi.t
+                            };
+                        });
+                    }, function(err) {
+                        console.error(err);
                     });
-                }, function(err) {
-                     console.error(err);
+                    DB.getPolygons(area.orgid)
+                    .then(function(polygons) {
+                        $scope.map.paths = polygons.map(function(poly) {
+                            return {
+                                latlngs: JSON.parse('[' + poly.poly + ']'),
+                                color: poly.c,
+                                weight: 2,
+                                opacity: 0.5,
+                                fillColor: poly.c,
+                                type: 'polygon'
+                            };
+                        });
+                    }, function(err) {
+                        console.error(err);
+                    });
+
                 });
-
+            }, function(err) {
+                console.log(err);
             });
-        }, function(err) {
-            console.log(err);
-        });
 
-        DB.getAreaFishes($stateParams.id)
-        .then(function(fishes) {
-            $scope.fishes = fishes;
-        }, function(err) {
-            console.log(err);
-        });
+            DB.getAreaFishes($stateParams.id)
+            .then(function(fishes) {
+                $scope.fishes = fishes;
+            }, function(err) {
+                console.log(err);
+            });
 
-        DB.getProductsByArea($stateParams.id)
-        .then(function(products) {
-            $scope.products = products;
-        }, function(err) {
-            console.log(err);
-        });
+            DB.getProductsByArea($stateParams.id)
+            .then(function(products) {
+                $scope.products = products;
+            }, function(err) {
+                console.log(err);
+            });
 
+        });
         // Area fishes
         $scope.sortorder = '-amount';
 

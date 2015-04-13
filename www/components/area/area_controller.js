@@ -37,6 +37,11 @@ angular.module('ifiske.controllers')
         // Areainfo
         DB.getArea($stateParams.id)
         .then(function(area) {
+            $scope.map.center = {
+                lat: area.lat,
+                lng: area.lng,
+                zoom: Number(area.zoom) ? Number(area.zoom) : 9
+            };
             $scope.images = area.images;
 
             $ionicSlideBoxDelegate.update();
@@ -51,12 +56,12 @@ angular.module('ifiske.controllers')
                 for(var i = 0; i < poi_types.length; ++i) {
                     var type = poi_types[i];
                     icons[type.ID] = {
-                        iconUrl: 'http://www.ifiske.se/'+type.icon
+                        iconUrl: 'http://www.ifiske.se/'+type.icon,
+                        iconAnchor:   [16, 37] // point of the icon which will correspond to marker's location
                     };
                 }
                 DB.getPois(area.orgid)
                 .then(function(pois) {
-                    console.log(pois);
                     $scope.map.markers = pois.map(function(poi) {
                         return {
                             layer: 'pois',
@@ -67,20 +72,22 @@ angular.module('ifiske.controllers')
                         };
                     });
                 }, function(err) {
-                    console.log(err);
+                    console.error(err);
                 });
                 DB.getPolygons(area.orgid)
                 .then(function(polygons) {
-                    console.log(polygons);
                     $scope.map.paths = polygons.map(function(poly) {
                         return {
                             latlngs: JSON.parse('[' + poly.poly + ']'),
                             color: poly.c,
-                            weight: 2
+                            weight: 2,
+                            opacity: 0.5,
+                            fillColor: poly.c,
+                            type: 'polygon'
                         };
                     });
                 }, function(err) {
-                     console.log(err);
+                     console.error(err);
                 });
 
             });
@@ -90,7 +97,6 @@ angular.module('ifiske.controllers')
 
         DB.getAreaFishes($stateParams.id)
         .then(function(fishes) {
-            console.log(fishes);
             $scope.fishes = fishes;
         }, function(err) {
             console.log(err);
@@ -152,11 +158,6 @@ angular.module('ifiske.controllers')
 
         //Map
         angular.extend($scope.map, {
-            center: {
-                lat: 62.0,
-                lng: 15.0,
-                zoom: 5
-            },
             layers: {
                 baselayers: {
                     mapbox: {
@@ -171,7 +172,7 @@ angular.module('ifiske.controllers')
                 },
                 overlays: {
                     pois: {
-                        name: 'Fiskeområden',
+                        name: 'Ställen',
                         type: 'markercluster',
                         visible: true,
                         layerOptions: {

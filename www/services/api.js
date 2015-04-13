@@ -65,14 +65,14 @@
                 },
                 user_exists: function(username, email) {
 		    var args = {m: 'user_exists'};
-		    
+
 		    if (typeof username === 'string') {
 			args.username = username;
 		    }
 		    if (typeof email === 'string') {
 			args.email = email;
 		    }
-		    
+
                     return api_call(args);
                 },
                 user_register: function(username, fullname, password, email, phone) {

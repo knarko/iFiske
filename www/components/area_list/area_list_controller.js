@@ -1,8 +1,8 @@
 angular.module('ifiske.controllers')
 .controller('AreasCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate' ,'DB', function($scope, $stateParams, $ionicScrollDelegate ,DB) {
 
-    $scope.search = {'$': $stateParams.search};
-    $scope.queryBy = '$';
+    var copy = $stateParams.search;
+    $scope.search = copy;
     $scope.county = $stateParams.county;
     DB.search('', $stateParams.id)
     .then(function(data) {
@@ -11,7 +11,7 @@ angular.module('ifiske.controllers')
         console.log(err);
     });
     $scope.clearSearch = function() {
-        //todo: clear search field
+        $scope.search = '';
     };
     $scope.scrollTop = function() {
         $ionicScrollDelegate.scrollTop();

@@ -30,7 +30,11 @@
                         if(data.status === 'error') {
                             reject(data.message);
                         } else {
-                            fulfill(data);
+                            if(data.data) {
+                                fulfill(data.data.response);
+                            } else {
+                                reject(data);
+                            }
                         }
                     })
                     .error(function(data, status, headers, config, statusText) {
@@ -101,7 +105,7 @@
                             sessionData.setToken(data.data.response);
 
                             //needed for chaining of promises, should be done some other way perhaps?
-                            return data;
+                            return data.data.response;
                         });
                 },
                 user_logout: function() {

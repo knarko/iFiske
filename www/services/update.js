@@ -21,8 +21,8 @@
                         API.get_areas()
                         .then(function(data) {
                             var fishArr = [];
-                            for(var key in data.data.response) {
-                                var fishes = data.data.response[key].fish;
+                            for(var key in data) {
+                                var fishes = data[key].fish;
                                 for(var fishKey in fishes) {
                                     fishArr.push({
                                         'ID': key+'_'+fishKey,
@@ -34,7 +34,7 @@
                                 }
                             }
                             return $q.all([
-                                DB.populateTable('Area', data.data.response),
+                                DB.populateTable('Area', data),
                                 DB.populateTable('Area_Fish', fishArr)
                             ])
                             .then(function() {
@@ -46,7 +46,7 @@
                         }),
                         API.get_products()
                         .then(function(data) {
-                            return DB.populateTable('Product', data.data.response)
+                            return DB.populateTable('Product', data)
                             .then(function() {
                                 console.log('Populated Product');
                             }, function(err) {
@@ -56,7 +56,7 @@
                         }),
                         API.get_counties()
                         .then(function(data) {
-                            return DB.populateTable('County', data.data.response)
+                            return DB.populateTable('County', data)
                             .then(function() {
                                 console.log('Populated County');
                             }, function(err) {
@@ -66,7 +66,7 @@
                         }),
                         API.get_municipalities()
                         .then(function(data) {
-                            return DB.populateTable('Municipality', data.data.response)
+                            return DB.populateTable('Municipality', data)
                             .then(function() {
                                 console.log('Populated Municipality');
                             }, function(err) {
@@ -76,7 +76,7 @@
                         }),
                         API.get_fishes()
                         .then(function(data) {
-                            return DB.populateTable('Fish', data.data.response)
+                            return DB.populateTable('Fish', data)
                             .then(function() {
                                 console.log('Populated Fish');
                             }, function(err) {
@@ -86,7 +86,7 @@
                         }),
                         API.get_rules()
                         .then(function(data) {
-                            return DB.populateTable('Rule', data.data.response)
+                            return DB.populateTable('Rule', data)
                             .then(function() {
                                 console.log('Populated Rule');
                             }, function(err) {
@@ -96,7 +96,7 @@
                         }),
                         API.get_techniques()
                         .then(function(data) {
-                            return DB.populateTable('Technique', data.data.response)
+                            return DB.populateTable('Technique', data)
                             .then(function() {
                                 console.log('Populated Technique');
                             }, function(err) {
@@ -106,7 +106,7 @@
                         }),
                         API.get_organizations()
                         .then(function(data) {
-                            return DB.populateTable('Organization', data.data.response)
+                            return DB.populateTable('Organization', data)
                             .then(function() {
                                 console.log('Populated Organization');
                             }, function(err) {
@@ -116,7 +116,7 @@
                         }),
                         API.get_map_pois()
                         .then(function(data) {
-                            return DB.populateTable('Poi', data.data.response)
+                            return DB.populateTable('Poi', data)
                             .then(function() {
                                 console.log('Populated Poi');
                             }, function(err) {
@@ -126,7 +126,7 @@
                         }),
                         API.get_map_poi_types()
                         .then(function(data) {
-                            return DB.populateTable('Poi_Type', data.data.response)
+                            return DB.populateTable('Poi_Type', data)
                             .then(function() {
                                 console.log('Populated Poi_Type');
                             }, function(err) {
@@ -136,7 +136,7 @@
                         }),
                         API.get_map_polygons()
                         .then(function(data) {
-                            return DB.populateTable('Polygon', data.data.response)
+                            return DB.populateTable('Polygon', data)
                             .then(function() {
                                 console.log('Populated Polygon');
                             }, function(err) {
@@ -151,7 +151,8 @@
                     return $q.all([
                         API.user_products()
                         .then(function(data) {
-                            return DB.populateTable('User_Product', data.data.response)
+                            console.log(data);
+                            return DB.populateTable('User_Product', data)
                             .then(function() {
                                 console.log('Populated User_Product');
                             }, function(err) {
@@ -161,17 +162,17 @@
                         }),
                         API.user_info()
                         .then(function(data) {
-                            var numbers = data.data.response.numbers;
+                            var numbers = data.numbers;
                             var numArr = [];
                             for(var i = 0; i < numbers.length; ++i) {
                                 numArr.push({'number': numbers[i]});
                             }
                             return $q.all([
-                                DB.populateTable('User_Info', [data.data.response])
+                                DB.populateTable('User_Info', [data])
                                 .then(function() {
                                     console.log('Populated User_Info');
                                 }, function(err) {
-                                    console.log(data.data.response);
+                                    console.log(data);
                                     console.log(err);
                                     return $q.reject(err);
                                 }),
@@ -238,7 +239,7 @@
                                 API.user_logout();
                                 $ionicLoading.hide();
                             } else {
-                                console.log('Got an error, will try to recreate all tables: ', err);
+                                console.warn('Got an error, will try to recreate all tables: ', err);
 
                                 return DB.clean()
                                 .then(function(){
@@ -261,15 +262,15 @@
                         });
                         API.get_terms_of_service()
                         .then(function(data) {
-                            localStorage.set('tos',data.data.response);
+                            localStorage.set('tos',data);
                         });
                         API.get_sms_terms()
                         .then(function(terms) {
-                            localStorage.set('sms_terms', terms.data.response);
+                            localStorage.set('sms_terms', terms);
                         });
                         API.get_contact_info()
                         .then(function(data) {
-                            localStorage.set('contactInfo', data.data.response);
+                            localStorage.set('contactInfo', data);
                         });
 
                     } else if(sessionData.token) {

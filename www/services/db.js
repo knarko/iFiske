@@ -288,9 +288,10 @@
                         ].join(' '), [id])
                         .then( function (area) {
                             var object = createObject(area)[0];
+                            //TODO: DB should not need API
                             API.get_photos(object.orgid)
                             .then(function(images) {
-                                object.images = images.data.response;
+                                object.images = images;
                                 fulfill(object);
                             }, function(err) {
                                 fulfill(object);

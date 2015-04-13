@@ -15,7 +15,7 @@ angular.module('ifiske.controllers')
     $scope.checkUsername = function(input) {
         API.user_exists(input.$viewValue)
         .then(function(data) {
-            input.$setValidity('nameTaken', !data.data.response);
+            input.$setValidity('nameTaken', !data);
         });
     };
 
@@ -23,7 +23,7 @@ angular.module('ifiske.controllers')
     $scope.checkEmail = function(input) {
         API.user_exists(null, input.$viewValue)
         .then(function(data) {
-            input.$setValidity('emailTaken', !data.data.response);
+            input.$setValidity('emailTaken', !data);
         });
     };
 

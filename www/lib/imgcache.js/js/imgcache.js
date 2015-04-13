@@ -126,7 +126,7 @@ var ImgCache = {
     };
 
     Helpers.hasJqueryOrJqueryLite = function (element) {
-        return (ImgCache.jQuery || ImgCache.jQueryLite); 
+        return (ImgCache.jQuery || ImgCache.jQueryLite);
     };
 
     Helpers.isCordova = function () {
@@ -165,7 +165,7 @@ var ImgCache = {
         if (Helpers.isCordovaAndroidOlderThan4() && typeof entry.toNativeURL === 'function') {
             return entry.toNativeURL();
         } else {
-            return entry.toInternalURL();
+            return entry.toInternalURL ? entry.toInternalURL() : entry.toURL();
         }
     };
 

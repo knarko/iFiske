@@ -1,4 +1,4 @@
-<ion-view title="Mina fiskekort" cache-view="false">
+<ion-view title="Mina fiskekort">
     <ion-content class="padding">
 	<div class="list card product" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired' : (product.fr*1000 > now ? 'inactive' : 'active')">
 	    <div class="item item-icon-left">

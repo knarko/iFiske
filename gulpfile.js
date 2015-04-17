@@ -32,7 +32,7 @@ gulp.task('scripts', function(done) {
 });
 
 gulp.task('sass', function(done) {
-    gulp.src(paths.sass)
+    gulp.src('./scss/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({

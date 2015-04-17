@@ -102,10 +102,10 @@
                             password: password
                         })
                         .then(function(data) {
-                            sessionData.setToken(data.data.response);
+                            sessionData.setToken(data);
 
                             //needed for chaining of promises, should be done some other way perhaps?
-                            return data.data.response;
+                            return data;
                         });
                 },
                 user_logout: function() {

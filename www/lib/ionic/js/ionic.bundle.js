@@ -7425,6 +7425,7 @@ ionic.views.Slider = ionic.views.View.inherit({
 
       },
       start: function(event) {
+          event.stopPropagation();
 
         var touches = event.touches[0];
 

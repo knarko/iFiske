@@ -18,13 +18,13 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
-//#006993
 $positive: #3060a0 !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "www/font/font.scss";
 
 @import "scss/imports/custom.scss";
+@import "scss/imports/tabslidebox.scss";
 
 
 

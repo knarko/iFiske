@@ -1,28 +1,30 @@
 <ion-view title="areatabs">
-
-    <!-- This navbar is separate from the one used in the menu state. As of beta.14
-	 ionic does not support ion-tabs as a subview of ion-side-menu. In order to
-	 support proper navigation between states, this navbar has a custom back
-	 button. -->
-
-    <ion-nav-bar class="bar-calm" align-title="center">
-	<ion-nav-buttons>
-	    <button class="button button-clear" ng-click="tabsBack()"><i class="icon ion-arrow-left-c"></i></button>
-	</ion-nav-buttons>
-    </ion-nav-bar>
-
-    <ion-tabs class="tabs-positive tabs-icon-only">
-	<ion-tab title="Information" ui-sref="^.info">
-	    <ion-nav-view name="info"></ion-nav-view>
-	</ion-tab>
-    <ion-tab title="Fiskekort" ui-sref="^.cards" ng-if="products.length">
-	    <ion-nav-view name="cards"></ion-nav-view>
-	</ion-tab>
-	<ion-tab title="Fiskar" ui-sref="^.fishinfo" ng-if="fishes.length">
-	    <ion-nav-view name="fishinfo"></ion-nav-view>
-	</ion-tab>
-	<ion-tab title="Karta" ui-sref="^.map" ng-if="map">
-	    <ion-nav-view name="map"></ion-nav-view>
-	</ion-tab>
-    </ion-tabs>
+    <ion-content scroll="false">
+        <tab-slide-box tab="0" tabs-position="bottom">
+            <ion-slide-box show-pager="false">
+                <ion-slide>
+                    <ion-nav-view name="info"></ion-nav-view>
+                </ion-slide>
+                <ion-slide>
+                    <ion-nav-view name="cards"></ion-nav-view>
+                </ion-slide>
+                <ion-slide>
+                    <ion-nav-view name="fishinfo"></ion-nav-view>
+                </ion-slide>
+                <ion-slide>
+                    <ion-nav-view name="map"></ion-nav-view>
+                </ion-slide>
+            </ion-slide-box>
+            <div class="tsb-icons">
+                <div class="tsb-ic-wrp">
+                    <ion-scroll direction="x" class="tsb-hscroll">
+                        <a>Information</a>
+                        <a>Kort</a>
+                        <a>Fiskinfo</a>
+                        <a>Karta</a>
+                    </ion-scroll>
+                </div>
+            </div>
+        </tab-slide-box>
+    </ion-content>
 </ion-view>

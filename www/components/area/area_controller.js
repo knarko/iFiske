@@ -3,41 +3,20 @@ angular.module('ifiske.controllers')
     '$scope',
     '$ionicHistory',
     'localStorage',
-    '$rootScope',
-    '$ionicViewSwitcher',
     '$stateParams',
     'DB',
     '$ionicSlideBoxDelegate',
     '$ionicModal',
 
     '$state',
-    function($scope, $ionicHistory, localStorage, $rootScope, $ionicViewSwitcher, $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, $state) {
+    function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, $state) {
 
         $scope.map = {
             center: {}
         };
         $scope.image_endpoint = 'http://www.ifiske.se';
-        $scope.tabsBack = function() {
-            // If the current view is at the top of its history stack
-            if(!$ionicHistory.viewHistory().currentView.index) {
-                /**
-                 * Switch to the home history stack
-                 * See $ionicHistory source for the even handler used
-                 * See home_controller.js for the historyId used
-                 */
-                $ionicViewSwitcher.nextDirection('back');
-                $scope.$emit('$ionicHistory.change', {
-                    historyId: localStorage.get('homeHistoryId')
-                });
-            } else {
-                // Default back action
-                $rootScope.$ionicGoBack();
-            }
-        };
 
         $scope.$on('$ionicView.beforeEnter', function(e){
-            //We need to fetch stateparams from the $state since it doesn't update for some reason...
-            $stateParams = $state.$current.locals["@"].$stateParams;
 
             var icons = {};
             // Areainfo

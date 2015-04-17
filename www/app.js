@@ -18,7 +18,8 @@ angular.module('ifiske', [
     'ngCordovaSms',
     'ngMessages',
     'ImgCache',
-    'leaflet-directive'
+    'leaflet-directive',
+    'tabSlideBox'
 ])
 .constant('$ionicLoadingConfig', {
     template: '<ion-spinner></ion-spinner>'
@@ -191,40 +192,23 @@ angular.module('ifiske', [
         templateUrl: 'components/report/report.html'
     })
 
-    .state('area', {
-        abstract:true,
+    .state('menu.area', {
         url: '/area/:id',
-        templateUrl: 'components/area/area.html',
-        controller: 'AreaCtrl'
-    })
-    .state('area.map', {
-        url: '/map',
         views: {
-            'map': {
-                templateUrl: 'components/area/map.html'
-            }
-        }
-    })
-    .state('area.info', {
-        url: '/info',
-        views: {
-            'info': {
+            '@menu': {
+                templateUrl: 'components/area/area.html',
+                controller: 'AreaCtrl',
+            },
+            'info@menu.area': {
                 templateUrl: 'components/area/info.html'
-            }
-        }
-    })
-    .state('area.fishinfo', {
-        url: '/fishinfo',
-        views: {
-            'fishinfo': {
+            },
+            'map@menu.area': {
+                templateUrl: 'components/area/map.html'
+            },
+            'fishinfo@menu.area': {
                 templateUrl: 'components/area/fish.html'
-            }
-        }
-    })
-    .state('area.cards', {
-        url: '/cards',
-        views: {
-            'cards': {
+            },
+            'cards@menu.area': {
                 templateUrl: 'components/area/cards.html'
             }
         }

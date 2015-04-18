@@ -16,7 +16,7 @@ angular.module('ifiske.controllers')
                         new_scope.area = a;
                         return new_scope;
                     },
-                    message: '<a ui-sref="area.info({id: area.ID })">{{area.t}}</a>'
+                    message: '<a ui-sref="menu.area({id: area.ID })">{{area.t}}</a>'
                 };
             });
         });

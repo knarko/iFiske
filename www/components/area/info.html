@@ -21,6 +21,7 @@
     </div>
     <div ng-if="org.d" class="item item-body">
         <p ng-bind-html="org.d | nobrs"></p>
+        <a ng-if="area.map" system-browser ng-href="{{image_endpoint}}{{area.map}}">Karta över området som PDF</a>
     </div>
     <div ng-if="org.cp" class="item item-divider">
         <p>Kontaktinformation</p>

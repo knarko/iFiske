@@ -9,6 +9,10 @@ ion-view.abstract-bg {
     background-size:cover;
 }
 
+ion-view.abstract-bg ion-view {
+    background: none;
+}
+
 div.bar.bar-transparent {
     background: none;
 }

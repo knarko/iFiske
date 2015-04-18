@@ -2,7 +2,7 @@
     <ion-content>
 	<div class="card">
 	    <div class="item item-text-wrap">
-		<p ng-bind-html="contactInfo"></p>
+		<div ng-bind-html="contactInfo | nobrs | cleantables"></div>
 	    </div>
 	</div>
     </ion-content>

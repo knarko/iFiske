@@ -14,20 +14,20 @@
     </div>
     <div ng-if="area.d" class="item item-body">
         <button class="button button-positive pull-right buy-cards-info-button" ui-sref="area.cards" ng-if="products.length">Köp Fiskekort</button>
-        <p ng-bind-html="area.d | nobrs"></p>
+        <p ng-bind-html="area.d | onebr"></p>
     </div>
     <div ng-if="org.t" class="item item-divider">
       <p>{{org.t}}</p>
     </div>
     <div ng-if="org.d" class="item item-body">
-        <p ng-bind-html="org.d | nobrs"></p>
+        <p ng-bind-html="org.d | onebr"></p>
         <a ng-if="area.map" system-browser ng-href="{{image_endpoint}}{{area.map}}">Karta över området som PDF</a>
     </div>
     <div ng-if="org.cp" class="item item-divider">
         <p>Kontaktinformation</p>
     </div>
     <div ng-if="org.cp" class="item item-body">
-        <p ng-bind-html="org.cp | nobrs"></p>
+        <p ng-bind-html="org.cp | onebr"></p>
         <a href="{{org.url}}" system-browser ng-if="org.url">{{org.url}}</a>
     </div>
 </div>

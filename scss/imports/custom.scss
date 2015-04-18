@@ -35,6 +35,9 @@ ion-popover-view.popover {
 p.important {
     color: red;
 }
+p.important>i {
+    margin-right: 10px;
+}
 p.note {
     white-space: normal;
 }
@@ -207,4 +210,10 @@ p.note {
     bottom:0px;
     width:100%;
 
+}
+.card-info h1,
+.card-info h2,
+.card-info h3,
+.card-info h4 {
+    text-align: center;
 }

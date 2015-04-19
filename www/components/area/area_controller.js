@@ -169,7 +169,8 @@ angular.module('ifiske.controllers')
                         }
                     }
                 }
-            }
+            },
+            paths: {}
         });
     }
 ]);

@@ -16,7 +16,6 @@ angular.module('ifiske.controllers')
         $scope.image_endpoint = 'http://www.ifiske.se';
 
         var icons = {};
-        if($stateParams.area) {
 
         // Areainfo
         DB.getArea($stateParams.id)

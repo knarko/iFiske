@@ -4,7 +4,6 @@
     angular.module('ifiske.update', ['ifiske.api', 'ifiske.db', 'ifiske.utils'])
     .provider('Update', function UpdateProvider() {
 
-
         this.$get = [
             'API',
             'DB',
@@ -21,11 +20,11 @@
                         API.get_areas()
                         .then(function(data) {
                             var fishArr = [];
-                            for(var key in data) {
+                            for (var key in data) {
                                 var fishes = data[key].fish;
-                                for(var fishKey in fishes) {
+                                for (var fishKey in fishes) {
                                     fishArr.push({
-                                        'ID': key+'_'+fishKey,
+                                        'ID': key + '_' + fishKey,
                                         fid: fishKey,
                                         aid: key,
                                         amount: fishes[fishKey][0],
@@ -164,7 +163,7 @@
                         .then(function(data) {
                             var numbers = data.numbers;
                             var numArr = [];
-                            for(var i = 0; i < numbers.length; ++i) {
+                            for (var i = 0; i < numbers.length; ++i) {
                                 numArr.push({'number': numbers[i]});
                             }
                             return $q.all([
@@ -201,23 +200,22 @@
                     });
                 };
 
-
                 var updateFunc = function(forced) {
                     $ionicLoading.show();
 
                     var currentTime = Date.now();
 
                     var lastUpdate = 0;
-                    if(!forced) {
+                    if (!forced) {
                         lastUpdate = localStorage.get(LAST_UPDATE);
                     }
 
-                    var aWeek = 1000*3600*24*7;
-                    if(currentTime - lastUpdate > aWeek) {
+                    var aWeek = 1000 * 3600 * 24 * 7;
+                    if (currentTime - lastUpdate > aWeek) {
                         DB.init()
                         .then(function() {
                             console.log('Initialized DB system');
-                            if(sessionData.token) {
+                            if (sessionData.token) {
                                 return $q.all([
                                     populateUser(),
                                     populate()
@@ -227,30 +225,30 @@
                             }
                         })
 
-                        .then(function(){
+                        .then(function() {
                             console.log('Populated all the things');
                             localStorage.set(LAST_UPDATE, currentTime);
                             $ionicLoading.hide();
                         }, function(err) {
-                            if(err.error_code === 7) {
+                            if (err.error_code === 7) {
                                 // Authentication failure
                                 // TODO: Show to user
                                 cleanUser();
                                 API.user_logout();
                                 $ionicLoading.hide();
                             } else {
-                                console.warn('Got an error, will try to recreate all tables: ', err);
+                                console.warn('Got an error, will try to recreate all tables:', err);
 
                                 return DB.clean()
-                                .then(function(){
+                                .then(function() {
                                     return DB.init();
                                 })
 
-                                .then(function(){
+                                .then(function() {
                                     return populate();
                                 })
 
-                                .then(function(){
+                                .then(function() {
                                     console.log('Populated all the things');
                                     localStorage.set(LAST_UPDATE, currentTime);
                                     $ionicLoading.hide();
@@ -262,7 +260,7 @@
                         });
                         API.get_terms_of_service()
                         .then(function(data) {
-                            localStorage.set('tos',data);
+                            localStorage.set('tos', data);
                         });
                         API.get_sms_terms()
                         .then(function(terms) {
@@ -273,15 +271,16 @@
                             localStorage.set('contactInfo', data);
                         });
 
-                    } else if(sessionData.token) {
+                    } else if (sessionData.token) {
                         DB.init()
                         .then(function() {
                             console.log('Initialized DB system');
-                            if(sessionData.token) {
+                            if (sessionData.token) {
                                 populateUser()
                                 .then(function() {
                                     $ionicLoading.hide();
                                 }, function(err) {
+                                    console.err(err);
                                     $ionicLoading.hide();
                                 });
                             }

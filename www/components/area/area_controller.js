@@ -39,7 +39,8 @@ angular.module('ifiske.controllers')
                     var type = poi_types[i];
                     icons[type.ID] = {
                         iconUrl: 'http://www.ifiske.se/' + type.icon,
-                        iconAnchor:   [16, 37] // point of the icon which will correspond to marker's location
+                        iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
+                        popupAnchor: [0, -35],
                     };
                 }
                 DB.getPois(area.orgid)

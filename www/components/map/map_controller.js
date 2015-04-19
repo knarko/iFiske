@@ -4,14 +4,13 @@ angular.module('ifiske.controllers')
     'leafletData',
     'DB',
     function($scope, leafletData, DB) {
-        $scope.test= 'hej';
-        DB.search('').then(function(areas){
+        DB.search('').then(function(areas) {
             $scope.markers = areas.map(function(a) {
                 return {
                     layer: 'fishareas',
                     lat: a.lat,
                     lng: a.lng,
-                    getMessageScope: function(){
+                    getMessageScope: function() {
                         var new_scope = $scope.$new();
                         new_scope.area = a;
                         return new_scope;

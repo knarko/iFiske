@@ -49,7 +49,7 @@ angular.module('ifiske', [
     function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ImgCacheProvider) {
 
         ImgCacheProvider.setOptions({
-            debug: true,
+            debug: false,
             usePersistentCache: true
         });
         ImgCacheProvider.manualInit = true;

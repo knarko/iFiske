@@ -279,7 +279,6 @@
                                         '"' + table[0][0] + '"',
                                         '));'
                                     ].join(' ');
-                                    console.log(query);
                                     tx.executeSql(query);
                                 }
                             },

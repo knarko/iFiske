@@ -27,12 +27,21 @@ angular.module('ifiske.controllers')
             },
             layers: {
                 baselayers: {
-                    mapbox: {
-                        name: 'Mapbox',
+                    outdoors: {
+                        name: 'Utomhuskarta',
                         type: 'xyz',
                         url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
                         layerOptions: {
                             maptype: 'mapbox.outdoors',
+                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                        }
+                    },
+                    satellite: {
+                        name: 'Satellit',
+                        type: 'xyz',
+                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        layerOptions: {
+                            maptype: 'mapbox.satellite',
                             apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
                         }
                     }
@@ -43,6 +52,7 @@ angular.module('ifiske.controllers')
                         type: 'markercluster',
                         visible: true,
                         layerOptions: {
+                            showOnSelector: false,
                             disableClusteringAtZoom: 9,
                             chunkedLoading: true,
                             showCoverageOnHover: false,

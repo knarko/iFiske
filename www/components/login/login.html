@@ -27,8 +27,9 @@
     </ion-content>
 
     <div class="bar bar-footer bar-transparent hide-on-keyboard-open">
-	<button class="button button-positive button-margin"> Glömt lösenord </button>
 	<button class="button button-positive button-margin"
-		ui-sref="menu.home"> Hoppa över <i class="icon ion-arrow-right-b"></i></button>
+		ui-sref="^.recover.lostpassword"> Glömt lösenord </button>
+	<button class="button button-positive button-margin"
+		ng-click="skip()"> Hoppa över <i class="icon ion-arrow-right-b"></i></button>
     </div>
 </ion-view>

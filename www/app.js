@@ -214,20 +214,20 @@ angular.module('ifiske', [
 		.state('app.area', {
 		    url: '/area/:id',
 		    views: {
-			'@menu': {
+			'@app': {
 			    templateUrl: 'components/area/area.html',
 			    controller: 'AreaCtrl',
 			},
-			'info@menu.area': {
+			'info@app.area': {
 			    templateUrl: 'components/area/info.html'
 			},
-			'map@menu.area': {
+			'map@app.area': {
 			    templateUrl: 'components/area/map.html'
 			},
-			'fishinfo@menu.area': {
+			'fishinfo@app.area': {
 			    templateUrl: 'components/area/fish.html'
 			},
-			'cards@menu.area': {
+			'cards@app.area': {
 			    templateUrl: 'components/area/cards.html'
 			}
 		    }

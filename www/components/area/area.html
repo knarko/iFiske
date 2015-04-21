@@ -1,30 +1,28 @@
-<ion-view title="areatabs">
+<ion-view title="areatabs" class="abstract-bg">
     <ion-content scroll="false">
         <tab-slide-box tab="0" tabs-position="bottom">
-            <ion-slide-box show-pager="false">
+            <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)">
                 <ion-slide>
                     <ion-nav-view name="info"></ion-nav-view>
                 </ion-slide>
                 <ion-slide>
                     <ion-nav-view name="cards"></ion-nav-view>
                 </ion-slide>
-                <ion-slide>
+                <ion-slide ng-if="fishes.length">
                     <ion-nav-view name="fishinfo"></ion-nav-view>
                 </ion-slide>
                 <ion-slide>
                     <ion-nav-view name="map"></ion-nav-view>
                 </ion-slide>
             </ion-slide-box>
-            <div class="tsb-icons">
-                <div class="tsb-ic-wrp">
-                    <ion-scroll direction="x" class="tsb-hscroll">
-                        <a>Information</a>
-                        <a>Kort</a>
-                        <a>Fiskinfo</a>
-                        <a>Karta</a>
-                    </ion-scroll>
+            <ion-footer-bar class="bar-calm tsb-nav">
+                <div class="button-bar">
+                    <button class="button button-clear icon ion-information-circled"></button>
+                    <button class="button button-clear icon ion-card"></button>
+                    <button ng-if="fishes.length" class="button button-clear"><i class="icon icon-icon_fish"></i></button>
+                    <button class="button button-clear icon ion-map"></button>
                 </div>
-            </div>
+            </ion-footer-bar>
         </tab-slide-box>
     </ion-content>
 </ion-view>

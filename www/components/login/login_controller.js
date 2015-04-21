@@ -20,6 +20,7 @@ angular.module('ifiske.controllers')
 		    .then(function(data) {
 			$ionicLoading.hide();
 			loginForm.$setValidity("loginError", true);
+			$ionicViewSwitcher.nextDirection('forward');
 			$state.go('app.home');
 		    }, function(error) {
 			$ionicLoading.hide();

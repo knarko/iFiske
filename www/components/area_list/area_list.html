@@ -11,7 +11,8 @@
     <ion-content header-shrink>
 	<div style="height: 43px;"></div>
 	<ion-list>
-	    <ion-item collection-repeat="area in areas |filter:search" ui-sref="app.area({id: area.ID })" nav-direction="forward">
+	    <ion-item collection-repeat="area in areas | filter:search" ui-sref="app.area({id: area.ID , area:area})">
+
 		<h2>{{area.t}}</h2>
 	    </ion-item>
 	</ion-list>

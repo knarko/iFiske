@@ -1,5 +1,5 @@
 <ion-view title="{{area.t}}">
-<ion-content>
+<ion-content overflow-scroll="true">
 <div class="wrap-grid">
     <div ng-repeat="fish in fishes | orderBy:sortorder" class="c-50 card fishcard">
         <div class="item-image" ui-sref="app.fishdetail({fish: fish, id: fish.ID})">

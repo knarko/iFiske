@@ -84,6 +84,7 @@
 
     <gap:splash gap:platform="winphone" src="resources/wp8/splash/SplashScreenImage.png" width="768" height="1280"/>
 
+    <!--gap:plugin name="io.litehelpers.cordova.sqlite" version="0.7.6" /-->
     <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
     <gap:plugin name="com.cordova.plugins.sms" version="0.1.1" />
     <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
@@ -97,6 +98,8 @@
     <access origin="http://127.0.0.1*" />
     <access origin="https://www.ifiske.se/*" subdomains="true" />
     <access origin="http://www.ifiske.se/*" subdomains="true" />
+    <access origin="https://api.tiles.mapbox.com/*" subdomains="true" />
+    <access origin="http://api.tiles.mapbox.com/*" subdomains="true" />
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
         <param name="android-package" value="org.apache.cordova.device.Device" />

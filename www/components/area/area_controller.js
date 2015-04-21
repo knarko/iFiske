@@ -7,100 +7,103 @@ angular.module('ifiske.controllers')
     'DB',
     '$ionicSlideBoxDelegate',
     '$ionicModal',
-
-    '$state',
-    function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, $state) {
+    function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal) {
         $scope.map = {
             center: {}
         };
         $scope.image_endpoint = 'http://www.ifiske.se';
 
-        $scope.$on('$ionicView.beforeEnter', function(e){
+        var icons = {};
 
-            var icons = {};
-            // Areainfo
-            DB.getArea($stateParams.id)
-            .then(function(area) {
-                $scope.map.center = {
-                    lat: area.lat,
-                    lng: area.lng,
-                    zoom: Number(area.zoom) ? Number(area.zoom) : 9
-                };
-                $scope.images = area.images;
+        // Areainfo
+        DB.getArea($stateParams.id)
+        .then(function(area) {
+            $scope.map.center = {
+                lat: area.lat,
+                lng: area.lng,
+                zoom: Number(area.zoom) ? Number(area.zoom) : 9
+            };
+            $scope.images = area.images;
 
-                $ionicSlideBoxDelegate.update();
-                $scope.area = area;
+            $ionicSlideBoxDelegate.update();
+            $scope.area = area;
 
-                DB.getOrganization(area.orgid)
-                .then(function(org) {
-                    $scope.org = org;
-                });
-                DB.getPoiTypes()
-                .then(function(poi_types) {
-                    for(var i = 0; i < poi_types.length; ++i) {
-                        var type = poi_types[i];
-                        icons[type.ID] = {
-                            iconUrl: 'http://www.ifiske.se/'+type.icon,
-                            iconAnchor:   [16, 37] // point of the icon which will correspond to marker's location
+            DB.getOrganization(area.orgid)
+            .then(function(org) {
+                $scope.org = org;
+            });
+            DB.getPoiTypes()
+            .then(function(poi_types) {
+                for (var i = 0; i < poi_types.length; ++i) {
+                    var type = poi_types[i];
+                    icons[type.ID] = {
+                        iconUrl: 'http://www.ifiske.se/' + type.icon,
+                        iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
+                        popupAnchor: [0, -35],
+                    };
+                }
+                DB.getPois(area.orgid)
+                .then(function(pois) {
+                    $scope.map.markers = pois.map(function(poi) {
+                        return {
+                            layer: 'pois',
+                            lat: poi.la,
+                            lng: poi.lo,
+                            icon: icons[poi.type],
+                            message: poi.t
                         };
-                    }
-                    DB.getPois(area.orgid)
-                    .then(function(pois) {
-                        $scope.map.markers = pois.map(function(poi) {
-                            return {
-                                layer: 'pois',
-                                lat: poi.la,
-                                lng: poi.lo,
-                                icon: icons[poi.type],
-                                message: poi.t
-                            };
-                        });
-                    }, function(err) {
-                        console.error(err);
                     });
-                    DB.getPolygons(area.orgid)
-                    .then(function(polygons) {
-                        $scope.map.paths = polygons.map(function(poly) {
-                            return {
-                                latlngs: JSON.parse('[' + poly.poly + ']'),
-                                color: poly.c,
-                                weight: 2,
-                                opacity: 0.5,
-                                fillColor: poly.c,
-                                type: 'polygon'
-                            };
-                        });
-                    }, function(err) {
-                        console.error(err);
+                    $scope.map.markers.push({
+                        layer: 'pois',
+                        lat: area.lat,
+                        lng: area.lng,
+                        message: area.t
                     });
-
+                }, function(err) {
+                    console.error(err);
                 });
-            }, function(err) {
-                console.log(err);
-            });
+                DB.getPolygons(area.orgid)
+                .then(function(polygons) {
+                    $scope.map.paths = polygons.map(function(poly) {
+                        return {
+                            latlngs: JSON.parse('[' + poly.poly + ']'),
+                            color: poly.c,
+                            weight: 2,
+                            opacity: 0.5,
+                            fillColor: poly.c,
+                            type: 'polygon'
+                        };
+                    });
+                    console.log($scope);
+                }, function(err) {
+                    console.error(err);
+                });
 
-            DB.getAreaFishes($stateParams.id)
-            .then(function(fishes) {
-                $scope.fishes = fishes;
-            }, function(err) {
-                console.log(err);
             });
-
-            DB.getProductsByArea($stateParams.id)
-            .then(function(products) {
-                $scope.products = products;
-            }, function(err) {
-                console.log(err);
-            });
-
+        }, function(err) {
+            console.log(err);
         });
+
+        DB.getAreaFishes($stateParams.id)
+        .then(function(fishes) {
+            $scope.fishes = fishes;
+        }, function(err) {
+            console.log(err);
+        });
+
+        DB.getProductsByArea($stateParams.id)
+        .then(function(products) {
+            $scope.products = products;
+        }, function(err) {
+            console.log(err);
+        });
+
         // Area fishes
         $scope.sortorder = '-amount';
 
         //Area_Cards
         $scope.smsterms = localStorage.get('sms_terms');
-        $scope.predicate = "so";
-
+        $scope.predicate = 'so';
 
         //SMS-modal
         $ionicModal.fromTemplateUrl('components/area/sms_modal.html', {
@@ -116,7 +119,7 @@ angular.module('ifiske.controllers')
         $scope.closeModal = function() {
             $scope.sms_modal.hide();
         };
-        $scope.showTerms = function($event) {
+        $scope.showTerms = function() {
             $scope.showingterms = !$scope.showingterms;
         };
         $scope.showingterms = false;
@@ -145,12 +148,21 @@ angular.module('ifiske.controllers')
         angular.extend($scope.map, {
             layers: {
                 baselayers: {
-                    mapbox: {
-                        name: 'Mapbox',
+                    outdoors: {
+                        name: 'Utomhuskarta',
                         type: 'xyz',
                         url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
                         layerOptions: {
                             maptype: 'mapbox.outdoors',
+                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                        }
+                    },
+                    satellite: {
+                        name: 'Satellit',
+                        type: 'xyz',
+                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        layerOptions: {
+                            maptype: 'mapbox.satellite',
                             apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
                         }
                     }
@@ -161,6 +173,7 @@ angular.module('ifiske.controllers')
                         type: 'markercluster',
                         visible: true,
                         layerOptions: {
+                            showOnSelector: false,
                             disableClusteringAtZoom: 9,
                             chunkedLoading: true,
                             showCoverageOnHover: false,
@@ -168,7 +181,8 @@ angular.module('ifiske.controllers')
                         }
                     }
                 }
-            }
+            },
+            paths: {}
         });
     }
 ]);

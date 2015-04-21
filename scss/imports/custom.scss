@@ -9,6 +9,10 @@ ion-view.abstract-bg {
     background-size:cover;
 }
 
+ion-view.abstract-bg ion-view {
+    background: none;
+}
+
 div.bar.bar-transparent {
     background: none;
 }
@@ -35,12 +39,19 @@ ion-popover-view.popover {
 p.important {
     color: red;
 }
+p.important>i {
+    margin-right: 10px;
+}
 p.note {
     white-space: normal;
 }
 
 .pull-right {
     float: right;
+}
+.buy-cards-info-button {
+    margin-left: 5px;
+    margin-top: 16px;
 }
 .item-body.item-nopad {
     padding-top: 0;
@@ -207,4 +218,10 @@ p.note {
     bottom:0px;
     width:100%;
 
+}
+.card-info h1,
+.card-info h2,
+.card-info h3,
+.card-info h4 {
+    text-align: center;
 }

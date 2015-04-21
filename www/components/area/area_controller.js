@@ -10,7 +10,6 @@ angular.module('ifiske.controllers')
 
     '$state',
     function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, $state) {
-
         $scope.map = {
             center: {}
         };

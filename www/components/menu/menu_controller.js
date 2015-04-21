@@ -2,10 +2,11 @@ angular.module('ifiske.controllers')
 .controller('MenuCtrl', [
     '$scope',
     '$state',
+    '$ionicViewSwitcher',
     '$ionicPopover',
     'sessionData',
     'Update',
-    function($scope, $state, $ionicPopover, sessionData, Update) {
+    function($scope, $state, $ionicViewSwitcher, $ionicPopover, sessionData, Update) {
 
     $scope.sessionData = sessionData;
 
@@ -17,21 +18,22 @@ angular.module('ifiske.controllers')
 
     $scope.userinfo = function() {
 	$scope.popover.hide();
-	$state.go('menu.userinfo');
+	$state.go('app.userinfo');
     };
     $scope.logout = function() {
 	$scope.popover.hide();
 	Update.user_logout();
 
-	$state.go('start.login');
+	$state.go('app.login');
     };
     $scope.login = function() {
 	$scope.popover.hide();
-	$state.go('start.login');
+	$ionicViewSwitcher.nextDirection('back');
+	$state.go('app.login');
     };
     $scope.register = function() {
 	$scope.popover.hide();
-	$state.go('start.register.details');
+	$state.go('app.register.details');
     };
 
     $scope.update = function() {

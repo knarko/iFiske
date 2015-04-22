@@ -145,6 +145,11 @@ angular.module('ifiske.controllers')
             $scope.rules_modal.remove();
         });
 
+
+        $scope.gotoProducts = function() {
+            $ionicSlideBoxDelegate.$getByHandle('tabs').slide(1);
+        };
+
         //Map
         angular.extend($scope.map, {
             layers: {

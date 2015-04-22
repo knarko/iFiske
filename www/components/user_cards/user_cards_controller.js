@@ -3,12 +3,13 @@ angular.module('ifiske.controllers')
     '$scope',
     '$stateParams',
     'DB',
+    'Update',
     '$ionicModal',
-    function($scope, $stateParams, DB, $ionicModal) {
+    function($scope, $stateParams, DB, Update, $ionicModal) {
         $scope.pred = '-to';
         $scope.endpoint = 'https://www.ifiske.se';
 
-        $scope.$on('$ionicView.beforeEnter', function(e){
+        var initilize = function() {
             $scope.now = Date.now();
             DB.getUserProducts()
             .then(function(data) {
@@ -16,8 +17,9 @@ angular.module('ifiske.controllers')
             }, function(err) {
                 console.log(err);
             });
+        };
 
-        });
+        $scope.$on('$ionicView.beforeEnter', initilize);
         //use the same modal as in area_cards
         $ionicModal.fromTemplateUrl('components/area_cards/rules_modal.html', {
             scope: $scope,
@@ -37,5 +39,12 @@ angular.module('ifiske.controllers')
         $scope.$on('$destroy', function() {
             $scope.rules_modal.remove();
         });
+        $scope.update = function() {
+            Update.update()
+            .finally(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+                initilize();
+            });
+        };
     }
 ]);

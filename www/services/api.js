@@ -5,7 +5,7 @@
 	.provider('API', function APIProvider() {
 
             this.base_url = 'https://www.ifiske.se/api/v2/api.php';
-	    
+
             this.$get = [
 		'$http',
 		'sessionData',
@@ -56,9 +56,9 @@
 		     * # session_api_call #
 		     * wrapper for api_call - inserts the session token into params
 		     */
-		    var session_api_call = function(params) {
+		    var session_api_call = function(params, cache) {
 			var session = sessionData.token;
-			return api_call(angular.extend(params, {s: session}));
+			return api_call(angular.extend(params, {s: session}), cache);
 		    };
 
 		    return {
@@ -91,7 +91,7 @@
 				}, false);
 			},
 			user_confirm: function(username, pin) {
-			    return api_call({ 
+			    return api_call({
 				m: 'user_confirm',
 				username: username,
 				pin: pin
@@ -108,7 +108,7 @@
 			},
 			user_reset_password: function(user_identification, password, code) {
 			    return api_call({
-				m: 'user_reset_password', 
+				m: 'user_reset_password',
 				user_identification: user_identification,
 				password: password,
 				code: code

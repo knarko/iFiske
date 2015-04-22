@@ -212,67 +212,70 @@
 
                     var aWeek = 1000 * 3600 * 24 * 7;
                     if (currentTime - lastUpdate > aWeek) {
-                        DB.init()
-                        .then(function() {
-                            console.log('Initialized DB system');
-                            if (sessionData.token) {
-                                return $q.all([
-                                    populateUser(),
-                                    populate()
-                                ]);
-                            } else {
-                                return populate();
-                            }
-                        })
-
-                        .then(function() {
-                            console.log('Populated all the things');
-                            localStorage.set(LAST_UPDATE, currentTime);
-                            $ionicLoading.hide();
-                        }, function(err) {
-                            if (err.error_code === 7) {
-                                // Authentication failure
-                                // TODO: Show to user
-                                cleanUser();
-                                API.user_logout();
-                                $ionicLoading.hide();
-                            } else {
-                                console.warn('Got an error, will try to recreate all tables:', err);
-
-                                return DB.clean()
-                                .then(function() {
-                                    return DB.init();
-                                })
-
-                                .then(function() {
+                        console.log(lastUpdate, currentTime, forced);
+                        return $q.all([
+                            DB.init()
+                            .then(function() {
+                                console.log('Initialized DB system');
+                                if (sessionData.token) {
+                                    return $q.all([
+                                        populateUser(),
+                                        populate()
+                                    ]);
+                                } else {
                                     return populate();
-                                })
+                                }
+                            })
 
-                                .then(function() {
-                                    console.log('Populated all the things');
-                                    localStorage.set(LAST_UPDATE, currentTime);
+                            .then(function() {
+                                console.log('Populated all the things');
+                                localStorage.set(LAST_UPDATE, currentTime);
+                                $ionicLoading.hide();
+                            }, function(err) {
+                                if (err.error_code === 7) {
+                                    // Authentication failure
+                                    // TODO: Show to user
+                                    cleanUser();
+                                    API.user_logout();
                                     $ionicLoading.hide();
-                                }, function(err) {
-                                    console.log('Still error, handle it!', err);
-                                    $ionicLoading.hide();
-                                });
-                            }
-                        });
-                        API.get_terms_of_service()
-                        .then(function(data) {
-                            localStorage.set('tos', data);
-                        });
-                        API.get_sms_terms()
-                        .then(function(terms) {
-                            localStorage.set('sms_terms', terms);
-                        });
-                        API.get_contact_info()
-                        .then(function(data) {
-                            localStorage.set('contactInfo', data);
-                        });
+                                } else {
+                                    console.warn('Got an error, will try to recreate all tables:', err);
+
+                                    return DB.clean()
+                                    .then(function() {
+                                        return DB.init();
+                                    })
+
+                                    .then(function() {
+                                        return populate();
+                                    })
+
+                                    .then(function() {
+                                        console.log('Populated all the things');
+                                        localStorage.set(LAST_UPDATE, currentTime);
+                                        $ionicLoading.hide();
+                                    }, function(err) {
+                                        console.log('Still error, handle it!', err);
+                                        $ionicLoading.hide();
+                                    });
+                                }
+                            }),
+                            API.get_terms_of_service()
+                            .then(function(data) {
+                                localStorage.set('tos', data);
+                            }),
+                            API.get_sms_terms()
+                            .then(function(terms) {
+                                localStorage.set('sms_terms', terms);
+                            }),
+                            API.get_contact_info()
+                            .then(function(data) {
+                                localStorage.set('contactInfo', data);
+                            })
+                        ]);
 
                     } else if (sessionData.token) {
-                        DB.init()
+                        return DB.init()
                         .then(function() {
                             console.log('Initialized DB system');
                             if (sessionData.token) {
@@ -289,21 +292,22 @@
                     } else {
                         console.log('no_update');
                         $ionicLoading.hide();
+                        return $q.when('No update');
                     }
                 };
 
                 return {
                     update: function() {
-                        updateFunc();
+                        return updateFunc();
                     },
 
                     forcedUpdate: function() {
-                        updateFunc(true);
+                        return updateFunc(true);
                     },
 
                     user_logout: function() {
                         cleanUser();
-                        API.user_logout();
+                        return API.user_logout();
                     },
                     user_login: function(username, password) {
                         return API.user_login(username, password)

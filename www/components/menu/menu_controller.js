@@ -8,36 +8,37 @@ angular.module('ifiske.controllers')
     'Update',
     function($scope, $state, $ionicViewSwitcher, $ionicPopover, sessionData, Update) {
 
-    $scope.sessionData = sessionData;
+        $scope.sessionData = sessionData;
 
-    $ionicPopover.fromTemplateUrl('components/menu/popover.html', {
-        scope: $scope
-    }).then(function(popover) {
-        $scope.popover = popover;
-    });
+        $ionicPopover.fromTemplateUrl('components/menu/popover.html', {
+            scope: $scope
+        }).then(function(popover) {
+            $scope.popover = popover;
+        });
 
-    $scope.userinfo = function() {
-	$scope.popover.hide();
-	$state.go('app.userinfo');
-    };
-    $scope.logout = function() {
-	$scope.popover.hide();
-	Update.user_logout();
+        $scope.userinfo = function() {
+            $scope.popover.hide();
+            $state.go('app.userinfo');
+        };
+        $scope.logout = function() {
+            $scope.popover.hide();
+            Update.user_logout();
 
-	$state.go('app.login');
-    };
-    $scope.login = function() {
-	$scope.popover.hide();
-	$ionicViewSwitcher.nextDirection('back');
-	$state.go('app.login');
-    };
-    $scope.register = function() {
-	$scope.popover.hide();
-	$state.go('app.register.details');
-    };
+            $state.go('app.login');
+        };
+        $scope.login = function() {
+            $scope.popover.hide();
+            $ionicViewSwitcher.nextDirection('back');
+            $state.go('app.login');
+        };
+        $scope.register = function() {
+            $scope.popover.hide();
+            $state.go('app.register.details');
+        };
 
-    $scope.update = function() {
-        Update.forcedUpdate();
-    };
+        $scope.forcedUpdate = function() {
+            Update.forcedUpdate();
+        };
 
-}]);
+    }
+]);

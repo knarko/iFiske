@@ -25,7 +25,10 @@
     "org.apache.cordova.file",
     "org.apache.cordova.file-transfer",
     "com.cordova.plugins.sms",
-    "https://github.com/brodysoft/Cordova-SQLitePlugin"
+    "https://github.com/brodysoft/Cordova-SQLitePlugin",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator",
+    "org.apache.cordova.geolocation",
+    "org.apache.cordova.device-orientation"
   ],
   "cordovaPlatforms": []
 }

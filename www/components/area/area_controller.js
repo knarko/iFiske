@@ -25,8 +25,8 @@ angular.module('ifiske.controllers')
             };
             $scope.images = area.images;
 
-            $ionicSlideBoxDelegate.update();
             $scope.area = area;
+            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
 
             DB.getOrganization(area.orgid)
             .then(function(org) {
@@ -74,7 +74,6 @@ angular.module('ifiske.controllers')
                             type: 'polygon'
                         };
                     });
-                    console.log($scope);
                 }, function(err) {
                     console.error(err);
                 });
@@ -87,6 +86,7 @@ angular.module('ifiske.controllers')
         DB.getAreaFishes($stateParams.id)
         .then(function(fishes) {
             $scope.fishes = fishes;
+            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
         }, function(err) {
             console.log(err);
         });
@@ -94,6 +94,7 @@ angular.module('ifiske.controllers')
         DB.getProductsByArea($stateParams.id)
         .then(function(products) {
             $scope.products = products;
+            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
         }, function(err) {
             console.log(err);
         });

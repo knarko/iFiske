@@ -88,17 +88,17 @@ angular.module('ifiske.controllers')
                 });
             });
 
-                $cordovaDeviceOrientation.watchHeading({
-                    frequency: 3000
-                }).then(null, function(error) {
-                    console.error(error);
-                }, function(heading) {
-                    $timeout(function(){
-                        updateMypos({
-                                   iconAngle: heading.trueHeading
-                        });
+            $cordovaDeviceOrientation.watchHeading({
+                frequency: 3000
+            }).then(null, function(error) {
+                console.error(error);
+            }, function(heading) {
+                $timeout(function(){
+                    updateMypos({
+                        iconAngle: heading.trueHeading
                     });
                 });
+            });
         });
 
         DB.search('').then(function(areas) {
@@ -111,22 +111,9 @@ angular.module('ifiske.controllers')
                     getMessageScope: function() {
                         var new_scope = $scope.$new();
                         new_scope.area = a;
-                        new_scope.navigate = function() {
-                            launchnavigator.navigate(
-                                [$scope.mypos.coords.latitude, $scope.mypos.coords.longitude],
-                                [a.lat, a.lng],
-                                function(){
-                                    console.log('Opening navigator');
-                                },
-                                function(error){
-                                    alert('Navigation failed!');
-                                });
-                        };
-
                         return new_scope;
                     },
-                    //message: '<a ui-sref="menu.area({id: area.ID })">{{area.t}}</a>'
-                    message: '<a ng-click="navigate()">{{area.t}}</a>'
+                    message: '<a ui-sref="app.area({id: area.ID })">{{area.t}}</a>'
                 };
             }
         });

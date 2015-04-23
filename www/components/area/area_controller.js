@@ -7,13 +7,99 @@ angular.module('ifiske.controllers')
     'DB',
     '$ionicSlideBoxDelegate',
     '$ionicModal',
-    function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal) {
+    'leafletEvents',
+    '$ionicPlatform',
+    '$cordovaGeolocation',
+    '$cordovaDeviceOrientation',
+    '$timeout',
+    function($scope, $ionicHistory, localStorage,  $stateParams, DB, $ionicSlideBoxDelegate, $ionicModal, leafletEvents, $ionicPlatform, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout) {
+        function updateMypos(obj) {
+            /* Hackfix to make it update =( */
+            if($scope.map.markers.mypos2) {
+                angular.extend($scope.map.markers.mypos2, obj);
+                $scope.map.markers.mypos = $scope.map.markers.mypos2;
+                delete $scope.map.markers.mypos2;
+            } else {
+                angular.extend($scope.map.markers.mypos, obj);
+                $scope.map.markers.mypos2 = $scope.map.markers.mypos;
+                delete $scope.map.markers.mypos;
+            }
+        }
+        function getMypos() {
+            console.log($scope);
+            return $scope.map.markers.mypos || $scope.map.markers.mypos2;
+        }
+
+        $ionicPlatform.ready(function() {
+            $cordovaGeolocation.watchPosition({
+                frequency: 3000
+            }).then(null, function(error) {
+                console.error(error);
+            }, function(pos) {
+                $timeout(function() {
+                    updateMypos({
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    });
+                });
+            });
+
+            $cordovaDeviceOrientation.watchHeading({
+                frequency: 3000
+            }).then(null, function(error) {
+                console.error(error);
+            }, function(heading) {
+                $timeout(function(){
+                    updateMypos({
+                        iconAngle: heading.trueHeading
+                    });
+                });
+            });
+        });
+
         $scope.map = {
-            center: {}
+            center: {},
+            markers: {
+                mypos: {
+                    lat: 0,
+                    lng: 0,
+                    iconAngle: 0,
+                    message: 'This is you!',
+                }
+            }
         };
         $scope.image_endpoint = 'http://www.ifiske.se';
 
         var icons = {};
+        $scope.navigate = function(poi) {
+            console.log($scope);
+            var pos = getMypos();
+            launchnavigator.navigate(
+                [$scope.navto.lat, $scope.navto.lng],
+                null,
+                function(){
+                    console.log('Opening navigator');
+                },
+                function(error){
+                    alert('Navigation failed!');
+                });
+        };
+
+        var enabledEvents = ['popupopen', 'popupclose'];
+        $scope.events = {
+            enabled: enabledEvents
+        };
+
+        $scope.$on('leafletDirectiveMarker.popupopen', function(event, args) {
+            //show navtobutton
+            $scope.navto = args.model;
+        });
+
+        $scope.$on('leafletDirectiveMarker.popupclose', function(event, args) {
+            //hide navtobutton
+            $scope.navto = null;
+        });
+
 
         // Areainfo
         DB.getArea($stateParams.id)
@@ -44,21 +130,23 @@ angular.module('ifiske.controllers')
                 }
                 DB.getPois(area.orgid)
                 .then(function(pois) {
-                    $scope.map.markers = pois.map(function(poi) {
-                        return {
+                    for(var i = 0; i < pois.length; ++i) {
+                        var poi = pois[i];
+
+                        $scope.map.markers['poi' + i] = {
                             layer: 'pois',
                             lat: poi.la,
                             lng: poi.lo,
                             icon: icons[poi.type],
                             message: poi.t
                         };
-                    });
-                    $scope.map.markers.push({
+                    }
+                    $scope.map.markers['area'] = {
                         layer: 'pois',
                         lat: area.lat,
                         lng: area.lng,
                         message: area.t
-                    });
+                    };
                 }, function(err) {
                     console.error(err);
                 });

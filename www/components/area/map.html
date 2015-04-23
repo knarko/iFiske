@@ -1,4 +1,5 @@
 <ion-view title="{{area.t}}">
+    <ion-content scroll="false">
     <leaflet
           defaults="map.defaults"
           data-tap-disabled="true"
@@ -7,5 +8,10 @@
           layers="map.layers"
           paths="map.paths"
           center="map.center"
-          />
+          broadcast-events="map.events"
+          ></leaflet>
+    <button ng-show="navto" class="button button-positive button-float" ng-click="navigate()">
+        <i class="icon ion-navigate"></i>
+    </button>
+    </ion-content>
 </ion-view>

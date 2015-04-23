@@ -225,3 +225,25 @@ p.note {
 .card-info h4 {
     text-align: center;
 }
+
+button.button-float {
+    border-radius: 50%;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    padding: 10px;
+    transition: all .1s ease-out;
+}
+.button-float i.icon {
+  vertical-align: middle;
+  text-align: center;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding-right: 2px;
+  padding-top: 2px;
+}
+.button-float.ng-hide {
+    transform: scale(0.1) rotate(90deg); /* 1/10 of the original size */
+    transition: all .1s ease-out;
+}

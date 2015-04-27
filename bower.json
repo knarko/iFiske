@@ -16,7 +16,7 @@
     "angular-messages": "~1.3.12",
     "angular-imgcache.js": "~0.1.0",
     "leaflet": "~0.7.3",
-    "angular-leaflet-directive": "https://github.com/tombatossals/angular-leaflet-directive.git#master",
+    "angular-leaflet-directive": "https://github.com/maistho/angular-leaflet-directive.git#master",
     "leaflet.markercluster": "~0.4.0",
     "imgcache.js": "maistho/imgcache.js#master"
   }

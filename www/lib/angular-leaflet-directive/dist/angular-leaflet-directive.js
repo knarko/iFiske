@@ -1761,7 +1761,7 @@ angular.module("leaflet-directive").factory('leafletMapDefaults', ["$q", "leafle
 }]);
 
 angular.module("leaflet-directive")
-.service('leafletMarkersHelpers', ["$rootScope", "leafletHelpers", "$log", "$compile", "leafletGeoJsonHelpers", function ($rootScope, leafletHelpers, $log, $compile,
+.service('leafletMarkersHelpers', ["$rootScope", "$timeout", "leafletHelpers", "$log", "$compile", "leafletGeoJsonHelpers", function ($rootScope, $timeout, leafletHelpers, $log, $compile,
   leafletGeoJsonHelpers) {
 
     var isDefined = leafletHelpers.isDefined,
@@ -1907,7 +1907,9 @@ angular.module("leaflet-directive")
                     });
                 }
                 else {
-                    updatePopup(popup);
+                    $timeout(function() {
+                        updatePopup(popup);
+                    });
                 }
             }
         }
@@ -3439,9 +3441,9 @@ angular.module("leaflet-directive").directive('layers', ["$log", "$q", "leafletD
                             }
                             delete leafletLayers.baselayers[name];
 
-                            // if (newBaseLayers[name].doRefresh) {
-                            //     newBaseLayers[name].doRefresh = false;
-                            // }
+                            if (newBaseLayers[name] && newBaseLayers[name].doRefresh) {
+                                newBaseLayers[name].doRefresh = false;
+                            }
                         }
                     }
                     // add new layers
@@ -3495,9 +3497,9 @@ angular.module("leaflet-directive").directive('layers', ["$log", "$q", "leafletD
                             // TODO: Depending on the layer type we will have to delete what's included on it
                             delete leafletLayers.overlays[name];
 
-                            // if (newOverlayLayers[name].doRefresh) {
-                            //     newOverlayLayers[name].doRefresh = false;
-                            // }
+                            if (newOverlayLayers[name] && newOverlayLayers[name].doRefresh) {
+                                newOverlayLayers[name].doRefresh = false;
+                            }
                         }
                     }
 

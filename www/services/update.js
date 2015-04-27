@@ -283,7 +283,7 @@
                                 .then(function() {
                                     $ionicLoading.hide();
                                 }, function(err) {
-                                    console.err(err);
+                                    console.error(err);
                                     $ionicLoading.hide();
                                 });
                             }

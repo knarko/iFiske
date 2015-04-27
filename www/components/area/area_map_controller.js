@@ -9,6 +9,8 @@ angular.module('ifiske.controllers')
     '$timeout',
     function($scope, DB, leafletEvents, $ionicPlatform, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout) {
         function updateMypos(obj) {
+            //rotate iconAngle 45 deg since the icon is tilted by default
+            obj.iconAngle = (obj.iconAngle | 0) - 45;
             // We need to create a new named element in order for the update to register
             if ($scope.map.markers.mypos2) {
                 angular.extend($scope.map.markers.mypos2, obj);
@@ -31,6 +33,63 @@ angular.module('ifiske.controllers')
         //TODO: Get apikey from ifiske-api
         var apikey = 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg';
 
+        var updateMap = function() {
+            $scope.map.center = {
+                lat: $scope.area.lat,
+                lng: $scope.area.lng,
+                zoom: Number($scope.area.zoom) ? Number($scope.area.zoom) : 9
+            };
+
+            DB.getPoiTypes()
+            .then(function(poi_types) {
+                for (var i = 0; i < poi_types.length; ++i) {
+                    var type = poi_types[i];
+                    icons[type.ID] = {
+                        iconUrl: $scope.image_endpoint + type.icon,
+                        iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
+                        popupAnchor: [0, -35],
+                    };
+                }
+                DB.getPois($scope.area.orgid)
+                .then(function(pois) {
+                    for (var i = 0; i < pois.length; ++i) {
+                        var poi = pois[i];
+
+                        $scope.map.markers['poi' + i] = {
+                            layer: 'pois',
+                            lat: poi.la,
+                            lng: poi.lo,
+                            icon: icons[poi.type],
+                            message: poi.t
+                        };
+                    }
+                    $scope.map.markers.area = {
+                        layer: 'pois',
+                        lat: $scope.area.lat,
+                        lng: $scope.area.lng,
+                        message: $scope.area.t
+                    };
+                }, function(err) {
+                    console.error(err);
+                });
+                DB.getPolygons($scope.area.orgid)
+                .then(function(polygons) {
+                    $scope.map.paths = polygons.map(function(poly) {
+                        return {
+                            latlngs: JSON.parse('[' + poly.poly + ']'),
+                            color: poly.c,
+                            weight: 2,
+                            opacity: 0.5,
+                            fillColor: poly.c,
+                            type: 'polygon'
+                        };
+                    });
+                }, function(err) {
+                    console.error(err);
+                });
+
+            });
+        };
         angular.extend($scope, {
             map: {
                 center: {},
@@ -42,6 +101,12 @@ angular.module('ifiske.controllers')
                         lng: 0,
                         iconAngle: 0,
                         message: 'This is you!',
+                        icon: {
+                            type: 'div',
+                            iconSize: [40,40],
+                            iconAnchor: [20,20],
+                            className: 'icon ion-navigate myposition'
+                        }
                     }
                 },
 
@@ -85,63 +150,10 @@ angular.module('ifiske.controllers')
         });
 
         $scope.$on('$ionicView.beforeEnter', function() {
-            $scope.$on('ifiske-area', function() {
-                $scope.map.center = {
-                    lat: $scope.area.lat,
-                    lng: $scope.area.lng,
-                    zoom: Number($scope.area.zoom) ? Number($scope.area.zoom) : 9
-                };
-
-                DB.getPoiTypes()
-                .then(function(poi_types) {
-                    for (var i = 0; i < poi_types.length; ++i) {
-                        var type = poi_types[i];
-                        icons[type.ID] = {
-                            iconUrl: $scope.image_endpoint + type.icon,
-                            iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
-                            popupAnchor: [0, -35],
-                        };
-                    }
-                    DB.getPois($scope.area.orgid)
-                    .then(function(pois) {
-                        for (var i = 0; i < pois.length; ++i) {
-                            var poi = pois[i];
-
-                            $scope.map.markers['poi' + i] = {
-                                layer: 'pois',
-                                lat: poi.la,
-                                lng: poi.lo,
-                                icon: icons[poi.type],
-                                message: poi.t
-                            };
-                        }
-                        $scope.map.markers.area = {
-                            layer: 'pois',
-                            lat: $scope.area.lat,
-                            lng: $scope.area.lng,
-                            message: $scope.area.t
-                        };
-                    }, function(err) {
-                        console.error(err);
-                    });
-                    DB.getPolygons($scope.area.orgid)
-                    .then(function(polygons) {
-                        $scope.map.paths = polygons.map(function(poly) {
-                            return {
-                                latlngs: JSON.parse('[' + poly.poly + ']'),
-                                color: poly.c,
-                                weight: 2,
-                                opacity: 0.5,
-                                fillColor: poly.c,
-                                type: 'polygon'
-                            };
-                        });
-                    }, function(err) {
-                        console.error(err);
-                    });
-
-                });
-            });
+            if ($scope.area) {
+                updateMap();
+            }
+            $scope.$on('ifiske-area', updateMap);
 
             $ionicPlatform.ready(function() {
                 $cordovaGeolocation.watchPosition({
@@ -171,17 +183,18 @@ angular.module('ifiske.controllers')
             });
 
             $scope.navigate = function() {
-                console.log($scope);
                 //var pos = getMypos(); //might need for ios
-                window.launchnavigator.navigate(
-                    [$scope.navto.lat, $scope.navto.lng],
-                    null,
-                    function() {
-                        console.log('Opening navigator');
-                    },
-                    function(error) {
-                        alert('Navigation failed!', error);
-                    });
+                $ionicPlatform.ready(function() {
+                    launchnavigator.navigate(
+                        [$scope.navto.lat, $scope.navto.lng],
+                        null,
+                        function() {
+                            console.log('Opening navigator');
+                        },
+                        function(error) {
+                            alert('Navigation failed!', error);
+                        });
+                });
             };
 
             var enabledEvents = ['popupopen', 'popupclose'];

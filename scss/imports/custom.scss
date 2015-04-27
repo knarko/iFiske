@@ -247,3 +247,11 @@ button.button-float {
     transform: scale(0.1) rotate(90deg); /* 1/10 of the original size */
     transition: all .1s ease-out;
 }
+
+.angular-leaflet-map .myposition {
+    font-size: 3em;
+    color: $calm;
+}
+.angular-leaflet-map .myposition:before {
+    text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
+}

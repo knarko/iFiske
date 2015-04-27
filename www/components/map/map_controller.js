@@ -10,6 +10,8 @@ angular.module('ifiske.controllers')
     function($scope, leafletData, $ionicPlatform, DB, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout) {
 
         function updateMypos(obj) {
+            //rotate iconAngle 45 deg since the icon is tilted by default
+            obj.iconAngle = (obj.iconAngle | 0) - 45;
             /* Hackfix to make it update =( */
             if($scope.markers.mypos2) {
                 angular.extend($scope.markers.mypos2, obj);
@@ -68,8 +70,14 @@ angular.module('ifiske.controllers')
                 mypos: {
                     lat: 0,
                     lng: 0,
-                    iconAngle: 0,
+                    iconAngle: -45,
                     message: 'hi!',
+                    icon: {
+                        type: 'div',
+                        iconSize: [40,40],
+                        iconAnchor: [20,20],
+                        className: 'icon ion-navigate myposition'
+                    }
                 }
             }
         });

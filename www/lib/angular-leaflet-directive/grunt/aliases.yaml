@@ -51,12 +51,11 @@ dev-chrome:
 
 spec: #continuos running specs
  - 'fast-build'
- - 'concurrent:spec'
+ - 'concurrent:unit-mocha'
 
-spec-unit:
+spec-chrome:
  - 'fast-build'
- - 'karma:unit'
- - 'watch:unit'
+ - 'concurrent:chrome'
 
 serve:
  - 'concurrent:watchServe'
@@ -85,3 +84,22 @@ build:
 travis:
  - 'bower:install'
  - 'test-unit'
+
+bump-@:
+ - 'bump-only'
+ - 'default'
+ - 'bump-commit'
+
+bump-@-minor:
+ - 'bump-only:minor'
+ - 'default'
+ - 'bump-commit'
+
+bump-@-major:
+ - 'bump-only:major'
+ - 'default'
+ - 'bump-commit'
+
+examples:
+ - 'shell:examples'
+ - 'concat:examples'

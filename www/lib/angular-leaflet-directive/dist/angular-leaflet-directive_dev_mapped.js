@@ -1,5 +1,5 @@
 /*!
-*  angular-leaflet-directive 0.7.11 2015-04-05
+*  angular-leaflet-directive 0.7.15 2015-04-27
 *  angular-leaflet-directive - An AngularJS directive to easily interact with Leaflet maps
 *  git: https://github.com/tombatossals/angular-leaflet-directive
 */
@@ -24,7 +24,9 @@ angular.module("leaflet-directive", []).directive('leaflet',
             layers         : '=',
             controls       : '=',
             decorations    : '=',
-            eventBroadcast : '='
+            eventBroadcast : '=',
+            markersWatchOptions : '=',
+            geojsonWatchOptions : '='
         },
         transclude: true,
         template: '<div class="angular-leaflet-map"><div ng-transclude></div></div>',
@@ -206,8 +208,8 @@ angular.module("leaflet-directive").factory('leafletBoundsHelpers', function ($l
 });
 
 angular.module("leaflet-directive").factory('leafletControlHelpers', function ($rootScope, $log, leafletHelpers, leafletMapDefaults) {
-    var isObject = leafletHelpers.isObject,
-        isDefined = leafletHelpers.isDefined;
+    var isDefined = leafletHelpers.isDefined;
+    var isObject = leafletHelpers.isObject;
     var _controls = {};
 
     var _controlLayersMustBeVisible = function(baselayers, overlays, mapId) {
@@ -216,21 +218,35 @@ angular.module("leaflet-directive").factory('leafletControlHelpers', function ($
             return false;
         }
 
-        var numberOfLayers = 0;
+        var atLeastOneControlItemMustBeShown = false;
+
         if (isObject(baselayers)) {
-            numberOfLayers += Object.keys(baselayers).length;
+            Object.keys(baselayers).forEach(function(key) {
+                var layer = baselayers[key];
+                if (!isDefined(layer.layerOptions) || layer.layerOptions.showOnSelector !== false) {
+                    atLeastOneControlItemMustBeShown = true;
+                }
+            });
         }
+
         if (isObject(overlays)) {
-            numberOfLayers += Object.keys(overlays).length;
+            Object.keys(overlays).forEach(function(key) {
+                var layer = overlays[key];
+                if (!isDefined(layer.layerParams) || layer.layerParams.showOnSelector !== false) {
+                    atLeastOneControlItemMustBeShown = true;
+                }
+            });
         }
-        return numberOfLayers > 1;
+
+        return atLeastOneControlItemMustBeShown;
     };
 
     var _createLayersControl = function(mapId) {
         var defaults = leafletMapDefaults.getDefaults(mapId);
         var controlOptions = {
             collapsed: defaults.controls.layers.collapsed,
-            position: defaults.controls.layers.position
+            position: defaults.controls.layers.position,
+            autoZIndex: false
         };
 
         angular.extend(controlOptions, defaults.controls.layers.options);
@@ -250,9 +266,9 @@ angular.module("leaflet-directive").factory('leafletControlHelpers', function ($
 
         updateLayersControl: function(map, mapId, loaded, baselayers, overlays, leafletLayers) {
             var i;
-
             var _layersControl = _controls[mapId];
             var mustBeLoaded = _controlLayersMustBeVisible(baselayers, overlays, mapId);
+
             if (isDefined(_layersControl) && loaded) {
                 for (i in leafletLayers.baselayers) {
                     _layersControl.removeLayer(leafletLayers.baselayers[i]);
@@ -260,7 +276,7 @@ angular.module("leaflet-directive").factory('leafletControlHelpers', function ($
                 for (i in leafletLayers.overlays) {
                     _layersControl.removeLayer(leafletLayers.overlays[i]);
                 }
-                _layersControl.removeFrom(map);
+                map.removeControl(_layersControl);
                 delete _controls[mapId];
             }
 
@@ -275,13 +291,14 @@ angular.module("leaflet-directive").factory('leafletControlHelpers', function ($
                     }
                 }
                 for (i in overlays) {
-                	var hideOverlayOnSelector = isDefined(overlays[i].layerOptions) &&
-                            overlays[i].layerOptions.showOnSelector === false;
+                	var hideOverlayOnSelector = isDefined(overlays[i].layerParams) &&
+                            overlays[i].layerParams.showOnSelector === false;
                     if (!hideOverlayOnSelector && isDefined(leafletLayers.overlays[i])) {
                         _layersControl.addOverlay(leafletLayers.overlays[i], overlays[i].name);
                     }
                 }
-                _layersControl.addTo(map);
+
+                map.addControl(_layersControl);
             }
             return mustBeLoaded;
         }
@@ -337,6 +354,49 @@ angular.module("leaflet-directive").service('leafletData', function ($log, $q, l
             return defer.promise;
         };
     });
+});
+
+angular.module("leaflet-directive")
+.service('leafletDirectiveControlsHelpers', function ($log, leafletData, leafletHelpers) {
+    var _isDefined = leafletHelpers.isDefined,
+        _isString = leafletHelpers.isString,
+        _isObject = leafletHelpers.isObject,
+        _mainErrorHeader = leafletHelpers.errorHeader;
+
+    var _errorHeader = _mainErrorHeader + '[leafletDirectiveControlsHelpers';
+
+    var _extend = function(id, thingToAddName, createFn, cleanFn){
+        var _fnHeader = _errorHeader + '.extend] ';
+        var extender = {};
+        if(!_isDefined(thingToAddName)){
+            $log.error(_fnHeader + 'thingToAddName cannot be undefined');
+            return;
+        }
+
+        if(_isString(thingToAddName) && _isDefined(createFn) && _isDefined(cleanFn)){
+            extender[thingToAddName] = {
+                create: createFn,
+                clean: cleanFn
+            };
+        }
+        else if(_isObject(thingToAddName) && !_isDefined(createFn) && !_isDefined(cleanFn)){
+            extender = thingToAddName;
+        }
+        else{
+            $log.error(_fnHeader + 'incorrect arguments');
+            return;
+        }
+
+        //add external control to create / destroy markers without a watch
+        leafletData.getDirectiveControls().then(function(controls){
+            angular.extend(controls, extender);
+            leafletData.setDirectiveControls(controls, id);
+        });
+    };
+
+    return {
+        extend: _extend
+    };
 });
 
 angular.module("leaflet-directive").factory('leafletEvents',
@@ -427,7 +487,8 @@ angular.module("leaflet-directive")
 
 angular.module("leaflet-directive").factory('leafletHelpers', function ($q, $log) {
     var _errorHeader = '[AngularJS - Leaflet] ';
-
+    var _copy = angular.copy;
+    var _clone = _copy;
     /*
     For parsing paths to a field in an object
 
@@ -529,6 +590,8 @@ angular.module("leaflet-directive").factory('leafletHelpers', function ($q, $log
     };
 
     return {
+        copy:_copy,
+        clone:_clone,
         errorHeader: _errorHeader,
         getObjectValue: _getObjectValue,
         getObjectArrayPath:_getObjectArrayPath,
@@ -639,13 +702,15 @@ angular.module("leaflet-directive").factory('leafletHelpers', function ($q, $log
             d[id].resolvedDefer = true;
         },
 
+        FullScreenControlPlugin: {
+            isLoaded: function() {
+                return angular.isDefined(L.Control.Fullscreen);
+            }
+        },
+
         AwesomeMarkersPlugin: {
             isLoaded: function() {
-                if (angular.isDefined(L.AwesomeMarkers) && angular.isDefined(L.AwesomeMarkers.Icon)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return angular.isDefined(L.AwesomeMarkers) && angular.isDefined(L.AwesomeMarkers.Icon);
             },
             is: function(icon) {
                 if (this.isLoaded()) {
@@ -786,7 +851,12 @@ angular.module("leaflet-directive").factory('leafletHelpers', function ($q, $log
                 return angular.isDefined(L.tileLayer.chinaProvider);
             }
         },
-        HeatMapLayerPlugin: {
+        HeatLayerPlugin: {
+            isLoaded: function() {
+                return angular.isDefined(L.heatLayer);
+            }
+        },
+        WebGLHeatMapLayerPlugin: {
             isLoaded: function() {
                 return angular.isDefined(L.TileLayer.WebGLHeatMap);
             }
@@ -914,6 +984,25 @@ angular.module("leaflet-directive").factory('leafletHelpers', function ($q, $log
                         return false;
                     }
                 }
+            }
+        },
+        /*
+         watchOptions - object to set deep nested watches and turn off watches all together
+         (rely on control / functional updates)
+         watchOptions - Object
+             doWatch:boolean
+             isDeep:boolean (sets $watch(function,isDeep))
+             individual
+                 doWatch:boolean
+                 isDeep:boolean
+         */
+        //legacy defaults
+        watchOptions: {
+            doWatch:true,
+            isDeep: true,
+            individual:{
+                doWatch:true,
+                isDeep: true
             }
         }
     };
@@ -1086,11 +1175,13 @@ angular.module('leaflet-directive').service('leafletIterators', function ($log, 
   };
 });
 
-angular.module("leaflet-directive").factory('leafletLayerHelpers', function ($rootScope, $log, leafletHelpers) {
-    var Helpers = leafletHelpers,
-        isString = leafletHelpers.isString,
-        isObject = leafletHelpers.isObject,
-        isDefined = leafletHelpers.isDefined;
+angular.module("leaflet-directive")
+.factory('leafletLayerHelpers', function ($rootScope, $log, leafletHelpers) {
+    var Helpers = leafletHelpers;
+    var isString = leafletHelpers.isString;
+    var isObject = leafletHelpers.isObject;
+    var isArray = leafletHelpers.isArray;
+    var isDefined = leafletHelpers.isDefined;
 
     var utfGridCreateLayer = function(params) {
         if (!Helpers.UTFGridPlugin.isLoaded()) {
@@ -1279,16 +1370,36 @@ angular.module("leaflet-directive").factory('leafletLayerHelpers', function ($ro
                 return new L.BingLayer(params.key, params.options);
             }
         },
-        heatmap: {
+        webGLHeatmap: {
             mustHaveUrl: false,
             mustHaveData: true,
             createLayer: function(params) {
-                if (!Helpers.HeatMapLayerPlugin.isLoaded()) {
+                if (!Helpers.WebGLHeatMapLayerPlugin.isLoaded()) {
                     return;
                 }
                 var layer = new L.TileLayer.WebGLHeatMap(params.options);
                 if (isDefined(params.data)) {
                     layer.setData(params.data);
+                }
+
+                return layer;
+            }
+        },
+        heat: {
+            mustHaveUrl: false,
+            mustHaveData: true,
+            createLayer: function(params) {
+                if (!Helpers.HeatLayerPlugin.isLoaded()) {
+                    return;
+                }
+                var layer = new L.heatLayer();
+
+                if (isArray(params.data)) {
+                    layer.setLatLngs(params.data);
+                }
+
+                if (isObject(params.options)) {
+                    layer.setOptions(params.options);
                 }
 
                 return layer;
@@ -1811,7 +1922,7 @@ angular.module("leaflet-directive")
             if (isDefined(markerData.label.options) && markerData.label.options.noHide === true) {
                 marker.showLabel();
             }
-            if (compileMessage) {
+            if (compileMessage && isDefined(marker.label)) {
                 $compile(marker.label._container)(labelScope);
             }
         }
@@ -1882,22 +1993,25 @@ angular.module("leaflet-directive")
             groups[groupName].addLayer(marker);
         },
 
-        listenMarkerEvents: function(marker, markerData, leafletScope, watching) {
+        listenMarkerEvents: function(marker, markerData, leafletScope) {
+            //these should be deregistered on destroy .. possible leake
+            //handles should not be closures since they will need to be removed
             marker.on("popupopen", function(/* event */) {
-                if (watching) {
-                    safeApply(leafletScope, function() {
-                        markerData.focus = true;
-                    });
-                } else {
-                    _manageOpenPopup(marker, markerData);
-                }
+                safeApply(leafletScope, function() {
+                    markerData.focus = true;
+                    _manageOpenPopup(marker, markerData);//needed since markerData is now a copy
+                });
             });
             marker.on("popupclose", function(/* event */) {
-                if (watching) {
-                    safeApply(leafletScope, function() {
-                        markerData.focus = false;
-                    });
-                }
+                safeApply(leafletScope, function() {
+                    markerData.focus = false;
+                });
+            });
+            marker.on("add", function(/* event */) {
+                safeApply(leafletScope, function() {
+                  if('label' in markerData)
+                    _manageOpenLabel(marker, markerData);
+                });
             });
         },
 
@@ -2126,30 +2240,7 @@ angular.module("leaflet-directive")
             }, isDeepWatch);
         },
         string: _string,
-        log: _log,
-        /*
-         attrs of note:
-         watchMarkers - deep watch of every single nested marker (old way) deprecated
-
-         markersNested - markers are a nested structure by layer
-         _markersWatchOptions - object to set deep nested watches and turn off watches all together
-         (rely on control / functional updates)
-         _markersWatchOptions - Object
-             doWatch:boolean
-             isDeep:boolean (sets $watch(function,isDeep))
-             individual
-                 doWatch:boolean
-                 isDeep:boolean
-         */
-        //legacy defaults
-        markersWatchOptions: {
-            doWatch:true,
-            isDeep: true,
-            individual:{
-                doWatch:true,
-                isDeep: true
-            }
-        }
+        log: _log
     };
 });
 
@@ -2403,6 +2494,48 @@ angular.module("leaflet-directive").factory('leafletPathsHelpers', function ($ro
             return pathTypes[path.type].createPath(options);
         }
     };
+});
+
+angular.module("leaflet-directive")
+.service('leafletWatchHelpers', function (){
+
+    var _maybe = function(scope, watchFunctionName, thingToWatchStr, watchOptions, initCb){
+        //watchOptions.isDeep is/should be ignored in $watchCollection
+        var unWatch = scope[watchFunctionName](thingToWatchStr, function(newValue, oldValue) {
+            initCb(newValue, oldValue);
+            if(!watchOptions.doWatch)
+                unWatch();
+        }, watchOptions.isDeep);
+
+        return unWatch;
+    };
+
+  /*
+  @name: maybeWatch
+  @description: Utility to watch something once or forever.
+  @returns unWatch function
+  @param watchOptions - see markersWatchOptions and or derrivatives. This object is used
+  to set watching to once and its watch depth.
+  */
+  var _maybeWatch = function(scope, thingToWatchStr, watchOptions, initCb){
+      return _maybe(scope, '$watch', thingToWatchStr, watchOptions, initCb);
+  };
+
+  /*
+  @name: _maybeWatchCollection
+  @description: Utility to watch something once or forever.
+  @returns unWatch function
+  @param watchOptions - see markersWatchOptions and or derrivatives. This object is used
+  to set watching to once and its watch depth.
+  */
+  var _maybeWatchCollection = function(scope, thingToWatchStr, watchOptions, initCb){
+      return _maybe(scope, '$watchCollection', thingToWatchStr, watchOptions, initCb);
+  };
+
+  return {
+    maybeWatch: _maybeWatch,
+    maybeWatchCollection: _maybeWatchCollection
+  };
 });
 
 angular.module("leaflet-directive").directive('bounds', function ($log, $timeout, leafletHelpers, leafletBoundsHelpers) {
@@ -2695,6 +2828,15 @@ angular.module("leaflet-directive").directive('controls', function ($log, leafle
                     map.addControl(scaleControl);
                 }
 
+                if (isDefined(controls.fullscreen)) {
+                    if (leafletHelpers.FullScreenControlPlugin.isLoaded()) {
+                        var fullscreenControl = new L.Control.Fullscreen(controls.fullscreen);
+                        map.addControl(fullscreenControl);
+                    } else {
+                        $log.error('[AngularJS - Leaflet] Fullscreen plugin is not loaded.');
+                    }
+                }
+
                 if (isDefined(controls.custom)) {
                     for(var i in controls.custom) {
                         map.addControl(controls.custom[i]);
@@ -2707,7 +2849,7 @@ angular.module("leaflet-directive").directive('controls', function ($log, leafle
 
 angular.module("leaflet-directive").directive("decorations", function($log, leafletHelpers) {
 	return {
-		restrict: "A", 
+		restrict: "A",
 		scope: false,
 		replace: false,
 		require: 'leaflet',
@@ -2743,12 +2885,12 @@ angular.module("leaflet-directive").directive("decorations", function($log, leaf
 			controller.getMap().then(function(map) {
 				leafletScope.$watch("decorations", function(newDecorations) {
 					for (var name in leafletDecorations) {
-						if (!isDefined(newDecorations) || !isDefined(newDecorations[name])) {
+						if (!isDefined(newDecorations[name]) || !angular.equals(newDecorations[name], leafletDecorations)) {
 							map.removeLayer(leafletDecorations[name]);
 							delete leafletDecorations[name];
 						}
 					}
-					
+
 					for (var newName in newDecorations) {
 						var decorationData = newDecorations[newName],
 							newDecoration = createDecoration(decorationData);
@@ -2764,6 +2906,7 @@ angular.module("leaflet-directive").directive("decorations", function($log, leaf
 		}
 	};
 });
+
 angular.module("leaflet-directive").directive('eventBroadcast', function ($log, $rootScope, leafletHelpers, leafletEvents) {
     return {
         restrict: "A",
@@ -2829,7 +2972,16 @@ angular.module("leaflet-directive").directive('eventBroadcast', function ($log, 
     };
 });
 
-angular.module("leaflet-directive").directive('geojson', function ($log, $rootScope, leafletData, leafletHelpers) {
+angular.module("leaflet-directive")
+.directive('geojson', function ($log, $rootScope, leafletData, leafletHelpers,
+    leafletWatchHelpers, leafletDirectiveControlsHelpers,leafletIterators) {
+
+    var _maybeWatch = leafletWatchHelpers.maybeWatch,
+        _watchOptions = leafletHelpers.watchOptions,
+        _extendDirectiveControls = leafletDirectiveControlsHelpers.extend,
+        hlp = leafletHelpers,
+        $it = leafletIterators;
+
     return {
         restrict: "A",
         scope: false,
@@ -2840,18 +2992,13 @@ angular.module("leaflet-directive").directive('geojson', function ($log, $rootSc
             var safeApply = leafletHelpers.safeApply,
                 isDefined = leafletHelpers.isDefined,
                 leafletScope  = controller.getLeafletScope(),
-                leafletGeoJSON = {};
+                leafletGeoJSON = {},
+                _hasSetLeafletData = false;
 
             controller.getMap().then(function(map) {
-                leafletScope.$watchCollection("geojson", function(geojson) {
-                    if (isDefined(leafletGeoJSON) && map.hasLayer(leafletGeoJSON)) {
-                        map.removeLayer(leafletGeoJSON);
-                    }
+                var watchOptions = leafletScope.geojsonWatchOptions || _watchOptions;
 
-                    if (!(isDefined(geojson) && isDefined(geojson.data))) {
-                        return;
-                    }
-
+                var _hookUpEvents = function(geojson){
                     var resetStyleOnMouseout = geojson.resetStyleOnMouseout;
                     var onEachFeature;
 
@@ -2859,7 +3006,7 @@ angular.module("leaflet-directive").directive('geojson', function ($log, $rootSc
                         onEachFeature = geojson.onEachFeature;
                     } else {
                         onEachFeature = function(feature, layer) {
-                            if (leafletHelpers.LabelPlugin.isLoaded() && isDefined(geojson.label)) {
+                            if (leafletHelpers.LabelPlugin.isLoaded() && isDefined(feature.properties.description)) {
                                 layer.bindLabel(feature.properties.description);
                             }
 
@@ -2871,6 +3018,7 @@ angular.module("leaflet-directive").directive('geojson', function ($log, $rootSc
                                 },
                                 mouseout: function(e) {
                                     if (resetStyleOnMouseout) {
+                                        //this is broken on nested needs to traverse
                                         leafletGeoJSON.resetStyle(e.target);
                                     }
                                     safeApply(leafletScope, function() {
@@ -2885,8 +3033,40 @@ angular.module("leaflet-directive").directive('geojson', function ($log, $rootSc
                             });
                         };
                     }
+                    return onEachFeature;
+                };
+
+                var isNested = (hlp.isDefined(attrs.geojsonNested) &&
+                    hlp.isTruthy(attrs.geojsonNested));
+
+                var _clean = function(){
+                    if(!leafletGeoJSON)
+                        return;
+                    var _remove = function(lObject) {
+                        if (isDefined(lObject) && map.hasLayer(lObject)) {
+                            map.removeLayer(lObject);
+                        }
+                    };
+                    if(isNested) {
+                        $it.each(leafletGeoJSON, function(lObject) {
+                            _remove(lObject);
+                        });
+                        return;
+                    }
+                    _remove(leafletGeoJSON);
+                };
+
+                var _addGeojson = function(model, maybeName){
+                    var geojson = angular.copy(model);
+                    if (!(isDefined(geojson) && isDefined(geojson.data))) {
+                        return;
+                    }
+                    var onEachFeature = _hookUpEvents(geojson);
 
                     if (!isDefined(geojson.options)) {
+                        //right here is why we use a clone / copy (we modify and thus)
+                        //would kick of a watcher.. we need to be more careful everywhere
+                        //for stuff like this
                         geojson.options = {
                             style: geojson.style,
                             filter: geojson.filter,
@@ -2895,10 +3075,42 @@ angular.module("leaflet-directive").directive('geojson', function ($log, $rootSc
                         };
                     }
 
-                    leafletGeoJSON = L.geoJson(geojson.data, geojson.options);
-                    leafletData.setGeoJSON(leafletGeoJSON, attrs.id);
-                    leafletGeoJSON.addTo(map);
+                    var lObject = L.geoJson(geojson.data, geojson.options);
 
+                    if(maybeName && hlp.isString(maybeName)){
+                        leafletGeoJSON[maybeName] = lObject;
+                    }
+                    else{
+                        leafletGeoJSON = lObject;
+                    }
+
+                    lObject.addTo(map);
+
+                    if(!_hasSetLeafletData){//only do this once and play with the same ref forever
+                        _hasSetLeafletData = true;
+                        leafletData.setGeoJSON(leafletGeoJSON, attrs.id);
+                    }
+                };
+
+                var _create = function(model){
+                    _clean();
+                    if(isNested) {
+                        if(!model || !Object.keys(model).length)
+                            return;
+                        $it.each(model, function(m, name) {
+                            //name could be layerName and or groupName
+                            //for now it is not tied to a layer
+                            _addGeojson(m,name);
+                        });
+                        return;
+                    }
+                    _addGeojson(model);
+                };
+
+                _extendDirectiveControls(attrs.id, 'geojson', _create, _clean);
+
+                _maybeWatch(leafletScope,'geojson', watchOptions, function(geojson){
+                    _create(geojson);
                 });
             });
         }
@@ -3216,15 +3428,20 @@ angular.module("leaflet-directive").directive('layers', function ($log, $q, leaf
                 }
 
                 // Watch for the base layers
-                leafletScope.$watch('layers.baselayers', function(newBaseLayers) {
+                leafletScope.$watch('layers.baselayers', function(newBaseLayers, oldBaseLayers) {
+                    if(angular.equals(newBaseLayers, oldBaseLayers)) return;
                     // Delete layers from the array
                     for (var name in leafletLayers.baselayers) {
-                        if (!isDefined(newBaseLayers[name])) {
+                        if (!isDefined(newBaseLayers[name]) || newBaseLayers[name].doRefresh) {
                             // Remove from the map if it's on it
                             if (map.hasLayer(leafletLayers.baselayers[name])) {
                                 map.removeLayer(leafletLayers.baselayers[name]);
                             }
                             delete leafletLayers.baselayers[name];
+
+                            // if (newBaseLayers[name].doRefresh) {
+                            //     newBaseLayers[name].doRefresh = false;
+                            // }
                         }
                     }
                     // add new layers
@@ -3266,16 +3483,21 @@ angular.module("leaflet-directive").directive('layers', function ($log, $q, leaf
                 }, true);
 
                 // Watch for the overlay layers
-                leafletScope.$watch('layers.overlays', function(newOverlayLayers) {
+                leafletScope.$watch('layers.overlays', function(newOverlayLayers, oldOverlayLayers) {
+                    if(angular.equals(newOverlayLayers, oldOverlayLayers)) return;
                     // Delete layers from the array
                     for (var name in leafletLayers.overlays) {
-                        if (!isDefined(newOverlayLayers[name])) {
+                        if (!isDefined(newOverlayLayers[name]) || newOverlayLayers[name].doRefresh) {
                             // Remove from the map if it's on it
                             if (map.hasLayer(leafletLayers.overlays[name])) {
                                 map.removeLayer(leafletLayers.overlays[name]);
                             }
                             // TODO: Depending on the layer type we will have to delete what's included on it
                             delete leafletLayers.overlays[name];
+
+                            // if (newOverlayLayers[name].doRefresh) {
+                            //     newOverlayLayers[name].doRefresh = false;
+                            // }
                         }
                     }
 
@@ -3283,11 +3505,13 @@ angular.module("leaflet-directive").directive('layers', function ($log, $q, leaf
                     for (var newName in newOverlayLayers) {
                         if (!isDefined(leafletLayers.overlays[newName])) {
                             var testOverlayLayer = createLayer(newOverlayLayers[newName]);
-                            if (isDefined(testOverlayLayer)) {
-                                leafletLayers.overlays[newName] = testOverlayLayer;
-                                if (newOverlayLayers[newName].visible === true) {
-                                    map.addLayer(leafletLayers.overlays[newName]);
-                                }
+                            if (!isDefined(testOverlayLayer)) {
+                                // If the layer creation fails, continue to the next overlay
+                                continue;
+                            }
+                            leafletLayers.overlays[newName] = testOverlayLayer;
+                            if (newOverlayLayers[newName].visible === true) {
+                                map.addLayer(leafletLayers.overlays[newName]);
                             }
                         }
 
@@ -3426,8 +3650,9 @@ angular.module("leaflet-directive").directive('legend', function ($log, $http, l
     });
 
 angular.module("leaflet-directive").directive('markers',
-    function ($log, $rootScope, $q, leafletData, leafletHelpers,
-              leafletMapDefaults, leafletMarkersHelpers, leafletEvents, leafletIterators) {
+    function ($log, $rootScope, $q, leafletData, leafletHelpers, leafletMapDefaults,
+      leafletMarkersHelpers, leafletEvents, leafletIterators, leafletWatchHelpers,
+      leafletDirectiveControlsHelpers) {
     //less terse vars to helpers
     var isDefined = leafletHelpers.isDefined,
         errorHeader = leafletHelpers.errorHeader,
@@ -3440,7 +3665,9 @@ angular.module("leaflet-directive").directive('markers',
         createMarker = leafletMarkersHelpers.createMarker,
         deleteMarker = leafletMarkersHelpers.deleteMarker,
         $it = leafletIterators,
-        _markersWatchOptions = leafletMarkersHelpers.markersWatchOptions;
+        _markersWatchOptions = leafletHelpers.watchOptions,
+        maybeWatch = leafletWatchHelpers.maybeWatch,
+        extendDirectiveControls = leafletDirectiveControlsHelpers.extend;
 
     var _maybeAddMarkerToLayer = function(layerName, layers, model, marker, doIndividualWatch, map){
 
@@ -3485,7 +3712,11 @@ angular.module("leaflet-directive").directive('markers',
             }
 
             if (!isDefined(leafletMarkers[newName])) {
-                var model = markersToRender[newName];
+                //(nmccready) very important to not have model changes when lObject is changed
+                //this might be desirable in some cases but it causes two-way binding to lObject which is not ideal
+                //if it is left as the reference then all changes from oldModel vs newModel are ignored
+                //see _destroy (where modelDiff becomes meaningless if we do not copy here)
+                var model = Helpers.copy(markersToRender[newName]);
                 var marker = createMarker(model);
                 var layerName = (model? model.layer : undefined) || maybeLayerName; //original way takes pref
                 if (!isDefined(marker)) {
@@ -3535,28 +3766,31 @@ angular.module("leaflet-directive").directive('markers',
             }
         }
     };
-    var _destroy = function(markerModels, lMarkers, map, layers){
+    var _destroy = function(markerModels, oldMarkerModels, lMarkers, map, layers){
         // Delete markers from the array
-        var hasLogged = false;
+        var hasLogged = false,
+          modelIsDiff = false;
+        var doCheckOldModel =  isDefined(oldMarkerModels);
         for (var name in lMarkers) {
             if(!hasLogged) {
                 $log.debug(errorHeader + "[markers] destroy: ");
                 hasLogged = true;
             }
-            if (!isDefined(markerModels) || !Object.keys(markerModels).length ||
-                !isDefined(markerModels[name]) || !Object.keys(markerModels[name]).length) {
+
+            if(doCheckOldModel){
+              //might want to make the option (in watch options) to disable deep checking
+              //ie the options to only check !== (reference check) instead of angular.equals (slow)
+              modelIsDiff = !angular.equals(markerModels[name],oldMarkerModels[name]);
+            }
+            if (!isDefined(markerModels) ||
+                !Object.keys(markerModels).length ||
+                !isDefined(markerModels[name]) ||
+                !Object.keys(markerModels[name]).length ||
+                modelIsDiff) {
                 deleteMarker(lMarkers[name], map, layers);
                 delete lMarkers[name];
             }
         }
-    };
-
-    var _maybeWatch = function(scope, watchOptions, initCb){
-        var unWatch = scope.$watch('markers', function(newMarkers) {
-            initCb(newMarkers);
-            if(!watchOptions.doWatch)
-                unWatch();
-        }, watchOptions.isDeep);
     };
 
     return {
@@ -3587,18 +3821,18 @@ angular.module("leaflet-directive").directive('markers',
 
                 // backwards compat
                 if(isDefined(attrs.watchMarkers))
-                    watchOptions.individual.doWatch =
+                  watchOptions.doWatch = watchOptions.individual.doWatch =
                         (!isDefined(attrs.watchMarkers) || Helpers.isTruthy(attrs.watchMarkers));
 
                 var isNested = (isDefined(attrs.markersNested) && Helpers.isTruthy(attrs.markersNested));
 
                 getLayers().then(function(layers) {
-                    var _clean = function(models){
-                        _destroy(models, leafletMarkers, map, layers);
+                    var _clean = function(models, oldModels){
+                        _destroy(models, oldModels, leafletMarkers, map, layers);
                     };
 
-                    var _create = function(models){
-                        _clean(models);
+                    var _create = function(models, oldModels){
+                        _clean(models, oldModels);
                         if(isNested) {
                             $it.each(models, function(markersToAdd, layerName) {
                                 _addMarkers(markersToAdd, map, layers, leafletMarkers, leafletScope,
@@ -3609,58 +3843,17 @@ angular.module("leaflet-directive").directive('markers',
                         _addMarkers(models, map, layers, leafletMarkers, leafletScope,
                             watchOptions);
                     };
-                    //add external control to create / destroy markers without a watch
-                    leafletData.getDirectiveControls().then(function(controls){
-                        angular.extend(controls, {
-                            markers:{
-                                create: _create,
-                                clean: _clean
-                            }
-                        });
-                        leafletData.setDirectiveControls(controls, attrs.id);
-                    });
+                    extendDirectiveControls(attrs.id, 'markers', _create, _clean);
                     leafletData.setMarkers(leafletMarkers, attrs.id);
 
-                    _maybeWatch(leafletScope, watchOptions, function(newMarkers){
-                        _create(newMarkers);
+                    maybeWatch(leafletScope,'markers', watchOptions, function(newMarkers, oldMarkers){
+                        _create(newMarkers, oldMarkers);
                     });
                 });
             });
         }
     };
 });
-
-
-angular.module("leaflet-directive").directive('markersWatchOptions',
-    function ($log, $rootScope, $q, leafletData, leafletHelpers, leafletMarkersHelpers) {
-    //less terse vars to helpers
-    var isDefined = leafletHelpers.isDefined,
-        errorHeader = leafletHelpers.errorHeader,
-        isObject = leafletHelpers.isObject,
-        _markersWatchOptions = leafletMarkersHelpers.markersWatchOptions;
-
-    return {
-        restrict: "A",
-        scope: false,
-        replace: false,
-        require: ['leaflet'],
-
-        link: function(scope, element, attrs, controller) {
-            var mapController = controller[0],
-                leafletScope = mapController.getLeafletScope();
-
-
-                if(isDefined(scope.markerWatchOptions)) {
-                    if(isObject(scope.markerWatchOptions))
-                        angular.extend(_markersWatchOptions, scope.markerWatchOptions);
-                    else
-                        $log.error(errorHeader + ' [markers] markersWatchOptions is not an object');
-                    leafletScope.markersWatchOptions = _markersWatchOptions;
-                }
-        }
-    };
-});
-
 
 angular.module("leaflet-directive").directive('maxbounds', function ($log, leafletMapDefaults, leafletBoundsHelpers, leafletHelpers) {
     return {
@@ -3914,6 +4107,45 @@ angular.module("leaflet-directive").directive('tiles', function ($log, leafletDa
             });
         }
     };
+});
+
+/*
+    Create multiple similar directives for watchOptions to support directiveControl
+    instead. (when watches are disabled)
+    NgAnnotate does not work here due to the functional creation
+*/
+['markers', 'geojson'].forEach(function(name){
+    angular.module("leaflet-directive").directive(name + 'WatchOptions', [
+        '$log', '$rootScope', '$q', 'leafletData', 'leafletHelpers',
+        function ($log, $rootScope, $q, leafletData, leafletHelpers) {
+
+            var isDefined = leafletHelpers.isDefined,
+                errorHeader = leafletHelpers.errorHeader,
+                isObject = leafletHelpers.isObject,
+                _watchOptions = leafletHelpers.watchOptions;
+
+            return {
+                restrict: "A",
+                scope: false,
+                replace: false,
+                require: ['leaflet'],
+
+                link: function (scope, element, attrs, controller) {
+                    var mapController = controller[0],
+                        leafletScope = mapController.getLeafletScope();
+
+                    mapController.getMap().then(function () {
+                        if (isDefined(scope[name + 'WatchOptions'])) {
+                            if (isObject(scope[name + 'WatchOptions']))
+                                angular.extend(_watchOptions, scope[name + 'WatchOptions']);
+                            else
+                                $log.error(errorHeader + '[' + name + 'WatchOptions] is not an object');
+                            leafletScope[name + 'WatchOptions'] = _watchOptions;
+                        }
+                    });
+                }
+            };
+    }]);
 });
 
 angular.module("leaflet-directive")
@@ -4256,13 +4488,14 @@ angular.module("leaflet-directive")
 });
 
 angular.module("leaflet-directive")
-.factory('leafletPathEvents', function ($rootScope, $q, $log, leafletHelpers, leafletLabelEvents) {
+.factory('leafletPathEvents', function ($rootScope, $q, $log, leafletHelpers, leafletLabelEvents, leafletEventsHelpers) {
     var safeApply = leafletHelpers.safeApply,
         isDefined = leafletHelpers.isDefined,
         isObject = leafletHelpers.isObject,
         Helpers = leafletHelpers,
         errorHeader = leafletHelpers.errorHeader,
-        lblHelp = leafletLabelEvents;
+        lblHelp = leafletLabelEvents,
+        fire = leafletEventsHelpers.fire;
 
     var _genDispatchPathEvent = function (eventName, logic, leafletScope, lObject, name, model, layerName) {
         return function (e) {
@@ -4368,7 +4601,7 @@ angular.module("leaflet-directive")
         }
 
         if (Helpers.LabelPlugin.isLoaded() && isDefined(lObject.label)) {
-            lblHelp.genLabelEvents(leafletScope, logic, lObject, name);
+            lblHelp.genLabelEvents(name, logic, leafletScope, lObject, model);
         }
     };
 

@@ -101,21 +101,24 @@ angular.module('ifiske.controllers')
             });
         });
 
-        DB.search('').then(function(areas) {
-            for(var i = 0; i < areas.length; ++i) {
-                var a = areas[i];
-                $scope.markers['area' + i] = {
-                    layer: 'fishareas',
-                    lat: a.lat,
-                    lng: a.lng,
-                    getMessageScope: function() {
-                        var new_scope = $scope.$new();
-                        new_scope.area = a;
-                        return new_scope;
-                    },
-                    message: '<a ui-sref="app.area({id: area.ID })">{{area.t}}</a>'
-                };
-            }
+        $scope.$on('$ionicView.beforeEnter', function() {
+            console.log('hi!');
+            DB.search('').then(function(areas) {
+                for(var i = 0; i < areas.length; ++i) {
+                    var a = areas[i];
+                    $scope.markers['area' + i] = {
+                        layer: 'fishareas',
+                        lat: a.lat,
+                        lng: a.lng,
+                        getMessageScope: function() {
+                            var new_scope = $scope.$new();
+                            new_scope.area = a;
+                            return new_scope;
+                        },
+                        message: '<a ui-sref="app.area({id: area.ID })">{{area.t}}</a>'
+                    };
+                }
+            });
         });
     }
 ]);

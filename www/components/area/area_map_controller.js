@@ -60,7 +60,10 @@ angular.module('ifiske.controllers')
                             lat: poi.la,
                             lng: poi.lo,
                             icon: icons[poi.type],
-                            message: poi.t
+                            message: '<h4>' + poi.t + '</h4><p>' + poi.d + '</p>',
+                            popupOptions: {
+                                maxWidth: window.innerWidth - 50
+                            }
                         };
                     }
                     $scope.map.markers.area = {

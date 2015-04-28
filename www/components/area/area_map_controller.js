@@ -7,7 +7,8 @@ angular.module('ifiske.controllers')
     '$cordovaGeolocation',
     '$cordovaDeviceOrientation',
     '$timeout',
-    function($scope, DB, leafletEvents, $ionicPlatform, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout) {
+    'localStorage',
+    function($scope, DB, leafletEvents, $ionicPlatform, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout, localStorage) {
         function updateMypos(obj) {
             //rotate iconAngle 45 deg since the icon is tilted by default
             obj.iconAngle = (obj.iconAngle | 0) - 45;
@@ -30,8 +31,7 @@ angular.module('ifiske.controllers')
 
         var icons = {};
         var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
-        //TODO: Get apikey from ifiske-api
-        var apikey = 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg';
+        var apikey = localStorage.get('mapbox_api');
 
         var updateMap = function() {
             $scope.map.center = {

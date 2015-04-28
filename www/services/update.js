@@ -37,9 +37,9 @@
                                 DB.populateTable('Area_Fish', fishArr)
                             ])
                             .then(function() {
-                                console.log('Populated Area');
+                                return 'Area';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -47,9 +47,9 @@
                         .then(function(data) {
                             return DB.populateTable('Product', data)
                             .then(function() {
-                                console.log('Populated Product');
+                                return 'Product';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -57,9 +57,9 @@
                         .then(function(data) {
                             return DB.populateTable('County', data)
                             .then(function() {
-                                console.log('Populated County');
+                                return 'County';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -67,9 +67,9 @@
                         .then(function(data) {
                             return DB.populateTable('Municipality', data)
                             .then(function() {
-                                console.log('Populated Municipality');
+                                return 'Municipality';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -77,9 +77,9 @@
                         .then(function(data) {
                             return DB.populateTable('Fish', data)
                             .then(function() {
-                                console.log('Populated Fish');
+                                return 'Fish';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -87,9 +87,9 @@
                         .then(function(data) {
                             return DB.populateTable('Rule', data)
                             .then(function() {
-                                console.log('Populated Rule');
+                                return 'Rule';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -97,9 +97,9 @@
                         .then(function(data) {
                             return DB.populateTable('Technique', data)
                             .then(function() {
-                                console.log('Populated Technique');
+                                return 'Technique';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -107,9 +107,9 @@
                         .then(function(data) {
                             return DB.populateTable('Organization', data)
                             .then(function() {
-                                console.log('Populated Organization');
+                                return 'Organization';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -117,9 +117,9 @@
                         .then(function(data) {
                             return DB.populateTable('Poi', data)
                             .then(function() {
-                                console.log('Populated Poi');
+                                return 'Poi';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -127,9 +127,9 @@
                         .then(function(data) {
                             return DB.populateTable('Poi_Type', data)
                             .then(function() {
-                                console.log('Populated Poi_Type');
+                                return 'Poi_Type';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         }),
@@ -137,9 +137,9 @@
                         .then(function(data) {
                             return DB.populateTable('Polygon', data)
                             .then(function() {
-                                console.log('Populated Polygon');
+                                return 'Polygon';
                             }, function(err) {
-                                console.log(err);
+                                console.warn(err);
                                 return $q.reject(err);
                             });
                         })
@@ -153,7 +153,7 @@
                             console.log(data);
                             return DB.populateTable('User_Product', data)
                             .then(function() {
-                                console.log('Populated User_Product');
+                                return 'User_Product';
                             }, function(err) {
                                 console.log(err);
                                 return $q.reject(err);
@@ -169,7 +169,7 @@
                             return $q.all([
                                 DB.populateTable('User_Info', [data])
                                 .then(function() {
-                                    console.log('Populated User_Info');
+                                    return 'User_Info';
                                 }, function(err) {
                                     console.log(data);
                                     console.log(err);
@@ -177,7 +177,7 @@
                                 }),
                                 DB.populateTable('User_Number', numArr)
                                 .then(function() {
-                                    console.log('Populated User_Numbers');
+                                    return 'User_Numbers';
                                 }, function(err) {
                                     console.log(err);
                                     return $q.reject(err);
@@ -212,7 +212,6 @@
 
                     var aWeek = 1000 * 3600 * 24 * 7;
                     if (currentTime - lastUpdate > aWeek) {
-                        console.log(lastUpdate, currentTime, forced);
                         return $q.all([
                             DB.init()
                             .then(function() {
@@ -227,8 +226,8 @@
                                 }
                             })
 
-                            .then(function() {
-                                console.log('Populated all the things');
+                            .then(function(stuff) {
+                                console.log('Populated:', stuff);
                                 localStorage.set(LAST_UPDATE, currentTime);
                                 $ionicLoading.hide();
                             }, function(err) {
@@ -250,8 +249,8 @@
                                         return populate();
                                     })
 
-                                    .then(function() {
-                                        console.log('Populated all the things');
+                                    .then(function(stuff) {
+                                        console.log('Populated:', stuff);
                                         localStorage.set(LAST_UPDATE, currentTime);
                                         $ionicLoading.hide();
                                     }, function(err) {
@@ -271,6 +270,10 @@
                             API.get_contact_info()
                             .then(function(data) {
                                 localStorage.set('contactInfo', data);
+                            }),
+                            API.get_mapbox_api()
+                            .then(function(data) {
+                                localStorage.set('mapbox_api', data);
                             })
                         ]);
 

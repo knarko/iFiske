@@ -24,6 +24,9 @@ angular.module('ifiske.controllers')
             }
         }
 
+        var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
+        var apikey = localStorage.get('mapbox_api');
+
         angular.extend($scope, {
             center: {
                 lat: 62.0,
@@ -33,21 +36,21 @@ angular.module('ifiske.controllers')
             layers: {
                 baselayers: {
                     outdoors: {
-                        name: 'Utomhuskarta',
+                        name: 'Utomhus',
                         type: 'xyz',
-                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        url: mapboxUrl,
                         layerOptions: {
                             maptype: 'mapbox.outdoors',
-                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                            apikey: apikey
                         }
                     },
                     satellite: {
                         name: 'Satellit',
                         type: 'xyz',
-                        url: 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}',
+                        url: mapboxUrl,
                         layerOptions: {
                             maptype: 'mapbox.satellite',
-                            apikey: 'pk.eyJ1IjoibWFpc3RobyIsImEiOiI3Ums5R0IwIn0.DOhU81clHLEhTj81DIOjdg'
+                            apikey: apikey
                         }
                     }
                 },

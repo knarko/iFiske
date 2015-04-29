@@ -3,12 +3,13 @@
 	<div class="list list-inset">
 	    <form name="verifyForm">
 		<p class="text-center">
-		    <strong>Vi har skickat ett SMS till nummer {{phone}} med en aktiveringskod</strong>
+		    <strong>En aktiveringskod kommer skickas via SMS till {{phone}} inom kort</strong>
 		</p>
 		
 		<label for="vercode" class="input-label">Aktiveringskod:</label>
 		<label ng-class="{'label-error': verifyForm.vercode.$invalid &&
-				 verifyForm.vercode.$dirty}" class="item item-input">
+				 verifyForm.vercode.$dirty && verifyForm.vercode.length}" 
+                       class="item item-input">
 		    <input id="vercode" name="vercode" ng-model="vercode" type="text" 
 			   placeholder="1234" ng-pattern="/^\d{4}$/" required>
 		</label>

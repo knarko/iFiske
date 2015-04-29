@@ -47,10 +47,8 @@ angular.module('ifiske.controllers')
 			    }
 			}
 			if (data.texted) {
-			    $scope.info += 'sms';
+			    $scope.info += 'SMS';
 			}
-			$scope.info += '.';
-		        
                         
 			$state.go('^.resetpassword');
 

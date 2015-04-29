@@ -10,19 +10,20 @@ angular.module('ifiske.controllers')
 	'API',
 	function($scope, $state, $ionicHistory, $ionicPlatform, $ionicLoading, $cordovaToast, API) {
 	    'use strict';
-
 	    
 	    var user = "";
 	    
 	    /**
+             * ToDo: use to skip from lostpassword to resetpassword
 	     * skip
 	     * Submit handler for skip button
 	     */
-	    $scope.skip = function() {
-		$scope.info = "";
-		$state.go('^.resetpassword');
-	    };
-	    
+            /*
+	      $scope.skip = function() {
+	      $scope.info = "";
+	      $state.go('^.resetpassword');
+	      };
+            */	    
 
 	    /**
 	     * lostPassword
@@ -30,10 +31,11 @@ angular.module('ifiske.controllers')
 	     */
 	    $scope.lostPassword = function(form) {
 
-		$ionicLoading.show();
-		
-		user = form.user.$viewValue;
-		API.user_lost_password(user)
+	        $ionicLoading.show();
+
+	        user = form.user.$viewValue;
+
+	        API.user_lost_password(user)
 		    .then(function(data) {
 			
 			// Set info message for next view
@@ -48,12 +50,13 @@ angular.module('ifiske.controllers')
 			    $scope.info += 'sms';
 			}
 			$scope.info += '.';
-		
+		        
+                        
 			$state.go('^.resetpassword');
 
 		    }, function(error) {
 			//ToDo: handle timeout?
-			//ToDo: check error codes
+			//ToDo: check error codes?
 			form.user.$setValidity('invalidUser', false);
 		    })
 		    .finally($ionicLoading.hide);
@@ -68,22 +71,35 @@ angular.module('ifiske.controllers')
 	     */
 	    $scope.resetPassword = function(form) {
 		$ionicLoading.show();
-
+		
+		
 		API.user_reset_password(user, form.password.$viewValue, form.code.$viewValue)
 		    .then(function(data) {
-			console.log(data);
-			// Success toast
-			$ionicPlatform.ready(function() {
-			    $cordovaToast.showLongBottom('Ditt lösenord har ändrats');
-			});
-			// Navigate to current history root
-			$ionicHistory.goToHistoryRoot($ionicHistory.currentView().historyId);	
+		
+                        //ToDo: handle timeouts?
+
+                        //ToDo: .ready() needed?
+	                // Success toast
+		        $ionicPlatform.ready(function() {
+		            $cordovaToast.showLongBottom('Ditt lösenord har ändrats');
+		        });
+	        			
+                        $state.go('app.login');
+
+                        // Navigate to current history root?
+			//$ionicHistory.goToHistoryRoot($ionicHistory.currentView().historyId);	
 		    }, function(error) {
-			console.log(error);
-			//ToDo: check error code
-			// 5: no such user
-			// 13: password length
-			// 16: invalid/expired reset code
+                        switch(error.error_code) {
+                        /*case 5:
+                            //invalide username
+                            break;*/
+                        /*case 13:
+                            form.password.$setValidity('passwordLength', false);
+                            break;*/
+                        case 16:
+		            form.code.$setValidity('invalidCode',false);
+                            break;
+                        }
 		    })
 		    .finally($ionicLoading.hide);
 	    };

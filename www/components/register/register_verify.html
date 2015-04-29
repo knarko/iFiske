@@ -5,13 +5,20 @@
 		<p class="text-center">
 		    <strong>En aktiveringskod kommer skickas via SMS till {{phone}} inom kort</strong>
 		</p>
+                
+                <ng-messages for="formErrors" class="error-message">
+                  <div class="text-center" ng-message="validationError">
+                    Registreringen misslyckades, försök igen
+                  </div>
+                </ng-messages>
 		
 		<label for="vercode" class="input-label">Aktiveringskod:</label>
 		<label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 				 verifyForm.vercode.$dirty && verifyForm.vercode.length}" 
                        class="item item-input">
 		    <input id="vercode" name="vercode" ng-model="vercode" type="text" 
-			   placeholder="1234" ng-pattern="/^\d{4}$/" required>
+			   placeholder="1234" ng-pattern="/^\d{4}$/" required
+                           ng-change="verifyForm.vercode.$setValidity('verified',true)">
 		</label>
 		<div class="error-message" ng-messages="verifyForm.vercode.$error" 
 		     ng-if="verifyForm.vercode.$dirty">

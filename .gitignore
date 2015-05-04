@@ -65,3 +65,5 @@ www/css/*
 
 #Emacs config
 .dir-locals.el
+
+lib

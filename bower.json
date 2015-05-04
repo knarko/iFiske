@@ -10,14 +10,17 @@
     "angular-sanitize": "1.3.6",
     "angular-animate": "1.3.6",
     "angular-leaflet-directive": "master",
-    "imgcache.js": "master"
+    "imgcache.js": "master",
+    "angular": "1.3.x"
   },
   "dependencies": {
-    "angular-messages": "~1.3.12",
+    "angular-messages": "~1.3.15",
     "angular-imgcache.js": "~0.1.0",
     "leaflet": "~0.7.3",
     "angular-leaflet-directive": "https://github.com/maistho/angular-leaflet-directive.git#master",
     "leaflet.markercluster": "~0.4.0",
-    "imgcache.js": "maistho/imgcache.js#master"
+    "imgcache.js": "maistho/imgcache.js#master",
+    "ngCordova": "~0.1.15-alpha",
+    "angular-i18n": "~1.3.15"
   }
 }

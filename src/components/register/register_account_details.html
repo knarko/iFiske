@@ -1,0 +1,36 @@
+<ion-view view-title="Nytt konto">
+    <ion-content>
+	<div class="list list-inset">
+	    <form name="registerForm">
+		<label for="username" class="input-label">Användarnamn:</label>
+		<label ng-class="{'label-error': registerForm.username.$invalid &&
+				 registerForm.username.$dirty}" class="item item-input">
+		    <input id="username" name="username" ng-model="username" type="text" 
+			  ng-pattern="/^.{5,25}$/" required>
+		</label>
+		<div class="error-message" ng-messages="registerForm.username.$error" 
+		     ng-if="registerForm.username.$dirty">
+		    <p ng-message="required">Du måste välja ett användarnamn</p>
+		    <p ng-message="pattern">Mellan 5 och 25 tecken</p>
+		</div>
+
+		<label for="password" class="input-label">Lösenord:</label>
+		<label ng-class="{'label-error': registerForm.password.$invalid &&
+				 registerForm.password.$dirty}" class="item item-input">
+		    <input id="password" name="password" ng-model="password" type="password" 
+			  ng-pattern="/^.{6,16}$/" required>
+		</label>
+		<div class="error-message" ng-messages="registerForm.password.$error"
+		     ng-if="registerForm.password.$dirty">
+		    <p ng-message="required">Du måste ange ett lösenord</p>
+		    <p ng-message="pattern">Mellan 6 och 16 tecken</p>
+		</div>
+
+		<button ng-click="accountDetails(registerForm)" 
+			ng-disabled="registerForm.$invalid" 
+			class="button button-block button-positive">Nästa</button>
+
+	    </form>
+	</div>
+    </ion-content>
+</ion-view>

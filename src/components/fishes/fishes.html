@@ -1,0 +1,14 @@
+<ion-view title="Fiskarter">
+<ion-content>
+<div class="wrap-grid">
+    <div ng-repeat="fish in fishes | orderBy:sortorder" class="c-50 card fishcard">
+        <div class="item-image" ui-sref="app.fishdetail({fish: fish, id: fish.ID})">
+            <img ng-if="fish.img" ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
+            <img ng-if="!fish.img" ic-src="{{image_endpoint}}{{default_img}}" img-cache />
+            <p>{{fish.t}}</p>
+        </div>
+
+    </div>
+</div>
+</ion-content>
+</ion-view>

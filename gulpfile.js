@@ -12,21 +12,58 @@ var uglify = require('gulp-uglify');
 var paths = {
     sass: ['./scss/**/*.scss'],
     scripts: [
-        './www/app.js',
-        './www/components/**/*.js',
-        './www/services/**/*.js',
-        './www/directives/**/*.js'
+        './src/app.js',
+        './src/components/**/*.js',
+        './src/services/**/*.js',
+        './src/directives/**/*.js'
+    ],
+    libs: [
+        './lib/ionic/js/ionic.bundle.js',
+        './lib/angular-i18n/angular-locale_sv-se.js',
+        './lib/ngCordova/dist/ng-cordova.js',
+        './lib/extensions.js',
+        './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
+        './lib/angular-messages/angular-messages.js',
+        './lib/imgcache.js/js/imgcache.js',
+        './lib/angular-imgcache.js/angular-imgcache.js',
+        './lib/leaflet/dist/leaflet-src.js',
+        './lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
+        './lib/leaflet-plugins/layer/Marker.Rotate.js',
+        './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
+        './lib/tabbedSlideBox/tabbedSlideBox/tabSlideBox.js',
     ]
 };
 
-gulp.task('default', ['sass', 'scripts']);
+gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(concat('all.min.js'))
     .pipe(uglify())
-    .pipe(sourcemaps.write())
+    //.pipe(sourcemaps.write())
+    .pipe(gulp.dest('./www/'))
+    .on('end', done);
+});
+
+gulp.task('fonts', function(done) {
+    gulp.src('lib/ionic/fonts/**/*.{ttf,woff,eof,svg}')
+    .pipe(gulp.dest('./www/css/fonts'))
+    .on('end', done);
+});
+
+gulp.task('templates', function(done) {
+    gulp.src('src/components/**/*.html')
+    .pipe(gulp.dest('./www/components'))
+    .on('end', done);
+});
+
+gulp.task('libs', function(done) {
+    gulp.src(paths.libs)
+    //.pipe(sourcemaps.init())
+    .pipe(concat('libs.min.js', {newLine: ';'}))
+    .pipe(uglify())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -46,6 +83,7 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.scripts, ['scripts']);
+    gulp.watch(paths.scripts, ['libs']);
 });
 
 gulp.task('install', ['git-check'], function() {

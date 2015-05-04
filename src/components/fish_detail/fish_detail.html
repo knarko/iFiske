@@ -1,0 +1,35 @@
+<ion-view title="{{fish.t}}">
+<ion-content>
+<div class="card list">
+    <div class="item">
+        <h2>{{fish.t}}</h2>
+        <h3>{{fish.lat}}</h3>
+    </div>
+    <div ng-if="fish.img" class="item item-image">
+        <img ng-src="{{image_endpoint}}{{fish.img}}" />
+    </div>
+    <div ng-if="fish.d" class="item item-body">
+        <p ng-bind-html="fish.d" />
+    </div>
+    <div ng-if="fish.geo" class="item item-divider">
+        Utbredning
+    </div>
+    <div ng-if="fish.geo" class="item item-body">
+        <p ng-bind-html="fish.geo" />
+    </div>
+    <div ng-if="fish.size" class="item item-divider">
+        Storlek och tillväxt
+    </div>
+    <div ng-if="fish.size" class="item item-body">
+        <p ng-bind-html="fish.size" />
+    </div>
+    <div ng-if="fish.rec" class="item item-divider">
+        Sportfiskerekord
+    </div>
+    <div ng-if="fish.rec" class="item item-body">
+        <p ng-bind-html="fish.rec" />
+    </div>
+
+</div>
+</ion-content>
+</ion-view>

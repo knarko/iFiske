@@ -47,7 +47,7 @@ gulp.task('scripts', function(done) {
 });
 
 gulp.task('fonts', function(done) {
-    gulp.src('lib/ionic/fonts/**/*.{ttf,woff,eof,svg}')
+    gulp.src('lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}')
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);
 });
@@ -71,7 +71,7 @@ gulp.task('libs', function(done) {
 gulp.task('sass', function(done) {
     gulp.src('./scss/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./www/css/'))
+    //.pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))

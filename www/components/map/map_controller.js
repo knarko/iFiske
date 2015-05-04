@@ -7,7 +7,8 @@ angular.module('ifiske.controllers')
     '$cordovaGeolocation',
     '$cordovaDeviceOrientation',
     '$timeout',
-    function($scope, leafletData, $ionicPlatform, DB, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout) {
+    'localStorage',
+    function($scope, leafletData, $ionicPlatform, DB, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout, localStorage) {
 
         function updateMypos(obj) {
             //rotate iconAngle 45 deg since the icon is tilted by default

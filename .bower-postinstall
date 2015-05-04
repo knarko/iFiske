@@ -1,3 +1,3 @@
 #!/bin/bash
-find lib -name "*.css" | sed 's/\(^.*\/\)\([^/]\+\)\.css$/\2.css \1_\2.scss/' | xargs -l ln -fs
+find lib -name "*.css" | sed 's/^\(.*\/\)\(.*\)\.css$/\2.css \1_\2.scss/' | xargs -L1 ln -fs
 

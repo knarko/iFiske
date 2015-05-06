@@ -54,7 +54,7 @@ gulp.task('fonts', function(done) {
 });
 
 gulp.task('templates', function(done) {
-    gulp.src('src/components/**/*.html')
+    gulp.src(paths.templates)
     .pipe(gulp.dest('./www/components'))
     .on('end', done);
 });

@@ -1,5 +1,14 @@
 angular.module('ifiske.utils', [])
 
+.factory('Licenses', ['$http', function($http) {
+    return {
+        get: function() {
+            return $http.get('/licenses.json').then(function(data) {
+                return data.data;
+            });
+        }
+    };
+}])
 .factory('localStorage', ['$window', function($window) {
     return {
         set: function(key, value) {

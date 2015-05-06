@@ -31,7 +31,8 @@ var paths = {
         './lib/leaflet-plugins/layer/Marker.Rotate.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
         './lib/tabbedSlideBox/tabbedSlideBox/tabSlideBox.js',
-    ]
+    ],
+    templates: ['src/components/**/*.html']
 };
 
 gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
@@ -83,7 +84,8 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.scripts, ['scripts']);
-    gulp.watch(paths.scripts, ['libs']);
+    gulp.watch(paths.libs, ['libs']);
+    gulp.watch(paths.templates, ['templates']);
 });
 
 gulp.task('install', ['git-check'], function() {

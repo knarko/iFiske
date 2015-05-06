@@ -9,6 +9,8 @@
     "templates"
   ],
   "watchPatterns": [
+    "src/**/*",
+    "src/*/*",
     "www/**/*",
     "www/*/*",
     "!www/.#*",

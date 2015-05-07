@@ -30,7 +30,7 @@ var paths = {
         './lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
         './lib/leaflet-plugins/layer/Marker.Rotate.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
-        './lib/tabbedSlideBox/tabbedSlideBox/tabSlideBox.js',
+        './lib/ionic-tabslidebox/tabSlideBox.js',
     ],
     templates: ['src/components/**/*.html']
 };

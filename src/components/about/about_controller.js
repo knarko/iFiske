@@ -17,24 +17,22 @@ angular.module('ifiske.controllers')
                     $scope.version = version;
                 });
             }
-            Licenses.get().then(function(data) {
-                $scope.licenses = data;
-                $scope.alert = function(l) {
-                    var scope = $scope.$new();
-                    scope.l = l;
-                    $ionicModal.fromTemplateUrl(
-                        'components/about/license_modal.html',
-                        {scope: scope}
-                    ).then(function(modal) {
-                        scope.closeModal = function() {
-                            modal.hide();
-                        };
-                        modal.show();
-                    });
+            $scope.licenses = Licenses.get();
+            $scope.alert = function(l) {
+                var scope = $scope.$new();
+                scope.l = l;
+                $ionicModal.fromTemplateUrl(
+                    'components/about/license_modal.html',
+                    {scope: scope}
+                ).then(function(modal) {
+                    scope.closeModal = function() {
+                        modal.hide();
+                    };
+                    modal.show();
+                });
 
-                };
+            };
 
-            });
         });
     }
 ]);

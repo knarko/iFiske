@@ -21,7 +21,7 @@ var paths = {
         './lib/ionic/js/ionic.bundle.js',
         './lib/angular-i18n/angular-locale_sv-se.js',
         './lib/ngCordova/dist/ng-cordova.js',
-        './lib/extensions.js',
+        './src/lib/polyfill.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
         './lib/angular-messages/angular-messages.js',
         './lib/imgcache.js/js/imgcache.js',
@@ -39,10 +39,10 @@ gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(concat('all.min.js'))
-    .pipe(uglify())
-    //.pipe(sourcemaps.write())
+    //.pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -61,10 +61,10 @@ gulp.task('templates', function(done) {
 
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(concat('libs.min.js', {newLine: ';'}))
-    .pipe(uglify())
-    //.pipe(sourcemaps.write())
+    //.pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });

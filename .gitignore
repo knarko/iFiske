@@ -63,4 +63,4 @@ node_modules
 #Emacs config
 .dir-locals.el
 
-lib
+/lib/

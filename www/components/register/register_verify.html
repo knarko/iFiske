@@ -3,7 +3,7 @@
 	<div class="list list-inset">
 	    <form name="verifyForm">
 		<p class="text-center">
-		    <strong>En aktiveringskod kommer skickas via SMS till {{phone}} inom kort</strong>
+		    <strong>En aktiveringskod kommer skickas via SMS till {{phone}} inom kort. Detta kan ta ett par minuter, så ha lite tålamod...</strong>
 		</p>
                 
                 <ng-messages for="formErrors" class="error-message">
@@ -12,7 +12,7 @@
                   </div>
                 </ng-messages>
 		
-		<label for="vercode" class="input-label">Aktiveringskod:</label>
+		<label for="vercode" class="input-label">Ange aktiveringskod:</label>
 		<label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 				 verifyForm.vercode.$dirty && verifyForm.vercode.length}" 
                        class="item item-input">

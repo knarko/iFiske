@@ -23,11 +23,11 @@
     <ion-content class="has-header">
       <ion-list>
 	<a ui-sref="app.home" class="item" menu-close>Hem</a>
+	<a ng-click="forcedUpdate()" class="item">Uppdatera databas</a>
+	<a ui-sref="app.about" class="item" menu-close>Om appen</a>
 	<a ui-sref="app.contact" class="item" menu-close>Kontakta oss</a>
 	<a ui-sref="app.legal" class="item" menu-close>Användarvillkor</a>
-	<a ui-sref="app.about" class="item" menu-close>Om appen</a>
 	<a ui-sref="app.bugs" class="item" menu-close>Rapportera Bugg</a>
-	<a ng-click="forcedUpdate()" class="item">Uppdatera databas</a>
       </ion-list>
     </ion-content>
   </ion-side-menu>

@@ -39,10 +39,10 @@ gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(concat('all.min.js'))
-    //.pipe(uglify())
-    .pipe(sourcemaps.write())
+    .pipe(uglify())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -61,10 +61,10 @@ gulp.task('templates', function(done) {
 
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(concat('libs.min.js', {newLine: ';'}))
-    //.pipe(uglify())
-    .pipe(sourcemaps.write())
+    .pipe(uglify())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });

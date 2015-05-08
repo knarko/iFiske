@@ -75,7 +75,7 @@ angular.module('ifiske.controllers')
                     lat: 0,
                     lng: 0,
                     iconAngle: -45,
-                    message: 'hi!',
+                    message: 'Din position',
                     icon: {
                         type: 'div',
                         iconSize: [40,40],

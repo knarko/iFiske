@@ -7,9 +7,14 @@
     <description>
         App för iFiske
     </description>
-    <author email="maistho@gmail.com" href="http://www.ifiske.se">
+    <author email="app@ifiske.se" href="http://www.ifiske.se">
         iFiske
     </author>
+
+    <!-- Only build iOS and Android -->
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+
     <feature name="http://api.phonegap.com/1.0/device" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
@@ -120,6 +125,10 @@
     <gap:config-file platform="android" parent="/manifest" mode="delete">
         <uses-permission android:name="android.permission.SEND_SMS" />
     </gap:config-file>
+    <gap:config-file platform="ios" parent="CFBundleIdentifier" overwrite="true">
+        <string>se.iFiske.iFiske</string>
+    </gap:config-file>
+
 
 </widget>
 

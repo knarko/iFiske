@@ -75,7 +75,7 @@ angular.module('ifiske.controllers')
                     lat: 0,
                     lng: 0,
                     iconAngle: -45,
-                    message: 'hi!',
+                    message: 'Din position',
                     icon: {
                         type: 'div',
                         iconSize: [40,40],
@@ -113,8 +113,16 @@ angular.module('ifiske.controllers')
             });
         });
 
+        var createscope = function(a) {
+            return function() {
+                var new_scope = $scope.$new();
+                new_scope.area = a;
+                console.log(a);
+                return new_scope;
+            };
+        };
+
         $scope.$on('$ionicView.beforeEnter', function() {
-            console.log('hi!');
             DB.search('').then(function(areas) {
                 for(var i = 0; i < areas.length; ++i) {
                     var a = areas[i];
@@ -122,11 +130,7 @@ angular.module('ifiske.controllers')
                         layer: 'fishareas',
                         lat: a.lat,
                         lng: a.lng,
-                        getMessageScope: function() {
-                            var new_scope = $scope.$new();
-                            new_scope.area = a;
-                            return new_scope;
-                        },
+                        getMessageScope: createscope(a),
                         message: '<a ui-sref="app.area({id: area.ID })">{{area.t}}</a>'
                     };
                 }

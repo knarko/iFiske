@@ -8,6 +8,17 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
+var gulpif = require('gulp-if');
+var minimist = require('minimist');
+
+var knownOptions = {
+    string: 'env',
+    default: {
+        env: process.env.NODE_ENV || 'production'
+    }
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
     sass: ['./scss/**/*.scss'],
@@ -39,10 +50,10 @@ gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    //.pipe(sourcemaps.init())
+    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('all.min.js'))
-    .pipe(uglify())
-    //.pipe(sourcemaps.write())
+    .pipe(gulpif(options.env === 'production', uglify()))
+    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -61,10 +72,10 @@ gulp.task('templates', function(done) {
 
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
-    //.pipe(sourcemaps.init())
+    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';'}))
-    .pipe(uglify())
-    //.pipe(sourcemaps.write())
+    .pipe(gulpif(options.env === 'production', uglify()))
+    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -72,7 +83,6 @@ gulp.task('libs', function(done) {
 gulp.task('sass', function(done) {
     gulp.src('./scss/*.scss')
     .pipe(sass())
-    //.pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))

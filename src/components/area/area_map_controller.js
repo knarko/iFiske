@@ -103,7 +103,7 @@ angular.module('ifiske.controllers')
                         lat: 0,
                         lng: 0,
                         iconAngle: 0,
-                        message: 'This is you!',
+                        message: 'Egen position',
                         icon: {
                             type: 'div',
                             iconSize: [40,40],

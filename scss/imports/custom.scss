@@ -1,0 +1,262 @@
+ion-view {
+    background-image: url("../img/bg-login.png");
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+ion-view.abstract-bg {
+    background-image: url("../img/bg-abstract.jpg");
+    background-size:cover;
+}
+
+ion-view.abstract-bg ion-view {
+    background: none;
+}
+
+div.bar.bar-transparent {
+    background: none;
+}
+
+
+.tinted-background {
+    background-color: grey;
+    background-blend-mode: screen;
+}
+
+.area-image {
+    width: 100%;
+}
+
+.card-area {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+ion-popover-view.popover {
+    height: 110px;
+}
+
+p.important {
+    color: red;
+}
+p.important>i {
+    margin-right: 10px;
+}
+p.note {
+    white-space: normal;
+}
+
+p.moreinfo {
+    padding: 0px 5px 0px 5px;
+    background-color: white;   
+}
+
+.pull-right {
+    float: right;
+}
+.buy-cards-info-button {
+    margin-left: 5px;
+    margin-top: 16px;
+}
+.item-body.item-nopad {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.card-list-divider {
+    margin-top: 2em;
+    text-align: center;
+}
+.card-list-divider:first-child {
+    margin-top: 0;
+}
+
+.input-label {
+    width: 100%;
+    padding-left: 6px
+}
+.label-error {
+    border-bottom: 2px solid orange;
+}
+.error-message {
+    color: orange;
+}
+.error-message > div {
+    padding: 0px 5px 0px 5px;
+    background-color: white;
+}
+.register-list {
+    margin-top: 10px;
+}
+#register-disclaimer {
+    text-align: center;
+    margin: 10px 5px 10px 5px;
+}
+
+.animate-hide {
+    transition: all 0.2s linear;
+    max-height: 1000px;
+    opacity: 1;
+    text-align: justify;
+
+}
+.animate-hide.ng-hide {
+    transition: all 0.2s linear;
+    overflow: hidden;
+    max-height:0;
+    opacity: 0;
+}
+
+.spaced-buttons>button {
+    margin: 0 0 0 10px;
+    margin-bottom: 10px;
+}
+.spaced-buttons>button:first-child {
+    margin-left: 0;
+}
+
+.proper-text {
+    line-height: 1.5em;
+    white-space: pre-wrap;
+}
+
+.wrap-grid>div {
+    display: block;
+    float:left;
+}
+.wrap-grid>div.c-50 {
+    width: 50%;
+}
+.wrap-grid>div.c-33 {
+    width: 33.3333%;
+}
+.wrap-grid>div.c-25 {
+    width: 25%;
+}
+
+.fishcard {
+    margin: 0 !important;
+    border-radius: 0;
+}
+.fishcard .item-title {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.product.active {
+    border-color: green;
+    color: green;
+}
+.product.expired {
+    border-color: red;
+    color: red;
+}
+.product.inactive {
+    border-color: orange;
+    color: orange;
+}
+.card.product {
+    box-shadow: 0px 0px 30px 1px inset;
+    border-width: 2px;
+    border-style: solid;
+
+}
+.card.product .item {
+    background-color: transparent;
+    background-color: transparent;
+    border:0;
+}
+
+#about-text p {
+    margin-bottom: 1em;
+}
+
+.button-margin {
+    margin: 0px 15px 0px 15px;
+}
+
+.input-label {
+    max-width: none;
+}
+
+#register-button {
+    margin-top: 15px;
+}
+
+.product-code {
+    float: right;
+}
+
+.product .item-body {
+    padding-top: 0;
+}
+.lvl {
+    background-image: url(../img/levels.gif);
+    height: 16px;
+    width: 26px;
+    display: inline-block;
+    background-size: 27px;
+}
+.lvl.lvl-1 {
+    background-position: 0px 0px;
+}
+.lvl.lvl-2 {
+    background-position: 0px -17px;
+}
+.lvl.lvl-3 {
+    background-position: 0px -33px;
+}
+.lvl.lvl-4 {
+    background-position: 0px -50px;
+}
+.lvl.lvl-5 {
+    background-position: 0px -66px;
+}
+
+.technique-icon-list.item-complex.item-icon-left .item-content {
+    padding-left: 125px;
+}
+
+.angular-leaflet-map {
+    position: absolute;
+    top:0px;
+    bottom:0px;
+    width:100%;
+
+}
+.card-info h1,
+.card-info h2,
+.card-info h3,
+.card-info h4 {
+    text-align: center;
+}
+
+button.button-float {
+    border-radius: 50%;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    padding: 10px;
+    transition: all .1s ease-out;
+}
+.button-float i.icon {
+  vertical-align: middle;
+  text-align: center;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding-right: 2px;
+  padding-top: 2px;
+}
+.button-float.ng-hide {
+    transform: scale(0.1) rotate(90deg); /* 1/10 of the original size */
+    transition: all .1s ease-out;
+}
+
+.angular-leaflet-map .myposition {
+    font-size: 3em;
+    color: $calm;
+}
+.angular-leaflet-map .myposition:before {
+    text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
+}

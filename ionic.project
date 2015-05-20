@@ -4,9 +4,13 @@
   "gulpStartupTasks": [
     "sass",
     "watch",
-    "scripts"
+    "scripts",
+    "libs",
+    "templates"
   ],
   "watchPatterns": [
+    "src/**/*",
+    "src/*/*",
     "www/**/*",
     "www/*/*",
     "!www/.#*",

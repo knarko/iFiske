@@ -1,0 +1,32 @@
+<ion-view title="Profil">
+    <ion-content>
+	<div class="list">
+	    <div class="item item-divider">
+		Användarinformation
+	    </div>
+	    <div class="item">
+		<h2>Användarnamn</h2>
+        <p>{{user.username}}</p>
+	    </div>
+	    <div class="item">
+		<h2>Namn</h2>
+        <p>{{user.name}}</p>
+	    </div>
+	    <div class="item">
+		<h2>E-mail</h2>
+        <p>{{user.email}}</p>
+	    </div>
+	    <div class="item item-divider">
+		Anslutna mobilnummer (På iFiske.se)
+	    </div>
+	    <div ng-repeat="number in numbers" class="item">
+            <p>{{number.number}}</p>
+	    </div>
+	</div>
+	<div class="card">
+	    <div class="item item-text-wrap">
+	      &#8505; För att ändra på din användarinformation hänvisas till www.ifiske.se - Där kan du också koppla fler mobilnummer till ditt konto, mm.
+	    </div>
+	</div>
+    </ion-content>
+</ion-view>

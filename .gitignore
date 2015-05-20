@@ -60,5 +60,7 @@ IOS/www/
 #Node files
 node_modules
 
-www/all.js
-www/css/*
+#Emacs config
+.dir-locals.el
+
+/lib/

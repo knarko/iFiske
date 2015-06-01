@@ -1,21 +1,25 @@
 <ion-view hide-back-button="true">
     <ion-nav-title>
-      <img height="85%" src="img/logo_plain.svg">
+        <img height="85%" src="img/logo_plain.svg">
     </ion-nav-title>
     <ion-nav-buttons side="right">
-	<button class="button button-clear icon ion-person" ng-click="popover.show($event)"></button>
+        <button class="button button-clear icon ion-person" ng-click="popover.show($event)"></button>
     </ion-nav-buttons>
-    
 
-    <ion-content class="padding"-->
+
+    <ion-content class="padding">
         <div class="list list-inset">
-            <label class="item item-input">
+            <label class="item item-input" ng-if="update.last_update()">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="search" placeholder="Sök" ng-keypress="myFunc($event)"/>
             </label>
+            <div class="item item-icon-right item-assertive" ng-if="!update.last_update()" ng-click="forcedUpdate()">
+                Ingen data finns!
+                <i class="icon ion-refresh"></i>
+            </div>
         </div>
 
-        <div class="list list-inset">
+        <div class="list list-inset" ng-class="{'disabled-list': !update.last_update() }">
             <div class="item item-button-left" ui-sref="^.counties">
                 <button class="button button-positive button-clear">
                     <i class="icon icon-icon_fishingareas"></i>
@@ -48,10 +52,10 @@
             </div>
             <!-- div class="item item-button-left" ui-sref="^.report">
                 <button class="button button-positive button-clear">
-                    <i class="icon icon-icon_paper"></i>
+                <i class="icon icon-icon_paper"></i>
                 </button>
                 Fångstrapporter
-            </div -->
-        </div>
+                </div -->
+                </div>
     </ion-content>
 </ion-view>

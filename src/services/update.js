@@ -322,6 +322,7 @@
                         return localStorage.get(LAST_UPDATE);
                     }
                 };
-            }];
+            }
+        ];
     });
 })(window.angular);

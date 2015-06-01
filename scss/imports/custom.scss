@@ -260,3 +260,9 @@ button.button-float {
 .angular-leaflet-map .myposition:before {
     text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
 }
+
+.disabled-list > * {
+    pointer-events: none;
+    cursor: default!important;
+    opacity: 0.4;
+}

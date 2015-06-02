@@ -266,3 +266,8 @@ button.button-float {
     cursor: default!important;
     opacity: 0.4;
 }
+
+.slider-image {
+    background-size: cover;
+    padding-top: 41.67%; // 250/600
+}

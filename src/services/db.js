@@ -304,14 +304,8 @@
                             .then(function(area) {
                                 var object = createObject(area)[0];
                                 //TODO: DB should not need API
-                                API.get_photos(object.orgid)
-                                .then(function(images) {
-                                    object.images = images;
-                                    fulfill(object);
-                                }, function(err) {
-                                    console.warn(err);
-                                    fulfill(object);
-                                });
+                                object.images = API.get_photos(object.orgid);
+                                fulfill(object);
                             }, reject);
                         });
                     },

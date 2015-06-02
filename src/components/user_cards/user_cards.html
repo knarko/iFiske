@@ -4,7 +4,7 @@
                  pulling-text="Uppdatera..."
                  on-refresh="update()">
         </ion-refresher>
-        <div class="card" ng-if="!products.length">
+        <div class="card" ng-if="products.length < 1">
             <div class="item item-text-wrap">
                 <p>När du köpt fiskekort kommer de att finnas listade här.</p>
             </div>

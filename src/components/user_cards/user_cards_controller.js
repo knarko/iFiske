@@ -5,17 +5,32 @@ angular.module('ifiske.controllers')
     'DB',
     'Update',
     '$ionicModal',
-    function($scope, $stateParams, DB, Update, $ionicModal) {
+    '$ionicLoading',
+    function($scope, $stateParams, DB, Update, $ionicModal, $ionicLoading) {
         $scope.pred = '-to';
         $scope.endpoint = 'https://www.ifiske.se';
 
         var initilize = function() {
-            $scope.now = Date.now();
-            DB.getUserProducts()
-            .then(function(data) {
-                $scope.products = data;
-            }, function(err) {
-                console.log(err);
+            $ionicLoading.show();
+            var a = Update.update();
+            console.log(a);
+            a.then(function(hi) {
+                console.log(hi);
+            });
+            a.finally(function() {
+                console.log('helloä');
+                $scope.now = Date.now();
+                DB.getUserProducts()
+                .then(function(data) {
+                    $scope.products = data;
+                    console.log($scope);
+                    $scope.$broadcast('scroll.refreshComplete');
+                    $ionicLoading.hide();
+                }, function(err) {
+                    console.log(err);
+                    $scope.$broadcast('scroll.refreshComplete');
+                    $ionicLoading.hide();
+                });
             });
         };
 
@@ -40,11 +55,7 @@ angular.module('ifiske.controllers')
             $scope.rules_modal.remove();
         });
         $scope.update = function() {
-            Update.update()
-            .finally(function() {
-                $scope.$broadcast('scroll.refreshComplete');
-                initilize();
-            });
+            initilize();
         };
     }
 ]);

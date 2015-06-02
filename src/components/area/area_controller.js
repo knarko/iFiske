@@ -19,6 +19,7 @@ angular.module('ifiske.controllers')
             });
 
             $ionicSlideBoxDelegate.$getByHandle('tabs').update();
+            $ionicSlideBoxDelegate.$getByHandle('tabs').enableSlide(false);
 
             DB.getOrganization(area.orgid)
             .then(function(org) {

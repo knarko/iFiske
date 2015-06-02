@@ -131,7 +131,7 @@ angular.module('ifiske.controllers')
                         lat: a.lat,
                         lng: a.lng,
                         getMessageScope: createscope(a),
-                        message: '<a ui-sref="app.area({id: area.ID })">{{area.t}}</a>'
+                        message: '<a ui-sref="app.area({id: area.ID })" ng-bind="area.t"></a>'
                     };
                 }
             });

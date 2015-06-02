@@ -55,6 +55,9 @@ angular.module('ifiske', [
         });
         ImgCacheProvider.manualInit = true;
 
+        //Disable swipe to go back since it is bugged
+        $ionicConfigProvider.views.swipeBackEnabled(false);
+
         // Cache views in the forward stack
         $ionicConfigProvider.views.forwardCache(true);
 

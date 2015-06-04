@@ -337,7 +337,7 @@
                                 'SELECT *',
                                 'FROM Area',
                                 'WHERE t LIKE ?',
-                                (county_id ? 'AND c1 = ?' : ''),
+                                (county_id ? 'AND ? IN (c1,c2,c3)' : ''),
                                 'ORDER BY t'
                             ].join(' '),
                             county_id ?

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="se.iFiske.fiskekort" version="3.0.0"
+<widget id="se.iFiske.fiskekort"
+    version="3.0.1"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:gap="http://phonegap.com/ns/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -10,6 +11,7 @@
     <author email="app@ifiske.se" href="http://www.ifiske.se">
         iFiske
     </author>
+    <content src="index.html"/>
 
     <!-- Only build iOS and Android -->
     <gap:platform name="ios" />
@@ -29,9 +31,9 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
-    <preference name="phonegap-version" value="3.6.3" />
+    <preference name="phonegap-version" value="3.7.0" />
     <preference name="SplashScreen" value="screen"/>
     <preference name="SplashScreenDelay" value="3000"/>
 

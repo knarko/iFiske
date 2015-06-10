@@ -5,9 +5,12 @@ angular.module('ifiske.controllers')
     '$ionicHistory',
     'localStorage',
     'sessionData',
-    function($scope, $state, $ionicHistory, localStorage, sessionData) {
+    'Update',
+    function($scope, $state, $ionicHistory, localStorage, sessionData, Update) {
 
         $scope.loggedIn = sessionData;
+
+        $scope.update = Update;
 
         // Current history stack Id. See area_controller for usage.
         localStorage.set('homeHistoryId', $ionicHistory.currentHistoryId());

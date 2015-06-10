@@ -48,7 +48,7 @@ p.note {
 
 p.moreinfo {
     padding: 0px 5px 0px 5px;
-    background-color: white;   
+    background-color: white;
 }
 
 .pull-right {
@@ -167,7 +167,7 @@ p.moreinfo {
     border:0;
 }
 
-#about-text p {
+.spaced-text p {
     margin-bottom: 1em;
 }
 
@@ -259,4 +259,15 @@ button.button-float {
 }
 .angular-leaflet-map .myposition:before {
     text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
+}
+
+.disabled-list > * {
+    pointer-events: none;
+    cursor: default!important;
+    opacity: 0.4;
+}
+
+.slider-image {
+    background-size: cover;
+    padding-top: 41.67%; // 250/600
 }

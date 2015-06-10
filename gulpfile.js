@@ -82,7 +82,9 @@ gulp.task('libs', function(done) {
 
 gulp.task('sass', function(done) {
     gulp.src('./scss/*.scss')
-    .pipe(sass())
+    .pipe(sass({
+              errLogToConsole: true
+    }))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))

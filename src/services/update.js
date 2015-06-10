@@ -282,11 +282,10 @@
                         .then(function() {
                             console.log('Initialized DB system');
                             if (sessionData.token) {
-                                populateUser()
-                                .then(function() {
-                                    $ionicLoading.hide();
-                                }, function(err) {
+                                return populateUser()
+                                .catch(function(err) {
                                     console.error(err);
+                                }).finally(function() {
                                     $ionicLoading.hide();
                                 });
                             }
@@ -322,6 +321,7 @@
                         return localStorage.get(LAST_UPDATE);
                     }
                 };
-            }];
+            }
+        ];
     });
 })(window.angular);

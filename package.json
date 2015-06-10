@@ -1,6 +1,6 @@
 {
   "name": "ifiske",
-  "version": "1.0.0",
+  "version": "3.0.1",
   "description": "ifiske: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",

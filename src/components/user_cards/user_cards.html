@@ -19,7 +19,7 @@
                 <p>Namn: {{product.fullname}}</p>
                 <p> Gäller från {{product.fr * 1000 | date:'short'}} till {{product.to * 1000 | date:'short'}}</p>
             </div>
-            <div class="item item-bodY" >
+            <div class="item item-body" >
 
                 <button ng-if="product.rule_t" ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
                 <a class="button button-energized" href="{{endpoint}}{{product.pdf}}" system-browser>Visa PDF</a>

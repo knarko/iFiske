@@ -1,7 +1,7 @@
 <ion-view title="{{newsTitle}}">
     <ion-content>
         <div class="list">
-            <div class="item" ng-repeat="item in content" ui-sref="app.dyninfodetail({item:item, id:item.ID})">
+            <div class="item" ng-repeat="item in content" ui-sref="app.newsitem({item:item, id:item.ID})">
                 <h2>{{item.t}}</h2>
             </div>
         </div>

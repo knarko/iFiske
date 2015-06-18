@@ -206,6 +206,18 @@ angular.module('ifiske', [
             templateUrl: 'components/technique_detail/technique_detail.html',
             controller: 'TechniqueDetailCtrl'
         })
+        .state('app.news', {
+            url: '/news',
+            templateUrl: 'components/news/news.html',
+            controller: 'NewsCtrl'
+        })
+        .state('app.newsitem', {
+            url: '/news/:id',
+            params: {'item': false, 'id': false},
+            templateUrl: 'components/news/newsitem.html',
+            controller: 'NewsItemCtrl'
+        })
+
         .state('app.area', {
             url: '/area/:id',
             views: {

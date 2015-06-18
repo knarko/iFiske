@@ -15,6 +15,8 @@ angular.module('ifiske.controllers')
         // Current history stack Id. See area_controller for usage.
         localStorage.set('homeHistoryId', $ionicHistory.currentHistoryId());
 
+        $scope.newsTitle = localStorage.get('NEWS');
+
         $scope.myFunc = function($event) {
             if($event.keyCode == 13 && !$event.shiftKey) { //if enter-key
                 $state.go('app.areas', {search: $event.srcElement.value});

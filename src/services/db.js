@@ -177,6 +177,11 @@
                         ['ver',    'int'],
                         ['mod',    'int'],
                         ['poly',   'text']
+                    ],
+                    'News': [
+                        ['ID',     'int'],
+                        ['t',      'text'],
+                        ['text',   'text']
                     ]
 
                 };
@@ -537,6 +542,30 @@
                                 'SELECT *',
                                 'FROM Polygon',
                                 'WHERE orgid = ?'
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(createObject(data));
+                            }, reject);
+                        });
+                    },
+
+                    getNews: function() {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT *',
+                                'FROM News'
+                            ].join(' '))
+                            .then(function(data) {
+                                fulfill(createObject(data));
+                            }, reject);
+                        });
+                    },
+                    getNewsItem: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT *',
+                                'FROM News',
+                                'WHERE ID = ?'
                             ].join(' '), [id])
                             .then(function(data) {
                                 fulfill(createObject(data));

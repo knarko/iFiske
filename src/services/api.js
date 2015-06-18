@@ -228,6 +228,9 @@
                     },
                     get_mapbox_api: function() {
                         return api_call({m: 'get_mapbox_apiaccesstoken'});
+                    },
+                    get_content_menu: function() {
+                        return api_call({m: 'get_content_menu'});
                     }
                 };
             }];

@@ -9,8 +9,9 @@
                 </ion-slide-box>
                 <img ng-src="{{image_endpoint + images[0]}}" ng-if="images.length == 1" />
             </div>
-            <div ng-if="area.d" class="item item-divider">
+            <div ng-if="area.d" class="item item-divider item-button-right">
                 <h2>{{area.t}}</h2>
+                <button class="button button-icon icon" ng-class="{starred: starred, 'ion-android-star-outline': !starred, 'ion-android-star': starred}" ng-click="starred = !starred"></button>
             </div>
             <div ng-if="area.d" class="item item-body">
                 <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ng-click="gotoProducts()">Köp Fiskekort</button>

@@ -271,3 +271,14 @@ button.button-float {
     background-size: cover;
     padding-top: 41.67%; // 250/600
 }
+.item.item-divider.item-button-right {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.item.item-divider.item-button-right>button {
+    top:4px;
+}
+
+.starred {
+    color: $energized;
+}

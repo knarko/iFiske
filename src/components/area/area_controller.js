@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     '$ionicSlideBoxDelegate',
     function($scope, $stateParams, DB, $ionicSlideBoxDelegate) {
         $scope.image_endpoint = 'http://www.ifiske.se/';
+        $scope.starred = false;
 
         DB.getArea($stateParams.id)
         .then(function(area) {

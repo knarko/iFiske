@@ -9,7 +9,7 @@
         </div>
         <ion-list>
             <ion-item ng-repeat="region in regions" ui-sref="main.areas(region)">
-                <h2>{{region.t}}</h2>
+                <h2>{{::region.t}}</h2>
             </ion-item>
         </ion-list>
     </ion-content>

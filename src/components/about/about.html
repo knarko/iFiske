@@ -4,7 +4,7 @@
             <div class="item item-text-wrap spaced-text">
                 <h2>iFiske - Enklare Fiskekort</h2>
                 <p>&copy; 2015 Jighead AB (iFiske.se)</p>
-                <p>Versionsnummer: <b>{{version}}</b></p>
+                <p>Versionsnummer: <b>{{::version}}</b></p>
                 <p>Databasen hämtades senast: <b>{{update.last_update() | date:'medium'}}</b></p>
                 <p>Denna app visar information om de fiskevatten som är anslutna till tjänsten iFiske.se. Jighead AB ansvarar ej för att all information är uppdaterad och korrekt, detta ansvar ligger på respektive ansluten organisation.</p>
                 <p>Besök gärna <a href='http://www.ifiske.se/'>iFiske.se</a> - där finns mer information om anslutna fiskevatten och om iFiske.se! Gilla gärna <a href='http://www.facebook.com/fiskekort/'>iFiskes sida på Facebook</a> för senaste nytt!</p>
@@ -16,7 +16,7 @@
             </div>
             <div class="list">
                 <div class="item" ng-click="alert(l)" ng-repeat="l in licenses">
-                    <h2>{{l.title}}</h2>
+                    <h2>{{::l.title}}</h2>
                 </div>
             </div>
         </div>

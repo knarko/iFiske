@@ -1,6 +1,6 @@
 <div class="modal">
     <ion-header-bar class="bar-calm">
-        <h1 class="title">{{product.t}}</h1>
+        <h1 class="title">{{::product.t}}</h1>
         <button class="button button-clear icon ion-close" ng-click="closeModal()"></button>
     </ion-header-bar>
     <ion-content>
@@ -12,10 +12,10 @@
             <p>När du klickar på knappen kommer din vanliga sms-app att öppnas med ett förskrivet SMS till 72456.</p>
             <p>Formatet för att skicka ett sms är:</p>
             <div class="list list-inset">
-                <p class="item">FISKA {{product.pf}} Förnamn Efternamn</p>
+                <p class="item">FISKA {{::product.pf}} Förnamn Efternamn</p>
             </div>
             <p>Se till att rätt namn står innan du skickar ditt sms!</p>
         </div>
-        <button class="button button-full button-balanced" ng-cordova-sms="{{product.pf}}">Skicka SMS</button>
+        <button class="button button-full button-balanced" ng-cordova-sms="{{::product.pf}}">Skicka SMS</button>
     </ion-content>
 </div>

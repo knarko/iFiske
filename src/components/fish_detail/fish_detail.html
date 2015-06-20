@@ -1,9 +1,9 @@
-<ion-view title="{{fish.t}}">
+<ion-view title="{{::fish.t}}">
 <ion-content>
 <div class="card list">
     <div class="item">
-        <h2>{{fish.t}}</h2>
-        <h3>{{fish.lat}}</h3>
+        <h2>{{::fish.t}}</h2>
+        <h3>{{::fish.lat}}</h3>
     </div>
     <div ng-if="fish.img" class="item item-image">
         <img ng-src="{{image_endpoint}}{{fish.img}}" />

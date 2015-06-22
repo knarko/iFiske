@@ -18,7 +18,7 @@ angular.module('ifiske.controllers')
         $scope.newsTitle = localStorage.get('NEWS');
 
         $scope.myFunc = function($event) {
-            if($event.keyCode == 13 && !$event.shiftKey) { //if enter-key
+            if ($event.keyCode === 13 && !$event.shiftKey) { //if enter-key
                 $state.go('app.areas', {search: $event.srcElement.value});
             }
 

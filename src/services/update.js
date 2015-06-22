@@ -22,6 +22,10 @@
                             table: 'User_Product',
                         },
                         {
+                            endpoint: 'user_get_favorites',
+                            table: 'User_Favorite',
+                        },
+                        {
                             endpoint: 'user_info',
                             f: function(data) {
                                 var numbers = data.numbers;

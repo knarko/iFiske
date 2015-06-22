@@ -214,6 +214,13 @@
                     user_get_favorites: function() {
                         return session_api_call({m: 'user_get_favorites'}, false);
                     },
+                    user_add_favorite: function(area) {
+                        //Flag 0 means to not get notifications on catch reports
+                        return session_api_call({m: 'user_add_favorite', areaid: area, flag: 0}, false);
+                    },
+                    user_remove_favorite: function(area) {
+                        return session_api_call({m: 'user_remove_favorite', areaid: area}, false);
+                    },
                     get_terms_of_service: function() {
                         return api_call({m: 'get_terms_of_service'});
                     },

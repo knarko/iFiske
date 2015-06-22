@@ -8,7 +8,8 @@
             '$cordovaSQLite',
             'API',
             '$q',
-            function($cordovaSQLite, API, $q) {
+            '$rootScope',
+            function($cordovaSQLite, API, $q, $rootScope) {
 
                 var db;
                 if (window.sqlitePlugin) {
@@ -126,6 +127,13 @@
                     ],
                     'User_Number': [
                         ['number', 'text']
+                    ],
+                    'User_Favorite': [
+                        ['ID',  'int'],
+                        ['a',   'int'],
+                        ['add', 'int'],
+                        ['not', 'int'],
+                        ['cnt', 'int'],
                     ],
                     'Technique': [
                         ['ID',       'int'],
@@ -302,14 +310,28 @@
                     getArea: function(id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT *',
+                                'SELECT Area.*,',
+                                'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
-                                'WHERE id = ?'
+                                'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
+                                'WHERE Area.ID = ?'
                             ].join(' '), [id])
                             .then(function(area) {
+                                console.log(area);
                                 var object = createObject(area)[0];
                                 //TODO: DB should not need API
                                 object.images = API.get_photos(object.orgid);
+                                $rootScope.$watch(function() {
+                                    return object.favorite;
+                                }, function(newVal, oldVal) {
+                                    //TODO: This should be able to cache the update if we don't have network
+                                    if (newVal) {
+                                        API.user_add_favorite(object.ID);
+                                    } else {
+                                        API.user_remove_favorite(object.ID);
+                                    }
+                                    console.log(newVal, oldVal);
+                                });
                                 fulfill(object);
                             }, reject);
                         });
@@ -339,8 +361,10 @@
                     search: function(searchstring, county_id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT *',
+                                'SELECT Area.*,',
+                                'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
+                                'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                                 'WHERE t LIKE ?',
                                 (county_id ? 'AND ? IN (c1,c2,c3)' : ''),
                                 'ORDER BY t'
@@ -507,6 +531,17 @@
                             ].join(' '))
                             .then(function(data) {
                                 fulfill(createObject(data));
+                            }, reject);
+                        });
+                    },
+                    getUserFavorites: function() {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT *',
+                                'FROM User_Favorite'
+                            ].join(' '))
+                            .then(function(data) {
+                                fulfill(createObject(data)[0]);
                             }, reject);
                         });
                     },

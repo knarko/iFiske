@@ -217,6 +217,10 @@ p.moreinfo {
     padding-left: 125px;
 }
 
+.item.item-image:first-child {
+    border-top:0;
+}
+
 .angular-leaflet-map {
     position: absolute;
     top:0px;

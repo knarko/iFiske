@@ -541,7 +541,7 @@
                                 'FROM User_Favorite'
                             ].join(' '))
                             .then(function(data) {
-                                fulfill(createObject(data)[0]);
+                                fulfill(createObject(data));
                             }, reject);
                         });
                     },

@@ -315,7 +315,7 @@
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                                 'WHERE Area.ID = ?'
-                            ].join(' '), [id])
+                            ].join(' '), Array.isArray(id) ? id : [id])
                             .then(function(area) {
                                 console.log(area);
                                 var object = createObject(area)[0];

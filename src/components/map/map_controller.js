@@ -60,7 +60,7 @@ angular.module('ifiske.controllers')
                         name: 'Fiskeområden',
                         type: 'markercluster',
                         visible: true,
-                        layerOptions: {
+                        layerParams: {
                             showOnSelector: false,
                             disableClusteringAtZoom: 9,
                             chunkedLoading: true,

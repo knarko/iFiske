@@ -139,7 +139,7 @@ angular.module('ifiske.controllers')
                             name: 'Ställen',
                             type: 'markercluster',
                             visible: true,
-                            layerOptions: {
+                            layerParams: {
                                 showOnSelector: false,
                                 disableClusteringAtZoom: 9,
                                 chunkedLoading: true,

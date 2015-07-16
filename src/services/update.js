@@ -27,6 +27,10 @@
                         },
                         {
                             endpoint: 'user_info',
+                            table: [
+                                'User_Info',
+                                'User_Number'
+                            ],
                             f: function(data) {
                                 var numbers = data.numbers;
                                 var numArr = [];
@@ -196,11 +200,17 @@
                 };
 
                 var cleanUser = function() {
-                    return $q.all([
-                        DB.cleanTable('User_Product'),
-                        DB.cleanTable('User_Number'),
-                        DB.cleanTable('User_Info')
-                    ])
+                    var p = [];
+                    for (var i = 0; i < updates.auth.length; ++i) {
+                        if (Array.isArray(updates.auth[i].table)) {
+                            for (var j = 0; j < updates.auth[i].table.length; ++j) {
+                                p.push(DB.cleanTable(updates.auth[i].table[j]));
+                            }
+                        } else {
+                            p.push(DB.cleanTable(updates.auth[i].table));
+                        }
+                    }
+                    return $q.all(p)
                     .then(function() {
                         console.log('Removed user info from database');
                     }, function(err) {

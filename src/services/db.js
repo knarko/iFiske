@@ -321,17 +321,6 @@
                                 var object = createObject(area)[0];
                                 //TODO: DB should not need API
                                 object.images = API.get_photos(object.orgid);
-                                $rootScope.$watch(function() {
-                                    return object.favorite;
-                                }, function(newVal, oldVal) {
-                                    //TODO: This should be able to cache the update if we don't have network
-                                    if (newVal) {
-                                        API.user_add_favorite(object.ID);
-                                    } else {
-                                        API.user_remove_favorite(object.ID);
-                                    }
-                                    console.log(newVal, oldVal);
-                                });
                                 fulfill(object);
                             }, reject);
                         });
@@ -538,10 +527,23 @@
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
                                 'SELECT *',
-                                'FROM User_Favorite'
+                                'FROM User_Favorite',
+                                'JOIN Area ON User_Favorite.a = Area.ID'
                             ].join(' '))
                             .then(function(data) {
                                 fulfill(createObject(data));
+                            }, reject);
+                        });
+                    },
+
+                    removeFavorite: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'DELETE FROM User_Favorite',
+                                'WHERE a = ?'
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(data);
                             }, reject);
                         });
                     },

@@ -1,0 +1,20 @@
+<ion-view title="Fiskevatten">
+    <ion-content scroll="false">
+        <tab-slide-box tab="0" tabs-position="bottom">
+            <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)" delegate-handle="tabs" >
+                <ion-slide>
+                    <ion-nav-view name="counties"></ion-nav-view>
+                </ion-slide>
+                <ion-slide>
+                    <ion-nav-view name="favorites"></ion-nav-view>
+                </ion-slide>
+            </ion-slide-box>
+            <ion-footer-bar class="bar-calm tsb-nav">
+                <div class="button-bar">
+                    <button class="button button-clear icon ion-information-circled"></button>
+                    <button class="button button-clear icon ion-card"></button>
+                </div>
+            </ion-footer-bar>
+        </tab-slide-box>
+    </ion-content>
+</ion-view>

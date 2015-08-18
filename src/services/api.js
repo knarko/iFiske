@@ -218,6 +218,10 @@
                         //Flag 0 means to not get notifications on catch reports
                         return session_api_call({m: 'user_add_favorite', areaid: area, flag: 0}, false);
                     },
+                    user_set_favorite_notification: function(area, flag) {
+                        flag = flag ? 1 : 0;
+                        return session_api_call({m: 'user_set_favorite_notification', areaid: area, flag: flag}, false);
+                    },
                     user_remove_favorite: function(area) {
                         return session_api_call({m: 'user_remove_favorite', areaid: area}, false);
                     },

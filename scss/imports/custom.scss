@@ -296,3 +296,7 @@ button.button-float {
 .starred {
     color: $energized;
 }
+
+.item-toggle {
+    pointer-events: initial; //This enables clickable lists with toggles
+}

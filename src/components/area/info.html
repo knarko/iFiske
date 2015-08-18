@@ -13,7 +13,7 @@
                 <h2>{{::area.t}}</h2>
                 <button class="button button-icon icon"
                         ng-class="{starred: area.favorite, 'ion-android-star-outline': !area.favorite, 'ion-android-star': area.favorite}"
-                        ng-click="area.favorite = !area.favorite"
+                        ng-click="changeFavorite();"
                         ></button>
             </div>
             <div ng-if="area.d" class="item item-body">

@@ -30,7 +30,12 @@
     "https://github.com/brodysoft/Cordova-SQLitePlugin",
     "uk.co.workingedge.phonegap.plugin.launchnavigator",
     "org.apache.cordova.geolocation",
-    "org.apache.cordova.device-orientation"
+    "org.apache.cordova.device-orientation",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "nl.x-services.plugins.toast"
+    }
   ],
   "cordovaPlatforms": []
 }

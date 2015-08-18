@@ -158,11 +158,21 @@ angular.module('ifiske', [
             controller: 'UserCtrl',
             templateUrl: 'components/user/user.html',
         })
-
-        .state('app.counties', {
-            url: '/counties',
-            templateUrl: 'components/counties/counties.html',
-            controller: 'CountiesCtrl'
+        .state('app.find_areas', {
+            url: '/find_areas',
+            views: {
+                '@app': {
+                    templateUrl: 'components/find_areas/tabs.html',
+                },
+                'counties@app.find_areas': {
+                    templateUrl: 'components/find_areas/counties.html',
+                    controller: 'CountiesCtrl'
+                },
+                'favorites@app.find_areas': {
+                    templateUrl: 'components/find_areas/favorites.html',
+                    controller: 'FavoritesCtrl'
+                }
+            }
         })
         .state('app.areas', {
             url: '/areas',

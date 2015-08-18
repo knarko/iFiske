@@ -21,6 +21,7 @@ var knownOptions = {
 var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
+    static: ['./src/static/**.*'],
     sass: ['./scss/**/*.scss'],
     scripts: [
         './src/app.js',
@@ -42,11 +43,12 @@ var paths = {
         './lib/leaflet-plugins/layer/Marker.Rotate.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
         './lib/ionic-tabslidebox/tabSlideBox.js',
+        './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js'
     ],
     templates: ['src/components/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
+gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'static']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
@@ -70,6 +72,12 @@ gulp.task('fonts', function(done) {
 gulp.task('templates', function(done) {
     gulp.src(paths.templates)
     .pipe(gulp.dest('./www/components'))
+    .on('end', done);
+});
+
+gulp.task('static', function(done) {
+    gulp.src(paths.static)
+    .pipe(gulp.dest('./www/static'))
     .on('end', done);
 });
 

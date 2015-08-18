@@ -17,7 +17,9 @@ angular.module('ifiske.controllers')
                     $scope.version = version;
                 });
             }
-            $scope.licenses = Licenses.get();
+            Licenses.get().then(function(data) {
+                $scope.licenses = data.data;
+            });
             $scope.alert = function(l) {
                 var scope = $scope.$new();
                 scope.l = l;

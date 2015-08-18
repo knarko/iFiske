@@ -25,6 +25,10 @@ $positive: #3060a0 !default;
 @import "lib/leaflet.markercluster/dist/MarkerCluster.Default";
 @import "lib/leaflet.markercluster/dist/MarkerCluster";
 @import "lib/ionic-tabslidebox/tabSlideBox";
+@import "lib/leaflet.locatecontrol/dist/_L.Control.Locate";
+
+$fa-font-path: "fonts";
+@import "lib/font-awesome/scss/font-awesome";
 
 
 @import "scss/imports/font.scss";

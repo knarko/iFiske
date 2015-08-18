@@ -59,7 +59,10 @@ gulp.task('scripts', function(done) {
 });
 
 gulp.task('fonts', function(done) {
-    gulp.src('lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}')
+    gulp.src([
+        'lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}',
+        'lib/font-awesome/fonts/**/*.{ttf,woff2,eof,svg,eot}'
+    ])
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);
 });

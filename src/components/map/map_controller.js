@@ -10,29 +10,41 @@ angular.module('ifiske.controllers')
     'localStorage',
     function($scope, leafletData, $ionicPlatform, DB, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout, localStorage) {
 
-        function updateMypos(obj) {
-            //rotate iconAngle 45 deg since the icon is tilted by default
-            obj.iconAngle = (obj.iconAngle | 0) - 45;
-            /* Hackfix to make it update =( */
-            if($scope.markers.mypos2) {
-                angular.extend($scope.markers.mypos2, obj);
-                $scope.markers.mypos = $scope.markers.mypos2;
-                delete $scope.markers.mypos2;
-            } else {
-                angular.extend($scope.markers.mypos, obj);
-                $scope.markers.mypos2 = $scope.markers.mypos;
-                delete $scope.markers.mypos;
-            }
-        }
-
         var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
         var apikey = localStorage.get('mapbox_api');
 
+        var lc = new L.control.locate({
+            follow: false,
+            position: 'bottomright',
+            keepCurrentZoomLevel: false,
+            stopFollowingOnDrag: true,
+            remainActive: true,
+            onLocationError: function(err) {
+                console.error(err);
+                $timeout(function() {
+                    lc.start(); //try again
+                });
+            },
+            onLocationOutsideMapBounds: function(context) {
+                console.log(context);
+            },
+            locateOptions: {
+                maxZoom: 14
+            },
+            icon: 'icon ion-android-locate'
+
+        });
         angular.extend($scope, {
             center: {
                 lat: 62.0,
                 lng: 15.0,
-                zoom: 5
+                zoom: 9,
+                autoDiscover: true
+            },
+            controls: {
+                custom: [
+                    lc
+                ]
             },
             layers: {
                 baselayers: {
@@ -71,46 +83,7 @@ angular.module('ifiske.controllers')
                 }
             },
             markers: {
-                mypos: {
-                    lat: 0,
-                    lng: 0,
-                    iconAngle: -45,
-                    message: 'Din position',
-                    icon: {
-                        type: 'div',
-                        iconSize: [40,40],
-                        iconAnchor: [20,20],
-                        className: 'icon ion-navigate myposition'
-                    }
-                }
             }
-        });
-
-        $ionicPlatform.ready(function() {
-            $cordovaGeolocation.watchPosition({
-                frequency: 3000
-            }).then(null, function(error) {
-                console.error(error);
-            }, function(pos) {
-                $timeout(function(){
-                    updateMypos({
-                        lat: pos.coords.latitude,
-                        lng: pos.coords.longitude
-                    });
-                });
-            });
-
-            $cordovaDeviceOrientation.watchHeading({
-                frequency: 3000
-            }).then(null, function(error) {
-                console.error(error);
-            }, function(heading) {
-                $timeout(function(){
-                    updateMypos({
-                        iconAngle: heading.trueHeading
-                    });
-                });
-            });
         });
 
         var createscope = function(a) {

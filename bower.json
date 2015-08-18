@@ -21,6 +21,7 @@
     "imgcache.js": "maistho/imgcache.js#master",
     "ngCordova": "maistho/ng-cordova#master",
     "angular-i18n": "~1.3.15",
-    "ionic-tabslidebox": "maistho/ionic-tabslidebox#master"
+    "ionic-tabslidebox": "maistho/ionic-tabslidebox#master",
+    "leaflet.locatecontrol": "~0.44.0"
   }
 }

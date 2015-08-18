@@ -136,7 +136,7 @@
                             });
                     },
                     user_logout: function() {
-                        session_api_call({m: 'user_logout'}, false)
+                        return session_api_call({m: 'user_logout'}, false)
                         .then(function() {
                             sessionData.deleteToken();
                         });

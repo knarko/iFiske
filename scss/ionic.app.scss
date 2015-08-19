@@ -30,6 +30,8 @@ $positive: #3060a0 !default;
 $fa-font-path: "fonts";
 @import "lib/font-awesome/scss/font-awesome";
 
+@import "lib/Leaflet.awesome-markers/dist/_leaflet.awesome-markers";
+
 
 @import "scss/imports/font.scss";
 @import "scss/imports/custom.scss";

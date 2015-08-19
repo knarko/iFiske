@@ -43,12 +43,13 @@ var paths = {
         './lib/leaflet-plugins/layer/Marker.Rotate.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
         './lib/ionic-tabslidebox/tabSlideBox.js',
-        './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js'
+        './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
+        './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
     ],
     templates: ['src/components/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'static']);
+gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'static', 'images']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
@@ -116,6 +117,15 @@ gulp.task('install', ['git-check'], function() {
     .on('log', function(data) {
         gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
+});
+
+gulp.task('images', function(done) {
+    gulp.src([
+        './lib/Leaflet.awesome-markers/dist/images/*',
+        './lib/leaflet/dist/images/*'
+    ])
+    .pipe(gulp.dest('./www/css/images'))
+    .on('end', done);
 });
 
 gulp.task('git-check', function(done) {

@@ -104,7 +104,13 @@ angular.module('ifiske.controllers')
                         lat: a.lat,
                         lng: a.lng,
                         getMessageScope: createscope(a),
-                        message: '<a ui-sref="app.area({id: area.ID })" ng-bind="area.t"></a>'
+                        message: '<a ui-sref="app.area({id: area.ID })" ng-bind="area.t"></a>',
+                        icon: {
+                            type: 'awesomeMarker',
+                            icon: a.favorite ? 'star': '',
+                            markerColor: a.wsc ? 'blue' : 'lightgray',
+                            prefix: 'ion'
+                        }
                     };
                 }
             });

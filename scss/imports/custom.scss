@@ -300,3 +300,10 @@ button.button-float {
 .item-toggle {
     pointer-events: initial; //This enables clickable lists with toggles
 }
+
+//fixes flickering on star-button...
+.button {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+

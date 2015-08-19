@@ -189,7 +189,9 @@
                     'News': [
                         ['ID',     'int'],
                         ['t',      'text'],
-                        ['text',   'text']
+                        ['text',   'text'],
+                        ['img',    'text'],
+                        ['icon',   'text']
                     ]
 
                 };

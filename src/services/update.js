@@ -188,12 +188,12 @@
                         };
                     } else if (item.storage_name) {
                         then = function(data) {
-                            localStorage.set(item.storage_name, data);
+                            return localStorage.set(item.storage_name, data);
                         };
                     }
 
                     if (then) {
-                        p.then(then);
+                        return p.then(then);
                     } else {
                         console.error('NO ACTION!');
                     }

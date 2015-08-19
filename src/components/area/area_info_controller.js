@@ -22,7 +22,7 @@ angular.module('ifiske.controllers')
                 var promise;
                 if ($scope.area.favorite) {
                     promise = API.user_add_favorite($scope.area.ID).then(function() {
-                        Update.update();
+                        DB.addFavorite($scope.area.ID);
                         $ionicPlatform.ready(function() {
                             $cordovaToast.show('Området är nu tillagt i dina favoriter', 'short', 'bottom');
                         });

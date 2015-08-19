@@ -30,6 +30,7 @@ angular.module('ifiske.controllers')
         $scope.notify = function(area) {
             console.log(area);
             API.user_set_favorite_notification(area.ID, area.not).then(function() {
+                DB.setFavoriteNotification(area.ID, area.not);
                 $ionicPlatform.ready(function() {
                     $cordovaToast.show('Notifikationer är ' + (area.not ? 'på' : 'av'),
                                        'short', 'bottom');

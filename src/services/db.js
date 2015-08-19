@@ -549,6 +549,28 @@
                             }, reject);
                         });
                     },
+                    addFavorite: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'INSERT INTO User_Favorite',
+                                '(a, not) VALUES (?, 0)',
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(data);
+                            }, reject);
+                        });
+                    },
+                    setFavoriteNotification: function(id, not) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'UPDATE User_Favorite',
+                                'SET "not" = ? WHERE a = ?'
+                            ].join(' '), [not, id])
+                            .then(function(data) {
+                                fulfill(data);
+                            }, reject);
+                        });
+                    },
 
                     getPois: function(id) {
                         return $q(function(fulfill, reject) {

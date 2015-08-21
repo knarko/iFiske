@@ -12,9 +12,12 @@ angular.module('ifiske.controllers')
 
         $ionicPlatform.ready(function() {
             if (window.cordova) {
-                $cordovaAppVersion.getAppVersion().then(function(version) {
+                $cordovaAppVersion.getVersionNumber().then(function(version) {
                     console.log('iFiske version:', version);
                     $scope.version = version;
+                });
+                $cordovaAppVersion.getVersionCode().then(function(version) {
+                    $scope.build = version;
                 });
             }
             Licenses.get().then(function(data) {

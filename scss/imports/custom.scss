@@ -8,10 +8,10 @@ ion-side-menu-content {
 ion-side-menu-content ion-view.view.image-bg,
 ion-side-menu-content ion-view.pane.image-bg,
 ion-side-menu-content ion-nav-view.view,
+ion-side-menu-content ion-nav-view.view-container,
 ion-side-menu-content ion-nav-view.pane {
-    background: none;
+    background: none !important;
 }
-
 
 ion-view.abstract-bg {
     background-image: url("../img/bg-abstract.jpg");

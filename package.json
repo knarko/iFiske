@@ -37,5 +37,7 @@
       "id": "nl.x-services.plugins.toast"
     }
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "ios"
+  ]
 }

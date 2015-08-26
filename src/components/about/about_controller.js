@@ -16,8 +16,8 @@ angular.module('ifiske.controllers')
                     console.log('iFiske version:', version);
                     $scope.version = version;
                 });
-                $cordovaAppVersion.getVersionCode().then(function(version) {
-                    $scope.build = version;
+                $cordovaAppVersion.getVersionCode().then(function(build) {
+                    $scope.build = build;
                 });
             }
             Licenses.get().then(function(data) {

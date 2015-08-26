@@ -1,12 +1,7 @@
 <ion-view title="{{::item.t}}">
     <ion-content>
-        <div class="item item-image" ng-if="item.img">
-            <img ng-src="{{::image_endpoint + item.img}}"/>
-        </div>
-        <div class="item item-divider">
-            <h2>{{item.t}}</h2>
-        </div>
         <div class="item item-body">
+            <img ng-src="{{::image_endpoint + item.img}}" class="news-text-image">
             <p ng-bind-html="item.text | nobrs"></p>
         </div>
     </ion-content>

@@ -1,9 +1,11 @@
 <ion-view title="{{::newsTitle}}">
     <ion-content>
         <div class="list">
-            <div class="item item-thumbnail-left" ng-repeat="item in content" ui-sref="app.newsitem({item:item, id:item.ID})">
-                <img ng-src="{{::item.icon}}">
-                <h2>{{::item.t}}</h2>
+            <div class="item item-button-left" ng-repeat="item in content" ui-sref="app.newsitem({item:item, id:item.ID})">
+                <button class="button button-positive button-clear">
+                    <i style="content: url('{{::item.icon}}');" class="icon-image"></i>
+                </button>
+                {{::item.t}}
             </div>
         </div>
     </ion-content>

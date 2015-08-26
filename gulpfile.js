@@ -85,7 +85,7 @@ gulp.task('static', function(done) {
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(concat('libs.min.js', {newLine: ';'}))
+    .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))

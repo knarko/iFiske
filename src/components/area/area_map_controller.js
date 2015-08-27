@@ -9,25 +9,6 @@ angular.module('ifiske.controllers')
     '$timeout',
     'localStorage',
     function($scope, DB, leafletEvents, $ionicPlatform, $cordovaGeolocation, $cordovaDeviceOrientation, $timeout, localStorage) {
-        function updateMypos(obj) {
-            //rotate iconAngle 45 deg since the icon is tilted by default
-            obj.iconAngle = (obj.iconAngle | 0) - 45;
-            // We need to create a new named element in order for the update to register
-            if ($scope.map.markers.mypos2) {
-                angular.extend($scope.map.markers.mypos2, obj);
-                $scope.map.markers.mypos = $scope.map.markers.mypos2;
-                delete $scope.map.markers.mypos2;
-            } else {
-                angular.extend($scope.map.markers.mypos, obj);
-                $scope.map.markers.mypos2 = $scope.map.markers.mypos;
-                delete $scope.map.markers.mypos;
-            }
-        }
-        /* might need for ios
-           function getMypos() {
-           return $scope.map.markers.mypos || $scope.map.markers.mypos2;
-           }
-           */
 
         var icons = {};
         var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
@@ -99,18 +80,6 @@ angular.module('ifiske.controllers')
                 paths: {},
 
                 markers: {
-                    mypos: {
-                        lat: 0,
-                        lng: 0,
-                        iconAngle: 0,
-                        message: 'Egen position',
-                        icon: {
-                            type: 'div',
-                            iconSize: [40,40],
-                            iconAnchor: [20,20],
-                            className: 'icon ion-navigate myposition'
-                        }
-                    }
                 },
 
                 layers: {
@@ -158,32 +127,6 @@ angular.module('ifiske.controllers')
             }
             $scope.$on('ifiske-area', updateMap);
 
-            $ionicPlatform.ready(function() {
-                $cordovaGeolocation.watchPosition({
-                    frequency: 3000
-                }).then(null, function(error) {
-                    console.error(error);
-                }, function(pos) {
-                    $timeout(function() {
-                        updateMypos({
-                            lat: pos.coords.latitude,
-                            lng: pos.coords.longitude
-                        });
-                    });
-                });
-
-                $cordovaDeviceOrientation.watchHeading({
-                    frequency: 3000
-                }).then(null, function(error) {
-                    console.error(error);
-                }, function(heading) {
-                    $timeout(function() {
-                        updateMypos({
-                            iconAngle: heading.trueHeading
-                        });
-                    });
-                });
-            });
 
             $scope.navigate = function() {
                 //var pos = getMypos(); //might need for ios

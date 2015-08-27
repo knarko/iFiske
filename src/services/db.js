@@ -199,7 +199,7 @@
                 var createObject = function(data) {
                     var retval = [];
                     for (var i = 0; i < data.rows.length; ++i) {
-                        retval.push(data.rows.item(i));
+                        retval.push(angular.copy(data.rows.item(i)));
                     }
                     return retval;
                 };

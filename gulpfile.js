@@ -54,7 +54,7 @@ gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'static',
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(concat('all.min.js'))
+    .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))

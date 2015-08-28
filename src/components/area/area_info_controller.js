@@ -42,7 +42,7 @@ angular.module('ifiske.controllers')
                 });
             } else {
                 $ionicPopup.alert({
-                    title: 'Du måste vara inloggad för att kunna ha favoriter',
+                    title: 'Du måste vara inloggad för att kunna markera fiskevatten som favoriter.',
                 });
             }
         };

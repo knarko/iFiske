@@ -108,7 +108,7 @@ angular.module('ifiske.controllers')
                         icon: {
                             type: 'awesomeMarker',
                             icon: a.favorite ? 'star': '',
-                            markerColor: a.wsc ? 'blue' : 'lightgray',
+                            markerColor: a.wsc ? (a.favorite ? 'orange' : 'blue') : 'lightgray',
                             prefix: 'ion'
                         }
                     };

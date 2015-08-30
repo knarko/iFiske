@@ -22,6 +22,7 @@ angular.module('ifiske.controllers')
                 DB.removeFavorite(area.ID);
                 $scope.favorites.splice($scope.favorites.indexOf(area), 1);
                 $ionicPlatform.ready(function() {
+                    window.plugins.toast.hide();
                     $cordovaToast.show('Området är nu borttaget från dina favoriter', 'short', 'bottom');
                 });
             });
@@ -32,6 +33,7 @@ angular.module('ifiske.controllers')
             API.user_set_favorite_notification(area.ID, area.not).then(function() {
                 DB.setFavoriteNotification(area.ID, area.not);
                 $ionicPlatform.ready(function() {
+                    window.plugins.toast.hide();
                     $cordovaToast.show('Notifikationer är ' + (area.not ? 'på' : 'av'),
                                        'short', 'bottom');
                 });

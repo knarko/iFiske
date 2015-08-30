@@ -26,21 +26,29 @@ angular.module('ifiske', [
     template: '<ion-spinner></ion-spinner>'
     // hideOnStateChange: true
 })
-.run(['$ionicPlatform', 'Update', 'ImgCache', function($ionicPlatform, Update, ImgCache) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar above the keyboard for form inputs
-        if (window.ionic && window.ionic.Keyboard) {
-            window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            window.StatusBar.styleDefault();
-        }
+.run([
+    '$ionicPlatform',
+    'Update',
+    'ImgCache',
+    '$rootScope',
+    function($ionicPlatform, Update, ImgCache, $rootScope) {
 
-        ImgCache.$init();
-        Update.update();
-    });
-}])
+        $rootScope.image_endpoint = 'http://www.ifiske.se';
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar above the keyboard for form inputs
+            if (window.ionic && window.ionic.Keyboard) {
+                window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                window.StatusBar.styleDefault();
+            }
+
+            ImgCache.$init();
+            Update.update();
+        });
+    }
+])
 
 .config([
     '$stateProvider',

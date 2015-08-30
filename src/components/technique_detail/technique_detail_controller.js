@@ -5,7 +5,6 @@ angular.module('ifiske.controllers')
     'DB',
     '$ionicSlideBoxDelegate',
     function($scope, $stateParams, DB, $ionicSlideBoxDelegate) {
-        $scope.image_endpoint = 'http://www.ifiske.se';
         $scope.tech = $stateParams.tech;
         $scope.images = [];
 

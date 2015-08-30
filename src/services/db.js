@@ -553,7 +553,7 @@
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
                                 'INSERT INTO User_Favorite',
-                                '(a, not) VALUES (?, 0)',
+                                '(a, "not") VALUES (?, 0)',
                             ].join(' '), [id])
                             .then(function(data) {
                                 fulfill(data);

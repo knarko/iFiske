@@ -1,6 +1,6 @@
-<ion-view>
+<ion-view title="Fiskevatten">
   <ion-content>
-    <div ng-show="favorites.length" class="item item-divider" style='float:right; padding-right:20px;'>Notifikation via email &#8628;</div>
+    <div ng-show="favorites.length" class="item item-divider text-right">Notifikation via email &#8628;</div>
     <div ng-show="!favorites.length" class="item item-divider">- Inga favoriter har markerats -</div>
         <ion-list>
             <ion-toggle ng-repeat="area in favorites" toggle-class="toggle-balanced" on-hold="openPopover(area)" ng-model="area.not" ng-change="notify(area)" ng-true-value="1" ng-false-value="0">

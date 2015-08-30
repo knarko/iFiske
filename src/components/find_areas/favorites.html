@@ -1,5 +1,5 @@
 <ion-view title="Fiskevatten">
-  <ion-content>
+  <ion-content scroll="false" has-tabs="true">
     <div ng-show="favorites.length" class="item item-divider text-right">Notifikation via email &#8628;</div>
     <div ng-show="!favorites.length" class="item item-divider">- Inga favoriter har markerats -</div>
         <ion-list>
@@ -13,4 +13,12 @@
             </div>
         </div>
     </ion-content>
+    <div class="tabs tabs-icon-only tabs-calm">
+        <a nav-clear class="tab-item disable-user-behaviour" title="Counties" nav-clear ui-sref="app.find_areas.counties" nav-transition="none">
+            <i class="icon icon-icon_fishingareas"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+        </a>
+        <a nav-clear class="tab-item disable-user-behaviour active" title="Favorites" nav-clear ui-sref="app.find_areas.favorites" nav-transition="none">
+            <i class="icon ion-android-star"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+        </a>
+    </div>
 </ion-view>

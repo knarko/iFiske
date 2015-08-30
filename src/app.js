@@ -168,15 +168,22 @@ angular.module('ifiske', [
         })
         .state('app.find_areas', {
             url: '/find_areas',
+            templateUrl: 'components/find_areas/tabs.html',
+            abstract: true
+        })
+        .state('app.find_areas.counties', {
+            url: '/counties',
             views: {
-                '@app': {
-                    templateUrl: 'components/find_areas/tabs.html',
-                },
-                'counties@app.find_areas': {
+                'find_areas': {
                     templateUrl: 'components/find_areas/counties.html',
                     controller: 'CountiesCtrl'
-                },
-                'favorites@app.find_areas': {
+                }
+            }
+        })
+        .state('app.find_areas.favorites', {
+            url: '/favorites',
+            views: {
+                'find_areas': {
                     templateUrl: 'components/find_areas/favorites.html',
                     controller: 'FavoritesCtrl'
                 }

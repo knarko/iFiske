@@ -6,7 +6,8 @@ angular.module('ifiske.controllers')
     'API',
     '$ionicActionSheet',
     '$ionicPlatform',
-    function($scope, DB, $cordovaToast, API, $ionicActionSheet, $ionicPlatform) {
+    '$ionicHistory',
+    function($scope, DB, $cordovaToast, API, $ionicActionSheet, $ionicPlatform, $ionicHistory) {
         var initialize = function() {
             DB.getUserFavorites()
             .then(function(data) {
@@ -14,6 +15,11 @@ angular.module('ifiske.controllers')
                 console.log(data);
             });
         };
+
+        $ionicHistory.nextViewOptions({
+            disableAnimate: true,
+            disableBack: true
+        });
 
         $scope.$on('$ionicView.beforeEnter', initialize);
 

@@ -1,20 +1,3 @@
 <ion-view title="Fiskevatten">
-    <ion-content scroll="false">
-        <tab-slide-box tab="0" tabs-position="bottom">
-            <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)" delegate-handle="tabs" >
-                <ion-slide>
-                    <ion-nav-view name="counties"></ion-nav-view>
-                </ion-slide>
-                <ion-slide>
-                    <ion-nav-view name="favorites"></ion-nav-view>
-                </ion-slide>
-            </ion-slide-box>
-            <ion-footer-bar class="bar-calm tsb-nav">
-                <div class="button-bar">
-                    <button class="button button-clear"><i class="icon icon-icon_fishingareas"></i></button>
-                    <button class="button button-clear icon ion-android-star"></button>
-                </div>
-            </ion-footer-bar>
-        </tab-slide-box>
-    </ion-content>
+    <ion-nav-view name="find_areas"></ion-nav-view>
 </ion-view>

@@ -1,0 +1,7 @@
+<label for="{{id}}" class="input-label">{{label}}</label>
+<label class="item item-input" 
+       ng-class="{ 'error': registerForm.{{name}}.$invalid &&
+				 registerForm.{{name}}.$dirty}">
+    <input id="{{id}}" name="{{name}}" ng-bind="{{name}}" type="{{type}}" 
+	   placeholder="{{placeholder}}" ng-model="ngModel" ng-pattern="ngPattern" required>
+</label>

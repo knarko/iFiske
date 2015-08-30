@@ -629,7 +629,7 @@
                                 'WHERE ID = ?'
                             ].join(' '), [id])
                             .then(function(data) {
-                                fulfill(createObject(data));
+                                fulfill(createObject(data)[0]);
                             }, reject);
                         });
                     }

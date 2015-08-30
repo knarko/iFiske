@@ -46,10 +46,11 @@ var paths = {
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
     ],
-    templates: ['src/components/**/*.html']
+    templates: ['src/components/**/*.html'],
+    directives: ['src/directives/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'static', 'images']);
+gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'directives', 'static', 'images']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
@@ -70,6 +71,11 @@ gulp.task('fonts', function(done) {
     .on('end', done);
 });
 
+gulp.task('directives', function(done) {
+    gulp.src(paths.directives)
+    .pipe(gulp.dest('./www/directives'))
+    .on('end', done);
+});
 gulp.task('templates', function(done) {
     gulp.src(paths.templates)
     .pipe(gulp.dest('./www/components'))
@@ -110,6 +116,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.libs, ['libs']);
     gulp.watch(paths.templates, ['templates']);
+    gulp.watch(paths.directives, ['directives']);
 });
 
 gulp.task('install', ['git-check'], function() {

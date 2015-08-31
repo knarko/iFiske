@@ -1,20 +1,11 @@
 <ion-view title="Fiskevatten">
-    <ion-content scroll="false">
-        <tab-slide-box tab="0" tabs-position="bottom">
-            <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)" delegate-handle="tabs" >
-                <ion-slide>
-                    <ion-nav-view name="counties"></ion-nav-view>
-                </ion-slide>
-                <ion-slide>
-                    <ion-nav-view name="favorites"></ion-nav-view>
-                </ion-slide>
-            </ion-slide-box>
-            <ion-footer-bar class="bar-calm tsb-nav">
-                <div class="button-bar">
-                    <button class="button button-clear"><i class="icon icon-icon_fishingareas"></i></button>
-                    <button class="button button-clear icon ion-android-star"></button>
-                </div>
-            </ion-footer-bar>
-        </tab-slide-box>
-    </ion-content>
+    <ion-nav-view name="find_areas"></ion-nav-view>
+    <ion-footer-bar class="tabs tabs-icon-only tabs-calm">
+        <a nav-transition="none" class="tab-item" title="Counties" ui-sref-active="active" ng-click="goto('counties')">
+            <i class="icon icon-icon_fishingareas"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+        </a>
+        <a nav-transition="none" class="tab-item" title="Favorites" ui-sref-active="active" ng-click="goto('favorites')">
+            <i class="icon ion-android-star"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+        </a>
+    </ion-footer-bar>
 </ion-view>

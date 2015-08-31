@@ -169,6 +169,7 @@ angular.module('ifiske', [
         .state('app.find_areas', {
             url: '/find_areas',
             templateUrl: 'components/find_areas/tabs.html',
+            controller: 'FindAreasCtrl',
             abstract: true
         })
         .state('app.find_areas.counties', {
@@ -244,31 +245,49 @@ angular.module('ifiske', [
         })
 
         .state('app.area', {
+            abstract: true,
             url: '/area/:id',
+            templateUrl: 'components/area/area.html',
+            controller: 'AreaCtrl',
+        })
+        .state('app.area.info', {
+            url: '/info',
             views: {
-                '@app': {
-                    templateUrl: 'components/area/area.html',
-                    controller: 'AreaCtrl',
-                },
-                'info@app.area': {
+                area: {
                     templateUrl: 'components/area/info.html',
                     controller: 'AreaInfoCtrl'
-                },
-                'map@app.area': {
+                }
+            }
+        })
+        .state('app.area.map', {
+            url: '/map',
+            views: {
+                area: {
                     templateUrl: 'components/area/map.html',
                     controller: 'AreaMapCtrl'
-                },
-                'fishinfo@app.area': {
+                }
+            }
+        })
+        .state('app.area.fish', {
+            url: '/fish',
+            views: {
+                area: {
                     templateUrl: 'components/area/fish.html',
                     controller: 'AreaFishCtrl'
-                },
-                'cards@app.area': {
+                }
+            }
+        })
+        .state('app.area.cards', {
+            url: '/cards',
+            views: {
+                area: {
                     templateUrl: 'components/area/cards.html',
                     controller: 'AreaCardsCtrl'
                 }
             }
         });
-    }]);
+    }
+]);
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);

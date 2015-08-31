@@ -3,8 +3,18 @@ angular.module('ifiske.controllers')
     '$scope',
     '$stateParams',
     'DB',
-    '$ionicSlideBoxDelegate',
-    function($scope, $stateParams, DB, $ionicSlideBoxDelegate) {
+    '$state',
+    '$ionicHistory',
+    '$ionicViewSwitcher',
+    function($scope, $stateParams, DB, $state, $ionicHistory, $ionicViewSwitcher) {
+
+        $scope.goto = function(state) {
+            $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
+            $ionicViewSwitcher.nextTransition('none');
+            $state.go('app.area.' + state, null, {
+                location: 'replace'
+            });
+        };
 
         DB.getArea($stateParams.id)
         .then(function(area) {
@@ -17,9 +27,6 @@ angular.module('ifiske.controllers')
                 console.error(err);
             });
 
-            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
-            $ionicSlideBoxDelegate.$getByHandle('tabs').enableSlide(false);
-
             DB.getOrganization(area.orgid)
             .then(function(org) {
                 $scope.org = org;
@@ -31,7 +38,6 @@ angular.module('ifiske.controllers')
         DB.getAreaFishes($stateParams.id)
         .then(function(fishes) {
             $scope.fishes = fishes;
-            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
         }, function(err) {
             console.log(err);
         });
@@ -39,7 +45,6 @@ angular.module('ifiske.controllers')
         DB.getProductsByArea($stateParams.id)
         .then(function(products) {
             $scope.products = products;
-            $ionicSlideBoxDelegate.$getByHandle('tabs').update();
         }, function(err) {
             console.log(err);
         });

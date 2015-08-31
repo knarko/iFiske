@@ -16,11 +16,6 @@ angular.module('ifiske.controllers')
             });
         };
 
-        $ionicHistory.nextViewOptions({
-            disableAnimate: true,
-            disableBack: true
-        });
-
         $scope.$on('$ionicView.beforeEnter', initialize);
 
         var removeFavorite = function(area) {

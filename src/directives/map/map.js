@@ -134,7 +134,7 @@ angular.module('ifiske.directives', [])
                         lat: a.lat,
                         lng: a.lng,
                         getMessageScope: createscope(a), //TODO: dont create multiple scopes
-                        message: '<a ui-sref="app.area({id: area.ID })" ng-bind="area.t"></a>',
+                        message: '<a ui-sref="app.area.info({id: area.ID })" ng-bind="area.t"></a>',
                         icon: {
                             type: 'awesomeMarker',
                             icon: a.favorite ? 'star': '',

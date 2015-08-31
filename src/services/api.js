@@ -26,7 +26,7 @@
                                 method:'get',
                                 url: base_url,
                                 params: angular.extend(params, {'key': 'ox07xh8aaypwvq7a'}),
-                                timeout: 5000,
+                                timeout: 7000,
                                 cache: (cache !== false)
                             }
                         )

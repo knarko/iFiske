@@ -1,4 +1,4 @@
-angular.module('ifiske.directives', [])
+angular.module('ifiske.directives')
 .directive('ifiskeMap', function() {
     return {
         restrict: 'E',

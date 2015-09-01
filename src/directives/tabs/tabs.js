@@ -1,4 +1,4 @@
-angular.module('ifiske.directives', [])
+angular.module('ifiske.directives')
 .directive('hipTabs', function() {
     return {
         scope: true,

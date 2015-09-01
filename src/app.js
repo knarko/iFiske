@@ -69,6 +69,9 @@ angular.module('ifiske', [
         // Cache views in the forward stack
         $ionicConfigProvider.views.forwardCache(true);
 
+        // Sets all transitions to use android-style, since that looks better with transparent backgrounds
+        $ionicConfigProvider.views.transition('android');
+
         // Clear back button default text
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
 

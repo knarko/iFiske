@@ -8,7 +8,7 @@ angular.module('ifiske.directives', [])
         link: function(scope) {
             console.log(scope);
         },
-        controller: function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
+        controller: ['$scope', '$ionicHistory', '$state', '$ionicViewSwitcher', function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
             // $scope is the appropriate scope for the directive
             $scope.tabs = [];
             this.addChild = function(nestedDirective) {
@@ -21,7 +21,7 @@ angular.module('ifiske.directives', [])
                     location: 'replace'
                 });
             };
-        }
+        }]
     };
 })
 .directive('ionicTab', function() {

@@ -323,3 +323,19 @@ i.icon-image {
 .text-right {
     text-align: right;
 }
+
+.button.icon-top i,
+.button.icon-top i:before {
+    font-size: 22px !important;
+    margin-top: -6px;
+    display: block !important;
+}
+.button.icon-top {
+    overflow: visible;
+}
+.button.icon-top span {
+    margin-top: -16px;
+    display: block;
+    font-size: 12px;
+}
+

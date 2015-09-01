@@ -5,15 +5,31 @@ angular.module('ifiske.directives')
         restrict: 'E',
         transclude: true,
         templateUrl: 'directives/tabs/tabs.html',
-        link: function(scope) {
-            console.log(scope);
+        link: function(scope, elm, iat, con, transcludeFn) {
         },
         controller: ['$scope', '$ionicHistory', '$state', '$ionicViewSwitcher', function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
+            var tabs = [];
             this.scope = $scope;
-            $scope.goto = function(state) {
+            this.addTab = function(tab) {
+                tabs.push(tab);
+            };
+
+            $scope.goto = function(elementScope) {
+                var target = -1;
+                for (var i = 0; i < tabs.length; ++i) {
+                    if ($state.is(tabs[i].viewName)) {
+                        target = tabs[i].index;
+                    }
+                }
+                if (target === -1 || target === elementScope.index) {
+                    // No transition at all
+                } else if (target > elementScope.index) {
+                    $ionicViewSwitcher.nextDirection('back');
+                } else if (target < elementScope.index) {
+                    $ionicViewSwitcher.nextDirection('forward');
+                }
                 $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
-                $ionicViewSwitcher.nextTransition('none');
-                $state.go(state, null, {
+                $state.go(elementScope.viewName, null, {
                     location: 'replace'
                 });
             };
@@ -25,15 +41,16 @@ angular.module('ifiske.directives')
         scope: {
             icon: '@',
             name: '@',
-            viewName: '@'
+            viewName: '@',
+            index: '@'
         },
         restrict: 'E',
         require: '^hipTabs',
         replace: true,
         templateUrl: 'directives/tabs/tab.html',
         link: function(scope, elem, attrs, controllerInstance) {
-            console.log(scope);
             scope.goto = controllerInstance.scope.goto;
+            controllerInstance.addTab(scope);
         }
     };
 });

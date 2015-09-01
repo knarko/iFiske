@@ -1,18 +1,14 @@
 angular.module('ifiske.controllers')
 .controller('AreaInfoCtrl', [
     '$scope',
-    '$ionicSlideBoxDelegate',
     'sessionData',
     '$ionicPopup',
     'API',
     'DB',
     '$ionicPlatform',
     '$cordovaToast',
-    function($scope, $ionicSlideBoxDelegate, sessionData, $ionicPopup, API, DB, $ionicPlatform, $cordovaToast) {
+    function($scope, sessionData, $ionicPopup, API, DB, $ionicPlatform, $cordovaToast) {
         console.log($scope);
-        $scope.gotoProducts = function() {
-            $ionicSlideBoxDelegate.$getByHandle('tabs').slide(1);
-        };
         $scope.$on('$ionicView.beforeEnter', function() {
         });
 

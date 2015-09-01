@@ -91,7 +91,7 @@ angular.module('ifiske.directives', [])
                     },
                     controls: {
                         custom: [
-
+                            lc
                         ]
                     }
                 }

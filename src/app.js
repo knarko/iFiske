@@ -175,7 +175,7 @@ angular.module('ifiske', [
         .state('app.find_areas.counties', {
             url: '/counties',
             views: {
-                'find_areas': {
+                'ionic-tabs': {
                     templateUrl: 'components/find_areas/counties.html',
                     controller: 'CountiesCtrl'
                 }
@@ -184,7 +184,7 @@ angular.module('ifiske', [
         .state('app.find_areas.favorites', {
             url: '/favorites',
             views: {
-                'find_areas': {
+                'ionic-tabs': {
                     templateUrl: 'components/find_areas/favorites.html',
                     controller: 'FavoritesCtrl'
                 }
@@ -253,7 +253,7 @@ angular.module('ifiske', [
         .state('app.area.info', {
             url: '/info',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/info.html',
                     controller: 'AreaInfoCtrl'
                 }
@@ -262,7 +262,7 @@ angular.module('ifiske', [
         .state('app.area.map', {
             url: '/map',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/map.html',
                     controller: 'AreaMapCtrl'
                 }
@@ -271,7 +271,7 @@ angular.module('ifiske', [
         .state('app.area.fish', {
             url: '/fish',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/fish.html',
                     controller: 'AreaFishCtrl'
                 }
@@ -280,7 +280,7 @@ angular.module('ifiske', [
         .state('app.area.cards', {
             url: '/cards',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/cards.html',
                     controller: 'AreaCardsCtrl'
                 }

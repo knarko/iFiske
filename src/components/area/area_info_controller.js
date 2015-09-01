@@ -4,12 +4,12 @@ angular.module('ifiske.controllers')
     '$ionicSlideBoxDelegate',
     'sessionData',
     '$ionicPopup',
-    'Update',
     'API',
     'DB',
     '$ionicPlatform',
     '$cordovaToast',
-    function($scope, $ionicSlideBoxDelegate, sessionData, $ionicPopup, Update, API, DB, $ionicPlatform, $cordovaToast) {
+    function($scope, $ionicSlideBoxDelegate, sessionData, $ionicPopup, API, DB, $ionicPlatform, $cordovaToast) {
+        console.log($scope);
         $scope.gotoProducts = function() {
             $ionicSlideBoxDelegate.$getByHandle('tabs').slide(1);
         };

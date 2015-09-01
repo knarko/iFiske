@@ -1,0 +1,10 @@
+<ion-nav-view name="ionic-tabs"></ion-nav-view>
+<ng-transclude></ng-transclude>
+<ion-footer-bar class="bar-calm">
+  <div class="button-bar">
+    <button ng-repeat="tab in tabs "class="button button-clear" ng-class="{active: ('{{tab.viewName}}' | isState)}" ng-click="goto('{{tab.viewName}}')">
+      <i class="icon {{tab.icon}}"></i>
+      <span ng-bind-html="tab.name"></span>
+    </button>
+  </div>
+</ion-footer-bar>

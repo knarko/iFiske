@@ -1,5 +1,5 @@
 angular.module('ifiske.directives', [])
-.directive('ionicTabs', function() {
+.directive('hipTabs', function() {
     return {
         scope: true,
         restrict: 'E',
@@ -9,11 +9,7 @@ angular.module('ifiske.directives', [])
             console.log(scope);
         },
         controller: ['$scope', '$ionicHistory', '$state', '$ionicViewSwitcher', function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
-            // $scope is the appropriate scope for the directive
-            $scope.tabs = [];
-            this.addChild = function(nestedDirective) {
-                $scope.tabs.push(nestedDirective);
-            };
+            this.scope = $scope;
             $scope.goto = function(state) {
                 $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
                 $ionicViewSwitcher.nextTransition('none');
@@ -24,19 +20,20 @@ angular.module('ifiske.directives', [])
         }]
     };
 })
-.directive('ionicTab', function() {
+.directive('hipTab', function() {
     return {
-        scope:{
+        scope: {
             icon: '@',
             name: '@',
             viewName: '@'
         },
         restrict: 'E',
-        require: '^ionicTabs',
+        require: '^hipTabs',
+        replace: true,
+        templateUrl: 'directives/tabs/tab.html',
         link: function(scope, elem, attrs, controllerInstance) {
             console.log(scope);
-            console.log(scope.$parent.area);
-            controllerInstance.addChild(scope);
+            scope.goto = controllerInstance.scope.goto;
         }
     };
 });

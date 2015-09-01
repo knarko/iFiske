@@ -169,8 +169,7 @@ angular.module('ifiske', [
         .state('app.find_areas', {
             url: '/find_areas',
             templateUrl: 'components/find_areas/tabs.html',
-            controller: 'FindAreasCtrl',
-            abstract: true
+            controller: 'FindAreasCtrl'
         })
         .state('app.find_areas.counties', {
             url: '/counties',
@@ -245,7 +244,6 @@ angular.module('ifiske', [
         })
 
         .state('app.area', {
-            abstract: true,
             url: '/area/:id',
             templateUrl: 'components/area/area.html',
             controller: 'AreaCtrl',

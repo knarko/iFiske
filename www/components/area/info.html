@@ -16,7 +16,7 @@
                     ></button>
         </div>
         <div ng-if="area.d" class="item item-body">
-            <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ng-click="gotoProducts()">Köp Fiskekort</button>
+            <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ui-sref="^.cards">Köp Fiskekort</button>
             <p ng-bind-html="area.d | onebr"></p>
         </div>
         <div ng-if="org.t" class="item item-divider">

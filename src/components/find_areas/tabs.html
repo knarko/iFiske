@@ -1,11 +1,6 @@
 <ion-view title="Fiskevatten">
-    <ion-nav-view name="find_areas"></ion-nav-view>
-    <ion-footer-bar class="tabs tabs-icon-only tabs-calm">
-        <a nav-transition="none" class="tab-item" title="Counties" ui-sref-active="active" ng-click="goto('counties')">
-            <i class="icon icon-icon_fishingareas"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
-        </a>
-        <a nav-transition="none" class="tab-item" title="Favorites" ui-sref-active="active" ng-click="goto('favorites')">
-            <i class="icon ion-android-star"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
-        </a>
-    </ion-footer-bar>
+    <hip-tabs>
+        <hip-tab name="Län" icon="icon-icon_fishingareas" view-name="app.find_areas.counties" index="0"></hip-tab>
+        <hip-tab name="Favoriter" icon="ion-android-star" view-name="app.find_areas.favorites" index="1"></hip-tab>
+    </hip-tabs>
 </ion-view>

@@ -1,4 +1,4 @@
-angular.module('ifiske.directives', [])
+angular.module('ifiske.directives')
 .directive('ifiskeMap', function() {
     return {
         restrict: 'E',
@@ -10,7 +10,7 @@ angular.module('ifiske.directives', [])
         scope: {
             mapData: '='
         },
-        controller: function($scope, $timeout, localStorage, DB, $q) {
+        controller: ['$scope', '$timeout', 'localStorage', 'DB', '$q', function($scope, $timeout, localStorage, DB, $q) {
             var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
             var apikey = localStorage.get('mapbox_api');
 
@@ -91,7 +91,7 @@ angular.module('ifiske.directives', [])
                     },
                     controls: {
                         custom: [
-
+                            lc
                         ]
                     }
                 }
@@ -208,6 +208,6 @@ angular.module('ifiske.directives', [])
                     createArea(data.area);
                 }
             }, true);
-        }
+        }]
     };
 });

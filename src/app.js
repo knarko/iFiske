@@ -69,6 +69,9 @@ angular.module('ifiske', [
         // Cache views in the forward stack
         $ionicConfigProvider.views.forwardCache(true);
 
+        // Sets all transitions to use android-style, since that looks better with transparent backgrounds
+        $ionicConfigProvider.views.transition('android');
+
         // Clear back button default text
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
 
@@ -169,13 +172,12 @@ angular.module('ifiske', [
         .state('app.find_areas', {
             url: '/find_areas',
             templateUrl: 'components/find_areas/tabs.html',
-            controller: 'FindAreasCtrl',
-            abstract: true
+            controller: 'FindAreasCtrl'
         })
         .state('app.find_areas.counties', {
             url: '/counties',
             views: {
-                'find_areas': {
+                'ionic-tabs': {
                     templateUrl: 'components/find_areas/counties.html',
                     controller: 'CountiesCtrl'
                 }
@@ -184,7 +186,7 @@ angular.module('ifiske', [
         .state('app.find_areas.favorites', {
             url: '/favorites',
             views: {
-                'find_areas': {
+                'ionic-tabs': {
                     templateUrl: 'components/find_areas/favorites.html',
                     controller: 'FavoritesCtrl'
                 }
@@ -245,7 +247,6 @@ angular.module('ifiske', [
         })
 
         .state('app.area', {
-            abstract: true,
             url: '/area/:id',
             templateUrl: 'components/area/area.html',
             controller: 'AreaCtrl',
@@ -253,7 +254,7 @@ angular.module('ifiske', [
         .state('app.area.info', {
             url: '/info',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/info.html',
                     controller: 'AreaInfoCtrl'
                 }
@@ -262,7 +263,7 @@ angular.module('ifiske', [
         .state('app.area.map', {
             url: '/map',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/map.html',
                     controller: 'AreaMapCtrl'
                 }
@@ -271,7 +272,7 @@ angular.module('ifiske', [
         .state('app.area.fish', {
             url: '/fish',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/fish.html',
                     controller: 'AreaFishCtrl'
                 }
@@ -280,7 +281,7 @@ angular.module('ifiske', [
         .state('app.area.cards', {
             url: '/cards',
             views: {
-                area: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/cards.html',
                     controller: 'AreaCardsCtrl'
                 }

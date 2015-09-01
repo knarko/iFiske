@@ -3,18 +3,10 @@ angular.module('ifiske.controllers')
     '$scope',
     '$stateParams',
     'DB',
-    '$state',
-    '$ionicHistory',
-    '$ionicViewSwitcher',
-    function($scope, $stateParams, DB, $state, $ionicHistory, $ionicViewSwitcher) {
-
-        $scope.goto = function(state) {
-            $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
-            $ionicViewSwitcher.nextTransition('none');
-            $state.go('app.area.' + state, null, {
-                location: 'replace'
-            });
-        };
+    function($scope, $stateParams, DB) {
+        $scope.$on('$ionicView.beforeEnter', function() {
+            console.log('beforeenter area_controller.js');
+        });
 
         DB.getArea($stateParams.id)
         .then(function(area) {
@@ -37,6 +29,7 @@ angular.module('ifiske.controllers')
 
         DB.getAreaFishes($stateParams.id)
         .then(function(fishes) {
+            console.log(fishes);
             $scope.fishes = fishes;
         }, function(err) {
             console.log(err);

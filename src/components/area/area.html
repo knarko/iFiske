@@ -1,17 +1,8 @@
 <ion-view class="abstract-bg">
-    <ion-nav-view name="area"></ion-nav-view>
-    <ion-footer-bar class="tabs tabs-icon-only tabs-calm">
-        <a nav-transition="none" class="tab-item" title="" ui-sref-active="active" ng-click="goto('info')">
-            <i class="icon ion-information-circled"></i>
-        </a>
-        <a nav-transition="none" class="tab-item" title="" ui-sref-active="active" ng-click="goto('cards')">
-            <i class=" icon ion-card"></i>
-        </a>
-        <a nav-transition="none" class="tab-item" title="" ui-sref-active="active" ng-if="fishes.length" ng-click="goto('fish')">
-            <i class="icon icon-icon_fish"></i>
-        </a>
-        <a nav-transition="none" class="tab-item" title="" ui-sref-active="active" ng-click="goto('map')">
-            <i class="icon ion-map"></i>
-        </a>
-    </ion-footer-bar>
+    <hip-tabs>
+        <hip-tab name="Info" view-name="app.area.info" icon="ion-information-circled" index="0"></hip-tab>
+        <hip-tab name="Köp" view-name="app.area.cards" icon="ion-card" index="1"></hip-tab>
+        <hip-tab ng-if="fishes.length" name="Fisk" view-name="app.area.fish" icon="icon-icon_fish" index="2"></hip-tab>
+        <hip-tab name="Karta" view-name="app.area.map" icon="ion-map" index="3"></hip-tab>
+    </hip-tabs>
 </ion-view>

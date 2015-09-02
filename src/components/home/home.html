@@ -38,11 +38,11 @@
                 </button>
                 Mina fiskekort
             </div>
-            <div class="item item-button-left" ui-sref="^.news">
+            <div ng-if="news()" class="item item-button-left" ui-sref="^.news">
                 <button class="button button-positive button-clear">
                     <i class="icon ion-information-circled"></i>
                 </button>
-                {{::newsTitle}}
+                {{news()}}
             </div>
             <div class="item item-button-left" ui-sref="^.fishes">
                 <button class="button button-positive button-clear">

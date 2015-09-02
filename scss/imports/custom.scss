@@ -327,14 +327,10 @@ i.icon-image {
     text-align: right;
 }
 
-.button.icon-top i,
-.button.icon-top i:before {
-    font-size: 30px !important;
-    margin-top: -5px;
-    display: block !important;
+hip-tabs ion-footer-bar {
+    padding: 0 !important;
 }
 .button.icon-top {
-    overflow: visible;
     color: $stable !important;
 }
 .button.icon-top span {

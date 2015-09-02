@@ -277,7 +277,7 @@ button.button-float {
 
 .disabled-list > * {
     pointer-events: none;
-    cursor: default!important;
+    cursor: default !important;
     opacity: 0.4;
 }
 
@@ -327,20 +327,19 @@ i.icon-image {
     text-align: right;
 }
 
-hip-tabs ion-footer-bar {
-    padding: 0 !important;
+hip-tabs ion-footer-bar.bar {
+    padding: 0;
 }
-.button.icon-top {
-    color: $stable !important;
+hip-tabs .button.icon-top.button-clear {
+    color: $stable;
 }
-.button.icon-top span {
+hip-tabs .button.icon-top span {
     margin-top: -13px;
     display: block;
     font-size: 12px;
 }
 
-.button.button-clear.active {
-    color: $calm !important;
+hip-tabs .button.button-clear.active {
+    color: $calm;
     opacity: 1;
 }
-

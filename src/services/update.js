@@ -219,53 +219,58 @@
                 };
 
                 var updateFunc = function(forced) {
-                    $ionicLoading.show();
-                    return $q(function(fulfill, reject) {
+                    return DB.ready.then(function(newDB) {
+                        forced = newDB || forced;
+                        $ionicLoading.show();
+                        return $q(function(fulfill, reject) {
 
-                        var promises = [];
-                        var currentTime = Date.now();
-                        var shouldUpdate = (forced || timedUpdate(currentTime));
-                        DB.init()
-                        .then(function() {
-                            console.log('Initialized DB system');
-                            for (var i = 0; i < updates.always.length; ++i) {
-                                promises.push(populate(updates.always[i]));
-                            }
-                            if (sessionData.token) {
-                                for (i = 0; i < updates.auth.length; ++i) {
-                                    promises.push(populate(updates.auth[i]));
+                            var promises = [];
+                            var currentTime = Date.now();
+                            var shouldUpdate = (forced || timedUpdate(currentTime));
+                            DB.init()
+                            .then(function() {
+                                console.log('Initialized DB system');
+                                for (var i = 0; i < updates.always.length; ++i) {
+                                    promises.push(populate(updates.always[i]));
                                 }
-                            }
-                            if (shouldUpdate) {
-                                for (i = 0; i < updates.timed.length; ++i) {
-                                    promises.push(populate(updates.timed[i]));
+                                if (sessionData.token) {
+                                    for (i = 0; i < updates.auth.length; ++i) {
+                                        promises.push(populate(updates.auth[i]));
+                                    }
                                 }
-                            }
-
-                            $q.all(promises).then(function(stuff) {
-                                console.log('Populated:', stuff);
                                 if (shouldUpdate) {
-                                    localStorage.set(LAST_UPDATE, currentTime);
+                                    for (i = 0; i < updates.timed.length; ++i) {
+                                        promises.push(populate(updates.timed[i]));
+                                    }
                                 }
-                                fulfill('Pass');
-                            }, function(err) {
-                                if (err.error_code === 7) {
-                                    // Authentication failure
-                                    // TODO: Show to user
-                                    cleanUser();
-                                    API.user_logout();
-                                    reject('auth failure');
-                                } else {
-                                    console.warn('Got an error, recreate all tables:', err);
-                                    reject('Couldn\'t update');
-                                }
-                            })
-                            .finally(function() {
-                                $ionicLoading.hide();
-                            });
-                        });
 
+                                $q.all(promises).then(function(stuff) {
+                                    console.log('Populated:', stuff);
+                                    if (shouldUpdate) {
+                                        console.log('in here');
+                                        localStorage.set(LAST_UPDATE, currentTime);
+                                    }
+                                    fulfill('Pass');
+                                }, function(err) {
+                                    if (err.error_code === 7) {
+                                        // Authentication failure
+                                        // TODO: Show to user
+                                        cleanUser();
+                                        API.user_logout();
+                                        reject('auth failure');
+                                    } else {
+                                        console.warn('Got an error, recreate all tables:', err);
+                                        reject('Couldn\'t update');
+                                    }
+                                })
+                                .finally(function() {
+                                    $ionicLoading.hide();
+                                });
+                            });
+
+                        });
                     });
+
                 };
 
                 return {

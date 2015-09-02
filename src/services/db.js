@@ -8,18 +8,35 @@
             '$cordovaSQLite',
             'API',
             '$q',
-            '$rootScope',
-            function($cordovaSQLite, API, $q, $rootScope) {
+            'localStorage',
+            function($cordovaSQLite, API, $q, localStorage) {
 
                 var db;
+                var ready = $q.defer();
+                var version = '2';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
-                    db = window.openDatabase(
-                        'fiskebasen.db', '1.0', 'fiskebasen', 10 * 1024 * 1024);
+                    try {
+                        db = window.openDatabase('fiskebasen.db', version, 'fiskebasen', 10 * 1024 * 1024);
+                        ready.resolve(false);
+                    } catch (e) {
+                        if (!db) {
+                            db = window.openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
+                            db.changeVersion(db.version, version, function() {
+                                console.log('updating db from ' + db.version + ' to ' + version);
+                                clean().then(function() {
+                                    init().then(function() {
+                                        ready.resolve(true);
+                                    });
+                                });
+                            });
+                        }
+                    }
                 } else {
                     console.log('Not supported on this device, sorry');
-                    return undefined;
+                    ready.reject('Not supported');
+                    return {ready: ready.promise};
                 }
 
                 var tableDef = {
@@ -204,7 +221,63 @@
                     return retval;
                 };
 
+                function clean() {
+                    return $q(function(fulfill, reject) {
+                        db.transaction(
+                            function(tx) {
+                                for (var table in tableDef) {
+                                    tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
+                                }
+                            },
+                            reject,
+                            fulfill
+                        );
+                    })
+                    .then(function() {
+                        console.log('Removed all tables');
+                    });
+                }
+
+                /**
+                 * Initialies the tables in the database
+                 * @method init
+                 */
+                function init() {
+                    return $q(function(fulfill, reject) {
+                        db.transaction(function(tx) {
+                            for (var t in tableDef) {
+                                var table = tableDef[t];
+                                var tableValues = [];
+
+                                /*
+                                 * Builds a string with "" around all names, so that
+                                 * it can be used to create an SQL Table witout having
+                                 * to worry about using reserved keywords.
+                                 */
+                                for (var i = 0; i < table.length; ++i) {
+                                    tableValues.push('"' + table[i][0] + '" ' + table[i][1]);
+                                }
+                                tableValues = tableValues.join(', ');
+
+                                var query = [
+                                    'CREATE TABLE IF NOT EXISTS',
+                                    t,
+                                    '(',
+                                    tableValues,
+                                    ', PRIMARY KEY(',
+                                    '"' + table[0][0] + '"',
+                                    '));'
+                                ].join(' ');
+                                tx.executeSql(query);
+                            }
+                        },
+                        reject,
+                        fulfill);
+                    });
+                }
+                console.log(ready);
                 return {
+                    ready: ready.promise,
                     populateTable: function(table, data) {
                         return $q(function(fulfill, reject) {
                             db.transaction(function(tx) {
@@ -243,66 +316,9 @@
                         });
                     },
 
-                    /**
-                     * Drops all tables in the database
-                     * @method clean
-                     */
-                    clean: function() {
-                        return $q(function(fulfill, reject) {
-                            db.transaction(
-                                function(tx) {
-                                    for (var table in tableDef) {
-                                        tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
-                                    }
-                                },
-                                reject,
-                                fulfill
-                            );
-                        })
-                        .then(function() {
-                            console.log('Removed all tables');
-                        });
-                    },
+                    clean: clean,
 
-                    /**
-                     * Initialies the tables in the database
-                     * @method init
-                     */
-                    init: function() {
-                        return $q(function(fulfill, reject) {
-                            db.transaction(function(tx) {
-                                for (var t in tableDef) {
-                                    var table = tableDef[t];
-                                    var tableValues = [];
-
-                                    /*
-                                     * Builds a string with "" around all names, so that
-                                     * it can be used to create an SQL Table witout having
-                                     * to worry about using reserved keywords.
-                                     */
-                                    for (var i = 0; i < table.length; ++i) {
-                                        tableValues.push('"' + table[i][0] + '" ' + table[i][1]);
-                                    }
-                                    tableValues = tableValues.join(', ');
-
-                                    var query = [
-                                        'CREATE TABLE IF NOT EXISTS',
-                                        t,
-                                        '(',
-                                        tableValues,
-                                        ', PRIMARY KEY(',
-                                        '"' + table[0][0] + '"',
-                                        '));'
-                                    ].join(' ');
-                                    tx.executeSql(query);
-                                }
-                            },
-                            reject,
-                            fulfill);
-                        });
-                    },
-
-
+                    init: init,
 
                     /**
                      * Gets information about an area

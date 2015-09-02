@@ -257,8 +257,7 @@
                                     reject('auth failure');
                                 } else {
                                     console.warn('Got an error, recreate all tables:', err);
-                                    return DB.clean()
-                                    .then(updateFunc);
+                                    reject('Couldn\'t update');
                                 }
                             })
                             .finally(function() {

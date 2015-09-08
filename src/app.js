@@ -125,6 +125,10 @@ angular.module('ifiske', [
             templateUrl: 'components/register/register.html',
             controller: 'RegisterCtrl'
         })
+        .state('app.register.fork', {
+            url: '/fork',
+            templateUrl: 'components/register/register_fork.html'
+        })
         .state('app.register.details', {
             url: '/details',
             templateUrl: 'components/register/register_details.html'
@@ -132,6 +136,11 @@ angular.module('ifiske', [
         .state('app.register.verify', {
             url: '/verify',
             templateUrl: 'components/register/register_verify.html'
+        })
+        .state('app.register.verify2', {
+            url: '/verify2',
+            templateUrl: 'components/register/register_verify2.html',
+            controller: 'RegisterVerify2Ctrl'
         })
 
         //

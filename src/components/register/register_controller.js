@@ -11,7 +11,34 @@ angular.module('ifiske.controllers')
         'localStorage',
         function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, API, localStorage) {
 
-            var username;
+            var details = $scope.details = {};
+
+            /*
+              Getter/setter for username.
+              Stores username in localStorage, in case the app is closed before the
+              verification process is complete. _username ensures that the value can become 
+              undefined when the input is invalid (required by ngModel).
+            */
+/*            var _username;
+            details.username = function(username) {
+                if (arguments.length) {
+                    if (_username = username) {
+                        localStorage.set('register_username', username);
+                    }
+                }
+                return _username;
+            }
+  */       
+
+            /*
+               Note:
+               An attempt was made to simplify the validators using the validator pipelines 
+               introduced in Angular 1.3. No way was found to trigger validation on blur for 
+               some validators in a pipeline, and on submit for others. 
+            */
+
+            // Validation errors not tied to a specific input field
+            $scope.formErrors = {};
 
             // Live check for username availability
             $scope.checkUsername = function(input) {
@@ -30,8 +57,6 @@ angular.module('ifiske.controllers')
             };
 
 
-            // Validation errors not tied to input field
-            $scope.formErrors = {};
 
             /**
              * register
@@ -40,19 +65,14 @@ angular.module('ifiske.controllers')
             $scope.register = function(form) {
                 $ionicLoading.show();
 
-                // Save phone number for next view
-                $scope.phone = form.phone.$viewValue;
-
-                // Save username for verify submit handler
-                username = form.username.$viewValue;
-
-                var password = form.password.$viewValue;
-                var fullname = form.fullname.$viewValue;
-                var email = form.email.$viewValue;
-
-                API.user_register(username, fullname, password, email, $scope.phone)
+                API.user_register(details.username, details.fullname, details.password, 
+                                  details.email, details.phone)
                     .then(function(data) {
-                        // Success: Go to verify account view
+                        // Success
+                        // Save username in case app closes before completed account verification
+                        localStorage.set('register_username', details.username);
+
+                        // Proceed to account verification
                         $ionicLoading.hide();
                         $scope.formErrors = {};
                         $state.go('^.verify');
@@ -62,7 +82,7 @@ angular.module('ifiske.controllers')
                          * Error: Inform the user about failed registration
                          * See API documentation for error codes
                          *
-                         * ToDo: Handle timeout
+                         * ToDo: Handle timeouts
                          */
                         $scope.formErrors.registrationError = true;
                         $ionicScrollDelegate.scrollTop(true);
@@ -92,19 +112,20 @@ angular.module('ifiske.controllers')
              */
             $scope.verify = function(form) {
                 $ionicLoading.show();
-
-                var vercode = form.vercode;
-
-                API.user_confirm(username, vercode.$viewValue)
+                                
+                API.user_confirm(form.username.$viewValue, form.vercode.$viewValue)
                     .then(function(data) {
                         $ionicPlatform.ready(function() {
                             $cordovaToast.showLongBottom('Ditt konto har skapats');
                         });
                         $scope.formErrors.validationError = false;
+                        details = {};
+                        localStorage.set('register_username', '');
+
                         $state.go('app.login');
                     }, function(error) {
                         if (error.error_code) {
-                            vercode.$setValidity("verified", false);
+                            form.vercode.$setValidity("verified", false);
                         } else {
                             $scope.formErrors.validationError = true;
                         }

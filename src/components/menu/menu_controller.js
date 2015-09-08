@@ -33,7 +33,7 @@ angular.module('ifiske.controllers')
         };
         $scope.register = function() {
             $scope.popover.hide();
-            $state.go('app.register.details');
+            $state.go('app.register.fork');
         };
 
         $scope.forcedUpdate = function() {

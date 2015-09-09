@@ -22,7 +22,15 @@
                             table: 'User_Product',
                         },
                         {
+                            endpoint: 'user_get_favorites',
+                            table: 'User_Favorite',
+                        },
+                        {
                             endpoint: 'user_info',
+                            table: [
+                                'User_Info',
+                                'User_Number'
+                            ],
                             f: function(data) {
                                 var numbers = data.numbers;
                                 var numArr = [];
@@ -152,7 +160,6 @@
                     ]
                 };
 
-
                 var timedUpdate = function(currentTime) {
 
                     var lastUpdate = localStorage.get(LAST_UPDATE);
@@ -174,30 +181,36 @@
                             .then(function() {
                                 return item.table;
                             }, function(err) {
+                                //TODO: what if we need to remake the tables?
                                 console.warn(err);
                                 return $q.reject(err);
                             });
                         };
                     } else if (item.storage_name) {
                         then = function(data) {
-                            localStorage.set(item.storage_name, data);
+                            return localStorage.set(item.storage_name, data);
                         };
                     }
 
-                    if(then) {
-                        p.then(then);
+                    if (then) {
+                        return p.then(then);
                     } else {
                         console.error('NO ACTION!');
                     }
                 };
 
-
                 var cleanUser = function() {
-                    return $q.all([
-                        DB.cleanTable('User_Product'),
-                        DB.cleanTable('User_Number'),
-                        DB.cleanTable('User_Info')
-                    ])
+                    var p = [];
+                    for (var i = 0; i < updates.auth.length; ++i) {
+                        if (Array.isArray(updates.auth[i].table)) {
+                            for (var j = 0; j < updates.auth[i].table.length; ++j) {
+                                p.push(DB.cleanTable(updates.auth[i].table[j]));
+                            }
+                        } else {
+                            p.push(DB.cleanTable(updates.auth[i].table));
+                        }
+                    }
+                    return $q.all(p)
                     .then(function() {
                         console.log('Removed user info from database');
                     }, function(err) {
@@ -206,53 +219,58 @@
                 };
 
                 var updateFunc = function(forced) {
-                    $ionicLoading.show();
-                    return $q(function(fulfill, reject) {
+                    return DB.ready.then(function(newDB) {
+                        forced = newDB || forced;
+                        $ionicLoading.show();
+                        return $q(function(fulfill, reject) {
 
-                    var promises = [];
-                    var currentTime = Date.now();
-                    var shouldUpdate = (forced || timedUpdate(currentTime));
-                    DB.init()
-                    .then(function() {
-                        console.log('Initialized DB system');
-                        for (var i = 0; i < updates.always.length; ++i) {
-                            promises.push(populate(updates.always[i]));
-                        }
-                        if (sessionData.token) {
-                            for (i = 0; i < updates.auth.length; ++i) {
-                                promises.push(populate(updates.auth[i]));
-                            }
-                        }
-                        if (shouldUpdate) {
-                            for (i = 0; i < updates.timed.length; ++i) {
-                                promises.push(populate(updates.timed[i]));
-                            }
-                        }
+                            var promises = [];
+                            var currentTime = Date.now();
+                            var shouldUpdate = (forced || timedUpdate(currentTime));
+                            DB.init()
+                            .then(function() {
+                                console.log('Initialized DB system');
+                                for (var i = 0; i < updates.always.length; ++i) {
+                                    promises.push(populate(updates.always[i]));
+                                }
+                                if (sessionData.token) {
+                                    for (i = 0; i < updates.auth.length; ++i) {
+                                        promises.push(populate(updates.auth[i]));
+                                    }
+                                }
+                                if (shouldUpdate) {
+                                    for (i = 0; i < updates.timed.length; ++i) {
+                                        promises.push(populate(updates.timed[i]));
+                                    }
+                                }
 
-                        $q.all(promises).then(function(stuff) {
-                            console.log('Populated:', stuff);
-                            if (shouldUpdate) {
-                                localStorage.set(LAST_UPDATE, currentTime);
-                            }
-                            fulfill('Pass');
-                        }, function(err) {
-                            if (err.error_code === 7) {
-                                // Authentication failure
-                                // TODO: Show to user
-                                cleanUser();
-                                API.user_logout();
-                            } else {
-                                console.warn('Got an error, will try to recreate all tables:', err);
-                                return DB.clean()
-                                .then(updateFunc);
-                            }
-                        })
-                        .finally(function() {
-                                $ionicLoading.hide();
+                                $q.all(promises).then(function(stuff) {
+                                    console.log('Populated:', stuff);
+                                    if (shouldUpdate) {
+                                        console.log('in here');
+                                        localStorage.set(LAST_UPDATE, currentTime);
+                                    }
+                                    fulfill('Pass');
+                                }, function(err) {
+                                    if (err.error_code === 7) {
+                                        // Authentication failure
+                                        // TODO: Show to user
+                                        cleanUser();
+                                        API.user_logout();
+                                        reject('auth failure');
+                                    } else {
+                                        console.warn('Got an error, recreate all tables:', err);
+                                        reject('Couldn\'t update');
+                                    }
+                                })
+                                .finally(function() {
+                                    $ionicLoading.hide();
+                                });
+                            });
+
                         });
                     });
 
-                    });
                 };
 
                 return {

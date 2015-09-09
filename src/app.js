@@ -26,21 +26,29 @@ angular.module('ifiske', [
     template: '<ion-spinner></ion-spinner>'
     // hideOnStateChange: true
 })
-.run(['$ionicPlatform', 'Update', 'ImgCache', function($ionicPlatform, Update, ImgCache) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar above the keyboard for form inputs
-        if (window.ionic && window.ionic.Keyboard) {
-            window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            window.StatusBar.styleDefault();
-        }
+.run([
+    '$ionicPlatform',
+    'Update',
+    'ImgCache',
+    '$rootScope',
+    function($ionicPlatform, Update, ImgCache, $rootScope) {
 
-        ImgCache.$init();
-        Update.update();
-    });
-}])
+        $rootScope.image_endpoint = 'http://www.ifiske.se';
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar above the keyboard for form inputs
+            if (window.ionic && window.ionic.Keyboard) {
+                window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                window.StatusBar.styleDefault();
+            }
+
+            ImgCache.$init();
+            Update.update();
+        });
+    }
+])
 
 .config([
     '$stateProvider',
@@ -60,6 +68,9 @@ angular.module('ifiske', [
 
         // Cache views in the forward stack
         $ionicConfigProvider.views.forwardCache(true);
+
+        // Sets all transitions to use android-style, since that looks better with transparent backgrounds
+        $ionicConfigProvider.views.transition('android');
 
         // Clear back button default text
         $ionicConfigProvider.backButton.previousTitleText(false).text('');
@@ -114,6 +125,10 @@ angular.module('ifiske', [
             templateUrl: 'components/register/register.html',
             controller: 'RegisterCtrl'
         })
+        .state('app.register.fork', {
+            url: '/fork',
+            templateUrl: 'components/register/register_fork.html'
+        })
         .state('app.register.details', {
             url: '/details',
             templateUrl: 'components/register/register_details.html'
@@ -121,6 +136,11 @@ angular.module('ifiske', [
         .state('app.register.verify', {
             url: '/verify',
             templateUrl: 'components/register/register_verify.html'
+        })
+        .state('app.register.verify2', {
+            url: '/verify2',
+            templateUrl: 'components/register/register_verify2.html',
+            controller: 'RegisterVerify2Ctrl'
         })
 
         //
@@ -158,11 +178,28 @@ angular.module('ifiske', [
             controller: 'UserCtrl',
             templateUrl: 'components/user/user.html',
         })
-
-        .state('app.counties', {
+        .state('app.find_areas', {
+            url: '/find_areas',
+            templateUrl: 'components/find_areas/tabs.html',
+            controller: 'FindAreasCtrl'
+        })
+        .state('app.find_areas.counties', {
             url: '/counties',
-            templateUrl: 'components/counties/counties.html',
-            controller: 'CountiesCtrl'
+            views: {
+                'ionic-tabs': {
+                    templateUrl: 'components/find_areas/counties.html',
+                    controller: 'CountiesCtrl'
+                }
+            }
+        })
+        .state('app.find_areas.favorites', {
+            url: '/favorites',
+            views: {
+                'ionic-tabs': {
+                    templateUrl: 'components/find_areas/favorites.html',
+                    controller: 'FavoritesCtrl'
+                }
+            }
         })
         .state('app.areas', {
             url: '/areas',
@@ -220,30 +257,47 @@ angular.module('ifiske', [
 
         .state('app.area', {
             url: '/area/:id',
+            templateUrl: 'components/area/area.html',
+            controller: 'AreaCtrl',
+        })
+        .state('app.area.info', {
+            url: '/info',
             views: {
-                '@app': {
-                    templateUrl: 'components/area/area.html',
-                    controller: 'AreaCtrl',
-                },
-                'info@app.area': {
+                'ionic-tabs': {
                     templateUrl: 'components/area/info.html',
                     controller: 'AreaInfoCtrl'
-                },
-                'map@app.area': {
+                }
+            }
+        })
+        .state('app.area.map', {
+            url: '/map',
+            views: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/map.html',
                     controller: 'AreaMapCtrl'
-                },
-                'fishinfo@app.area': {
+                }
+            }
+        })
+        .state('app.area.fish', {
+            url: '/fish',
+            views: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/fish.html',
                     controller: 'AreaFishCtrl'
-                },
-                'cards@app.area': {
+                }
+            }
+        })
+        .state('app.area.cards', {
+            url: '/cards',
+            views: {
+                'ionic-tabs': {
                     templateUrl: 'components/area/cards.html',
                     controller: 'AreaCardsCtrl'
                 }
             }
         });
-    }]);
+    }
+]);
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);

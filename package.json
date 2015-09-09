@@ -1,6 +1,6 @@
 {
   "name": "ifiske",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "ifiske: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
@@ -30,7 +30,14 @@
     "https://github.com/brodysoft/Cordova-SQLitePlugin",
     "uk.co.workingedge.phonegap.plugin.launchnavigator",
     "org.apache.cordova.geolocation",
-    "org.apache.cordova.device-orientation"
+    "org.apache.cordova.device-orientation",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "nl.x-services.plugins.toast"
+    }
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "ios"
+  ]
 }

@@ -1,28 +1,8 @@
 <ion-view class="abstract-bg">
-    <ion-content scroll="false">
-        <tab-slide-box tab="0" tabs-position="bottom">
-            <ion-slide-box show-pager="false" on-slide-changed="slideChanged($index)" delegate-handle="tabs" >
-                <ion-slide>
-                    <ion-nav-view name="info"></ion-nav-view>
-                </ion-slide>
-                <ion-slide>
-                    <ion-nav-view name="cards"></ion-nav-view>
-                </ion-slide>
-                <ion-slide ng-if="fishes.length">
-                    <ion-nav-view name="fishinfo"></ion-nav-view>
-                </ion-slide>
-                <ion-slide>
-                    <ion-nav-view name="map"></ion-nav-view>
-                </ion-slide>
-            </ion-slide-box>
-            <ion-footer-bar class="bar-calm tsb-nav">
-                <div class="button-bar">
-                    <button class="button button-clear icon ion-information-circled"></button>
-                    <button class="button button-clear icon ion-card"></button>
-                    <button ng-if="fishes.length" class="button button-clear"><i class="icon icon-icon_fish"></i></button>
-                    <button class="button button-clear icon ion-map"></button>
-                </div>
-            </ion-footer-bar>
-        </tab-slide-box>
-    </ion-content>
+    <hip-tabs>
+        <hip-tab name="Information" view-name="app.area.info" icon="ion-information-circled" index="0"></hip-tab>
+        <hip-tab name="Fiskekort" view-name="app.area.cards" icon="ion-card" index="1"></hip-tab>
+        <hip-tab ng-if="fishes.length" name="Fiskarter" view-name="app.area.fish" icon="icon-icon_fish" index="2"></hip-tab>
+        <hip-tab name="Karta" view-name="app.area.map" icon="ion-map" index="3"></hip-tab>
+    </hip-tabs>
 </ion-view>

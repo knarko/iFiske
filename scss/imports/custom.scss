@@ -1,12 +1,22 @@
-ion-view {
+ion-side-menu-content {
     background-image: url("../img/bg-login.png");
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
 }
+
+ion-side-menu-content ion-view.view.image-bg,
+ion-side-menu-content ion-view.pane.image-bg,
+ion-side-menu-content ion-nav-view.view,
+ion-side-menu-content ion-nav-view.view-container,
+ion-side-menu-content ion-nav-view.pane {
+    background: none !important;
+}
+
 ion-view.abstract-bg {
     background-image: url("../img/bg-abstract.jpg");
     background-size:cover;
+    background-repeat: no-repeat;
 }
 
 ion-view.abstract-bg ion-view {
@@ -144,16 +154,16 @@ p.moreinfo {
 }
 
 .product.active {
-    border-color: green;
-    color: green;
+    border-color: $balanced;
+    color: $balanced;
 }
 .product.expired {
-    border-color: red;
-    color: red;
+    border-color: $assertive;
+    color: $assertive;
 }
 .product.inactive {
-    border-color: orange;
-    color: orange;
+    border-color: $energized;
+    color: $energized;
 }
 .card.product {
     box-shadow: 0px 0px 30px 1px inset;
@@ -217,6 +227,10 @@ p.moreinfo {
     padding-left: 125px;
 }
 
+.item.item-image:first-child {
+    border-top:0;
+}
+
 .angular-leaflet-map {
     position: absolute;
     top:0px;
@@ -263,11 +277,69 @@ button.button-float {
 
 .disabled-list > * {
     pointer-events: none;
-    cursor: default!important;
+    cursor: default !important;
     opacity: 0.4;
 }
 
 .slider-image {
     background-size: cover;
     padding-top: 41.67%; // 250/600
+}
+.item.item-divider.item-button-right {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.item.item-divider.item-button-right>button {
+    top:4px;
+}
+
+.starred {
+    color: $energized;
+}
+.starred:hover {
+    color: $energized;
+}
+
+.item-toggle {
+    pointer-events: initial; //This enables clickable lists with toggles
+}
+
+//fixes flickering on star-button...
+.button {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    //Removes all borders on buttons
+    border: none;
+}
+
+i.icon-image {
+    width: 35px;
+}
+
+.news-text-image {
+    float: right;
+    width: 35%;
+    margin-top:  12px;
+    margin-left: 12px;
+}
+.text-right {
+    text-align: right;
+}
+
+hip-tabs ion-footer-bar.bar {
+    padding: 0;
+}
+hip-tabs .button.icon-top.button-clear {
+    color: $stable;
+}
+hip-tabs .button.icon-top span {
+    margin-top: -13px;
+    display: block;
+    font-size: 12px;
+}
+
+hip-tabs .button.button-clear.active {
+    color: $calm;
+    opacity: 1;
 }

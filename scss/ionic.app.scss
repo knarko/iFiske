@@ -18,13 +18,25 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "./fonts" !default;
 
-$positive: #3060a0 !default;
+$stable:     #e5e5e5 !default;
+$calm:       #57aee5 !default;
+$positive:   #146993 !default;
+$balanced:   #25bd3c !default;
+$energized:  #edce07 !default;
+$assertive:  #e84115 !default;
+
 //libs
 @import "lib/ionic/scss/ionic";
 @import "lib/leaflet/dist/leaflet";
 @import "lib/leaflet.markercluster/dist/MarkerCluster.Default";
 @import "lib/leaflet.markercluster/dist/MarkerCluster";
 @import "lib/ionic-tabslidebox/tabSlideBox";
+@import "lib/leaflet.locatecontrol/dist/_L.Control.Locate";
+
+$fa-font-path: "fonts";
+@import "lib/font-awesome/scss/font-awesome";
+
+@import "lib/Leaflet.awesome-markers/dist/_leaflet.awesome-markers";
 
 
 @import "scss/imports/font.scss";

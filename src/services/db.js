@@ -8,17 +8,35 @@
             '$cordovaSQLite',
             'API',
             '$q',
-            function($cordovaSQLite, API, $q) {
+            'localStorage',
+            function($cordovaSQLite, API, $q, localStorage) {
 
                 var db;
+                var ready = $q.defer();
+                var version = '2';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
-                    db = window.openDatabase(
-                        'fiskebasen.db', '1.0', 'fiskebasen', 10 * 1024 * 1024);
+                    try {
+                        db = window.openDatabase('fiskebasen.db', version, 'fiskebasen', 10 * 1024 * 1024);
+                        ready.resolve(false);
+                    } catch (e) {
+                        if (!db) {
+                            db = window.openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
+                            db.changeVersion(db.version, version, function() {
+                                console.log('updating db from ' + db.version + ' to ' + version);
+                                clean().then(function() {
+                                    init().then(function() {
+                                        ready.resolve(true);
+                                    });
+                                });
+                            });
+                        }
+                    }
                 } else {
                     console.log('Not supported on this device, sorry');
-                    return undefined;
+                    ready.reject('Not supported');
+                    return {ready: ready.promise};
                 }
 
                 var tableDef = {
@@ -127,6 +145,13 @@
                     'User_Number': [
                         ['number', 'text']
                     ],
+                    'User_Favorite': [
+                        ['ID',  'int'],
+                        ['a',   'int'],
+                        ['add', 'int'],
+                        ['not', 'int'],
+                        ['cnt', 'int'],
+                    ],
                     'Technique': [
                         ['ID',       'int'],
                         ['t',        'text'],
@@ -181,7 +206,9 @@
                     'News': [
                         ['ID',     'int'],
                         ['t',      'text'],
-                        ['text',   'text']
+                        ['text',   'text'],
+                        ['img',    'text'],
+                        ['icon',   'text']
                     ]
 
                 };
@@ -189,12 +216,68 @@
                 var createObject = function(data) {
                     var retval = [];
                     for (var i = 0; i < data.rows.length; ++i) {
-                        retval.push(data.rows.item(i));
+                        retval.push(angular.copy(data.rows.item(i)));
                     }
                     return retval;
                 };
 
+                function clean() {
+                    return $q(function(fulfill, reject) {
+                        db.transaction(
+                            function(tx) {
+                                for (var table in tableDef) {
+                                    tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
+                                }
+                            },
+                            reject,
+                            fulfill
+                        );
+                    })
+                    .then(function() {
+                        console.log('Removed all tables');
+                    });
+                }
+
+                /**
+                 * Initialies the tables in the database
+                 * @method init
+                 */
+                function init() {
+                    return $q(function(fulfill, reject) {
+                        db.transaction(function(tx) {
+                            for (var t in tableDef) {
+                                var table = tableDef[t];
+                                var tableValues = [];
+
+                                /*
+                                 * Builds a string with "" around all names, so that
+                                 * it can be used to create an SQL Table witout having
+                                 * to worry about using reserved keywords.
+                                 */
+                                for (var i = 0; i < table.length; ++i) {
+                                    tableValues.push('"' + table[i][0] + '" ' + table[i][1]);
+                                }
+                                tableValues = tableValues.join(', ');
+
+                                var query = [
+                                    'CREATE TABLE IF NOT EXISTS',
+                                    t,
+                                    '(',
+                                    tableValues,
+                                    ', PRIMARY KEY(',
+                                    '"' + table[0][0] + '"',
+                                    '));'
+                                ].join(' ');
+                                tx.executeSql(query);
+                            }
+                        },
+                        reject,
+                        fulfill);
+                    });
+                }
+                console.log(ready);
                 return {
+                    ready: ready.promise,
                     populateTable: function(table, data) {
                         return $q(function(fulfill, reject) {
                             db.transaction(function(tx) {
@@ -233,66 +316,9 @@
                         });
                     },
 
-                    /**
-                     * Drops all tables in the database
-                     * @method clean
-                     */
-                    clean: function() {
-                        return $q(function(fulfill, reject) {
-                            db.transaction(
-                                function(tx) {
-                                    for (var table in tableDef) {
-                                        tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
-                                    }
-                                },
-                                reject,
-                                fulfill
-                            );
-                        })
-                        .then(function() {
-                            console.log('Removed all tables');
-                        });
-                    },
+                    clean: clean,
 
-                    /**
-                     * Initialies the tables in the database
-                     * @method init
-                     */
-                    init: function() {
-                        return $q(function(fulfill, reject) {
-                            db.transaction(function(tx) {
-                                for (var t in tableDef) {
-                                    var table = tableDef[t];
-                                    var tableValues = [];
-
-                                    /*
-                                     * Builds a string with "" around all names, so that
-                                     * it can be used to create an SQL Table witout having
-                                     * to worry about using reserved keywords.
-                                     */
-                                    for (var i = 0; i < table.length; ++i) {
-                                        tableValues.push('"' + table[i][0] + '" ' + table[i][1]);
-                                    }
-                                    tableValues = tableValues.join(', ');
-
-                                    var query = [
-                                        'CREATE TABLE IF NOT EXISTS',
-                                        t,
-                                        '(',
-                                        tableValues,
-                                        ', PRIMARY KEY(',
-                                        '"' + table[0][0] + '"',
-                                        '));'
-                                    ].join(' ');
-                                    tx.executeSql(query);
-                                }
-                            },
-                            reject,
-                            fulfill);
-                        });
-                    },
-
-
+                    init: init,
 
                     /**
                      * Gets information about an area
@@ -302,11 +328,14 @@
                     getArea: function(id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT *',
+                                'SELECT Area.*,',
+                                'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
-                                'WHERE id = ?'
-                            ].join(' '), [id])
+                                'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
+                                'WHERE Area.ID = ?'
+                            ].join(' '), Array.isArray(id) ? id : [id])
                             .then(function(area) {
+                                console.log(area);
                                 var object = createObject(area)[0];
                                 //TODO: DB should not need API
                                 object.images = API.get_photos(object.orgid);
@@ -339,8 +368,10 @@
                     search: function(searchstring, county_id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT *',
+                                'SELECT Area.*,',
+                                'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
+                                'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                                 'WHERE t LIKE ?',
                                 (county_id ? 'AND ? IN (c1,c2,c3)' : ''),
                                 'ORDER BY t'
@@ -510,6 +541,52 @@
                             }, reject);
                         });
                     },
+                    getUserFavorites: function() {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT *',
+                                'FROM User_Favorite',
+                                'JOIN Area ON User_Favorite.a = Area.ID'
+                            ].join(' '))
+                            .then(function(data) {
+                                fulfill(createObject(data));
+                            }, reject);
+                        });
+                    },
+
+                    removeFavorite: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'DELETE FROM User_Favorite',
+                                'WHERE a = ?'
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(data);
+                            }, reject);
+                        });
+                    },
+                    addFavorite: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'INSERT INTO User_Favorite',
+                                '(a, "not") VALUES (?, 0)',
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(data);
+                            }, reject);
+                        });
+                    },
+                    setFavoriteNotification: function(id, not) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'UPDATE User_Favorite',
+                                'SET "not" = ? WHERE a = ?'
+                            ].join(' '), [not, id])
+                            .then(function(data) {
+                                fulfill(data);
+                            }, reject);
+                        });
+                    },
 
                     getPois: function(id) {
                         return $q(function(fulfill, reject) {
@@ -568,7 +645,7 @@
                                 'WHERE ID = ?'
                             ].join(' '), [id])
                             .then(function(data) {
-                                fulfill(createObject(data));
+                                fulfill(createObject(data)[0]);
                             }, reject);
                         });
                     }

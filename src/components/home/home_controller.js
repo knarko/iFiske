@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     'localStorage',
     'sessionData',
     'Update',
+    '$window',
     function($scope, $state, $ionicHistory, localStorage, sessionData, Update) {
 
         $scope.loggedIn = sessionData;
@@ -15,10 +16,12 @@ angular.module('ifiske.controllers')
         // Current history stack Id. See area_controller for usage.
         localStorage.set('homeHistoryId', $ionicHistory.currentHistoryId());
 
-        $scope.newsTitle = localStorage.get('NEWS');
+        $scope.news = function() {
+            return localStorage.get('NEWS');
+        };
 
         $scope.myFunc = function($event) {
-            if($event.keyCode == 13 && !$event.shiftKey) { //if enter-key
+            if ($event.keyCode === 13 && !$event.shiftKey) { //if enter-key
                 $state.go('app.areas', {search: $event.srcElement.value});
             }
 

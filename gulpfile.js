@@ -21,6 +21,7 @@ var knownOptions = {
 var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
+    static: ['./src/static/**.*'],
     sass: ['./scss/**/*.scss'],
     scripts: [
         './src/app.js',
@@ -42,16 +43,19 @@ var paths = {
         './lib/leaflet-plugins/layer/Marker.Rotate.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
         './lib/ionic-tabslidebox/tabSlideBox.js',
+        './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
+        './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
     ],
-    templates: ['src/components/**/*.html']
+    templates: ['src/components/**/*.html'],
+    directives: ['src/directives/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates']);
+gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'directives', 'static', 'images']);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(concat('all.min.js'))
+    .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
@@ -59,21 +63,35 @@ gulp.task('scripts', function(done) {
 });
 
 gulp.task('fonts', function(done) {
-    gulp.src('lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}')
+    gulp.src([
+        'lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}',
+        'lib/font-awesome/fonts/**/*.{ttf,woff2,eof,svg,eot}'
+    ])
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);
 });
 
+gulp.task('directives', function(done) {
+    gulp.src(paths.directives)
+    .pipe(gulp.dest('./www/directives'))
+    .on('end', done);
+});
 gulp.task('templates', function(done) {
     gulp.src(paths.templates)
     .pipe(gulp.dest('./www/components'))
     .on('end', done);
 });
 
+gulp.task('static', function(done) {
+    gulp.src(paths.static)
+    .pipe(gulp.dest('./www/static'))
+    .on('end', done);
+});
+
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(concat('libs.min.js', {newLine: ';'}))
+    .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
@@ -98,6 +116,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.scripts, ['scripts']);
     gulp.watch(paths.libs, ['libs']);
     gulp.watch(paths.templates, ['templates']);
+    gulp.watch(paths.directives, ['directives']);
 });
 
 gulp.task('install', ['git-check'], function() {
@@ -105,6 +124,15 @@ gulp.task('install', ['git-check'], function() {
     .on('log', function(data) {
         gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
+});
+
+gulp.task('images', function(done) {
+    gulp.src([
+        './lib/Leaflet.awesome-markers/dist/images/*',
+        './lib/leaflet/dist/images/*'
+    ])
+    .pipe(gulp.dest('./www/css/images'))
+    .on('end', done);
 });
 
 gulp.task('git-check', function(done) {

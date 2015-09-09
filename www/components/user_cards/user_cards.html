@@ -1,4 +1,4 @@
-<ion-view title="Mina fiskekort">
+<ion-view title="Mina fiskekort" class="image-bg">
     <ion-content class="padding">
         <ion-refresher
                  pulling-text="Uppdatera..."
@@ -12,18 +12,18 @@
         <div class="list card product" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired' : (product.fr*1000 > now ? 'inactive' : 'active')">
             <div class="item item-icon-left">
                 <i class="icon ion-card"></i>
-                <h2>{{product.ot}}</h2>
+                <h2>{{::product.ot}}</h2>
             </div>
             <div class="item item-body" >
-                <h2>{{product.t}}<span class="product-code">{{product.code}}</span></h2>
-                <p>Namn: {{product.fullname}}</p>
-                <p> Gäller från {{product.fr * 1000 | date:'short'}} till {{product.to * 1000 | date:'short'}}</p>
+                <h2>{{::product.t}}<span class="product-code">{{::product.code}}</span></h2>
+                <p>Namn: {{::product.fullname}}</p>
+                <p> Gäller från {{::product.fr * 1000 | date:'short'}} till {{::product.to * 1000 | date:'short'}}</p>
             </div>
             <div class="item item-body" >
 
                 <button ng-if="product.rule_t" ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
-                <a class="button button-energized" href="{{endpoint}}{{product.pdf}}" system-browser>Visa PDF</a>
-                <a class="button button-calm" href="{{endpoint}}/r/{{product.code}}" system-browser>Fångstrapport</a>
+                <a class="button button-energized" href="{{::endpoint}}{{::product.pdf}}" system-browser>Visa PDF</a>
+                <a class="button button-calm" href="{{::endpoint}}/r/{{::product.code}}" system-browser>Fångstrapport</a>
             </div>
         </div>
     </ion-content>

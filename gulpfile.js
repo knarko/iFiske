@@ -10,6 +10,7 @@ var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
+var phonegapBuild = require('gulp-phonegap-build');
 
 var knownOptions = {
     string: 'env',
@@ -148,4 +149,14 @@ gulp.task('git-check', function(done) {
     }
     done();
 });
-
+gulp.task('phonegap-build', function(done) {
+    gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
+    .pipe(phonegapBuild({
+        "appId": "1642930",
+        "user": {
+            "email": "app@ifiske.se",
+            "password": "REDACTED"
+        }
+    }))
+    .on('end', done);
+});

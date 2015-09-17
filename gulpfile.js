@@ -27,7 +27,8 @@ var paths = {
         './src/app.js',
         './src/components/**/*.js',
         './src/services/**/*.js',
-        './src/directives/**/*.js'
+        './src/directives/**/*.js',
+        './src/lib/**/*.js'
     ],
     libs: [
         './lib/ionic/js/ionic.bundle.js',

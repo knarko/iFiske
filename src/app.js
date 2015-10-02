@@ -19,7 +19,8 @@ angular.module('ifiske', [
     'ngMessages',
     'ImgCache',
     'leaflet-directive',
-    'tabSlideBox'
+    'tabSlideBox',
+    'ngIOS9UIWebViewPatch'
 ])
 
 .constant('$ionicLoadingConfig', {

@@ -162,20 +162,24 @@ gulp.task('git-check', function(done) {
 });
 gulp.task('deploy', ['default'], function(done) {
     var email = 'app@ifiske.se';
+    var appId = '1642930';
     inquirer.prompt({
         type: 'password',
         name: 'pass',
-        message: 'Enter password for ' + email
+        message: 'Enter password for ' + email + ':'
     }, function(response) {
         gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
         .pipe(phonegapBuild({
-            'appId': '1642930',
+            'appId': appId,
             'user': {
                 'email': email,
                 'password': response.pass
             }
         }))
         .on('end', done);
-
+        gutil.log(
+            'See the build here:',
+            gutil.colors.underline('https://build.phonegap.com/apps/' + appId + '/builds')
+        );
     });
 });

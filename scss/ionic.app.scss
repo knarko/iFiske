@@ -36,10 +36,8 @@ $assertive:  #e84115 !default;
 $fa-font-path: "fonts";
 @import "lib/font-awesome/scss/font-awesome";
 
-@import "lib/Leaflet.awesome-markers/dist/_leaflet.awesome-markers";
+@import "lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers";
 
 
-@import "scss/imports/font.scss";
-@import "scss/imports/custom.scss";
-
-
+@import "scss/imports/font";
+@import "scss/imports/custom";

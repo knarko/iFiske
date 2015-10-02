@@ -1,3 +1,4 @@
+/* jshint node: true */
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -52,7 +53,16 @@ var paths = {
     directives: ['src/directives/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'directives', 'static', 'images']);
+gulp.task('default', [
+    'sass',
+    'scripts',
+    'libs',
+    'fonts',
+    'templates',
+    'directives',
+    'static',
+    'images'
+]);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
@@ -103,12 +113,12 @@ gulp.task('libs', function(done) {
 gulp.task('sass', function(done) {
     gulp.src('./scss/*.scss')
     .pipe(sass({
-              errLogToConsole: true
+        errLogToConsole: true
     }))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))
-    .pipe(rename({ extname: '.min.css' }))
+    .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
@@ -149,13 +159,13 @@ gulp.task('git-check', function(done) {
     }
     done();
 });
-gulp.task('phonegap-build', function(done) {
+gulp.task('deploy', ['default'], function(done) {
     gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
     .pipe(phonegapBuild({
-        "appId": "1642930",
-        "user": {
-            "email": "app@ifiske.se",
-            "password": "REDACTED"
+        'appId': '1642930',
+        'user': {
+            'email': 'app@ifiske.se',
+            'password': 'REDACTED'
         }
     }))
     .on('end', done);

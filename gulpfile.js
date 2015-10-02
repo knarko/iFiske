@@ -1,3 +1,4 @@
+/* jshint node: true */
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -10,6 +11,8 @@ var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
+var phonegapBuild = require('gulp-phonegap-build');
+var inquirer = require('inquirer');
 
 var knownOptions = {
     string: 'env',
@@ -51,7 +54,16 @@ var paths = {
     directives: ['src/directives/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'directives', 'static', 'images']);
+gulp.task('default', [
+    'sass',
+    'scripts',
+    'libs',
+    'fonts',
+    'templates',
+    'directives',
+    'static',
+    'images'
+]);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
@@ -102,12 +114,12 @@ gulp.task('libs', function(done) {
 gulp.task('sass', function(done) {
     gulp.src('./scss/*.scss')
     .pipe(sass({
-              errLogToConsole: true
+        errLogToConsole: true
     }))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))
-    .pipe(rename({ extname: '.min.css' }))
+    .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
@@ -148,4 +160,26 @@ gulp.task('git-check', function(done) {
     }
     done();
 });
-
+gulp.task('deploy', ['default'], function(done) {
+    var email = 'app@ifiske.se';
+    var appId = '1642930';
+    inquirer.prompt({
+        type: 'password',
+        name: 'pass',
+        message: 'Enter password for ' + email + ':'
+    }, function(response) {
+        gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
+        .pipe(phonegapBuild({
+            'appId': appId,
+            'user': {
+                'email': email,
+                'password': response.pass
+            }
+        }))
+        .on('end', done);
+        gutil.log(
+            'See the build here:',
+            gutil.colors.underline('https://build.phonegap.com/apps/' + appId + '/builds')
+        );
+    });
+});

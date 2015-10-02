@@ -12,6 +12,7 @@ var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
 var phonegapBuild = require('gulp-phonegap-build');
+var inquirer = require('inquirer');
 
 var knownOptions = {
     string: 'env',
@@ -160,13 +161,21 @@ gulp.task('git-check', function(done) {
     done();
 });
 gulp.task('deploy', ['default'], function(done) {
-    gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
-    .pipe(phonegapBuild({
-        'appId': '1642930',
-        'user': {
-            'email': 'app@ifiske.se',
-            'password': 'REDACTED'
-        }
-    }))
-    .on('end', done);
+    var email = 'app@ifiske.se';
+    inquirer.prompt({
+        type: 'password',
+        name: 'pass',
+        message: 'Enter password for ' + email
+    }, function(response) {
+        gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
+        .pipe(phonegapBuild({
+            'appId': '1642930',
+            'user': {
+                'email': email,
+                'password': response.pass
+            }
+        }))
+        .on('end', done);
+
+    });
 });

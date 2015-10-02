@@ -21,6 +21,7 @@
     "gulp-sourcemaps": "1.6.x",
     "gulp-uglify": "1.4.x",
     "gulp-util": "3.0.x",
+    "inquirer": "^0.10.1",
     "minimist": "1.2.x",
     "shelljs": "^0.5.3"
   },

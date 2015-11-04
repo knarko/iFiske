@@ -25,7 +25,7 @@ var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
     static: ['./src/static/**.*'],
-    sass: ['./scss/**/*.scss'],
+    sass: ['./src/scss/**/*.scss'],
     scripts: [
         './src/app.js',
         './src/components/**/*.js',
@@ -34,10 +34,10 @@ var paths = {
         './src/lib/**/*.js'
     ],
     libs: [
+        './src/lib/polyfill.js',
         './lib/ionic/js/ionic.bundle.js',
         './lib/angular-i18n/angular-locale_sv-se.js',
         './lib/ngCordova/dist/ng-cordova.js',
-        './src/lib/polyfill.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
         './lib/angular-messages/angular-messages.js',
         './lib/imgcache.js/js/imgcache.js',

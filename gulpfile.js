@@ -10,6 +10,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var replace = require('gulp-replace');
 var minimist = require('minimist');
 var phonegapBuild = require('gulp-phonegap-build');
 var inquirer = require('inquirer');
@@ -36,6 +37,7 @@ var paths = {
     libs: [
         './src/lib/polyfill.js',
         './lib/ionic/js/ionic.bundle.js',
+        './lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
         './lib/angular-i18n/angular-locale_sv-se.js',
         './lib/ngCordova/dist/ng-cordova.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
@@ -102,7 +104,11 @@ gulp.task('static', function(done) {
 });
 
 gulp.task('libs', function(done) {
+    var settings = JSON.stringify(require('./.io-config.json'));
+
     gulp.src(paths.libs)
+    .pipe(replace('"IONIC_SETTINGS_STRING_START";"IONIC_SETTINGS_STRING_END"',
+    '"IONIC_SETTINGS_STRING_START";var settings = ' + settings + '; return { get: function(setting) { if (settings[setting]) { return settings[setting]; } return null; } };"IONIC_SETTINGS_STRING_END"'))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))

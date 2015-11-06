@@ -5,6 +5,8 @@
 
 angular.module('ifiske', [
     'ionic',
+    'ionic.service.core',
+    'ionic.service.push',
     'ifiske.controllers',
     'ifiske.directives',
     'ifiske.api',
@@ -12,6 +14,7 @@ angular.module('ifiske', [
     'ifiske.utils',
     'ifiske.update',
     'ifiske.filters',
+    'ifiske.push',
     'ionic.ion.headerShrink',
     'ngCordova',
     'systemBrowser',
@@ -32,8 +35,10 @@ angular.module('ifiske', [
     'Update',
     'ImgCache',
     '$rootScope',
-    function($ionicPlatform, Update, ImgCache, $rootScope) {
 
+    //Only get these to init them
+    'Push',
+    function($ionicPlatform, Update, ImgCache, $rootScope) {
         $rootScope.image_endpoint = 'http://www.ifiske.se';
         $ionicPlatform.ready(function() {
             // Hide the accessory bar above the keyboard for form inputs

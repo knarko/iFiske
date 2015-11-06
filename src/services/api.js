@@ -144,6 +144,16 @@
                     user_products: function() {
                         return session_api_call({m: 'user_products'}, false);
                     },
+                    user_get_pushtoken: function() {
+                        return session_api_call({m: 'user_get_pushtoken'}, false);
+                    },
+                    user_add_pushtoken: function(token) {
+                        return session_api_call({
+                            m: 'user_add_pushtoken',
+                            token: token,
+                            type: 'ionic'
+                        }, false);
+                    },
                     get_fishes: function() {
                         return api_call({m: 'get_fishes'});
                     },

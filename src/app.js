@@ -21,9 +21,7 @@ angular.module('ifiske', [
     'ngCordovaSms',
     'ngMessages',
     'ImgCache',
-    'leaflet-directive',
-    'tabSlideBox',
-    'ngIOS9UIWebViewPatch'
+    'ui-leaflet'
 ])
 
 .constant('$ionicLoadingConfig', {

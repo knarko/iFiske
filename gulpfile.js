@@ -36,19 +36,23 @@ var paths = {
     ],
     libs: [
         './src/lib/polyfill.js',
-        './lib/ionic/js/ionic.bundle.js',
+
+        './lib/ionic/release/js/ionic.bundle.js',
         './lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
-        './lib/angular-i18n/angular-locale_sv-se.js',
-        './lib/ngCordova/dist/ng-cordova.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
+
+        './lib/ngCordova/dist/ng-cordova.js',
+
+        './lib/angular-i18n/angular-locale_sv-se.js',
         './lib/angular-messages/angular-messages.js',
+        './lib/angular-simple-logger/dist/angular-simple-logger.js',
+
         './lib/imgcache.js/js/imgcache.js',
         './lib/angular-imgcache.js/angular-imgcache.js',
+
         './lib/leaflet/dist/leaflet-src.js',
-        './lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
-        './lib/leaflet-plugins/layer/Marker.Rotate.js',
-        './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
-        './lib/ionic-tabslidebox/tabSlideBox.js',
+        './lib/ui-leaflet/dist/ui-leaflet.js',
+        './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
     ],
@@ -79,8 +83,8 @@ gulp.task('scripts', function(done) {
 
 gulp.task('fonts', function(done) {
     gulp.src([
-        'lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}',
-        'lib/font-awesome/fonts/**/*.{ttf,woff2,eof,svg,eot}'
+        'lib/ionic/release/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}',
+        'lib/font-awesome/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}'
     ])
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);

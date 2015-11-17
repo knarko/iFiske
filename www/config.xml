@@ -103,6 +103,7 @@
     <gap:plugin name="cordova-plugin-geolocation"                        source="npm"    version="1.0.1" />
     <gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm"    version="2.9.0" />
     <gap:plugin name="cordova-plugin-x-toast"                            source="npm"    version="2.1.1" />
+    <gap:plugin name="cordova-plugin-whitelist"                          source="npm"    version="1.0.0" />
 
 
     <access origin="http://127.0.0.1*" />
@@ -110,6 +111,7 @@
     <access origin="http://www.ifiske.se/*"         subdomains="true" />
     <access origin="https://api.tiles.mapbox.com/*" subdomains="true" />
     <access origin="http://api.tiles.mapbox.com/*"  subdomains="true" />
+    <access origin="cdvfile://*"                    subdomains="true" />
     <feature name="Device">
         <param name="ios-package"     value="CDVDevice"/>
         <param name="android-package" value="org.apache.cordova.device.Device"/>

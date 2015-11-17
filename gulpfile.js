@@ -118,7 +118,7 @@ gulp.task('libs', function(done) {
 });
 
 gulp.task('sass', function(done) {
-    gulp.src('./scss/*.scss')
+    gulp.src('./src/scss/*.scss')
     .pipe(sass({
         errLogToConsole: true
     }))

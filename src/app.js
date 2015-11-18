@@ -7,15 +7,10 @@ angular.module('ifiske', [
     'ionic',
     'ionic.service.core',
     'ionic.service.push',
+    'ionic.ion.headerShrink',
     'ifiske.controllers',
     'ifiske.directives',
-    'ifiske.api',
-    'ifiske.db',
-    'ifiske.utils',
-    'ifiske.update',
-    'ifiske.filters',
-    'ifiske.push',
-    'ionic.ion.headerShrink',
+    'ifiske.services',
     'ngCordova',
     'systemBrowser',
     'ngCordovaSms',
@@ -305,3 +300,4 @@ angular.module('ifiske', [
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
+angular.module('ifiske.services', []);

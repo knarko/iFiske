@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.update', ['ifiske.api', 'ifiske.db', 'ifiske.utils'])
+    angular.module('ifiske.services')
     .provider('Update', function UpdateProvider() {
 
         this.$get = [

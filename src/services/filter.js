@@ -1,4 +1,4 @@
-angular.module('ifiske.filters', [])
+angular.module('ifiske.services')
 .filter('onebr', function() {
     return function(input) {
         return input.replace(/(<br>\s*)+/g, '<br>');

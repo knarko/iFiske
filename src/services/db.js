@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.db', [])
+    angular.module('ifiske.services')
     .provider('DB', function DBProvider() {
 
         this.$get = [

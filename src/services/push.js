@@ -1,5 +1,5 @@
 /* global Ionic */
-angular.module('ifiske.push', [])
+angular.module('ifiske.services')
 
 .factory('Push', [
     '$ionicPlatform',

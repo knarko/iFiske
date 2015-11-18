@@ -1,4 +1,4 @@
-angular.module('ifiske.utils', [])
+angular.module('ifiske.services')
 
 .factory('localStorage', ['$window', function($window) {
     return {

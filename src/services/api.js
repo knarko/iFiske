@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.api', ['ifiske.utils'])
+    angular.module('ifiske.services')
     .provider('API', function APIProvider() {
 
         this.base_url = 'https://www.ifiske.se/api/v2/api.php';

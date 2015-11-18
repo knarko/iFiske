@@ -1,7 +1,4 @@
-// angular.module is a global place for creating, registering and retrieving Angular modules
 // 'ifiske' is the name of this angular module (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'ifiske.controllers' is found in controllers.js
 
 angular.module('ifiske', [
     'ionic',

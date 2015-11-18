@@ -211,6 +211,15 @@ angular.module('ifiske', [
             templateUrl: 'components/user_cards/user_cards.html',
             controller: 'UserCardsCtrl'
         })
+        .state('app.license_detail', {
+            url: '/license/:id',
+            params: {
+                'id': false,
+                'license': false
+            },
+            templateUrl: 'components/license_detail/license_detail.html',
+            controller: 'LicenseDetailCtrl'
+        })
         .state('app.favorites', {
             url: '/favorites',
             templateUrl: 'components/favorites/favorites.html'

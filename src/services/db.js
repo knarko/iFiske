@@ -447,6 +447,23 @@
                         });
                     },
 
+                    getUserProduct: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT User_Product.*,',
+                                'Rule.t as rule_t,',
+                                'Rule.ver as rule_ver,',
+                                'Rule.d as rule_d',
+                                'FROM User_Product',
+                                'LEFT JOIN Product ON Product.ID = User_Product.pid',
+                                'LEFT JOIN Rule ON Rule.ID = Product.ri',
+                                'WHERE User_Product.ID = ?'
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(createObject(data)[0]);
+                            }, reject);
+                        });
+                    },
                     getUserProducts: function() {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [

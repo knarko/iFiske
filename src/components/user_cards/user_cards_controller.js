@@ -36,7 +36,7 @@ angular.module('ifiske.controllers')
 
         $scope.$on('$ionicView.beforeEnter', initilize);
         //use the same modal as in area_cards
-        $ionicModal.fromTemplateUrl('components/area_cards/rules_modal.html', {
+        $ionicModal.fromTemplateUrl('components/area/rules_modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {

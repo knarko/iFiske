@@ -6,11 +6,51 @@ angular.module('ifiske.services')
     '$ionicPush',
     '$ionicUser',
     'API',
-    function($ionicPlatform, $ionicPush, $ionicUser, API) {
+    '$state',
+    function($ionicPlatform, $ionicPush, $ionicUser, API, $state) {
         var pushHandlers = {
             default: function(notification, payload) {
                 alert(notification.text);
-            }
+            },
+
+            /*
+            * We got a new fishing license. We will get the Code of the new license
+            * Payload should contain:
+            * code: fishing license code
+            */
+            NEW: [function(notification, payload) {
+                if (payload && payload.code) {
+                    $state.go('app.license_detail', {id: payload.code})
+                }
+            }],
+
+            /*
+            * We got a request to make a fishing report
+            * Payload should contain:
+            * orgid: organisation id,
+            * code: fishing license code,
+            */
+            REP_REQ: [function(notification, payload) {
+
+            }],
+
+            /*
+            * Someone made a report on a area we favorited
+            * Payload should contain:
+            * RepId: ID of the new report
+            */
+            NEW_FAV: [function(notification, payload) {
+
+            }],
+
+            /*
+            * Display a message
+            * Payload should contain:
+            * message: a string that we should Display
+            */
+            NOTE: [function(notification, payload) {
+
+            }]
         };
 
         $ionicPlatform.ready(function() {

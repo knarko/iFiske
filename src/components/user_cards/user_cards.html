@@ -10,6 +10,7 @@
             </div>
         </div>
         <div class="list card product" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired' : (product.fr*1000 > now ? 'inactive' : 'active')">
+          <button ui-sref="^.license_detail({license: product, id: product.ID})">Go</button>
             <div class="item item-icon-left">
                 <i class="icon ion-card"></i>
                 <h2>{{::product.ot}}</h2>

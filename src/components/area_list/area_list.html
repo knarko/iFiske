@@ -12,8 +12,7 @@
         <div style="height: 43px;"></div>
         <ion-list>
             <ion-item collection-repeat="area in areas | filter:search" ui-sref="app.area.info({id: area.ID, area:area})">
-
-                <h2>{{::area.t}}</h2>
+                <h2>{{area.t}}</h2>
             </ion-item>
         </ion-list>
     </ion-content>

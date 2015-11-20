@@ -54,14 +54,6 @@ angular.module('ifiske.services')
         };
 
         $ionicPlatform.ready(function() {
-            var user = Ionic.User.current();
-
-            if (!user.id) {
-                user.id = Ionic.User.anonymousId();
-                user.save();
-                API.user_add_pushtoken(user);
-            }
-
             $ionicPush.init({
                 debug: false,
                 onNotification: function(notification) {
@@ -81,13 +73,44 @@ angular.module('ifiske.services')
                     console.log(data.token);
                 }
             });
+        });
 
+        var createNewUser = function() {
+            var user = Ionic.User.current();
+
+            if (!user.id) {
+                user.id = Ionic.User.anonymousId();
+                API.user_add_pushtoken(user.id);
+            }
+            registerPush();
+        };
+        var registerPush = function() {
             $ionicPush.register(function(token) {
+                var user = Ionic.User.current();
                 user.addPushToken(token);
                 user.save();
             });
-        });
+        };
+
+        var init = function() {
+            API.user_get_pushtoken().then(function(userId) {
+                $ionicPlatform.ready(function() {
+                    if (userId) {
+                        Ionic.User.load(userId).then(function(loadedUser) {
+                            Ionic.User.current(loadedUser);
+                            registerPush();
+                        }, function(failure) {
+                            console.log("Couldn't load user", failure);
+                            createNewUser();
+                        });
+                    } else {
+                        createNewUser();
+                    }
+                });
+            });
+        };
         return {
+            init: init,
             registerHandler: function(name, handler) {
                 if (name === 'default') {
                     return;

@@ -6,7 +6,8 @@ angular.module('ifiske.controllers')
     '$ionicLoading',
     '$ionicHistory',
     '$ionicViewSwitcher',
-    function($scope, $state, Update, $ionicLoading, $ionicHistory, $ionicViewSwitcher) {
+    'Push',
+    function($scope, $state, Update, $ionicLoading, $ionicHistory, $ionicViewSwitcher, Push) {
 
         /**
          * signIn
@@ -25,6 +26,7 @@ angular.module('ifiske.controllers')
                     disableBack: true,
                     historyRoot: true
                 });
+                Push.init();
                 $state.go('app.home');
             }, function(error) {
                 $ionicLoading.hide();

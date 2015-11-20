@@ -82,7 +82,7 @@ angular.module('ifiske.services')
 
             if (!user.id) {
                 user.id = Ionic.User.anonymousId();
-                API.user_add_pushtoken(user.id);
+                API.user_set_pushtoken(user.id);
             }
             registerPush();
         };

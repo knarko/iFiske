@@ -147,9 +147,9 @@
                     user_get_pushtoken: function() {
                         return session_api_call({m: 'user_get_pushtoken'}, false);
                     },
-                    user_add_pushtoken: function(token) {
+                    user_set_pushtoken: function(token) {
                         return session_api_call({
-                            m: 'user_add_pushtoken',
+                            m: 'user_set_pushtoken',
                             token: token,
                             type: 1 //1 is for ionic
                         }, false);

@@ -5,9 +5,11 @@ angular.module('ifiske.services')
     '$ionicPlatform',
     '$ionicPush',
     '$ionicUser',
+    '$timeout',
     'API',
     '$state',
-    function($ionicPlatform, $ionicPush, $ionicUser, API, $state) {
+    'sessionData',
+    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData) {
         var pushHandlers = {
             default: function(notification, payload) {
                 alert(notification.text);
@@ -60,17 +62,17 @@ angular.module('ifiske.services')
                     var payload = notification.payload;
                     var i;
 
+                    console.log('Recieved a new push notification', notification, payload);
                     if (payload.action in pushHandlers) {
-                        console.log(notification, payload);
                         for (i = 0; i < pushHandlers[payload.action].length; ++i) {
-                            pushHandlers[payload.action][i](notification, payload);
+                            $timeout(pushHandlers[payload.action][i], 0, true, notification, payload);
                         }
                     } else {
                         pushHandlers.default(notification, payload);
                     }
                 },
                 onRegister: function(data) {
-                    console.log(data.token);
+                    console.log('Registered a push token:', data.token);
                 }
             });
         });
@@ -109,6 +111,10 @@ angular.module('ifiske.services')
                 });
             });
         };
+
+        if (sessionData.token) {
+            init();
+        }
         return {
             init: init,
             registerHandler: function(name, handler) {

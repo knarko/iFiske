@@ -151,7 +151,7 @@
                         return session_api_call({
                             m: 'user_add_pushtoken',
                             token: token,
-                            type: 'ionic'
+                            type: 1 //1 is for ionic
                         }, false);
                     },
                     get_fishes: function() {

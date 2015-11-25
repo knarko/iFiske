@@ -9,7 +9,8 @@ angular.module('ifiske.services')
     'API',
     '$state',
     'sessionData',
-    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData) {
+    '$ionicPopup',
+    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup) {
         var pushHandlers = {
             default: function(notification, payload) {
                 alert(notification.text);
@@ -22,7 +23,7 @@ angular.module('ifiske.services')
             */
             NEW: [function(notification, payload) {
                 if (payload && payload.code) {
-                    $state.go('app.license_detail', {id: payload.code})
+                    $state.go('app.license_detail', {id: payload.code});
                 }
             }],
 
@@ -33,7 +34,9 @@ angular.module('ifiske.services')
             * code: fishing license code,
             */
             REP_REQ: [function(notification, payload) {
-
+                if (payload && payload.orgid && payload.code) {
+                    $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
+                }
             }],
 
             /*
@@ -42,7 +45,9 @@ angular.module('ifiske.services')
             * RepId: ID of the new report
             */
             NEW_FAV: [function(notification, payload) {
-
+                if (payload && payload.repid) {
+                    $state.go('app.report', {id: payload.repid});
+                }
             }],
 
             /*
@@ -51,7 +56,9 @@ angular.module('ifiske.services')
             * message: a string that we should Display
             */
             NOTE: [function(notification, payload) {
-
+                if (payload && payload.message) {
+                    $ionicPopup.alert(payload.message);
+                }
             }]
         };
 

@@ -208,6 +208,23 @@ angular.module('ifiske', [
             templateUrl: 'components/user_cards/user_cards.html',
             controller: 'UserCardsCtrl'
         })
+        .state('app.report', {
+            url: '/report/:id',
+            params: {
+                'id': false
+            },
+            templateUrl: 'components/report/report.html',
+            controller: 'ReportCtrl'
+        })
+        .state('app.create_report', {
+            url: '/create_report',
+            params: {
+                'orgid': false,
+                'code': false
+            },
+            templateUrl: 'components/create_report/create_report.html',
+            controller: 'CreateReportCtrl'
+        })
         .state('app.license_detail', {
             url: '/license/:id',
             params: {

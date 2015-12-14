@@ -16,7 +16,7 @@ angular.module('ifiske.controllers')
             /*
               Getter/setter for username.
               Stores username in localStorage, in case the app is closed before the
-              verification process is complete. _username ensures that the value can become 
+              verification process is complete. _username ensures that the value can become
               undefined when the input is invalid (required by ngModel).
             */
 /*            var _username;
@@ -28,13 +28,13 @@ angular.module('ifiske.controllers')
                 }
                 return _username;
             }
-  */       
+  */
 
             /*
                Note:
-               An attempt was made to simplify the validators using the validator pipelines 
-               introduced in Angular 1.3. No way was found to trigger validation on blur for 
-               some validators in a pipeline, and on submit for others. 
+               An attempt was made to simplify the validators using the validator pipelines
+               introduced in Angular 1.3. No way was found to trigger validation on blur for
+               some validators in a pipeline, and on submit for others.
             */
 
             // Validation errors not tied to a specific input field
@@ -65,10 +65,9 @@ angular.module('ifiske.controllers')
             $scope.register = function(form) {
                 $ionicLoading.show();
 
-                API.user_register(details.username, details.fullname, details.password, 
+                API.user_register(details.username, details.fullname, details.password,
                                   details.email, details.phone)
                     .then(function(data) {
-                        // Success
                         // Save username in case app closes before completed account verification
                         localStorage.set('register_username', details.username);
 
@@ -76,7 +75,6 @@ angular.module('ifiske.controllers')
                         $ionicLoading.hide();
                         $scope.formErrors = {};
                         $state.go('^.verify');
-
                     }, function(error) {
                         /**
                          * Error: Inform the user about failed registration
@@ -88,16 +86,16 @@ angular.module('ifiske.controllers')
                         $ionicScrollDelegate.scrollTop(true);
 
                         // Invalid Email
-                        if (error.error_code == 8) {
+                        if (error.error_code === 8) {
                             form.email.$setValidity('invalidEmail', false);
                         }
                         // Username or Email already registered
-                        if (error.error_code == 9) {
+                        if (error.error_code === 9) {
                             $scope.checkUsername(form.username);
                             $scope.checkEmail(form.email);
                         }
                         // Invalid phone number
-                        if (error.error_code == 10) {
+                        if (error.error_code === 10) {
                             form.phone.$setValidity('invalidPhone', false);
                         }
 
@@ -112,8 +110,11 @@ angular.module('ifiske.controllers')
              */
             $scope.verify = function(form) {
                 $ionicLoading.show();
-                                
-                API.user_confirm(form.username.$viewValue, form.vercode.$viewValue)
+
+                // Get username from form or localStorage
+                var username = form.username ? form.username.$viewValue : localStorage.get('register_username');
+
+                API.user_confirm(username, form.vercode.$viewValue)
                     .then(function(data) {
                         $ionicPlatform.ready(function() {
                             $cordovaToast.showLongBottom('Ditt konto har skapats');
@@ -130,7 +131,7 @@ angular.module('ifiske.controllers')
                             $scope.formErrors.validationError = true;
                         }
                     })
-                    .finally($ionicLoading.hide());
+                    .finally($ionicLoading.hide);
             };
 
 

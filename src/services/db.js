@@ -328,7 +328,7 @@
                     getArea: function(id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT Area.*, Organization.t as org',
+                                'SELECT Area.*, Organization.t AS org,',
                                 'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
@@ -374,7 +374,7 @@
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                                 'JOIN Organization ON Organization.ID = Area.orgid',
-                                'WHERE ()(Area.t LIKE ?) OR (Organization.t LIKE ?))',
+                                'WHERE ((Area.t LIKE ?) OR (Organization.t LIKE ?))',
                                 (county_id ? 'AND ? IN (c1,c2,c3)' : ''),
                                 'ORDER BY Organization.t'
                             ].join(' '),

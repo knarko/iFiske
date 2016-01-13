@@ -1,31 +1,19 @@
 <ion-view title="Mina fiskekort" class="image-bg">
-    <ion-content class="padding">
-        <ion-refresher
-                 pulling-text="Uppdatera..."
-                 on-refresh="update()">
-        </ion-refresher>
-        <div class="card" ng-if="products.length < 1">
-            <div class="item item-text-wrap">
-                <p>När du köpt fiskekort kommer de att finnas listade här.</p>
-            </div>
-        </div>
-        <div class="list card product" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired' : (product.fr*1000 > now ? 'inactive' : 'active')">
-          <button ui-sref="^.license_detail({license: product, id: product.ID})">Go</button>
-            <div class="item item-icon-left">
-                <i class="icon ion-card"></i>
-                <h2>{{::product.ot}}</h2>
-            </div>
-            <div class="item item-body" >
-                <h2>{{::product.t}}<span class="product-code">{{::product.code}}</span></h2>
-                <p>Namn: {{::product.fullname}}</p>
-                <p> Gäller från {{::product.fr * 1000 | date:'short'}} till {{::product.to * 1000 | date:'short'}}</p>
-            </div>
-            <div class="item item-body" >
+  <ion-content class="padding">
+    <ion-refresher
+    pulling-text="Uppdatera..."
+    on-refresh="update()">
+  </ion-refresher>
+  <div class="list">
+  <div class="item" ng-if="products.length < 1">
+    <div class="item item-text-wrap">
+      <p>När du köpt fiskekort kommer de att finnas listade här.</p>
+    </div>
+  </div>
+  <div class="item" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired2' : (product.fr*1000 > now ? 'inactive2' : 'active2')" ui-sref="^.license_detail({license: product, id: product.ID})">
+      <h2>{{product.ot}} - {{product.t}}</h2>
+    </div>
+  </div>
 
-                <button ng-if="product.rule_t" ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
-                <a class="button button-energized" href="{{::endpoint}}{{::product.pdf}}" system-browser>Visa PDF</a>
-                <a class="button button-calm" href="{{::endpoint}}/r/{{::product.code}}" system-browser>Fångstrapport</a>
-            </div>
-        </div>
-    </ion-content>
+</ion-content>
 </ion-view>

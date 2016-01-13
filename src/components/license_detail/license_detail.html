@@ -1,12 +1,18 @@
-<ion-view title="Fiskekort" class="image-bg">
-  <ion-content>
-    <h2>{{::product.ot}}</h2>
-    <h2>{{::product.t}}<span class="product-code">{{::product.code}}</span></h2>
-    <p>Namn: {{::product.fullname}}</p>
-    <p> Gäller från {{::product.fr * 1000 | date:'short'}} till {{::product.to * 1000 | date:'short'}}</p>
-
-    <button ng-if="product.rule_t" ng-click="openRulesModal({{product}})" class="button button-balanced">Regler</button>
-    <a class="button button-energized" href="{{::image_endpoint}}{{::product.pdf}}" system-browser>Visa PDF</a>
-    <a class="button button-calm" href="{{::image_endpoint}}/r/{{::product.code}}" system-browser>Fångstrapport</a>
+<ion-view title="Fiskekort">
+  <ion-content padding="true">
+    <img class="logo product" ng-src="{{image_endpoint}}{{org.logo||'logos/285.gif'}}">
+    <h2>{{product.ot}}</h2>
+    <h3>{{product.t}}</h3>
+    <div class="qr" style="background-image:url(data:image/png;base64,{{product.qr}})"></div>
+    <p>{{product.subt}}</p>
+    <p>Namn: {{product.fullname}}</p>
+    <p> Gäller från {{product.fr * 1000 | date:'short'}} till {{product.to * 1000 | date:'short'}}</p>
+    <a class="pull-right button button-icon icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" system-browser>PDF</a>
   </ion-content>
+  <ion-footer-bar class="bar-dark">
+    <div class="button-bar">
+      <a class="button button-icon ion-document" ng-if="product.rule_t" ng-click="openRulesModal({{product}})" >Regler</a>
+      <a class="button button-icon ion-paper-airplane" href="{{::image_endpoint}}r/{{::product.code}}" system-browser>Fångstrapport</a>
+    </div>
+  </ion-footer-bar>
 </ion-view>

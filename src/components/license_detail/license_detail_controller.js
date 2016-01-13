@@ -11,6 +11,12 @@ angular.module('ifiske.controllers')
             //TODO: get license from DB, or from api
             DB.getUserProduct($stateParams.id).then(function(license) {
                 $scope.product = license;
+                DB.getArea(license.ai).then(function(area) {
+                    $scope.area = area;
+                    DB.getOrganization(area.orgid).then(function(org) {
+                        $scope.org = org;
+                    });
+                });
             });
         }
         $scope.now = Date.now();

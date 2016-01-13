@@ -9,11 +9,11 @@
             'API',
             '$q',
             'localStorage',
-            function($cordovaSQLite, API, $q, localStorage) {
+            function($cordovaSQLite, API, $q) {
 
                 var db;
                 var ready = $q.defer();
-                var version = '2';
+                var version = '3';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
@@ -128,9 +128,12 @@
                         ['ref1',      'int'],
                         ['ref2',      'int'],
                         ['t',         'text'],
+                        ['subt',      'text'],
                         ['to',        'int'],
                         ['pid',       'int'],
-                        ['pdf',       'text']
+                        ['pdf',       'text'],
+                        ['qr',        'text'],
+                        ['fineprint', 'text']
                     ],
                     'User_Info': [
                         ['ID',        'int'],
@@ -177,7 +180,8 @@
                         ['dp',     'int'],
                         ['fva',    'int'],
                         ['org',    'int'],
-                        ['ml',     'int']
+                        ['ml',     'int'],
+                        ['logo',   'text']
                     ],
                     'Poi': [
                         ['ID',     'int'],
@@ -452,7 +456,7 @@
                     getUserProduct: function(id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT User_Product.*,',
+                                'SELECT User_Product.*, Product.ai,',
                                 'Rule.t as rule_t,',
                                 'Rule.ver as rule_ver,',
                                 'Rule.d as rule_d',

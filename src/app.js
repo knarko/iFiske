@@ -29,7 +29,7 @@ angular.module('ifiske', [
     //Only get these to init them
     'Push',
     function($ionicPlatform, Update, ImgCache, $rootScope) {
-        $rootScope.image_endpoint = 'http://www.ifiske.se';
+        $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
             // Hide the accessory bar above the keyboard for form inputs
             if (window.ionic && window.ionic.Keyboard) {

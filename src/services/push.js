@@ -124,6 +124,12 @@ angular.module('ifiske.services')
         }
         return {
             init: init,
+            token: function() {
+                return Ionic.User.current().id;
+            },
+            unregister: function() {
+                return $ionicPush.unregister();
+            },
             registerHandler: function(name, handler) {
                 if (name === 'default') {
                     return;

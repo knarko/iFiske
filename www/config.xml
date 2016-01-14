@@ -11,13 +11,16 @@
     <author email="app@ifiske.se" href="http://www.ifiske.se">
         iFiske
     </author>
-    <content src="index.html"/>
+    <content src="index.html" />
 
     <!-- Only build iOS and Android -->
     <gap:platform name="ios"/>
     <gap:platform name="android"/>
 
     <feature name="http://api.phonegap.com/1.0/device"/>
+
+    <preference name="android-build-tool" value="gradle" />
+
     <preference name="permissions"                value="none"/>
     <preference name="orientation"                value="default"/>
     <preference name="target-device"              value="universal"/>
@@ -104,14 +107,10 @@
     <gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm"    version="2.9.0" />
     <gap:plugin name="cordova-plugin-x-toast"                            source="npm"    version="2.1.1" />
     <gap:plugin name="cordova-plugin-whitelist"                          source="npm"    version="1.0.0" />
+    <gap:plugin name="phonegap-plugin-push"                              source="npm"    version="1.5.3" />
 
 
-    <access origin="http://127.0.0.1*" />
-    <access origin="https://www.ifiske.se/*"        subdomains="true" />
-    <access origin="http://www.ifiske.se/*"         subdomains="true" />
-    <access origin="https://api.tiles.mapbox.com/*" subdomains="true" />
-    <access origin="http://api.tiles.mapbox.com/*"  subdomains="true" />
-    <access origin="cdvfile://*"                    subdomains="true" />
+    <access origin="*" />
     <feature name="Device">
         <param name="ios-package"     value="CDVDevice"/>
         <param name="android-package" value="org.apache.cordova.device.Device"/>
@@ -131,6 +130,12 @@
     <gap:config-file platform="ios" parent="CFBundleIdentifier" overwrite="true">
         <string>se.iFiske.iFiske</string>
     </gap:config-file>
+
+    <!-- For debbuging. Remove these settings on a proper build -->
+    <!--gap:config-file platform="android" parent="/manifest">
+        <application android:debuggable="true" />
+    </gap:config-file-->
+
 
 
 </widget>

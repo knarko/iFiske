@@ -4,6 +4,7 @@
             <h2>iFiske - Enklare Fiskekort</h2>
             <p>&copy; 2015 Jighead AB (iFiske.se)</p>
             <p>Versionsnummer: <b>{{version}}</b> <span ng-if="build">(build: {{build}})</span></p>
+            <p>Push-token (för utveckling): {{push.token()}}</p>
             <p>Databasen hämtades senast: <b>{{update.last_update() | date:'medium'}}</b></p>
             <p>Denna app visar information om de fiskevatten som är anslutna till tjänsten iFiske.se. Jighead AB ansvarar ej för att all information är uppdaterad och korrekt, detta ansvar ligger på respektive ansluten organisation.</p>
             <p>Besök gärna <a href='http://www.ifiske.se/'>iFiske.se</a> - där finns mer information om anslutna fiskevatten och om iFiske.se! Gilla gärna <a href='http://www.facebook.com/fiskekort/'>iFiskes sida på Facebook</a> för senaste nytt!</p>

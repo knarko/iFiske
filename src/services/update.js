@@ -11,7 +11,8 @@
             '$q',
             '$ionicLoading',
             'sessionData',
-            function(API, DB, localStorage, $q, $ionicLoading, sessionData) {
+            'Push',
+            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push) {
 
                 var LAST_UPDATE = 'last_update';
 
@@ -210,6 +211,7 @@
                             p.push(DB.cleanTable(updates.auth[i].table));
                         }
                     }
+                    p.push(Push.unregister());
                     return $q.all(p)
                     .then(function() {
                         console.log('Removed user info from database');

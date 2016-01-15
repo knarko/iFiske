@@ -10,8 +10,8 @@ angular.module('ifiske.controllers')
         $scope.pred = '-to';
 
         var initilize = function() {
-            var a = Update.update();
-            a.then(function() {
+            Update.update()
+            .then(function() {
                 $scope.now = Date.now();
                 return DB.getUserProducts();
             })

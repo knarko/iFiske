@@ -11,7 +11,8 @@
     </div>
   </div>
   <div class="item" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired2' : (product.fr*1000 > now ? 'inactive2' : 'active2')" ui-sref="^.license_detail({license: product, id: product.ID})">
-      <h2>{{product.ot}} - {{product.t}}</h2>
+      <h2>{{product.ot}}</h2>
+      <p>{{product.t}}</p>
     </div>
   </div>
 

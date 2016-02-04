@@ -10,10 +10,11 @@ angular.module('ifiske.services')
     '$state',
     'sessionData',
     '$ionicPopup',
-    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup) {
+    '$cordovaInAppBrowser',
+    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser) {
         var pushHandlers = {
             default: function(notification, payload) {
-                alert(notification.text);
+                $ionicPopup.alert(notification.text);
             },
 
             /*
@@ -35,7 +36,16 @@ angular.module('ifiske.services')
             */
             REP_REQ: [function(notification, payload) {
                 if (payload && payload.orgid && payload.code) {
-                    $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
+                    $ionicPopup.confirm({
+                        title: 'Vill du skapa en fångstrapport?',
+                        cancelText: 'Avbryt',
+                        okText: 'OK'
+                    }).then(function(response) {
+                        if (response) {
+                            $cordovaInAppBrowser.open('https://ifiske.se/r/' + payload.code, '_system');
+                        }
+                    });
+                    //$state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
                 }
             }],
 
@@ -46,7 +56,7 @@ angular.module('ifiske.services')
             */
             NEW_FAV: [function(notification, payload) {
                 if (payload && payload.repid) {
-                    $state.go('app.report', {id: payload.repid});
+                    //$state.go('app.report', {id: payload.repid});
                 }
             }],
 
@@ -62,22 +72,23 @@ angular.module('ifiske.services')
             }]
         };
 
+        var handleNotification = function(notification) {
+            var payload = notification.payload;
+            var i;
+
+            console.log('Recieved a new push notification', notification, payload);
+            if (payload.action in pushHandlers) {
+                for (i = 0; i < pushHandlers[payload.action].length; ++i) {
+                    $timeout(pushHandlers[payload.action][i], 0, true, notification, payload);
+                }
+            } else {
+                pushHandlers.default(notification, payload);
+            }
+        };
         $ionicPlatform.ready(function() {
             $ionicPush.init({
                 debug: false,
-                onNotification: function(notification) {
-                    var payload = notification.payload;
-                    var i;
-
-                    console.log('Recieved a new push notification', notification, payload);
-                    if (payload.action in pushHandlers) {
-                        for (i = 0; i < pushHandlers[payload.action].length; ++i) {
-                            $timeout(pushHandlers[payload.action][i], 0, true, notification, payload);
-                        }
-                    } else {
-                        pushHandlers.default(notification, payload);
-                    }
-                },
+                onNotification: handleNotification,
                 onRegister: function(data) {
                     console.log('Registered a push token:', data.token);
                 }
@@ -93,6 +104,7 @@ angular.module('ifiske.services')
             API.user_set_pushtoken(user.id);
             registerPush();
         };
+        
         var registerPush = function() {
             $ionicPush.register(function(token) {
                 var user = Ionic.User.current();
@@ -138,7 +150,8 @@ angular.module('ifiske.services')
                     pushHandlers[name] = [];
                 }
                 pushHandlers[name].push(handler);
-            }
+            },
+            testNotification: handleNotification
         };
     }
 ]);

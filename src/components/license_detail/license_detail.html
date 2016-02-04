@@ -1,18 +1,23 @@
 <ion-view title="Fiskekort">
   <ion-content padding="true">
-    <img class="logo product" ng-src="{{image_endpoint}}{{org.logo||'logos/285.gif'}}">
-    <h2>{{product.ot}}</h2>
-    <h3>{{product.t}}</h3>
-    <div class="qr" style="background-image:url(data:image/png;base64,{{product.qr}})"></div>
-    <p>{{product.subt}}</p>
-    <p>Namn: {{product.fullname}}</p>
-    <p> Gäller från {{product.fr * 1000 | date:'short'}} till {{product.to * 1000 | date:'short'}}</p>
-    <a class="pull-right button button-icon icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" system-browser>PDF</a>
+    <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{org.logo}}">
+    <h2 class="text-center">{{product.ot}}</h2>
+    <h3 class="text-center">{{product.t}}</h3>
+    <div ng-if="product.qr" class="qr" style="background-image:url(data:image/png;base64,{{product.qr}})"></div>
+    <h2 class="text-center">{{product.code}}</h2>
+    <p ng-if="product.subt">{{product.subt}}</p>
+    <p>Utfärdat till {{product.fullname}}</p>
+    <p>Gäller från <b>{{product.fr * 1000 | date:'short'}}</b></p>
+    <p>till <b>{{product.to * 1000 | date:'short'}}</b></p>
+    <p class="text-center">
+      <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}r/{{::product.code}}" system-browser><i class="icon icon-icon_fish"></i> Fångstrapport</a>
+      <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" system-browser>PDF</a>
+    </p>
+    <p ng-if="product.fine">{{product.fine}}</p>
   </ion-content>
-  <ion-footer-bar class="bar-dark">
+  <ion-footer-bar ng-if="product.rule_t" class="bar-balanced">
     <div class="button-bar">
-      <a class="button button-icon ion-document" ng-if="product.rule_t" ng-click="openRulesModal({{product}})" >Regler</a>
-      <a class="button button-icon ion-paper-airplane" href="{{::image_endpoint}}r/{{::product.code}}" system-browser>Fångstrapport</a>
+    <a class="button button-icon ion-document-text" ng-click="openRulesModal()">Regler</a>
     </div>
   </ion-footer-bar>
 </ion-view>

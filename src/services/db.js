@@ -133,7 +133,7 @@
                         ['pid',       'int'],
                         ['pdf',       'text'],
                         ['qr',        'text'],
-                        ['fineprint', 'text']
+                        ['fine',      'text']
                     ],
                     'User_Info': [
                         ['ID',        'int'],

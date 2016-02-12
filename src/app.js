@@ -234,10 +234,6 @@ angular.module('ifiske', [
             templateUrl: 'components/license_detail/license_detail.html',
             controller: 'LicenseDetailCtrl'
         })
-        .state('app.favorites', {
-            url: '/favorites',
-            templateUrl: 'components/favorites/favorites.html'
-        })
         .state('app.fishes', {
             url: '/fishes',
             templateUrl: 'components/fishes/fishes.html',

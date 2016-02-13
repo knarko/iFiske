@@ -373,7 +373,7 @@
                     search: function(searchstring, county_id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT Area.*, Organization.t AS org,',
+                                'SELECT Area.*, Organization.t AS org, Organization.logo AS logo,',
                                 'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',

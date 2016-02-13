@@ -23,6 +23,7 @@
             <p>{{::org.t}}</p>
         </div>
         <div ng-if="org.d" class="item item-body">
+            <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
             <a ng-if="area.map" system-browser ng-href="{{::image_endpoint}}{{::area.map}}">Karta över området som PDF</a>
         </div>

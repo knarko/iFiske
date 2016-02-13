@@ -9,12 +9,12 @@
     </ion-header-bar>
 
     <ion-content header-shrink>
-        <div style="height: 43px;"></div>
-        <ion-list>
-            <ion-item collection-repeat="area in areas | filter:search" ui-sref="app.area.info({id: area.ID, area:area})">
-                <h2>{{area.org}}</h2>
-                <p>{{area.t}}</p>
-            </ion-item>
-        </ion-list>
+      <div style="height: 43px;"></div>
+      <div class="list">
+        <div class="item" collection-repeat="area in areas | filter:search" ui-sref="app.area.info({id: area.ID, area:area})">
+          <h2>{{area.org}}</h2>
+          <p>{{area.t}}</p>
+        </div>
+      </div>
     </ion-content>
 </ion-view>

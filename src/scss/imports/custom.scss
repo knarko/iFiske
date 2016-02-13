@@ -400,3 +400,9 @@ hip-tabs .button.button-clear.active {
     color: $calm;
     opacity: 1;
 }
+
+.wide-popup {
+    .popup {
+        width: 90%;
+    }
+}

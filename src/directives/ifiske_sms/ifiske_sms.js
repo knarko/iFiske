@@ -25,12 +25,14 @@ angular.module('ngCordovaSms', [])
                         }
                     }]
                 }).then(function(name) {
-                    var message = 'FISKA ' + attrs.ngCordovaSms + ' ' + name;
-                    $cordovaSms.send('72456', message, 'INTENT', function() {
-                        console.log('Opened SMS application')
-                    }, function(err) {
-                        console.log(err);
-                    });
+                    if (name) {
+                        var message = 'FISKA ' + attrs.ngCordovaSms + ' ' + name;
+                        $cordovaSms.send('72456', message, 'INTENT', function() {
+                            console.log('Opened SMS application')
+                        }, function(err) {
+                            console.log(err);
+                        });
+                    }
                 });
             };
             el.on('click', function(e) {

@@ -20,6 +20,7 @@
     <feature name="http://api.phonegap.com/1.0/device"/>
 
     <preference name="android-build-tool" value="gradle" />
+    <!--preference name="android-targetSdkVersion" value="23" /-->
 
     <preference name="permissions"                value="none"/>
     <preference name="orientation"                value="default"/>
@@ -36,7 +37,7 @@
     <preference name="disable-cursor"             value="false"/>
     <preference name="android-minSdkVersion"      value="14"/>
     <preference name="android-installLocation"    value="auto"/>
-    <preference name="phonegap-version"           value="cli-5.2.0"/>
+    <preference name="phonegap-version"           value="cli-6.0.0"/>
     <preference name="SplashScreen"               value="screen"/>
     <preference name="SplashScreenDelay"          value="3000"/>
 
@@ -94,35 +95,23 @@
 
     <gap:splash gap:platform="winphone" src="resources/wp8/splash/SplashScreenImage.png" width="768" height="1280"/>
 
-    <!--gap:plugin name="io.litehelpers.cordova.sqlite" version="0.7.6" /-->
-    <gap:plugin name="com.cordova.plugins.sms"                           source="pgb"    version="0.1.2" />
-    <gap:plugin name="cordova-plugin-inappbrowser"                       source="npm"    version="1.0.1" />
-    <gap:plugin name="cordova-plugin-statusbar"                          source="npm"    version="1.0.1" />
-    <gap:plugin name="cordova-plugin-app-version"                        source="npm"    version="0.1.7" />
-    <gap:plugin name="cordova-plugin-device"                             source="npm"    version="1.0.1" />
-    <gap:plugin name="cordova-plugin-file-transfer"                      source="npm"    version="1.2.1" />
-    <gap:plugin name="cordova-plugin-file"                               source="npm"    version="3.0.0" />
-    <gap:plugin name="ionic-plugin-keyboard"                             source="npm"    version="1.0.5" />
-    <gap:plugin name="cordova-plugin-geolocation"                        source="npm"    version="1.0.1" />
-    <gap:plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" source="npm"    version="2.9.0" />
-    <gap:plugin name="cordova-plugin-x-toast"                            source="npm"    version="2.1.1" />
-    <gap:plugin name="cordova-plugin-whitelist"                          source="npm"    version="1.0.0" />
-    <gap:plugin name="phonegap-plugin-push"                              source="npm"    version="1.5.3" />
+    <!--plugin name="cordova-sqlite-storage" spec="0.8.2" /-->
+    <plugin name="cordova-sms-plugin"                                spec="0.1.8" />
+    <plugin name="cordova-plugin-inappbrowser"                       spec="1.3.0" />
+    <plugin name="cordova-plugin-statusbar"                          spec="2.1.1" />
+    <plugin name="cordova-plugin-app-version"                        spec="0.1.8" />
+    <plugin name="cordova-plugin-device"                             spec="1.1.1" />
+    <plugin name="cordova-plugin-file-transfer"                      spec="1.5.0" />
+    <plugin name="cordova-plugin-file"                               spec="4.1.1" />
+    <plugin name="ionic-plugin-keyboard"                             spec="1.0.8" />
+    <plugin name="cordova-plugin-geolocation"                        spec="2.1.0" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="2.9.9" />
+    <plugin name="cordova-plugin-x-toast"                            spec="2.4.0" />
+    <plugin name="cordova-plugin-whitelist"                          spec="1.2.1" />
+    <plugin name="phonegap-plugin-push"                              spec="1.5.3" />
 
 
     <access origin="*" />
-    <feature name="Device">
-        <param name="ios-package"     value="CDVDevice"/>
-        <param name="android-package" value="org.apache.cordova.device.Device"/>
-    </feature>
-    <feature name="File">
-        <param name="ios-package"     value="CDVFile"/>
-        <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
-    </feature>
-    <feature name="FileTransfer">
-        <param name="ios-package"     value="CDVFileTransfer"/>
-        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer"/>
-    </feature>
     <!-- Remove unused permission that we get from sms-plugin -->
     <gap:config-file platform="android" parent="/manifest" mode="delete">
         <uses-permission android:name="android.permission.SEND_SMS" />

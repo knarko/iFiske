@@ -29,7 +29,7 @@ angular.module('ifiske.controllers')
             $scope.persistApproveSMSRules = function() {
                 if ($scope.SMSRules.approval == 'YES') {
                     $ionicPopup.show({
-                        title: 'Skriv in ditt namn',
+                        title: 'Regler för SMS-köp',
                         scope: $scope,
                         cssClass: 'wide-popup',
                         template: '<p ng-bind-html="smsterms"></p>',

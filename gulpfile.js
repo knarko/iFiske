@@ -181,7 +181,8 @@ gulp.task('deploy', ['default'], function(done) {
         name: 'pass',
         message: 'Enter password for ' + email + ':'
     }, function(response) {
-        gulp.src(['./www/**/*', './resources/**/*'], {base: '.', dot: true})
+        gulp.src(['./www/**/*', './resources/**/*', 'config.xml'], {base: '.', dot: true})
+        .pipe(gulpif(/.*?config\.xml$/, rename({dirname: 'www'})))
         .pipe(phonegapBuild({
             'appId': appId,
             'user': {

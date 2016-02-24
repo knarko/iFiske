@@ -49,7 +49,10 @@ angular.module('ifiske.controllers')
 			if (data.texted) {
 			    $scope.info += 'SMS';
 			}
-                        
+            if (data.mailed) {
+                $scope.info += '<br>Om du inte fått ditt mejl efter 10 minuter, kolla så att mejlet inte fastnat i skräpposten.'
+            }
+
 			$state.go('^.resetpassword');
 
 		    }, function(error) {

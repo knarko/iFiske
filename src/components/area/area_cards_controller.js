@@ -4,7 +4,8 @@ angular.module('ifiske.controllers')
     '$ionicModal',
     'localStorage',
     '$ionicPopup',
-    function($scope, $ionicModal, localStorage, $ionicPopup) {
+    '$cordovaInAppBrowser',
+    function($scope, $ionicModal, localStorage, $ionicPopup, $cordovaInAppBrowser) {
         $scope.$on('$ionicView.beforeEnter', function() {
             //Area_Cards
             $scope.smsterms = localStorage.get('sms_terms');
@@ -50,6 +51,11 @@ angular.module('ifiske.controllers')
                 } else {
                 localStorage.set('sms-approval', $scope.SMSRules.approval);
                 }
+            };
+
+            $scope.openProductInBrowser = function(id) {
+                var url = 'https://www.ifiske.se/mobile/index.php?p=5&i=' + id;
+                $cordovaInAppBrowser.open(url, '_system');
             };
 
             //Rules modal

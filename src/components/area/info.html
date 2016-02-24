@@ -26,14 +26,14 @@
         <div ng-if="org.d" class="item item-body">
             <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
-            <a ng-if="area.map" system-browser ng-href="{{::image_endpoint}}{{::area.map}}">Karta över området som PDF</a>
+            <a ng-if="area.map" ng-href="{{::image_endpoint}}{{::area.map}}">Karta över området som PDF</a>
         </div>
         <div ng-if="org.cp" class="item item-divider">
             <p>Kontaktinformation</p>
         </div>
         <div ng-if="org.cp" class="item item-body">
             <p ng-bind-html="org.cp | onebr"></p>
-            <a href="{{::org.url}}" system-browser ng-if="org.url">{{::org.url}}</a>
+            <a href="{{::org.url}}" ng-if="org.url">{{::org.url}}</a>
         </div>
     </ion-content>
 </ion-view>

@@ -21,6 +21,15 @@
 
     <preference name="android-build-tool" value="gradle" />
     <!--preference name="android-targetSdkVersion" value="23" /-->
+    <access origin="*" />
+    <access origin="cdvfile://*" />
+
+    <allow-navigation href="cdvfile://*" />
+    <allow-intent href="cdvfile://*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
 
     <preference name="permissions"                value="none"/>
     <preference name="orientation"                value="default"/>
@@ -111,8 +120,6 @@
     <plugin name="phonegap-plugin-push"                              spec="1.5.3" />
 
 
-    <access origin="*" />
-    <access origin="cdvfile://*" />
     <!-- Remove unused permission that we get from sms-plugin -->
     <gap:config-file platform="android" parent="/manifest" mode="delete">
         <uses-permission android:name="android.permission.SEND_SMS" />

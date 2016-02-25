@@ -112,6 +112,7 @@
 
 
     <access origin="*" />
+    <access origin="cdvfile://*" />
     <!-- Remove unused permission that we get from sms-plugin -->
     <gap:config-file platform="android" parent="/manifest" mode="delete">
         <uses-permission android:name="android.permission.SEND_SMS" />

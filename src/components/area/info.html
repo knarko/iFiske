@@ -7,7 +7,7 @@
                     <div class="slider-image" img-cache ic-bg="{{::image_endpoint + img}}"></div>
                 </ion-slide>
             </ion-slide-box>
-            <img ng-src="{{::image_endpoint + images[0]}}" ng-if="images.length == 1" />
+            <img img-cache ic-src="{{::image_endpoint + images[0]}}" ng-if="images.length == 1" />
         </div>
         <div ng-if="area.d" class="item item-divider item-button-right">
             <h2>{{::area.t}}</h2>

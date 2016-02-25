@@ -41,7 +41,9 @@ angular.module('ifiske', [
             }
 
             ImgCache.$init();
-            Update.update();
+            Update.update().catch(function(err) {
+                console.error(err);
+            })
         });
     }
 ])

@@ -14,7 +14,8 @@ angular.module('ifiske.controllers')
         'localStorage',
         function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, $ionicViewSwitcher, $ionicHistory, API, Update, localStorage) {
 
-            var details = $scope.details = {};
+            $scope.details = {};
+            $scope.forms = {};
 
             /*
               Getter/setter for username.
@@ -68,16 +69,18 @@ angular.module('ifiske.controllers')
             $scope.register = function(form) {
                 $ionicLoading.show();
 
-                API.user_register(details.username, details.fullname, details.password,
-                                  details.email, details.phone)
+                API.user_register($scope.details.username, $scope.details.fullname, $scope.details.password,
+                                  $scope.details.email, $scope.details.phone)
                     .then(function() {
                         // Save username in case app closes before completed account verification
-                        localStorage.set('register_username', details.username);
-                        localStorage.set('register_password', details.password);
+                        localStorage.set('register_username', $scope.details.username);
+                        localStorage.set('register_password', $scope.details.password);
 
                         // Proceed to account verification
                         $ionicLoading.hide();
                         $scope.formErrors = {};
+                        $scope.details = {};
+                        $scope.forms.registerForm.$setPristine();
                         $state.go('^.verify');
                     }, function(error) {
                         /**
@@ -126,7 +129,7 @@ angular.module('ifiske.controllers')
                             }
                         });
                         $scope.formErrors.validationError = false;
-                        details = {};
+                        $scope.details = {};
 
                         var password = localStorage.get('register_password');
                         if (password) {

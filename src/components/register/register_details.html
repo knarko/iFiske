@@ -2,7 +2,7 @@
     <ion-content>
 	<div class="list list-inset register-list">
 
-	    <form name="registerForm" id="register-form" novalidate>
+	    <form name="forms.registerForm" id="register-form" novalidate>
 
                 <!-- Submit errors -->
 		<ng-messages for="formErrors" class="error-message">
@@ -14,16 +14,16 @@
 
 		<!-- Username -->
 		<label for="username" class="input-label">Användarnamn:</label>
-		<label ng-class="{'label-error': registerForm.username.$invalid &&
-				 registerForm.username.$dirty}" class="item item-input">
-		    <input id="username" name="username" type="text" 
+		<label ng-class="{'label-error': forms.registerForm.username.$invalid &&
+				 forms.registerForm.username.$dirty}" class="item item-input">
+		    <input id="username" name="username" type="text"
                            ng-pattern="/^.{5,25}$/" ng-model="details.username"
-			   ng-blur="checkUsername(registerForm.username);"
-			   ng-change="registerForm.username.$setValidity('nameTaken',true);"
+			   ng-blur="checkUsername(forms.registerForm.username);"
+			   ng-change="forms.registerForm.username.$setValidity('nameTaken',true);"
 			   required>
 		</label>
-		<ng-messages for="registerForm.username.$error" class="error-message"
-		     ng-if="registerForm.username.$dirty">
+		<ng-messages for="forms.registerForm.username.$error" class="error-message"
+		     ng-if="forms.registerForm.username.$dirty">
 		    <div ng-message="required">Du måste välja ett användarnamn</div>
 		    <div ng-message="pattern">Mellan 5 och 25 tecken</div>
 		    <div ng-message="nameTaken">Användarnamnet är upptaget</div>
@@ -32,13 +32,13 @@
 
 		<!-- Password -->
 		<label for="password" class="input-label">Lösenord:</label>
-		<label ng-class="{'label-error': registerForm.password.$invalid &&
-				 registerForm.password.$dirty}" class="item item-input">
+		<label ng-class="{'label-error': forms.registerForm.password.$invalid &&
+				 forms.registerForm.password.$dirty}" class="item item-input">
 		    <input id="password" name="password" ng-model="details.password"
 			   type="password" ng-pattern="/^.{6,16}$/" required>
 		</label>
-		<ng-messages for="registerForm.password.$error" class="error-message"
-		     ng-if="registerForm.password.$dirty">
+		<ng-messages for="forms.registerForm.password.$error" class="error-message"
+		     ng-if="forms.registerForm.password.$dirty">
 		    <div ng-message="required">Du måste ange ett lösenord</div>
 		    <div ng-message="pattern">Mellan 6 och 16 tecken</div>
 		</ng-messages>
@@ -46,14 +46,14 @@
 
 		<!-- Fullname -->
 		<label for="fullname" class="input-label">För- och efternamn:</label>
-		<label ng-class="{'label-error': registerForm.fullname.$invalid &&
-				 registerForm.fullname.$dirty}" class="item item-input">
+		<label ng-class="{'label-error': forms.registerForm.fullname.$invalid &&
+				 forms.registerForm.fullname.$dirty}" class="item item-input">
 		    <input id="fullname" name="fullname" ng-model="details.fullname" type="text"
 			   placeholder="t.ex. Erik Johansson" ng-pattern="/^.{5,50}$/"
 			   required>
 		</label>
-		<ng-messages for="registerForm.fullname.$error" class="error-message"
-		     ng-if="registerForm.fullname.$dirty">
+		<ng-messages for="forms.registerForm.fullname.$error" class="error-message"
+		     ng-if="forms.registerForm.fullname.$dirty">
 		    <div ng-message="required">Du måste ange ett namn</div>
 		    <div ng-message="pattern">Mellan 5 och 50 tecken</div>
 		</ng-messages>
@@ -61,18 +61,18 @@
 
 		<!-- Email -->
 		<label for="email" class="input-label">E-postadress:</label>
-		<label ng-class="{'label-error': registerForm.email.$invalid &&
-				 registerForm.email.$dirty}" class="item item-input">
+		<label ng-class="{'label-error': forms.registerForm.email.$invalid &&
+				 forms.registerForm.email.$dirty}" class="item item-input">
 		    <input id="email" name="email" ng-model="details.email" type="email"
 			   placeholder="t.ex. mail@example.com"
-			   ng-blur="checkEmail(registerForm.email);"
-			   ng-change="registerForm.email.$setValidity('emailTaken',true);
-				      registerForm.email.$setValidity('invalidEmail',true);"
+			   ng-blur="checkEmail(forms.registerForm.email);"
+			   ng-change="forms.registerForm.email.$setValidity('emailTaken',true);
+				      forms.registerForm.email.$setValidity('invalidEmail',true);"
 			   required>
 
 		</label>
-		<ng-messages for="registerForm.email.$error" class="error-message"
-		     ng-if="registerForm.email.$dirty">
+		<ng-messages for="forms.registerForm.email.$error" class="error-message"
+		     ng-if="forms.registerForm.email.$dirty">
 		    <div ng-message="required">Du måste ange en e-postadress</div>
 		    <div ng-message="email">Ogiltig e-postadress</div>
 		    <div ng-message="emailTaken">E-mailadressen är redan registrerad</div>
@@ -82,15 +82,15 @@
 
 		<!-- Phone -->
 		<label for="phone" class="input-label">Mobilnummer:</label>
-		<label ng-class="{'label-error': registerForm.phone.$invalid &&
-				 registerForm.phone.$dirty}" class="item item-input">
+		<label ng-class="{'label-error': forms.registerForm.phone.$invalid &&
+				 forms.registerForm.phone.$dirty}" class="item item-input">
 		    <input id="phone" name="phone" ng-model="details.phone" type="tel"
 			   placeholder="t.ex. 0761234567" ng-pattern="/^[\d]{5,25}$/"
-			   ng-change="registerForm.phone.$setValidity('invalidPhone',true);"
+			   ng-change="forms.registerForm.phone.$setValidity('invalidPhone',true);"
 			   required>
 		</label>
-		<ng-messages for="registerForm.phone.$error" class="error-message"
-		     ng-if="registerForm.phone.$dirty">
+		<ng-messages for="forms.registerForm.phone.$error" class="error-message"
+		     ng-if="forms.registerForm.phone.$dirty">
 		    <div ng-message="required">Du måste ange ett mobilnummer</div>
 		    <div ng-message="pattern">Mellan 5 och 25 siffror</div>
 		    <div ng-message="invalidPhone">Ogiltigt mobilnummer</div>
@@ -102,7 +102,7 @@
 		</p>
 
 
-		<button ng-click="register(registerForm);" ng-disabled="registerForm.$invalid"
+		<button ng-click="register(forms.registerForm);" ng-disabled="forms.registerForm.$invalid"
 			class="button button-block button-positive">Nästa</button>
 
 	    </form>

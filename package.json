@@ -27,6 +27,7 @@
     "shelljs": "0.6.x"
   },
   "cordovaPlugins": [
+    "cordova-plugin-splashscreen@3.2.1",
     "cordova-sms-plugin@0.1.8",
     "cordova-plugin-inappbrowser@1.3.0",
     "cordova-plugin-statusbar@2.1.1",

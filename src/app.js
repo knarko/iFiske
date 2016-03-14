@@ -22,23 +22,25 @@ angular.module('ifiske', [
 })
 .run([
     '$ionicPlatform',
+    '$window',
     'Update',
     'ImgCache',
     '$rootScope',
 
     //Only get these to init them
     'Push',
-    function($ionicPlatform, Update, ImgCache, $rootScope) {
+    function($ionicPlatform, $window, Update, ImgCache, $rootScope) {
         $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
             // Hide the accessory bar above the keyboard for form inputs
-            if (window.ionic && window.ionic.Keyboard) {
-                window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
+            if ($window.ionic && $window.ionic.Keyboard) {
+                $window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
             }
-            if (window.StatusBar) {
+            if ($window.StatusBar) {
                 // org.apache.cordova.statusbar required
-                window.StatusBar.styleDefault();
+                $window.StatusBar.styleDefault();
             }
+
 
             ImgCache.$init();
             Update.update().catch(function(err) {
@@ -88,7 +90,6 @@ angular.module('ifiske', [
         $urlRouterProvider.otherwise(defaultUrl);
 
         $stateProvider
-
         .state('app', {
             url: '/app',
             //abstract: true,

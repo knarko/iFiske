@@ -299,6 +299,7 @@
                         return API.user_login(username, password)
                         .then(function() {
                             updateFunc();
+                            Push.init();
                         });
                     },
                     last_update: function() {

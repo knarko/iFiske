@@ -7,9 +7,12 @@ angular.module('ifiske.controllers')
         '$ionicScrollDelegate',
         '$ionicPlatform',
         '$cordovaToast',
+        '$ionicViewSwitcher',
+        '$ionicHistory',
         'API',
+        'Update',
         'localStorage',
-        function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, API, localStorage) {
+        function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, $ionicViewSwitcher, $ionicHistory, API, Update, localStorage) {
 
             var details = $scope.details = {};
 
@@ -67,9 +70,10 @@ angular.module('ifiske.controllers')
 
                 API.user_register(details.username, details.fullname, details.password,
                                   details.email, details.phone)
-                    .then(function(data) {
+                    .then(function() {
                         // Save username in case app closes before completed account verification
                         localStorage.set('register_username', details.username);
+                        localStorage.set('register_password', details.password);
 
                         // Proceed to account verification
                         $ionicLoading.hide();
@@ -115,15 +119,33 @@ angular.module('ifiske.controllers')
                 var username = form.username ? form.username.$viewValue : localStorage.get('register_username');
 
                 API.user_confirm(username, form.vercode.$viewValue)
-                    .then(function(data) {
+                    .then(function() {
                         $ionicPlatform.ready(function() {
-                            $cordovaToast.showLongBottom('Ditt konto har skapats');
+                            if(window.plugins && window.plugins.toast) {
+                                $cordovaToast.showLongBottom('Ditt konto har skapats');
+                            }
                         });
                         $scope.formErrors.validationError = false;
                         details = {};
-                        localStorage.set('register_username', '');
 
-                        $state.go('app.login');
+                        var password = localStorage.get('register_password');
+                        if (password) {
+                            Update.user_login(username, password)
+                            .then(function() {
+                                $ionicViewSwitcher.nextDirection('forward');
+                                $ionicHistory.nextViewOptions({
+                                    disableBack: true,
+                                    historyRoot: true
+                                });
+                                $state.go('app.home');
+                            })
+                            .finally(function() {
+                                localStorage.set('register_username', '');
+                                localStorage.set('register_password', '');
+                            });
+                        } else {
+                            $state.go('app.login');
+                        }
                     }, function(error) {
                         if (error.error_code) {
                             form.vercode.$setValidity("verified", false);
@@ -132,7 +154,7 @@ angular.module('ifiske.controllers')
                         }
                     })
                     .finally($ionicLoading.hide);
-            };
+                };
 
 
             $scope.tos = localStorage.get('tos');

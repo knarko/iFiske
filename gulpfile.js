@@ -15,6 +15,7 @@ var minimist = require('minimist');
 var phonegapBuild = require('gulp-phonegap-build');
 var inquirer = require('inquirer');
 var plumber = require('gulp-plumber');
+var keytar = require('keytar');
 
 var knownOptions = {
     string: 'env',
@@ -176,18 +177,28 @@ gulp.task('git-check', function(done) {
 gulp.task('deploy', ['default'], function(done) {
     var email = 'app@ifiske.se';
     var appId = '1642930';
-    inquirer.prompt({
-        type: 'password',
-        name: 'pass',
-        message: 'Enter password for ' + email + ':'
-    }, function(response) {
+    var password = keytar.getPassword('PhoneGap Build', 'app@ifiske.se');
+    if (password) {
+        deploy(password);
+    } else {
+        inquirer.prompt({
+            type: 'password',
+            name: 'pass',
+            message: 'Enter password for ' + email + ':'
+        }, function(response) {
+            keytar.addPassword('PhoneGap Build', 'app@ifiske.se', response.pass);
+            deploy(response.pass);
+        });
+    }
+
+    function deploy(password) {
         gulp.src(['./www/**/*', './resources/**/*', 'config.xml'], {base: '.', dot: true})
         .pipe(gulpif(/.*?config\.xml$/, rename({dirname: 'www'})))
         .pipe(phonegapBuild({
             'appId': appId,
             'user': {
                 'email': email,
-                'password': response.pass
+                'password': password
             }
         }))
         .on('end', done);
@@ -195,5 +206,5 @@ gulp.task('deploy', ['default'], function(done) {
             'See the build here:',
             gutil.colors.underline('https://build.phonegap.com/apps/' + appId + '/builds')
         );
-    });
+    }
 });

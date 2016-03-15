@@ -13,7 +13,7 @@
     "ngCordova": "0.1.23-alpha",
     "ui-leaflet": "1.0.0",
     "Leaflet.awesome-markers": "2.0.2",
-    "leaflet.locatecontrol": "#gh-pages",
+    "leaflet.locatecontrol": "0.49.0",
     "leaflet.markercluster": "0.4.0"
   },
   "resolutions": {

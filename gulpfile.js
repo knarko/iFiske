@@ -1,3 +1,4 @@
+/* jshint node: true */
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -9,7 +10,12 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var replace = require('gulp-replace');
 var minimist = require('minimist');
+var phonegapBuild = require('gulp-phonegap-build');
+var inquirer = require('inquirer');
+var plumber = require('gulp-plumber');
+var keytar = require('keytar');
 
 var knownOptions = {
     string: 'env',
@@ -22,7 +28,7 @@ var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
     static: ['./src/static/**.*'],
-    sass: ['./scss/**/*.scss'],
+    sass: ['./src/scss/**/*.scss'],
     scripts: [
         './src/app.js',
         './src/components/**/*.js',
@@ -31,19 +37,24 @@ var paths = {
         './src/lib/**/*.js'
     ],
     libs: [
-        './lib/ionic/js/ionic.bundle.js',
-        './lib/angular-i18n/angular-locale_sv-se.js',
-        './lib/ngCordova/dist/ng-cordova.js',
         './src/lib/polyfill.js',
+
+        './lib/ionic/release/js/ionic.bundle.js',
+        './lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
+
+        './lib/ngCordova/dist/ng-cordova.js',
+
+        './lib/angular-i18n/angular-locale_sv-se.js',
         './lib/angular-messages/angular-messages.js',
+        './lib/angular-simple-logger/dist/angular-simple-logger.js',
+
         './lib/imgcache.js/js/imgcache.js',
         './lib/angular-imgcache.js/angular-imgcache.js',
+
         './lib/leaflet/dist/leaflet-src.js',
-        './lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
-        './lib/leaflet-plugins/layer/Marker.Rotate.js',
-        './lib/leaflet.markercluster/dist/leaflet.markercluster.js',
-        './lib/ionic-tabslidebox/tabSlideBox.js',
+        './lib/ui-leaflet/dist/ui-leaflet.js',
+        './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
     ],
@@ -51,13 +62,23 @@ var paths = {
     directives: ['src/directives/**/*.html']
 };
 
-gulp.task('default', ['sass', 'scripts', 'libs', 'fonts', 'templates', 'directives', 'static', 'images']);
+gulp.task('default', [
+    'sass',
+    'scripts',
+    'libs',
+    'fonts',
+    'templates',
+    'directives',
+    'static',
+    'images'
+]);
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
+    .pipe(plumber())
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify()))
+    .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
@@ -65,8 +86,8 @@ gulp.task('scripts', function(done) {
 
 gulp.task('fonts', function(done) {
     gulp.src([
-        'lib/ionic/fonts/**/*.{ttf,woff,eof,svg,eot}',
-        'lib/font-awesome/fonts/**/*.{ttf,woff2,eof,svg,eot}'
+        'lib/ionic/release/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}',
+        'lib/font-awesome/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}'
     ])
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);
@@ -90,24 +111,29 @@ gulp.task('static', function(done) {
 });
 
 gulp.task('libs', function(done) {
+    var settings = JSON.stringify(require('./.io-config.json'));
+
     gulp.src(paths.libs)
+    .pipe(plumber())
+    .pipe(replace('"IONIC_SETTINGS_STRING_START";"IONIC_SETTINGS_STRING_END"',
+    '"IONIC_SETTINGS_STRING_START";var settings = ' + settings + '; return { get: function(setting) { if (settings[setting]) { return settings[setting]; } return null; } };"IONIC_SETTINGS_STRING_END"'))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify()))
+    .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
 
 gulp.task('sass', function(done) {
-    gulp.src('./scss/*.scss')
+    gulp.src('./src/scss/*.scss')
     .pipe(sass({
-              errLogToConsole: true
+        errLogToConsole: true
     }))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))
-    .pipe(rename({ extname: '.min.css' }))
+    .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
@@ -148,4 +174,37 @@ gulp.task('git-check', function(done) {
     }
     done();
 });
+gulp.task('deploy', ['default'], function(done) {
+    var email = 'app@ifiske.se';
+    var appId = '1642930';
+    var password = keytar.getPassword('PhoneGap Build', 'app@ifiske.se');
+    if (password) {
+        deploy(password);
+    } else {
+        inquirer.prompt({
+            type: 'password',
+            name: 'pass',
+            message: 'Enter password for ' + email + ':'
+        }, function(response) {
+            keytar.addPassword('PhoneGap Build', 'app@ifiske.se', response.pass);
+            deploy(response.pass);
+        });
+    }
 
+    function deploy(password) {
+        gulp.src(['./www/**/*', './resources/**/*', 'config.xml'], {base: '.', dot: true})
+        .pipe(gulpif(/.*?config\.xml$/, rename({dirname: 'www'})))
+        .pipe(phonegapBuild({
+            'appId': appId,
+            'user': {
+                'email': email,
+                'password': password
+            }
+        }))
+        .on('end', done);
+        gutil.log(
+            'See the build here:',
+            gutil.colors.underline('https://build.phonegap.com/apps/' + appId + '/builds')
+        );
+    }
+});

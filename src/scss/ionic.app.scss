@@ -1,0 +1,44 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #4a87ee !default;
+$calm:                            #43cee6 !default;
+$balanced:                        #66cc33 !default;
+$energized:                       #f0b840 !default;
+$assertive:                       #ef4e3a !default;
+$royal:                           #8a6de9 !default;
+$dark:                            #444 !default;
+ */
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "./fonts" !default;
+
+
+$stable:     #e5e5e5 !default;
+$calm:       #5ccbff !default;
+$positive:   #006696 !default;
+$balanced:   #669600 !default;
+$energized:  #edce07 !default;
+$assertive:  #ff580a !default;
+
+//libs
+@import "lib/ionic/scss/ionic";
+@import "lib/leaflet/dist/leaflet";
+@import "lib/leaflet.markercluster/dist/MarkerCluster.Default";
+@import "lib/leaflet.markercluster/dist/MarkerCluster";
+@import "lib/leaflet.locatecontrol/dist/L.Control.Locate";
+
+$fa-font-path: "fonts";
+@import "lib/font-awesome/scss/font-awesome";
+
+@import "lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers";
+
+
+@import "./imports/font";
+@import "./imports/license";
+@import "./imports/custom";

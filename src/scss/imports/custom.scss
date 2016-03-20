@@ -1,0 +1,413 @@
+ion-side-menu-content {
+    background-image: url("../img/bg-login.png");
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+ion-side-menu-content ion-view.view.image-bg,
+ion-side-menu-content ion-view.pane.image-bg,
+ion-side-menu-content ion-nav-view.view,
+ion-side-menu-content ion-nav-view.view-container,
+ion-side-menu-content ion-nav-view.pane {
+    background: none !important;
+}
+
+ion-view.abstract-bg {
+    background-image: url("../img/bg-abstract.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+ion-view.abstract-bg ion-view {
+    background: none;
+}
+
+div.bar.bar-transparent {
+    background: none;
+}
+
+
+.tinted-background {
+    background-color: $dark;
+    background-blend-mode: screen;
+}
+
+.area-image {
+    width: 100%;
+}
+
+.card-area {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+ion-popover-view {
+    height: auto !important;
+
+    ion-content {
+        position: relative !important;
+    }
+}
+.platform-ios {
+
+    .popover {
+
+        .item:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .item:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    }
+}
+
+.platform-android  ion-popover-view {
+    margin-top: 10px !important;
+}
+
+p.important {
+    color: $assertive;
+}
+
+p.important>i {
+    margin-right: 10px;
+}
+
+p.note {
+    white-space: normal;
+}
+
+p.moreinfo {
+    padding: 0 5px;
+    background-color: $light;
+}
+
+.pull-right {
+    float: right;
+}
+
+.buy-cards-info-button {
+    margin-left: 5px;
+    margin-top: 16px;
+}
+
+.item-body.item-nopad {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.card-list-divider {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.card-list-divider:first-child {
+    margin-top: 0;
+}
+
+.input-label {
+    width: 100%;
+    padding-left: 6px;
+}
+
+.label-error {
+    border-bottom: 2px solid $energized;
+}
+
+.error-message {
+    color: $energized;
+}
+
+.error-message > div {
+    padding: 0 5px;
+    background-color: $light;
+}
+
+.register-list {
+    margin-top: 10px;
+}
+
+#register-disclaimer {
+    text-align: center;
+    margin: 10px 5px 10px 5px;
+}
+
+.animate-hide {
+    transition: all .2s linear;
+    max-height: 1000px;
+    opacity: 1;
+    text-align: justify;
+
+}
+
+.animate-hide.ng-hide {
+    transition: all .2s linear;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+.spaced-buttons>button {
+    margin: 0 0 0 10px;
+    margin-bottom: 10px;
+}
+
+.spaced-buttons>button:first-child {
+    margin-left: 0;
+}
+
+.proper-text {
+    line-height: 1.5em;
+    white-space: pre-wrap;
+}
+
+.wrap-grid>div {
+    display: block;
+    float: left;
+}
+
+.wrap-grid>div.c-50 {
+    width: 50%;
+}
+
+.wrap-grid>div.c-33 {
+    width: 33.3333%;
+}
+
+.wrap-grid>div.c-25 {
+    width: 25%;
+}
+
+.fishcard {
+    margin: 0 !important;
+    border-radius: 0;
+}
+
+.fishcard .item-title {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.product.active {
+    border-color: $balanced;
+    color: $balanced;
+}
+
+.product.expired {
+    border-color: $assertive;
+    color: $assertive;
+}
+
+.product.inactive {
+    border-color: $energized;
+    color: $energized;
+}
+
+.card.product {
+    box-shadow: 0 0 30px 1px inset;
+    border-width: 2px;
+    border-style: solid;
+
+}
+
+.card.product .item {
+    background-color: transparent;
+    border: 0;
+}
+
+.spaced-text p {
+    margin-bottom: 1em;
+}
+
+.button-margin {
+    margin: 0 15px;
+}
+
+.input-label {
+    max-width: none;
+}
+
+#register-button {
+    margin-top: 15px;
+}
+
+.product-code {
+    float: right;
+}
+
+.product .item-body {
+    padding-top: 0;
+}
+
+.lvl {
+    background-image: url(../img/levels.gif);
+    height: 16px;
+    width: 26px;
+    display: inline-block;
+    background-size: 27px;
+}
+
+.lvl.lvl-1 {
+    background-position: 0 0;
+}
+
+.lvl.lvl-2 {
+    background-position: 0 -17px;
+}
+
+.lvl.lvl-3 {
+    background-position: 0 -33px;
+}
+
+.lvl.lvl-4 {
+    background-position: 0 -50px;
+}
+
+.lvl.lvl-5 {
+    background-position: 0 -66px;
+}
+
+.technique-icon-list.item-complex.item-icon-left .item-content {
+    padding-left: 125px;
+}
+
+.item.item-image:first-child {
+    border-top: 0;
+}
+
+.angular-leaflet-map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.card-info h1,
+.card-info h2,
+.card-info h3,
+.card-info h4 {
+    text-align: center;
+}
+
+button.button-float {
+    border-radius: 50%;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    padding: 10px;
+    transition: all .1s ease-out;
+}
+
+.button-float i.icon {
+    vertical-align: middle;
+    text-align: center;
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding-right: 2px;
+    padding-top: 2px;
+}
+
+.button-float.ng-hide {
+    transform: scale(.1) rotate(90deg);
+    transition: all .1s ease-out;
+}
+
+.angular-leaflet-map .myposition {
+    font-size: 3em;
+    color: $calm;
+}
+
+.angular-leaflet-map .myposition:before {
+    text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
+}
+
+.disabled-list > * {
+    pointer-events: none;
+    cursor: default !important;
+    opacity: .4;
+}
+
+.slider-image {
+    background-size: cover;
+    padding-top: 41.67%; // 250/600
+}
+
+.item.item-divider.item-button-right {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.item.item-divider.item-button-right>button {
+    top: 4px;
+}
+
+.starred {
+    color: $energized;
+}
+
+.starred:hover {
+    color: $energized;
+}
+
+.item-toggle {
+    pointer-events: initial; //This enables clickable lists with toggles
+}
+
+//fixes flickering on star-button...
+.button {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    //Removes all borders on buttons
+    border: 0;
+}
+
+i.icon-image {
+    width: 35px;
+}
+
+.news-text-image {
+    float: right;
+    width: 35%;
+    margin-top:  12px;
+    margin-left: 12px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+hip-tabs ion-footer-bar.bar {
+    padding: 0;
+}
+
+hip-tabs .button.icon-top.button-clear {
+    color: $stable;
+}
+
+hip-tabs .button.icon-top span {
+    margin-top: -13px;
+    display: block;
+    font-size: 12px;
+}
+
+hip-tabs .button.button-clear.active {
+    color: $calm;
+    opacity: 1;
+}
+
+.wide-popup {
+    .popup {
+        width: 90%;
+    }
+}
+
+.logo.large {
+    max-width: 50%;
+    width: initial;
+}

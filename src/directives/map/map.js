@@ -22,9 +22,6 @@ angular.module('ifiske.directives')
                 remainActive: true,
                 onLocationError: function(err) {
                     console.error(err);
-                    $timeout(function() {
-                        lc.start(); //try again
-                    });
                 },
                 onLocationOutsideMapBounds: function(context) {
                     console.log(context);

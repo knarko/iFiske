@@ -1,26 +1,19 @@
-// angular.module is a global place for creating, registering and retrieving Angular modules
 // 'ifiske' is the name of this angular module (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'ifiske.controllers' is found in controllers.js
 
 angular.module('ifiske', [
     'ionic',
+    'ionic.service.core',
+    'ionic.service.push',
+    'ionic.ion.headerShrink',
     'ifiske.controllers',
     'ifiske.directives',
-    'ifiske.api',
-    'ifiske.db',
-    'ifiske.utils',
-    'ifiske.update',
-    'ifiske.filters',
-    'ionic.ion.headerShrink',
+    'ifiske.services',
     'ngCordova',
     'systemBrowser',
     'ngCordovaSms',
     'ngMessages',
     'ImgCache',
-    'leaflet-directive',
-    'tabSlideBox',
-    'ngIOS9UIWebViewPatch'
+    'ui-leaflet'
 ])
 
 .constant('$ionicLoadingConfig', {
@@ -29,24 +22,30 @@ angular.module('ifiske', [
 })
 .run([
     '$ionicPlatform',
+    '$window',
     'Update',
     'ImgCache',
     '$rootScope',
-    function($ionicPlatform, Update, ImgCache, $rootScope) {
 
-        $rootScope.image_endpoint = 'http://www.ifiske.se';
+    //Only get these to init them
+    'Push',
+    function($ionicPlatform, $window, Update, ImgCache, $rootScope) {
+        $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
             // Hide the accessory bar above the keyboard for form inputs
-            if (window.ionic && window.ionic.Keyboard) {
-                window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
+            if ($window.ionic && $window.ionic.Keyboard) {
+                $window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
             }
-            if (window.StatusBar) {
+            if ($window.StatusBar) {
                 // org.apache.cordova.statusbar required
-                window.StatusBar.styleDefault();
+                $window.StatusBar.styleDefault();
             }
 
+
             ImgCache.$init();
-            Update.update();
+            Update.update().catch(function(err) {
+                console.error(err);
+            })
         });
     }
 ])
@@ -91,7 +90,6 @@ angular.module('ifiske', [
         $urlRouterProvider.otherwise(defaultUrl);
 
         $stateProvider
-
         .state('app', {
             url: '/app',
             //abstract: true,
@@ -213,9 +211,31 @@ angular.module('ifiske', [
             templateUrl: 'components/user_cards/user_cards.html',
             controller: 'UserCardsCtrl'
         })
-        .state('app.favorites', {
-            url: '/favorites',
-            templateUrl: 'components/favorites/favorites.html'
+        .state('app.report', {
+            url: '/report/:id',
+            params: {
+                'id': false
+            },
+            templateUrl: 'components/report/report.html',
+            controller: 'ReportCtrl'
+        })
+        .state('app.create_report', {
+            url: '/create_report',
+            params: {
+                'orgid': false,
+                'code': false
+            },
+            templateUrl: 'components/create_report/create_report.html',
+            controller: 'CreateReportCtrl'
+        })
+        .state('app.license_detail', {
+            url: '/license/:id',
+            params: {
+                'id': false,
+                'license': false
+            },
+            templateUrl: 'components/license_detail/license_detail.html',
+            controller: 'LicenseDetailCtrl'
         })
         .state('app.fishes', {
             url: '/fishes',
@@ -302,3 +322,4 @@ angular.module('ifiske', [
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
+angular.module('ifiske.services', []);

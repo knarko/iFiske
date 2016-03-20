@@ -1,0 +1,18 @@
+engines:
+    eslint:
+        enabled: true
+    scss-lint:
+        enabled: true
+
+ratings:
+    paths:
+        - src/**
+        - "**.js"
+        - "**.scss"
+
+exclude_paths:
+    - "www/**/*"
+    - "hooks/**/*"
+    - "platforms/**/*"
+    - "plugins/**/*"
+    - "resources/**/*"

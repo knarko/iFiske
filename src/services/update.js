@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.update', ['ifiske.api', 'ifiske.db', 'ifiske.utils'])
+    angular.module('ifiske.services')
     .provider('Update', function UpdateProvider() {
 
         this.$get = [
@@ -11,7 +11,9 @@
             '$q',
             '$ionicLoading',
             'sessionData',
-            function(API, DB, localStorage, $q, $ionicLoading, sessionData) {
+            'Push',
+            '$ionicPopup',
+            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $ionicPopup) {
 
                 var LAST_UPDATE = 'last_update';
 
@@ -210,6 +212,7 @@
                             p.push(DB.cleanTable(updates.auth[i].table));
                         }
                     }
+                    p.push(Push.unregister());
                     return $q.all(p)
                     .then(function() {
                         console.log('Removed user info from database');
@@ -247,20 +250,26 @@
                                 $q.all(promises).then(function(stuff) {
                                     console.log('Populated:', stuff);
                                     if (shouldUpdate) {
-                                        console.log('in here');
                                         localStorage.set(LAST_UPDATE, currentTime);
                                     }
                                     fulfill('Pass');
                                 }, function(err) {
                                     if (err.error_code === 7) {
+                                        $ionicPopup.alert({
+                                            title: 'Du är inte inloggad',
+                                            template: '<p>Logga in igen</p>'
+                                        });
                                         // Authentication failure
                                         // TODO: Show to user
                                         cleanUser();
                                         API.user_logout();
                                         reject('auth failure');
                                     } else {
-                                        console.warn('Got an error, recreate all tables:', err);
-                                        reject('Couldn\'t update');
+                                        $ionicPopup.alert({
+                                            title: 'Nätverksproblem',
+                                            template: '<p>' + err.message + '</p><p>Försök igen</p>'
+                                        });
+                                        reject('Couldn\'t update: ' + err.message);
                                     }
                                 })
                                 .finally(function() {
@@ -290,6 +299,7 @@
                         return API.user_login(username, password)
                         .then(function() {
                             updateFunc();
+                            Push.init();
                         });
                     },
                     last_update: function() {

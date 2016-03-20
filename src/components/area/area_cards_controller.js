@@ -3,11 +3,15 @@ angular.module('ifiske.controllers')
     '$scope',
     '$ionicModal',
     'localStorage',
-    function($scope, $ionicModal, localStorage) {
+    '$ionicPopup',
+    '$cordovaInAppBrowser',
+    function($scope, $ionicModal, localStorage, $ionicPopup, $cordovaInAppBrowser) {
         $scope.$on('$ionicView.beforeEnter', function() {
             //Area_Cards
             $scope.smsterms = localStorage.get('sms_terms');
             $scope.predicate = 'so';
+            $scope.SMSRules = {}
+            $scope.SMSRules.approval = localStorage.get('sms-approval') || 'NO';
 
             //SMS-modal
             $ionicModal.fromTemplateUrl('components/area/sms_modal.html', {
@@ -23,10 +27,36 @@ angular.module('ifiske.controllers')
             $scope.closeModal = function() {
                 $scope.sms_modal.hide();
             };
-            $scope.showTerms = function() {
-                $scope.showingterms = !$scope.showingterms;
+            $scope.persistApproveSMSRules = function() {
+                if ($scope.SMSRules.approval == 'YES') {
+                    $ionicPopup.show({
+                        title: 'Regler för SMS-köp',
+                        scope: $scope,
+                        cssClass: 'wide-popup',
+                        template: '<p ng-bind-html="smsterms"></p>',
+                        buttons: [{
+                            text: 'Avbryt',
+                            type: 'button-default',
+                            onTap: function() {
+                                $scope.SMSRules.approval = 'NO';
+                            }
+                        }, {
+                            text: 'OK',
+                            type: 'button-positive',
+                            onTap: function() {
+                                localStorage.set('sms-approval', $scope.SMSRules.approval);
+                            }
+                        }]
+                    });
+                } else {
+                localStorage.set('sms-approval', $scope.SMSRules.approval);
+                }
             };
-            $scope.showingterms = false;
+
+            $scope.openProductInBrowser = function(id) {
+                var url = 'https://www.ifiske.se/mobile/index.php?p=5&i=' + id;
+                $cordovaInAppBrowser.open(url, '_system');
+            };
 
             //Rules modal
             $ionicModal.fromTemplateUrl('components/area/rules_modal.html', {

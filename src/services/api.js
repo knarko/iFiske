@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.api', ['ifiske.utils'])
+    angular.module('ifiske.services')
     .provider('API', function APIProvider() {
 
         this.base_url = 'https://www.ifiske.se/api/v2/api.php';
@@ -143,6 +143,16 @@
                     },
                     user_products: function() {
                         return session_api_call({m: 'user_products'}, false);
+                    },
+                    user_get_pushtoken: function() {
+                        return session_api_call({m: 'user_get_pushtoken'}, false);
+                    },
+                    user_set_pushtoken: function(token) {
+                        return session_api_call({
+                            m: 'user_set_pushtoken',
+                            token: token,
+                            type: 1 //1 is for ionic
+                        }, false);
                     },
                     get_fishes: function() {
                         return api_call({m: 'get_fishes'});

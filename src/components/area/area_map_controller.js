@@ -2,13 +2,8 @@ angular.module('ifiske.controllers')
 .controller('AreaMapCtrl', [
     '$scope',
     'DB',
-    'leafletEvents',
     '$ionicPlatform',
-    '$cordovaGeolocation',
-    '$cordovaDeviceOrientation',
-    '$timeout',
-    'localStorage',
-    function($scope, DB, leafletEvents, $ionicPlatform) {
+    function($scope, DB, $ionicPlatform) {
         $scope.map = {};
         var updateMap = function() {
             $scope.map.area = $scope.area;

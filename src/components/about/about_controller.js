@@ -6,9 +6,13 @@ angular.module('ifiske.controllers')
     '$ionicModal',
     'Update',
     'Licenses',
-    function($scope, $cordovaAppVersion, $ionicPlatform, $ionicModal, Update, Licenses) {
+    'Push',
+    function($scope, $cordovaAppVersion, $ionicPlatform, $ionicModal, Update, Licenses, Push) {
         $scope.version = $scope.dbDate = 'Okänt';
         $scope.update = Update;
+
+        //Show the push token for debugging purposes
+        $scope.push = Push;
 
         $ionicPlatform.ready(function() {
             if (window.cordova) {

@@ -1,20 +1,12 @@
 {
   "name": "ifiske",
-  "app_id": "",
+  "app_id": "46a4a954",
   "gulpStartupTasks": [
-    "sass",
-    "watch",
-    "scripts",
-    "libs",
-    "templates"
+    "default",
+    "watch"
   ],
   "watchPatterns": [
     "src/**/*",
-    "src/*/*",
-    "www/**/*",
-    "www/*/*",
-    "!www/.#*",
-    "!www/*/.#*",
-    "!www/*/*/.#*"
+    "src/*/*"
   ]
 }

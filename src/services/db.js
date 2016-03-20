@@ -1,7 +1,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('ifiske.db', [])
+    angular.module('ifiske.services')
     .provider('DB', function DBProvider() {
 
         this.$get = [
@@ -9,11 +9,11 @@
             'API',
             '$q',
             'localStorage',
-            function($cordovaSQLite, API, $q, localStorage) {
+            function($cordovaSQLite, API, $q) {
 
                 var db;
                 var ready = $q.defer();
-                var version = '2';
+                var version = '3';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
@@ -128,9 +128,12 @@
                         ['ref1',      'int'],
                         ['ref2',      'int'],
                         ['t',         'text'],
+                        ['subt',      'text'],
                         ['to',        'int'],
                         ['pid',       'int'],
-                        ['pdf',       'text']
+                        ['pdf',       'text'],
+                        ['qr',        'text'],
+                        ['fine',      'text']
                     ],
                     'User_Info': [
                         ['ID',        'int'],
@@ -177,7 +180,8 @@
                         ['dp',     'int'],
                         ['fva',    'int'],
                         ['org',    'int'],
-                        ['ml',     'int']
+                        ['ml',     'int'],
+                        ['logo',   'text']
                     ],
                     'Poi': [
                         ['ID',     'int'],
@@ -328,10 +332,11 @@
                     getArea: function(id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT Area.*,',
+                                'SELECT Area.*, Organization.t AS org,',
                                 'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
+                                'JOIN Organization ON Area.orgid = Organization.ID',
                                 'WHERE Area.ID = ?'
                             ].join(' '), Array.isArray(id) ? id : [id])
                             .then(function(area) {
@@ -368,17 +373,18 @@
                     search: function(searchstring, county_id) {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [
-                                'SELECT Area.*,',
+                                'SELECT Area.*, Organization.t AS org, Organization.logo AS logo,',
                                 'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                                 'FROM Area',
                                 'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
-                                'WHERE t LIKE ?',
+                                'JOIN Organization ON Organization.ID = Area.orgid',
+                                'WHERE ((Area.t LIKE ?) OR (Organization.t LIKE ?))',
                                 (county_id ? 'AND ? IN (c1,c2,c3)' : ''),
-                                'ORDER BY t'
+                                'ORDER BY Organization.t'
                             ].join(' '),
                             county_id ?
-                                ['%' + searchstring + '%', county_id] :
-                                ['%' + searchstring + '%'])
+                                ['%' + searchstring + '%', '%' + searchstring + '%', county_id] :
+                                ['%' + searchstring + '%', '%' + searchstring + '%'])
                             .then(function(data) {
                                 fulfill(createObject(data));
                             }, reject);
@@ -447,6 +453,23 @@
                         });
                     },
 
+                    getUserProduct: function(id) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT User_Product.*, Product.ai,',
+                                'Rule.t as rule_t,',
+                                'Rule.ver as rule_ver,',
+                                'Rule.d as rule_d',
+                                'FROM User_Product',
+                                'LEFT JOIN Product ON Product.ID = User_Product.pid',
+                                'LEFT JOIN Rule ON Rule.ID = Product.ri',
+                                'WHERE User_Product.ID = ?'
+                            ].join(' '), [id])
+                            .then(function(data) {
+                                fulfill(createObject(data)[0]);
+                            }, reject);
+                        });
+                    },
                     getUserProducts: function() {
                         return $q(function(fulfill, reject) {
                             $cordovaSQLite.execute(db, [

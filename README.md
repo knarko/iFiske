@@ -1,7 +1,6 @@
 # [iFiske](http://ifiske.se)
-This is the GitHub repo for the iFiske fishing license app for phones and tablets. 
-The app is developed using the  [Ionic Framework](http://ionicframework.com) using JavaSript and HTML.
-
+This is the GitHub repo for the iFiske fishing license app for phones and tablets.
+The app is developed using the [Ionic Framework](http://ionicframework.com) which builds on cordova.
 
 For more information about iFiske, visit [ifiske.se](http://ifiske.se)!
 ## Table of contents
@@ -13,10 +12,12 @@ For more information about iFiske, visit [ifiske.se](http://ifiske.se)!
 
 ## Quick start
 ### Building locally
-Install [Ionic](http://ionicframework.com) (version 1.3.7).
+Install [Ionic](http://ionicframework.com) (use the latest version).
 ````Shell
 git clone https://github.com/ifiske/ifiske
 cd ifiske
+npm install
+bower install
 ionic setup sass
 ionic serve
 ````

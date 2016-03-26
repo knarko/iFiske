@@ -208,3 +208,5 @@ gulp.task('deploy', ['default'], function(done) {
         );
     }
 });
+
+gulp.task('bump', require('gulp-cordova-bump'));

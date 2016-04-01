@@ -4,7 +4,7 @@
   "devDependencies": {},
   "dependencies": {
     "angular-i18n": "1.5",
-    "angular-imgcache.js": "https://github.com/maistho/angular-imgcache.js.git#master",
+    "angular-imgcache.js": "1.0.x",
     "angular-messages": "1.4.7",
     "angular-simple-logger": "0.1.5",
     "ionic": "1.1.1",

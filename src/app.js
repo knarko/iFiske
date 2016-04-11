@@ -45,7 +45,7 @@ angular.module('ifiske', [
             ImgCache.$init();
             Update.update().catch(function(err) {
                 console.error(err);
-            })
+            });
         });
     }
 ])
@@ -134,12 +134,13 @@ angular.module('ifiske', [
         })
         .state('app.register.verify', {
             url: '/verify',
-            templateUrl: 'components/register/register_verify.html'
+            templateUrl: 'components/register/register_verify.html',
+            controller: 'RegisterVerifyCtrl'
         })
         .state('app.register.verify2', {
             url: '/verify2',
             templateUrl: 'components/register/register_verify2.html',
-            controller: 'RegisterVerify2Ctrl'
+            controller: 'RegisterVerifyCtrl'
         })
 
         //

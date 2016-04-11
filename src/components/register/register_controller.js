@@ -75,6 +75,7 @@ angular.module('ifiske.controllers')
                         // Save username in case app closes before completed account verification
                         localStorage.set('register_username', $scope.details.username);
                         localStorage.set('register_password', $scope.details.password);
+                        localStorage.set('register_phone', $scope.details.phone);
 
                         // Proceed to account verification
                         $ionicLoading.hide();

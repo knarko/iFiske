@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-    .controller('RegisterVerify2Ctrl', [
+    .controller('RegisterVerifyCtrl', [
         '$scope',
         'localStorage',
         function($scope, localStorage) {

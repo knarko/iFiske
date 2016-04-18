@@ -147,6 +147,9 @@
                     user_get_pushtoken: function() {
                         return session_api_call({m: 'user_get_pushtoken'}, false);
                     },
+                    user_get_secret: function() {
+                        return session_api_call({m: 'user_get_secret'}, false);
+                    },
                     user_set_pushtoken: function(token) {
                         return session_api_call({
                             m: 'user_set_pushtoken',

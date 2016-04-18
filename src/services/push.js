@@ -4,14 +4,15 @@ angular.module('ifiske.services')
 .factory('Push', [
     '$ionicPlatform',
     '$ionicPush',
-    '$ionicUser',
     '$timeout',
     'API',
     '$state',
     'sessionData',
     '$ionicPopup',
     '$cordovaInAppBrowser',
-    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser) {
+    'DB',
+    '$q',
+    function($ionicPlatform, $ionicPush, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
         var pushHandlers = {
             default: function(notification, payload) {
                 $ionicPopup.alert(notification.text);
@@ -95,51 +96,60 @@ angular.module('ifiske.services')
             });
         });
 
-        var createNewUser = function() {
-            var user = Ionic.User.current();
-
-            if (!user.id) {
-                user.id = Ionic.User.anonymousId();
-            }
-            API.user_set_pushtoken(user.id);
-            registerPush();
-        };
-        
         var registerPush = function() {
-            $ionicPush.register(function(token) {
-                var user = Ionic.User.current();
-                user.addPushToken(token);
-                user.save();
+            return $ionicPush.register(function(token) {
+                return $ionicPush.saveToken(token);
             });
         };
 
-        var init = function() {
-            API.user_get_pushtoken().then(function(userId) {
-                $ionicPlatform.ready(function() {
-                    if (userId) {
-                        Ionic.User.load(userId).then(function(loadedUser) {
-                            Ionic.User.current(loadedUser);
-                            registerPush();
-                        }, function(failure) {
-                            console.log("Couldn't load user", failure);
-                            createNewUser();
-                        });
-                    } else {
-                        createNewUser();
-                    }
+        function login(email, password) {
+            return $ionicPlatform.ready(function() {
+                var details = {email: email, password: password};
+                console.log('logging in');
+                return Ionic.Auth.login('basic', {remember: true}, details).catch(function(errors) {
+                    console.log(errors);
+                    return Ionic.Auth.signup(details).then(function() {
+                        return Ionic.Auth.login('basic', {remember: true}, details);
+                    });
                 });
+            }).then(function() {
+                var user = Ionic.User.current();
+                return API.user_set_pushtoken(user.id);
+            }).catch(function(err) {
+                console.error('we got an error!', err);
             });
-        };
-
-        if (sessionData.token) {
-            init();
         }
+
+        function init() {
+            if (!sessionData.token) {
+                return;
+            }
+            var user = Ionic.User.current();
+            if (user.isAuthenticated()) {
+                return registerPush();
+            } else {
+                var promises = [
+                    API.user_info(),
+                    API.user_get_secret()
+                ];
+                return $q.all(promises).then(function(userInfo) {
+                    var email = userInfo[0].email;
+                    var password = userInfo[1];
+                    return login(email, password).then(function() {
+                        return registerPush();
+                    });
+                });
+            }
+        }
+        init();
+
         return {
             init: init,
             token: function() {
                 return Ionic.User.current().id;
             },
             unregister: function() {
+                Ionic.Auth.logout();
                 return $ionicPush.unregister();
             },
             registerHandler: function(name, handler) {

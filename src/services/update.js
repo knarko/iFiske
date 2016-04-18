@@ -171,7 +171,6 @@
                 };
 
                 var populate = function(item) {
-                    console.log(item);
 
                     var p = API[item.endpoint]();
                     var then;

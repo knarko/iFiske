@@ -26,8 +26,8 @@
     <preference name="android-installLocation" value="auto"/>
     <preference name="phonegap-version" value="cli-6.1.1"/>
     <preference name="SplashScreen" value="screen"/>
-    <preference name="FadeSplashScreenDuration" value="500"/>
-    <preference name="SplashScreenDelay" value="5000"/>
+    <preference name="FadeSplashScreenDuration" value="250"/>
+    <preference name="SplashScreenDelay" value="1000"/>
 
     <access origin="*"/>
     <access origin="cdvfile://*"/>

@@ -103,7 +103,7 @@ angular.module('ifiske.services')
         };
 
         function login(email, password) {
-            return $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready().then(function() {
                 var details = {email: email, password: password};
                 console.log('logging in');
                 return Ionic.Auth.login('basic', {remember: true}, details).catch(function(errors) {
@@ -149,8 +149,9 @@ angular.module('ifiske.services')
                 return Ionic.User.current().id;
             },
             unregister: function() {
-                Ionic.Auth.logout();
-                return $ionicPush.unregister();
+                return $ionicPush.unregister().then(function() {
+                    return Ionic.Auth.logout();
+                });
             },
             registerHandler: function(name, handler) {
                 if (name === 'default') {

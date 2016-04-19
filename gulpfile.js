@@ -29,12 +29,19 @@ var options = minimist(process.argv.slice(2), knownOptions);
 var paths = {
     static: ['./src/static/**.*'],
     sass: ['./src/scss/**/*.scss'],
+    fonts: [
+        'lib/ionic/release/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}',
+        'lib/font-awesome/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}'
+    ],
+    images: [
+        './lib/Leaflet.awesome-markers/dist/images/*',
+        './lib/leaflet/dist/images/*'
+    ],
     scripts: [
         './src/app.js',
         './src/components/**/*.js',
         './src/services/**/*.js',
         './src/directives/**/*.js',
-        './src/lib/**/*.js'
     ],
     libs: [
         './src/lib/polyfill.js',
@@ -85,10 +92,7 @@ gulp.task('scripts', function(done) {
 });
 
 gulp.task('fonts', function(done) {
-    gulp.src([
-        'lib/ionic/release/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}',
-        'lib/font-awesome/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}'
-    ])
+    gulp.src(paths.fonts)
     .pipe(gulp.dest('./www/css/fonts'))
     .on('end', done);
 });
@@ -154,10 +158,7 @@ gulp.task('install', ['git-check'], function() {
 });
 
 gulp.task('images', function(done) {
-    gulp.src([
-        './lib/Leaflet.awesome-markers/dist/images/*',
-        './lib/leaflet/dist/images/*'
-    ])
+    gulp.src(paths.images)
     .pipe(gulp.dest('./www/css/images'))
     .on('end', done);
 });

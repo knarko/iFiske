@@ -5,6 +5,8 @@ var bower = require('bower');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
+var autoprefixer = require('autoprefixer');
+var postcss = require('gulp-postcss');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
@@ -134,6 +136,7 @@ gulp.task('sass', function(done) {
     .pipe(sass({
         errLogToConsole: true
     }))
+    .pipe(postcss([autoprefixer({browsers: ['Android > 4', 'Last 3 Chrome versions', 'Last 3 Safari versions', 'ChromeAndroid > 40', 'Last 3 iOS versions']})]))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))

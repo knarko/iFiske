@@ -32,6 +32,11 @@ angular.module('ifiske', [
     function($ionicPlatform, $window, Update, ImgCache, $rootScope) {
         $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
+            if ($window.MobileAccessibility) {
+                $window.MobileAccessibility.usePreferredTextZoom(false);
+                console.log("Preferred text zoom disabled");
+            }
+
             // Hide the accessory bar above the keyboard for form inputs
             if ($window.ionic && $window.ionic.Keyboard) {
                 $window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
@@ -40,7 +45,6 @@ angular.module('ifiske', [
                 // org.apache.cordova.statusbar required
                 $window.StatusBar.styleDefault();
             }
-
 
             ImgCache.$init();
             Update.update().catch(function(err) {

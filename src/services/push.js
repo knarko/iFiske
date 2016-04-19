@@ -97,8 +97,11 @@ angular.module('ifiske.services')
         });
 
         var registerPush = function() {
-            return $ionicPush.register(function(token) {
-                return $ionicPush.saveToken(token);
+            console.log('Registering push!')
+            return $ionicPlatform.ready().then(function() {
+                return $ionicPush.register(function(token) {
+                    return $ionicPush.saveToken(token);
+                });
             });
         };
 
@@ -107,13 +110,18 @@ angular.module('ifiske.services')
                 var details = {email: email, password: password};
                 console.log('logging in');
                 return Ionic.Auth.login('basic', {remember: true}, details).catch(function(errors) {
-                    console.log(errors);
-                    return Ionic.Auth.signup(details).then(function() {
-                        return Ionic.Auth.login('basic', {remember: true}, details);
-                    });
+                    console.log('errors on logging in:',errors);
+                    if (errors && errors.response && errors.response.statusCode === 401) {
+                        return Ionic.Auth.signup(details).then(function() {
+                            return Ionic.Auth.login('basic', {remember: true}, details);
+                        });
+                    } else {
+                        return errors;
+                    }
                 });
             }).then(function() {
                 var user = Ionic.User.current();
+                console.log('Sending userID to iFiske servers')
                 return API.user_set_pushtoken(user.id);
             }).catch(function(err) {
                 console.error('we got an error!', err);
@@ -122,6 +130,7 @@ angular.module('ifiske.services')
 
         function init() {
             if (!sessionData.token) {
+                console.log('No token, not initializing push notifications')
                 return;
             }
             var user = Ionic.User.current();
@@ -149,7 +158,8 @@ angular.module('ifiske.services')
                 return Ionic.User.current().id;
             },
             unregister: function() {
-                return $ionicPush.unregister().then(function() {
+                //$ionicPush returns a non-$q-promise, so we need to wrap it.
+                return $q.all([$ionicPush.unregister()]).finally(function() {
                     return Ionic.Auth.logout();
                 });
             },

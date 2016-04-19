@@ -9,7 +9,7 @@
     "angular-simple-logger": "0.1.7",
     "ionic": "1.2.4",
     "ionic-ion-header-shrink": "maistho/ionic-ion-header-shrink#master",
-    "ionic-platform-web-client": "0.7.1",
+    "ionic-platform-web-client": "maistho/ionic-platform-web-client#master",
     "ngCordova": "0.1.26-alpha",
     "ui-leaflet": "1.0.0",
     "Leaflet.awesome-markers": "2.0.2",

@@ -87,7 +87,7 @@ gulp.task('scripts', function(done) {
     .pipe(plumber())
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
+    .pipe(gulpif(options.env === 'production', uglify({compress: {drop_console: true}}).on('error', gutil.log)))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
@@ -125,7 +125,7 @@ gulp.task('libs', function(done) {
     '"IONIC_SETTINGS_STRING_START";var settings = ' + settings + '; return { get: function(setting) { if (settings[setting]) { return settings[setting]; } return null; } };"IONIC_SETTINGS_STRING_END"'))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
+    .pipe(gulpif(options.env === 'production', uglify({compress: {drop_console: true}}).on('error', gutil.log)))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);

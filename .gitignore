@@ -70,3 +70,4 @@ www/libs.min.js
 www/all.min.js
 www/static
 www/directives
+*.ipa

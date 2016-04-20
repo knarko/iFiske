@@ -4,14 +4,15 @@ angular.module('ifiske.services')
 .factory('Push', [
     '$ionicPlatform',
     '$ionicPush',
-    '$ionicUser',
     '$timeout',
     'API',
     '$state',
     'sessionData',
     '$ionicPopup',
     '$cordovaInAppBrowser',
-    function($ionicPlatform, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser) {
+    'DB',
+    '$q',
+    function($ionicPlatform, $ionicPush, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
         var pushHandlers = {
             default: function(notification, payload) {
                 $ionicPopup.alert(notification.text);
@@ -95,52 +96,72 @@ angular.module('ifiske.services')
             });
         });
 
-        var createNewUser = function() {
-            var user = Ionic.User.current();
-
-            if (!user.id) {
-                user.id = Ionic.User.anonymousId();
-            }
-            API.user_set_pushtoken(user.id);
-            registerPush();
-        };
-        
         var registerPush = function() {
-            $ionicPush.register(function(token) {
-                var user = Ionic.User.current();
-                user.addPushToken(token);
-                user.save();
-            });
-        };
-
-        var init = function() {
-            API.user_get_pushtoken().then(function(userId) {
-                $ionicPlatform.ready(function() {
-                    if (userId) {
-                        Ionic.User.load(userId).then(function(loadedUser) {
-                            Ionic.User.current(loadedUser);
-                            registerPush();
-                        }, function(failure) {
-                            console.log("Couldn't load user", failure);
-                            createNewUser();
-                        });
-                    } else {
-                        createNewUser();
-                    }
+            console.log('Registering push!')
+            return $ionicPlatform.ready().then(function() {
+                return $ionicPush.register(function(token) {
+                    return $ionicPush.saveToken(token);
                 });
             });
         };
 
-        if (sessionData.token) {
-            init();
+        function login(email, password) {
+            return $ionicPlatform.ready().then(function() {
+                var details = {email: email, password: password};
+                console.log('logging in');
+                return Ionic.Auth.login('basic', {remember: true}, details).catch(function(errors) {
+                    console.log('errors on logging in:',errors);
+                    if (errors && errors.response && errors.response.statusCode === 401) {
+                        return Ionic.Auth.signup(details).then(function() {
+                            return Ionic.Auth.login('basic', {remember: true}, details);
+                        });
+                    } else {
+                        return errors;
+                    }
+                });
+            }).then(function() {
+                var user = Ionic.User.current();
+                console.log('Sending userID to iFiske servers')
+                return API.user_set_pushtoken(user.id);
+            }).catch(function(err) {
+                console.error('we got an error!', err);
+            });
         }
+
+        function init() {
+            if (!sessionData.token) {
+                console.log('No token, not initializing push notifications')
+                return;
+            }
+            var user = Ionic.User.current();
+            if (user.isAuthenticated()) {
+                return registerPush();
+            } else {
+                var promises = [
+                    API.user_info(),
+                    API.user_get_secret()
+                ];
+                return $q.all(promises).then(function(userInfo) {
+                    var email = userInfo[0].email;
+                    var password = userInfo[1];
+                    return login(email, password).then(function() {
+                        return registerPush();
+                    });
+                });
+            }
+        }
+        init();
+
         return {
             init: init,
             token: function() {
                 return Ionic.User.current().id;
             },
             unregister: function() {
-                return $ionicPush.unregister();
+                //$ionicPush returns a non-$q-promise, so we need to wrap it.
+                return $q.all([$ionicPush.unregister()]).finally(function() {
+                    return Ionic.Auth.logout();
+                });
             },
             registerHandler: function(name, handler) {
                 if (name === 'default') {

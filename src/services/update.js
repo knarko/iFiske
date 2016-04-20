@@ -171,7 +171,6 @@
                 };
 
                 var populate = function(item) {
-                    console.log(item);
 
                     var p = API[item.endpoint]();
                     var then;
@@ -298,8 +297,7 @@
                     user_login: function(username, password) {
                         return API.user_login(username, password)
                         .then(function() {
-                            updateFunc();
-                            Push.init();
+                            return $q.all([updateFunc(), Push.init()]);
                         });
                     },
                     last_update: function() {

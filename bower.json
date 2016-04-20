@@ -3,20 +3,20 @@
   "private": "true",
   "devDependencies": {},
   "dependencies": {
-    "angular-i18n": "1.5",
+    "angular-i18n": "1.5.5",
     "angular-imgcache.js": "1.0.x",
-    "angular-messages": "1.4.7",
-    "angular-simple-logger": "0.1.5",
-    "ionic": "1.1.1",
+    "angular-messages": "1.5.5",
+    "angular-simple-logger": "0.1.7",
+    "ionic": "1.2.4",
     "ionic-ion-header-shrink": "maistho/ionic-ion-header-shrink#master",
-    "ionic-platform-web-client": "0.2.1",
-    "ngCordova": "0.1.23-alpha",
+    "ionic-platform-web-client": "maistho/ionic-platform-web-client#master",
+    "ngCordova": "0.1.26-alpha",
     "ui-leaflet": "1.0.0",
     "Leaflet.awesome-markers": "2.0.2",
     "leaflet.locatecontrol": "0.49.0",
-    "leaflet.markercluster": "0.4.0"
+    "leaflet.markercluster": "0.5.0"
   },
   "resolutions": {
-    "angular": "1.4.3"
+    "angular": "1.5.5"
   }
 }

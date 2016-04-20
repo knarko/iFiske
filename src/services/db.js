@@ -279,7 +279,6 @@
                         fulfill);
                     });
                 }
-                console.log(ready);
                 return {
                     ready: ready.promise,
                     populateTable: function(table, data) {

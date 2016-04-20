@@ -1,49 +1,42 @@
 <ion-view view-title="Aktivera konto" class="image-bg">
-    <ion-content padding="true">
+  <ion-content padding="true">
 
-        <form name="verifyForm" novalidate>
+    <form name="verifyForm" novalidate>
 
-            <!-- Submit errors -->
-            <ng-messages for="formErrors" class="error-message">
-                <div class="text-center" ng-message="validationError">
-                    Aktiveringen misslyckades, försök igen.
-                </div>
-                <div class="text-center" ng-message="validationError2">
-                    Ogiltigt användarnamn eller aktiveringskod
-                </div>
-            </ng-messages>
-
-
-            <!-- Username -->
-            <label for="username" class="input-label">Användarnamn:</label>
-            <label ng-class="{}" class="item item-input">
-                <input id"username" name="username" type="text" required
-                       ng-model="details.username">
-            </label>
-            <div class="error-message" ng-messages="verifyForm.username.$error"
-                 ng-if="verifyForm.vercode.$dirty">
-		<p ng-message="verified">Ogiltigt användarnamn</p>
-            </div>
+      <!-- Submit errors -->
+      <ng-messages for="formErrors" class="error-message">
+        <div class="text-center" ng-message="validationError">
+          Aktiveringen misslyckades, försök igen.
+        </div>
+        <div class="text-center" ng-message="validationError2">
+          Ogiltigt användarnamn eller aktiveringskod
+        </div>
+      </ng-messages>
 
 
-            <!-- vercode -->
-	    <label for="vercode" class="input-label">Aktiveringskod:</label>
-	    <label ng-class="{'label-error': verifyForm.vercode.$invalid &&
-			     verifyForm.vercode.$dirty && verifyForm.vercode.length}"
-                   class="item item-input">
-		<input id="vercode" name="vercode" type="text" required
-		       ng-model="details.vercode" ng-pattern="/^\d{4}$/"
-                       ng-change="verifyForm.vercode.$setValidity('verified',true)">
-	    </label>
-	    <div class="error-message" ng-messages="verifyForm.vercode.$error"
-		 ng-if="verifyForm.vercode.$dirty">
-		<p ng-message="verified">Ogiltig aktiveringskod</p>
-	    </div>
+      <!-- Username -->
+      <label for="username" class="input-label">Användarnamn:</label>
+      <label ng-class="{}" class="item item-input">
+        <input id="username" name="username" type="text" required ng-model="details.username">
+      </label>
+      <div class="error-message" ng-messages="verifyForm.username.$error" ng-if="verifyForm.vercode.$dirty">
+        <p ng-message="verified">Ogiltigt användarnamn</p>
+      </div>
 
 
-	    <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid"
-		    class="button button-block button-positive">Aktivera</button>
-        </form>
+      <!-- vercode -->
+      <label for="vercode" class="input-label">Aktiveringskod:</label>
+      <label ng-class="{'label-error': verifyForm.vercode.$invalid &&
+			     verifyForm.vercode.$dirty && verifyForm.vercode.length}" class="item item-input">
+        <input id="vercode" name="vercode" type="text" required ng-model="details.vercode" ng-pattern="/^\d{4}$/" ng-change="verifyForm.vercode.$setValidity('verified',true)">
+      </label>
+      <div class="error-message" ng-messages="verifyForm.vercode.$error" ng-if="verifyForm.vercode.$dirty">
+        <p ng-message="verified">Ogiltig aktiveringskod</p>
+      </div>
 
-    </ion-content>
+
+      <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive">Aktivera</button>
+    </form>
+
+  </ion-content>
 </ion-view>

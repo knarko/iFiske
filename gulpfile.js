@@ -32,8 +32,8 @@ var paths = {
     static: ['./src/static/**.*'],
     sass: ['./src/scss/**/*.scss'],
     fonts: [
-        'lib/ionic/release/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}',
-        'lib/font-awesome/fonts/*.{otf,ttf,woff,woff2,eof,svg,eot}'
+        'lib/ionic/release/fonts/*.{woff,otf,ttf}',
+        'lib/font-awesome/fonts/*.{woff,otf,ttf}'
     ],
     images: [
         './lib/Leaflet.awesome-markers/dist/images/*',
@@ -72,6 +72,8 @@ var paths = {
 };
 
 gulp.task('default', [
+    'index',
+    'static_images',
     'sass',
     'scripts',
     'libs',
@@ -81,6 +83,18 @@ gulp.task('default', [
     'static',
     'images'
 ]);
+
+gulp.task('index', function(done) {
+    gulp.src('src/index.html')
+    .pipe(gulp.dest('./www/'))
+    .on('end', done);
+});
+
+gulp.task('static_images', function(done) {
+    gulp.src('src/img/*')
+    .pipe(gulp.dest('./www/img'))
+    .on('end', done);
+});
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)

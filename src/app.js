@@ -26,10 +26,11 @@ angular.module('ifiske', [
     'Update',
     'ImgCache',
     '$rootScope',
+    '$timeout',
 
     //Only get these to init them
     'Push',
-    function($ionicPlatform, $window, Update, ImgCache, $rootScope) {
+    function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout) {
         $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
             if ($window.MobileAccessibility) {
@@ -50,6 +51,12 @@ angular.module('ifiske', [
             Update.update().catch(function(err) {
                 console.error(err);
             });
+
+            if ($window.navigator && $window.navigator.splashscreen) {
+                $timeout(function() {
+                    $window.navigator.splashscreen.hide();
+                }, 500);
+            }
         });
     }
 ])

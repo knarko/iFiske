@@ -11,15 +11,6 @@ angular.module('ifiske.controllers')
     '$timeout',
     function($scope, $state, $window, Update, $ionicLoading, $ionicHistory, $ionicViewSwitcher, $ionicPlatform, $timeout) {
 
-        $scope.$on('$ionicView.afterEnter', function() {
-            $ionicPlatform.ready(function() {
-                if ($window.navigator && $window.navigator.splashscreen) {
-                    $timeout(function() {
-                        $window.navigator.splashscreen.hide();
-                    }, 500);
-                }
-            });
-        });
         /**
          * signIn
          * Submit handler for login form. Validates login input.

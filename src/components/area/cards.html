@@ -1,6 +1,9 @@
 <ion-view>
     <ion-nav-title>{{area.t}}</ion-nav-title>
     <ion-content>
+      <div class="item item-body card-info" ng-if="!products.length">
+        <h2>Den här fiskevårdsorganisationen säljer tyvärr inte fiskekort genom iFiske</h2>
+      </div>
         <div class="item item-body card-info" ng-if="area.note">
             <h2>Information</h2>
             <p ng-bind-html="area.note"></p>
@@ -25,5 +28,6 @@
                 </div>
             </div>
         </div>
+
     </ion-content>
 </ion-view>

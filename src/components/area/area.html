@@ -1,7 +1,7 @@
 <ion-view class="abstract-bg">
     <hip-tabs>
         <hip-tab name="Information" view-name="app.area.info" icon="ion-information-circled" index="0"></hip-tab>
-        <hip-tab name="Fiskekort" view-name="app.area.cards" icon="ion-card" index="1"></hip-tab>
+        <hip-tab name="{{area.ptab || 'Fiskekort'}}" view-name="app.area.cards" icon="ion-card" index="1"></hip-tab>
         <hip-tab ng-if="fishes.length" name="Fiskarter" view-name="app.area.fish" icon="icon-icon_fish" index="2"></hip-tab>
         <hip-tab name="Karta" view-name="app.area.map" icon="ion-map" index="3"></hip-tab>
     </hip-tabs>

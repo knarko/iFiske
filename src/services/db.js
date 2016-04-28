@@ -13,7 +13,7 @@
 
                 var db;
                 var ready = $q.defer();
-                var version = '3';
+                var version = '4';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
@@ -62,7 +62,8 @@
                         ['map',   'text'],
                         ['wsc',   'int'],
                         ['mod',   'int'],
-                        ['d',     'text']
+                        ['d',     'text'],
+                        ['ptab',  'text'],
                     ],
                     'Area_Fish': [
                         ['ID',       'text'],

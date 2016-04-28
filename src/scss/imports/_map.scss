@@ -5,6 +5,7 @@
     width: 100%;
 
 }
+
 .angular-leaflet-map .myposition {
     font-size: 3em;
     color: $calm;
@@ -13,6 +14,7 @@
 .angular-leaflet-map .myposition:before {
     text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
 }
+
 button.button-float {
     border-radius: 50%;
     position: absolute;

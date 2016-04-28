@@ -3,25 +3,26 @@ ion-side-menu-content {
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
-}
 
-ion-side-menu-content ion-view.view.image-bg,
-ion-side-menu-content ion-view.pane.image-bg,
-ion-side-menu-content ion-nav-view.view,
-ion-side-menu-content ion-nav-view.view-container,
-ion-side-menu-content ion-nav-view.pane {
-    background: none !important;
+    ion-view.view.image-bg,
+    ion-view.pane.image-bg,
+    ion-nav-view.view,
+    ion-nav-view.view-container,
+    ion-nav-view.pane {
+        background: none !important;
+    }
 }
 
 ion-view.abstract-bg {
     background-image: url("../img/bg-abstract.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+
+    .abstract-bg ion-view {
+        background: none;
+    }
 }
 
-ion-view.abstract-bg ion-view {
-    background: none;
-}
 
 div.bar.bar-transparent {
     background: none;
@@ -40,6 +41,7 @@ ion-popover-view {
         position: relative !important;
     }
 }
+
 .platform-ios {
 
     .popover {
@@ -48,6 +50,7 @@ ion-popover-view {
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
+
         .item:last-child {
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
@@ -94,7 +97,6 @@ ion-popover-view {
 //fixes flickering on star-button...
 .button {
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 
     //Removes all borders on buttons
     border: 0;

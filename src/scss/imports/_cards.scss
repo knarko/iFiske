@@ -1,0 +1,43 @@
+.important {
+    color: $assertive;
+}
+
+.important>i {
+    margin-right: 10px;
+}
+
+.note {
+    white-space: normal;
+}
+.item-body.item-nopad {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.card-list-divider {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.card-list-divider:first-child {
+    margin-top: 0;
+}
+.spaced-buttons>button {
+    margin: 0 0 0 10px;
+    margin-bottom: 10px;
+}
+
+.spaced-buttons>button:first-child {
+    margin-left: 0;
+}
+.card-info h1,
+.card-info h2,
+.card-info h3,
+.card-info h4 {
+    text-align: center;
+}
+.wide-popup {
+    .popup {
+        width: 90%;
+    }
+}

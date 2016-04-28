@@ -1,0 +1,24 @@
+hip-tabs {
+    color:red;
+    ion-footer-bar.bar {
+        padding: 0;
+    }
+
+    .button {
+        &.icon-top.button-clear {
+            color: $stable;
+        }
+
+        &.icon-top span {
+            margin-top: -13px;
+            display: block;
+            font-size: 12px;
+        }
+
+        &.button-clear.active {
+            color: $calm;
+            opacity: 1;
+        }
+
+    }
+}

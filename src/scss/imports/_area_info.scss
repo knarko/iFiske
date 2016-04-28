@@ -1,0 +1,29 @@
+
+.buy-cards-info-button {
+    margin-left: 5px;
+    margin-top: 16px;
+}
+.item.item-divider.item-button-right {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.item.item-divider.item-button-right>button {
+    top: 4px;
+}
+
+.slider-image {
+    background-size: cover;
+    padding-top: 41.67%; // 250/600
+}
+.starred {
+    color: $energized;
+}
+
+.starred:hover {
+    color: $energized;
+}
+.logo.large {
+    max-width: 50%;
+    width: initial;
+}

@@ -38,7 +38,18 @@ $fa-font-path: "fonts";
 
 @import "lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers";
 
-
+// Imports
 @import "./imports/global";
 @import "./imports/font";
+@import "./imports/area_info";
+@import "./imports/cards";
+@import "./imports/fish";
+@import "./imports/font";
+@import "./imports/hip-tabs";
+@import "./imports/home";
 @import "./imports/license";
+@import "./imports/login";
+@import "./imports/map";
+@import "./imports/news";
+@import "./imports/register";
+@import "./imports/technique";

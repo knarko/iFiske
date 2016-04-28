@@ -1,0 +1,103 @@
+ion-side-menu-content {
+    background-image: url("../img/bg-login.png");
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+
+    ion-view.view.image-bg,
+    ion-view.pane.image-bg,
+    ion-nav-view.view,
+    ion-nav-view.view-container,
+    ion-nav-view.pane {
+        background: none !important;
+    }
+}
+
+ion-view.abstract-bg {
+    background-image: url("../img/bg-abstract.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .abstract-bg ion-view {
+        background: none;
+    }
+}
+
+
+div.bar.bar-transparent {
+    background: none;
+}
+
+
+.tinted-background {
+    background-color: $dark;
+    background-blend-mode: screen;
+}
+
+ion-popover-view {
+    height: auto !important;
+
+    ion-content {
+        position: relative !important;
+    }
+}
+
+.platform-ios {
+
+    .popover {
+
+        .item:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .item:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    }
+}
+
+.platform-android  ion-popover-view {
+    margin-top: 10px !important;
+}
+
+
+.pull-right {
+    float: right;
+}
+
+.error-message {
+    color: $energized;
+}
+
+.error-message > div {
+    padding: 0 5px;
+    background-color: $light;
+}
+
+
+.proper-text {
+    line-height: 1.5em;
+    white-space: pre-wrap;
+}
+
+.spaced-text p {
+    margin-bottom: 1em;
+}
+
+.item.item-image:first-child {
+    border-top: 0;
+}
+
+.item-toggle {
+    pointer-events: initial; //This enables clickable lists with toggles
+}
+
+//fixes flickering on star-button...
+.button {
+    backface-visibility: hidden;
+
+    //Removes all borders on buttons
+    border: 0;
+}

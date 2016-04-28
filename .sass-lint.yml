@@ -16,9 +16,15 @@ rules:
   empty-line-between-blocks: 1
   single-line-per-selector: 1
 
+  force-attribute-nesting: 0
+  force-element-nesting: 0
+  force-pseudo-nesting: 0
+
   # Disallows
   no-debug: 1
   no-duplicate-properties: 1
+  no-mergeable-selectors: 1
+  no-qualifying-elements: 0
   no-empty-rulesets: 1
   no-extends: 0
   no-ids: 0
@@ -26,8 +32,9 @@ rules:
   no-warn: 1
   no-color-keywords: 0
   no-invalid-hex: 1
-  no-css-comments: 1
+  no-css-comments: 0
   no-color-literals: 1
+  no-transition-all: 0
 
   # Style Guide
   border-zero: 1

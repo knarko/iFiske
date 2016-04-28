@@ -1,0 +1,56 @@
+.wrap-grid {
+    & > div {
+        display: block;
+        float: left;
+
+        .c-50 {
+            width: 50%;
+        }
+
+        .c-33 {
+            width: 33.3333%;
+        }
+
+        .c-25 {
+            width: 25%;
+        }
+    }
+}
+
+.fishcard {
+    margin: 0 !important;
+    border-radius: 0;
+
+    .item-title {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+
+.lvl {
+    background-image: url('../img/levels.gif');
+    height: 16px;
+    width: 26px;
+    display: inline-block;
+    background-size: 27px;
+
+    .lvl-1 {
+        background-position: 0 0;
+    }
+
+    .lvl-2 {
+        background-position: 0 -17px;
+    }
+
+    .lvl-3 {
+        background-position: 0 -33px;
+    }
+
+    .lvl-4 {
+        background-position: 0 -50px;
+    }
+
+    .lvl-5 {
+        background-position: 0 -66px;
+    }
+}

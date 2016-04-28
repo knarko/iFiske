@@ -1,0 +1,40 @@
+.angular-leaflet-map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.angular-leaflet-map .myposition {
+    font-size: 3em;
+    color: $calm;
+}
+
+.angular-leaflet-map .myposition:before {
+    text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
+}
+
+button.button-float {
+    border-radius: 50%;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    padding: 10px;
+    transition: all .1s ease-out;
+}
+
+.button-float i.icon {
+    vertical-align: middle;
+    text-align: center;
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding-right: 2px;
+    padding-top: 2px;
+}
+
+.button-float.ng-hide {
+    transform: scale(.1) rotate(90deg);
+    transition: all .1s ease-out;
+}

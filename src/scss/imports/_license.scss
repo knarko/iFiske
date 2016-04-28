@@ -1,6 +1,7 @@
 .qr {
+    display: block;
+    margin: 0 auto;
     height: 192px;
-    background-size: contain;
     image-rendering: pixelated;
     background-repeat: no-repeat;
     background-position: center center;

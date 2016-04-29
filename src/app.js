@@ -276,6 +276,20 @@ angular.module('ifiske', [
         controller:  'UserCardsCtrl',
     })
 
+    // Admin
+    .state('app.admin', {
+        url:         '/admin/:id',
+        templateUrl: 'components/admin/admin.html',
+        controller:  'AdminCtrl',
+        params:      {id: false, org: false},
+    })
+    .state('app.admin_product', {
+        url:         '/admin/:id/product/:productID',
+        templateUrl: 'components/admin/product/product.html',
+        controller:  'AdminProductCtrl',
+        params:      {id: false, productID: false, product: false},
+    })
+
     .state('app.areas', {
         url:    '/areas',
         params: {

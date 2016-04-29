@@ -1,0 +1,11 @@
+<ion-view title="Admin">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="prod in products" ui-sref="app.admin_product({id: id, product: prod, productID: prod.ID})">
+        <h2>{{prod.t}}</h2>
+        <p>{{prod.subt}}</p>
+        {{prod}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

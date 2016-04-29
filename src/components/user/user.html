@@ -1,6 +1,13 @@
 <ion-view title="{{'Profile' | translate}}">
   <ion-content>
     <div class="list">
+      <div class="item item-divider" ng-if="organizations.length" translate>
+        Administration
+      </div>
+      <div class="item" ng-repeat="org in organizations" ui-sref="app.admin({id: org.orgid, org: org})">
+        <h2>{{org.ot}}</h2>
+        <p>{{org.levelname}}</p>
+      </div>
       <div class="item item-divider" translate>User information</div>
       <div class="item">
         <h2 translate>Username</h2>

@@ -142,6 +142,20 @@ angular.module('ifiske.services')
                     type:  1, // 1 is for ionic
                 }, false);
             },
+
+            /*
+             * Administration endpoints
+             */
+            user_organizations: function() {
+                return session_api_call({m: 'user_organizations'}, false);
+            },
+            adm_products: function(orgid) {
+                return session_api_call({m: 'adm_products', orgid: orgid}, false);
+            },
+            adm_revoke_prod: function(code) {
+                return session_api_call({m: 'adm_revoke_prod', code: code}, false);
+            },
+
             get_fishes: function() {
                 return api_call({m: 'get_fishes'});
             },

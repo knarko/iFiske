@@ -185,11 +185,14 @@ gulp.task('foss', function(done) {
     gulp.src(['./{lib,plugins,node_modules/@ionic}/*/{license,LICENSE}*'])
     .pipe(markdown())
     .pipe(map(function(file, cb) {
-        var file_content = file.contents.toString();
-        var title = file.relative.match(/[\\\/](.*?)[\\\/][^\\\/]+$/)[1].replace(/[\\\/]/g, '-').replace('@', '');
+        var fileContent = file.contents.toString();
+        var title = file.relative
+        .match(/[\\/](.*?)[\\/][^\\/]+$/)[1]
+        .replace(/[\\/]/g, '-')
+        .replace('@', '');
         file.contents = new Buffer(JSON.stringify({
             title: title,
-            text:  file_content,
+            text:  fileContent,
         }));
         cb(null, file);
     }))

@@ -12,8 +12,9 @@
             '$ionicLoading',
             'sessionData',
             'Push',
-            '$ionicPopup',
-            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $ionicPopup) {
+            '$cordovaToast',
+            '$ionicPlatform',
+            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $cordovaToast, $ionicPlatform) {
 
                 var LAST_UPDATE = 'last_update';
 
@@ -254,19 +255,15 @@
                                     fulfill('Pass');
                                 }, function(err) {
                                     if (err.error_code === 7) {
-                                        $ionicPopup.alert({
-                                            title: 'Du är inte inloggad',
-                                            template: '<p>Logga in igen</p>'
+                                        $ionicPlatform.ready(function() {
+                                            $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
                                         });
-                                        // Authentication failure
-                                        // TODO: Show to user
                                         cleanUser();
                                         API.user_logout();
                                         reject('auth failure');
                                     } else {
-                                        $ionicPopup.alert({
-                                            title: 'Nätverksproblem',
-                                            template: '<p>' + err.message + '</p><p>Försök igen</p>'
+                                        $ionicPlatform.ready(function() {
+                                            $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
                                         });
                                         reject('Couldn\'t update: ' + err.message);
                                     }

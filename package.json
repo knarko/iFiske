@@ -43,8 +43,13 @@
     "cordova-sms-plugin@0.1.10",
     "ionic-plugin-keyboard@2.0.1",
     "phonegap-plugin-mobile-accessibility@1.0.4-dev",
-    "phonegap-plugin-push@1.6.3",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator@3.0.4"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator@3.0.4",
+    {
+        "variables": {
+            "SENDER_ID": "196216212249"
+            },
+            "locator": "phonegap-plugin-push@1.6.3"
+        }
   ],
   "cordovaPlatforms": [
     "android"

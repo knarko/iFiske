@@ -33,6 +33,8 @@
   <plugin name="cordova-sms-plugin" spec="0.1.10"/>
   <plugin name="ionic-plugin-keyboard" spec="2.0.1"/>
   <plugin name="phonegap-plugin-mobile-accessibility" spec="1.0.4-dev"/>
-  <plugin name="phonegap-plugin-push" spec="1.6.3"/>
+  <plugin name="phonegap-plugin-push" spec="1.6.3">
+      <variable name="SENDER_ID" value="196216212249"/>
+  </plugin>
   <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="3.0.4"/>
 </widget>

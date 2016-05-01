@@ -33,7 +33,8 @@ angular.module('ifiske', [
     function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout) {
         $rootScope.image_endpoint = 'https://www.ifiske.se/';
         $ionicPlatform.ready(function() {
-            if ($window.MobileAccessibility) {
+
+            if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
                 $window.MobileAccessibility.usePreferredTextZoom(false);
                 console.log("Preferred text zoom disabled");
             }

@@ -165,6 +165,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.libs, ['libs']);
     gulp.watch(paths.templates, ['templates']);
     gulp.watch(paths.directives, ['directives']);
+    gulp.watch('src/index.html', ['index']);
 });
 
 gulp.task('install', ['git-check'], function() {

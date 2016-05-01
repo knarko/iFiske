@@ -30,7 +30,7 @@
     "shelljs": "0.6.x"
   },
   "cordovaPlugins": [
-    "cordova-plugin-app-version@1.0.0",
+    "cordova-plugin-app-version@0.1.8",
     "cordova-plugin-device@1.1.2",
     "cordova-plugin-file-transfer@1.5.1",
     "cordova-plugin-file@4.2.0",
@@ -47,7 +47,6 @@
     "uk.co.workingedge.phonegap.plugin.launchnavigator@3.0.4"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "android"
   ]
 }

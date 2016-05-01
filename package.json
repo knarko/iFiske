@@ -43,7 +43,8 @@
     "uk.co.workingedge.phonegap.plugin.launchnavigator@2.9.9",
     "cordova-plugin-x-toast@2.4.0",
     "cordova-plugin-whitelist@1.2.1",
-    "phonegap-plugin-push@1.5.3"
+    "phonegap-plugin-push@1.5.3",
+    "phonegap-plugin-mobile-accessibility@1.0.4"
   ],
   "cordovaPlatforms": [
     "android",

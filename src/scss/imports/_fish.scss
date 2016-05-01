@@ -3,15 +3,15 @@
         display: block;
         float: left;
 
-        .c-50 {
+        &.c-50 {
             width: 50%;
         }
 
-        .c-33 {
+        &.c-33 {
             width: 33.3333%;
         }
 
-        .c-25 {
+        &.c-25 {
             width: 25%;
         }
     }

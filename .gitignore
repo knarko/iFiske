@@ -67,3 +67,4 @@ node_modules
 www/
 *.ipa
 platforms/
+plugins/

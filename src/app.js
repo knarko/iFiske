@@ -39,10 +39,6 @@ angular.module('ifiske', [
                 console.log("Preferred text zoom disabled");
             }
 
-            // Hide the accessory bar above the keyboard for form inputs
-            if ($window.ionic && $window.ionic.Keyboard) {
-                $window.ionic.Keyboard.hideKeyboardAccessoryBar(true);
-            }
             if ($window.StatusBar) {
                 // org.apache.cordova.statusbar required
                 $window.StatusBar.styleDefault();

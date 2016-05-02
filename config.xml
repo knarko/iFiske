@@ -4,7 +4,7 @@
   <description>iFiske - Enklare Fiskekort!</description>
   <author email="app@ifiske.se" href="http://www.ifiske.se">iFiske</author>
   <content src="index.html"/>
-  <preference name="android-minSdkVersion" value="14"/>
+  <preference name="android-minSdkVersion" value="15"/>
   <preference name="android-targetSdkVersion" value="22"/>
   <preference name="orientation" value="portrait"/>
   <preference name="SplashScreenDelay" value="2000"/>

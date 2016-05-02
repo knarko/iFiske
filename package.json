@@ -45,11 +45,11 @@
     "phonegap-plugin-mobile-accessibility@1.0.4-dev",
     "uk.co.workingedge.phonegap.plugin.launchnavigator@3.0.4",
     {
-        "variables": {
-            "SENDER_ID": "196216212249"
-            },
-            "locator": "phonegap-plugin-push@1.6.3"
-        }
+      "variables": {
+        "SENDER_ID": "196216212249"
+      },
+      "locator": "phonegap-plugin-push@1.6.3"
+    }
   ],
   "cordovaPlatforms": [
     "android",

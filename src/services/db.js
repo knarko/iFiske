@@ -6,14 +6,12 @@
 
         this.$get = [
             '$cordovaSQLite',
-            'API',
             '$q',
-            'localStorage',
-            function($cordovaSQLite, API, $q) {
+            function($cordovaSQLite, $q) {
 
                 var db;
                 var ready = $q.defer();
-                var version = '4';
+                var version = '5';
                 if (window.sqlitePlugin) {
                     db = $cordovaSQLite.openDB('fiskebasen.db');
                 } else if (window.openDatabase) {
@@ -71,6 +69,11 @@
                         ['fid',      'int'],
                         ['amount',   'int'],
                         ['comment',  'text']
+                    ],
+                    'Area_Photos': [
+                        ['ID', 'text'],
+                        ['aid', 'int'],
+                        ['url', 'int'],
                     ],
                     'Product': [
                         ['ID',     'int'],
@@ -340,11 +343,20 @@
                                 'WHERE Area.ID = ?'
                             ].join(' '), Array.isArray(id) ? id : [id])
                             .then(function(area) {
-                                console.log(area);
-                                var object = createObject(area)[0];
-                                //TODO: DB should not need API
-                                object.images = API.get_photos(object.orgid);
-                                fulfill(object);
+                                fulfill(createObject(area)[0]);
+                            }, reject);
+                        });
+                    },
+
+                    getAreaPhotos: function(aid) {
+                        return $q(function(fulfill, reject) {
+                            $cordovaSQLite.execute(db, [
+                                'SELECT Area_Photos.*',
+                                'FROM Area_Photos',
+                                'WHERE Area_Photos.aid = ?'
+                            ].join(' '), [aid])
+                            .then(function(data) {
+                                fulfill(createObject(data));
                             }, reject);
                         });
                     },

@@ -65,6 +65,7 @@
                             endpoint: 'get_areas',
                             f: function(data) {
                                 var fishArr = [];
+                                var photoArr = [];
                                 for (var key in data) {
                                     var fishes = data[key].fish;
                                     for (var fishKey in fishes) {
@@ -76,10 +77,23 @@
                                             comment: fishes[fishKey][1]
                                         });
                                     }
+                                    var photos = data[key].imgs;
+                                    if (photos) {
+                                        for (var i = 0; i < photos.length; ++i) {
+                                            photoArr.push({
+                                                ID: key + '_' + i,
+                                                aid: key,
+                                                url: photos[i],
+                                            });
+                                        }
+                                    } else {
+                                        console.log(key)
+                                    }
                                 }
                                 return $q.all([
                                     DB.populateTable('Area', data),
-                                    DB.populateTable('Area_Fish', fishArr)
+                                    DB.populateTable('Area_Fish', fishArr),
+                                    DB.populateTable('Area_Photos', photoArr)
                                 ])
                                 .then(function() {
                                     return 'Area';

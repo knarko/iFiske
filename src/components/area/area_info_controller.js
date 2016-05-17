@@ -7,10 +7,34 @@ angular.module('ifiske.controllers')
     'DB',
     '$ionicPlatform',
     '$cordovaToast',
-    function($scope, sessionData, $ionicPopup, API, DB, $ionicPlatform, $cordovaToast) {
+    '$stateParams',
+    function($scope, sessionData, $ionicPopup, API, DB, $ionicPlatform, $cordovaToast, $stateParams) {
         console.log($scope);
         $scope.$on('$ionicView.beforeEnter', function() {
         });
+
+        $scope.options = {
+            loop: true,
+            effect: 'slide',
+            speed: 250,
+            autoPlay: 1000,
+            autoHeight: true,
+        };
+        DB.getAreaPhotos($stateParams.id)
+        .then(function(images) {
+            $scope.images = images;
+            if ($scope.slider) {
+                $scope.slider.updateLoop();
+            }
+        }, function(err) {
+            console.error(err);
+        });
+
+        $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+            // grab an instance of the slider
+            $scope.slider = data.slider;
+        });
+
 
         $scope.changeFavorite = function() {
             if (sessionData.token) {

@@ -13,12 +13,6 @@ angular.module('ifiske.controllers')
             $scope.area = area;
             $scope.$broadcast('ifiske-area');
 
-            area.images.then(function(images) {
-                $scope.images = images;
-            }, function(err) {
-                console.error(err);
-            });
-
             DB.getOrganization(area.orgid)
             .then(function(org) {
                 $scope.org = org;

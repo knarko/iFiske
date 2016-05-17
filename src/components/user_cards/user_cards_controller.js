@@ -26,7 +26,7 @@ angular.module('ifiske.controllers')
             });
         };
 
-        $scope.$on('$ionicView.beforeEnter', initilize);
+        $scope.$on('$ionicView.loaded', initilize);
         $scope.update = function() {
             initilize();
         };

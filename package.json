@@ -41,7 +41,7 @@
     "cordova-plugin-statusbar@2.1.3",
     "cordova-plugin-whitelist@1.2.2",
     "cordova-plugin-x-toast@2.5.1",
-    "cordova-sms-plugin@0.1.10",
+    "cordova-sms-plugin-no-send-sms-permission@0.1.8",
     "ionic-plugin-keyboard@2.0.1",
     "phonegap-plugin-mobile-accessibility@1.0.4-dev",
     "uk.co.workingedge.phonegap.plugin.launchnavigator@3.0.4",

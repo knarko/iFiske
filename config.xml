@@ -31,7 +31,7 @@
   <plugin name="cordova-plugin-statusbar" spec="2.1.3"/>
   <plugin name="cordova-plugin-whitelist" spec="1.2.2"/>
   <plugin name="cordova-plugin-x-toast" spec="2.5.1"/>
-  <plugin name="cordova-sms-plugin" spec="0.1.10"/>
+  <plugin name="cordova-sms-plugin-no-send-sms-permission" spec="0.1.8"/>
   <plugin name="ionic-plugin-keyboard" spec="2.0.1"/>
   <plugin name="phonegap-plugin-mobile-accessibility" spec="1.0.4-dev"/>
   <plugin name="phonegap-plugin-push" spec="1.6.3">

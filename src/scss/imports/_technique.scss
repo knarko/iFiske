@@ -1,3 +1,9 @@
-.technique-icon-list.item-complex.item-icon-left .item-content {
-    padding-left: 125px;
+.technique-icon-list.item-complex.item-icon-left {
+    .icon {
+        left: 0;
+    }
+
+    .item-content {
+        padding-left: 110px;
+    }
 }

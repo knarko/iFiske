@@ -1,8 +1,8 @@
 .wrap-grid {
-    & > div {
-        display: block;
-        float: left;
+    display: flex;
+    flex-wrap: wrap;
 
+    & > div {
         &.c-50 {
             width: 50%;
         }

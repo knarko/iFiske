@@ -98,10 +98,10 @@ gulp.task('static_images', function(done) {
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: done}))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify({compress: {drop_console: true}}).on('error', gutil.log)))
+    .pipe(gulpif(options.env === 'production', uglify({compress: {drop_console: true}})))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
@@ -134,7 +134,7 @@ gulp.task('libs', function(done) {
     var settings = JSON.stringify(require('./.io-config.json'));
 
     gulp.src(paths.libs)
-    .pipe(plumber())
+    .pipe(plumber({errorHandler: done}))
     .pipe(replace('"IONIC_SETTINGS_STRING_START";"IONIC_SETTINGS_STRING_END"',
     '"IONIC_SETTINGS_STRING_START";var settings = ' + settings + '; return { get: function(setting) { if (settings[setting]) { return settings[setting]; } return null; } };"IONIC_SETTINGS_STRING_END"'))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
@@ -147,16 +147,15 @@ gulp.task('libs', function(done) {
 
 gulp.task('sass', function(done) {
     gulp.src(paths.sass)
-    .pipe(sass({
-        errLogToConsole: true
-    }))
+    .pipe(plumber({errorHandler: done}))
+    .pipe(sass())
     .pipe(postcss([autoprefixer({browsers: ['Android > 4', 'Last 3 Chrome versions', 'Last 3 Safari versions', 'ChromeAndroid > 40', 'Last 3 iOS versions']})]))
     .pipe(minifyCss({
         keepSpecialComments: 0
     }))
     .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
-    .on('end', done);
+    .on('end', done)
 });
 
 gulp.task('watch', function() {

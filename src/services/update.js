@@ -270,14 +270,22 @@
                                 }, function(err) {
                                     if (err.error_code === 7) {
                                         $ionicPlatform.ready(function() {
-                                            $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
+                                            if (window.plugins) {
+                                                $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
+                                            } else {
+                                                console.warn('Cannot toast')
+                                            }
                                         });
                                         cleanUser();
                                         API.user_logout();
                                         reject('auth failure');
                                     } else {
                                         $ionicPlatform.ready(function() {
-                                            $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
+                                            if (window.plugins) {
+                                                $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
+                                            } else {
+                                                console.warn('Cannot toast')
+                                            }
                                         });
                                         reject('Couldn\'t update: ' + err.message);
                                     }

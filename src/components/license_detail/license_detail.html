@@ -10,7 +10,7 @@
     <p>Gäller från <b>{{product.fr * 1000 | date:'short'}}</b></p>
     <p>till <b>{{product.to * 1000 | date:'short'}}</b></p>
     <p class="text-center">
-      <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> Fångstrapport</a>
+      <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> Fångstrapport</a>
       <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" >PDF</a>
     </p>
     <p ng-if="product.fine">{{product.fine}}</p>

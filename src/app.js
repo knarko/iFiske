@@ -31,7 +31,7 @@ angular.module('ifiske', [
     //Only get these to init them
     'Push',
     function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout) {
-        $rootScope.image_endpoint = 'https://www.ifiske.se/';
+        $rootScope.image_endpoint = 'https://www.ifiske.se';
         $ionicPlatform.ready(function() {
 
             if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {

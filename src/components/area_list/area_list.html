@@ -11,9 +11,10 @@
     <ion-content header-shrink>
       <div style="height: 43px;"></div>
       <div class="list">
-        <div class="item" collection-repeat="area in areas | filter:search" ui-sref="app.area.info({id: area.ID, area:area})">
+        <div class="item item-icon-left" collection-repeat="area in areas | filter:search" ui-sref="app.area.info({id: area.ID, area:area})">
+          <i class="icon ion-card" ng-class="{selling: area.wsc}"></i>
           <h2>{{area.org}}</h2>
-          <p>{{area.t}}</p>
+          <p>{{area.t === area.org ? '&nbsp;': area.t}}</p>
         </div>
       </div>
     </ion-content>

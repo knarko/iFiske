@@ -16,6 +16,14 @@ angular.module('ifiske.controllers')
                 return DB.getUserProducts();
             })
             .then(function(data) {
+                var now = parseInt(Date.now() / 1000);
+                $scope.valid = [];
+                $scope.expired = [];
+                $scope.inactive = [];
+                for(var i = 0; i < data.length; ++i) {
+                    data[i].validity = data[i].fr < now ? now < data[i].to ? 'valid' : 'expired' : 'inactive';
+                    $scope[data[i].validity].push(data[i]);
+                }
                 $scope.products = data;
                 console.log($scope);
             }, function(err) {

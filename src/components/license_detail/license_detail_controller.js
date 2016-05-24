@@ -4,19 +4,30 @@ angular.module('ifiske.controllers')
     '$stateParams',
     'DB',
     '$ionicModal',
-    function($scope, $stateParams, DB, $ionicModal) {
+    '$sce',
+    function($scope, $stateParams, DB, $ionicModal, $sce) {
+            function updateQR() {
+
+            $scope.qr = $sce.trustAsResourceUrl('data:image/png;base64,'+$scope.product.qr);
+            }
         if ($stateParams.license) {
             $scope.product = $stateParams.license;
+            updateQR();
         } else {
             //TODO: get license from DB, or from api
             DB.getUserProduct($stateParams.id).then(function(license) {
+                var now = parseInt(Date.now() / 1000);
                 $scope.product = license;
-                DB.getArea(license.ai).then(function(area) {
-                    $scope.area = area;
-                    DB.getOrganization(area.orgid).then(function(org) {
-                        $scope.org = org;
+                updateQR();
+                $scope.product.validity = $scope.product.fr < now ? now < $scope.product.to ? 'valid' : 'expired' : 'inactive';
+                if (license.ai) {
+                    DB.getArea(license.ai).then(function(area) {
+                        $scope.area = area;
+                        DB.getOrganization(area.orgid).then(function(org) {
+                            $scope.org = org;
+                        });
                     });
-                });
+                }
             });
         }
         $scope.now = Date.now();

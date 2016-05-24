@@ -1,17 +1,49 @@
 .qr {
     display: block;
     margin: 0 auto;
-    height: 192px;
+    max-width: 80%;
     image-rendering: pixelated;
-    background-repeat: no-repeat;
-    background-position: center center;
+    color-interpolation-filters: sRGB;
+    position: relative;
+
+    &::before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+    }
+
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+
+        image {
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
 
 .logo {
     float: right;
     width: 60px;
     display: block;
+}
 
+.valid {
+    color: $balanced;
+}
+
+.inactive {
+    color: $energized;
+}
+
+.expired {
+    color: $assertive;
 }
 
 .qr + h1 {

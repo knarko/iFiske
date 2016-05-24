@@ -1,16 +1,36 @@
 <ion-view title="Mina fiskekort" class="image-bg">
-  <ion-content class="padding">
+  <ion-content>
     <ion-refresher
     pulling-text="Uppdatera..."
     on-refresh="update()">
   </ion-refresher>
   <div class="list">
-  <div class="item" ng-if="products.length < 1">
-    <div class="item item-text-wrap">
-      <p>När du köpt fiskekort kommer de att finnas listade här.</p>
+    <div class="item" ng-if="products.length < 1">
+      <div class="item item-text-wrap">
+        <p>När du köpt fiskekort kommer de att finnas listade här</p>
+      </div>
     </div>
-  </div>
-  <div class="item" ng-repeat="product in products | orderBy:pred" ng-class="product.to*1000 < now ? 'expired2' : (product.fr*1000 > now ? 'inactive2' : 'active2')" ui-sref="^.license_detail({license: product, id: product.ID})">
+    <div class="item item-divider item-icon-left" ng-if="valid.length">
+      <i class="icon ion-checkmark"></i>
+      Aktiva fiskekort
+    </div>
+    <div class="item" ng-repeat="product in valid" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
+      <h2>{{product.ot}}</h2>
+      <p>{{product.t}}</p>
+    </div>
+    <div class="item item-divider item-icon-left" ng-if="inactive.length">
+      <i class="icon ion-clock"></i>
+      Ej ännu aktiva fiskekort
+    </div>
+    <div class="item" ng-repeat="product in inactive" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
+      <h2>{{product.ot}}</h2>
+      <p>{{product.t}}</p>
+    </div>
+    <div class="item item-divider item-icon-left" ng-if="expired.length">
+      <i class="icon ion-close"></i>
+      Utgångna fiskekort
+    </div>
+    <div class="item" ng-repeat="product in expired" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
       <h2>{{product.ot}}</h2>
       <p>{{product.t}}</p>
     </div>

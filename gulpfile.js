@@ -40,6 +40,7 @@ var paths = {
         './lib/leaflet/dist/images/*'
     ],
     scripts: [
+        './src/io-config.js',
         './src/app.js',
         './src/components/**/*.js',
         './src/services/**/*.js',
@@ -131,12 +132,9 @@ gulp.task('static', function(done) {
 });
 
 gulp.task('libs', function(done) {
-    var settings = JSON.stringify(require('./.io-config.json'));
 
     gulp.src(paths.libs)
     .pipe(plumber({errorHandler: done}))
-    .pipe(replace('"IONIC_SETTINGS_STRING_START";"IONIC_SETTINGS_STRING_END"',
-    '"IONIC_SETTINGS_STRING_START";var settings = ' + settings + '; return { get: function(setting) { if (settings[setting]) { return settings[setting]; } return null; } };"IONIC_SETTINGS_STRING_END"'))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify({compress: {drop_console: true}}).on('error', gutil.log)))

@@ -124,6 +124,11 @@ angular.module('ifiske', [
         templateUrl: 'components/menu/menu.html',
         controller:  'MenuCtrl',
     })
+    .state('app.settings', {
+        url:         '/settings',
+        templateUrl: 'components/settings/settings.html',
+        controller:  'MenuCtrl',
+    })
 
     .state('app.login', {
         url:         '/login',

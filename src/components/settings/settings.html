@@ -1,0 +1,24 @@
+
+<ion-view title="Inställningar">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        Inställningar
+      </div>
+
+      <ion-toggle ng-model="push.checked" ng-checked="push.checked">
+        Push-notifikationer
+      </ion-toggle>
+      <a ng-click="forcedUpdate()" class="item">Uppdatera databas</a>
+
+      <a ng-if="sessionData.token" class="item" ng-click="logout();">Logga ut</a>
+      <div class="item item-divider">
+        Information
+      </div>
+      <a ui-sref="app.about" class="item">Om appen</a>
+      <a ui-sref="app.contact" class="item">Kontakta oss</a>
+      <a ui-sref="app.bugs" class="item">Rapportera Bugg</a>
+      <a ui-sref="app.legal" class="item">Användarvillkor</a>
+    </div>
+  </ion-content>
+</ion-view>

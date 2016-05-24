@@ -8,13 +8,29 @@
       <svg>
         <defs>
           <filter id="filter-green">
+            <feComponentTransfer>
+              <feFuncR type="discrete"
+              tableValues="0 1"/>
+              <feFuncG type="discrete"
+              tableValues="0 1"/>
+              <feFuncB type="discrete"
+              tableValues="0 1"/>
+            </feComponentTransfer>
             <feColorMatrix type="matrix" values="0 0 0 0 0.4, 0 0 0 0 0.59, 0 0 0 0 0, -1 -1 -1 1 0"/>
           </filter>
           <filter id="filter-red">
+            <feComponentTransfer>
+              <feFuncR type="discrete"
+              tableValues="0 1"/>
+              <feFuncG type="discrete"
+              tableValues="0 1"/>
+              <feFuncB type="discrete"
+              tableValues="0 1"/>
+            </feComponentTransfer>
             <feColorMatrix type="matrix" values="0 0 0 0 1, 0 0 0 0 0.345, 0 0 0 0 0.039, -1 -1 -1 1 0"/>
           </filter>
         </defs>
-        <image ng-xlink:href="{{qr}}" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCAQMAAADZmpKrAAAABlBMVEX///8AAABVwtN+AAAAyUlEQVQokY3RMaoFMQgFUCGt4FYC0wrZumAbcCuBtEK+Yf4wZqpndSB4DQrwY9GSAWN5FkJvzoKHXBGr9Y9gyFfdpn8Eyus/7xGtHnXPfQRQpvH9r0fYlUrMOzT4clI8FBkm4FnUcJrsjlfgTqTKWSRNmS7MimgzmpxVlKaR1iyao662X1+VyhzJPQtNC0jlrNKxNi41C1nxor2MV+EFjJ4V1wLxvaNXsd22kOoht2F3XpKw9Z2SZR5NeAhEYnM1K6415mqc9WP9AUcC1DW/8TT0AAAAAElFTkSuQmCC" filter="url(#filter-{{product.validity==='valid'?'green':'red'}})"/>
+        <image ng-xlink:href="{{qr}}" width="100%" height="100%" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCAQMAAADZmpKrAAAABlBMVEX///8AAABVwtN+AAAAyUlEQVQokY3RMaoFMQgFUCGt4FYC0wrZumAbcCuBtEK+Yf4wZqpndSB4DQrwY9GSAWN5FkJvzoKHXBGr9Y9gyFfdpn8Eyus/7xGtHnXPfQRQpvH9r0fYlUrMOzT4clI8FBkm4FnUcJrsjlfgTqTKWSRNmS7MimgzmpxVlKaR1iyao662X1+VyhzJPQtNC0jlrNKxNi41C1nxor2MV+EFjJ4V1wLxvaNXsd22kOoht2F3XpKw9Z2SZR5NeAhEYnM1K6415mqc9WP9AUcC1DW/8TT0AAAAAElFTkSuQmCC" filter="url(#filter-{{product.validity==='valid'?'green':'red'}})" />
       </svg>
     </div>
     <h1 class="text-center {{product.validity}}">{{product.code}}</h1>

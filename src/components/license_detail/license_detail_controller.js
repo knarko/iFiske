@@ -6,10 +6,9 @@ angular.module('ifiske.controllers')
     '$ionicModal',
     '$sce',
     function($scope, $stateParams, DB, $ionicModal, $sce) {
-            function updateQR() {
-
+        function updateQR() {
             $scope.qr = $sce.trustAsResourceUrl('data:image/png;base64,'+$scope.product.qr);
-            }
+        }
         if ($stateParams.license) {
             $scope.product = $stateParams.license;
             updateQR();

@@ -343,7 +343,11 @@
                                 'WHERE Area.ID = ?'
                             ].join(' '), Array.isArray(id) ? id : [id])
                             .then(function(area) {
-                                fulfill(createObject(area)[0]);
+                                if (area.rows.length) {
+                                    fulfill(createObject(area)[0]);
+                                } else {
+                                    reject('Could not find area');
+                                }
                             }, reject);
                         });
                     },

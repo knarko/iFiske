@@ -3,8 +3,8 @@
     <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{org.logo}}">
     <h2 class="text-center">{{product.ot}}</h2>
     <h3 class="text-center">{{product.t}}</h3>
-    <img ng-if="product.qr" class="qr" src="data:image/png;base64,{{product.qr}}" />
-    <h2 class="text-center">{{product.code}}</h2>
+    <img ng-if="product.qr" class="qr" ng-src="data:image/png;base64,{{product.qr}}" />
+    <h1 class="text-center">{{product.code}}</h1>
     <p ng-if="product.subt">{{product.subt}}</p>
     <p>Utfärdat till {{product.fullname}}</p>
     <p>Gäller från <b>{{product.fr * 1000 | date:'short'}}</b></p>
@@ -13,7 +13,7 @@
       <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> Fångstrapport</a>
       <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" >PDF</a>
     </p>
-    <p ng-if="product.fine">{{product.fine}}</p>
+    <p ng-if="product.fine" class="fineprint">{{product.fine}}</p>
   </ion-content>
   <ion-footer-bar ng-if="product.rule_t" class="bar-balanced">
     <div class="button-bar">

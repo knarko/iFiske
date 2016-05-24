@@ -14,7 +14,13 @@
 
 }
 
-.qr + h2 {
+.qr + h1 {
     margin-top: 0;
+    font-weight: bold;
+}
 
+.fineprint {
+    font-family: monospace;
+    font-size: 10px;
+    white-space: pre-line;
 }

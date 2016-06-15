@@ -9,12 +9,14 @@
     "build": "gulp",
     "build.dev": "gulp --env=development",
     "postinstall": "bower install && ionic state restore",
-    "android": "ionic run android --device",
-    "ios": "ionic run ios --device",
+    "android": "gulp && ionic run android --device",
+    "ios": "gulp && ionic run ios --device",
     "bump": "gulp bump",
     "bump.patch": "gulp bump --patch",
     "bump.minor": "gulp bump --minor",
-    "bump.major": "gulp bump --major"
+    "bump.major": "gulp bump --major",
+    "package": "gulp --env=production && ionic package build android --release -p prod && ionic package build ios --release -p prod",
+    "resources": "ionic resources"
   },
   "repository": {
     "type": "git",

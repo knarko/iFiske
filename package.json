@@ -4,6 +4,18 @@
   "description": "ifiske: Enklare Fiskekort",
   "license": "Apache-2.0",
   "private": true,
+  "scripts": {
+    "start": "set NODE_ENV=development && ionic serve",
+    "build": "gulp",
+    "build.dev": "gulp --env=development",
+    "postinstall": "bower install && ionic state restore",
+    "android": "ionic run android --device",
+    "ios": "ionic run ios --device",
+    "bump": "gulp bump",
+    "bump.patch": "gulp bump --patch",
+    "bump.minor": "gulp bump --minor",
+    "bump.major": "gulp bump --major"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiske/ifiske.git"
@@ -11,6 +23,7 @@
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "bower": "^1.7.9",
+    "cordova": "^6.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-cordova-bump": "github:maistho/gulp-cordova-bump#master",
@@ -26,6 +39,7 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "inquirer": "^1.0.2",
+    "ionic": "^1.7.15",
     "keytar": "^3.0.2",
     "minimist": "^1.2.0",
     "shelljs": "^0.7.0"

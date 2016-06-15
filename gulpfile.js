@@ -50,7 +50,7 @@ var paths = {
         './src/lib/polyfill.js',
 
         './lib/ionic/release/js/ionic.bundle.js',
-        './lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+        './node_modules/@ionic/cloud/dist/bundle/ionic.cloud.js',
         './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
 
         './lib/ngCordova/dist/ng-cordova.js',

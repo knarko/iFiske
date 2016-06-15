@@ -14,7 +14,8 @@
             'Push',
             '$cordovaToast',
             '$ionicPlatform',
-            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $cordovaToast, $ionicPlatform) {
+            'ImgCache',
+            function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $cordovaToast, $ionicPlatform, ImgCache) {
 
                 var LAST_UPDATE = 'last_update';
 
@@ -117,7 +118,20 @@
                         },
                         {
                             endpoint: 'get_fishes',
-                            table: 'Fish'
+                            f: function(data) {
+                                var image_endpoint = 'https://www.ifiske.se';
+                                console.log('Downloading all fish images: ', data);
+                                for (var fish in data) {
+                                    ImgCache.cacheFile(image_endpoint + data[fish].img);
+                                }
+                                return DB.populateTable('Fish', data)
+                                .then(function() {
+                                    return 'Fish';
+                                }, function(err) {
+                                    console.warn(err);
+                                    return $q.reject(err);
+                                });
+                            },
                         },
                         {
                             endpoint: 'get_rules',

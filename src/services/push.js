@@ -3,7 +3,6 @@ angular.module('ifiske.services')
 
 .factory('Push', [
     '$ionicPlatform',
-    '$ionicPush',
     '$timeout',
     'API',
     '$state',
@@ -12,7 +11,8 @@ angular.module('ifiske.services')
     '$cordovaInAppBrowser',
     'DB',
     '$q',
-    function($ionicPlatform, $ionicPush, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
+    function($ionicPlatform, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
+        var ionicPush;
         var pushHandlers = {
             default: function(notification, payload) {
                 $ionicPopup.alert(notification.text);
@@ -87,7 +87,7 @@ angular.module('ifiske.services')
             }
         };
         $ionicPlatform.ready(function() {
-            $ionicPush.init({
+            ionicPush = new Ionic.Push({
                 debug: false,
                 onNotification: handleNotification,
                 onRegister: function(data) {
@@ -99,8 +99,8 @@ angular.module('ifiske.services')
         var registerPush = function() {
             console.log('Registering push!')
             return $ionicPlatform.ready().then(function() {
-                return $ionicPush.register(function(token) {
-                    return $ionicPush.saveToken(token);
+                return ionicPush.register(function(token) {
+                    return ionicPush.saveToken(token);
                 });
             });
         };
@@ -121,6 +121,7 @@ angular.module('ifiske.services')
                 });
             }).then(function() {
                 var user = Ionic.User.current();
+                user.save();
                 console.log('Sending userID to iFiske servers')
                 return API.user_set_pushtoken(user.id);
             }).catch(function(err) {
@@ -134,7 +135,7 @@ angular.module('ifiske.services')
                 return;
             }
             var user = Ionic.User.current();
-            if (user.isAuthenticated()) {
+            if (user.isAuthenticated() && !user.isAnonymous()) {
                 return registerPush();
             } else {
                 var promises = [
@@ -158,8 +159,8 @@ angular.module('ifiske.services')
                 return Ionic.User.current().id;
             },
             unregister: function() {
-                //$ionicPush returns a non-$q-promise, so we need to wrap it.
-                return $q.all([$ionicPush.unregister()]).finally(function() {
+                //ionicPush returns a non-$q-promise, so we need to wrap it.
+                return $q.all([ionicPush.unregister()]).finally(function() {
                     return Ionic.Auth.logout();
                 });
             },

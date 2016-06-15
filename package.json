@@ -73,6 +73,6 @@
     "ios"
   ],
   "dependencies": {
-    "@ionic/cloud": "^0.8.0-beta.8"
+    "@ionic/cloud": "driftyco/ionic-cloud#95dd10f651287217356bc438d872452a9df60274"
   }
 }

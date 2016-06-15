@@ -1,8 +1,8 @@
 <ion-view title="Fiskekort">
-  <ion-content padding="true">
+  <ion-content padding="true" class="text-center">
     <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{org.logo}}">
-    <h2 class="text-center">{{product.ot}}</h2>
-    <h3 class="text-center">{{product.t}}</h3>
+    <h2>{{product.ot}}</h2>
+    <h3>{{product.t}}</h3>
 
     <div ng-if="product.qr" class="qr">
       <svg>
@@ -33,17 +33,17 @@
         <image ng-xlink:href="{{qr}}" width="100%" height="100%" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCAQMAAADZmpKrAAAABlBMVEX///8AAABVwtN+AAAAyUlEQVQokY3RMaoFMQgFUCGt4FYC0wrZumAbcCuBtEK+Yf4wZqpndSB4DQrwY9GSAWN5FkJvzoKHXBGr9Y9gyFfdpn8Eyus/7xGtHnXPfQRQpvH9r0fYlUrMOzT4clI8FBkm4FnUcJrsjlfgTqTKWSRNmS7MimgzmpxVlKaR1iyao662X1+VyhzJPQtNC0jlrNKxNi41C1nxor2MV+EFjJ4V1wLxvaNXsd22kOoht2F3XpKw9Z2SZR5NeAhEYnM1K6415mqc9WP9AUcC1DW/8TT0AAAAAElFTkSuQmCC" filter="url(#filter-{{product.validity==='valid'?'green':'red'}})" />
       </svg>
     </div>
-    <h1 class="text-center {{product.validity}}">{{product.code}}</h1>
+    <h1 class="{{product.validity}}">{{product.code}}</h1>
 
-    <h3 ng-if="product.validity === 'expired'" class="text-center">Fiskekortet har utgått</h3>
-    <h3 ng-if="product.validity === 'inactive'" class="text-center">Fiskekortet gäller inte än</h3>
+    <h3 ng-if="product.validity === 'expired'">Fiskekortet har utgått</h3>
+    <h3 ng-if="product.validity === 'inactive'">Fiskekortet gäller inte än</h3>
 
     <p ng-if="product.subt">{{product.subt}}</p>
 
     <p>Utfärdat till {{product.fullname}}</p>
     <p>Gäller från <b>{{product.fr * 1000 | date:'short'}}</b></p>
     <p>till <b>{{product.to * 1000 | date:'short'}}</b></p>
-    <p class="text-center">
+    <p>
       <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> Fångstrapport</a>
       <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}" >PDF</a>
     </p>

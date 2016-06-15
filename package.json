@@ -9,6 +9,8 @@
     "build": "gulp",
     "build.dev": "gulp --env=development",
     "postinstall": "bower install && ionic state restore",
+    "android.dev": "gulp --env=development && ionic run android --device",
+    "ios.dev": "gulp --env=development && ionic run ios --device",
     "android": "gulp && ionic run android --device",
     "ios": "gulp && ionic run ios --device",
     "bump": "gulp bump",

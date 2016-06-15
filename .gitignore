@@ -59,6 +59,7 @@ IOS/www/
 
 #Node files
 node_modules
+npm-debug.log
 
 #Emacs config
 .dir-locals.el

@@ -18,6 +18,8 @@
     "bump.minor": "gulp bump --minor",
     "bump.major": "gulp bump --major",
     "package": "gulp --env=production && ionic package build android --release -p prod && ionic package build ios --release -p prod",
+    "package.android": "gulp --env=production && ionic package build android --release -p prod",
+    "package.ios": "gulp --env=production && ionic package build ios --release -p prod",
     "resources": "ionic resources"
   },
   "repository": {

@@ -77,6 +77,6 @@
     "ios"
   ],
   "dependencies": {
-    "@ionic/cloud": "0.8.0-beta.9"
+    "@ionic/cloud": "0.8.0-beta.10"
   }
 }

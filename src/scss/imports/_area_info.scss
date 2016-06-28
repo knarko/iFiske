@@ -15,6 +15,14 @@
 .slider-image {
     background-size: cover;
     padding-top: 41.67%; // 250/600
+    position: relative;
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 .starred {

@@ -2,12 +2,14 @@
 <ion-content>
 <div class="list">
     <div class="item item-image">
-        <ion-slide-box does-continue="true" auto-play="true" ng-if="images.length > 1">
-        <ion-slide ng-repeat="img in images track by $index">
-        <img ic-src="{{::image_endpoint + img}}" img-cache />
-        </ion-slide>
-        </ion-slide-box>
-        <img ic-src="{{::image_endpoint + images[0]}}" ng-if="images.length == 1" img-cache />
+      <ion-slides ng-if="images.length > 1" options="slideOptions" slider="data.slider">
+        <ion-slide-page ng-repeat="img in images">
+          <div class="slider-image">
+            <img img-cache ic-src="{{::image_endpoint + img}}">
+          </div>
+        </ion-slide-page>
+      </ion-slides>
+      <img img-cache ic-src="{{::image_endpoint + images[0]}}" ng-if="images.length == 1" />
     </div>
     <div class="item">
         <h2>{{::tech.t}}</h2>

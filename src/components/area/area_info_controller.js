@@ -13,7 +13,7 @@ angular.module('ifiske.controllers')
         $scope.$on('$ionicView.beforeEnter', function() {
         });
 
-        $scope.options = {
+        $scope.slideOptions = {
             loop: true,
             effect: 'slide',
             speed: 250,
@@ -33,6 +33,7 @@ angular.module('ifiske.controllers')
         $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
             // grab an instance of the slider
             $scope.slider = data.slider;
+            $scope.slider.updateLoop();
         });
 
 

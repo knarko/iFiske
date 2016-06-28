@@ -162,7 +162,7 @@ angular.module('ifiske.services')
             },
             unregister: function() {
                 //$ionicPush returns a non-$q-promise, so we need to wrap it.
-                return $q.all([$ionicPush.unregister()]).finally(function() {
+                return $q.when($ionicPush.unregister()).finally(function() {
                     return $ionicAuth.logout();
                 });
             },

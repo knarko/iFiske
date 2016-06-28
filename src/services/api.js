@@ -81,15 +81,8 @@
 
                         return api_call(args, false);
                     },
-                    user_register: function(username, fullname, password, email, phone) {
-                        return api_call(
-                            {m: 'user_register',
-                                username: username,
-                                fullname: fullname,
-                                password: password,
-                                email: email,
-                                phone: phone
-                            }, false);
+                    user_register: function(userDetails) {
+                        return api_call(angular.extend({m: 'user_register'}, userDetails), false);
                     },
                     user_confirm: function(username, pin) {
                         return api_call({

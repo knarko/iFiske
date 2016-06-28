@@ -23,6 +23,13 @@
 
         <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive">Aktivera</button>
       </form>
+
+      <div class="register-retry">
+        <p>
+          Om det tar lång tid för ditt SMS att komma fram, tryck på den här knappen för att prova att skicka SMSet igen.
+        </p>
+        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive">Försök igen <span ng-if="!timePassed"> om {{timeLeft | date:'mm:ss'}}</span></button>
+      </div>
     </div>
   </ion-content>
 </ion-view>

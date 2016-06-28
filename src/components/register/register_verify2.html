@@ -36,6 +36,15 @@
 
 
       <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive">Aktivera</button>
+      <p>
+        Om du har tappat bort din aktiveringskod går det också bra att skapa ett nytt konto med samma användaruppgifter som förut.
+      </p>
+      <div class="register-retry">
+        <p>
+          Om du behöver få en ny aktiveringskod, tryck här.
+        </p>
+        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive">Skicka ny aktiveringskod</button>
+      </div>
     </form>
 
   </ion-content>

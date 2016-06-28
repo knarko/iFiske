@@ -9,30 +9,15 @@ angular.module('ifiske.controllers')
         '$cordovaToast',
         '$ionicViewSwitcher',
         '$ionicHistory',
+        '$timeout',
+        '$interval',
         'API',
         'Update',
         'localStorage',
-        function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, $ionicViewSwitcher, $ionicHistory, API, Update, localStorage) {
+        function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, $ionicViewSwitcher, $ionicHistory, $timeout, $interval, API, Update, localStorage) {
 
             $scope.details = {};
             $scope.forms = {};
-
-            /*
-              Getter/setter for username.
-              Stores username in localStorage, in case the app is closed before the
-              verification process is complete. _username ensures that the value can become
-              undefined when the input is invalid (required by ngModel).
-            */
-/*            var _username;
-            details.username = function(username) {
-                if (arguments.length) {
-                    if (_username = username) {
-                        localStorage.set('register_username', username);
-                    }
-                }
-                return _username;
-            }
-  */
 
             /*
                Note:
@@ -60,8 +45,6 @@ angular.module('ifiske.controllers')
                     });
             };
 
-
-
             /**
              * register
              * Submit handler for the registration form
@@ -69,13 +52,20 @@ angular.module('ifiske.controllers')
             $scope.register = function(form) {
                 $ionicLoading.show();
 
-                API.user_register($scope.details.username, $scope.details.fullname, $scope.details.password,
-                                  $scope.details.email, $scope.details.phone)
+                var userDetails = {
+                    username: $scope.details.username,
+                    fullname: $scope.details.fullname,
+                    password: $scope.details.password,
+                    email: $scope.details.email,
+                    phone: $scope.details.phone,
+                };
+
+                API.user_register(userDetails)
                     .then(function() {
-                        // Save username in case app closes before completed account verification
-                        localStorage.set('register_username', $scope.details.username);
-                        localStorage.set('register_password', $scope.details.password);
-                        localStorage.set('register_phone', $scope.details.phone);
+
+                        // Save user details for later use
+                        localStorage.set('register_user_details', JSON.stringify(userDetails));
+                        startTimer();
 
                         // Proceed to account verification
                         $ionicLoading.hide();
@@ -112,6 +102,54 @@ angular.module('ifiske.controllers')
             };
 
 
+            $scope.retryRegister = function() {
+                var userDetails = getUserDetails();
+                if (!userDetails) {
+                    //Navigate back to initial registration
+                    return;
+                }
+                API.user_register(userDetails)
+                .then(function() {
+                    if(window.plugins && window.plugins.toast) {
+                        $cordovaToast.showShortBottom('Ny aktiveringskod skickad');
+                    }
+                }, function(error) {
+                    console.error(error);
+                    if(window.plugins && window.plugins.toast) {
+                        $cordovaToast.showLongBottom('Ett fel uppstod, aktiveringskoden kunde inte skickas.');
+                    }
+                });
+            };
+
+            var timer, endoftime;
+            function startTimer() {
+                $scope.timePassed = false;
+                $scope.timeLeft = 1000 * 60 * 3;
+                timer = $interval(function() {
+                    $scope.timeLeft-=1000;
+                }, 1000);
+                endoftime = $timeout(function() {
+                    stopTimer();
+                }, $scope.timeLeft);
+            }
+            function stopTimer() {
+                $interval.cancel(timer);
+                $timeout.cancel(endoftime);
+                $scope.timePassed = true;
+            }
+            stopTimer();
+
+            function getUserDetails() {
+                try {
+                    return userDetails = JSON.parse(localStorage.get('register_user_details'));
+                } catch (e){
+                    //TODO: this is shit, more user info pls
+                    console.error(e);
+                    return false;
+                }
+            }
+
+
             /**
              * verify
              * Submit handler for the verification form
@@ -119,8 +157,13 @@ angular.module('ifiske.controllers')
             $scope.verify = function(form) {
                 $ionicLoading.show();
 
-                // Get username from form or localStorage
-                var username = form.username ? form.username.$viewValue : localStorage.get('register_username');
+                var userDetails = getUserDetails();
+                if (!userDetails) {
+                    $ionicLoading.hide();
+                    return;
+                }
+
+                var username = (form.username && form.username.$viewValue) || userDetails.username;
 
                 API.user_confirm(username, form.vercode.$viewValue)
                     .then(function() {
@@ -132,9 +175,8 @@ angular.module('ifiske.controllers')
                         $scope.formErrors.validationError = false;
                         $scope.details = {};
 
-                        var password = localStorage.get('register_password');
-                        if (password) {
-                            Update.user_login(username, password)
+                        if (userDetails.password) {
+                            Update.user_login(userDetails.username, userDetails.password)
                             .then(function() {
                                 $ionicViewSwitcher.nextDirection('forward');
                                 $ionicHistory.nextViewOptions({
@@ -144,8 +186,8 @@ angular.module('ifiske.controllers')
                                 $state.go('app.home');
                             })
                             .finally(function() {
-                                localStorage.set('register_username', '');
-                                localStorage.set('register_password', '');
+                                //Clean up user details
+                                localStorage.set('register_user_details', '');
                             });
                         } else {
                             $state.go('app.login');
@@ -153,6 +195,7 @@ angular.module('ifiske.controllers')
                     }, function(error) {
                         if (error.error_code) {
                             form.vercode.$setValidity("verified", false);
+                            stopTimer();
                         } else {
                             $scope.formErrors.validationError = true;
                         }

@@ -5,6 +5,7 @@ angular.module('ifiske.services')
     '$ionicAuth',
     '$ionicPush',
     '$ionicUser',
+    '$ionicEventEmitter',
     '$timeout',
     'API',
     '$state',
@@ -13,7 +14,7 @@ angular.module('ifiske.services')
     '$cordovaInAppBrowser',
     'DB',
     '$q',
-    function($ionicPlatform, $ionicAuth, $ionicPush, $ionicUser, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
+    function($ionicPlatform, $ionicAuth, $ionicPush, $ionicUser, $ionicEventEmitter, $timeout, API, $state, sessionData, $ionicPopup, $cordovaInAppBrowser, DB, $q) {
         var pushHandlers = {
             default: function(notification) {
                 $ionicPopup.alert(notification.text);
@@ -75,7 +76,7 @@ angular.module('ifiske.services')
         };
 
         var handleNotification = function(notification) {
-            var payload = notification.payload;
+            var payload = notification.additionalData.payload;
             var i;
 
             console.log('Recieved a new push notification', notification, payload);
@@ -90,10 +91,10 @@ angular.module('ifiske.services')
         $ionicPlatform.ready(function() {
             $ionicPush.init({
                 debug: false,
-                onNotification: handleNotification,
-                onRegister: function(data) {
-                    console.log('Registered a push token:', data.token);
-                }
+            });
+            $ionicEventEmitter.on('push:notification', handleNotification);
+            $ionicEventEmitter.on('push:register', function(data) {
+                console.log('Registered a push token:', data.token);
             });
         });
 

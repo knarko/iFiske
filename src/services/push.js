@@ -75,7 +75,24 @@ angular.module('ifiske.services')
         }],
     };
 
-    function handleNotification(notification) {
+    /*
+    Flow of push notifications:
+    1. Register with Ionic Cloud
+    2. Get settings from Ionic Cloud
+    Note: Do we want to persist all settings to cloud? We might want to keep some settings only on certain devices (push for example)
+    3. Check if the user has enabled push notifications
+    4. Enable/Disable push notifications
+
+    Enabling:
+    1. Register a push token with ionic
+    2. Send the Ionic User ID to API servers
+
+    Disabling:
+    1. Unregister the push token with IonicCloud
+    2. Tell API servers that we no longer want push notifications (how? we need a new API route)
+    */
+
+    var handleNotification = function(notification) {
         var payload = notification.additionalData.payload;
         var i;
 
@@ -87,7 +104,7 @@ angular.module('ifiske.services')
         } else {
             pushHandlers.default(notification, payload);
         }
-    }
+    };
     $ionicPlatform.ready(function() {
         $rootScope.$on('cloud:push:notification', handleNotification);
         $rootScope.$on('cloud:push:register', function(data) {

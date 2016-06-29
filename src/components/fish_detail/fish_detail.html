@@ -9,25 +9,25 @@
         <img ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
     </div>
     <div ng-if="fish.d" class="item item-divider">
-        <p>Beskrivning</p>
+        <p translate>Description</p>
     </div>
     <div ng-if="fish.d" class="item item-body">
         <p ng-bind-html="fish.d" />
     </div>
     <div ng-if="fish.geo" class="item item-divider">
-        <p>Utbredning</p>
+        <p translate>Prevalence</p>
     </div>
     <div ng-if="fish.geo" class="item item-body">
         <p ng-bind-html="fish.geo" />
     </div>
     <div ng-if="fish.size" class="item item-divider">
-        <p>Storlek och tillväxt</p>
+        <p translate>Size and growth</p>
     </div>
     <div ng-if="fish.size" class="item item-body">
         <p ng-bind-html="fish.size" />
     </div>
     <div ng-if="fish.rec" class="item item-divider">
-        <p>Sportfiskerekord</p>
+        <p translate>Angler record</p>
     </div>
     <div ng-if="fish.rec" class="item item-body">
         <p ng-bind-html="fish.rec" />

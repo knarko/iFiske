@@ -14,6 +14,8 @@ angular.module('ifiske', [
     'ngMessages',
     'ImgCache',
     'ui-leaflet',
+    'pascalprecht.translate',
+    'ifiske.translations',
 ])
 
 .constant('$ionicLoadingConfig', {
@@ -62,8 +64,13 @@ angular.module('ifiske', [
     $urlRouterProvider,
     $ionicConfigProvider,
     ImgCacheProvider,
-    $ionicCloudProvider
+    $ionicCloudProvider,
+    $translateProvider,
+    swedishTranslations
 ) {
+    $translateProvider
+    .translations('sv', swedishTranslations)
+    .preferredLanguage('sv');
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({
         core: {

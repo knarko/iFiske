@@ -1,6 +1,6 @@
 <ion-view view-title="Fiskevatten">
     <ion-content>
-	      <div ng-show="!counties.length" class="item item-text-wrap">&#8505; Det verkar inte finnas några fiskevatten laddade. Se till att du har tillgång till nätet och gå sedan till menyn och välj att 'Uppdatera Databasen'</div>
+	      <div ng-show="!counties.length" class="item item-text-wrap">&#8505; {{'No areas available' | translate}}</div>
         <ion-list>
             <ion-item ng-repeat="county in counties" ui-sref="app.areas({id: county.ID, county: county.t})">
                 <h2>{{::county.t}}</h2>

@@ -37,6 +37,7 @@ var paths = {
         './src/services/**/*.js',
         './src/directives/**/*.js',
         './src/models/**/*.js',
+        './src/translations/*.js',
     ],
     libs: [
         './src/lib/polyfill.js',
@@ -53,6 +54,8 @@ var paths = {
 
         './lib/imgcache.js/js/imgcache.js',
         './lib/angular-imgcache.js/angular-imgcache.js',
+
+        './lib/angular-translate/angular-translate.js',
 
         './lib/leaflet/dist/leaflet-src.js',
         './lib/ui-leaflet/dist/ui-leaflet.js',

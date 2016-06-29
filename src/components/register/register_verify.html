@@ -3,32 +3,28 @@
     <div class="list list-inset">
       <form name="verifyForm">
         <p class="text-center">
-          <strong>En aktiveringskod kommer skickas via SMS till {{details.phone}} inom kort. Detta kan ta ett par minuter.</strong>
+          <strong translate translate-value-phone="details.phone">Activation code sent</strong>
         </p>
 
         <ng-messages for="formErrors" class="error-message">
-          <div class="text-center" ng-message="validationError">
-            Aktiveringen misslyckades, försök igen
-          </div>
+          <div class="text-center" ng-message="validationError" translate>Activation failed</div>
         </ng-messages>
 
-        <label for="vercode" class="input-label">Aktiveringskod:</label>
+        <label for="vercode" class="input-label" translate>Activation code</label>
         <label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 				 verifyForm.vercode.$dirty && verifyForm.vercode.length}" class="item item-input">
           <input id="vercode" name="vercode" ng-model="details.vercode" type="text" placeholder="1234" ng-pattern="/^\d{4}$/" required ng-change="verifyForm.vercode.$setValidity('verified',true)">
         </label>
         <div class="error-message" ng-messages="verifyForm.vercode.$error" ng-if="verifyForm.vercode.$dirty">
-          <p ng-message="verified">Ogiltig aktiveringskod</p>
+          <p ng-message="verified" translate>Activation code failed</p>
         </div>
 
-        <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive">Aktivera</button>
+        <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive" translate>Activate</button>
       </form>
 
       <div class="register-retry">
-        <p>
-          Om det tar lång tid för ditt SMS att komma fram, tryck på den här knappen för att prova att skicka SMSet igen.
-        </p>
-        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive">Försök igen <span ng-if="!timePassed"> om {{timeLeft | date:'mm:ss'}}</span></button>
+        <p translate>Activation took too long</p>
+        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive">{{'Try again' | translate}} <span ng-if="!timePassed"> {{'in' | translate}} {{timeLeft | date:'mm:ss'}}</span></button>
       </div>
     </div>
   </ion-content>

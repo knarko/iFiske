@@ -1,4 +1,4 @@
-<ion-view title="Fiskemetoder">
+<ion-view title="{{'Fishing methods' | translate}}">
 <ion-content>
 <ion-list>
 <ion-item ng-repeat="tech in techniques | orderBy:sortorder" class="item item-icon-left technique-icon-list" ui-sref="^.techniquedetail({tech: tech, id: tech.ID})">

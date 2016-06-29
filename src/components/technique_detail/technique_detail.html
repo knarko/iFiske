@@ -19,19 +19,19 @@
         <h2>{{::tech.t}}</h2>
     </div>
     <div ng-if="tech.d" class="item item-divider">
-        <p>Beskrivning (Grunderna)</p>
+        <p translate>Technique description</p>
     </div>
     <div ng-if="tech.d" class="item item-body">
         <p ng-bind-html="tech.d | onebr" />
     </div>
     <div ng-if="tech.de" class="item item-divider">
-        <p>Utrustning</p>
+        <p translate>Technique gear</p>
     </div>
     <div ng-if="tech.de" class="item item-body">
         <p ng-bind-html="tech.de | onebr" />
     </div>
     <div ng-if="tech.da" class="item item-divider">
-        <p>Avancerade tips</p>
+        <p translate>Technique advanced</p>
     </div>
     <div ng-if="tech.da" class="item item-body">
         <p ng-bind-html="tech.da | onebr" />

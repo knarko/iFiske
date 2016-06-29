@@ -19,7 +19,7 @@
                     ></button>
         </div>
         <div ng-if="area.d" class="item item-body">
-            <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ui-sref="^.cards">Köp Fiskekort</button>
+            <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ui-sref="^.cards" translate>Purchase license</button>
             <p ng-bind-html="area.d | onebr"></p>
         </div>
         <div ng-if="org.t" class="item item-divider">
@@ -28,10 +28,10 @@
         <div ng-if="org.d" class="item item-body">
             <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
-            <a ng-if="area.map" ng-href="{{::image_endpoint}}{{::area.map}}">Karta över området som PDF</a>
+            <a ng-if="area.map" ng-href="{{::image_endpoint}}{{::area.map}}" translate>Area map as PDF</a>
         </div>
         <div ng-if="org.cp" class="item item-divider">
-            <p>Kontaktinformation</p>
+            <p translate>Contact information</p>
         </div>
         <div ng-if="org.cp" class="item item-body">
             <p ng-bind-html="org.cp | onebr"></p>

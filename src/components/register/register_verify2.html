@@ -1,49 +1,41 @@
-<ion-view view-title="Aktivera konto" class="image-bg">
+<ion-view view-title="{{'Activate account' | translate}}" class="image-bg">
   <ion-content padding="true">
 
     <form name="verifyForm" novalidate>
 
       <!-- Submit errors -->
       <ng-messages for="formErrors" class="error-message">
-        <div class="text-center" ng-message="validationError">
-          Aktiveringen misslyckades, försök igen.
-        </div>
-        <div class="text-center" ng-message="validationError2">
-          Ogiltigt användarnamn eller aktiveringskod
-        </div>
+        <div class="text-center" ng-message="validationError" translate>Activation failed</div>
+        <div class="text-center" ng-message="validationError2" translate>Activation invalid</div>
       </ng-messages>
 
 
       <!-- Username -->
-      <label for="username" class="input-label">Användarnamn:</label>
+      <label for="username" class="input-label" translate>Username</label>
       <label ng-class="{}" class="item item-input">
         <input id="username" name="username" type="text" required ng-model="details.username">
       </label>
       <div class="error-message" ng-messages="verifyForm.username.$error" ng-if="verifyForm.vercode.$dirty">
-        <p ng-message="verified">Ogiltigt användarnamn</p>
+        <p ng-message="verified" translate>Username invalid</p>
       </div>
 
 
       <!-- vercode -->
-      <label for="vercode" class="input-label">Aktiveringskod:</label>
+      <label for="vercode" class="input-label" translate>Activation code</label>
       <label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 			     verifyForm.vercode.$dirty && verifyForm.vercode.length}" class="item item-input">
         <input id="vercode" name="vercode" type="text" required ng-model="details.vercode" ng-pattern="/^\d{4}$/" ng-change="verifyForm.vercode.$setValidity('verified',true)">
       </label>
       <div class="error-message" ng-messages="verifyForm.vercode.$error" ng-if="verifyForm.vercode.$dirty">
-        <p ng-message="verified">Ogiltig aktiveringskod</p>
+        <p ng-message="verified" translate>Activation code invalid</p>
       </div>
 
 
-      <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive">Aktivera</button>
-      <p>
-        Om du har tappat bort din aktiveringskod går det också bra att skapa ett nytt konto med samma användaruppgifter som förut.
-      </p>
+      <button ng-click="verify(verifyForm)" ng-disabled="verifyForm.$invalid" class="button button-block button-positive" translate>Activate</button>
+      <p translate>Activation code lost</p>
       <div class="register-retry">
-        <p>
-          Om du behöver få en ny aktiveringskod, tryck här.
-        </p>
-        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive">Skicka ny aktiveringskod</button>
+        <p translate>Request new activation code</p>
+        <button ng-click="retryRegister()" ng-disabled="!timePassed" class="button button-block button-positive" translate>Send new activation code</button>
       </div>
     </form>
 

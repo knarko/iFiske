@@ -1,10 +1,10 @@
 <ion-popover-view>
   <ion-content scroll="false">
     <list>
-      <a ng-if="sessionData.token" class="item" ng-click="userinfo();">Profil</a>
-      <a ng-if="!sessionData.token" class="item" ng-click="login();">Logga in</a>
-      <a ng-if="!sessionData.token" class="item" ng-click="register();">Registrera</a>
-      <a class="item" ng-click="settings()">Inställningar</a>
+      <a ng-if="sessionData.token" class="item" ng-click="userinfo();" translate>Profile</a>
+      <a ng-if="!sessionData.token" class="item" ng-click="login();" translate>Log in</a>
+      <a ng-if="!sessionData.token" class="item" ng-click="register();" translate>Register</a>
+      <a class="item" ng-click="settings()" translate>Settings</a>
     </list>
   </ion-content>
 </ion-popover-view>

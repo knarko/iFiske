@@ -112,7 +112,7 @@ angular.module('ifiske.services')
         });
     });
 
-    function startPush() {
+    var startPush = function() {
         if (Settings.push()) {
             console.log('Push: Registering for push notifications');
             return $ionicPlatform.ready().then(function() {
@@ -128,6 +128,18 @@ angular.module('ifiske.services')
         // $ionicPush returns a non-$q-promise, so we need to wrap it.
         console.log('Unregistering push tokens');
         return $q.when($ionicPush.unregister());
+    };
+
+    function logout() {
+        // TypeError in Ionic Cloud that we have to catch
+        try {
+            return $q.when($ionicPush.unregister())
+            .finally(function() {
+                return $ionicAuth.logout();
+            });
+        } finally {
+            return $ionicAuth.logout();
+        }
     }
 
     function login(email, password) {
@@ -170,13 +182,6 @@ angular.module('ifiske.services')
             return login(email, password).then(function() {
                 return startPush();
             });
-        });
-    }
-
-    function logout() {
-        return $q.when($ionicPush.unregister())
-        .finally(function() {
-            return $ionicAuth.logout();
         });
     }
 

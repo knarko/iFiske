@@ -1,23 +1,14 @@
 /* jshint node: true */
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
-var sass = require('gulp-sass');
-var autoprefixer = require('autoprefixer');
-var postcss = require('gulp-postcss');
-var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
-var replace = require('gulp-replace');
 var minimist = require('minimist');
-var phonegapBuild = require('gulp-phonegap-build');
 var plumber = require('gulp-plumber');
-var keytar = require('keytar');
 
 var knownOptions = {
     string:  'env',
@@ -129,7 +120,7 @@ gulp.task('templates', function(done) {
     .on('end', done);
 });
 
-gulp.task('static', function(done) {
+gulp.task('static', ['foss'], function(done) {
     gulp.src(paths.static)
     .pipe(gulp.dest('./www/static'))
     .on('end', done);
@@ -147,6 +138,10 @@ gulp.task('libs', function(done) {
 });
 
 gulp.task('sass', function(done) {
+    var sass = require('gulp-sass');
+    var autoprefixer = require('autoprefixer');
+    var postcss = require('gulp-postcss');
+    var minifyCss = require('gulp-minify-css');
     gulp.src(paths.sass)
     .pipe(plumber({errorHandler: done}))
     .pipe(sass())
@@ -172,13 +167,6 @@ gulp.task('watch', function() {
     gulp.watch(paths.templates, ['templates']);
     gulp.watch(paths.directives, ['directives']);
     gulp.watch('src/index.html', ['index']);
-});
-
-gulp.task('install', ['git-check'], function() {
-    return bower.commands.install()
-    .on('log', function(data) {
-        gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
 });
 
 gulp.task('images', function(done) {

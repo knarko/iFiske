@@ -206,10 +206,6 @@ angular.module('ifiske', [
         controller:  'RegisterVerifyCtrl',
     })
 
-    .state('app.bugs', {
-        url:         '/info',
-        templateUrl: 'components/menu/report.html',
-    })
     .state('app.contact', {
         url:         '/contact',
         templateUrl: 'components/contact/contact.html',

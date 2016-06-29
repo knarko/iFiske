@@ -122,5 +122,6 @@ angular.module('ifiske.translations', [])
     'Active licenses': 'Aktiva fiskekort',
     'Inactive licenses': 'Ej ännu aktiva fiskekort',
     'Expired licenses': 'Utgångna fiskekort',
+    'Report bug long text': '<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href="https://github.com/ifiske/ifiske/issues">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href="mailto:app@ifiske.se">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen "det funkar inte" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>',
 
 });

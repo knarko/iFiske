@@ -16,7 +16,6 @@ var gulpif = require('gulp-if');
 var replace = require('gulp-replace');
 var minimist = require('minimist');
 var phonegapBuild = require('gulp-phonegap-build');
-var inquirer = require('inquirer');
 var plumber = require('gulp-plumber');
 var keytar = require('keytar');
 
@@ -185,6 +184,29 @@ gulp.task('install', ['git-check'], function() {
 gulp.task('images', function(done) {
     gulp.src(paths.images)
     .pipe(gulp.dest('./www/css/images'))
+    .on('end', done);
+});
+
+gulp.task('foss', function(done) {
+    var map = require('map-stream');
+    var markdown = require('gulp-markdown');
+    gulp.src(['./{lib,plugins,node_modules/@ionic}/*/{license,LICENSE}*'])
+    .pipe(markdown())
+    .pipe(map(function(file, cb) {
+        var file_content = file.contents.toString();
+        var title = file.relative.match(/[\\\/](.*?)[\\\/][^\\\/]+$/)[1].replace(/[\\\/]/g, '-').replace('@', '');
+        file.contents = new Buffer(JSON.stringify({
+            title: title,
+            text:  file_content,
+        }));
+        cb(null, file);
+    }))
+    .pipe(concat('licenses.json', {newLine: ',\r\n'}))
+    .pipe(map(function(file, cb) {
+        file.contents = new Buffer('[' + file.contents.toString() + ']');
+        cb(null, file);
+    }))
+    .pipe(gulp.dest('src/static'))
     .on('end', done);
 });
 

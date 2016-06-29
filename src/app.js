@@ -131,6 +131,12 @@ angular.module('ifiske', [
         controller:  'SettingsCtrl',
     })
 
+    .state('app.settings.foss', {
+        url:         '/foss',
+        templateUrl: 'components/settings/foss/foss.html',
+        controller:  'FossController',
+    })
+
     .state('app.login', {
         url:         '/login',
         templateUrl: 'components/login/login.html',

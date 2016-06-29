@@ -3,10 +3,11 @@ angular.module('ifiske.controllers')
     '$scope',
     'Push',
     'Settings',
+    'Update',
     '$cordovaToast',
     '$cordovaAppVersion',
     '$ionicPlatform',
-    function($scope, Push, Settings, $cordovaToast, $cordovaAppVersion, $ionicPlatform) {
+    function($scope, Push, Settings, Update, $cordovaToast, $cordovaAppVersion, $ionicPlatform) {
         var blockChanges = false;
         var changedDuringBlock = false;
         function changeHandler() {
@@ -51,6 +52,8 @@ angular.module('ifiske.controllers')
             checked: Settings.push(),
             changed: changeHandler,
         };
+
+        $scope.update = Update;
 
         $ionicPlatform.ready(function() {
             if (window.cordova) {

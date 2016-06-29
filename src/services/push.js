@@ -12,6 +12,7 @@ angular.module('ifiske.services')
     sessionData,
     $ionicPopup,
     $cordovaInAppBrowser,
+    Settings,
     $q
 ) {
     var pushHandlers = {
@@ -94,13 +95,22 @@ angular.module('ifiske.services')
         });
     });
 
-    function registerPush() {
-        console.log('Push: Registering for push notifications');
-        return $ionicPlatform.ready().then(function() {
-            return $ionicPush.register(function(token) {
-                return $ionicPush.saveToken(token);
+    function startPush() {
+        if (Settings.push()) {
+            console.log('Push: Registering for push notifications');
+            return $ionicPlatform.ready().then(function() {
+                return $ionicPush.register(function(token) {
+                    return $ionicPush.saveToken(token);
+                });
             });
-        });
+        }
+        // Unregister push
+        if (!$ionicPush.token) {
+            return $q.resolve('No tokens to unregister');
+        }
+        // $ionicPush returns a non-$q-promise, so we need to wrap it.
+        console.log('Unregistering push tokens');
+        return $q.when($ionicPush.unregister());
     }
 
     function login(email, password) {
@@ -131,7 +141,7 @@ angular.module('ifiske.services')
             return;
         }
         if ($ionicAuth.isAuthenticated() && !$ionicUser.isAnonymous()) {
-            return registerPush();
+            return startPush();
         }
         var promises = [
             API.user_info(),
@@ -141,23 +151,27 @@ angular.module('ifiske.services')
             var email = userInfo[0].email;
             var password = userInfo[1];
             return login(email, password).then(function() {
-                return registerPush();
+                return startPush();
             });
         });
     }
-    init();
+
+    function logout() {
+        return $q.when($ionicPush.unregister())
+        .finally(function() {
+            return $ionicAuth.logout();
+        });
+    }
 
     return {
         init:  init,
         token: function() {
             return $ionicUser.id;
         },
-        unregister: function() {
-            // $ionicPush returns a non-$q-promise, so we need to wrap it.
-            return $q.when($ionicPush.unregister()).finally(function() {
-                return $ionicAuth.logout();
-            });
+        reset: function() {
+            return startPush();
         },
+        logout:          logout,
         registerHandler: function(name, handler) {
             if (name === 'default') {
                 return;

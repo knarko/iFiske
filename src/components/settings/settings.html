@@ -6,7 +6,7 @@
         Inställningar
       </div>
 
-      <ion-toggle ng-model="push.checked" ng-checked="push.checked">
+      <ion-toggle ng-model="push.checked" ng-checked="push.checked" ng-change="push.changed()">
         Push-notifikationer
       </ion-toggle>
       <a ng-click="forcedUpdate()" class="item">Uppdatera databas</a>

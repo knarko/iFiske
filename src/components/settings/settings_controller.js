@@ -4,8 +4,9 @@ angular.module('ifiske.controllers')
     'Push',
     'Settings',
     '$cordovaToast',
+    '$cordovaAppVersion',
     '$ionicPlatform',
-    function($scope, Push, Settings, $cordovaToast, $ionicPlatform) {
+    function($scope, Push, Settings, $cordovaToast, $cordovaAppVersion, $ionicPlatform) {
         var blockChanges = false;
         var changedDuringBlock = false;
         function changeHandler() {
@@ -50,5 +51,15 @@ angular.module('ifiske.controllers')
             checked: Settings.push(),
             changed: changeHandler,
         };
+
+        $ionicPlatform.ready(function() {
+            if (window.cordova) {
+                $cordovaAppVersion.getVersionNumber().then(function(version) {
+                    $scope.version = version;
+                });
+            } else {
+                $scope.version = '3.3.10';
+            }
+        });
     }
 ]);

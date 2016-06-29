@@ -131,6 +131,22 @@ angular.module('ifiske', [
         controller:  'SettingsCtrl',
     })
 
+    .state('app.settings.main', {
+        url:         '/main',
+        templateUrl: 'components/settings/main.html',
+    })
+
+    .state('app.settings.foss', {
+        url:         '/foss',
+        templateUrl: 'components/settings/foss/foss.html',
+        controller:  'FossController',
+    })
+
+    .state('app.settings.about', {
+        url:         '/about',
+        templateUrl: 'components/settings/about.html',
+    })
+
     .state('app.settings.foss', {
         url:         '/foss',
         templateUrl: 'components/settings/foss/foss.html',
@@ -183,17 +199,6 @@ angular.module('ifiske', [
         controller:  'RegisterVerifyCtrl',
     })
 
-    //
-    .state('app.home', {
-        url:         '/home',
-        templateUrl: 'components/home/home.html',
-        controller:  'HomeCtrl',
-    })
-    .state('app.info', {
-        url:         '/info',
-        templateUrl: 'components/info/info.html',
-    })
-
     .state('app.bugs', {
         url:         '/info',
         templateUrl: 'components/menu/report.html',
@@ -207,11 +212,6 @@ angular.module('ifiske', [
         url:         '/legal',
         templateUrl: 'components/legal/legal.html',
         controller:  'LegalCtrl',
-    })
-    .state('app.about', {
-        url:         '/about',
-        templateUrl: 'components/about/about.html',
-        controller:  'AboutCtrl',
     })
     .state('app.userinfo', {
         url:         '/userinfo',
@@ -232,6 +232,42 @@ angular.module('ifiske', [
             },
         },
     })
+    .state('app.find_areas.favorites', {
+        url:   '/favorites',
+        views: {
+            'ionic-tabs': {
+                templateUrl: 'components/find_areas/favorites.html',
+                controller:  'FavoritesCtrl',
+            },
+        },
+    })
+    .state('app.areas', {
+        url:         '/areas',
+        params:      {id: false, county: false, search: ''},
+        templateUrl: 'components/area_list/area_list.html',
+        controller:  'AreasCtrl',
+    })
+    .state('app.cards', {
+        url:         '/cards',
+        templateUrl: 'components/user_cards/user_cards.html',
+        controller:  'UserCardsCtrl',
+    })
+    .state('app.report', {
+        url:    '/report/:id',
+        params: {
+            id: false,
+        },
+        templateUrl: 'components/report/report.html',
+        controller:  'ReportCtrl',
+    })
+    .state('app.create_report', {
+        url:    '/create_report',
+        params: {
+            orgid: false,
+            code:  false,
+        },
+    })
+
     .state('app.find_areas.favorites', {
         url:   '/favorites',
         views: {

@@ -21,13 +21,14 @@ angular.module('ifiske.controllers')
         $state.go('app.userinfo');
     };
 
-    $scope.settings = function() {
-        $scope.popover.hide();
-        $state.go('app.settings');
-    };
     $scope.logout = function() {
         $scope.popover.hide();
         User.logout();
+    };
+
+    $scope.settings = function() {
+        $scope.popover.hide();
+        $state.go('app.settings.main');
     };
 
     $scope.forcedUpdate = function() {

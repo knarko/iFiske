@@ -1,0 +1,26 @@
+<ion-view title="Om appen">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        Om Appen
+      </div>
+      <div class="item">
+        <h2>iFiske - Enklare Fiskekort</h2>
+        <p>&copy; 2015 Jighead AB (iFiske.se)</p>
+      </div>
+      <div class="item">
+        <h2>Versionsnummer</h2>
+        <p>{{version}}</p>
+      </div>
+      <div class="item">
+        <h2>AnvändarId</h2>
+        <p>{{userId}}</p>
+      </div>
+      <div class="item">
+        <h2>Senast uppdaterad</h2>
+        <p>{{update.last_update() | date:'medium'}}</p>
+      </div>
+        <a class="item" ui-sref="app.settings.foss">Öppen mjukvara</a>
+    </div>
+  </ion-content>
+</ion-view>

@@ -27,12 +27,12 @@ angular.module('ifiske', [
     'ImgCache',
     '$rootScope',
     '$timeout',
-
-    // Only get these to init them
     'Push',
-    function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout) {
+    function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout, Push) {
         $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
         $ionicPlatform.ready(function() {
+            Push.init();
+
             if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
                 $window.MobileAccessibility.usePreferredTextZoom(false);
                 console.log("Preferred text zoom disabled");

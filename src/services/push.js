@@ -167,6 +167,5 @@ angular.module('ifiske.services')
             }
             pushHandlers[name].push(handler);
         },
-        testNotification: handleNotification,
     };
 });

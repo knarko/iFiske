@@ -4,13 +4,15 @@ angular.module('ifiske.controllers')
     '$stateParams',
     'DB',
     'Update',
-    '$ionicModal',
-    '$ionicLoading',
-    function($scope, $stateParams, DB, Update) {
+    'PullToRefresh',
+    function($scope, $stateParams, DB, Update, PullToRefresh) {
         $scope.pred = '-to';
+        $scope.$on('$ionicView.beforeEnter', function() {
+            PullToRefresh.trigger('licenses-content');
+        });
 
         var initilize = function() {
-            Update.update()
+            Update.update(true)
             .then(function() {
                 $scope.now = Date.now();
                 return DB.getUserProducts();
@@ -20,7 +22,7 @@ angular.module('ifiske.controllers')
                 $scope.valid = [];
                 $scope.expired = [];
                 $scope.inactive = [];
-                for(var i = 0; i < data.length; ++i) {
+                for (var i = 0; i < data.length; ++i) {
                     data[i].validity = data[i].fr < now ? now < data[i].to ? 'valid' : 'expired' : 'inactive';
                     $scope[data[i].validity].push(data[i]);
                 }
@@ -34,7 +36,7 @@ angular.module('ifiske.controllers')
             });
         };
 
-        $scope.$on('$ionicView.loaded', initilize);
+        //$scope.$on('$ionicView.loaded', initilize);
         $scope.update = function() {
             initilize();
         };

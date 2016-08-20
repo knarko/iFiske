@@ -249,10 +249,11 @@
                     });
                 };
 
-                var updateFunc = function(forced) {
+                var updateFunc = function(forced, hideLoading) {
                     return DB.ready.then(function(newDB) {
                         forced = newDB || forced;
-                        $ionicLoading.show();
+                        if (!hideLoading)
+                            $ionicLoading.show();
                         return $q(function(fulfill, reject) {
 
                             var promises = [];
@@ -315,12 +316,12 @@
                 };
 
                 return {
-                    update: function() {
-                        return updateFunc();
+                    update: function(hideLoading) {
+                        return updateFunc(false, hideLoading);
                     },
 
-                    forcedUpdate: function() {
-                        return updateFunc(true);
+                    forcedUpdate: function(hideLoading) {
+                        return updateFunc(true, hideLoading);
                     },
 
                     user_logout: function() {

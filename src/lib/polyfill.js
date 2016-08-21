@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function() {
     if (!String.prototype.repeat) {
         String.prototype.repeat = function(count) {

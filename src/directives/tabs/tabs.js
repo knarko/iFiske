@@ -5,9 +5,15 @@ angular.module('ifiske.directives')
         restrict:    'E',
         transclude:  true,
         templateUrl: 'directives/tabs/tabs.html',
-        link:        function(scope, elm, iat, con, transcludeFn) {
+
+        link: function(scope, elm, iat, con, transcludeFn) {
         },
-        controller: ['$scope', '$ionicHistory', '$state', '$ionicViewSwitcher', function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
+        controller: function(
+            $scope,
+            $ionicHistory,
+            $state,
+            $ionicViewSwitcher
+        ) {
             var tabs = [];
             this.scope = $scope;
             this.addTab = function(tab) {
@@ -33,7 +39,7 @@ angular.module('ifiske.directives')
                     location: 'replace',
                 });
             };
-        }],
+        },
     };
 })
 .directive('hipTab', function() {
@@ -48,10 +54,10 @@ angular.module('ifiske.directives')
         require:     '^hipTabs',
         replace:     true,
         templateUrl: 'directives/tabs/tab.html',
-        link:        function(scope, elem, attrs, controllerInstance) {
+
+        link: function(scope, elem, attrs, controllerInstance) {
             scope.goto = controllerInstance.scope.goto;
             controllerInstance.addTab(scope);
         },
     };
 });
-

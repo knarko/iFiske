@@ -10,11 +10,18 @@ angular.module('ifiske.directives')
         scope: {
             mapData: '=',
         },
-        controller: ['$scope', '$timeout', 'localStorage', 'DB', '$q', function($scope, $timeout, localStorage, DB, $q) {
+        controller: function(
+            $scope,
+            $timeout,
+            localStorage,
+            DB,
+            $q
+        ) {
+            // eslint-disable-next-line max-len
             var mapboxUrl = 'http://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
             var apikey = localStorage.get('mapbox_api');
 
-            var lc = new L.control.locate({
+            var lc = new window.L.control.locate({ // eslint-disable-line new-cap
                 follow:               false,
                 position:             'bottomright',
                 keepCurrentZoomLevel: false,
@@ -96,10 +103,10 @@ angular.module('ifiske.directives')
 
             var createscope = function(a) {
                 return function() {
-                    var new_scope = $scope.$new();
-                    new_scope.area = a;
+                    var scope = $scope.$new();
+                    scope.area = a;
                     console.log(a);
-                    return new_scope;
+                    return scope;
                 };
             };
 
@@ -107,20 +114,19 @@ angular.module('ifiske.directives')
             var createIcons = function() {
                 if (icons) {
                     return $q.when(icons);
-                } else {
-                    return DB.getPoiTypes()
-                    .then(function(poi_types) {
-                        icons = {};
-                        for (var i = 0; i < poi_types.length; ++i) {
-                            var type = poi_types[i];
-                            icons[type.ID] = {
-                                iconUrl:     'http://www.ifiske.se' + type.icon,
-                                iconAnchor:  [16, 37], // point of the icon which will correspond to marker's location
-                                popupAnchor: [0, -35],
-                            };
-                        }
-                    });
                 }
+                return DB.getPoiTypes()
+                .then(function(poiTypes) {
+                    icons = {};
+                    for (var i = 0; i < poiTypes.length; ++i) {
+                        var type = poiTypes[i];
+                        icons[type.ID] = {
+                            iconUrl:     'http://www.ifiske.se' + type.icon,
+                            iconAnchor:  [16, 37], // point of the icon which will correspond to marker's location
+                            popupAnchor: [0, -35],
+                        };
+                    }
+                });
             };
 
             var createMarkers = function(areas) {
@@ -131,8 +137,9 @@ angular.module('ifiske.directives')
                         lat:             a.lat,
                         lng:             a.lng,
                         getMessageScope: createscope(a), // TODO: dont create multiple scopes
-                        message:         '<a ui-sref="app.area.info({id: area.ID })" ng-bind="area.t"></a>',
-                        icon:            {
+
+                        message: '<a ui-sref="app.area.info({id: area.ID })" ng-bind="area.t"></a>',
+                        icon:    {
                             type:        'awesomeMarker',
                             icon:        a.favorite ? 'star' : '',
                             markerColor: a.wsc ? (a.favorite ? 'orange' : 'blue') : 'lightgray',
@@ -205,6 +212,6 @@ angular.module('ifiske.directives')
                     createArea(data.area);
                 }
             }, true);
-        }],
+        },
     };
 });

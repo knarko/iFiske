@@ -21,7 +21,16 @@ angular.module('ifiske.controllers')
             $scope.slider.updateLoop();
         });
 
-        if (!$scope.tech) {
+        if ($scope.tech) {
+            var data = $scope.tech;
+            $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
+                return !/\/$/.test(el);
+            });
+
+            if ($scope.slider) {
+                $scope.slider.updateLoop();
+            }
+        } else {
             DB.getTechnique($stateParams.id)
             .then(function(data) {
                 $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
@@ -33,15 +42,6 @@ angular.module('ifiske.controllers')
 
                 $scope.tech = data;
             });
-        } else {
-            var data = $scope.tech;
-            $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
-                return !/\/$/.test(el);
-            });
-
-            if ($scope.slider) {
-                $scope.slider.updateLoop();
-            }
         }
     },
 ]);

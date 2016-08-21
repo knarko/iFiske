@@ -1,5 +1,10 @@
 angular.module('ngCordovaSms', [])
-.directive('ngCordovaSms', ['$cordovaSms', '$ionicPopup', 'DB', '$rootScope', function($cordovaSms, $ionicPopup, DB, $rootScope) {
+.directive('ngCordovaSms', function(
+    $cordovaSms,
+    $ionicPopup,
+    DB,
+    $rootScope
+) {
     'use strict';
     return {
         restrict: 'A',
@@ -55,4 +60,4 @@ angular.module('ngCordovaSms', [])
             });
         },
     };
-}]);
+});

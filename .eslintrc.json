@@ -9,11 +9,24 @@
     },
     "rules": {
         "indent": ["error", 4],
-        "max-len": ["error", 100],
+        "max-len": ["error",
+            {
+                "code": 100,
+                "ignoreComments": true
+            }
+        ],
         "comma-dangle": ["error", "always-multiline"],
-        "key-spacing": ["error", {
-            "align": "value"
-        }],
-        "radix": "off"
+        "key-spacing": ["error",
+            {
+                "align": "value"
+            }
+        ],
+        "radix": "off",
+        "one-var": ["error",
+            {
+                "uninitialized": "always",
+                "initialized": "never"
+            }
+        ]
     }
 }

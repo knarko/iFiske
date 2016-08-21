@@ -29,13 +29,14 @@ angular.module('ifiske.controllers')
 
             $scope.navigate = function() {
                 $ionicPlatform.ready(function() {
-                    launchnavigator.navigate(
+                    window.launchnavigator.navigate(
                         [$scope.navto.lat, $scope.navto.lng],
                         null,
                         function() {
                             console.log('Opening navigator');
                         },
                         function(error) {
+                            // TODO: don't alert
                             alert('Navigation failed!', error);
                         });
                 });

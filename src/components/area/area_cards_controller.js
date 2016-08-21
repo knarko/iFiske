@@ -18,7 +18,7 @@ angular.module('ifiske.controllers')
                 scope:     $scope,
                 animation: 'slide-in-up',
             }).then(function(modal) {
-                $scope.sms_modal = modal;
+                $scope.sms_modal = modal; // eslint-disable-line camelcase
             });
             $scope.openModal = function(product) {
                 $scope.sms_modal.show();
@@ -28,7 +28,7 @@ angular.module('ifiske.controllers')
                 $scope.sms_modal.hide();
             };
             $scope.persistApproveSMSRules = function() {
-                if ($scope.SMSRules.approval == 'YES') {
+                if ($scope.SMSRules.approval === 'YES') {
                     $ionicPopup.show({
                         title:    'Regler för SMS-köp',
                         scope:    $scope,
@@ -63,7 +63,7 @@ angular.module('ifiske.controllers')
                 scope:     $scope,
                 animation: 'slide-in-up',
             }).then(function(modal) {
-                $scope.rules_modal = modal;
+                $scope.rules_modal = modal; // eslint-disable-line camelcase
             });
             $scope.openRulesModal = function(product) {
                 $scope.rules_modal.show();

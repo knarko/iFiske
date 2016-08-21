@@ -10,7 +10,6 @@ angular.module('ifiske.controllers')
     '$ionicPlatform',
     '$timeout',
     function($scope, $state, $window, Update, $ionicLoading, $ionicHistory, $ionicViewSwitcher, $ionicPlatform, $timeout) {
-
         /**
          * signIn
          * Submit handler for login form. Validates login input.
@@ -26,7 +25,7 @@ angular.module('ifiske.controllers')
                 $ionicViewSwitcher.nextDirection('forward');
                 $ionicHistory.nextViewOptions({
                     disableBack: true,
-                    historyRoot: true
+                    historyRoot: true,
                 });
                 $state.go('app.home');
             }, function(error) {
@@ -44,9 +43,9 @@ angular.module('ifiske.controllers')
             $ionicViewSwitcher.nextDirection('forward');
             $ionicHistory.nextViewOptions({
                 disableBack: true,
-                historyRoot: true
+                historyRoot: true,
             });
             $state.go('app.home');
         };
-    }
+    },
 ]);

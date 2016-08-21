@@ -15,7 +15,6 @@ angular.module('ifiske.controllers')
         'Update',
         'localStorage',
         function($scope, $state, $ionicLoading, $ionicModal, $ionicScrollDelegate, $ionicPlatform, $cordovaToast, $ionicViewSwitcher, $ionicHistory, $timeout, $interval, API, Update, localStorage) {
-
             $scope.details = {};
             $scope.forms = {};
 
@@ -56,13 +55,12 @@ angular.module('ifiske.controllers')
                     username: $scope.details.username,
                     fullname: $scope.details.fullname,
                     password: $scope.details.password,
-                    email: $scope.details.email,
-                    phone: $scope.details.phone,
+                    email:    $scope.details.email,
+                    phone:    $scope.details.phone,
                 };
 
                 API.user_register(userDetails)
                     .then(function() {
-
                         // Save user details for later use
                         localStorage.set('register_user_details', JSON.stringify(userDetails));
                         startTimer();
@@ -101,21 +99,20 @@ angular.module('ifiske.controllers')
                     });
             };
 
-
             $scope.retryRegister = function() {
                 var userDetails = getUserDetails();
                 if (!userDetails) {
-                    //Navigate back to initial registration
+                    // Navigate back to initial registration
                     return;
                 }
                 API.user_register(userDetails)
                 .then(function() {
-                    if(window.plugins && window.plugins.toast) {
+                    if (window.plugins && window.plugins.toast) {
                         $cordovaToast.showShortBottom('Ny aktiveringskod skickad');
                     }
                 }, function(error) {
                     console.error(error);
-                    if(window.plugins && window.plugins.toast) {
+                    if (window.plugins && window.plugins.toast) {
                         $cordovaToast.showLongBottom('Ett fel uppstod, aktiveringskoden kunde inte skickas.');
                     }
                 });
@@ -126,7 +123,7 @@ angular.module('ifiske.controllers')
                 $scope.timePassed = false;
                 $scope.timeLeft = 1000 * 60 * 3;
                 timer = $interval(function() {
-                    $scope.timeLeft-=1000;
+                    $scope.timeLeft -= 1000;
                 }, 1000);
                 endoftime = $timeout(function() {
                     stopTimer();
@@ -142,13 +139,12 @@ angular.module('ifiske.controllers')
             function getUserDetails() {
                 try {
                     return userDetails = JSON.parse(localStorage.get('register_user_details'));
-                } catch (e){
-                    //TODO: this is shit, more user info pls
+                } catch (e) {
+                    // TODO: this is shit, more user info pls
                     console.error(e);
                     return false;
                 }
             }
-
 
             /**
              * verify
@@ -168,7 +164,7 @@ angular.module('ifiske.controllers')
                 API.user_confirm(username, form.vercode.$viewValue)
                     .then(function() {
                         $ionicPlatform.ready(function() {
-                            if(window.plugins && window.plugins.toast) {
+                            if (window.plugins && window.plugins.toast) {
                                 $cordovaToast.showLongBottom('Ditt konto har skapats');
                             }
                         });
@@ -181,12 +177,12 @@ angular.module('ifiske.controllers')
                                 $ionicViewSwitcher.nextDirection('forward');
                                 $ionicHistory.nextViewOptions({
                                     disableBack: true,
-                                    historyRoot: true
+                                    historyRoot: true,
                                 });
                                 $state.go('app.home');
                             })
                             .finally(function() {
-                                //Clean up user details
+                                // Clean up user details
                                 localStorage.set('register_user_details', '');
                             });
                         } else {
@@ -201,14 +197,13 @@ angular.module('ifiske.controllers')
                         }
                     })
                     .finally($ionicLoading.hide);
-                };
-
+            };
 
             $scope.tos = localStorage.get('tos');
-            //Modal with the EULA
+            // Modal with the EULA
             $ionicModal.fromTemplateUrl('components/register/eula.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
+                scope:     $scope,
+                animation: 'slide-in-up',
             }).then(function(modal) {
                 $scope.eula = modal;
             });
@@ -221,5 +216,4 @@ angular.module('ifiske.controllers')
             $scope.$on('$destroy', function() {
                 $scope.eula.remove();
             });
-
         }]);

@@ -27,7 +27,6 @@ angular.module('ifiske.controllers')
             }
             $scope.$on('ifiske-area', updateMap);
 
-
             $scope.navigate = function() {
                 $ionicPlatform.ready(function() {
                     launchnavigator.navigate(
@@ -44,18 +43,18 @@ angular.module('ifiske.controllers')
 
             var enabledEvents = ['popupopen', 'popupclose'];
             $scope.events = {
-                enabled: enabledEvents
+                enabled: enabledEvents,
             };
 
             $scope.$on('leafletDirectiveMarker.popupopen', function(event, args) {
-                //show navtobutton
+                // show navtobutton
                 $scope.navto = args.model;
             });
 
             $scope.$on('leafletDirectiveMarker.popupclose', function() {
-                //hide navtobutton
+                // hide navtobutton
                 $scope.navto = null;
             });
         });
-    }
+    },
 ]);

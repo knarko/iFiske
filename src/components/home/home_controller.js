@@ -8,7 +8,6 @@ angular.module('ifiske.controllers')
     'Update',
     '$window',
     function($scope, $state, $ionicHistory, localStorage, sessionData, Update) {
-
         $scope.loggedIn = sessionData;
 
         $scope.update = Update;
@@ -21,10 +20,9 @@ angular.module('ifiske.controllers')
         };
 
         $scope.myFunc = function($event) {
-            if ($event.keyCode === 13 && !$event.shiftKey) { //if enter-key
+            if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
                 $state.go('app.areas', {search: $event.srcElement.value});
             }
-
         };
-    }
+    },
 ]);

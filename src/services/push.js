@@ -40,15 +40,15 @@ angular.module('ifiske.services')
             REP_REQ: [function(notification, payload) {
                 if (payload && payload.orgid && payload.code) {
                     $ionicPopup.confirm({
-                        title: 'Vill du skapa en fångstrapport?',
+                        title:      'Vill du skapa en fångstrapport?',
                         cancelText: 'Avbryt',
-                        okText: 'OK'
+                        okText:     'OK',
                     }).then(function(response) {
                         if (response) {
                             $cordovaInAppBrowser.open('https://ifiske.se/r/' + payload.code, '_system');
                         }
                     });
-                    //$state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
+                    // $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
                 }
             }],
 
@@ -59,7 +59,7 @@ angular.module('ifiske.services')
             */
             NEW_FAV: [function(notification, payload) {
                 if (payload && payload.repid) {
-                    //$state.go('app.report', {id: payload.repid});
+                    // $state.go('app.report', {id: payload.repid});
                 }
             }],
 
@@ -72,7 +72,7 @@ angular.module('ifiske.services')
                 if (payload && payload.message) {
                     $ionicPopup.alert(payload.message);
                 }
-            }]
+            }],
         };
 
         var handleNotification = function(notification) {
@@ -112,7 +112,7 @@ angular.module('ifiske.services')
                 var details = {email: email, password: password};
                 console.log('logging in');
                 return $ionicAuth.login('basic', {remember: true}, details).catch(function(errors) {
-                    console.log('errors on logging in:',errors);
+                    console.log('errors on logging in:', errors);
                     if (errors && errors.response && errors.response.statusCode === 401) {
                         return $ionicAuth.signup(details).then(function() {
                             return $ionicAuth.login('basic', {remember: true}, details);
@@ -142,7 +142,7 @@ angular.module('ifiske.services')
             } else {
                 var promises = [
                     API.user_info(),
-                    API.user_get_secret()
+                    API.user_get_secret(),
                 ];
                 return $q.all(promises).then(function(userInfo) {
                     var email = userInfo[0].email;
@@ -156,12 +156,12 @@ angular.module('ifiske.services')
         init();
 
         return {
-            init: init,
+            init:  init,
             token: function() {
                 return $ionicUser.current().id;
             },
             unregister: function() {
-                //$ionicPush returns a non-$q-promise, so we need to wrap it.
+                // $ionicPush returns a non-$q-promise, so we need to wrap it.
                 return $q.when($ionicPush.unregister()).finally(function() {
                     return $ionicAuth.logout();
                 });
@@ -175,7 +175,7 @@ angular.module('ifiske.services')
                 }
                 pushHandlers[name].push(handler);
             },
-            testNotification: handleNotification
+            testNotification: handleNotification,
         };
-    }
+    },
 ]);

@@ -1,11 +1,11 @@
 angular.module('ifiske.directives')
 .directive('hipTabs', function() {
     return {
-        scope: true,
-        restrict: 'E',
-        transclude: true,
+        scope:       true,
+        restrict:    'E',
+        transclude:  true,
         templateUrl: 'directives/tabs/tabs.html',
-        link: function(scope, elm, iat, con, transcludeFn) {
+        link:        function(scope, elm, iat, con, transcludeFn) {
         },
         controller: ['$scope', '$ionicHistory', '$state', '$ionicViewSwitcher', function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
             var tabs = [];
@@ -30,28 +30,28 @@ angular.module('ifiske.directives')
                 }
                 $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
                 $state.go(elementScope.viewName, null, {
-                    location: 'replace'
+                    location: 'replace',
                 });
             };
-        }]
+        }],
     };
 })
 .directive('hipTab', function() {
     return {
         scope: {
-            icon: '@',
-            name: '@',
+            icon:     '@',
+            name:     '@',
             viewName: '@',
-            index: '@'
+            index:    '@',
         },
-        restrict: 'E',
-        require: '^hipTabs',
-        replace: true,
+        restrict:    'E',
+        require:     '^hipTabs',
+        replace:     true,
         templateUrl: 'directives/tabs/tab.html',
-        link: function(scope, elem, attrs, controllerInstance) {
+        link:        function(scope, elem, attrs, controllerInstance) {
             scope.goto = controllerInstance.scope.goto;
             controllerInstance.addTab(scope);
-        }
+        },
     };
 });
 

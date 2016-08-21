@@ -3,7 +3,6 @@
 
     angular.module('ifiske.services')
     .provider('Update', function UpdateProvider() {
-
         this.$get = [
             'API',
             'DB',
@@ -16,24 +15,23 @@
             '$ionicPlatform',
             'ImgCache',
             function(API, DB, localStorage, $q, $ionicLoading, sessionData, Push, $cordovaToast, $ionicPlatform, ImgCache) {
-
                 var LAST_UPDATE = 'last_update';
 
                 var updates = {
                     auth: [
                         {
                             endpoint: 'user_products',
-                            table: 'User_Product',
+                            table:    'User_Product',
                         },
                         {
                             endpoint: 'user_get_favorites',
-                            table: 'User_Favorite',
+                            table:    'User_Favorite',
                         },
                         {
                             endpoint: 'user_info',
-                            table: [
+                            table:    [
                                 'User_Info',
-                                'User_Number'
+                                'User_Number',
                             ],
                             f: function(data) {
                                 var numbers = data.numbers;
@@ -58,43 +56,43 @@
                                         return $q.reject(err);
                                     }),
                                 ]);
-                            }
-                        }
+                            },
+                        },
                     ],
                     timed: [
                         {
                             endpoint: 'get_areas',
-                            f: function(data) {
+                            f:        function(data) {
                                 var fishArr = [];
                                 var photoArr = [];
                                 for (var key in data) {
                                     var fishes = data[key].fish;
                                     for (var fishKey in fishes) {
                                         fishArr.push({
-                                            'ID': key + '_' + fishKey,
-                                            fid: fishKey,
-                                            aid: key,
-                                            amount: fishes[fishKey][0],
-                                            comment: fishes[fishKey][1]
+                                            'ID':    key + '_' + fishKey,
+                                            fid:     fishKey,
+                                            aid:     key,
+                                            amount:  fishes[fishKey][0],
+                                            comment: fishes[fishKey][1],
                                         });
                                     }
                                     var photos = data[key].imgs;
                                     if (photos) {
                                         for (var i = 0; i < photos.length; ++i) {
                                             photoArr.push({
-                                                ID: key + '_' + i,
+                                                ID:  key + '_' + i,
                                                 aid: key,
                                                 url: photos[i],
                                             });
                                         }
                                     } else {
-                                        console.log(key)
+                                        console.log(key);
                                     }
                                 }
                                 return $q.all([
                                     DB.populateTable('Area', data),
                                     DB.populateTable('Area_Fish', fishArr),
-                                    DB.populateTable('Area_Photos', photoArr)
+                                    DB.populateTable('Area_Photos', photoArr),
                                 ])
                                 .then(function() {
                                     return 'Area';
@@ -102,23 +100,23 @@
                                     console.warn(err);
                                     return $q.reject(err);
                                 });
-                            }
+                            },
                         },
                         {
                             endpoint: 'get_products',
-                            table: 'Product'
+                            table:    'Product',
                         },
                         {
                             endpoint: 'get_counties',
-                            table: 'County'
+                            table:    'County',
                         },
                         {
                             endpoint: 'get_municipalities',
-                            table: 'Municipality'
+                            table:    'Municipality',
                         },
                         {
                             endpoint: 'get_fishes',
-                            f: function(data) {
+                            f:        function(data) {
                                 var image_endpoint = 'https://www.ifiske.se';
                                 console.log('Downloading all fish images: ', data);
                                 for (var fish in data) {
@@ -135,33 +133,33 @@
                         },
                         {
                             endpoint: 'get_rules',
-                            table: 'Rule'
+                            table:    'Rule',
                         },
                         {
                             endpoint: 'get_techniques',
-                            table: 'Technique'
+                            table:    'Technique',
                         },
                         {
                             endpoint: 'get_organizations',
-                            table: 'Organization'
+                            table:    'Organization',
                         },
                         {
                             endpoint: 'get_map_pois',
-                            table: 'Poi'
+                            table:    'Poi',
                         },
                         {
                             endpoint: 'get_map_poi_types',
-                            table: 'Poi_Type'
+                            table:    'Poi_Type',
                         },
                         {
                             endpoint: 'get_map_polygons',
-                            table: 'Polygon'
-                        }
+                            table:    'Polygon',
+                        },
                     ],
                     always: [
                         {
                             endpoint: 'get_content_menu',
-                            f: function(data) {
+                            f:        function(data) {
                                 localStorage.set('NEWS', data.title);
                                 return DB.populateTable('News', data.contents)
                                 .then(function() {
@@ -170,29 +168,28 @@
                                     console.warn(err);
                                     return $q.reject(err);
                                 });
-                            }
+                            },
                         },
                         {
-                            endpoint: 'get_terms_of_service',
-                            storage_name: 'tos'
+                            endpoint:     'get_terms_of_service',
+                            storage_name: 'tos',
                         },
                         {
-                            endpoint: 'get_sms_terms',
-                            storage_name: 'sms_terms'
+                            endpoint:     'get_sms_terms',
+                            storage_name: 'sms_terms',
                         },
                         {
-                            endpoint: 'get_contact_info',
-                            storage_name: 'contactInfo'
+                            endpoint:     'get_contact_info',
+                            storage_name: 'contactInfo',
                         },
                         {
-                            endpoint: 'get_mapbox_api',
-                            storage_name: 'mapbox_api'
-                        }
-                    ]
+                            endpoint:     'get_mapbox_api',
+                            storage_name: 'mapbox_api',
+                        },
+                    ],
                 };
 
                 var timedUpdate = function(currentTime) {
-
                     var lastUpdate = localStorage.get(LAST_UPDATE);
 
                     var aWeek = 1000 * 3600 * 24 * 7;
@@ -200,7 +197,6 @@
                 };
 
                 var populate = function(item) {
-
                     var p = API[item.endpoint]();
                     var then;
                     if (typeof item.f === 'function') {
@@ -211,7 +207,7 @@
                             .then(function() {
                                 return item.table;
                             }, function(err) {
-                                //TODO: what if we need to remake the tables?
+                                // TODO: what if we need to remake the tables?
                                 console.warn(err);
                                 return $q.reject(err);
                             });
@@ -255,7 +251,6 @@
                         if (!hideLoading)
                             $ionicLoading.show();
                         return $q(function(fulfill, reject) {
-
                             var promises = [];
                             var currentTime = Date.now();
                             var shouldUpdate = (forced || timedUpdate(currentTime));
@@ -288,7 +283,7 @@
                                             if (window.plugins) {
                                                 $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
                                             } else {
-                                                console.warn('Cannot toast')
+                                                console.warn('Cannot toast');
                                             }
                                         });
                                         cleanUser();
@@ -299,7 +294,7 @@
                                             if (window.plugins) {
                                                 $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
                                             } else {
-                                                console.warn('Cannot toast')
+                                                console.warn('Cannot toast');
                                             }
                                         });
                                         reject('Couldn\'t update: ' + err.message);
@@ -309,10 +304,8 @@
                                     $ionicLoading.hide();
                                 });
                             });
-
                         });
                     });
-
                 };
 
                 return {
@@ -336,9 +329,9 @@
                     },
                     last_update: function() {
                         return localStorage.get(LAST_UPDATE);
-                    }
+                    },
                 };
-            }
+            },
         ];
     });
 })(window.angular);

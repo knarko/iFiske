@@ -7,13 +7,13 @@ angular.module('ifiske.controllers')
     '$sce',
     function($scope, $stateParams, DB, $ionicModal, $sce) {
         function updateQR() {
-            $scope.qr = $sce.trustAsResourceUrl('data:image/png;base64,'+$scope.product.qr);
+            $scope.qr = $sce.trustAsResourceUrl('data:image/png;base64,' + $scope.product.qr);
         }
         if ($stateParams.license) {
             $scope.product = $stateParams.license;
             updateQR();
         } else {
-            //TODO: get license from DB, or from api
+            // TODO: get license from DB, or from api
             DB.getUserProduct($stateParams.id).then(function(license) {
                 var now = parseInt(Date.now() / 1000);
                 $scope.product = license;
@@ -31,10 +31,10 @@ angular.module('ifiske.controllers')
         }
         $scope.now = Date.now();
         console.log($scope);
-        //use the same modal as in area_cards
+        // use the same modal as in area_cards
         $ionicModal.fromTemplateUrl('components/area/rules_modal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
+            scope:     $scope,
+            animation: 'slide-in-up',
         }).then(function(modal) {
             $scope.rules_modal = modal;
         });
@@ -48,5 +48,5 @@ angular.module('ifiske.controllers')
         $scope.$on('$destroy', function() {
             $scope.rules_modal.remove();
         });
-    }
+    },
 ]);

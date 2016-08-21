@@ -39,26 +39,25 @@ angular.module('ifiske.controllers')
                                        'short', 'bottom');
                 });
             });
-
         };
         $scope.openPopover = function(area) {
             $ionicActionSheet.show({
                 buttons: [
-                    {text: area.not ? 'Stäng av notifikationer' : 'Sätt på notifikationer'}
+                    {text: area.not ? 'Stäng av notifikationer' : 'Sätt på notifikationer'},
                 ],
-                destructiveText: 'Ta bort favorit',
+                destructiveText:          'Ta bort favorit',
                 destructiveButtonClicked: function() {
                     removeFavorite(area);
                     return true;
                 },
-                titleText: 'Ändra din favorit',
-                cancelText: 'Gör inget',
+                titleText:     'Ändra din favorit',
+                cancelText:    'Gör inget',
                 buttonClicked: function() {
                     area.not = !area.not;
                     return true;
                 },
-                cancel: function() {}
+                cancel: function() {},
             });
         };
-    }
+    },
 ]);

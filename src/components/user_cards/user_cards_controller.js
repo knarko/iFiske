@@ -36,9 +36,9 @@ angular.module('ifiske.controllers')
             });
         };
 
-        //$scope.$on('$ionicView.loaded', initilize);
+        // $scope.$on('$ionicView.loaded', initilize);
         $scope.update = function() {
             initilize();
         };
-    }
+    },
 ]);

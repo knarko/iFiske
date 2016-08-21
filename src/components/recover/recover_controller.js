@@ -29,15 +29,13 @@ angular.module('ifiske.controllers')
     * lostPassword
     * Submit handler for first form
     */
-    $scope.lostPassword = function(form) {
+        $scope.lostPassword = function(form) {
+            $ionicLoading.show();
 
-        $ionicLoading.show();
+            user = form.user.$viewValue;
 
-        user = form.user.$viewValue;
-
-        API.user_lost_password(user)
+            API.user_lost_password(user)
         .then(function(data) {
-
             // Set info message for next view
             $scope.info = 'En återställningskod kommer skickas till dig inom kort, via ';
             if (data.mailed) {
@@ -50,19 +48,17 @@ angular.module('ifiske.controllers')
                 $scope.info += 'SMS';
             }
             if (data.mailed) {
-                $scope.info += '<br>Om du inte fått ditt mejl efter 10 minuter, kolla så att mejlet inte fastnat i skräpposten.'
+                $scope.info += '<br>Om du inte fått ditt mejl efter 10 minuter, kolla så att mejlet inte fastnat i skräpposten.';
             }
 
             $state.go('^.resetpassword');
-
         }, function(error) {
-            //ToDo: handle timeout?
-            //ToDo: check error codes?
+            // ToDo: handle timeout?
+            // ToDo: check error codes?
             form.user.$setValidity('invalidUser', false);
         })
         .finally($ionicLoading.hide);
-    };
-
+        };
 
     /**
     * resetPassword
@@ -70,16 +66,14 @@ angular.module('ifiske.controllers')
     *
     * ToDo: log in immediately?
     */
-    $scope.resetPassword = function(form) {
-        $ionicLoading.show();
+        $scope.resetPassword = function(form) {
+            $ionicLoading.show();
 
-
-        API.user_reset_password(user, form.password.$viewValue, form.code.$viewValue)
+            API.user_reset_password(user, form.password.$viewValue, form.code.$viewValue)
         .then(function(data) {
+            // ToDo: handle timeouts?
 
-            //ToDo: handle timeouts?
-
-            //ToDo: .ready() needed?
+            // ToDo: .ready() needed?
             // Success toast
             $ionicPlatform.ready(function() {
                 $cordovaToast.showLongBottom('Ditt lösenord har ändrats');
@@ -88,20 +82,20 @@ angular.module('ifiske.controllers')
             $state.go('app.login');
 
             // Navigate to current history root?
-            //$ionicHistory.goToHistoryRoot($ionicHistory.currentView().historyId);
+            // $ionicHistory.goToHistoryRoot($ionicHistory.currentView().historyId);
         }, function(error) {
-            switch(error.error_code) {
-                /*case 5:
+            switch (error.error_code) {
+                /* case 5:
                 //invalide username
                 break;*/
-                /*case 13:
+                /* case 13:
                 form.password.$setValidity('passwordLength', false);
                 break;*/
-                case 16:
-                form.code.$setValidity('invalidCode',false);
+            case 16:
+                form.code.$setValidity('invalidCode', false);
                 break;
             }
         })
         .finally($ionicLoading.hide);
-    };
-}]);
+        };
+    }]);

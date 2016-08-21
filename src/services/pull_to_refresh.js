@@ -4,7 +4,6 @@ angular.module('ifiske.services')
     '$timeout',
     '$ionicScrollDelegate',
     function($timeout, $ionicScrollDelegate) {
-
         /**
         * Trigger the pull-to-refresh on a specific scroll view delegate handle.
         *
@@ -12,7 +11,6 @@ angular.module('ifiske.services')
         */
         this.trigger = function(delegateHandle) {
             $timeout(function() {
-
                 var scrollView = $ionicScrollDelegate.$getByHandle(delegateHandle).getScrollView();
 
                 if (!scrollView) {
@@ -39,9 +37,7 @@ angular.module('ifiske.services')
                 if (scrollView.__refreshStart) {
                     scrollView.__refreshStart();
                 }
-
             });
-
         };
-    }
+    },
 ]);

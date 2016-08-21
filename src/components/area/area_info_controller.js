@@ -14,10 +14,10 @@ angular.module('ifiske.controllers')
         });
 
         $scope.slideOptions = {
-            loop: true,
-            effect: 'slide',
-            speed: 250,
-            autoPlay: 1000,
+            loop:       true,
+            effect:     'slide',
+            speed:      250,
+            autoPlay:   1000,
             autoHeight: true,
         };
         DB.getAreaPhotos($stateParams.id)
@@ -30,12 +30,11 @@ angular.module('ifiske.controllers')
             console.error(err);
         });
 
-        $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+        $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
             // grab an instance of the slider
             $scope.slider = data.slider;
             $scope.slider.updateLoop();
         });
-
 
         $scope.changeFavorite = function() {
             if (sessionData.token) {
@@ -68,5 +67,5 @@ angular.module('ifiske.controllers')
                 });
             }
         };
-    }
+    },
 ]);

@@ -7,11 +7,10 @@ angular.module('ifiske.controllers')
     'sessionData',
     'Update',
     function($scope, $state, $ionicViewSwitcher, $ionicPopover, sessionData, Update) {
-
         $scope.sessionData = sessionData;
 
         $ionicPopover.fromTemplateUrl('components/menu/popover.html', {
-            scope: $scope
+            scope: $scope,
         }).then(function(popover) {
             $scope.popover = popover;
         });
@@ -39,6 +38,5 @@ angular.module('ifiske.controllers')
         $scope.forcedUpdate = function() {
             Update.forcedUpdate();
         };
-
-    }
+    },
 ]);

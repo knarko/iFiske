@@ -3,7 +3,6 @@
 
     angular.module('ifiske.services')
     .provider('API', function APIProvider() {
-
         this.base_url = 'https://www.ifiske.se/api/v2/api.php';
 
         this.$get = [
@@ -23,11 +22,11 @@
                     return $q(function(fulfill, reject) {
                         $http(
                             {
-                                method:'get',
-                                url: base_url,
-                                params: angular.extend(params, {'key': 'ox07xh8aaypwvq7a'}),
+                                method:  'get',
+                                url:     base_url,
+                                params:  angular.extend(params, {'key': 'ox07xh8aaypwvq7a'}),
                                 timeout: 7000,
-                                cache: (cache !== false)
+                                cache:   (cache !== false),
                             }
                         )
                         // ToDo: Proper logging
@@ -42,7 +41,7 @@
                                 }
                             }
                         })
-                        //.error(function(data, status, headers, config, statusText) {
+                        // .error(function(data, status, headers, config, statusText) {
                         .error(function(data, status) {
                             if (status === 0) {
                                 reject(new Error('Request timeout'));
@@ -86,9 +85,9 @@
                     },
                     user_confirm: function(username, pin) {
                         return api_call({
-                            m: 'user_confirm',
+                            m:        'user_confirm',
                             username: username,
-                            pin: pin
+                            pin:      pin,
                         }, false);
                     },
                     user_info: function() {
@@ -96,35 +95,35 @@
                     },
                     user_lost_password: function(user) {
                         return api_call(
-                            {m: 'user_lost_password',
-                                user_identification: user
+                            {m:                   'user_lost_password',
+                                user_identification: user,
                             }, false);
                     },
                     user_reset_password: function(user_identification, password, code) {
                         return api_call({
-                            m: 'user_reset_password',
+                            m:                   'user_reset_password',
                             user_identification: user_identification,
-                            password: password,
-                            code: code
+                            password:            password,
+                            code:                code,
                         }, false);
                     },
                     user_change_password: function(old_password, new_password) {
                         return session_api_call({
-                            m: 'user_change_password',
+                            m:            'user_change_password',
                             old_password: old_password,
-                            new_password: new_password
+                            new_password: new_password,
                         }, false);
                     },
                     user_login: function(username, password) {
                         return api_call(
-                            {m: 'user_login',
+                            {m:        'user_login',
                                 username: username,
-                                password: password
+                                password: password,
                             }, false)
                             .then(function(data) {
                                 sessionData.setToken(data);
 
-                                //needed for chaining of promises
+                                // needed for chaining of promises
                                 return data;
                             });
                     },
@@ -145,9 +144,9 @@
                     },
                     user_set_pushtoken: function(token) {
                         return session_api_call({
-                            m: 'user_set_pushtoken',
+                            m:     'user_set_pushtoken',
                             token: token,
-                            type: 1 //1 is for ionic
+                            type:  1, // 1 is for ionic
                         }, false);
                     },
                     get_fishes: function() {
@@ -161,67 +160,67 @@
                     },
                     get_organizations: function(orgid) {
                         return api_call(
-                            {m: 'get_organizations',
-                                orgid: orgid
+                            {m:     'get_organizations',
+                                orgid: orgid,
                             });
                     },
                     get_org_modified: function(orgid) {
                         return api_call(
-                            {m: 'get_org_modified',
-                                orgid: orgid
+                            {m:     'get_org_modified',
+                                orgid: orgid,
                             });
                     },
                     get_areas: function(areaid) {
                         return api_call(
-                            {m: 'get_areas',
-                                areaid: areaid
+                            {m:      'get_areas',
+                                areaid: areaid,
                             });
                     },
                     get_areas_modified: function(areaid) {
                         return api_call(
-                            {m: 'get_areas_modified',
-                                areaid: areaid
+                            {m:      'get_areas_modified',
+                                areaid: areaid,
                             });
                     },
                     get_products: function(areaid) {
                         return api_call(
-                            {m: 'get_products',
-                                areaid: areaid
+                            {m:      'get_products',
+                                areaid: areaid,
                             });
                     },
                     get_rules: function(ruleid) {
                         return api_call(
-                            {m: 'get_rules',
-                                ruleid: ruleid
+                            {m:      'get_rules',
+                                ruleid: ruleid,
                             });
                     },
                     get_photos: function(orgid, areaid) {
                         return api_call(
-                            {m: 'get_photos',
-                                orgid: orgid,
-                                areaid: areaid
+                            {m:      'get_photos',
+                                orgid:  orgid,
+                                areaid: areaid,
                             });
                     },
                     get_map_pois: function(orgid) {
                         return api_call(
-                            {m: 'get_map_pois',
-                                orgid: orgid
+                            {m:     'get_map_pois',
+                                orgid: orgid,
                             });
                     },
-                    get_map_poi_types : function() {
+                    get_map_poi_types: function() {
                         return api_call({m: 'get_map_poi_types'});
                     },
                     get_map_polygons: function(orgid) {
                         return api_call(
-                            {m: 'get_map_polygons',
-                                orgid: orgid
+                            {m:     'get_map_polygons',
+                                orgid: orgid,
                             });
                     },
                     user_get_favorites: function() {
                         return session_api_call({m: 'user_get_favorites'}, false);
                     },
                     user_add_favorite: function(area) {
-                        //Flag 0 means to not get notifications on catch reports
+                        // Flag 0 means to not get notifications on catch reports
                         return session_api_call({m: 'user_add_favorite', areaid: area, flag: 0}, false);
                     },
                     user_set_favorite_notification: function(area, flag) {
@@ -248,7 +247,7 @@
                     },
                     get_content_menu: function() {
                         return api_call({m: 'get_content_menu'});
-                    }
+                    },
                 };
             }];
     });

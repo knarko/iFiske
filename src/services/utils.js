@@ -10,7 +10,7 @@ angular.module('ifiske.services')
         },
         remove: function(key) {
             $window.localStorage.removeItem(key);
-        }
+        },
     };
 }])
 .service('sessionData', ['localStorage', function(localStorage) {
@@ -34,7 +34,7 @@ angular.module('ifiske.services')
         return {
             get: function() {
                 return $http.get('static/licenses.json');
-            }
+            },
         };
-    }
+    },
 ]);

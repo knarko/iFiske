@@ -11,5 +11,5 @@ angular.module('ifiske.controllers')
                 $scope.item = data;
             });
         }
-    }
+    },
 ]);

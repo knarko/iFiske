@@ -20,7 +20,9 @@
     "package": "gulp --env=production && ionic package build android --release -p prod && ionic package build ios --release -p prod",
     "package.android": "gulp --env=production && ionic package build android --release -p prod",
     "package.ios": "gulp --env=production && ionic package build ios --release -p prod",
-    "resources": "ionic resources"
+    "resources": "ionic resources",
+    "lint": "eslint src",
+    "lint.fix": "eslint src --fix"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,8 @@
     "autoprefixer": "^6.3.6",
     "bower": "^1.7.9",
     "cordova": "^6.2.0",
+    "eslint": "^3.3.1",
+    "eslint-config-google": "^0.6.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-cordova-bump": "github:maistho/gulp-cordova-bump#master",

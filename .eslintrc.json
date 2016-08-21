@@ -1,0 +1,19 @@
+{
+    "extends": "google",
+    "env": {
+        "browser" :true
+    },
+    "globals": {
+        "goog": null,
+        "angular": false
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "max-len": ["error", 100],
+        "comma-dangle": ["error", "always-multiline"],
+        "key-spacing": ["error", {
+            "align": "value"
+        }],
+        "radix": "off"
+    }
+}

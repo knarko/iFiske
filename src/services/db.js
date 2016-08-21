@@ -289,6 +289,26 @@ angular.module('ifiske.services')
                     fulfill);
                 });
             }
+
+            function getMultiple(sql, args) {
+                return $q(function(fulfill, reject) {
+                    $cordovaSQLite.execute(db, sql, args)
+                        .then(function(result) {
+                            if (result.rows.length) {
+                                fulfill(createObject(result));
+                            } else {
+                                reject('Could not find any matching objects');
+                            }
+                        });
+                });
+            }
+
+            function getSingle(sql, args) {
+                return getMultiple(sql, args).then(function(result) {
+                    return result[0];
+                });
+            }
+
             return {
                 ready:         ready.promise,
                 populateTable: function(table, data) {
@@ -331,6 +351,9 @@ angular.module('ifiske.services')
                 clean: clean,
 
                 init: init,
+
+                getMultiple: getMultiple,
+                getSingle:   getSingle,
 
                 /**
                 * Gets information about an area

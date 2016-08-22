@@ -21,11 +21,26 @@
                 "align": "value"
             }
         ],
+        "no-unused-vars": ["warn",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "vars": "all"
+            }
+        ],
         "radix": "off",
         "one-var": ["error",
             {
                 "uninitialized": "always",
                 "initialized": "never"
+            }
+        ],
+        "require-jsdoc": ["warn",
+            {
+                "require": {
+                    "FunctionDeclaration": true,
+                    "MethodDefinition": true
+                }
             }
         ]
     }

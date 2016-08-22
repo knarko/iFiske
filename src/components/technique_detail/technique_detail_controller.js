@@ -1,19 +1,15 @@
 angular.module('ifiske.controllers')
-.controller('TechniqueDetailCtrl', [
-    '$scope',
-    '$stateParams',
-    'DB',
-    function($scope, $stateParams, DB) {
-        $scope.tech = $stateParams.tech;
-        $scope.images = [];
+.controller('TechniqueDetailCtrl', function($scope, $stateParams, Technique, $sce) {
+    $scope.tech = $stateParams.tech;
+    $scope.images = [];
 
-        $scope.slideOptions = {
-            loop:       true,
-            effect:     'slide',
-            speed:      250,
-            autoPlay:   1000,
-            autoHeight: true,
-        };
+    $scope.slideOptions = {
+        loop:       true,
+        effect:     'slide',
+        speed:      250,
+        autoPlay:   1000,
+        autoHeight: true,
+    };
 
         $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
             // grab an instance of the slider
@@ -21,27 +17,25 @@ angular.module('ifiske.controllers')
             $scope.slider.updateLoop();
         });
 
-        if ($scope.tech) {
-            var data = $scope.tech;
+    if ($scope.tech) {
+        var data = $scope.tech;
+        $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
+            return !/\/$/.test(el);
+        });
+        if ($scope.slider) {
+            $scope.slider.updateLoop();
+        }
+    } else {
+        Technique.getOne($stateParams.id)
+        .then(function(data) {
             $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
                 return !/\/$/.test(el);
             });
-
             if ($scope.slider) {
                 $scope.slider.updateLoop();
             }
-        } else {
-            DB.getTechnique($stateParams.id)
-            .then(function(data) {
-                $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
-                    return !/\/$/.test(el);
-                });
-                if ($scope.slider) {
-                    $scope.slider.updateLoop();
-                }
 
-                $scope.tech = data;
-            });
-        }
-    },
-]);
+            $scope.tech = data;
+        });
+    }
+});

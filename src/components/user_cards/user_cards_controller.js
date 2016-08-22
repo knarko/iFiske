@@ -2,18 +2,11 @@ angular.module('ifiske.controllers')
 .controller('UserCardsCtrl', function(
     $scope,
     $stateParams,
-    DB,
+    User,
+    Product,
     Update,
     PullToRefresh
 ) {
-    // TODO: put in Product-model
-    function getProductValidity(product) {
-        var now = parseInt(Date.now() / 1000);
-        if (product.fr < now) {
-            return now < product.to ? 'valid' : 'expired';
-        }
-        return 'inactive';
-    }
     $scope.pred = '-to';
     $scope.$on('$ionicView.beforeEnter', function() {
         PullToRefresh.trigger('licenses-content');
@@ -23,14 +16,14 @@ angular.module('ifiske.controllers')
         Update.update(true)
         .then(function() {
             $scope.now = Date.now();
-            return DB.getUserProducts();
+            return User.getProducts();
         })
         .then(function(data) {
             $scope.valid = [];
             $scope.expired = [];
             $scope.inactive = [];
             for (var i = 0; i < data.length; ++i) {
-                data[i].validity = getProductValidity(data[i]);
+                data[i].validity = Product.getValidity(data[i]);
                 $scope[data[i].validity].push(data[i]);
             }
             $scope.products = data;

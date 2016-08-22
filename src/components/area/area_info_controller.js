@@ -4,7 +4,8 @@ angular.module('ifiske.controllers')
     sessionData,
     $ionicPopup,
     API,
-    DB,
+    Area,
+    User,
     $ionicPlatform,
     $cordovaToast,
     $stateParams
@@ -20,7 +21,7 @@ angular.module('ifiske.controllers')
         autoPlay:   1000,
         autoHeight: true,
     };
-    DB.getAreaPhotos($stateParams.id)
+    Area.getPhotos($stateParams.id)
     .then(function(images) {
         $scope.images = images;
         if ($scope.slider) {
@@ -43,7 +44,7 @@ angular.module('ifiske.controllers')
             if ($scope.area.favorite) {
                 promise = API.user_add_favorite($scope.area.ID)
                 .then(function() {
-                    return DB.addFavorite($scope.area.ID);
+                    return User.addFavorite($scope.area.ID);
                 }).then(function() {
                     return $ionicPlatform.ready(function() {
                         $cordovaToast.show(
@@ -55,7 +56,7 @@ angular.module('ifiske.controllers')
                 });
             } else {
                 promise = API.user_remove_favorite($scope.area.ID).then(function() {
-                    return DB.removeFavorite($scope.area.ID);
+                    return User.removeFavorite($scope.area.ID);
                 }).then(function() {
                     $ionicPlatform.ready(function() {
                         $cordovaToast.show(

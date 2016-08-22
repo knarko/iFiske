@@ -46,6 +46,7 @@ var paths = {
         './src/components/**/*.js',
         './src/services/**/*.js',
         './src/directives/**/*.js',
+        './src/models/**/*.js',
     ],
     libs: [
         './src/lib/polyfill.js',

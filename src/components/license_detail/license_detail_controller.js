@@ -2,17 +2,13 @@ angular.module('ifiske.controllers')
 .controller('LicenseDetailCtrl', function(
     $scope,
     $stateParams,
-    DB,
+    Area,
+    User,
+    Product,
+    Organization,
     $ionicModal,
     $sce
 ) {
-    function getProductValidity(product) {
-        var now = parseInt(Date.now() / 1000);
-        if (product.fr < now) {
-            return now < product.to ? 'valid' : 'expired';
-        }
-        return 'inactive';
-    }
     function updateQR() {
         $scope.qr = $sce.trustAsResourceUrl('data:image/png;base64,' + $scope.product.qr);
     }
@@ -20,15 +16,14 @@ angular.module('ifiske.controllers')
         $scope.product = $stateParams.license;
         updateQR();
     } else {
-        // TODO: get license from DB, or from api
-        DB.getUserProduct($stateParams.id).then(function(license) {
+        User.getProduct($stateParams.id).then(function(license) {
             $scope.product = license;
             updateQR();
-            $scope.product.validity = getProductValidity($scope.product);
+            $scope.product.validity = Product.getValidity($scope.product);
             if (license.ai) {
-                DB.getArea(license.ai).then(function(area) {
+                Area.getOne(license.ai).then(function(area) {
                     $scope.area = area;
-                    DB.getOrganization(area.orgid).then(function(org) {
+                    Organization.getOne(area.orgid).then(function(org) {
                         $scope.org = org;
                     });
                 });

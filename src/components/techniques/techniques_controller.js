@@ -1,9 +1,9 @@
 angular.module('ifiske.controllers')
-.controller('TechniquesCtrl', ['$scope', 'DB', function($scope, DB) {
+.controller('TechniquesCtrl', function($scope, Technique) {
     $scope.sortorder = 'so';
 
-    DB.getTechniques()
+    Technique.getAll()
     .then(function(data) {
         $scope.techniques = data;
     });
-}]);
+});

@@ -1,7 +1,7 @@
 angular.module('ifiske.controllers')
-.controller('CountiesCtrl', function($scope, DB, $state, $ionicHistory) {
+.controller('CountiesCtrl', function($scope, County, $state, $ionicHistory) {
     var initialize = function() {
-        DB.getCounties()
+        County.getAll()
         .then(function(data) {
             $scope.counties = data;
         }, function(err) {

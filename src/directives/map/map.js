@@ -14,7 +14,7 @@ angular.module('ifiske.directives')
             $scope,
             $timeout,
             localStorage,
-            DB,
+            MapData,
             $q
         ) {
             // eslint-disable-next-line max-len
@@ -115,7 +115,7 @@ angular.module('ifiske.directives')
                 if (icons) {
                     return $q.when(icons);
                 }
-                return DB.getPoiTypes()
+                return MapData.getPoiTypes()
                 .then(function(poiTypes) {
                     icons = {};
                     for (var i = 0; i < poiTypes.length; ++i) {

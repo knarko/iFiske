@@ -1,19 +1,15 @@
 angular.module('ifiske.controllers')
-.controller('AreaMapCtrl', [
-    '$scope',
-    'DB',
-    '$ionicPlatform',
-    function($scope, DB, $ionicPlatform) {
+.controller('AreaMapCtrl', function($scope, MapData, $ionicPlatform) {
         $scope.map = {};
         var updateMap = function() {
             $scope.map.area = $scope.area;
-            DB.getPois($scope.area.orgid)
+            MapData.getPois($scope.area.orgid)
             .then(function(pois) {
                 $scope.map.pois = pois;
             }, function(err) {
                 console.error(err);
             });
-            DB.getPolygons($scope.area.orgid)
+            MapData.getPolygons($scope.area.orgid)
             .then(function(polygons) {
                 $scope.map.polygons = polygons;
             }, function(err) {

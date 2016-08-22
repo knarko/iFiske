@@ -2,7 +2,7 @@ angular.module('ngCordovaSms', [])
 .directive('ngCordovaSms', function(
     $cordovaSms,
     $ionicPopup,
-    DB,
+    User,
     $rootScope
 ) {
     'use strict';
@@ -52,7 +52,7 @@ angular.module('ngCordovaSms', [])
             };
             el.on('click', function(e) {
                 e.preventDefault();
-                DB.getUserInfo()
+                User.getInfo()
                 .then(showPopup)
                 .catch(function() {
                     showPopup({name: ''});

@@ -10,163 +10,35 @@ angular.module('ifiske.services')
         Push,
         $cordovaToast,
         $ionicPlatform,
-        ImgCache
+        Area,
+        County,
+        Fish,
+        MapData,
+        Organization,
+        News,
+        Product,
+        Rule,
+        Technique,
+        User
     ) {
         var LAST_UPDATE = 'last_update';
 
         var updates = {
             auth: [
-                {
-                    endpoint: 'user_products',
-                    table:    'User_Product',
-                },
-                {
-                    endpoint: 'user_get_favorites',
-                    table:    'User_Favorite',
-                },
-                {
-                    endpoint: 'user_info',
-                    table:    [
-                        'User_Info',
-                        'User_Number',
-                    ],
-                    f: function(data) {
-                        var numbers = data.numbers;
-                        var numArr = [];
-                        for (var i = 0; i < numbers.length; ++i) {
-                            numArr.push({number: numbers[i]});
-                        }
-                        return $q.all([
-                            DB.populateTable('User_Info', [data])
-                            .then(function() {
-                                return 'User_Info';
-                            }, function(err) {
-                                console.log(data);
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
-                            DB.populateTable('User_Number', numArr)
-                            .then(function() {
-                                return 'User_Numbers';
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
-                        ]);
-                    },
-                },
+                User.update,
             ],
             timed: [
-                {
-                    endpoint: 'get_areas',
-                    f:        function(data) {
-                        var fishArr = [];
-                        var photoArr = [];
-                        for (var key in data) {
-                            var fishes = data[key].fish;
-                            for (var fishKey in fishes) {
-                                fishArr.push({
-                                    ID:      key + '_' + fishKey,
-                                    fid:     fishKey,
-                                    aid:     key,
-                                    amount:  fishes[fishKey][0],
-                                    comment: fishes[fishKey][1],
-                                });
-                            }
-                            var photos = data[key].imgs;
-                            if (photos) {
-                                for (var i = 0; i < photos.length; ++i) {
-                                    photoArr.push({
-                                        ID:  key + '_' + i,
-                                        aid: key,
-                                        url: photos[i],
-                                    });
-                                }
-                            } else {
-                                console.log(key);
-                            }
-                        }
-                        return $q.all([
-                            DB.populateTable('Area', data),
-                            DB.populateTable('Area_Fish', fishArr),
-                            DB.populateTable('Area_Photos', photoArr),
-                        ])
-                        .then(function() {
-                            return 'Area';
-                        }, function(err) {
-                            console.warn(err);
-                            return $q.reject(err);
-                        });
-                    },
-                },
-                {
-                    endpoint: 'get_products',
-                    table:    'Product',
-                },
-                {
-                    endpoint: 'get_counties',
-                    table:    'County',
-                },
-                {
-                    endpoint: 'get_municipalities',
-                    table:    'Municipality',
-                },
-                {
-                    endpoint: 'get_fishes',
-                    f:        function(data) {
-                        var image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
-                        console.log('Downloading all fish images: ', data);
-                        for (var fish in data) {
-                            ImgCache.cacheFile(image_endpoint + data[fish].img); // eslint-disable-line camelcase
-                        }
-                        return DB.populateTable('Fish', data)
-                        .then(function() {
-                            return 'Fish';
-                        }, function(err) {
-                            console.warn(err);
-                            return $q.reject(err);
-                        });
-                    },
-                },
-                {
-                    endpoint: 'get_rules',
-                    table:    'Rule',
-                },
-                {
-                    endpoint: 'get_techniques',
-                    table:    'Technique',
-                },
-                {
-                    endpoint: 'get_organizations',
-                    table:    'Organization',
-                },
-                {
-                    endpoint: 'get_map_pois',
-                    table:    'Poi',
-                },
-                {
-                    endpoint: 'get_map_poi_types',
-                    table:    'Poi_Type',
-                },
-                {
-                    endpoint: 'get_map_polygons',
-                    table:    'Polygon',
-                },
+                Area.update,
+                County.update,
+                Fish.update,
+                Product.update,
+                Rule.update,
+                Organization.update,
+                Technique.update,
+                MapData.update,
             ],
             always: [
-                {
-                    endpoint: 'get_content_menu',
-                    f:        function(data) {
-                        localStorage.set('NEWS', data.title);
-                        return DB.populateTable('News', data.contents)
-                        .then(function() {
-                            return 'News';
-                        }, function(err) {
-                            console.warn(err);
-                            return $q.reject(err);
-                        });
-                    },
-                },
+                News.update,
                 {
                     endpoint:    'get_terms_of_service',
                     storageName: 'tos',
@@ -194,21 +66,13 @@ angular.module('ifiske.services')
         };
 
         var populate = function(item) {
+            if (typeof item === 'function') {
+                return item();
+            }
             var p = API[item.endpoint]();
             var then;
             if (typeof item.f === 'function') {
                 then = item.f;
-            } else if (item.table) {
-                then = function(data) {
-                    return DB.populateTable(item.table, data)
-                    .then(function() {
-                        return item.table;
-                    }, function(err) {
-                        // TODO: what if we need to remake the tables?
-                        console.warn(err);
-                        return $q.reject(err);
-                    });
-                };
             } else if (item.storageName) {
                 then = function(data) {
                     return localStorage.set(item.storageName, data);
@@ -223,16 +87,9 @@ angular.module('ifiske.services')
         };
 
         var cleanUser = function() {
+            // TODO: Add user cleaning to Userfile too
             var p = [];
-            for (var i = 0; i < updates.auth.length; ++i) {
-                if (Array.isArray(updates.auth[i].table)) {
-                    for (var j = 0; j < updates.auth[i].table.length; ++j) {
-                        p.push(DB.cleanTable(updates.auth[i].table[j]));
-                    }
-                } else {
-                    p.push(DB.cleanTable(updates.auth[i].table));
-                }
-            }
+            p.push(User.clean());
             p.push(Push.unregister());
             return $q.all(p)
             .then(function() {
@@ -251,56 +108,52 @@ angular.module('ifiske.services')
                     var promises = [];
                     var currentTime = Date.now();
                     var shouldUpdate = (forced || timedUpdate(currentTime));
-                    DB.init()
-                    .then(function() {
-                        console.log('Initialized DB system');
-                        var i;
-                        for (i = 0; i < updates.always.length; ++i) {
-                            promises.push(populate(updates.always[i]));
+                    var i;
+                    for (i = 0; i < updates.always.length; ++i) {
+                        promises.push(populate(updates.always[i]));
+                    }
+                    if (sessionData.token) {
+                        for (i = 0; i < updates.auth.length; ++i) {
+                            promises.push(populate(updates.auth[i]));
                         }
-                        if (sessionData.token) {
-                            for (i = 0; i < updates.auth.length; ++i) {
-                                promises.push(populate(updates.auth[i]));
-                            }
+                    }
+                    if (shouldUpdate) {
+                        for (i = 0; i < updates.timed.length; ++i) {
+                            promises.push(populate(updates.timed[i]));
                         }
-                        if (shouldUpdate) {
-                            for (i = 0; i < updates.timed.length; ++i) {
-                                promises.push(populate(updates.timed[i]));
-                            }
-                        }
+                    }
 
-                        $q.all(promises).then(function(stuff) {
-                            console.log('Populated:', stuff);
-                            if (shouldUpdate) {
-                                localStorage.set(LAST_UPDATE, currentTime);
-                            }
-                            fulfill('Pass');
-                        }, function(err) {
-                            if (err.error_code === 7) {
-                                $ionicPlatform.ready(function() {
-                                    if (window.plugins) {
-                                        $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
-                                    } else {
-                                        console.warn('Cannot toast');
-                                    }
-                                });
-                                cleanUser();
-                                API.user_logout();
-                                reject('auth failure');
-                            } else {
-                                $ionicPlatform.ready(function() {
-                                    if (window.plugins) {
-                                        $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
-                                    } else {
-                                        console.warn('Cannot toast');
-                                    }
-                                });
-                                reject('Couldn\'t update: ' + err.message);
-                            }
-                        })
-                        .finally(function() {
-                            $ionicLoading.hide();
-                        });
+                    $q.all(promises).then(function(stuff) {
+                        console.log('Populated:', stuff);
+                        if (shouldUpdate) {
+                            localStorage.set(LAST_UPDATE, currentTime);
+                        }
+                        fulfill('Pass');
+                    }, function(err) {
+                        if (err.error_code === 7) {
+                            $ionicPlatform.ready(function() {
+                                if (window.plugins) {
+                                    $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
+                                } else {
+                                    console.warn('Cannot toast');
+                                }
+                            });
+                            cleanUser();
+                            API.user_logout();
+                            reject('auth failure');
+                        } else {
+                            $ionicPlatform.ready(function() {
+                                if (window.plugins) {
+                                    $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
+                                } else {
+                                    console.warn('Cannot toast');
+                                }
+                            });
+                            reject('Couldn\'t update: ' + err.message);
+                        }
+                    })
+                    .finally(function() {
+                        $ionicLoading.hide();
                     });
                 });
             });

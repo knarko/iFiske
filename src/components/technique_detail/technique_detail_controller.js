@@ -11,11 +11,15 @@ angular.module('ifiske.controllers')
         autoHeight: true,
     };
 
-        $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
-            // grab an instance of the slider
-            $scope.slider = data.slider;
-            $scope.slider.updateLoop();
-        });
+    $scope.$on("$ionicSlides.sliderInitialized", function(_event, data) {
+        // grab an instance of the slider
+        $scope.slider = data.slider;
+        $scope.slider.updateLoop();
+    });
+
+    $scope.youtube = function(url) {
+        return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + url);
+    };
 
     if ($scope.tech) {
         var data = $scope.tech;

@@ -34,7 +34,7 @@ angular.module('ifiske.models')
                     for (var fish in data) {
                         ImgCache.cacheFile(image_endpoint + data[fish].img); // eslint-disable-line camelcase
                     }
-                    return DB.populateTableNew(table, data)
+                    return DB.populateTable(table, data)
                     .then(function() {
                         return 'Fish';
                     }, function(err) {

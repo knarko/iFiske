@@ -22,7 +22,7 @@ angular.module('ifiske.models')
                     });
                 }).then(function(data) {
                     localStorage.set('NEWS', data.title);
-                    return DB.populateTableNew(table, data.contents)
+                    return DB.populateTable(table, data.contents)
                     .then(function() {
                         return 'News';
                     }, function(err) {

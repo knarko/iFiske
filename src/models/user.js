@@ -68,7 +68,7 @@ angular.module('ifiske.models')
                 return wait.then(function() {
                     var p = [];
                     p.push(API.user_get_favorites().then(function(favorites) {
-                        DB.populateTableNew(tables.favorite, favorites);
+                        DB.populateTable(tables.favorite, favorites);
                     }));
                     p.push(API.user_info().then(function(data) {
                         var numbers = data.numbers;
@@ -77,7 +77,7 @@ angular.module('ifiske.models')
                             numArr.push({number: numbers[i]});
                         }
                         return $q.all([
-                            DB.populateTableNew(tables.info, [data])
+                            DB.populateTable(tables.info, [data])
                             .then(function() {
                                 return 'User_Info';
                             }, function(err) {
@@ -85,7 +85,7 @@ angular.module('ifiske.models')
                                 console.log(err);
                                 return $q.reject(err);
                             }),
-                            DB.populateTableNew(tables.number, numArr)
+                            DB.populateTable(tables.number, numArr)
                             .then(function() {
                                 return 'User_Numbers';
                             }, function(err) {
@@ -95,7 +95,7 @@ angular.module('ifiske.models')
                         ]);
                     }));
                     p.push(API.user_products().then(function(products) {
-                        DB.populateTableNew(tables.products, products);
+                        DB.populateTable(tables.products, products);
                     }));
 
                     return $q.all(p);

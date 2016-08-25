@@ -86,8 +86,7 @@ angular.module('ifiske.services')
             });
         }
 
-        function populateTableNew(table, data) {
-            console.log('Populating table: ', table, data);
+        function populateTable(table, data) {
             return $q(function(fulfill, reject) {
                 db.transaction(function(tx) {
                     tx.executeSql('DELETE FROM ' + table.name + ';');
@@ -124,11 +123,11 @@ angular.module('ifiske.services')
 
             insertHelper: function(table) {
                 return function(data) {
-                    return populateTableNew(table, data);
+                    return populateTable(table, data);
                 };
             },
 
-            populateTableNew: populateTableNew,
+            populateTable: populateTable,
 
             initializeTable: function(table) {
                 /*

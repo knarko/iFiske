@@ -91,9 +91,9 @@ angular.module('ifiske.models')
                 }
             }
             return $q.all([
-                DB.populateTableNew(tables[0], data),
-                DB.populateTableNew(tables[1], fishArr),
-                DB.populateTableNew(tables[2], photoArr),
+                DB.populateTable(tables[0], data),
+                DB.populateTable(tables[1], fishArr),
+                DB.populateTable(tables[2], photoArr),
             ])
             .then(function() {
                 return 'Area';

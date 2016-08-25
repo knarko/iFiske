@@ -1,5 +1,5 @@
 angular.module('ifiske.models')
-.provider('Fish', function AreaProvider() {
+.provider('Fish', function FishProvider() {
     var table = {
         name:    'Fish',
         primary: 'ID',
@@ -20,26 +20,21 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(API, DB, ImgCache, $q) {
+    this.$get = function(API, DB, ImgCache) {
         var wait = DB.initializeTable(table);
+
         return {
             update: function() {
-                return API.get('get_fishes').then(function(data) {
-                    return wait.then(function() {
-                        return data;
-                    });
-                }).then(function(data) {
-                    var image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
+                return API.get('get_fishes')
+                .then(function(data) {
+                    var ifiskeHome = 'https://www.ifiske.se';
                     console.log('Downloading all fish images: ', data);
                     for (var fish in data) {
-                        ImgCache.cacheFile(image_endpoint + data[fish].img); // eslint-disable-line camelcase
+                        if (data.hasOwnProperty(fish))
+                            ImgCache.cacheFile(ifiskeHome + data[fish].img);
                     }
-                    return DB.populateTable(table, data)
-                    .then(function() {
-                        return 'Fish';
-                    }, function(err) {
-                        console.warn(err);
-                        return $q.reject(err);
+                    return wait.then(function() {
+                        return DB.populateTable(table, data);
                     });
                 });
             },

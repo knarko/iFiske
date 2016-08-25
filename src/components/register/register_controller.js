@@ -13,7 +13,8 @@ angular.module('ifiske.controllers')
     $interval,
     API,
     Update,
-    localStorage
+    localStorage,
+    Terms
 ) {
     $scope.details = {};
     $scope.forms = {};
@@ -201,7 +202,7 @@ angular.module('ifiske.controllers')
         .finally($ionicLoading.hide);
     };
 
-    $scope.tos = localStorage.get('tos');
+    $scope.tos = Terms.getTermsOfService();
     // Modal with the EULA
     $ionicModal.fromTemplateUrl('components/register/eula.html', {
         scope:     $scope,

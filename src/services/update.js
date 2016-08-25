@@ -19,6 +19,7 @@ angular.module('ifiske.services')
         Product,
         Rule,
         Technique,
+        Terms,
         User
     ) {
         var LAST_UPDATE = 'last_update';
@@ -39,22 +40,7 @@ angular.module('ifiske.services')
             ],
             always: [
                 News.update,
-                {
-                    endpoint:    'get_terms_of_service',
-                    storageName: 'tos',
-                },
-                {
-                    endpoint:    'get_sms_terms',
-                    storageName: 'sms_terms',
-                },
-                {
-                    endpoint:    'get_contact_info',
-                    storageName: 'contactInfo',
-                },
-                {
-                    endpoint:    'get_mapbox_api',
-                    storageName: 'mapbox_api',
-                },
+                Terms.update,
             ],
         };
 

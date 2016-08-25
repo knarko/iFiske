@@ -1,132 +1,146 @@
 angular.module('ifiske.services')
-.provider('DB', function DBProvider() {
-    this.$get = function($cordovaSQLite, $q) {
-        var db;
-        var ready = $q.defer();
-        var version = '5';
-        if (window.sqlitePlugin) {
-            db = $cordovaSQLite.openDB('fiskebasen.db');
-        } else if (window.openDatabase) {
-            try {
+.service('DB', function($cordovaSQLite, $q) {
+    var db;
+    var ready = $q.defer();
+    var version = '5';
+    if (window.sqlitePlugin) {
+        db = $cordovaSQLite.openDB('fiskebasen.db');
+    } else if (window.openDatabase) {
+        try {
+            db = window.openDatabase(
+                'fiskebasen.db',
+                version,
+                'fiskebasen',
+                10 * 1024 * 1024
+            );
+            ready.resolve(false);
+        } catch (e) {
+            if (!db) {
                 db = window.openDatabase(
                     'fiskebasen.db',
-                    version,
+                    '',
                     'fiskebasen',
                     10 * 1024 * 1024
                 );
-                ready.resolve(false);
-            } catch (e) {
-                if (!db) {
-                    db = window.openDatabase(
-                        'fiskebasen.db',
-                        '',
-                        'fiskebasen',
-                        10 * 1024 * 1024
-                    );
-                    db.changeVersion(db.version, version, function() {
-                        console.log('updating db from ' + db.version + ' to ' + version);
-                        clean().then(function() {
-                            ready.resolve(true);
-                        });
-                    });
+                db.changeVersion(db.version, version, function() {
+                    console.log('updating db from ' + db.version + ' to ' + version);
+                    ready.resolve(true);
+                });
+            }
+        }
+    } else {
+        console.log('Not supported on this device, sorry');
+        ready.reject('Not supported');
+        return {ready: ready.promise};
+    }
+
+    /**
+     * Run a sql command
+     * @param  {string} sql SQL string to run
+     * @return {SQL_result}     SQL result
+     */
+    function runSql(sql) {
+        return $cordovaSQLite.execute(db, sql);
+    }
+
+    /**
+     * Create an array of objects from a sql result
+     * @param  {SQL_result} data Result of an sql query
+     * @return {Array}      Array of objects
+     */
+    function createObject(data) {
+        var retval = [];
+        for (var i = 0; i < data.rows.length; ++i) {
+            retval.push(angular.copy(data.rows.item(i)));
+        }
+        return retval;
+    }
+
+    function clean(table) {
+        return runSql('DROP TABLE IF EXISTS ' + table + ';');
+    }
+
+    /**
+     * Runs a query, returning the selected rows as an array
+     * @param  {string} sql  SQL command to execute
+     * @param  {array} args Array containing arguments to be inserted with '?'
+     * @return {Promise<array>}      Promise of an array with the selected rows
+     */
+    function getMultiple(sql, args) {
+        return $q(function(fulfill, reject) {
+            $cordovaSQLite.execute(db, sql, args)
+            .then(function(result) {
+                if (result.rows.length) {
+                    fulfill(createObject(result));
+                } else {
+                    reject('Could not find any matching objects');
                 }
-            }
-        } else {
-            console.log('Not supported on this device, sorry');
-            ready.reject('Not supported');
-            return {ready: ready.promise};
-        }
+            }, reject);
+        });
+    }
 
-        function runSql(sql) {
-            return $cordovaSQLite.execute(db, sql);
-        }
+    /**
+     * Runs a query, returning a single selected row
+     * @param  {string} sql  SQL command to execute
+     * @param  {Array} args Array containing arguments to be inserted wit '?'
+     * @return {Promise<Row>}      Promise of a row from the table
+     */
+    function getSingle(sql, args) {
+        return getMultiple(sql, args).then(function(result) {
+            return result[0];
+        });
+    }
 
-        function createObject(data) {
-            var retval = [];
-            for (var i = 0; i < data.rows.length; ++i) {
-                retval.push(angular.copy(data.rows.item(i)));
-            }
-            return retval;
-        }
+    /**
+     * Populates a given table with data
+     * @param  {table} table The table definition, should be {name: string, primary: string, members: {"column_name": "int|real|boolean|string"}}
+     * @param  {Enumerable} data  Object or Array with data to insert, should be contain objects with the same keys as the table columns
+     * @return {SQL_results}  Returns SQL results
+     */
+    function populateTable(table, data) {
+        return $q(function(fulfill, reject) {
+            db.transaction(function(tx) {
+                tx.executeSql('DELETE FROM ' + table.name + ';');
 
-        function clean() {
-            return $q(function(fulfill, reject) {
-                db.transaction(
-                    function(tx) {
-                        for (var table in tableDef) {
-                            tx.executeSql('DROP TABLE IF EXISTS ' + table + ';');
-                        }
-                    },
-                    reject,
-                    fulfill
-                );
-            })
-            .then(function() {
-                console.log('Removed all tables');
-            });
-        }
-        function getMultiple(sql, args) {
-            return $q(function(fulfill, reject) {
-                $cordovaSQLite.execute(db, sql, args)
-                .then(function(result) {
-                    if (result.rows.length) {
-                        fulfill(createObject(result));
-                    } else {
-                        reject('Could not find any matching objects');
+                for (var id in data) {
+                    var singleData = data[id];
+                    var insertData = [];
+                    for (var member in table.members) {
+                        insertData.push(singleData[member]);
                     }
-                }, reject);
-            });
-        }
+                    var query = [
+                        'INSERT INTO',
+                        table.name,
+                        'VALUES(?',
+                        ',?'.repeat(insertData.length - 1),
+                        ')',
+                    ].join(' ');
 
-        function getSingle(sql, args) {
-            return getMultiple(sql, args).then(function(result) {
-                return result[0];
-            });
-        }
+                    tx.executeSql(query, insertData);
+                }
+            }, reject, fulfill);
+        });
+    }
 
-        function populateTable(table, data) {
-            return $q(function(fulfill, reject) {
-                db.transaction(function(tx) {
-                    tx.executeSql('DELETE FROM ' + table.name + ';');
+    return {
+        ready: ready.promise,
 
-                    for (var id in data) {
-                        var singleData = data[id];
-                        var insertData = [];
-                        for (var member in table.members) {
-                            insertData.push(singleData[member]);
-                        }
-                        var query = [
-                            'INSERT INTO',
-                            table.name,
-                            'VALUES(?',
-                            ',?'.repeat(insertData.length - 1),
-                            ')',
-                        ].join(' ');
+        clean:       clean,
+        getMultiple: getMultiple,
+        getSingle:   getSingle,
 
-                        tx.executeSql(query, insertData);
-                    }
-                }, reject, fulfill);
-            });
-        }
+        runSql: runSql,
 
-        return {
-            ready: ready.promise,
+        insertHelper: function(table) {
+            return function(data) {
+                return populateTable(table, data);
+            };
+        },
 
-            clean:       clean,
-            getMultiple: getMultiple,
-            getSingle:   getSingle,
+        populateTable: populateTable,
 
-            runSql: runSql,
-
-            insertHelper: function(table) {
-                return function(data) {
-                    return populateTable(table, data);
-                };
-            },
-
-            populateTable: populateTable,
-
-            initializeTable: function(table) {
+        initializeTable: function(table) {
+            return ready.promise.then(function() {
                 /*
                 * Builds a string with "" around all names, so that
                 * it can be used to create an SQL Table witout having
@@ -148,19 +162,38 @@ angular.module('ifiske.services')
                     '"' + table.primary + '"',
                     '));',
                 ].join(' ');
-                return runSql(query);
-            },
 
-            cleanTable: function(table) {
-                return $q(function(fulfill, reject) {
-                    db.transaction(function(tx) {
-                        tx.executeSql('DELETE FROM ' + table + ';');
-                    },
-                    reject,
-                    fulfill);
+                /* Remake the table if the schema has changed */
+                return runSql('SELECT sql from sqlite_master where name is "' + table.name + '"')
+                .then(function(result) {
+                    if (!result.rows.length) {
+                        // There is no table, make it
+                        return runSql(query);
+                    }
+                    var currentSchema = result.rows[0].sql.split(/\(|\)/);
+                    var newSchema = query.split(/\(|\)/);
+
+                    if (currentSchema[1] !== newSchema[1] ||
+                        currentSchema[2] !== currentSchema[2]
+                    ) {
+                        console.log(table.name + ' needs to update since the schema has changed.');
+                        return clean(table.name).then(function() {
+                            return runSql(query);
+                        });
+                    }
                 });
-            },
+            });
+        },
 
-        };
+        cleanTable: function(table) {
+            return $q(function(fulfill, reject) {
+                db.transaction(function(tx) {
+                    tx.executeSql('DELETE FROM ' + table + ';');
+                },
+                reject,
+                fulfill);
+            });
+        },
+
     };
 });

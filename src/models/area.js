@@ -3,6 +3,7 @@ angular.module('ifiske.models')
     var tables = [
         {
             name:    'Area',
+            primary: 'ID',
             members: {
                 ID:    'int',
                 orgid: 'int',
@@ -28,10 +29,10 @@ angular.module('ifiske.models')
                 d:     'text',
                 ptab:  'text',
             },
-            primary: 'ID',
         },
         {
             name:    'Area_Fish',
+            primary: 'ID',
             members: {
                 ID:      'text',
                 aid:     'int',
@@ -39,16 +40,15 @@ angular.module('ifiske.models')
                 amount:  'int',
                 comment: 'text',
             },
-            primary: 'ID',
         },
         {
             name:    'Area_Photos',
+            primary: 'ID',
             members: {
                 ID:  'text',
                 aid: 'int',
                 url: 'int',
             },
-            primary: 'ID',
         },
     ];
 

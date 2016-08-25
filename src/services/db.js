@@ -170,12 +170,14 @@ angular.module('ifiske.services')
                         // There is no table, make it
                         return runSql(query);
                     }
-                    var currentSchema = result.rows[0].sql.split(/\(|\)/);
-                    var newSchema = query.split(/\(|\)/);
-
-                    if (currentSchema[1] !== newSchema[1] ||
-                        currentSchema[2] !== currentSchema[2]
-                    ) {
+                    var re = /"(\w+)"\s*(\w+)/g;
+                    var regexResult;
+                    var oldTable = {};
+                    while (regexResult = re.exec(result.rows[0].sql)) {
+                        oldTable[regexResult[1]] = regexResult[2];
+                    }
+                    var primaryKey = result.rows[0].sql.match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
+                    if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
                         console.log(table.name + ' needs to update since the schema has changed.');
                         return clean(table.name).then(function() {
                             return runSql(query);

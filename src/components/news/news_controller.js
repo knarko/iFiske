@@ -9,5 +9,5 @@ angular.module('ifiske.controllers')
         DB.getNews().then(function(data) {
             $scope.content = data;
         });
-    }
+    },
 ]);

@@ -9,7 +9,6 @@ angular.module('ifiske.controllers')
     '$timeout',
     'localStorage',
     function($scope, leafletData, $ionicPlatform, DB) {
-
         console.log($scope);
         $scope.map = {};
         $scope.map.centerOnMe = true;
@@ -18,5 +17,5 @@ angular.module('ifiske.controllers')
                 $scope.map.areas = areas;
             });
         });
-    }
+    },
 ]);

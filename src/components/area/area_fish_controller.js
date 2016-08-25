@@ -7,5 +7,5 @@ angular.module('ifiske.controllers')
         });
 
         $scope.sortorder = '-amount';
-    }
+    },
 ]);

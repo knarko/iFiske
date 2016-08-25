@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-.controller('CountiesCtrl', ['$scope', 'DB', '$state', '$ionicHistory', function($scope, DB, $state, $ionicHistory) {
+.controller('CountiesCtrl', function($scope, DB, $state, $ionicHistory) {
     var initialize = function() {
         DB.getCounties()
         .then(function(data) {
@@ -9,4 +9,4 @@ angular.module('ifiske.controllers')
         });
     };
     $scope.$on('$ionicView.beforeEnter', initialize);
-}]);
+});

@@ -3,5 +3,5 @@ angular.module('ifiske.controllers')
     '$scope',
     '$stateParams',
     function($scope, $stateParams) {
-    }
+    },
 ]);

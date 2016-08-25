@@ -8,20 +8,29 @@ angular.module('ifiske.controllers')
         $scope.images = [];
 
         $scope.slideOptions = {
-            loop: true,
-            effect: 'slide',
-            speed: 250,
-            autoPlay: 1000,
+            loop:       true,
+            effect:     'slide',
+            speed:      250,
+            autoPlay:   1000,
             autoHeight: true,
         };
 
-        $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+        $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
             // grab an instance of the slider
             $scope.slider = data.slider;
             $scope.slider.updateLoop();
         });
 
-        if (!$scope.tech) {
+        if ($scope.tech) {
+            var data = $scope.tech;
+            $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
+                return !/\/$/.test(el);
+            });
+
+            if ($scope.slider) {
+                $scope.slider.updateLoop();
+            }
+        } else {
             DB.getTechnique($stateParams.id)
             .then(function(data) {
                 $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
@@ -33,15 +42,6 @@ angular.module('ifiske.controllers')
 
                 $scope.tech = data;
             });
-        } else {
-            var data = $scope.tech;
-            $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
-                return !/\/$/.test(el);
-            });
-
-            if ($scope.slider) {
-                $scope.slider.updateLoop();
-            }
         }
-    }
+    },
 ]);

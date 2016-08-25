@@ -1,0 +1,47 @@
+{
+    "extends": "google",
+    "env": {
+        "browser" :true
+    },
+    "globals": {
+        "goog": null,
+        "angular": false
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "max-len": ["error",
+            {
+                "code": 100,
+                "ignoreComments": true
+            }
+        ],
+        "comma-dangle": ["error", "always-multiline"],
+        "key-spacing": ["error",
+            {
+                "align": "value"
+            }
+        ],
+        "no-unused-vars": ["warn",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "vars": "all"
+            }
+        ],
+        "radix": "off",
+        "one-var": ["error",
+            {
+                "uninitialized": "always",
+                "initialized": "never"
+            }
+        ],
+        "require-jsdoc": ["warn",
+            {
+                "require": {
+                    "FunctionDeclaration": true,
+                    "MethodDefinition": true
+                }
+            }
+        ]
+    }
+}

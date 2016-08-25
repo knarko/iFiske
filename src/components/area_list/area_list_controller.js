@@ -5,7 +5,6 @@ angular.module('ifiske.controllers')
     '$ionicScrollDelegate',
     'DB',
     function($scope, $stateParams, $ionicScrollDelegate, DB) {
-
         var copy = $stateParams.search;
         $scope.search = copy;
         $scope.county = $stateParams.county || 'Sökresultat';
@@ -21,7 +20,6 @@ angular.module('ifiske.controllers')
         $scope.scrollTop = function() {
             $ionicScrollDelegate.scrollTop();
         };
-
-    }
+    },
 ]);
 

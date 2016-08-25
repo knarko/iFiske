@@ -11,6 +11,7 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
 var replace = require('gulp-replace');
 var minimist = require('minimist');
@@ -20,24 +21,24 @@ var plumber = require('gulp-plumber');
 var keytar = require('keytar');
 
 var knownOptions = {
-    string: 'env',
+    string:  'env',
     default: {
-        env: process.env.NODE_ENV || 'production'
-    }
+        env: process.env.NODE_ENV || 'production',
+    },
 };
 
 var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
     static: ['./src/static/**.*'],
-    sass: ['./src/scss/**/*.scss'],
-    fonts: [
+    sass:   ['./src/scss/**/*.scss'],
+    fonts:  [
         'lib/ionic/release/fonts/*.{woff,otf,ttf}',
-        'lib/font-awesome/fonts/*.{woff,otf,ttf}'
+        'lib/font-awesome/fonts/*.{woff,otf,ttf}',
     ],
     images: [
         './lib/Leaflet.awesome-markers/dist/images/*',
-        './lib/leaflet/dist/images/*'
+        './lib/leaflet/dist/images/*',
     ],
     scripts: [
         './src/io-config.js',
@@ -66,10 +67,10 @@ var paths = {
         './lib/ui-leaflet/dist/ui-leaflet.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
-        './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
+        './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
     ],
-    templates: ['src/components/**/*.html'],
-    directives: ['src/directives/**/*.html']
+    templates:  ['src/components/**/*.html'],
+    directives: ['src/directives/**/*.html'],
 };
 
 gulp.task('default', [
@@ -82,7 +83,7 @@ gulp.task('default', [
     'templates',
     'directives',
     'static',
-    'images'
+    'images',
 ]);
 
 gulp.task('index', function(done) {
@@ -100,6 +101,7 @@ gulp.task('static_images', function(done) {
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(plumber({errorHandler: done}))
+    .pipe(ngAnnotate())
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
@@ -132,7 +134,6 @@ gulp.task('static', function(done) {
 });
 
 gulp.task('libs', function(done) {
-
     gulp.src(paths.libs)
     .pipe(plumber({errorHandler: done}))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
@@ -149,11 +150,11 @@ gulp.task('sass', function(done) {
     .pipe(sass())
     .pipe(postcss([autoprefixer({browsers: ['Android > 4', 'Last 3 Chrome versions', 'Last 3 Safari versions', 'ChromeAndroid > 40', 'Last 3 iOS versions']})]))
     .pipe(minifyCss({
-        keepSpecialComments: 0
+        keepSpecialComments: 0,
     }))
     .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
-    .on('end', done)
+    .on('end', done);
 });
 
 gulp.task('watch', function() {
@@ -198,9 +199,9 @@ gulp.task('deploy', ['default'], function(done) {
         deploy(password);
     } else {
         inquirer.prompt({
-            type: 'password',
-            name: 'pass',
-            message: 'Enter password for ' + email + ':'
+            type:    'password',
+            name:    'pass',
+            message: 'Enter password for ' + email + ':',
         }, function(response) {
             keytar.addPassword('PhoneGap Build', 'app@ifiske.se', response.pass);
             deploy(response.pass);
@@ -212,10 +213,10 @@ gulp.task('deploy', ['default'], function(done) {
         .pipe(gulpif(/.*?config\.xml$/, rename({dirname: 'www'})))
         .pipe(phonegapBuild({
             'appId': appId,
-            'user': {
-                'email': email,
-                'password': password
-            }
+            'user':  {
+                'email':    email,
+                'password': password,
+            },
         }))
         .on('end', done);
         gutil.log(

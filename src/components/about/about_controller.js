@@ -11,7 +11,7 @@ angular.module('ifiske.controllers')
         $scope.version = $scope.dbDate = 'Okänt';
         $scope.update = Update;
 
-        //Show the push token for debugging purposes
+        // Show the push token for debugging purposes
         $scope.push = Push;
 
         $ionicPlatform.ready(function() {
@@ -39,9 +39,7 @@ angular.module('ifiske.controllers')
                     };
                     modal.show();
                 });
-
             };
-
         });
-    }
+    },
 ]);

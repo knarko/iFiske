@@ -9,5 +9,5 @@ angular.module('ifiske.controllers')
                 $scope.details.username = localStorage.get('register_username');
                 $scope.details.vercode = '';
             });
-        }
+        },
     ]);

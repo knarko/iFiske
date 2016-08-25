@@ -26,9 +26,7 @@ angular.module('ifiske.services')
                     db.changeVersion(db.version, version, function() {
                         console.log('updating db from ' + db.version + ' to ' + version);
                         clean().then(function() {
-                            init().then(function() {
-                                ready.resolve(true);
-                            });
+                            ready.resolve(true);
                         });
                     });
                 }
@@ -113,7 +111,6 @@ angular.module('ifiske.services')
 
         return {
             ready: ready.promise,
-            init:  init,
 
             clean:       clean,
             getMultiple: getMultiple,

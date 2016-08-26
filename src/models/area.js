@@ -67,7 +67,6 @@ angular.module('ifiske.models')
         function update(shouldUpdate) {
             if (shouldUpdate)
                 return API.get('get_areas').then(function(data) {
-                    console.log(shouldUpdate);
                     if (shouldUpdate === 'skipWait')
                         return data;
                     return wait.then(function() {
@@ -100,7 +99,7 @@ angular.module('ifiske.models')
                         });
                     }
                 } else {
-                    console.log(key);
+                    console.log('Area did not know what to do with: ', key);
                 }
             }
             return $q.all([
@@ -120,7 +119,6 @@ angular.module('ifiske.models')
             */
             getOne: function getOne(id) {
                 return wait.then(function() {
-                    console.log('hello');
                     return DB.getSingle([
                         'SELECT Area.*, Organization.t AS org,',
                         'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',

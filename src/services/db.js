@@ -57,7 +57,11 @@ angular.module('ifiske.services')
                 if (result.rows.length) {
                     fulfill(createObject(result));
                 } else {
-                    reject('Could not find any matching objects');
+                    reject(
+                        'Could not find any objects for sql: \n' +
+                        sql + '\nWith arguments: \n' +
+                        (args ? args.join(',') : '')
+                    );
                 }
             }, reject);
         });

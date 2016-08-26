@@ -10,10 +10,6 @@ angular.module('ifiske.controllers')
     $cordovaToast,
     $stateParams
 ) {
-    console.log($scope);
-    $scope.$on('$ionicView.beforeEnter', function() {
-    });
-
     $scope.slideOptions = {
         loop:       true,
         effect:     'slide',
@@ -28,7 +24,7 @@ angular.module('ifiske.controllers')
             $scope.slider.updateLoop();
         }
     }, function(err) {
-        console.error(err);
+        console.warn(err);
     });
 
     $scope.$on("$ionicSlides.sliderInitialized", function(_event, data) {
@@ -68,7 +64,7 @@ angular.module('ifiske.controllers')
                 });
             }
             promise.catch(function(err) {
-                console.log(err);
+                console.warn(err);
             });
         } else {
             $ionicPopup.alert({

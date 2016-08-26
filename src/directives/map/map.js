@@ -4,9 +4,7 @@ angular.module('ifiske.directives')
         restrict:    'E',
         transclude:  false,
         templateUrl: 'directives/map/map.html',
-        link:        function(scope, _iElement, _iAttrs, ctrl) {
-            console.debug(scope, ctrl);
-        },
+
         scope: {
             mapData: '=',
         },

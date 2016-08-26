@@ -4,7 +4,7 @@ angular.module('ifiske.directives')
         restrict:    'E',
         transclude:  false,
         templateUrl: 'directives/map/map.html',
-        link:        function(scope, iElement, iAttrs, ctrl) {
+        link:        function(scope, _iElement, _iAttrs, ctrl) {
             console.debug(scope, ctrl);
         },
         scope: {
@@ -12,7 +12,6 @@ angular.module('ifiske.directives')
         },
         controller: function(
             $scope,
-            $timeout,
             localStorage,
             MapData,
             $q
@@ -101,17 +100,17 @@ angular.module('ifiske.directives')
                 },
             });
 
-            var createscope = function(a) {
+            function createscope(a) {
                 return function() {
                     var scope = $scope.$new();
                     scope.area = a;
                     console.log(a);
                     return scope;
                 };
-            };
+            }
 
             var icons;
-            var createIcons = function() {
+            function createIcons() {
                 if (icons) {
                     return $q.when(icons);
                 }
@@ -127,9 +126,9 @@ angular.module('ifiske.directives')
                         };
                     }
                 });
-            };
+            }
 
-            var createMarkers = function(areas) {
+            function createMarkers(areas) {
                 for (var i = 0; i < areas.length; ++i) {
                     var a = areas[i];
                     $scope.map.markers['area_' + i] = {
@@ -142,14 +141,15 @@ angular.module('ifiske.directives')
                         icon:    {
                             type:        'awesomeMarker',
                             icon:        a.favorite ? 'star' : '',
+                            // eslint-disable-next-line no-nested-ternary
                             markerColor: a.wsc ? (a.favorite ? 'orange' : 'blue') : 'lightgray',
                             prefix:      'ion',
                         },
                     };
                 }
-            };
+            }
 
-            var createPois = function(pois) {
+            function createPois(pois) {
                 createIcons().then(function() {
                     for (var i = 0; i < pois.length; ++i) {
                         var poi = pois[i];
@@ -166,9 +166,9 @@ angular.module('ifiske.directives')
                         };
                     }
                 });
-            };
+            }
 
-            var createPolygons = function(polygons) {
+            function createPolygons(polygons) {
                 $scope.map.paths = polygons.map(function(poly) {
                     return {
                         latlngs:   JSON.parse('[' + poly.poly + ']'),
@@ -179,9 +179,9 @@ angular.module('ifiske.directives')
                         type:      'polygon',
                     };
                 });
-            };
+            }
 
-            var createArea = function(area) {
+            function createArea(area) {
                 $scope.map.markers.area = {
                     layer:   'pois',
                     lat:     area.lat,
@@ -193,7 +193,7 @@ angular.module('ifiske.directives')
                     lng:  area.lng,
                     zoom: Number(area.zoom) ? Number(area.zoom) : 9,
                 };
-            };
+            }
 
             $scope.$watch('mapData', function(data) {
                 if (data.centerOnMe) {

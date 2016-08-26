@@ -24,7 +24,7 @@ angular.module('ifiske.services')
         * Payload should contain:
         * code: fishing license code
         */
-        NEW: [function(notification, payload) {
+        NEW: [function(_notification, payload) {
             if (payload && payload.code) {
                 $state.go('app.license_detail', {id: payload.code});
             }
@@ -36,7 +36,7 @@ angular.module('ifiske.services')
         * orgid: organisation id,
         * code: fishing license code,
         */
-        REP_REQ: [function(notification, payload) {
+        REP_REQ: [function(_notification, payload) {
             if (payload && payload.orgid && payload.code) {
                 $ionicPopup.confirm({
                     title:      'Vill du skapa en fångstrapport?',
@@ -56,7 +56,7 @@ angular.module('ifiske.services')
         * Payload should contain:
         * RepId: ID of the new report
         */
-        NEW_FAV: [function(notification, payload) {
+        NEW_FAV: [function(_notification, payload) {
             if (payload && payload.repid) {
                 // $state.go('app.report', {id: payload.repid});
             }
@@ -67,14 +67,14 @@ angular.module('ifiske.services')
         * Payload should contain:
         * message: a string that we should Display
         */
-        NOTE: [function(notification, payload) {
+        NOTE: [function(_notification, payload) {
             if (payload && payload.message) {
                 $ionicPopup.alert(payload.message);
             }
         }],
     };
 
-    var handleNotification = function(notification) {
+    function handleNotification(notification) {
         var payload = notification.additionalData.payload;
         var i;
 
@@ -86,7 +86,7 @@ angular.module('ifiske.services')
         } else {
             pushHandlers.default(notification, payload);
         }
-    };
+    }
     $ionicPlatform.ready(function() {
         $rootScope.$on('cloud:push:notification', handleNotification);
         $rootScope.$on('cloud:push:register', function(data) {
@@ -94,14 +94,14 @@ angular.module('ifiske.services')
         });
     });
 
-    var registerPush = function() {
+    function registerPush() {
         console.log('Registering push!');
         return $ionicPlatform.ready().then(function() {
             return $ionicPush.register(function(token) {
                 return $ionicPush.saveToken(token);
             });
         });
-    };
+    }
 
     function login(email, password) {
         return $ionicPlatform.ready().then(function() {

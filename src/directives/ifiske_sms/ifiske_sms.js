@@ -8,8 +8,8 @@ angular.module('ngCordovaSms', [])
     'use strict';
     return {
         restrict: 'A',
-        link:     function(scope, el, attrs) {
-            var showPopup = function(user) {
+        link:     function(_scope, el, attrs) {
+            function showPopup(user) {
                 var scope = $rootScope.$new();
                 if (!user || !user.name) {
                     user = {
@@ -49,7 +49,7 @@ angular.module('ngCordovaSms', [])
                         });
                     }
                 });
-            };
+            }
             el.on('click', function(e) {
                 e.preventDefault();
                 User.getInfo()

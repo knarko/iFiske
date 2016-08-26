@@ -2,14 +2,11 @@ angular.module('ifiske.controllers')
 .controller('RecoverCtrl', function(
     $scope,
     $state,
-    $ionicHistory,
     $ionicPlatform,
     $ionicLoading,
     $cordovaToast,
     API
 ) {
-    'use strict';
-
     var user = "";
 
     /**
@@ -52,7 +49,7 @@ angular.module('ifiske.controllers')
             }
 
             $state.go('^.resetpassword');
-        }, function(error) {
+        }, function(_error) {
             // ToDo: handle timeout?
             // ToDo: check error codes?
             form.user.$setValidity('invalidUser', false);
@@ -70,7 +67,7 @@ angular.module('ifiske.controllers')
         $ionicLoading.show();
 
         API.user_reset_password(user, form.password.$viewValue, form.code.$viewValue)
-        .then(function(data) {
+        .then(function(_data) {
             // ToDo: handle timeouts?
 
             // ToDo: .ready() needed?
@@ -93,6 +90,9 @@ angular.module('ifiske.controllers')
                 break;*/
             case 16:
                 form.code.$setValidity('invalidCode', false);
+                break;
+            default:
+                console.warn('Unhandled error code from api', error);
                 break;
             }
         })

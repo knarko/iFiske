@@ -1,7 +1,6 @@
 angular.module('ifiske.controllers')
 .controller('UserCardsCtrl', function(
     $scope,
-    $stateParams,
     User,
     Product,
     Update,
@@ -12,7 +11,7 @@ angular.module('ifiske.controllers')
         PullToRefresh.trigger('licenses-content');
     });
 
-    var initilize = function() {
+    function initilize() {
         Update.update(true)
         .then(function() {
             $scope.now = Date.now();
@@ -34,7 +33,7 @@ angular.module('ifiske.controllers')
         .finally(function() {
             $scope.$broadcast('scroll.refreshComplete');
         });
-    };
+    }
 
     // $scope.$on('$ionicView.loaded', initilize);
     $scope.update = function() {

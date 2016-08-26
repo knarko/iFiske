@@ -31,7 +31,7 @@ angular.module('ifiske.controllers')
         console.error(err);
     });
 
-    $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
+    $scope.$on("$ionicSlides.sliderInitialized", function(_event, data) {
         // grab an instance of the slider
         $scope.slider = data.slider;
         $scope.slider.updateLoop();

@@ -60,7 +60,10 @@ angular.module('ifiske.services')
                 // TODO: move this error handling somewhere else
                 $ionicPlatform.ready(function() {
                     if (window.plugins) {
-                        $cordovaToast.show('Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?', 'long', 'bottom');
+                        $cordovaToast.show(
+                            'Tyvärr kan appen inte komma åt iFiskes server.' +
+                            'Är du ansluten till nätverket?',
+                            'long', 'bottom');
                     } else {
                         console.warn('Cannot toast');
                     }

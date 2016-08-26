@@ -1,7 +1,7 @@
 angular.module('ifiske.controllers')
 .controller('AreaMapCtrl', function($scope, MapData, $ionicPlatform) {
     $scope.map = {};
-    var updateMap = function() {
+    function updateMap() {
         $scope.map.area = $scope.area;
         MapData.getPois($scope.area.orgid)
         .then(function(pois) {
@@ -15,7 +15,7 @@ angular.module('ifiske.controllers')
         }, function(err) {
             console.error(err);
         });
-    };
+    }
 
     $scope.$on('$ionicView.beforeEnter', function() {
         if ($scope.area) {
@@ -43,7 +43,7 @@ angular.module('ifiske.controllers')
             enabled: enabledEvents,
         };
 
-        $scope.$on('leafletDirectiveMarker.popupopen', function(event, args) {
+        $scope.$on('leafletDirectiveMarker.popupopen', function(_event, args) {
                 // show navtobutton
             $scope.navto = args.model;
         });

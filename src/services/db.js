@@ -2,37 +2,21 @@ angular.module('ifiske.services')
 .service('DB', function($cordovaSQLite, $q) {
     var db;
     var ready = $q.defer();
-    var version = '5';
     if (window.sqlitePlugin) {
         db = $cordovaSQLite.openDB('fiskebasen.db');
     } else if (window.openDatabase) {
-        try {
-            db = window.openDatabase(
-                'fiskebasen.db',
-                version,
-                'fiskebasen',
-                10 * 1024 * 1024
-            );
-            ready.resolve(false);
-        } catch (e) {
-            if (!db) {
-                db = window.openDatabase(
-                    'fiskebasen.db',
-                    '',
-                    'fiskebasen',
-                    10 * 1024 * 1024
-                );
-                db.changeVersion(db.version, version, function() {
-                    console.log('updating db from ' + db.version + ' to ' + version);
-                    ready.resolve(true);
-                });
-            }
-        }
+        db = window.openDatabase(
+            'fiskebasen.db',
+            '',
+            'fiskebasen',
+            10 * 1024 * 1024
+        );
     } else {
         console.log('Not supported on this device, sorry');
         ready.reject('Not supported');
         return {ready: ready.promise};
     }
+    ready.resolve();
 
     /**
      * Run a sql command

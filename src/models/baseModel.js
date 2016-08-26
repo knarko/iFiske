@@ -19,9 +19,9 @@ angular.module('ifiske.models')
                         'SELECT *',
                         'FROM',
                         table.name,
-                        'WHERE "',
-                        table.primary,
-                        '" = ?',
+                        'WHERE',
+                        '"' + table.primary + '"',
+                        '= ?',
                     ].join(' '), [id]);
                 });
             },
@@ -34,6 +34,8 @@ angular.module('ifiske.models')
          * @return {Promise}    A promise for when the update is finished
          */
         function update(shouldupdate) {
+            if (!model.table.apiMethod)
+                throw new Error(model.table.name + ' does not have an apiMethod!');
             if (shouldupdate)
                 return API[model.table.apiMethod]().then(function(data) {
                     if (shouldupdate === 'skipWait')

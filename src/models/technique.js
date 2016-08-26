@@ -1,9 +1,10 @@
 angular.module('ifiske.models')
 .provider('Technique', function TechniqueProvider() {
     var table = {
-        name:    'Technique',
-        primary: 'ID',
-        members: {
+        name:      'Technique',
+        apiMethod: 'get_techniques',
+        primary:   'ID',
+        members:   {
             ID:      'int',
             t:       'text',
             d:       'text',

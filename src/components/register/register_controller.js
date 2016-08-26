@@ -12,7 +12,7 @@ angular.module('ifiske.controllers')
     $timeout,
     $interval,
     API,
-    Update,
+    User,
     localStorage,
     Terms
 ) {
@@ -175,7 +175,7 @@ angular.module('ifiske.controllers')
             $scope.details = {};
 
             if (userDetails.password) {
-                Update.user_login(userDetails.username, userDetails.password)
+                User.login(userDetails.username, userDetails.password)
                 .then(function() {
                     $ionicViewSwitcher.nextDirection('forward');
                     $ionicHistory.nextViewOptions({

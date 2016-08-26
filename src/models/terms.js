@@ -2,6 +2,7 @@ angular.module('ifiske.models')
 .service('Terms', function($q, localStorage, API) {
     return {
         update: function() {
+            // Always update
             return $q.all([
                 API.get_terms_of_service(),
                 API.get_sms_terms(),

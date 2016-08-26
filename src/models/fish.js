@@ -24,8 +24,9 @@ angular.module('ifiske.models')
         var wait = DB.initializeTable(table);
 
         return {
-            update: function() {
-                return API.get('get_fishes')
+            update: function(shouldupdate) {
+                if (shouldupdate)
+                    return API.get('get_fishes')
                 .then(function(data) {
                     var ifiskeHome = 'https://www.ifiske.se';
                     console.log('Downloading all fish images: ', data);

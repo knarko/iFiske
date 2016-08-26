@@ -9,17 +9,17 @@
 
     <ion-content class="padding">
         <div class="list list-inset">
-            <label class="item item-input" ng-if="update.last_update()">
+            <label class="item item-input" ng-if="update.lastUpdate()">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="search" placeholder="Sök" ng-keypress="myFunc($event)"/>
             </label>
-            <div class="item item-icon-right item-assertive" ng-if="!update.last_update()" ng-click="forcedUpdate()">
+            <div class="item item-icon-right item-assertive" ng-if="!update.lastUpdate()" ng-click="forcedUpdate()">
                 Ingen data finns!
                 <i class="icon ion-refresh"></i>
             </div>
         </div>
 
-        <div class="list list-inset" ng-class="{'disabled-list': !update.last_update() }">
+        <div class="list list-inset" ng-class="{'disabled-list': !update.lastUpdate() }">
             <div class="item item-button-left" ui-sref="^.find_areas.counties">
                 <button class="button button-positive button-clear">
                     <i class="icon icon-icon_fishingareas"></i>

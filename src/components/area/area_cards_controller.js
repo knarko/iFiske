@@ -1,5 +1,12 @@
 angular.module('ifiske.controllers')
-.controller('AreaCardsCtrl', function($scope, $ionicModal, localStorage, $ionicPopup, $cordovaInAppBrowser) {
+.controller('AreaCardsCtrl', function(
+    $scope,
+    $ionicModal,
+    localStorage,
+    $ionicPopup,
+    $cordovaInAppBrowser,
+    Terms
+) {
     $scope.$on('$ionicView.beforeEnter', function() {
         // Area_Cards
         $scope.smsterms = Terms.getSmsTerms();

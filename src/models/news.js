@@ -15,7 +15,8 @@ angular.module('ifiske.models')
         var wait = DB.initializeTable(table);
 
         return {
-            update: function() {
+            update: function(shouldupdate) {
+                // Always update
                 return API.get_content_menu().then(function(data) {
                     return wait.then(function() {
                         return data;

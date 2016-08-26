@@ -56,51 +56,94 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, $q, API) {
+    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast) {
         var p = [];
         for (var table in tables) {
             p.push(DB.initializeTable(tables[table]));
         }
         var wait = $q.all(p);
 
-        return {
-            update: function() {
-                return wait.then(function() {
-                    var p = [];
-                    p.push(API.user_get_favorites().then(function(favorites) {
-                        DB.populateTable(tables.favorite, favorites);
-                    }));
-                    p.push(API.user_info().then(function(data) {
-                        var numbers = data.numbers;
-                        var numArr = [];
-                        for (var i = 0; i < numbers.length; ++i) {
-                            numArr.push({number: numbers[i]});
-                        }
-                        return $q.all([
-                            DB.populateTable(tables.info, [data])
-                            .then(function() {
-                                return 'User_Info';
-                            }, function(err) {
-                                console.log(data);
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
-                            DB.populateTable(tables.number, numArr)
-                            .then(function() {
-                                return 'User_Numbers';
-                            }, function(err) {
-                                console.log(err);
-                                return $q.reject(err);
-                            }),
-                        ]);
-                    }));
-                    p.push(API.user_products().then(function(products) {
-                        DB.populateTable(tables.products, products);
-                    }));
+        /**
+        * Cleans all the user data from database
+        * @return {Promise}  Promise when done
+        */
+        function clean() {
+            var p = [Push.unregister()];
+            for (var table in tables) {
+                p.push(DB.initializeTable(tables[table]));
+            }
+            return $q.all(p)
+            .then(function() {
+                console.log('Removed user info from database');
+            }, function(err) {
+                console.log('Could not remove user data from database!', err);
+            });
+        }
+        function update(shouldUpdate) {
+            return wait.then(function() {
+                var p = [];
+                p.push(API.user_get_favorites().then(function(favorites) {
+                    DB.populateTable(tables.favorite, favorites);
+                }));
+                p.push(API.user_info().then(function(data) {
+                    var numbers = data.numbers;
+                    var numArr = [];
+                    for (var i = 0; i < numbers.length; ++i) {
+                        numArr.push({number: numbers[i]});
+                    }
+                    return $q.all([
+                        DB.populateTable(tables.info, [data])
+                        .then(function() {
+                            return 'User_Info';
+                        }, function(err) {
+                            console.log(data);
+                            console.log(err);
+                            return $q.reject(err);
+                        }),
+                        DB.populateTable(tables.number, numArr)
+                        .then(function() {
+                            return 'User_Numbers';
+                        }, function(err) {
+                            console.log(err);
+                            return $q.reject(err);
+                        }),
+                    ]);
+                }));
+                p.push(API.user_products().then(function(products) {
+                    DB.populateTable(tables.products, products);
+                }));
 
-                    return $q.all(p);
-                });
-            },
+                return $q.all(p);
+            }).catch(function(err) {
+                if (err.error_code === 7) {
+                    $ionicPlatform.ready(function() {
+                        if (window.plugins) {
+                            $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');
+                        } else {
+                            console.warn('Cannot toast');
+                        }
+                    });
+                    logout();
+                    throw err;
+                }
+            });
+        }
+
+        function login(username, password) {
+            return API.user_login(username, password).then(update);
+        }
+
+        function logout() {
+            return $q.all([
+                clean(),
+                API.user_logout(),
+            ]);
+        }
+
+        return {
+            update: update,
+            login:  login,
+            logout: logout,
 
             getInfo: function() {
                 return wait.then(function() {
@@ -110,6 +153,7 @@ angular.module('ifiske.models')
                     ].join(' '));
                 });
             },
+
             getNumbers: function() {
                 return wait.then(function() {
                     return DB.getMultiple([
@@ -118,8 +162,9 @@ angular.module('ifiske.models')
                     ].join(' '));
                 });
             },
+
             getProduct: function(id) {
-        // TODO: get license from DB, or from api
+                // TODO: get license from DB, or from api
                 return wait.then(function() {
                     return DB.getSingle([
                         'SELECT User_Product.*, Product.ai,',
@@ -133,6 +178,7 @@ angular.module('ifiske.models')
                     ].join(' '), [id]);
                 });
             },
+
             getProducts: function() {
                 return wait.then(function() {
                     return DB.getMultiple([
@@ -146,6 +192,7 @@ angular.module('ifiske.models')
                     ].join(' '));
                 });
             },
+
             getFavorites: function() {
                 return wait.then(function() {
                     return DB.getMultiple([
@@ -164,6 +211,7 @@ angular.module('ifiske.models')
                     ].join(' '), [id]);
                 });
             },
+
             addFavorite: function(id) {
                 return wait.then(function() {
                     return DB.runSql([
@@ -172,6 +220,7 @@ angular.module('ifiske.models')
                     ].join(' '), [id]);
                 });
             },
+
             setFavoriteNotification: function(id, not) {
                 return wait.then(function() {
                     return DB.runSql([

@@ -14,12 +14,13 @@ angular.module('ifiske.models')
         var wait = DB.initializeTable(table);
 
         return {
-            update: function() {
-                return API.get_rules().then(function(data) {
-                    return wait.then(function() {
-                        return data;
-                    });
-                }).then(DB.insertHelper(table));
+            update: function(shouldupdate) {
+                if (shouldupdate)
+                    return API.get_rules().then(function(data) {
+                        return wait.then(function() {
+                            return data;
+                        });
+                    }).then(DB.insertHelper(table));
             },
         };
     };

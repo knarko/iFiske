@@ -104,15 +104,13 @@ angular.module('ifiske.models')
         }
 
         return {
-            /**
-            * Updates all tables
-            */
-            update: function() {
-                return API.get('get_areas').then(function(data) {
-                    return wait.then(function() {
-                        return data;
-                    });
-                }).then(insert);
+            update: function(shouldUpdate) {
+                if (shouldUpdate)
+                    return API.get('get_areas').then(function(data) {
+                        return wait.then(function() {
+                            return data;
+                        });
+                    }).then(insert);
             },
 
             /**

@@ -23,12 +23,13 @@ angular.module('ifiske.models')
     this.$get = function(DB, API) {
         var wait = DB.initializeTable(table);
         return {
-            update: function() {
-                return API.get_organizations().then(function(data) {
-                    return wait.then(function() {
-                        return data;
-                    });
-                }).then(DB.insertHelper(table));
+            update: function(shouldupdate) {
+                if (shouldupdate)
+                    return API.get_organizations().then(function(data) {
+                        return wait.then(function() {
+                            return data;
+                        });
+                    }).then(DB.insertHelper(table));
             },
             getOne: function(id) {
                 return wait.then(function() {

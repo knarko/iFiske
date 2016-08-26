@@ -48,17 +48,18 @@ angular.module('ifiske.models')
         ]);
 
         return {
-            update: function() {
-                return wait.then(function() {
-                    return $q.all([
-                        API.get_mapbox_api().then(function(data) {
-                            return localStorage.set('mapbox_api', data);
-                        }),
-                        API.get_map_pois().then(DB.insertHelper(tables.poi)),
-                        API.get_map_poi_types().then(DB.insertHelper(tables.poiType)),
-                        API.get_map_polygons().then(DB.insertHelper(tables.polygon)),
-                    ]);
-                });
+            update: function(shouldupdate) {
+                if (shouldupdate)
+                    return wait.then(function() {
+                        return $q.all([
+                            API.get_mapbox_api().then(function(data) {
+                                return localStorage.set('mapbox_api', data);
+                            }),
+                            API.get_map_pois().then(DB.insertHelper(tables.poi)),
+                            API.get_map_poi_types().then(DB.insertHelper(tables.poiType)),
+                            API.get_map_polygons().then(DB.insertHelper(tables.polygon)),
+                        ]);
+                    });
             },
             getPois: function(id) {
                 return wait.then(function() {

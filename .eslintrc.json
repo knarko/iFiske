@@ -9,6 +9,7 @@
     },
     "rules": {
         "indent": ["error", 4],
+        "func-style": ["warn", "declaration"],
         "max-len": ["error",
             {
                 "code": 100,

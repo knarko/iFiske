@@ -34,14 +34,14 @@ angular.module('ifiske.services')
             User,
         ];
 
-        var timedUpdate = function(currentTime) {
+        function timedUpdate(currentTime) {
             var lastUpdate = localStorage.get(LAST_UPDATE);
 
             var aWeek = 1000 * 3600 * 24 * 7;
             return (currentTime - lastUpdate) > aWeek;
-        };
+        }
 
-        var updateFunc = function(forced, hideLoading) {
+        function updateFunc(forced, hideLoading) {
             if (!hideLoading)
                 $ionicLoading.show();
             var currentTime = Date.now();
@@ -71,7 +71,7 @@ angular.module('ifiske.services')
             .finally(function() {
                 $ionicLoading.hide();
             });
-        };
+        }
 
         return {
             update: function(hideLoading) {

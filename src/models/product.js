@@ -1,9 +1,10 @@
 angular.module('ifiske.models')
 .provider('Product', function() {
     var table = {
-        name:    'Product',
-        primary: 'ID',
-        members: {
+        name:      'Product',
+        primary:   'ID',
+        apiMethod: 'get_products',
+        members:   {
             ID:    'int',
             t:     'text',
             t2:    'text',
@@ -20,19 +21,10 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, API) {
-        var wait = DB.initializeTable(table);
+    this.$get = function(DB, BaseModel) {
+        var model = new BaseModel(table);
 
-        return {
-            update: function(shouldupdate) {
-                if (shouldupdate)
-                    return API.get_products().then(function(data) {
-                        return wait.then(function() {
-                            return data;
-                        });
-                    }).then(DB.insertHelper(table));
-            },
-
+        angular.extend(model, {
             getValidity: function(product) {
                 var now = parseInt(Date.now() / 1000);
                 if (product.fr < now) {
@@ -47,7 +39,7 @@ angular.module('ifiske.models')
             * @param {Integer} productID
             */
             getOne: function(productID) {
-                return wait.then(function() {
+                return model.wait.then(function() {
                     return DB.getSingle([
                         'SELECT DISTINCT Product.*,',
                         'Rule.t as rule_t,',
@@ -68,7 +60,7 @@ angular.module('ifiske.models')
             * @param {Integer} areaID
             */
             getByArea: function(areaID) {
-                return wait.then(function() {
+                return model.wait.then(function() {
                     return DB.getMultiple([
                         'SELECT DISTINCT Product.*,',
                         'Rule.t as rule_t,',
@@ -82,6 +74,8 @@ angular.module('ifiske.models')
                     [areaID]);
                 });
             },
-        };
+        });
+
+        return model;
     };
 });

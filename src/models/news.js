@@ -11,14 +11,16 @@ angular.module('ifiske.models')
             icon: 'text',
         },
     };
-    this.$get = function(DB, API, $q, localStorage, ImgCache) {
-        var wait = DB.initializeTable(table);
+    this.$get = function(DB, API, $q, localStorage, ImgCache, BaseModel) {
+        var model = new BaseModel(table);
 
-        return {
+        angular.extend(model, {
             update: function(shouldupdate) {
                 // Always update
                 return API.get_content_menu().then(function(data) {
-                    return wait.then(function() {
+                    if (shouldupdate === 'skipWait')
+                        return data;
+                    return model.wait.then(function() {
                         return data;
                     });
                 }).then(function(data) {
@@ -39,24 +41,8 @@ angular.module('ifiske.models')
             getTitle: function() {
                 return localStorage.get('NEWS');
             },
+        });
 
-            getAll: function() {
-                return wait.then(function() {
-                    return DB.getMultiple([
-                        'SELECT *',
-                        'FROM News',
-                    ].join(' '));
-                });
-            },
-            getOne: function(id) {
-                return wait.then(function() {
-                    return DB.getSingle([
-                        'SELECT *',
-                        'FROM News',
-                        'WHERE ID = ?',
-                    ].join(' '), [id]);
-                });
-            },
-        };
+        return model;
     };
 });

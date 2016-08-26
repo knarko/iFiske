@@ -1,9 +1,10 @@
 angular.module('ifiske.models')
 .provider('County', function() {
     var table = {
-        name:    'County',
-        primary: 'ID',
-        members: {
+        name:      'County',
+        apiMethod: 'get_counties',
+        primary:   'ID',
+        members:   {
             ID: 'int',
             s:  'text',
             t:  'text',
@@ -11,17 +12,11 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, API) {
-        var wait = DB.initializeTable(table);
-
-        return {
-            update: function(shouldupdate) {
-                if (shouldupdate)
-                    return API.get_counties().then(DB.insertHelper(table));
-            },
-
+    this.$get = function(DB, BaseModel) {
+        var model = new BaseModel(table);
+        angular.extend(model, {
             getAll: function() {
-                return wait.then(function() {
+                return model.wait.then(function() {
                     return DB.getMultiple([
                         'SELECT DISTINCT County.*',
                         'FROM County',
@@ -32,6 +27,8 @@ angular.module('ifiske.models')
                     ].join(' '));
                 });
             },
-        };
+        });
+
+        return model;
     };
 });

@@ -21,17 +21,17 @@ angular.module('ifiske.services')
         var LAST_UPDATE = 'last_update';
 
         var updates = [
-            Area,
-            County,
-            Fish,
-            MapData,
-            News,
-            Organization,
-            Product,
-            Rule,
-            Technique,
-            Terms,
-            User,
+            Area.update,
+            County.update,
+            Fish.update,
+            MapData.update,
+            News.update,
+            Organization.update,
+            Product.update,
+            Rule.update,
+            Technique.update,
+            Terms.update,
+            User.update,
         ];
 
         function timedUpdate(currentTime) {

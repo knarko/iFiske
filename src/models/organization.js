@@ -1,9 +1,10 @@
 angular.module('ifiske.models')
 .provider('Organization', function() {
     var table = {
-        name:    'Organization',
-        primary: 'ID',
-        members: {
+        name:      'Organization',
+        apiMethod: 'get_organizations',
+        primary:   'ID',
+        members:   {
             ID:   'int',
             t:    'text',
             d:    'text',
@@ -20,25 +21,9 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, API) {
-        var wait = DB.initializeTable(table);
-        return {
-            update: function(shouldupdate) {
-                if (shouldupdate)
-                    return API.get_organizations().then(function(data) {
-                        return wait.then(function() {
-                            return data;
-                        });
-                    }).then(DB.insertHelper(table));
-            },
-            getOne: function(id) {
-                return wait.then(function() {
-                    return DB.getSingle([
-                        'SELECT * FROM Organization',
-                        'WHERE ID = ?',
-                    ].join(' '), [id]);
-                });
-            },
-        };
+    this.$get = function(BaseModel) {
+        var model = new BaseModel(table);
+
+        return model;
     };
 });

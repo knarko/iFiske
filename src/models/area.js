@@ -57,11 +57,24 @@ angular.module('ifiske.models')
         for (var i = 0; i < tables.length; ++i) {
             p.push(DB.initializeTable(tables[i]));
         }
-        var wait = $q.all(p);
-
-        wait.catch(function(err) {
-            console.error(err);
+        var wait = $q.all(p).then(function(results) {
+            for (var i = 0; i < results.length; ++i) {
+                if (results[i])
+                    return update('skipWait');
+            }
         });
+
+        function update(shouldUpdate) {
+            if (shouldUpdate)
+                return API.get('get_areas').then(function(data) {
+                    console.log(shouldUpdate);
+                    if (shouldUpdate === 'skipWait')
+                        return data;
+                    return wait.then(function() {
+                        return data;
+                    });
+                }).then(insert);
+        }
 
         function insert(data) {
             var fishArr = [];
@@ -94,24 +107,11 @@ angular.module('ifiske.models')
                 DB.populateTable(tables[0], data),
                 DB.populateTable(tables[1], fishArr),
                 DB.populateTable(tables[2], photoArr),
-            ])
-            .then(function() {
-                return 'Area';
-            }, function(err) {
-                console.warn(err);
-                return $q.reject(err);
-            });
+            ]);
         }
 
         return {
-            update: function(shouldUpdate) {
-                if (shouldUpdate)
-                    return API.get('get_areas').then(function(data) {
-                        return wait.then(function() {
-                            return data;
-                        });
-                    }).then(insert);
-            },
+            update: update,
 
             /**
             * Fetches a single Area
@@ -126,7 +126,7 @@ angular.module('ifiske.models')
                         'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                         'FROM Area',
                         'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
-                        'JOIN Organization ON Area.orgid = Organization.ID',
+                        'LEFT JOIN Organization ON Area.orgid = Organization.ID',
                         'WHERE Area.ID = ?',
                     ].join(' '), Array.isArray(id) ? id : [id]);
                 });
@@ -169,7 +169,7 @@ angular.module('ifiske.models')
                         'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
                         'FROM Area',
                         'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
-                        'JOIN Organization ON Organization.ID = Area.orgid',
+                        'LEFT JOIN Organization ON Organization.ID = Area.orgid',
                         'WHERE ((Area.t LIKE ?) OR (Organization.t LIKE ?))',
                         (countyID ? 'AND ? IN (c1,c2,c3)' : ''),
                         'ORDER BY Organization.t',

@@ -56,12 +56,17 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast) {
+    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData) {
         var p = [];
         for (var table in tables) {
             p.push(DB.initializeTable(tables[table]));
         }
-        var wait = $q.all(p);
+        var wait = $q.all(p).then(function(changed) {
+            for (var i = 0; i < changed.length; ++i) {
+                if (changed[i])
+                    return update('skipWait');
+            }
+        });
 
         /**
         * Cleans all the user data from database
@@ -80,7 +85,13 @@ angular.module('ifiske.models')
             });
         }
         function update(shouldUpdate) {
-            return wait.then(function() {
+            if (!sessionData.token) {
+                return;
+            }
+            var innerWait = wait;
+            if (shouldUpdate === 'skipWait')
+                innerWait = $q.resolve();
+            return innerWait.then(function() {
                 var p = [];
                 p.push(API.user_get_favorites().then(function(favorites) {
                     DB.populateTable(tables.favorite, favorites);
@@ -93,20 +104,20 @@ angular.module('ifiske.models')
                     }
                     return $q.all([
                         DB.populateTable(tables.info, [data])
-                        .then(function() {
-                            return 'User_Info';
-                        }, function(err) {
-                            console.log(data);
-                            console.log(err);
-                            return $q.reject(err);
-                        }),
+                            .then(function() {
+                                return 'User_Info';
+                            }, function(err) {
+                                console.log(data);
+                                console.log(err);
+                                return $q.reject(err);
+                            }),
                         DB.populateTable(tables.number, numArr)
-                        .then(function() {
-                            return 'User_Numbers';
-                        }, function(err) {
-                            console.log(err);
-                            return $q.reject(err);
-                        }),
+                            .then(function() {
+                                return 'User_Numbers';
+                            }, function(err) {
+                                console.log(err);
+                                return $q.reject(err);
+                            }),
                     ]);
                 }));
                 p.push(API.user_products().then(function(products) {

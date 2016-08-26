@@ -18,33 +18,9 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, API) {
-        var wait = DB.initializeTable(table);
+    this.$get = function(BaseModel) {
+        var model = new BaseModel(table);
 
-        return {
-            update: function(shouldupdate) {
-                if (shouldupdate)
-                    return API.get_techniques().then(function(data) {
-                        return wait.then(function() {
-                            return data;
-                        });
-                    }).then(DB.insertHelper(table));
-            },
-            getAll: function() {
-                return wait.then(function() {
-                    return DB.getMultiple([
-                        'SELECT * FROM Technique',
-                    ].join(' '));
-                });
-            },
-            getOne: function(id) {
-                return wait.then(function() {
-                    return DB.getSingle([
-                        'SELECT * FROM Technique',
-                        'WHERE ID = ?',
-                    ].join(' '), [id]);
-                });
-            },
-        };
+        return model;
     };
 });

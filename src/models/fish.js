@@ -20,13 +20,13 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(API, DB, ImgCache) {
-        var wait = DB.initializeTable(table);
+    this.$get = function(API, DB, ImgCache, BaseModel) {
+        var model = new BaseModel(table);
 
-        return {
+        angular.extend(model, {
             update: function(shouldupdate) {
                 if (shouldupdate)
-                    return API.get('get_fishes')
+                    return API.get_fishes()
                 .then(function(data) {
                     var ifiskeHome = 'https://www.ifiske.se';
                     console.log('Downloading all fish images: ', data);
@@ -34,27 +34,15 @@ angular.module('ifiske.models')
                         if (data.hasOwnProperty(fish))
                             ImgCache.cacheFile(ifiskeHome + data[fish].img);
                     }
-                    return wait.then(function() {
+                    if (shouldupdate === 'skipWait')
+                        return DB.populateTable(table, data);
+                    return model.wait.then(function() {
                         return DB.populateTable(table, data);
                     });
                 });
             },
+        });
 
-            getAll: function() {
-                return wait.then(function() {
-                    return DB.getMultiple([
-                        'SELECT * FROM Fish',
-                    ].join(' '));
-                });
-            },
-            getOne: function(id) {
-                return wait.then(function() {
-                    return DB.getSingle([
-                        'SELECT * FROM Fish',
-                        'WHERE id = ?',
-                    ].join(' '), [id]);
-                });
-            },
-        };
+        return model;
     };
 });

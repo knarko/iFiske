@@ -6,8 +6,6 @@ angular.module('ifiske.directives')
         transclude:  true,
         templateUrl: 'directives/tabs/tabs.html',
 
-        link: function(scope, elm, iat, con, transcludeFn) {
-        },
         controller: function(
             $scope,
             $ionicHistory,
@@ -55,7 +53,7 @@ angular.module('ifiske.directives')
         replace:     true,
         templateUrl: 'directives/tabs/tab.html',
 
-        link: function(scope, elem, attrs, controllerInstance) {
+        link: function(scope, _elem, _attrs, controllerInstance) {
             scope.goto = controllerInstance.scope.goto;
             controllerInstance.addTab(scope);
         },

@@ -24,7 +24,7 @@ angular.module('ifiske.services')
         * Payload should contain:
         * code: fishing license code
         */
-        NEW: [function(notification, payload) {
+        NEW: [function(_notification, payload) {
             if (payload && payload.code) {
                 $state.go('app.license_detail', {id: payload.code});
             }
@@ -36,7 +36,7 @@ angular.module('ifiske.services')
         * orgid: organisation id,
         * code: fishing license code,
         */
-        REP_REQ: [function(notification, payload) {
+        REP_REQ: [function(_notification, payload) {
             if (payload && payload.orgid && payload.code) {
                 $ionicPopup.confirm({
                     title:      'Vill du skapa en fångstrapport?',
@@ -56,7 +56,7 @@ angular.module('ifiske.services')
         * Payload should contain:
         * RepId: ID of the new report
         */
-        NEW_FAV: [function(notification, payload) {
+        NEW_FAV: [function(_notification, payload) {
             if (payload && payload.repid) {
                 // $state.go('app.report', {id: payload.repid});
             }
@@ -67,18 +67,18 @@ angular.module('ifiske.services')
         * Payload should contain:
         * message: a string that we should Display
         */
-        NOTE: [function(notification, payload) {
+        NOTE: [function(_notification, payload) {
             if (payload && payload.message) {
                 $ionicPopup.alert(payload.message);
             }
         }],
     };
 
-    var handleNotification = function(notification) {
+    function handleNotification(notification) {
         var payload = notification.additionalData.payload;
         var i;
 
-        console.log('Recieved a new push notification', notification, payload);
+        console.log('Push: Recieved a new push notification', notification, payload);
         if (payload.action in pushHandlers) {
             for (i = 0; i < pushHandlers[payload.action].length; ++i) {
                 $timeout(pushHandlers[payload.action][i], 0, true, notification, payload);
@@ -86,7 +86,7 @@ angular.module('ifiske.services')
         } else {
             pushHandlers.default(notification, payload);
         }
-    };
+    }
     $ionicPlatform.ready(function() {
         $rootScope.$on('cloud:push:notification', handleNotification);
         $rootScope.$on('cloud:push:register', function(data) {
@@ -94,21 +94,20 @@ angular.module('ifiske.services')
         });
     });
 
-    var registerPush = function() {
-        console.log('Registering push!');
+    function registerPush() {
+        console.log('Push: Registering for push notifications');
         return $ionicPlatform.ready().then(function() {
             return $ionicPush.register(function(token) {
                 return $ionicPush.saveToken(token);
             });
         });
-    };
+    }
 
     function login(email, password) {
         return $ionicPlatform.ready().then(function() {
             var details = {email: email, password: password};
-            console.log('logging in');
             return $ionicAuth.login('basic', details, {remember: true}).catch(function(errors) {
-                console.warn('errors on logging in:', errors);
+                console.warn('Push: errors on logging in:', errors);
                 if (errors && errors.response && errors.response.statusCode === 401) {
                     return $ionicAuth.signup(details).then(function() {
                         return $ionicAuth.login('basic', details, {remember: true});
@@ -119,16 +118,16 @@ angular.module('ifiske.services')
         }).then(function() {
             $ionicUser.save();
             console.log($ionicUser);
-            console.log('Sending userID to iFiske servers');
+            console.log('Push: Sending userID to iFiske servers');
             return API.user_set_pushtoken($ionicUser.id);
         }).catch(function(err) {
-            console.error('we got an error!', err);
+            console.error('Push: we got an error!', err);
         });
     }
 
     function init() {
         if (!sessionData.token) {
-            console.log('No token, not initializing push notifications');
+            console.log('Push: No token, not initializing push notifications');
             return;
         }
         if ($ionicAuth.isAuthenticated() && !$ionicUser.isAnonymous()) {

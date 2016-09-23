@@ -7,6 +7,7 @@ angular.module('ifiske', [
     'ifiske.controllers',
     'ifiske.directives',
     'ifiske.services',
+    'ifiske.models',
     'ngCordova',
     'systemBrowser',
     'ngCordovaSms',
@@ -363,3 +364,4 @@ angular.module('ifiske', [
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
 angular.module('ifiske.services', []);
+angular.module('ifiske.models', []);

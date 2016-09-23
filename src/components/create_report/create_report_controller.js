@@ -1,7 +1,3 @@
 angular.module('ifiske.controllers')
-.controller('CreateReportCtrl', [
-    '$scope',
-    '$stateParams',
-    function($scope, $stateParams) {
-    },
-]);
+.controller('CreateReportCtrl', function() {
+});

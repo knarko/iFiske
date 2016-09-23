@@ -4,15 +4,12 @@ angular.module('ifiske.controllers')
     sessionData,
     $ionicPopup,
     API,
-    DB,
+    Area,
+    User,
     $ionicPlatform,
     $cordovaToast,
     $stateParams
 ) {
-    console.log($scope);
-    $scope.$on('$ionicView.beforeEnter', function() {
-    });
-
     $scope.slideOptions = {
         loop:       true,
         effect:     'slide',
@@ -20,17 +17,17 @@ angular.module('ifiske.controllers')
         autoPlay:   1000,
         autoHeight: true,
     };
-    DB.getAreaPhotos($stateParams.id)
+    Area.getPhotos($stateParams.id)
     .then(function(images) {
         $scope.images = images;
         if ($scope.slider) {
             $scope.slider.updateLoop();
         }
     }, function(err) {
-        console.error(err);
+        console.warn(err);
     });
 
-    $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
+    $scope.$on("$ionicSlides.sliderInitialized", function(_event, data) {
         // grab an instance of the slider
         $scope.slider = data.slider;
         $scope.slider.updateLoop();
@@ -43,7 +40,7 @@ angular.module('ifiske.controllers')
             if ($scope.area.favorite) {
                 promise = API.user_add_favorite($scope.area.ID)
                 .then(function() {
-                    return DB.addFavorite($scope.area.ID);
+                    return User.addFavorite($scope.area.ID);
                 }).then(function() {
                     return $ionicPlatform.ready(function() {
                         $cordovaToast.show(
@@ -55,7 +52,7 @@ angular.module('ifiske.controllers')
                 });
             } else {
                 promise = API.user_remove_favorite($scope.area.ID).then(function() {
-                    return DB.removeFavorite($scope.area.ID);
+                    return User.removeFavorite($scope.area.ID);
                 }).then(function() {
                     $ionicPlatform.ready(function() {
                         $cordovaToast.show(
@@ -67,7 +64,7 @@ angular.module('ifiske.controllers')
                 });
             }
             promise.catch(function(err) {
-                console.log(err);
+                console.warn(err);
             });
         } else {
             $ionicPopup.alert({

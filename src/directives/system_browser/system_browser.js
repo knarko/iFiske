@@ -3,7 +3,7 @@ angular.module('systemBrowser', [])
     'use strict';
     return {
         restrict: 'A',
-        link:     function(scope, el, attrs) {
+        link:     function(_scope, el, _attrs) {
             el.on('click', function(e) {
                 if (e.target.href && e.target.host !== window.location.host) {
                     $cordovaInAppBrowser.open(e.target.href, '_system');

@@ -2,23 +2,21 @@ angular.module('ifiske.controllers')
 .controller('LoginCtrl', function(
     $scope,
     $state,
-    $window,
-    Update,
+    User,
     $ionicLoading,
     $ionicHistory,
-    $ionicViewSwitcher,
-    $ionicPlatform,
-    $timeout
+    $ionicViewSwitcher
 ) {
     /**
     * signIn
     * Submit handler for login form. Validates login input.
     * Moves to home view on successful login.
+    * @param {DOM.FormElement} loginForm - Form with login data
     */
     $scope.signIn = function(loginForm) {
         $ionicLoading.show();
 
-        Update.user_login(loginForm.username.$viewValue, loginForm.password.$viewValue)
+        User.login(loginForm.username.$viewValue, loginForm.password.$viewValue)
         .then(function() {
             $ionicLoading.hide();
             loginForm.$setValidity('loginError', true);

@@ -12,8 +12,9 @@ angular.module('ifiske.controllers')
     $timeout,
     $interval,
     API,
-    Update,
-    localStorage
+    User,
+    localStorage,
+    Terms
 ) {
     $scope.details = {};
     $scope.forms = {};
@@ -174,7 +175,7 @@ angular.module('ifiske.controllers')
             $scope.details = {};
 
             if (userDetails.password) {
-                Update.user_login(userDetails.username, userDetails.password)
+                User.login(userDetails.username, userDetails.password)
                 .then(function() {
                     $ionicViewSwitcher.nextDirection('forward');
                     $ionicHistory.nextViewOptions({
@@ -201,7 +202,7 @@ angular.module('ifiske.controllers')
         .finally($ionicLoading.hide);
     };
 
-    $scope.tos = localStorage.get('tos');
+    $scope.tos = Terms.getTermsOfService();
     // Modal with the EULA
     $ionicModal.fromTemplateUrl('components/register/eula.html', {
         scope:     $scope,

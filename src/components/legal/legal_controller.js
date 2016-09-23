@@ -1,4 +1,4 @@
 angular.module('ifiske.controllers')
-.controller('LegalCtrl', ['$scope', '$state', 'localStorage', function($scope, $state, localStorage) {
-    $scope.tos = localStorage.get('tos');
-}]);
+.controller('LegalCtrl', function($scope, Terms) {
+    $scope.tos = Terms.getTermsOfService();
+});

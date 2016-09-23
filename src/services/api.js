@@ -3,7 +3,7 @@ angular.module('ifiske.services')
 .provider('API', function APIProvider() {
     this.base_url = 'https://www.ifiske.se/api/v2/api.php';
 
-    this.$get = function($http, sessionData, localStorage, $q) {
+    this.$get = function($http, sessionData, $q) {
         var base_url = this.base_url;
 
         /**
@@ -11,7 +11,7 @@ angular.module('ifiske.services')
         * handles http requests
         * returns a $http object for the requested api call
         */
-        var api_call = function(params, cache) {
+        function api_call(params, cache) {
             return $q(function(fulfill, reject) {
                 $http(
                     {
@@ -41,18 +41,22 @@ angular.module('ifiske.services')
                     }
                 });
             });
-        };
+        }
 
         /**
         * # session_api_call #
         * wrapper for api_call - inserts the session token into params
         */
-        var session_api_call = function(params, cache) {
+        function session_api_call(params, cache) {
             var session = sessionData.token;
             return api_call(angular.extend(params, {s: session}), cache);
-        };
+        }
 
         return {
+            get: function(m, extras) {
+                return api_call(angular.extend({m: m}, extras));
+            },
+
             get_municipalities: function() {
                 return api_call({m: 'get_municipalities'});
             },

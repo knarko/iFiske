@@ -3,7 +3,7 @@
     <div class="list">
       <div class="item item-divider" translate>Settings</div>
 
-      <ion-toggle ng-model="push.checked" ng-checked="push.checked" ng-change="push.changed()" translate>Push notifications</ion-toggle>
+      <ion-toggle ng-model="push.checked" ng-checked="push.checked" ng-change="push.changed()">{{'Push notifications'|translate}}</ion-toggle>
       <a ng-click="forcedUpdate()" class="item" translate>Update stored data</a>
 
       <a ng-if="sessionData.token" class="item" ng-click="logout();" translate>Log out</a>

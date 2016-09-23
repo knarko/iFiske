@@ -131,6 +131,11 @@ angular.module('ifiske', [
         templateUrl: 'components/menu/menu.html',
         controller:  'MenuCtrl',
     })
+    .state('app.home', {
+        url:         '/home',
+        templateUrl: 'components/home/home.html',
+        controller:  'HomeCtrl',
+    })
 
     .state('app.settings', {
         url:         '/settings',
@@ -143,12 +148,6 @@ angular.module('ifiske', [
         templateUrl: 'components/settings/main.html',
     })
 
-    .state('app.settings.foss', {
-        url:         '/foss',
-        templateUrl: 'components/settings/foss/foss.html',
-        controller:  'FossController',
-    })
-
     .state('app.settings.about', {
         url:         '/about',
         templateUrl: 'components/settings/about.html',
@@ -158,6 +157,11 @@ angular.module('ifiske', [
         url:         '/foss',
         templateUrl: 'components/settings/foss/foss.html',
         controller:  'FossController',
+    })
+
+    .state('app.settings.bugs', {
+        url:         '/info',
+        templateUrl: 'components/settings/bugs.html',
     })
 
     .state('app.login', {
@@ -244,42 +248,12 @@ angular.module('ifiske', [
             },
         },
     })
-    .state('app.areas', {
-        url:         '/areas',
-        params:      {id: false, county: false, search: ''},
-        templateUrl: 'components/area_list/area_list.html',
-        controller:  'AreasCtrl',
-    })
     .state('app.cards', {
         url:         '/cards',
         templateUrl: 'components/user_cards/user_cards.html',
         controller:  'UserCardsCtrl',
     })
-    .state('app.report', {
-        url:    '/report/:id',
-        params: {
-            id: false,
-        },
-        templateUrl: 'components/report/report.html',
-        controller:  'ReportCtrl',
-    })
-    .state('app.create_report', {
-        url:    '/create_report',
-        params: {
-            orgid: false,
-            code:  false,
-        },
-    })
 
-    .state('app.find_areas.favorites', {
-        url:   '/favorites',
-        views: {
-            'ionic-tabs': {
-                templateUrl: 'components/find_areas/favorites.html',
-                controller:  'FavoritesCtrl',
-            },
-        },
-    })
     .state('app.areas', {
         url:    '/areas',
         params: {
@@ -289,11 +263,6 @@ angular.module('ifiske', [
         },
         templateUrl: 'components/area_list/area_list.html',
         controller:  'AreasCtrl',
-    })
-    .state('app.cards', {
-        url:         '/cards',
-        templateUrl: 'components/user_cards/user_cards.html',
-        controller:  'UserCardsCtrl',
     })
     .state('app.report', {
         url:    '/report/:id',

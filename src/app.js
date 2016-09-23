@@ -64,15 +64,25 @@ angular.module('ifiske', [
     $ionicCloudProvider
 ) {
     /* eslint-disable camelcase */
-    var ionicSettings = {
-        app_id:  "46a4a954",
-        gcm_key: "196216212249",
-    };
-    /* eslint-enable camelcase */
-    console.log('initializing Ionic with settings: ', ionicSettings);
     $ionicCloudProvider.init({
-        core: ionicSettings,
+        core: {
+            app_id: "46a4a954",
+        },
+        push: {
+            sender_id:    "196216212249",
+            pluginConfig: {
+                ios: {
+                    badge: true,
+                    sound: true,
+                },
+                android: {
+                    iconColor: "#00ff00",
+                },
+            },
+
+        },
     });
+    /* eslint-enable camelcase */
 
     ImgCacheProvider.setOptions({
         debug:              false,

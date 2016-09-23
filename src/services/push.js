@@ -5,14 +5,13 @@ angular.module('ifiske.services')
     $ionicAuth,
     $ionicPush,
     $ionicUser,
-    $ionicEventEmitter,
+    $rootScope,
     $timeout,
     API,
     $state,
     sessionData,
     $ionicPopup,
     $cordovaInAppBrowser,
-    DB,
     $q
 ) {
     var pushHandlers = {
@@ -89,11 +88,8 @@ angular.module('ifiske.services')
         }
     };
     $ionicPlatform.ready(function() {
-        $ionicPush.init({
-            debug: false,
-        });
-        $ionicEventEmitter.on('push:notification', handleNotification);
-        $ionicEventEmitter.on('push:register', function(data) {
+        $rootScope.$on('cloud:push:notification', handleNotification);
+        $rootScope.$on('cloud:push:register', function(data) {
             console.log('Registered a push token:', data.token);
         });
     });
@@ -111,20 +107,20 @@ angular.module('ifiske.services')
         return $ionicPlatform.ready().then(function() {
             var details = {email: email, password: password};
             console.log('logging in');
-            return $ionicAuth.login('basic', {remember: true}, details).catch(function(errors) {
+            return $ionicAuth.login('basic', details, {remember: true}).catch(function(errors) {
                 console.warn('errors on logging in:', errors);
                 if (errors && errors.response && errors.response.statusCode === 401) {
                     return $ionicAuth.signup(details).then(function() {
-                        return $ionicAuth.login('basic', {remember: true}, details);
+                        return $ionicAuth.login('basic', details, {remember: true});
                     });
                 }
                 return errors;
             });
         }).then(function() {
-            var user = $ionicUser.current();
-            user.save();
+            $ionicUser.save();
+            console.log($ionicUser);
             console.log('Sending userID to iFiske servers');
-            return API.user_set_pushtoken(user.id);
+            return API.user_set_pushtoken($ionicUser.id);
         }).catch(function(err) {
             console.error('we got an error!', err);
         });
@@ -135,8 +131,7 @@ angular.module('ifiske.services')
             console.log('No token, not initializing push notifications');
             return;
         }
-        var user = $ionicUser.current();
-        if (user.isAuthenticated() && !user.isAnonymous()) {
+        if ($ionicAuth.isAuthenticated() && !$ionicUser.isAnonymous()) {
             return registerPush();
         }
         var promises = [
@@ -156,7 +151,7 @@ angular.module('ifiske.services')
     return {
         init:  init,
         token: function() {
-            return $ionicUser.current().id;
+            return $ionicUser.id;
         },
         unregister: function() {
             // $ionicPush returns a non-$q-promise, so we need to wrap it.

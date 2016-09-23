@@ -150,7 +150,13 @@ gulp.task('sass', function(done) {
     gulp.src(paths.sass)
     .pipe(plumber({errorHandler: done}))
     .pipe(sass())
-    .pipe(postcss([autoprefixer({browsers: ['Android > 4', 'Last 3 Chrome versions', 'Last 3 Safari versions', 'ChromeAndroid > 40', 'Last 3 iOS versions']})]))
+    .pipe(postcss([autoprefixer({browsers: [
+        'Android > 4',
+        'Last 3 Chrome versions',
+        'Last 3 Safari versions',
+        'ChromeAndroid > 40',
+        'Last 3 iOS versions',
+    ]})]))
     .pipe(minifyCss({
         keepSpecialComments: 0,
     }))
@@ -179,53 +185,6 @@ gulp.task('images', function(done) {
     gulp.src(paths.images)
     .pipe(gulp.dest('./www/css/images'))
     .on('end', done);
-});
-
-gulp.task('git-check', function(done) {
-    if (!sh.which('git')) {
-        console.log(
-            '  ' + gutil.colors.red('Git is not installed.'),
-            '\n  Git, the version control system, is required to download Ionic.',
-            '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-            '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-        );
-        process.exit(1);
-    }
-    done();
-});
-gulp.task('deploy', ['default'], function(done) {
-    var email = 'app@ifiske.se';
-    var appId = '1642930';
-    var password = keytar.getPassword('PhoneGap Build', 'app@ifiske.se');
-    if (password) {
-        deploy(password);
-    } else {
-        inquirer.prompt({
-            type:    'password',
-            name:    'pass',
-            message: 'Enter password for ' + email + ':',
-        }, function(response) {
-            keytar.addPassword('PhoneGap Build', 'app@ifiske.se', response.pass);
-            deploy(response.pass);
-        });
-    }
-
-    function deploy(password) {
-        gulp.src(['./www/**/*', './resources/**/*', 'config.xml'], {base: '.', dot: true})
-        .pipe(gulpif(/.*?config\.xml$/, rename({dirname: 'www'})))
-        .pipe(phonegapBuild({
-            'appId': appId,
-            'user':  {
-                'email':    email,
-                'password': password,
-            },
-        }))
-        .on('end', done);
-        gutil.log(
-            'See the build here:',
-            gutil.colors.underline('https://build.phonegap.com/apps/' + appId + '/builds')
-        );
-    }
 });
 
 gulp.task('bump', require('gulp-cordova-bump'));

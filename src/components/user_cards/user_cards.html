@@ -1,5 +1,6 @@
 <ion-view title="Mina fiskekort" class="image-bg">
-  <ion-content delegate-handle="licenses-content">
+  <!-- overflow-scroll must be false in order to manually activate pull to refresh -->
+  <ion-content delegate-handle="licenses-content" overflow-scroll="false">
     <ion-refresher
     pulling-text="Uppdatera..."
     on-refresh="update()">

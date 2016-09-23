@@ -121,7 +121,7 @@ angular.module('ifiske.models')
                     ]);
                 }));
                 p.push(API.user_products().then(function(products) {
-                    DB.populateTable(tables.products, products);
+                    DB.populateTable(tables.product, products);
                 }));
 
                 return $q.all(p);

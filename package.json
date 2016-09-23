@@ -48,10 +48,10 @@
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.3.1",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
+    "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "inquirer": "^1.0.2",
-    "ionic": "^1.7.15",
+    "ionic": "^2.0.0",
     "keytar": "^3.0.2",
     "minimist": "^1.2.0",
     "shelljs": "^0.7.0"

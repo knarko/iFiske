@@ -73,6 +73,8 @@ var paths = {
     directives: ['src/directives/**/*.html'],
 };
 
+gulp.task('serve:before', ['default']);
+gulp.task('serve:after', ['watch']);
 gulp.task('default', [
     'index',
     'static_images',

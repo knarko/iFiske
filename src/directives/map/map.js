@@ -99,6 +99,9 @@ angular.module('ifiske.directives')
                     },
                 },
             });
+            setTimeout(function() {
+                lc.start();
+            }, 0);
 
             function createscope(a) {
                 return function() {
@@ -125,6 +128,7 @@ angular.module('ifiske.directives')
                             popupAnchor: [0, -35],
                         };
                     }
+                    return icons;
                 });
             }
 
@@ -150,7 +154,7 @@ angular.module('ifiske.directives')
             }
 
             function createPois(pois) {
-                createIcons().then(function() {
+                createIcons().then(function(icons) {
                     for (var i = 0; i < pois.length; ++i) {
                         var poi = pois[i];
 

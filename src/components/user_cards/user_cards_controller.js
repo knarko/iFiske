@@ -11,22 +11,22 @@ angular.module('ifiske.controllers')
         PullToRefresh.trigger('licenses-content');
     });
 
+    function setValid(data) {
+        $scope.valid = [];
+        $scope.expired = [];
+        $scope.inactive = [];
+        for (var i = 0; i < data.length; ++i) {
+            data[i].validity = Product.getValidity(data[i]);
+            $scope[data[i].validity].push(data[i]);
+        }
+        $scope.products = data;
+    }
     function initilize() {
-        Update.update(true)
-        .then(function() {
-            $scope.now = Date.now();
-            return User.getProducts();
-        })
-        .then(function(data) {
-            $scope.valid = [];
-            $scope.expired = [];
-            $scope.inactive = [];
-            for (var i = 0; i < data.length; ++i) {
-                data[i].validity = Product.getValidity(data[i]);
-                $scope[data[i].validity].push(data[i]);
-            }
-            $scope.products = data;
-        }, function(err) {
+        $scope.now = Date.now();
+        User.getProducts().then(setValid);
+        return Update.update(true)
+        .then(User.getProducts)
+        .then(setValid, function(err) {
             console.log(err);
         })
         .finally(function() {

@@ -53,6 +53,11 @@ angular.module('ifiske.controllers')
             changed: changeHandler,
         };
 
+        $scope.changeLanguage = function(lang) {
+            Settings.language(lang);
+            Update.forcedUpdate();
+        };
+
         $scope.update = Update;
 
         $ionicPlatform.ready(function() {
@@ -64,5 +69,5 @@ angular.module('ifiske.controllers')
                 $scope.version = '3.3.10';
             }
         });
-    }
+    },
 ]);

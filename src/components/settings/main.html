@@ -5,6 +5,9 @@
 
       <ion-toggle ng-model="push.checked" ng-checked="push.checked" ng-change="push.changed()">{{'Push notifications'|translate}}</ion-toggle>
       <a ng-click="forcedUpdate()" class="item" translate>Update stored data</a>
+      <a ng-click="changeLanguage('en')" class="item" translate>Set language to English</a>
+      <a ng-click="changeLanguage('de')" class="item" translate>Set language to German</a>
+      <a ng-click="changeLanguage('sv')" class="item" translate>Set language to Swedish</a>
 
       <a ng-if="sessionData.token" class="item" ng-click="logout();" translate>Log out</a>
       <div class="item item-divider" translate>Information</div>

@@ -3,7 +3,7 @@ angular.module('ifiske.services')
 .provider('API', function APIProvider() {
     this.base_url = 'https://www.ifiske.se/api/v2/api.php';
 
-    this.$get = function($http, sessionData, $q) {
+    this.$get = function($http, sessionData, $q, Settings) {
         var base_url = this.base_url;
 
         /**
@@ -17,7 +17,7 @@ angular.module('ifiske.services')
                     {
                         method:  'get',
                         url:     base_url,
-                        params:  angular.extend(params, {key: 'ox07xh8aaypwvq7a'}),
+                        params:  angular.extend(params, {lang: Settings.language(), key: 'ox07xh8aaypwvq7a'}),
                         timeout: 7000,
                         cache:   (cache !== false),
                     }

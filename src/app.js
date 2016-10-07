@@ -22,42 +22,45 @@ angular.module('ifiske', [
     template: '<ion-spinner></ion-spinner>',
     // hideOnStateChange: true
 })
-.run([
-    '$ionicPlatform',
-    '$window',
-    'Update',
-    'ImgCache',
-    '$rootScope',
-    '$timeout',
-    'Push',
-    function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout, Push) {
-        $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
-        $ionicPlatform.ready(function() {
-            Push.init();
+.run(function(
+    $ionicPlatform,
+    $window,
+    Update,
+    ImgCache,
+    $rootScope,
+    $timeout,
+    Push,
+    Settings,
+    $translate
+) {
+    $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
 
-            if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
-                $window.MobileAccessibility.usePreferredTextZoom(false);
-                console.log("Preferred text zoom disabled");
-            }
+    $translate.use(Settings.language());
+    $ionicPlatform.ready(function() {
+        Push.init();
 
-            if ($window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                $window.StatusBar.styleDefault();
-            }
+        if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
+            $window.MobileAccessibility.usePreferredTextZoom(false);
+            console.log("Preferred text zoom disabled");
+        }
 
-            ImgCache.$init();
-            Update.update().catch(function(err) {
-                console.error(err);
-            });
+        if ($window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            $window.StatusBar.styleDefault();
+        }
 
-            if ($window.navigator && $window.navigator.splashscreen) {
-                $timeout(function() {
-                    $window.navigator.splashscreen.hide();
-                }, 500);
-            }
+        ImgCache.$init();
+        Update.update().catch(function(err) {
+            console.error(err);
         });
-    },
-])
+
+        if ($window.navigator && $window.navigator.splashscreen) {
+            $timeout(function() {
+                $window.navigator.splashscreen.hide();
+            }, 500);
+        }
+    });
+})
 
 .config(function(
     $stateProvider,
@@ -66,11 +69,17 @@ angular.module('ifiske', [
     ImgCacheProvider,
     $ionicCloudProvider,
     $translateProvider,
-    swedishTranslations
+    swedishTranslations,
+    germanTranslations,
+    englishTranslations
 ) {
     $translateProvider
     .translations('sv', swedishTranslations)
-    .preferredLanguage('sv');
+    .translations('de', germanTranslations)
+    .translations('en', englishTranslations)
+    .determinePreferredLanguage()
+    .fallbackLanguage(['en', 'sv']);
+
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({
         core: {
@@ -385,3 +394,4 @@ angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
 angular.module('ifiske.services', []);
 angular.module('ifiske.models', []);
+angular.module('ifiske.translations', []);

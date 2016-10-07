@@ -3,7 +3,6 @@ angular.module('ifiske.controllers')
     $scope,
     User,
     Product,
-    Update,
     PullToRefresh
 ) {
     $scope.pred = '-to';
@@ -24,7 +23,7 @@ angular.module('ifiske.controllers')
     function initilize() {
         $scope.now = Date.now();
         User.getProducts().then(setValid);
-        return Update.update(true)
+        return User.update()
         .then(User.getProducts)
         .then(setValid, function(err) {
             console.log(err);

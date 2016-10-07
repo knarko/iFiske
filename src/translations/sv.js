@@ -52,7 +52,7 @@ angular.module('ifiske.translations')
     'License has expired':                 'Fiskekortet har utgått',
     'Log in':                              'Logga in',
     'Log out':                             'Logga ut',
-    'Make sure you have the correct name': 'Se till att rätt namn står innan du skickar ditt sms!',
+    'Make sure you have the correct name': 'Se till att rätt namn står innan du skickar ditt SMS!',
     'Map':                                 'Karta',
     'Mark favorites':                      'Håll koll på när det nappar! Markera dina favorit- och hemmavatten som favoriter med en stjärna, så prenumererar du via ePost på alla nya publika fångstrapporter som kommer in till oss. Om du vill ta bort en favorit, tryck och håll ner på fiskevattnets namn.',
     'My fishing licenses':                 'Mina fiskekort',
@@ -60,7 +60,7 @@ angular.module('ifiske.translations')
     'New account':                         'Nytt konto',
     'New password':                        'Nytt lösenord',
     'Next':                                'Nästa',
-    'No  favorites':                       'Inga favoriter har markerats',
+    'No favorites':                        'Inga favoriter har markerats',
     'No areas available':                  "Det verkar inte finnas några fiskevatten laddade. Se till att du har tillgång till nätet och gå sedan till menyn och välj att 'Uppdatera Databasen'", // TODO: fix instructions
     'No data':                             'Ingen data finns!',
     'No licenses':                         'När du köpt fiskekort kommer de att finnas listade här',

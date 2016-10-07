@@ -60,7 +60,7 @@ angular.module('ifiske.translations')
     'New account':                         'New Account',
     'New password':                        'Neues Kennwort',
     'Next':                                'Weiter',
-    'No  favorites':                       'Keine Favoriten wurden markiert',
+    'No favorites':                        'Keine Favoriten wurden markiert',
     'No areas available':                  'Es scheint keine Fischerei aufgeladen werden Achten Sie darauf, den Zugriff auf das Netzwerk haben und dann in das Menü und wählen Sie die "Datenbank aktualisieren"', // TODO: Fix instructions
     'No data':                             'Keine Daten, da! ',
     'No licenses':                         'Wenn man einen Angelschein kaufen, werden sie hier aufgelistet',

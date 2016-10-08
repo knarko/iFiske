@@ -90,6 +90,18 @@ ion-popover-view {
     border-top: 0;
 }
 
+.item {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+        overflow: visible;
+    }
+}
+
 .item-toggle {
     pointer-events: initial; //This enables clickable lists with toggles
 }

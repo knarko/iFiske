@@ -1,10 +1,10 @@
 <ion-view view-title="{{'Fishing area' | translate}}">
     <ion-content>
 	      <div ng-show="!counties.length" class="item item-text-wrap">&#8505; {{'No areas available' | translate}}</div>
-        <ion-list>
-            <ion-item ng-repeat="county in counties" ui-sref="app.areas({id: county.ID, county: county.t})">
-                <h2>{{::county.t}}</h2>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+        <div class="list">
+          <a ng-repeat="county in counties" ui-sref="app.areas({id: county.ID, county: county.t})" class="item">
+            {{::county.t}}
+          </a>
+        </div>
+      </ion-content>
 </ion-view>

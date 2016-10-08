@@ -1,6 +1,6 @@
 <ion-view>
     <ion-nav-title>{{area.t}}</ion-nav-title>
-    <ion-content>
+    <ion-content class="area">
         <div class="item item-image">
             <ion-slides ng-if="images.length > 1" options="slideOptions" slider="data.slider">
                 <ion-slide-page ng-repeat="img in images">
@@ -11,7 +11,7 @@
             </ion-slides>
             <img img-cache ic-src="{{::image_endpoint + images[0].url}}" ng-if="images.length == 1" />
         </div>
-        <div ng-if="area.d" class="item item-divider item-button-right">
+        <div ng-if="area.t" class="item item-divider item-button-right">
             <h2>{{::area.t}}</h2>
             <button class="button button-icon icon"
                     ng-class="{starred: area.favorite, 'ion-android-star-outline': !area.favorite, 'ion-android-star': area.favorite}"
@@ -22,7 +22,7 @@
             <button class="button button-positive pull-right buy-cards-info-button" ng-if="products.length" ui-sref="^.cards" translate>Purchase license</button>
             <p ng-bind-html="area.d | onebr"></p>
         </div>
-        <div ng-if="org.t" class="item item-divider">
+        <div ng-if="org.t && area.d" class="item item-divider">
             <p>{{::org.t}}</p>
         </div>
         <div ng-if="org.d" class="item item-body">

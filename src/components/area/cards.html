@@ -8,19 +8,19 @@
             <h2 translate>Information</h2>
             <p ng-bind-html="area.note"></p>
         </div>
-        <div class="card-list-divider" ng-repeat-start="product in products | orderBy:predicate" ng-show="product.hl">
+        <div class="card-list-divider" ng-repeat-start="product in products | orderBy:predicate" ng-if="product.hl">
             <h4>{{::product.hl}}</h4>
         </div>
 
         <div class="list card" ng-repeat-end>
             <div class="item item-icon-left">
                 <i class="icon ion-card"></i>
-                <h2 class="pull-right" ng-show="product.price">{{'Price' | translate}}: {{::product.price}} :-</h2>
+                <h2 class="pull-right" ng-if="product.price">{{'Price' | translate}}: {{::product.price}} :-</h2>
                 <h2>{{::product.t}}</h2>
             </div>
             <div class="item item-body item-nopad">
-                <p ng-show="product.im" class="important"><i class="icon ion-alert assertive"></i>{{::product.im}}</p>
-                <p ng-show="product.no" class="note" ng-bind-html="product.no"></p>
+                <p ng-if="product.im" class="important"><i class="icon ion-alert assertive"></i>{{::product.im}}</p>
+                <p ng-if="product.no" class="note" ng-bind-html="product.no"></p>
                 <div class="padding-vertical spaced-buttons">
                     <button ng-click="openRulesModal({{::product}})" class="button button-balanced icon-left ion-document-text" translate>Rules</button>
                     <button ng-if="product.ch == 0 || product.ch == 1" ng-click="openModal({{::product}})" class="button button-positive pull-right" translate>Purchase via text</button>

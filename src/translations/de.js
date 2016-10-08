@@ -16,8 +16,8 @@ angular.module('ifiske.translations')
     'Area added to favorites':             'The area is now marked as a favorite', // TODO
     'Area map as PDF':                     'Karte des Gebiets als PDF',
     'Area not selling':                    'Dieser Fisch Schutzorganisation verkauft leider nicht Lizenz von iFiske fischen',
-    'Catch report':                        'Catch Report',
     'Area removed from favorites':         'The area is no longer marked as favorite', // TODO
+    'Catch report':                        'Fangbericht',
     'Change language':                     'Sprache ändern',
     'Change user info':                    'Um die Benutzerinformationen zu ändern, finden Sie in www.ifiske.se - Dort können Sie auch weitere Handy-Nummer in Ihr Konto entspannen, usw. ',
     'Contact Information':                 'Kontakt',

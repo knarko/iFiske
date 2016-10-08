@@ -25,11 +25,29 @@ angular.module('ifiske.services')
             return settings.push;
         },
 
+        availableLanguages: function() {
+            return {
+                se: {
+                    short: 'se',
+                    long:  'Svenska',
+                },
+                en: {
+                    short: 'en',
+                    long:  'English',
+                },
+                de: {
+                    short: 'de',
+                    long:  'Deutsch',
+                },
+            };
+        },
+
         language: function(setLanguage) {
             if (setLanguage === undefined) {
                 return settings.language;
             }
             settings.language = setLanguage;
+            localStorage.set('language', settings.language);
             updateSettings();
 
             $translate.use(settings.language);

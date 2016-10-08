@@ -1,0 +1,10 @@
+<ion-view title="{{'Select language' | translate}}">
+  <ion-content>
+    <div class="row responsive-sm">
+      <a ng-repeat="lang in languages" ng-click="changeLanguage('{{lang.short}}')" class="col language-button">
+        <img ng-src="img/{{lang.short}}.png">
+        {{lang.long}}
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

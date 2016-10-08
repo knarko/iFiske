@@ -25,17 +25,17 @@ angular.module('ifiske', [
 .run(function(
     $ionicPlatform,
     $window,
-    Update,
     ImgCache,
     $rootScope,
     $timeout,
+    $translate,
+    localStorage,
+    Update,
     Push,
-    Settings,
-    $translate
+    Settings
 ) {
     $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
 
-    $translate.use(Settings.language());
     $ionicPlatform.ready(function() {
         Push.init();
 
@@ -50,9 +50,12 @@ angular.module('ifiske', [
         }
 
         ImgCache.$init();
-        Update.update().catch(function(err) {
-            console.error(err);
-        });
+        if (localStorage.get('language')) {
+            $translate.use(Settings.language());
+            Update.update().catch(function(err) {
+                console.error(err);
+            });
+        }
 
         if ($window.navigator && $window.navigator.splashscreen) {
             $timeout(function() {
@@ -74,11 +77,11 @@ angular.module('ifiske', [
     englishTranslations
 ) {
     $translateProvider
-    .translations('sv', swedishTranslations)
+    .translations('se', swedishTranslations)
     .translations('de', germanTranslations)
     .translations('en', englishTranslations)
     .determinePreferredLanguage()
-    .fallbackLanguage(['en', 'sv']);
+    .fallbackLanguage(['en', 'se']);
 
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({
@@ -128,7 +131,9 @@ angular.module('ifiske', [
     */
 
     var defaultUrl = '/app/login';
-    if (window.localStorage.getItem('session')) {
+    if (!window.localStorage.getItem('language')) {
+        defaultUrl = '/app/language';
+    } else if (window.localStorage.getItem('session')) {
         defaultUrl = '/app/home';
     }
     $urlRouterProvider.otherwise(defaultUrl);
@@ -171,6 +176,12 @@ angular.module('ifiske', [
     .state('app.settings.bugs', {
         url:         '/info',
         templateUrl: 'components/settings/bugs.html',
+    })
+
+    .state('app.language', {
+        url:         '/language',
+        templateUrl: 'components/languageSwitcher/languageSwitcher.html',
+        controller:  'languageSwitcher',
     })
 
     .state('app.login', {

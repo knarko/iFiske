@@ -1,4 +1,4 @@
-ion-side-menu-content {
+ion-nav-view.view-container {
     background-image: url("../img/bg-login.png");
     background-size: 100%;
     background-position: bottom;
@@ -7,7 +7,6 @@ ion-side-menu-content {
     ion-view.view.image-bg,
     ion-view.pane.image-bg,
     ion-nav-view.view,
-    ion-nav-view.view-container,
     ion-nav-view.pane {
         background: none !important;
     }
@@ -18,8 +17,9 @@ ion-view.abstract-bg {
     background-size: cover;
     background-repeat: no-repeat;
 
-    .abstract-bg ion-view {
-        background: none;
+    ion-view,
+    ion-nav-view {
+        background: none !important;
     }
 }
 

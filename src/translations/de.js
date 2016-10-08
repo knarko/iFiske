@@ -95,6 +95,8 @@ angular.module('ifiske.translations')
     'Request new activation code':         'Wenn Sie einen neuen Aktivierungscode zu erhalten, klicken Sie hier. ',
     'Reset code':                          'Rückruf',
     'Rules':                               'Regeln',
+    'Search':                              'Suche',
+    'Search results':                      'Suchergebnisse',
     'Select language':                     'Sprache wählen',
     'Send new activation code':            'Eine neue Aktivierung',
     'Send SMS':                            'SMS senden',

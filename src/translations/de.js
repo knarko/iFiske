@@ -13,9 +13,11 @@ angular.module('ifiske.translations')
     'Activation took too long':            'Wenn es eine lange Zeit für Ihre Nachricht nimmt zu gelangen, drücken Sie diese Taste, um zu versuchen, die SMS erneut zu senden. ',
     'Active licenses':                     'Aktive Fanglizenz',
     'Angler record':                       'Angeln Records',
+    'Area added to favorites':             'The area is now marked as a favorite', // TODO
     'Area map as PDF':                     'Karte des Gebiets als PDF',
     'Area not selling':                    'Dieser Fisch Schutzorganisation verkauft leider nicht Lizenz von iFiske fischen',
     'Catch report':                        'Catch Report',
+    'Area removed from favorites':         'The area is no longer marked as favorite', // TODO
     'Change language':                     'Sprache ändern',
     'Change user info':                    'Um die Benutzerinformationen zu ändern, finden Sie in www.ifiske.se - Dort können Sie auch weitere Handy-Nummer in Ihr Konto entspannen, usw. ',
     'Contact Information':                 'Kontakt',
@@ -54,6 +56,7 @@ angular.module('ifiske.translations')
     'License has expired':                 'Angelschein bezahlt wurde',
     'Log in':                              'Anmelden',
     'Log out':                             'Abmelden',
+    'Login required for favorite':         'Sie müssen angemeldet sein, um Fanggebiete als Favoriten markieren',
     'Make sure you have the correct name': 'Stellen Sie sicher, dass der richtige Name steht, bevor Sie Ihre SMS-Nachricht senden! ',
     'Map':                                 'Karte',
     'Mark favorites':                      'Behalten Sie, wenn die Fische beißen! Markieren Sie Ihre Favoriten und Heimatgewässer als Favoriten mit einem Stern, so abonnieren per E-Mail an alle neuen öffentlichen Fangberichte kommen zu uns. Wenn Sie einen Favoriten, drücken Sie löschen und halten Sie den Namen des Fischwasser. ',

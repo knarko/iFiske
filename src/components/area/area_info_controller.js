@@ -8,6 +8,7 @@ angular.module('ifiske.controllers')
     User,
     $ionicPlatform,
     $cordovaToast,
+    $translate,
     $stateParams
 ) {
     $scope.slideOptions = {
@@ -43,11 +44,13 @@ angular.module('ifiske.controllers')
                     return User.addFavorite($scope.area.ID);
                 }).then(function() {
                     return $ionicPlatform.ready(function() {
-                        $cordovaToast.show(
-                            'Området är nu tillagt i dina favoriter',
-                            'short',
-                            'bottom'
-                        );
+                        $translate('Area added to favorites').then(function(translation) {
+                            $cordovaToast.show(
+                                translation,
+                                'short',
+                                'bottom'
+                            );
+                        });
                     });
                 });
             } else {
@@ -55,11 +58,13 @@ angular.module('ifiske.controllers')
                     return User.removeFavorite($scope.area.ID);
                 }).then(function() {
                     $ionicPlatform.ready(function() {
-                        $cordovaToast.show(
-                            'Området är nu borttaget från dina favoriter',
-                            'short',
-                            'bottom'
-                        );
+                        $translate('Area removed from favorites').then(function(translation) {
+                            $cordovaToast.show(
+                                translation,
+                                'short',
+                                'bottom'
+                            );
+                        });
                     });
                 });
             }
@@ -67,8 +72,10 @@ angular.module('ifiske.controllers')
                 console.warn(err);
             });
         } else {
-            $ionicPopup.alert({
-                title: 'Du måste vara inloggad för att kunna markera fiskevatten som favoriter.',
+            $translate('Login required for favorite').then(function(translation) {
+                $ionicPopup.alert({
+                    title: translation,
+                });
             });
         }
     };

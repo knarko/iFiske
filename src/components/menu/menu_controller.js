@@ -25,6 +25,10 @@ angular.module('ifiske.controllers')
         $scope.popover.hide();
         $state.go('app.login');
     };
+    $scope.register = function() {
+        $scope.popover.hide();
+        $state.go('app.register.fork');
+    };
     $scope.logout = function() {
         $scope.popover.hide();
         User.logout();

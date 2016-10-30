@@ -83,7 +83,7 @@
 		<label ng-class="{'label-error': forms.registerForm.phone.$invalid &&
 				 forms.registerForm.phone.$dirty}" class="item item-input">
 		    <input id="phone" name="phone" ng-model="details.phone" type="tel"
-			   placeholder="{{'Phone placeholder' | translate}}" ng-pattern="/^[\d]{5,25}$/"
+			   placeholder="{{'Phone placeholder' | translate}}" ng-pattern="/^\+?[\d\-\s\(\)]{5,25}$/"
 			   ng-change="forms.registerForm.phone.$setValidity('invalidPhone',true);"
 			   required>
 		</label>

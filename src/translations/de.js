@@ -62,7 +62,7 @@ angular.module('ifiske.translations')
     'Mark favorites':                      'Behalten Sie, wenn die Fische beißen! Markieren Sie Ihre Favoriten und Heimatgewässer als Favoriten mit einem Stern, so abonnieren per E-Mail an alle neuen öffentlichen Fangberichte kommen zu uns. Wenn Sie einen Favoriten, drücken Sie löschen und halten Sie den Namen des Fischwasser. ',
     'My fishing licenses':                 'Mein Fanglizenz',
     'Name':                                'Name',
-    'New account':                         'New Account',
+    'New account':                         'Neues Konto',
     'New password':                        'Neues Kennwort',
     'Next':                                'Weiter',
     'No favorites':                        'Keine Favoriten wurden markiert',

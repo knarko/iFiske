@@ -11,6 +11,7 @@ angular.module('ifiske.directives')
         controller: function(
             $scope,
             localStorage,
+            $translate,
             MapData,
             $q
         ) {
@@ -52,7 +53,7 @@ angular.module('ifiske.directives')
                     layers:  {
                         baselayers: {
                             outdoors: {
-                                name:         'Utomhus',
+                                name:         $translate.instant('Outdoors'),
                                 type:         'xyz',
                                 url:          mapboxUrl,
                                 layerOptions: {
@@ -61,7 +62,7 @@ angular.module('ifiske.directives')
                                 },
                             },
                             satellite: {
-                                name:         'Satellit',
+                                name:         $translate.instant('Satellite'),
                                 type:         'xyz',
                                 url:          mapboxUrl,
                                 layerOptions: {

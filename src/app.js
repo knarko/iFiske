@@ -22,6 +22,7 @@ angular.module('ifiske', [
     template: '<ion-spinner></ion-spinner>',
     // hideOnStateChange: true
 })
+.constant('serverLocation', 'https://www.ifiske.se')
 .run(function(
     $ionicPlatform,
     $window,
@@ -32,9 +33,10 @@ angular.module('ifiske', [
     localStorage,
     Update,
     Push,
-    Settings
+    Settings,
+    serverLocation
 ) {
-    $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
+    $rootScope.image_endpoint = serverLocation; // eslint-disable-line camelcase
 
     $ionicPlatform.ready(function() {
         Push.init();

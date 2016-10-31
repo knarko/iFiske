@@ -13,6 +13,7 @@ angular.module('ifiske.services')
     $ionicPopup,
     $cordovaInAppBrowser,
     Settings,
+    serverLocation,
     $q
 ) {
     var pushHandlers = {
@@ -45,7 +46,7 @@ angular.module('ifiske.services')
                     okText:     'OK',
                 }).then(function(response) {
                     if (response) {
-                        $cordovaInAppBrowser.open('https://ifiske.se/r/' + payload.code, '_system');
+                        $cordovaInAppBrowser.open(serverLocation + '/r/' + payload.code, '_system');
                     }
                 });
                 // $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});

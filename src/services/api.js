@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
 angular.module('ifiske.services')
 .provider('API', function APIProvider() {
-    this.base_url = 'https://www.ifiske.se/api/v2/api.php';
-
-    this.$get = function($http, sessionData, $q, Settings) {
-        var base_url = this.base_url;
+    this.$get = function($http, sessionData, $q, Settings, serverLocation) {
+        var base_url = serverLocation + '/api/v2/api.php';
 
         /**
         * # api_call #

@@ -13,6 +13,7 @@ angular.module('ifiske.directives')
             localStorage,
             $translate,
             MapData,
+            serverLocation,
             $q
         ) {
             // eslint-disable-next-line max-len
@@ -119,7 +120,7 @@ angular.module('ifiske.directives')
                     for (var i = 0; i < poiTypes.length; ++i) {
                         var type = poiTypes[i];
                         icons[type.ID] = {
-                            iconUrl:     'http://www.ifiske.se' + type.icon,
+                            iconUrl:     serverLocation + type.icon,
                             iconAnchor:  [16, 37], // point of the icon which will correspond to marker's location
                             popupAnchor: [0, -35],
                         };

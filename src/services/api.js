@@ -233,8 +233,8 @@ angular.module('ifiske.services')
             get_contact_info: function() {
                 return api_call({m: 'get_contact_info'});
             },
-            get_engine_policies: function() {
-                return api_call({m: 'get_engine_policies'});
+            get_enginepolicies: function() {
+                return api_call({m: 'get_enginepolicies'});
             },
             get_sms_terms: function() {
                 return api_call({m: 'get_sms_terms'});

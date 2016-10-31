@@ -11,7 +11,7 @@
             </div>
             <p translate>Make sure you have the correct name</p>
 
-            <ion-checkbox ng-model="SMSRules.approval" ng-true-value="'YES'" ng-false-value="'NO'" ng-change="persistApproveSMSRules()" translate>I approve the text message rules</ion-checkbox>
+            <ion-checkbox ng-model="SMSRules.approval" ng-true-value="'YES'" ng-false-value="'NO'" ng-change="persistApproveSMSRules()">{{'I approve the text message rules' | translate}}</ion-checkbox>
         <button ng-disabled="SMSRules.approval!='YES'" class="button button-block button-balanced" ng-cordova-sms="{{product.pf}}" translate>Send SMS</button>
     </ion-content>
 </div>

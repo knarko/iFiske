@@ -9,6 +9,7 @@ var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
 var plumber = require('gulp-plumber');
+var sortJSON = require('gulp-json-sort').default;
 
 var knownOptions = {
     string:  'env',
@@ -197,6 +198,7 @@ gulp.task('foss', function(done) {
         file.contents = new Buffer('[' + file.contents.toString() + ']');
         cb(null, file);
     }))
+    .pipe(sortJSON({space: 1}))
     .pipe(gulp.dest('src/static'))
     .on('end', done);
 });

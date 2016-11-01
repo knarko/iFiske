@@ -281,13 +281,19 @@ angular.module('ifiske', [
         url:         '/admin/:id',
         templateUrl: 'components/admin/admin.html',
         controller:  'AdminCtrl',
-        params:      {id: false, org: false},
+        params:      {id: undefined, org: false},
     })
     .state('app.admin_product', {
         url:         '/admin/:id/product/:productID',
         templateUrl: 'components/admin/product/product.html',
         controller:  'AdminProductCtrl',
-        params:      {id: false, productID: false, product: false},
+        params:      {id: undefined, productID: undefined, product: false},
+    })
+    .state('app.admin_check', {
+        url:         '/verify_product/:code',
+        templateUrl: 'components/admin/check/check.html',
+        controller:  'AdminCheckCtrl',
+        params:      {code: undefined},
     })
 
     .state('app.areas', {

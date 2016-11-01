@@ -1,11 +1,26 @@
-<ion-view title="Admin">
+<ion-view title="{{'Admin' | translate}}">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="prod in products" ui-sref="app.admin_product({id: id, product: prod, productID: prod.ID})">
-        <h2>{{prod.t}}</h2>
+    <div class="padding">
+    <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
+    <h2>{{org.ot}}</h2>
+    <p>
+      {{'More in control panel' | translate}}
+      <a href="{{image_endpoint}}/index.php/mypage" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
+    </p>
+    </div>
+      <div class="list">
+        <div class="item item-divider" translate translate-value-amount="{{org.products.length}}">
+          Active licenses
+        </div>
+      <div class="item item-full-width" collection-repeat="prod in org.products" item-height="prod.subt ? '74px' : '54px'" ui-sref="app.admin_product({id: id, product: prod, productID: prod.ID})">
+        <h2>{{prod.t}} -  {{prod.code}}</h2>
         <p>{{prod.subt}}</p>
-        {{prod}}
-      </ion-item>
-    </ion-list>
+      </div>
+      </div>
   </ion-content>
+  <ion-footer-bar class="bar-balanced">
+    <div class="button-bar">
+      <a class="button button-icon ion-camera" ng-click="scanQR()" translate>Scan QR code</a>
+    </div>
+  </ion-footer-bar>
 </ion-view>

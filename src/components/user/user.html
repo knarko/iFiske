@@ -1,14 +1,16 @@
 <ion-view title="{{'Profile' | translate}}">
   <ion-content>
     <div class="list">
-      <div class="item item-divider" ng-if="organizations.length" translate>
-        Administration
+      <div class="item item-divider" ng-if="isAdmin">
+        <i class="icon ion-locked "></i> {{'Administration' | translate}}
       </div>
       <div class="item" ng-repeat="org in organizations" ui-sref="app.admin({id: org.orgid, org: org})">
         <h2>{{org.ot}}</h2>
-        <p>{{org.levelname}}</p>
+        <p translate>{{org.levelname}}</p>
       </div>
-      <div class="item item-divider" translate>User information</div>
+      <div class="item item-divider">
+        <i class="icon ion-person"></i> {{'User information' | translate}}
+      </div>
       <div class="item">
         <h2 translate>Username</h2>
         <p>{{user.username}}</p>
@@ -21,14 +23,17 @@
         <h2 translate>Email</h2>
         <p>{{user.email}}</p>
       </div>
-      <div class="item item-divider" translate>User phone numbers</div>
+      <div class="item item-divider">
+        <i class="icon ion-ios-telephone"></i> {{'User phone numbers' | translate}}
+      </div>
       <div ng-repeat="number in numbers" class="item">
         <p>{{number.number}}</p>
       </div>
     </div>
     <div class="card">
       <div class="item item-text-wrap">
-        &#8505; {{'Change user info' | translate}}</div>
+        &#8505; {{'Change user info' | translate}}
+      </div>
     </div>
   </ion-content>
 </ion-view>

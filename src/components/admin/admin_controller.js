@@ -1,27 +1,50 @@
 angular.module('ifiske.controllers')
-.controller('AdminCtrl', [
-    '$scope',
-    '$stateParams',
-    'API',
-    '$q',
-    '$ionicLoading',
-    function($scope, $stateParams, API, $q, $ionicLoading) {
+.controller('AdminCheckCtrl', function() {});
+angular.module('ifiske.controllers')
+.controller('AdminCtrl', function(
+  $scope,
+  $state,
+  $stateParams,
+  Admin,
+  $ionicLoading,
+  $cordovaBarcodeScanner
+) {
+    $scope.id = $stateParams.id;
+    $ionicLoading.show();
 
-        $scope.id = $stateParams.id;
-        $ionicLoading.show();
-        var p = [];
-        p.push(API.adm_products($stateParams.id).then(function(res) {
-            $scope.products = res;
-        }));
-        $scope.org = $stateParams.org;
-        if (!$scope.org) {
-            p.push(API.user_organizations().then(function(res) {
-                $scope.org = res[$stateParams.id];
-            }));
-        }
-
-        $q.all(p).finally(function() {
+    $scope.org = $stateParams.org;
+    if ($scope.org) {
+        $ionicLoading.hide();
+    } else {
+        Admin.getOrganization($stateParams.id).then(function(org) {
+            $scope.org = org;
+        }).finally(function() {
             $ionicLoading.hide();
         });
     }
-]);
+
+    $scope.scanQR = function() {
+        try {
+            $cordovaBarcodeScanner.scan().then(function(res) {
+                if (res.cancelled) {
+                    throw new Error('Cancelled');
+                }
+                if (res.format === 'QR_CODE') {
+                    var url = new URL(res.text);
+                    if (url.searchParams.get('e')) {
+                        return url.searchParams.get('e');
+                    }
+                } else {
+                    throw new Error('Not a QR code');
+                }
+            }).then(function(code) {
+            // TODO: check if code is valid and display to user
+                console.log(code);
+            }, function(err) {
+                console.warn(err);
+            });
+        } catch (e) {
+            $state.go('app.admin_check', {code: '904192'});
+        }
+    };
+});

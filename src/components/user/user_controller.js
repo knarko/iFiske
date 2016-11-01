@@ -1,12 +1,13 @@
 angular.module('ifiske.controllers')
-.controller('UserCtrl', function($scope, User, API) {
+.controller('UserCtrl', function($scope, User, Admin) {
     var levelnames = [
-        'Tillsyningsman',
-        'Kassör',
-        'Admin',
+        'USER_LEVEL_0',
+        'USER_LEVEL_1',
+        'USER_LEVEL_2',
     ];
-    API.user_organizations().then(function(res) {
+    Admin.getOrganizations().then(function(res) {
         for (var e in res) {
+            $scope.isAdmin = true;
             res[e].levelname = levelnames[res[e].level];
         }
         $scope.organizations = res;

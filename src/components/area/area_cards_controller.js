@@ -6,7 +6,7 @@ angular.module('ifiske.controllers')
     $ionicPopup,
     $cordovaInAppBrowser,
     Settings,
-    serverLocation
+    serverLocation,
     Terms
 ) {
     $scope.$on('$ionicView.beforeEnter', function() {

@@ -23,7 +23,11 @@
     "package.ios": "gulp --env=production && ionic package build ios --release -p prod",
     "resources": "ionic resources",
     "lint": "eslint src",
-    "lint.fix": "eslint src --fix"
+    "lint.fix": "eslint src --fix",
+    "gulp:serve:before": "gulp serve:before",
+    "gulp:serve:after": "gulp serve:after",
+    "serve:before": "gulp:serve:before",
+    "serve:after": "gulp:serve:after"
   },
   "repository": {
     "type": "git",

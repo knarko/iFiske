@@ -69,6 +69,7 @@ angular.module('ifiske', [
 
 .config(function(
     $stateProvider,
+    States,
     $urlRouterProvider,
     $ionicConfigProvider,
     ImgCacheProvider,
@@ -140,46 +141,16 @@ angular.module('ifiske', [
     }
     $urlRouterProvider.otherwise(defaultUrl);
 
+    function parseStates(name, state) {
+        $stateProvider.state(name, state.config);
+        if (state.children) {
+            Object.keys(state.children).forEach(function(stateName) {
+                parseStates(name + '.' + stateName, state.children[stateName]);
+            });
+        }
+    }
+    parseStates('app', States.app);
     $stateProvider
-    .state('app', {
-        url:         '/app',
-        // abstract: true,
-        templateUrl: 'components/menu/menu.html',
-        controller:  'MenuCtrl',
-    })
-    .state('app.home', {
-        url:         '/home',
-        templateUrl: 'components/home/home.html',
-        controller:  'HomeCtrl',
-    })
-
-    .state('app.settings', {
-        url:         '/settings',
-        templateUrl: 'components/settings/settings.html',
-        controller:  'SettingsCtrl',
-    })
-
-    .state('app.settings.main', {
-        url:         '/main',
-        templateUrl: 'components/settings/main.html',
-    })
-
-    .state('app.settings.about', {
-        url:         '/about',
-        templateUrl: 'components/settings/about.html',
-    })
-
-    .state('app.settings.foss', {
-        url:         '/foss',
-        templateUrl: 'components/settings/foss/foss.html',
-        controller:  'FossController',
-    })
-
-    .state('app.settings.bugs', {
-        url:         '/info',
-        templateUrl: 'components/settings/bugs.html',
-    })
-
     .state('app.language', {
         url:         '/language',
         templateUrl: 'components/languageSwitcher/languageSwitcher.html',

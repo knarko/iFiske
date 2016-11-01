@@ -34,6 +34,7 @@ var paths = {
     scripts: [
         './src/io-config.js',
         './src/app.js',
+        './src/states.js',
         './src/components/**/*.js',
         './src/services/**/*.js',
         './src/directives/**/*.js',

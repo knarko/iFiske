@@ -56,7 +56,7 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData) {
+    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData, Product) {
         var p = [];
         for (var table in tables) {
             p.push(DB.initializeTable(tables[table]));
@@ -189,7 +189,11 @@ angular.module('ifiske.models')
                         'LEFT JOIN Product ON Product.ID = User_Product.pid',
                         'LEFT JOIN Rule ON Rule.ID = Product.ri',
                         'WHERE User_Product.ID = ?',
-                    ].join(' '), [id]);
+                    ].join(' '), [id]).then(function(product) {
+                        console.log(product);
+                        product.validity = Product.getValidity(product);
+                        return product;
+                    });
                 });
             },
 
@@ -203,7 +207,13 @@ angular.module('ifiske.models')
                         'FROM User_Product',
                         'LEFT JOIN Product ON Product.ID = User_Product.pid',
                         'LEFT JOIN Rule ON Rule.ID = Product.ri',
-                    ].join(' '));
+                    ].join(' ')).then(function(products) {
+                        products.forEach(function(product) {
+                            console.log(product);
+                            product.validity = Product.getValidity(product);
+                        });
+                        return products;
+                    });
                 });
             },
 

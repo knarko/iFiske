@@ -1,8 +1,7 @@
 angular.module('ifiske.models')
 .provider('Admin', function() {
-    this.$get = function($q, API, Organization) {
+    this.$get = function($q, API, Organization, Product) {
         var organizations = {};
-        var products = [];
 
         var model = {
             isAdmin: function() {
@@ -14,16 +13,34 @@ angular.module('ifiske.models')
                     return false;
                 });
             },
-            getProduct: function(productID) {
-                var p = products[productID];
-                if (p) {
-                    return $q.resolve(p);
-                } else {
-                    return this.getProducts().then(function() {
-                        console.log(productID, products);
-                        return products[productID];
-                    });
+            checkProduct: function(code) {
+                return API.adm_check_prod(code);
+            },
+            getProduct: function(orgID, productID) {
+                var product;
+                try {
+                    product = organizations[orgID].products.filter(function(p) {
+                        return Number(p.ID) === Number(productID);
+                    })[0];
+                } catch (e) {
                 }
+                if (product) {
+                    return $q.resolve(product);
+                }
+
+                return model.wait.then(function() {
+                    var product;
+                    try {
+                        product = organizations[orgID].products.filter(function(p) {
+                            return Number(p.ID) === Number(productID);
+                        })[0];
+                    } catch (e) {
+                    }
+                    if (product) {
+                        return product;
+                    }
+                    return $q.reject('Could not find a product');
+                });
             },
             getOrganization: function(orgID) {
                 return model.wait.then(function() {
@@ -42,6 +59,7 @@ angular.module('ifiske.models')
                         p.push(API.adm_products(orgs[i].orgid).then(function(products) {
                             var prods = [];
                             for (var j in products) {
+                                products[j].validity = Product.getValidity(products[j]);
                                 prods.push(products[j]);
                             }
                             organizations[i].products = prods;
@@ -54,7 +72,7 @@ angular.module('ifiske.models')
             },
             getProducts: function(orgID) {
                 return model.wait.then(function() {
-                    console.log('orgs is', organizations, orgID, organizations[orgID].pr);
+                    console.log('orgs is', organizations, orgID, organizations[orgID]);
                     return organizations[orgID].products;
                 });
             },

@@ -155,6 +155,9 @@ angular.module('ifiske.services')
             adm_revoke_prod: function(code) {
                 return session_api_call({m: 'adm_revoke_prod', code: code}, false);
             },
+            adm_check_prod: function(code) {
+                return session_api_call({m: 'adm_check_prod', code: code}, false);
+            },
 
             get_fishes: function() {
                 return api_call({m: 'get_fishes'});

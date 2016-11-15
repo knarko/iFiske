@@ -50,7 +50,8 @@ var paths = {
 
         './lib/ngCordova/dist/ng-cordova.js',
 
-        './lib/angular-i18n/angular-locale_sv-se.js',
+        './lib/angular-i18n/angular-locale_sv.js',
+        // TODO: Allow for other locales maybe?
         './lib/angular-messages/angular-messages.js',
         './lib/angular-simple-logger/dist/angular-simple-logger.js',
 

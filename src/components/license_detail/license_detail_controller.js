@@ -4,7 +4,6 @@ angular.module('ifiske.controllers')
     $stateParams,
     Area,
     User,
-    Product,
     Organization,
     $ionicModal,
     $sce
@@ -19,7 +18,6 @@ angular.module('ifiske.controllers')
         User.getProduct($stateParams.id).then(function(license) {
             $scope.product = license;
             updateQR();
-            $scope.product.validity = Product.getValidity($scope.product);
             if (license.ai) {
                 Area.getOne(license.ai).then(function(area) {
                     $scope.area = area;

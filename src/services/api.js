@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
 angular.module('ifiske.services')
 .provider('API', function APIProvider() {
-    this.base_url = 'https://www.ifiske.se/api/v2/api.php';
-
-    this.$get = function($http, sessionData, $q) {
-        var base_url = this.base_url;
+    this.$get = function($http, sessionData, $q, Settings, serverLocation) {
+        var base_url = serverLocation + '/api/v2/api.php';
 
         /**
         * # api_call #
@@ -13,15 +11,16 @@ angular.module('ifiske.services')
         */
         function api_call(params, cache) {
             return $q(function(fulfill, reject) {
-                $http(
-                    {
-                        method:  'get',
-                        url:     base_url,
-                        params:  angular.extend(params, {key: 'ox07xh8aaypwvq7a'}),
-                        timeout: 7000,
-                        cache:   (cache !== false),
-                    }
-                )
+                $http({
+                    method: 'get',
+                    url:    base_url,
+                    params: angular.extend(params, {
+                        lang: Settings.language(),
+                        key:  'ox07xh8aaypwvq7a',
+                    }),
+                    timeout: 7000,
+                    cache:   (cache !== false),
+                })
                 // ToDo: Proper logging
                 .success(function(data) {
                     if (data.status === 'error') {
@@ -89,10 +88,10 @@ angular.module('ifiske.services')
                 return session_api_call({m: 'user_info'});
             },
             user_lost_password: function(user) {
-                return api_call(
-                    {m:                   'user_lost_password',
-                        user_identification: user,
-                    }, false);
+                return api_call({
+                    m:                   'user_lost_password',
+                    user_identification: user,
+                }, false);
             },
             user_reset_password: function(user_identification, password, code) {
                 return api_call({
@@ -110,23 +109,22 @@ angular.module('ifiske.services')
                 }, false);
             },
             user_login: function(username, password) {
-                return api_call(
-                        {m:        'user_login',
-                            username: username,
-                            password: password,
-                        }, false)
-                        .then(function(data) {
-                            sessionData.setToken(data);
-
-                            // needed for chaining of promises
-                            return data;
-                        });
+                return api_call({
+                    m:        'user_login',
+                    username: username,
+                    password: password,
+                }, false)
+                .then(function(data) {
+                    sessionData.setToken(data);
+                    // needed for chaining of promises
+                    return data;
+                });
             },
             user_logout: function() {
                 return session_api_call({m: 'user_logout'}, false)
-                        .then(function() {
-                            sessionData.deleteToken();
-                        });
+                .then(function() {
+                    sessionData.deleteToken();
+                });
             },
             user_products: function() {
                 return session_api_call({m: 'user_products'}, false);
@@ -154,68 +152,68 @@ angular.module('ifiske.services')
                 return api_call({m: 'get_baits'});
             },
             get_organizations: function(orgid) {
-                return api_call(
-                            {m:     'get_organizations',
-                                orgid: orgid,
-                            });
+                return api_call({
+                    m:     'get_organizations',
+                    orgid: orgid,
+                });
             },
             get_org_modified: function(orgid) {
-                return api_call(
-                                {m:     'get_org_modified',
-                                    orgid: orgid,
-                                });
+                return api_call({
+                    m:     'get_org_modified',
+                    orgid: orgid,
+                });
             },
             get_areas: function(areaid) {
-                return api_call(
-                                    {m:      'get_areas',
-                                        areaid: areaid,
-                                    });
+                return api_call({
+                    m:      'get_areas',
+                    areaid: areaid,
+                });
             },
             get_areas_modified: function(areaid) {
-                return api_call(
-                                        {m:      'get_areas_modified',
-                                            areaid: areaid,
-                                        });
+                return api_call({
+                    m:      'get_areas_modified',
+                    areaid: areaid,
+                });
             },
             get_products: function(areaid) {
-                return api_call(
-                                            {m:      'get_products',
-                                                areaid: areaid,
-                                            });
+                return api_call({
+                    m:      'get_products',
+                    areaid: areaid,
+                });
             },
             get_rules: function(ruleid) {
-                return api_call(
-                                                {m:      'get_rules',
-                                                    ruleid: ruleid,
-                                                });
+                return api_call({
+                    m:      'get_rules',
+                    ruleid: ruleid,
+                });
             },
             get_photos: function(orgid, areaid) {
-                return api_call(
-                                                    {m:      'get_photos',
-                                                        orgid:  orgid,
-                                                        areaid: areaid,
-                                                    });
+                return api_call({
+                    m:      'get_photos',
+                    orgid:  orgid,
+                    areaid: areaid,
+                });
             },
             get_map_pois: function(orgid) {
-                return api_call(
-                                                        {m:     'get_map_pois',
-                                                            orgid: orgid,
-                                                        });
+                return api_call({
+                    m:     'get_map_pois',
+                    orgid: orgid,
+                });
             },
             get_map_poi_types: function() {
                 return api_call({m: 'get_map_poi_types'});
             },
             get_map_polygons: function(orgid) {
-                return api_call(
-                                                            {m:     'get_map_polygons',
-                                                                orgid: orgid,
-                                                            });
+                return api_call({
+                    m:     'get_map_polygons',
+                    orgid: orgid,
+                });
             },
             user_get_favorites: function() {
                 return session_api_call({m: 'user_get_favorites'}, false);
             },
             user_add_favorite: function(area) {
-                                                            // Flag 0 means to not get notifications on catch reports
+                // Flag 0 means to not get notifications on catch reports
                 return session_api_call({m: 'user_add_favorite', areaid: area, flag: 0}, false);
             },
             user_set_favorite_notification: function(area, flag) {
@@ -235,8 +233,8 @@ angular.module('ifiske.services')
             get_contact_info: function() {
                 return api_call({m: 'get_contact_info'});
             },
-            get_engine_policies: function() {
-                return api_call({m: 'get_engine_policies'});
+            get_enginepolicies: function() {
+                return api_call({m: 'get_enginepolicies'});
             },
             get_sms_terms: function() {
                 return api_call({m: 'get_sms_terms'});

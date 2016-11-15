@@ -5,48 +5,38 @@ angular.module('ifiske.controllers')
     $ionicPlatform,
     $ionicLoading,
     $cordovaToast,
+    $translate,
     API
 ) {
-    var user = "";
-
     /**
-    * ToDo: use to skip from lostpassword to resetpassword
-    * skip
-    * Submit handler for skip button
-    */
-    /*
-    $scope.skip = function() {
-    $scope.info = "";
-    $state.go('^.resetpassword');
-    };
-    */
-
-    /**
-    * lostPassword
-    * Submit handler for first form
-    */
+     * lostPassword
+     * Submit handler for first form
+     * @param  {form} form the form with the username
+     */
     $scope.lostPassword = function(form) {
         $ionicLoading.show();
 
-        user = form.user.$viewValue;
+        var user = form.user.$viewValue;
 
         API.user_lost_password(user)
         .then(function(data) {
             // Set info message for next view
-            $scope.info = 'En återställningskod kommer skickas till dig inom kort, via ';
+            var methods = [];
             if (data.mailed) {
-                $scope.info += 'e-mail';
-                if (data.texted) {
-                    $scope.info += ' och ';
-                }
+                methods.push($translate.instant('Email'));
             }
             if (data.texted) {
-                $scope.info += 'SMS';
+                methods.push($translate.instant('SMS'));
             }
-            if (data.mailed) {
-                $scope.info += '<br>Om du inte fått ditt mejl efter 10 minuter, ' +
-                'kolla så att mejlet inte fastnat i skräpposten.';
-            }
+            $translate('Recovery code will soon be sent', {
+                methods: methods,
+                mailed:  Boolean(data.mailed),
+            }).then(function(translation) {
+                $scope.info = translation;
+            });
+
+            // Set username for next view
+            $scope.user = user;
 
             $state.go('^.resetpassword');
         }, function(_error) {
@@ -60,20 +50,24 @@ angular.module('ifiske.controllers')
     /**
     * resetPassword
     * Submit handler for second form
+    * @param {form} form the form with the new password
     *
     * ToDo: log in immediately?
     */
     $scope.resetPassword = function(form) {
         $ionicLoading.show();
 
-        API.user_reset_password(user, form.password.$viewValue, form.code.$viewValue)
-        .then(function(_data) {
-            // ToDo: handle timeouts?
+        var user = form.user.$viewValue;
+        var password = form.password.$viewValue;
+        var code = form.code.$viewValue;
 
-            // ToDo: .ready() needed?
+        API.user_reset_password(user, password, code)
+        .then(function(_data) {
             // Success toast
-            $ionicPlatform.ready(function() {
-                $cordovaToast.showLongBottom('Ditt lösenord har ändrats');
+            $translate('Password changed').then(function(translation) {
+                $ionicPlatform.ready(function() {
+                    $cordovaToast.showShortBottom(translation);
+                });
             });
 
             $state.go('app.login');
@@ -82,17 +76,23 @@ angular.module('ifiske.controllers')
             // $ionicHistory.goToHistoryRoot($ionicHistory.currentView().historyId);
         }, function(error) {
             switch (error.error_code) {
-                /* case 5:
-                //invalide username
-                break;*/
-                /* case 13:
+            case 5:
+                // invalid username
+                form.user.$setValidity('invalidUser', false);
+                break;
+            case 13:
                 form.password.$setValidity('passwordLength', false);
-                break;*/
+                break;
             case 16:
                 form.code.$setValidity('invalidCode', false);
                 break;
             default:
                 console.warn('Unhandled error code from api', error);
+                $translate('Unhandled API error').then(function(translation) {
+                    $ionicPlatform.ready(function() {
+                        $cordovaToast.showShortBottom(translation);
+                    });
+                });
                 break;
             }
         })

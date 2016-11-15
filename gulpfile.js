@@ -1,24 +1,15 @@
 /* jshint node: true */
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
-var sass = require('gulp-sass');
-var autoprefixer = require('autoprefixer');
-var postcss = require('gulp-postcss');
-var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
-var replace = require('gulp-replace');
 var minimist = require('minimist');
-var phonegapBuild = require('gulp-phonegap-build');
-var inquirer = require('inquirer');
 var plumber = require('gulp-plumber');
-var keytar = require('keytar');
+var sortJSON = require('gulp-json-sort').default;
 
 var knownOptions = {
     string:  'env',
@@ -47,6 +38,7 @@ var paths = {
         './src/services/**/*.js',
         './src/directives/**/*.js',
         './src/models/**/*.js',
+        './src/translations/*.js',
     ],
     libs: [
         './src/lib/polyfill.js',
@@ -63,6 +55,8 @@ var paths = {
 
         './lib/imgcache.js/js/imgcache.js',
         './lib/angular-imgcache.js/angular-imgcache.js',
+
+        './lib/angular-translate/angular-translate.js',
 
         './lib/leaflet/dist/leaflet-src.js',
         './lib/ui-leaflet/dist/ui-leaflet.js',
@@ -130,7 +124,7 @@ gulp.task('templates', function(done) {
     .on('end', done);
 });
 
-gulp.task('static', function(done) {
+gulp.task('static', ['foss'], function(done) {
     gulp.src(paths.static)
     .pipe(gulp.dest('./www/static'))
     .on('end', done);
@@ -148,6 +142,10 @@ gulp.task('libs', function(done) {
 });
 
 gulp.task('sass', function(done) {
+    var sass = require('gulp-sass');
+    var autoprefixer = require('autoprefixer');
+    var postcss = require('gulp-postcss');
+    var minifyCss = require('gulp-minify-css');
     gulp.src(paths.sass)
     .pipe(plumber({errorHandler: done}))
     .pipe(sass())
@@ -175,16 +173,33 @@ gulp.task('watch', function() {
     gulp.watch('src/index.html', ['index']);
 });
 
-gulp.task('install', ['git-check'], function() {
-    return bower.commands.install()
-    .on('log', function(data) {
-        gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
-});
-
 gulp.task('images', function(done) {
     gulp.src(paths.images)
     .pipe(gulp.dest('./www/css/images'))
+    .on('end', done);
+});
+
+gulp.task('foss', function(done) {
+    var map = require('map-stream');
+    var markdown = require('gulp-markdown');
+    gulp.src(['./{lib,plugins,node_modules/@ionic}/*/{license,LICENSE}*'])
+    .pipe(markdown())
+    .pipe(map(function(file, cb) {
+        var file_content = file.contents.toString();
+        var title = file.relative.match(/[\\\/](.*?)[\\\/][^\\\/]+$/)[1].replace(/[\\\/]/g, '-').replace('@', '');
+        file.contents = new Buffer(JSON.stringify({
+            title: title,
+            text:  file_content,
+        }));
+        cb(null, file);
+    }))
+    .pipe(concat('licenses.json', {newLine: ',\r\n'}))
+    .pipe(map(function(file, cb) {
+        file.contents = new Buffer('[' + file.contents.toString() + ']');
+        cb(null, file);
+    }))
+    .pipe(sortJSON({space: 1}))
+    .pipe(gulp.dest('src/static'))
     .on('end', done);
 });
 

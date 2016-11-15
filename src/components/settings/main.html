@@ -1,0 +1,18 @@
+<ion-view title="{{'Settings' | translate}}">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider" translate>Settings</div>
+
+      <ion-toggle ng-model="push.checked" ng-checked="push.checked" ng-change="push.changed()">{{'Push notifications'|translate}}</ion-toggle>
+      <a ng-click="forcedUpdate()" class="item" translate>Update stored data</a>
+      <a ng-click="changeLanguage()" class="item" translate>Change language</a>
+
+      <a ng-if="sessionData.token" class="item" ng-click="logout();" translate>Log out</a>
+      <div class="item item-divider" translate>Information</div>
+      <a ui-sref="app.contact" class="item" translate>Contact</a>
+      <a ui-sref="^.bugs" class="item" translate>Report issue</a>
+      <a ui-sref="app.legal" class="item" translate>Terms of subscription</a>
+      <a ui-sref="^.about" class="item" translate>About the app</a>
+    </div>
+  </ion-content>
+</ion-view>

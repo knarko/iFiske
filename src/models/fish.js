@@ -20,7 +20,7 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(API, DB, ImgCache, BaseModel) {
+    this.$get = function(API, DB, ImgCache, BaseModel, serverLocation) {
         var model = new BaseModel(table);
 
         angular.extend(model, {
@@ -28,11 +28,10 @@ angular.module('ifiske.models')
                 if (shouldupdate)
                     return API.get_fishes()
                 .then(function(data) {
-                    var ifiskeHome = 'https://www.ifiske.se';
                     console.log('Downloading all fish images: ', data);
                     for (var fish in data) {
                         if (data.hasOwnProperty(fish))
-                            ImgCache.cacheFile(ifiskeHome + data[fish].img);
+                            ImgCache.cacheFile(serverLocation + data[fish].img);
                     }
                     if (shouldupdate === 'skipWait')
                         return DB.populateTable(table, data);

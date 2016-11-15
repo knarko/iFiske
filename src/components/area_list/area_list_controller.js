@@ -7,7 +7,7 @@ angular.module('ifiske.controllers')
 ) {
     var copy = $stateParams.search;
     $scope.search = copy;
-    $scope.county = $stateParams.county || 'Sökresultat';
+    $scope.county = $stateParams.county || 'Search results';
     Area.search('', $stateParams.id)
     .then(function(data) {
         $scope.areas = data;

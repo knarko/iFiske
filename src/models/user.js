@@ -73,7 +73,7 @@ angular.module('ifiske.models')
         * @return {Promise}  Promise when done
         */
         function clean() {
-            var p = [Push.unregister()];
+            var p = [];
             for (var table in tables) {
                 p.push(DB.initializeTable(tables[table]));
             }
@@ -141,13 +141,16 @@ angular.module('ifiske.models')
         }
 
         function login(username, password) {
-            return API.user_login(username, password).then(update);
+            return API.user_login(username, password)
+            .then(update)
+            .then(Push.reset);
         }
 
         function logout() {
             return $q.all([
                 clean(),
                 API.user_logout(),
+                Push.logout(),
             ]);
         }
 

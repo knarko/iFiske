@@ -1,6 +1,5 @@
 .buy-cards-info-button {
     margin-left: 5px;
-    margin-top: 16px;
 }
 
 .item.item-divider.item-button-right {
@@ -10,6 +9,10 @@
 
 .item.item-divider.item-button-right>button {
     top: 4px;
+}
+
+.area p:first-of-type {
+    margin-top: 0;
 }
 
 .slider-image {

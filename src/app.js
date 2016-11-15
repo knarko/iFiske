@@ -14,56 +14,77 @@ angular.module('ifiske', [
     'ngMessages',
     'ImgCache',
     'ui-leaflet',
+    'pascalprecht.translate',
+    'ifiske.translations',
 ])
 
 .constant('$ionicLoadingConfig', {
     template: '<ion-spinner></ion-spinner>',
     // hideOnStateChange: true
 })
-.run([
-    '$ionicPlatform',
-    '$window',
-    'Update',
-    'ImgCache',
-    '$rootScope',
-    '$timeout',
+.constant('serverLocation', 'https://www.ifiske.se')
+.run(function(
+    $ionicPlatform,
+    $window,
+    ImgCache,
+    $rootScope,
+    $timeout,
+    $translate,
+    localStorage,
+    Update,
+    Push,
+    Settings,
+    serverLocation
+) {
+    $rootScope.image_endpoint = serverLocation; // eslint-disable-line camelcase
 
-    // Only get these to init them
-    'Push',
-    function($ionicPlatform, $window, Update, ImgCache, $rootScope, $timeout) {
-        $rootScope.image_endpoint = 'https://www.ifiske.se'; // eslint-disable-line camelcase
-        $ionicPlatform.ready(function() {
-            if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
-                $window.MobileAccessibility.usePreferredTextZoom(false);
-                console.log("Preferred text zoom disabled");
-            }
+    $ionicPlatform.ready(function() {
+        Push.init();
 
-            if ($window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                $window.StatusBar.styleDefault();
-            }
+        if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
+            $window.MobileAccessibility.usePreferredTextZoom(false);
+            console.log("Preferred text zoom disabled");
+        }
 
-            ImgCache.$init();
+        if ($window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            $window.StatusBar.styleDefault();
+        }
+
+        ImgCache.$init();
+        if (localStorage.get('language')) {
+            $translate.use(Settings.language());
             Update.update().catch(function(err) {
                 console.error(err);
             });
+        }
 
-            if ($window.navigator && $window.navigator.splashscreen) {
-                $timeout(function() {
-                    $window.navigator.splashscreen.hide();
-                }, 500);
-            }
-        });
-    },
-])
+        if ($window.navigator && $window.navigator.splashscreen) {
+            $timeout(function() {
+                $window.navigator.splashscreen.hide();
+            }, 500);
+        }
+    });
+})
 
 .config(function(
     $stateProvider,
     $urlRouterProvider,
     $ionicConfigProvider,
     ImgCacheProvider,
-    $ionicCloudProvider
+    $ionicCloudProvider,
+    $translateProvider,
+    swedishTranslations,
+    germanTranslations,
+    englishTranslations
 ) {
+    $translateProvider
+    .translations('se', swedishTranslations)
+    .translations('de', germanTranslations)
+    .translations('en', englishTranslations)
+    .determinePreferredLanguage()
+    .fallbackLanguage(['en', 'se']);
+
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({
         core: {
@@ -112,7 +133,9 @@ angular.module('ifiske', [
     */
 
     var defaultUrl = '/app/login';
-    if (window.localStorage.getItem('session')) {
+    if (!window.localStorage.getItem('language')) {
+        defaultUrl = '/app/language';
+    } else if (window.localStorage.getItem('session')) {
         defaultUrl = '/app/home';
     }
     $urlRouterProvider.otherwise(defaultUrl);
@@ -123,6 +146,44 @@ angular.module('ifiske', [
         // abstract: true,
         templateUrl: 'components/menu/menu.html',
         controller:  'MenuCtrl',
+    })
+    .state('app.home', {
+        url:         '/home',
+        templateUrl: 'components/home/home.html',
+        controller:  'HomeCtrl',
+    })
+
+    .state('app.settings', {
+        url:         '/settings',
+        templateUrl: 'components/settings/settings.html',
+        controller:  'SettingsCtrl',
+    })
+
+    .state('app.settings.main', {
+        url:         '/main',
+        templateUrl: 'components/settings/main.html',
+    })
+
+    .state('app.settings.about', {
+        url:         '/about',
+        templateUrl: 'components/settings/about.html',
+    })
+
+    .state('app.settings.foss', {
+        url:         '/foss',
+        templateUrl: 'components/settings/foss/foss.html',
+        controller:  'FossController',
+    })
+
+    .state('app.settings.bugs', {
+        url:         '/info',
+        templateUrl: 'components/settings/bugs.html',
+    })
+
+    .state('app.language', {
+        url:         '/language',
+        templateUrl: 'components/languageSwitcher/languageSwitcher.html',
+        controller:  'languageSwitcher',
     })
 
     .state('app.login', {
@@ -171,21 +232,6 @@ angular.module('ifiske', [
         controller:  'RegisterVerifyCtrl',
     })
 
-    //
-    .state('app.home', {
-        url:         '/home',
-        templateUrl: 'components/home/home.html',
-        controller:  'HomeCtrl',
-    })
-    .state('app.info', {
-        url:         '/info',
-        templateUrl: 'components/info/info.html',
-    })
-
-    .state('app.bugs', {
-        url:         '/info',
-        templateUrl: 'components/menu/report.html',
-    })
     .state('app.contact', {
         url:         '/contact',
         templateUrl: 'components/contact/contact.html',
@@ -195,11 +241,6 @@ angular.module('ifiske', [
         url:         '/legal',
         templateUrl: 'components/legal/legal.html',
         controller:  'LegalCtrl',
-    })
-    .state('app.about', {
-        url:         '/about',
-        templateUrl: 'components/about/about.html',
-        controller:  'AboutCtrl',
     })
     .state('app.userinfo', {
         url:         '/userinfo',
@@ -229,6 +270,12 @@ angular.module('ifiske', [
             },
         },
     })
+    .state('app.cards', {
+        url:         '/cards',
+        templateUrl: 'components/user_cards/user_cards.html',
+        controller:  'UserCardsCtrl',
+    })
+
     .state('app.areas', {
         url:    '/areas',
         params: {
@@ -238,11 +285,6 @@ angular.module('ifiske', [
         },
         templateUrl: 'components/area_list/area_list.html',
         controller:  'AreasCtrl',
-    })
-    .state('app.cards', {
-        url:         '/cards',
-        templateUrl: 'components/user_cards/user_cards.html',
-        controller:  'UserCardsCtrl',
     })
     .state('app.report', {
         url:    '/report/:id',
@@ -365,3 +407,4 @@ angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);
 angular.module('ifiske.services', []);
 angular.module('ifiske.models', []);
+angular.module('ifiske.translations', []);

@@ -12,6 +12,8 @@ angular.module('ifiske.services')
     sessionData,
     $ionicPopup,
     $cordovaInAppBrowser,
+    Settings,
+    serverLocation,
     $q
 ) {
     var pushHandlers = {
@@ -44,7 +46,7 @@ angular.module('ifiske.services')
                     okText:     'OK',
                 }).then(function(response) {
                     if (response) {
-                        $cordovaInAppBrowser.open('https://ifiske.se/r/' + payload.code, '_system');
+                        $cordovaInAppBrowser.open(serverLocation + '/r/' + payload.code, '_system');
                     }
                 });
                 // $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
@@ -74,7 +76,24 @@ angular.module('ifiske.services')
         }],
     };
 
-    function handleNotification(notification) {
+    /*
+    Flow of push notifications:
+    1. Register with Ionic Cloud
+    2. Get settings from Ionic Cloud
+    Note: Do we want to persist all settings to cloud? We might want to keep some settings only on certain devices (push for example)
+    3. Check if the user has enabled push notifications
+    4. Enable/Disable push notifications
+
+    Enabling:
+    1. Register a push token with ionic
+    2. Send the Ionic User ID to API servers
+
+    Disabling:
+    1. Unregister the push token with IonicCloud
+    2. Tell API servers that we no longer want push notifications (how? we need a new API route)
+    */
+
+    var handleNotification = function(notification) {
         var payload = notification.additionalData.payload;
         var i;
 
@@ -86,7 +105,7 @@ angular.module('ifiske.services')
         } else {
             pushHandlers.default(notification, payload);
         }
-    }
+    };
     $ionicPlatform.ready(function() {
         $rootScope.$on('cloud:push:notification', handleNotification);
         $rootScope.$on('cloud:push:register', function(data) {
@@ -94,13 +113,34 @@ angular.module('ifiske.services')
         });
     });
 
-    function registerPush() {
-        console.log('Push: Registering for push notifications');
-        return $ionicPlatform.ready().then(function() {
-            return $ionicPush.register(function(token) {
-                return $ionicPush.saveToken(token);
+    var startPush = function() {
+        if (Settings.push()) {
+            console.log('Push: Registering for push notifications');
+            return $ionicPlatform.ready().then(function() {
+                return $ionicPush.register(function(token) {
+                    return $ionicPush.saveToken(token);
+                });
             });
-        });
+        }
+        // Unregister push
+        if (!$ionicPush.token) {
+            return $q.resolve('No tokens to unregister');
+        }
+        // $ionicPush returns a non-$q-promise, so we need to wrap it.
+        console.log('Unregistering push tokens');
+        return $q.when($ionicPush.unregister());
+    };
+
+    function logout() {
+        // TypeError in Ionic Cloud that we have to catch
+        try {
+            return $q.when($ionicPush.unregister())
+            .finally(function() {
+                return $ionicAuth.logout();
+            });
+        } finally {
+            return $ionicAuth.logout();
+        }
     }
 
     function login(email, password) {
@@ -131,7 +171,7 @@ angular.module('ifiske.services')
             return;
         }
         if ($ionicAuth.isAuthenticated() && !$ionicUser.isAnonymous()) {
-            return registerPush();
+            return startPush();
         }
         var promises = [
             API.user_info(),
@@ -141,23 +181,20 @@ angular.module('ifiske.services')
             var email = userInfo[0].email;
             var password = userInfo[1];
             return login(email, password).then(function() {
-                return registerPush();
+                return startPush();
             });
         });
     }
-    init();
 
     return {
         init:  init,
         token: function() {
             return $ionicUser.id;
         },
-        unregister: function() {
-            // $ionicPush returns a non-$q-promise, so we need to wrap it.
-            return $q.when($ionicPush.unregister()).finally(function() {
-                return $ionicAuth.logout();
-            });
+        reset: function() {
+            return startPush();
         },
+        logout:          logout,
         registerHandler: function(name, handler) {
             if (name === 'default') {
                 return;
@@ -167,6 +204,5 @@ angular.module('ifiske.services')
             }
             pushHandlers[name].push(handler);
         },
-        testNotification: handleNotification,
     };
 });

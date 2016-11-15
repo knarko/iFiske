@@ -26,7 +26,6 @@ angular.module('ifiske.controllers')
                 $scope[data[i].validity].push(data[i]);
             }
             $scope.products = data;
-            console.log($scope);
         }, function(err) {
             console.log(err);
         })

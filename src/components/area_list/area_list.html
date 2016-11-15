@@ -1,9 +1,9 @@
-<ion-view view-title="{{county}}">
+<ion-view view-title="{{county | translate}}">
     <div style="height: 43px;"></div>
     <ion-header-bar class="bar-calm item-input-inset search-bar">
         <div class="item-input-wrapper">
             <i class="icon ion-search"></i>
-            <input type="search" placeholder="Sök fiskevatten" ng-model="search" ng-change="scrollTop()"/>
+            <input type="search" placeholder="{{'Search'|translate}}" ng-model="search" ng-change="scrollTop()"/>
             <i ng-if="search.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
         </div>
     </ion-header-bar>

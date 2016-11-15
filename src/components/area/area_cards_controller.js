@@ -5,6 +5,8 @@ angular.module('ifiske.controllers')
     localStorage,
     $ionicPopup,
     $cordovaInAppBrowser,
+    Settings,
+    serverLocation
     Terms
 ) {
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -55,7 +57,7 @@ angular.module('ifiske.controllers')
         };
 
         $scope.openProductInBrowser = function(id) {
-            var url = 'https://www.ifiske.se/mobile/index.php?p=5&i=' + id;
+            var url = serverLocation + '/mobile/index.php?lang=' + Settings.language() + '&p=5&i=' + id;
             $cordovaInAppBrowser.open(url, '_system');
         };
 

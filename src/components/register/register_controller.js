@@ -60,6 +60,10 @@ angular.module('ifiske.controllers')
             phone:    $scope.details.phone,
         };
 
+        // API does not accept '-' in phone numbers
+        userDetails.phone = userDetails.phone.replace(/-/, '');
+        $scope.phoneNumber = userDetails.phone;
+
         API.user_register(userDetails)
         .then(function() {
             // Save user details for later use

@@ -20,20 +20,23 @@ angular.module('ifiske.controllers')
         $scope.popover.hide();
         $state.go('app.userinfo');
     };
-    $scope.logout = function() {
-        $scope.popover.hide();
-        User.logout();
 
-        $state.go('app.login');
-    };
     $scope.login = function() {
         $scope.popover.hide();
-        $ionicViewSwitcher.nextDirection('back');
         $state.go('app.login');
     };
     $scope.register = function() {
         $scope.popover.hide();
         $state.go('app.register.fork');
+    };
+    $scope.logout = function() {
+        $scope.popover.hide();
+        User.logout();
+    };
+
+    $scope.settings = function() {
+        $scope.popover.hide();
+        $state.go('app.settings.main');
     };
 
     $scope.forcedUpdate = function() {

@@ -5,31 +5,29 @@
 
 	    <form name="loginForm" id="login-form">
 		<label class="item item-input">
-		    <input name="username" id="username" type="text" placeholder="Användarnamn"
+		    <input name="username" id="username" type="text" placeholder="{{'Username'|translate}}"
 			   ng-model="user.username"></label>
 		<label class="item item-input">
-		    <input name="password" id="password" type="password" placeholder="Lösenord"
+		    <input name="password" id="password" type="password" placeholder="{{'Password'|translate}}"
 			   ng-model="user.password"></label>
 
 		<ng-messages class="error-message" for="loginForm.$error">
-		    <div ng-message="loginError">Ogiltigt användarnamn eller lösenord</div>
+		    <div ng-message="loginError" translate>Invalid username or password</div>
 		</ng-messages>
 
-		<button class="button button-block button-positive" ng-click="signIn(loginForm)">
-		    Logga in
-		</button>
+		<button class="button button-block button-positive" ng-click="signIn(loginForm)" translate>Log in</button>
 	    </form>
 
 
-	    <button ui-sref="app.register.fork" id="register-button" class="button button-balanced button-block"> Skapa nytt konto </button>
+	    <button ui-sref="app.register.fork" id="register-button" class="button button-balanced button-block" translate>Create new account</button>
 
 	</div>
     </ion-content>
 
     <div class="bar bar-footer bar-transparent hide-on-keyboard-open">
 	<button class="button button-positive button-margin"
-		ui-sref="^.recover.lostpassword"> Glömt lösenord </button>
+		ui-sref="^.recover.lostpassword" translate>Forgot password</button>
 	<button class="button button-positive button-margin"
-		ng-click="skip()"> Hoppa över <i class="icon ion-arrow-right-b"></i></button>
+		ng-click="skip()">{{'Skip'|translate}} <i class="icon ion-arrow-right-b"></i></button>
     </div>
 </ion-view>

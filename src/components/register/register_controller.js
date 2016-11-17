@@ -188,6 +188,9 @@ angular.module('ifiske.controllers')
                     });
                     $state.go('app.home');
                 })
+                .catch(function(err) {
+                    console.warn(err);
+                })
                 .finally(function() {
                     // Clean up user details
                     localStorage.set('register_user_details', '');

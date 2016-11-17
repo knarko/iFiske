@@ -141,9 +141,10 @@ angular.module('ifiske.models')
         }
 
         function login(username, password) {
-            return API.user_login(username, password)
-            .then(update)
-            .then(Push.reset);
+            var p = API.user_login(username, password)
+            .then(update);
+            p.then(Push.reset);
+            return p;
         }
 
         function logout() {

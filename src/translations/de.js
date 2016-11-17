@@ -35,7 +35,7 @@ angular.module('ifiske.translations')
     'Favorites':                           'Favoriten',
     'First name':                          'Vorname',
     'Fishing area':                        'Angeln',
-    'Fishing license':                     'Angelschein',
+    'Fishing License':                     'Angelschein',
     'Fishing methods':                     'Fangmethoden',
     'Fiskekortet gäller inte än':          'Die Fangerlaubnis gilt nicht über',
     'Forgot password':                     'Passwort vergessen?',

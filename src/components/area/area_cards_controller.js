@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     $ionicPopup,
     $cordovaInAppBrowser,
     Settings,
+    $translate,
     serverLocation,
     Terms
 ) {
@@ -33,18 +34,18 @@ angular.module('ifiske.controllers')
         $scope.persistApproveSMSRules = function() {
             if ($scope.SMSRules.approval === 'YES') {
                 $ionicPopup.show({
-                    title:    'Regler för SMS-köp',
+                    title:    $translate.instant('SMS Rules'),
                     scope:    $scope,
                     cssClass: 'wide-popup',
                     template: '<p ng-bind-html="smsterms"></p>',
                     buttons:  [{
-                        text:  'Avbryt',
+                        text:  $translate.instant('Cancel'),
                         type:  'button-default',
                         onTap: function() {
                             $scope.SMSRules.approval = 'NO';
                         },
                     }, {
-                        text:  'OK',
+                        text:  $translate.instant('Accept'),
                         type:  'button-positive',
                         onTap: function() {
                             localStorage.set('sms-approval', $scope.SMSRules.approval);

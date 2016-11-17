@@ -1,4 +1,4 @@
-<ion-view title="{{'Fishing license'| translate}}">
+<ion-view title="{{'Fishing License'| translate}}">
   <ion-content padding="true" class="text-center">
     <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{org.logo}}">
     <h2>{{product.ot}}</h2>
@@ -40,9 +40,9 @@
 
     <p ng-if="product.subt">{{product.subt}}</p>
 
-    <p>{{'Issued to' | translate}}  {{product.fullname}}</p>
-    <p>{{'Valid from'|translate}} <b>{{product.fr * 1000 | date:'short'}}</b></p>
-    <p>{{'to'|translate}} <b>{{product.to * 1000 | date:'short'}}</b></p>
+    <p translate translate-value-name="{{product.fullname}}">Issued to</p>
+    <p translate translate-value-date="{{product.fr * 1000 | date:'short'}}">Valid from</p>
+    <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
     <p>
       <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> {{'Catch report' | translate}}</a>
       <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}"  translate>PDF</a>

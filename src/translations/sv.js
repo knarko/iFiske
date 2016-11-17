@@ -1,6 +1,8 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('swedishTranslations', {
+    'SMS Rules':                           'Regler för SMS-köp',
+    'Admin tools':                         'Administrationsverktyg',
     'About the app':                       'Om appen',
     'Activate account':                    'Aktivera konto',
     'Activate':                            'Aktivera',
@@ -31,11 +33,12 @@ angular.module('ifiske.translations')
     'Email required':                      'Du måste ange en e-postadress',
     'Email taken':                         'E-mailadressen är redan registrerad',
     'Email':                               'E-mail',
+    'Error':                               'Ett fel uppstod',
     'Expired licenses':                    'Utgångna fiskekort',
     'Favorites':                           'Favoriter',
     'First name':                          'Förnamn',
     'Fishing area':                        'Fiskevatten',
-    'Fishing license':                     'Fiskekort',
+    'Fishing License':                     'Fiskekort',
     'Fishing methods':                     'Fiskemetoder',
     'Fiskekortet gäller inte än':          'Fiskekortet gäller inte än',
     'Forgot password':                     'Glömt lösenord?',
@@ -50,7 +53,7 @@ angular.module('ifiske.translations')
     'Inactive licenses':                   'Ej ännu aktiva fiskekort',
     'Invalid reset code':                  'Ogiltig återställningskod',
     'Invalid username or password':        'Ogiltigt användarnamn eller lösenord',
-    'Issued to':                           'Utfärdat till',
+    'Issued to':                           'Utfärdat till: {{name}}',
     'Language selected':                   'Språkinställningar kan ändras senare genom inställningsmenyn',
     'Last updated':                        'Senast uppdaterad',
     'License has expired':                 'Fiskekortet har utgått',

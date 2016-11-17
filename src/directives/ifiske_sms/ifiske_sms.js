@@ -3,6 +3,7 @@ angular.module('ngCordovaSms', [])
     $cordovaSms,
     $ionicPopup,
     User,
+    $translate,
     $rootScope
 ) {
     'use strict';
@@ -20,15 +21,15 @@ angular.module('ngCordovaSms', [])
                     response: user.name,
                 };
                 $ionicPopup.show({
-                    title:    'Skriv in ditt namn',
+                    title:    $translate.instant('Type name'),
                     template: '<input ng-model="data.response" type="text">',
                     scope:    scope,
                     buttons:  [{
-                        text:  'Avbryt',
+                        text:  $translate.instant('Cancel'),
                         type:  'button-default',
                         onTap: function() {},
                     }, {
-                        text:  'OK',
+                        text:  $translate.instant('OK'),
                         type:  'button-positive',
                         onTap: function() {
                             return scope.data.response || '';

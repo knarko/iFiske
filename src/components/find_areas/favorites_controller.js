@@ -4,6 +4,7 @@ angular.module('ifiske.controllers')
     User,
     $cordovaToast,
     API,
+    $translate,
     $ionicActionSheet,
     $ionicPlatform
 ) {
@@ -23,8 +24,11 @@ angular.module('ifiske.controllers')
             $scope.favorites.splice($scope.favorites.indexOf(area), 1);
             $ionicPlatform.ready(function() {
                 window.plugins.toast.hide();
-                $cordovaToast.show('Området är nu borttaget från dina favoriter',
-                'short', 'bottom');
+                $cordovaToast.show(
+                    $translate.instant('Area removed from favorites'),
+                    'short',
+                    'bottom'
+                );
             });
         });
     }
@@ -35,7 +39,9 @@ angular.module('ifiske.controllers')
             User.setFavoriteNotification(area.ID, area.not);
             $ionicPlatform.ready(function() {
                 window.plugins.toast.hide();
-                $cordovaToast.show('Notifikationer är ' + (area.not ? 'på' : 'av'),
+                $cordovaToast.show((area.not ?
+                    $translate.instant('Notifications are turned on') :
+                    $translate.instant('Notifications are turned off')),
                 'short', 'bottom');
             });
         });
@@ -43,17 +49,22 @@ angular.module('ifiske.controllers')
     $scope.openPopover = function(area) {
         $ionicActionSheet.show({
             buttons: [
-                {text: area.not ? 'Stäng av notifikationer' : 'Sätt på notifikationer'},
+                {
+                    text: area.not ?
+                        $translate.instant('Turn notifications off') :
+                        $translate.instant('Turn notifications on'),
+                },
             ],
-            destructiveText:          'Ta bort favorit',
+            destructiveText:          $translate.instant('Remove favorite'),
             destructiveButtonClicked: function() {
                 removeFavorite(area);
                 return true;
             },
-            titleText:     'Ändra din favorit',
-            cancelText:    'Gör inget',
+            titleText:     $translate.instant('Edit favorite'),
+            cancelText:    $translate.instant('Cancel'),
             buttonClicked: function() {
-                area.not = !area.not;
+                area.not = (area.not + 1) % 2;
+                $scope.notify(area);
                 return true;
             },
             cancel: function() {},

@@ -1,20 +1,36 @@
-<ion-view title="Fiskekort">
+<ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}">
   <ion-content padding="true">
-    <h3 class="text-center">Produkt: {{product.t}}</h3>
-    <p ng-if="product.subt">{{product.subt}}</p>
-    <h2 class="text-center">{{product.code}}</h2>
-    <h2 class="text-center">{{product.tel}}</h2>
-    <p>Utfärdat till {{product.fullname}}</p>
-    <p>Inköpsdatum: {{product.at * 1000 | date:'short'}}</p>
-    <p>Gäller från <b>{{product.fr * 1000 | date:'short'}}</b></p>
-    <p>till <b>{{product.to * 1000 | date:'short'}}</b></p>
-    <h1>{{isValid()?'Giltligt':'Ej giltligt'}}</h1>
-    {{product}}
-      <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" >PDF</a>
+    <div ng-if="product">
+      <section class="text-center">
+        <h3>{{product.t}}</h3>
+        <p ng-if="product.subt">{{product.subt}}</p>
+        <h2>{{product.code}}</h2>
+        <h1 class="{{product.validity}}">{{product.validity | translate}}</h1>
+      </section>
+      <hr />
+      <section>
+        <p translate translate-value-name="{{product.fullname}}">Issued to</p>
+        <p>{{'Phone number' | translate}}: {{product.tel}}</p>
+        <p translate translate-value-date="{{product.at * 1000 | date:'short'}}">Issued at</p>
+        <p translate translate-value-date="{{product.fr * 1000 | date:'short'}}">Valid from</p>
+        <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
+      </section>
+      <hr />
+      <div class="button-bar">
+        <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
+        <a class="button icon-left ion-document-text button-dark" ng-click="openRulesModal()" translate>Rules</a>
+        <a class="button icon-left ion-document-text button-assertive" ng-click="confirmRevokeLicense" translate>Revoke</a>
+      </div>
+    </div>
+    <div ng-if="!product">
+      <h2 class="text-center" translate>Error</h2>
+      <p translate>{{message}}</p>
+      <p ng-if="code">{{'Code' | translate}}: <b>{{code}}</b></p>
+    </div>
   </ion-content>
   <ion-footer-bar ng-if="product.rule_t" class="bar-balanced">
     <div class="button-bar">
-    <a class="button button-icon ion-document-text" ng-click="openRulesModal()">Regler</a>
+      <a class="button button-icon ion-document-text" ng-click="openRulesModal()">Regler</a>
     </div>
   </ion-footer-bar>
 </ion-view>

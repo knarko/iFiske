@@ -19,7 +19,7 @@
       <div class="button-bar">
         <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
         <a class="button icon-left ion-document-text button-dark" ng-click="openRulesModal()" translate>Rules</a>
-        <a class="button icon-left ion-document-text button-assertive" ng-click="confirmRevokeLicense" translate>Revoke</a>
+        <a class="button icon-left ion-document-text button-assertive" ng-click="confirmRevokeLicense()" translate>Revoke</a>
       </div>
     </div>
     <div ng-if="!product">

@@ -23,8 +23,8 @@ angular.module('ifiske.services')
      * @param  {string} sql SQL string to run
      * @return {SQL_result}     SQL result
      */
-    function runSql(sql) {
-        return $cordovaSQLite.execute(db, sql);
+    function runSql(sql, params) {
+        return $cordovaSQLite.execute(db, sql, params);
     }
 
     /**

@@ -59,6 +59,7 @@ var paths = {
         './lib/angular-imgcache.js/angular-imgcache.js',
 
         './lib/angular-translate/angular-translate.js',
+        './lib/angular-translate-handler-log/angular-translate-handler-log.js',
 
         './lib/leaflet/dist/leaflet-src.js',
         './lib/ui-leaflet/dist/ui-leaflet.js',

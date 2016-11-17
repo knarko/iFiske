@@ -53,7 +53,6 @@ angular.module('ifiske', [
 
         ImgCache.$init();
         if (localStorage.get('language')) {
-            $translate.use(Settings.language());
             Update.update().catch(function(err) {
                 console.error(err);
             });
@@ -83,8 +82,17 @@ angular.module('ifiske', [
     .translations('se', swedishTranslations)
     .translations('de', germanTranslations)
     .translations('en', englishTranslations)
+    .translations('en_GB', englishTranslations)
     .determinePreferredLanguage()
-    .fallbackLanguage(['en', 'se']);
+    .fallbackLanguage(['en', 'se'])
+    .useSanitizeValueStrategy('sanitizeParameters')
+    .useMissingTranslationHandlerLog();
+    var language = localStorage.getItem('language');
+    if (language) {
+        $translateProvider.preferredLanguage(language);
+    } else {
+        $translateProvider.determinePreferredLanguage();
+    }
 
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({

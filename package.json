@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development ionic serve",
+    "start": "export NODE_ENV=development|| set NODE_ENV=development&& ionic serve",
     "start.prod": "ionic serve",
     "build": "gulp",
     "build.dev": "gulp --env=development",

@@ -155,7 +155,7 @@ angular.module('ifiske.translations')
     'User does not exist':                 'The user does not exist',
     'User Id':                             'User ID',
     'User information':                    'User Information',
-    'User phone numbers':                  'Connected phone numbers (On iFiske.se)',
+    'User phone numbers':                  'Connected phone numbers',
     'USER_LEVEL_0':                        'Controller',
     'USER_LEVEL_1':                        'Book keeper',
     'USER_LEVEL_2':                        'Admin',

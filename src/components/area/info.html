@@ -12,7 +12,7 @@
             <img img-cache ic-src="{{::image_endpoint + images[0].url}}" ng-if="images.length == 1" />
         </div>
         <div ng-if="area.t" class="item item-divider item-button-right">
-            <h2>{{::area.t}}</h2>
+            <h2 class="area-title">{{::area.t}}</h2>
             <button class="button button-icon icon"
                     ng-class="{starred: area.favorite, 'ion-android-star-outline': !area.favorite, 'ion-android-star': area.favorite}"
                     ng-click="changeFavorite();"

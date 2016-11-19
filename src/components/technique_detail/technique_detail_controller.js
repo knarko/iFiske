@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-.controller('TechniqueDetailCtrl', function($scope, $stateParams, Technique, $sce) {
+.controller('TechniqueDetailCtrl', function($scope, $stateParams, Technique) {
     $scope.tech = $stateParams.tech;
     $scope.images = [];
 
@@ -16,10 +16,6 @@ angular.module('ifiske.controllers')
         $scope.slider = data.slider;
         $scope.slider.updateLoop();
     });
-
-    $scope.youtube = function(url) {
-        return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + url);
-    };
 
     if ($scope.tech) {
         var data = $scope.tech;

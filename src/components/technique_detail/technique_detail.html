@@ -24,8 +24,7 @@
         <p translate>Youtube</p>
     </div>
     <div ng-if="tech.youtube">
-      <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
-      <div class='embed-container'><iframe ng-src="{{youtube(tech.youtube)}}" frameborder='0' allowfullscreen></iframe></div>
+      <youtube url="tech.youtube"></youtube>
     </div>
     <div ng-if="tech.de" class="item item-divider">
         <p translate>Technique gear</p>

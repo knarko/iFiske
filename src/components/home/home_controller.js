@@ -6,8 +6,16 @@ angular.module('ifiske.controllers')
     localStorage,
     sessionData,
     Update,
+    $window,
     Admin
 ) {
+    $scope.$on('$ionicView.load', function() {
+        if (sessionData.token) {
+            $window.ga.trackMetric('Logged in', 'Yes');
+        } else {
+            $window.ga.trackMetric('Logged in', 'No');
+        }
+    });
     console.log($ionicHistory);
     Admin.isAdmin().then(function(isAdmin) {
         console.log(isAdmin);

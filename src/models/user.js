@@ -52,11 +52,12 @@ angular.module('ifiske.models')
                 pdf:      'text',
                 qr:       'text',
                 fine:     'text',
+                rev:      'int',
             },
         },
     };
 
-    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData, Product) {
+    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData, Product, $window) {
         var p = [];
         for (var table in tables) {
             p.push(DB.initializeTable(tables[table]));
@@ -144,10 +145,17 @@ angular.module('ifiske.models')
             var p = API.user_login(username, password)
             .then(update);
             p.then(Push.reset);
+            p.then(function() {
+                $window.ga.trackEvent('Login and Signup', 'Login');
+            }, function(error) {
+                $window.ga.trackEvent('Login and Signup', 'Login Failure');
+                $window.ga.trackException('Login Failure', false);
+            });
             return p;
         }
 
         function logout() {
+            $window.ga.trackEvent('Login and Signup', 'Logout');
             return $q.all([
                 clean(),
                 API.user_logout(),

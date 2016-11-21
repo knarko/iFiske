@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     $ionicPlatform,
     $translate,
     Settings,
+    $window,
     Update
 ) {
     $scope.languages = Settings.availableLanguages();
@@ -15,6 +16,7 @@ angular.module('ifiske.controllers')
             Settings.language(lang);
             Update.forcedUpdate();
         }
+        $window.ga.trackMetric('Language', lang);
         $ionicPlatform.ready(function() {
             var text = $translate.instant('Language selected');
             if (window.plugins && window.plugins.toast) {

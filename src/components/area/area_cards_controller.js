@@ -7,6 +7,7 @@ angular.module('ifiske.controllers')
     $cordovaInAppBrowser,
     Settings,
     $translate,
+    $window,
     serverLocation,
     Terms
 ) {
@@ -25,6 +26,7 @@ angular.module('ifiske.controllers')
             $scope.sms_modal = modal; // eslint-disable-line camelcase
         });
         $scope.openModal = function(product) {
+            $window.ga.trackEvent('Purchase', 'Open SMS Modal', product.ID);
             $scope.sms_modal.show();
             $scope.product = product;
         };
@@ -60,6 +62,7 @@ angular.module('ifiske.controllers')
         $scope.openProductInBrowser = function(id) {
             var url = serverLocation + '/mobile/index.php?lang=' + Settings.language() + '&p=5&i=' + id;
             $cordovaInAppBrowser.open(url, '_system');
+            $window.ga.trackEvent('Purchase', 'Web', id);
         };
 
         // Rules modal

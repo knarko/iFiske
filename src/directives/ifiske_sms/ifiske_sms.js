@@ -4,6 +4,7 @@ angular.module('ngCordovaSms', [])
     $ionicPopup,
     User,
     $translate,
+    $window,
     $rootScope
 ) {
     'use strict';
@@ -43,10 +44,9 @@ angular.module('ngCordovaSms', [])
                             android: {
                                 intent: 'INTENT',
                             },
-                        }, function() {
+                        }).then(function() {
                             console.log('Opened SMS application');
-                        }, function(err) {
-                            console.log(err);
+                            $window.ga.trackEvent('Purchase', 'SMS', attrs.ngCordovaSms);
                         });
                     }
                 });

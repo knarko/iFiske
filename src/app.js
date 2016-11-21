@@ -29,11 +29,9 @@ angular.module('ifiske', [
     ImgCache,
     $rootScope,
     $timeout,
-    $translate,
     localStorage,
     Update,
     Push,
-    Settings,
     serverLocation
 ) {
     $rootScope.image_endpoint = serverLocation; // eslint-disable-line camelcase
@@ -53,6 +51,7 @@ angular.module('ifiske', [
 
         ImgCache.$init();
         if (localStorage.get('language')) {
+            $window.ga.trackMetric('Language', localStorage.get('language'));
             Update.update().catch(function(err) {
                 console.error(err);
             });
@@ -63,6 +62,17 @@ angular.module('ifiske', [
                 $window.navigator.splashscreen.hide();
             }, 500);
         }
+
+        $window.ga.debugMode(); // TODO: remove this
+        // $window.ga.startTrackerWithId('UA-7371664-4'); // Live
+        $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
+
+        $window.ga.enableUncaughtExceptionReporting(true);
+
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            console.log(toState, toParams);
+            $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')');
+        });
     });
 })
 

@@ -27,6 +27,13 @@
       <h2>{{product.ot}}</h2>
       <p>{{product.t}}</p>
     </div>
+    <div class="item item-divider item-icon-left" ng-if="revoked.length">
+      <i class="icon ion-close"></i>{{'Revoked licenses' | translate}}
+    </div>
+    <div class="item {{product.validity}}" ng-repeat="product in revoked" ui-sref="^.license_detail({license: product, id: product.ID})">
+      <h2>{{product.ot}}</h2>
+      <p>{{product.t}}</p>
+    </div>
   </div>
 
 </ion-content>

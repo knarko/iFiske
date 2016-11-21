@@ -26,7 +26,7 @@
             <p>{{::org.t}}</p>
         </div>
         <div ng-if="org.d" class="item item-body">
-            <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{org.logo}}">
+            <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{'/'+org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
             <a ng-if="area.map" ng-href="{{::image_endpoint}}{{::area.map}}" translate>Area map as PDF</a>
         </div>

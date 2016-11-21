@@ -1,6 +1,6 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
-.constant('englishTranslations', {
+.constant('germanTranslations', {
     // 'revoked':                             'Widerrufen werden',
     // 'Revoked':                             'Widerrufen werden',
     // 'Check license':                       'Überprüfen Fischerschein',

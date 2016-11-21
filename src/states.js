@@ -108,23 +108,22 @@
     };
     var admin = {
         config: {
-            url:         '/admin/:id',
-            templateUrl: 'components/admin/admin.html',
-            controller:  'AdminCtrl',
+            url:         '/admin',
+            templateUrl: 'components/admin/admin_wrap.html',
             params:      {id: undefined, org: false},
         },
         children: {
-            admin_product: {
-                url:         '/admin/:id/product/:productID',
+            main: {
+                url:         '/:id',
+                templateUrl: 'components/admin/admin.html',
+                controller:  'AdminCtrl',
+                params:      {id: undefined, org: false},
+            },
+            product: {
+                url:         '/product/:productID:code',
                 templateUrl: 'components/admin/product/product.html',
                 controller:  'AdminProductCtrl',
-                params:      {id: undefined, productID: undefined, product: false},
-            },
-            admin_check: {
-                url:         '/verify_product/:code',
-                templateUrl: 'components/admin/check/check.html',
-                controller:  'AdminCheckCtrl',
-                params:      {code: undefined},
+                params:      {code: undefined, productID: undefined, product: false},
             },
         },
     };

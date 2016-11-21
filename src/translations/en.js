@@ -1,6 +1,10 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('englishTranslations', {
+    'revoked':                             'Revoked',
+    'Revoked':                             'Revoked',
+    'Check license':                       'Check License Code',
+    'Enter license code template':         'Please enter the license code as found on the fishing license',
     'About the app':                       'About',
     'Accept':                              'Accept',
     'Activate account':                    'Activate account',
@@ -90,7 +94,6 @@ angular.module('ifiske.translations')
     'Notifications are turned on':         'Notifications are turned on',
     'Notify via email':                    'Notifications via email',
     'OK':                                  'OK',
-    'Open Control panel':                  'Open Control panel',
     'Open Control Panel':                  'Open Control Panel',
     'Open Source Licenses':                'Open Source Licenses',
     'Outdoors':                            'Outdoors',

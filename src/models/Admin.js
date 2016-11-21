@@ -3,6 +3,19 @@ angular.module('ifiske.models')
     this.$get = function($q, API, Organization, Product) {
         var organizations = {};
 
+        function initOrg(org) {
+            Organization.getOne(org.orgid).then(function(o) {
+                org.info = o;
+            });
+            return API.adm_products(org.orgid).then(function(products) {
+                var prods = [];
+                for (var j in products) {
+                    products[j].validity = Product.getValidity(products[j]);
+                    prods.push(products[j]);
+                }
+                org.products = prods;
+            });
+        }
         var model = {
             isAdmin: function() {
                 return API.user_organizations().then(function(orgs) {
@@ -56,17 +69,7 @@ angular.module('ifiske.models')
                     for (var i in orgs) {
                         console.log(i, organizations, orgs);
                         organizations[i] = orgs[i];
-                        Organization.getOne(i).then(function(org) {
-                            organizations[i].info = org;
-                        });
-                        p.push(API.adm_products(orgs[i].orgid).then(function(products) {
-                            var prods = [];
-                            for (var j in products) {
-                                products[j].validity = Product.getValidity(products[j]);
-                                prods.push(products[j]);
-                            }
-                            organizations[i].products = prods;
-                        }));
+                        p.push(initOrg(organizations[i]));
                     }
                     return $q.all(p).then(function() {
                         return orgs;

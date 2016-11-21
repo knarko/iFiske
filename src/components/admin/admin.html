@@ -1,22 +1,44 @@
 <ion-view title="{{'Admin' | translate}}">
   <ion-content>
     <div class="padding">
-    <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
-    <h2>{{org.ot}}</h2>
-    <p>
-      {{'More in control panel' | translate}}
-      <a href="{{image_endpoint}}/index.php/mypage" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
-    </p>
+      <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
+      <h2>{{org.ot}}</h2>
+      <p>
+        {{'More in control panel' | translate}}
+        <a href="{{image_endpoint}}/index.php/kontrollpanelen" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
+      </p>
+      <button class="button button-block button-positive" ng-click="checkLicense()" translate>Check license</button>
     </div>
-      <div class="list">
-        <div class="item item-divider" translate translate-value-amount="{{org.products.length}}">
-          Active licenses
-        </div>
-      <div class="item item-full-width" collection-repeat="prod in org.products" item-height="prod.subt ? '74px' : '54px'" ui-sref="app.admin_product({id: id, product: prod, productID: prod.ID})">
+    <div class="list">
+      <div class="item item-divider item-icon-left" ng-if="valid.length">
+        <i class="icon ion-checkmark"></i>{{'Active licenses' | translate}}
+      </div>
+      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in valid" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
         <h2>{{prod.t}} -  {{prod.code}}</h2>
         <p>{{prod.subt}}</p>
       </div>
+      <div class="item item-divider item-icon-left" ng-if="inactive.length">
+        <i class="icon ion-clock"></i>{{'Inactive licenses' | translate}}
       </div>
+      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in inactive" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
+        <h2>{{prod.t}} -  {{prod.code}}</h2>
+        <p>{{prod.subt}}</p>
+      </div>
+      <div class="item item-divider item-icon-left" ng-if="expired.length">
+        <i class="icon ion-close"></i>{{'Expired licenses' | translate}}
+      </div>
+      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in expired" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
+        <h2>{{prod.t}} -  {{prod.code}}</h2>
+        <p>{{prod.subt}}</p>
+      </div>
+      <div class="item item-divider item-icon-left" ng-if="revoked.length">
+        <i class="icon ion-close"></i>{{'Revoked licenses' | translate}}
+      </div>
+      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in revoked" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
+        <h2>{{prod.t}} -  {{prod.code}}</h2>
+        <p>{{prod.subt}}</p>
+      </div>
+    </div>
   </ion-content>
   <ion-footer-bar class="bar-balanced">
     <div class="button-bar">

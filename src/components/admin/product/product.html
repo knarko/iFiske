@@ -1,6 +1,6 @@
-<ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}">
+<ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}" class="bg-{{product.validity}}">
   <ion-content padding="true">
-    <div ng-if="product">
+    <div ng-if="product" class="padding bg-white">
       <section class="text-center">
         <h3>{{product.t}}</h3>
         <p ng-if="product.subt">{{product.subt}}</p>
@@ -16,14 +16,13 @@
         <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
       </section>
       <hr />
-      <div class="button-bar">
-        <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
-        <a class="button icon-left ion-document-text button-dark" ng-click="openRulesModal()" translate>Rules</a>
-        <a class="button icon-left ion-document-text button-assertive" ng-click="confirmRevokeLicense()" translate>Revoke</a>
-      </div>
+        <a ng-if="product.pdf" class="button button-dark button-block icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
+        <a class="button icon-left ion-document-text button-block button-assertive" ng-click="confirmRevokeLicense()" translate>Revoke</a>
     </div>
     <div ng-if="!product">
-      Verkar inte som att det finns något fiskekort med nummer {{productID}}. Är du säker på att det är rätt?
+      <h2 class="text-center" translate>Error</h2>
+      <p translate>{{message}}</p>
+      <p ng-if="code">{{'Code' | translate}}: <b>{{code}}</b></p>
     </div>
   </ion-content>
   <ion-footer-bar ng-if="product.rule_t" class="bar-balanced">

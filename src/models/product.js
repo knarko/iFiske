@@ -26,6 +26,9 @@ angular.module('ifiske.models')
 
         angular.extend(model, {
             getValidity: function(product) {
+                if (product.rev) {
+                    return 'revoked';
+                }
                 var now = parseInt(Date.now() / 1000);
                 if (product.fr < now) {
                     return now < product.to ? 'valid' : 'expired';

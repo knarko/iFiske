@@ -4,7 +4,7 @@
       <div class="item item-divider" ng-if="isAdmin">
         <i class="icon ion-locked "></i> {{'Administration' | translate}}
       </div>
-      <div class="item" ng-repeat="org in organizations" ui-sref="app.admin({id: org.orgid, org: org})">
+      <div class="item" ng-repeat="org in organizations" ui-sref="app.admin.main({id: org.orgid, org: org})">
         <h2>{{org.ot}}</h2>
         <p translate>{{org.levelname}}</p>
       </div>
@@ -29,6 +29,7 @@
       <div ng-repeat="number in numbers" class="item">
         <p>{{number.number}}</p>
       </div>
+      <a ng-if="sessionData.token" class="item" ng-click="logout();" translate>Log out</a>
     </div>
     <div class="card">
       <div class="item item-text-wrap">

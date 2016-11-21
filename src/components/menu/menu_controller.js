@@ -2,7 +2,6 @@ angular.module('ifiske.controllers')
 .controller('MenuCtrl', function(
     $scope,
     $state,
-    $ionicViewSwitcher,
     $ionicPopover,
     sessionData,
     Update,

@@ -1,0 +1,51 @@
+$gradient: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0,0,0,0.4) 10px,
+    rgba(0,0,0,0.4) 20px
+);
+
+.revoked {
+    position: absolute;
+    top: 50%;
+    font-weight: bold;
+    font-family: fantasy;
+    //color: $assertive;
+    transform: rotate(-55deg) translate(0%, -50%);
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    font-size: 22vw;
+    white-space: nowrap;
+    display: block;
+    overflow: visible;
+}
+
+.bg-valid {
+    background: $gradient, $balanced;
+    animation: 2s linear bg infinite;
+}
+
+.bg-inactive {
+    background: $gradient, $energized;
+    animation: 2s linear bg infinite;
+}
+
+.bg-expired,
+.bg-revoked {
+    background: $gradient, $assertive;
+    animation: 2s linear bg infinite;
+}
+@keyframes bg {
+    from {
+        background-position-y: 0;
+    }
+    to {
+        background-position-y: 28px;
+    }
+}
+
+.bg-white {
+    background: rgba(255, 255, 255, .9);
+}

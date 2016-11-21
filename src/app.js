@@ -64,8 +64,8 @@ angular.module('ifiske', [
         }
 
         $window.ga.debugMode(); // TODO: remove this
-        // $window.ga.startTrackerWithId('UA-7371664-4'); // Live
-        $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
+        $window.ga.startTrackerWithId('UA-7371664-4'); // Live
+        // $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
 
         $window.ga.enableUncaughtExceptionReporting(true);
 

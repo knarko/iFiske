@@ -51,7 +51,10 @@ angular.module('ifiske.services')
             updateSettings();
 
             $translate.use(settings.language);
-            $window.ga.trackMetric('Language', settings.language);
+
+            if ($window.ga)
+                $window.ga.trackMetric('Language', settings.language);
+
             return settings.language;
         },
     };

@@ -10,16 +10,20 @@ angular.module('ifiske.controllers')
     Admin
 ) {
     $scope.$on('$ionicView.load', function() {
-        if (sessionData.token) {
-            $window.ga.trackMetric('Logged in', 'Yes');
-        } else {
-            $window.ga.trackMetric('Logged in', 'No');
+        if ($window.ga) {
+            if (sessionData.token) {
+                $window.ga.trackMetric('Logged in', 'Yes');
+            } else {
+                $window.ga.trackMetric('Logged in', 'No');
+            }
         }
     });
     console.log($ionicHistory);
-    Admin.isAdmin().then(function(isAdmin) {
-        console.log(isAdmin);
-        $scope.admin = isAdmin;
+    $scope.$on('$ionicView.enter', function() {
+        Admin.isAdmin().then(function(isAdmin) {
+            console.log(isAdmin);
+            $scope.admin = isAdmin;
+        });
     });
     $scope.loggedIn = sessionData;
 

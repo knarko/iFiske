@@ -46,7 +46,8 @@ angular.module('ngCordovaSms', [])
                             },
                         }).then(function() {
                             console.log('Opened SMS application');
-                            $window.ga.trackEvent('Purchase', 'SMS', attrs.ngCordovaSms);
+                            if ($window.ga)
+                                $window.ga.trackEvent('Purchase', 'SMS', attrs.ngCordovaSms);
                         });
                     }
                 });

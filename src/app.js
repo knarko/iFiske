@@ -51,7 +51,8 @@ angular.module('ifiske', [
 
         ImgCache.$init();
         if (localStorage.get('language')) {
-            $window.ga.trackMetric('Language', localStorage.get('language'));
+            if ($window.ga)
+                $window.ga.trackMetric('Language', localStorage.get('language'));
             Update.update().catch(function(err) {
                 console.error(err);
             });
@@ -62,17 +63,18 @@ angular.module('ifiske', [
                 $window.navigator.splashscreen.hide();
             }, 500);
         }
+        if ($window.ga) {
+            $window.ga.debugMode(); // TODO: remove this
+            $window.ga.startTrackerWithId('UA-7371664-4'); // Live
+            // $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
+            $window.ga.enableUncaughtExceptionReporting(true);
 
-        $window.ga.debugMode(); // TODO: remove this
-        $window.ga.startTrackerWithId('UA-7371664-4'); // Live
-        // $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
-
-        $window.ga.enableUncaughtExceptionReporting(true);
-
-        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-            console.log(toState, toParams);
-            $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')');
-        });
+            $rootScope.$on('$stateChangeSuccess',
+            function(_event, toState, toParams, _fromState, _fromParams) {
+                console.log(toState, toParams);
+                $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')');
+            });
+        }
     });
 })
 

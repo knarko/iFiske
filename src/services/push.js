@@ -151,6 +151,11 @@ angular.module('ifiske.services')
                 if (errors && errors.response && errors.response.statusCode === 401) {
                     return $ionicAuth.signup(details).then(function() {
                         return $ionicAuth.login('basic', details, {remember: true});
+                    }, function(err) {
+                        console.log(err);
+                        if (err && err.details && err.details.indexOf('conflict_email') !== -1) {
+                            // alert('There was an error logging in, please contact ifiske');
+                        }
                     });
                 }
                 return errors;

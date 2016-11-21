@@ -28,6 +28,7 @@ angular.module('ifiske.controllers')
     }
 
     if ($scope.org) {
+        setValid($scope.org.products);
         $ionicLoading.hide();
     } else {
         Admin.getOrganization($stateParams.id).then(function(org) {

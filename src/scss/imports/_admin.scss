@@ -6,23 +6,16 @@ $gradient: repeating-linear-gradient(
     rgba(0,0,0,0.4) 20px
 );
 
-/*
-.revoked {
+img.revoked {
+    width: 85%;
     position: absolute;
-    top: 50%;
-    font-weight: bold;
-    font-family: fantasy;
-    //color: $assertive;
-    transform: rotate(-55deg) translate(0%, -50%);
-    width: 100%;
-    text-align: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 11% auto;
     z-index: 10;
-    font-size: 22vw;
-    white-space: nowrap;
-    display: block;
-    overflow: visible;
 }
-*/
 
 .bg-valid {
     background: $gradient, $balanced;
@@ -50,4 +43,12 @@ $gradient: repeating-linear-gradient(
 
 .bg-white {
     background: rgba(255, 255, 255, .9);
+    position: relative;
+}
+
+.bg-valid,
+.bg-expired,
+.bg-inactive,
+.bg-revoked {
+    transition: background-color 1s linear;
 }

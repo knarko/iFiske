@@ -29,6 +29,9 @@ angular.module('ifiske.models')
             checkProduct: function(code) {
                 return API.adm_check_prod(code);
             },
+            unrevokeProduct: function(product) {
+                return API.adm_revoke_prod(product.code, 0);
+            },
             revokeProduct: function(product) {
                 return API.adm_revoke_prod(product.code, 1);
             },

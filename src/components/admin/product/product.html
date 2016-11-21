@@ -1,6 +1,7 @@
 <ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}" class="bg-{{product.validity}}">
   <ion-content padding="true">
     <div ng-if="product" class="padding bg-white">
+      <img ng-show="product.rev" src="img/makulerad.png" class="revoked"/>
       <section class="text-center">
         <h3>{{product.t}}</h3>
         <p ng-if="product.subt">{{product.subt}}</p>
@@ -17,7 +18,8 @@
       </section>
       <hr />
         <a ng-if="product.pdf" class="button button-dark button-block icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
-        <a class="button icon-left ion-document-text button-block button-assertive" ng-click="confirmRevokeLicense()" translate>Revoke</a>
+        <a ng-if="!product.rev" class="button icon-left ion-document-text button-block button-assertive" ng-click="confirmRevokeLicense(1)" translate>Revoke</a>
+        <a ng-if="product.rev" class="button icon-left ion-document-text button-block button-balanced" ng-click="confirmRevokeLicense(0)" translate>Unrevoke</a>
     </div>
     <div ng-if="!product">
       <h2 class="text-center" translate>Error</h2>

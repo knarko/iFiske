@@ -38,7 +38,9 @@ angular.module('ifiske.controllers')
 
     $scope.myFunc = function($event) {
         if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
-            $state.go('app.areas', {search: $event.srcElement.value});
+            var searchTerm = $event.srcElement.value;
+            $window.ga.trackMetric('Search', searchTerm);
+            $state.go('app.areas', {search: searchTerm});
         }
     };
 });

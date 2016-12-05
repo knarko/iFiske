@@ -161,10 +161,10 @@ angular.module('ifiske.services')
                     var re = /"(\w+)"\s*(\w+)/g;
                     var regexResult;
                     var oldTable = {};
-                    while ((regexResult = re.exec(result.rows[0].sql))) {
+                    while ((regexResult = re.exec(result.rows.item(0).sql))) {
                         oldTable[regexResult[1]] = regexResult[2];
                     }
-                    var primaryKey = result.rows[0].sql.match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
+                    var primaryKey = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
                     if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
                         console.log(table.name + ' needs to update since the schema has changed.');
                         return clean(table.name).then(function() {

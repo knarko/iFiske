@@ -23,8 +23,7 @@ angular.module('ifiske.controllers')
   $stateParams,
   Admin,
   $ionicLoading,
-  $ionicPopup,
-  $translate,
+  $ionicPopover,
   API
 ) {
     $scope.id = $stateParams.id;
@@ -144,4 +143,23 @@ angular.module('ifiske.controllers')
         },
     };
     console.log($scope, $scope.chart);
+
+    $scope.pickOrg = function($event) {
+        console.log($scope);
+        if (!$scope.orgPopover) {
+            $scope.orgPopover = $ionicPopover.fromTemplate('<ion-popover-view>' +
+            '<ion-content scroll="false">' +
+            '<list>' +
+            '<a ng-repeat="org in orgs" class="item" ui-sref="^.org({id: org.orgid, org: org})" ng-click="orgPopover.hide()">{{org.ot}}</a>' +
+            '</list>' +
+            '</ion-content>' +
+            '</ion-popover-view>', {
+                scope: $scope,
+            });
+        }
+        Admin.getOrganizations().then(function(orgs) {
+            $scope.orgs = orgs;
+        });
+        $scope.orgPopover.show($event);
+    };
 });

@@ -2,7 +2,7 @@
   <ion-content>
     <div class="padding">
       <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
-      <h2 class="text-center">{{org.ot}}</h2>
+      <h2 class="text-center" ng-click="pickOrg($event)">{{org.ot}}<i class="icon ion-arrow-down-b"></i></h2>
     </div>
 
     <ion-scroll direction="x" zooming="false" scrollbar-x="false" class="horizontal-list">

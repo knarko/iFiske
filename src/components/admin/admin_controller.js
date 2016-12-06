@@ -62,17 +62,34 @@ angular.module('ifiske.controllers')
         $scope.products = data;
     }
 
-    if ($scope.org) {
-        setValid($scope.org.products);
-        $ionicLoading.hide();
-    } else {
+    $scope.$on('$ionicView.beforeEnter', function() {
+        Admin.getOrganizations().then(function(orgs) {
+            $scope.orgs = orgs;
+        });
+
+        API.adm_get_stats($scope.org.id).then(function(stats) {
+            console.log(stats);
+            $scope.chart.data = [
+                stats.weeks,
+            ];
+        }, function(err) {
+            console.error(err);
+        });
+
+        if ($scope.org && $scope.org.products) {
+            console.log($scope.org.products);
+            setValid($scope.org.products);
+            $ionicLoading.hide();
+        }
+
         Admin.getOrganization($stateParams.id).then(function(org) {
             $scope.org = org;
+            console.log($scope.org, $scope.org.products);
             setValid(org.products);
         }).finally(function() {
             $ionicLoading.hide();
         });
-    }
+    });
 
     $scope.checkLicense = function($event) {
         if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
@@ -84,14 +101,6 @@ angular.module('ifiske.controllers')
         }
     };
 
-    API.adm_get_stats($scope.org.id).then(function(stats) {
-        console.log(stats);
-        $scope.chart.data = [
-            stats.weeks,
-        ];
-    }, function(err) {
-        console.error(err);
-    });
     $scope.chart = {};
     $scope.chart.labels = []; // "January", "February", "March", "April", "May", "June", "July"];
     var now = new Date() - 365 * 3600 * 24 * 1000;
@@ -157,9 +166,6 @@ angular.module('ifiske.controllers')
                 scope: $scope,
             });
         }
-        Admin.getOrganizations().then(function(orgs) {
-            $scope.orgs = orgs;
-        });
         $scope.orgPopover.show($event);
     };
 });

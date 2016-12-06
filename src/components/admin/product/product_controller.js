@@ -62,8 +62,9 @@ angular.module('ifiske.controllers')
                             p = Admin.unrevokeProduct($scope.product);
                         }
                         p.then(function() {
-                            console.log('helo');
-                            init();
+                            return Admin.getOrganizations();
+                        }).then(function() {
+                            init(true);
                         });
                     },
                 },

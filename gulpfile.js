@@ -66,6 +66,10 @@ var paths = {
         './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
+
+        './node_modules/moment/moment.js',
+        './node_modules/chart.js/dist/Chart.js',
+        './node_modules/angular-chart.js/dist/angular-chart.js',
     ],
     templates:  ['src/components/**/*.html'],
     directives: ['src/directives/**/*.html'],

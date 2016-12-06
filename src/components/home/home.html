@@ -20,6 +20,12 @@
         </div>
 
         <div class="list list-inset" ng-class="{'disabled-list': !update.lastUpdate() }">
+          <div class="item item-button-left" ng-show="admin" ng-click="openAdmin()">
+            <button class="button button-positive button-clear">
+              <i class="icon ion-unlocked"></i>
+            </button>
+            {{'Admin tools' | translate}}
+          </div>
             <div class="item item-button-left" ui-sref="^.find_areas.counties">
                 <button class="button button-positive button-clear">
                     <i class="icon icon-icon_fishingareas"></i>
@@ -64,9 +70,4 @@
                 </div -->
                 </div>
     </ion-content>
-  <ion-footer-bar ng-show="admin" class="bar-balanced">
-    <div class="button-bar">
-      <a class="button button-icon ion-locked" ui-sref="app.admin({id: admin})" translate>Admin tools</a>
-    </div>
-  </ion-footer-bar>
 </ion-view>

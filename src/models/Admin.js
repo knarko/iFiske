@@ -35,30 +35,43 @@ angular.module('ifiske.models')
             revokeProduct: function(product) {
                 return API.adm_revoke_prod(product.code, 1);
             },
-            getProduct: function(orgID, productID) {
+            getProduct: function(productID) {
                 var product;
                 try {
-                    product = organizations[orgID].products.filter(function(p) {
-                        return Number(p.ID) === Number(productID);
-                    })[0];
+                    for (var orgID in organizations) {
+                        if (organizations[orgID])
+                            product = organizations[orgID].products.filter(function(p) {
+                                return Number(p.ID) === Number(productID);
+                            })[0];
+                    }
                 } catch (e) {
                 }
                 if (product) {
                     return $q.resolve(product);
                 }
 
+                console.log('waiting');
                 return model.wait.then(function() {
                     var product;
                     try {
-                        product = organizations[orgID].products.filter(function(p) {
-                            return Number(p.ID) === Number(productID);
-                        })[0];
+                        console.log(organizations);
+                        for (var orgID in organizations) {
+                            if (organizations[orgID]) {
+                                console.log(organizations, orgID);
+                                product = organizations[orgID].products.filter(function(p) {
+                                    return Number(p.ID) === Number(productID);
+                                })[0];
+                                if (product) {
+                                    break;
+                                }
+                            }
+                        }
                     } catch (e) {
                     }
                     if (product) {
                         return product;
                     }
-                    return $q.reject('Could not find a product');
+                    return $q.reject('License with this code not found');
                 });
             },
             getOrganization: function(orgID) {

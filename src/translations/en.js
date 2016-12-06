@@ -3,6 +3,7 @@ angular.module('ifiske.translations')
 .constant('englishTranslations', {
     'revoked':                             'Revoked',
     'Revoked':                             'Revoked',
+    'Revoked licenses':                    'Revoked fishing permits',
     'Check license':                       'Check License Code',
     'Enter license code template':         'Please enter the license code as found on the fishing license',
     'About the app':                       'About',
@@ -89,7 +90,7 @@ angular.module('ifiske.translations')
     'No data':                             'No data available',
     'No favorites':                        'You have not marked any waters as favorites',
     'No licenses':                         'When you buy fishing permits, they will be listed here',
-    'Not authorized to view this license': 'You are not authorized to view the details of this fishing license. If this message is received erroneounsly, please double check the entered code.',
+    'Not authorized to view this license': 'You are not authorized to view the details of this fishing license. If this message is received erroneously, please double check the entered code.',
     'Notifications are turned off':        'Notifications are turned off',
     'Notifications are turned on':         'Notifications are turned on',
     'Notify via email':                    'Notifications via email',
@@ -170,7 +171,7 @@ angular.module('ifiske.translations')
     'Username':                            'Username',
     'Valid from':                          'Valid from <b>{{date}}</b>',
     'Valid until':                         'Valid until <b>{{date}}</b>',
-    'valid':                               'Valid',
+    'active':                              'Valid',
     'Version':                             'Version mumber',
     'Youtube':                             'YouTube',
 });

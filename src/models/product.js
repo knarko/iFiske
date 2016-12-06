@@ -32,7 +32,7 @@ angular.module('ifiske.models')
                 }
                 var now = parseInt(Date.now() / 1000);
                 if (product.fr < now) {
-                    return now < product.to ? 'valid' : 'expired';
+                    return now < product.to ? 'active' : 'expired';
                 }
                 return 'inactive';
             },

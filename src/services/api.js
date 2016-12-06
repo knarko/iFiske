@@ -158,6 +158,9 @@ angular.module('ifiske.services')
             adm_check_prod: function(code) {
                 return session_api_call({m: 'adm_check_prod', code: code}, false);
             },
+            adm_get_stats: function(orgid) {
+                return session_api_call({m: 'adm_get_stats', orgid: orgid}, false);
+            },
 
             get_fishes: function() {
                 return api_call({m: 'get_fishes'});

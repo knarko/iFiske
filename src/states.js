@@ -110,17 +110,28 @@
         config: {
             url:         '/admin',
             templateUrl: 'components/admin/admin_wrap.html',
-            params:      {id: undefined, org: false},
+            controller:  'AdminWrapCtrl',
         },
         children: {
             main: {
-                url:         '/:id',
-                templateUrl: 'components/admin/admin.html',
+                url:         '/main',
+                templateUrl: 'components/admin/main.html',
                 controller:  'AdminCtrl',
+            },
+            org: {
+                url:         '/org/:id',
+                templateUrl: 'components/admin/admin.html',
+                controller:  'AdminOrgCtrl',
                 params:      {id: undefined, org: false},
             },
+            licenses: {
+                url:         '/licenses?name',
+                templateUrl: 'components/admin/licenses.html',
+                controller:  'AdminLicenseCtrl',
+                params:      {license: false, name: undefined},
+            },
             product: {
-                url:         '/product/:productID:code',
+                url:         '/product?productID&code',
                 templateUrl: 'components/admin/product/product.html',
                 controller:  'AdminProductCtrl',
                 params:      {code: undefined, productID: undefined, product: false},
@@ -216,40 +227,40 @@
                     templateUrl: 'components/user/user.html',
                 },
                 areas: {
-                    url:    '/areas',
-                    params: {
+                    url:         '/areas',
+                    templateUrl: 'components/area_list/area_list.html',
+                    controller:  'AreasCtrl',
+                    params:      {
                         id:     false,
                         county: false,
                         search: '',
                     },
-                    templateUrl: 'components/area_list/area_list.html',
-                    controller:  'AreasCtrl',
                 },
                 report: {
-                    url:    '/report/:id',
-                    params: {
-                        id: false,
-                    },
+                    url:         '/report/:id',
                     templateUrl: 'components/report/report.html',
                     controller:  'ReportCtrl',
+                    params:      {
+                        id: false,
+                    },
                 },
                 create_report: {
-                    url:    '/create_report',
-                    params: {
+                    url:         '/create_report',
+                    templateUrl: 'components/create_report/create_report.html',
+                    controller:  'CreateReportCtrl',
+                    params:      {
                         orgid: false,
                         code:  false,
                     },
-                    templateUrl: 'components/create_report/create_report.html',
-                    controller:  'CreateReportCtrl',
                 },
                 license_detail: {
-                    url:    '/license/:id',
-                    params: {
+                    url:         '/license/:id',
+                    templateUrl: 'components/license_detail/license_detail.html',
+                    controller:  'LicenseDetailCtrl',
+                    params:      {
                         id:      false,
                         license: false,
                     },
-                    templateUrl: 'components/license_detail/license_detail.html',
-                    controller:  'LicenseDetailCtrl',
                 },
                 fishes: {
                     url:         '/fishes',
@@ -257,13 +268,13 @@
                     controller:  'FishesCtrl',
                 },
                 fishdetail: {
-                    url:    '/fishdetail/:id',
-                    params: {
+                    url:         '/fishdetail/:id',
+                    templateUrl: 'components/fish_detail/fish_detail.html',
+                    controller:  'FishDetailCtrl',
+                    params:      {
                         id:   false,
                         fish: false,
                     },
-                    templateUrl: 'components/fish_detail/fish_detail.html',
-                    controller:  'FishDetailCtrl',
                 },
                 map: {
                     url:         '/map',
@@ -276,13 +287,13 @@
                     controller:  'TechniquesCtrl',
                 },
                 techniquedetail: {
-                    url:    '/techniquedetail/:id',
-                    params: {
+                    url:         '/techniquedetail/:id',
+                    templateUrl: 'components/technique_detail/technique_detail.html',
+                    controller:  'TechniqueDetailCtrl',
+                    params:      {
                         id:   false,
                         tech: false,
                     },
-                    templateUrl: 'components/technique_detail/technique_detail.html',
-                    controller:  'TechniqueDetailCtrl',
                 },
                 news: {
                     url:         '/news',
@@ -290,13 +301,13 @@
                     controller:  'NewsCtrl',
                 },
                 newsitem: {
-                    url:    '/news/:id',
-                    params: {
+                    url:         '/news/:id',
+                    templateUrl: 'components/news/newsitem.html',
+                    controller:  'NewsItemCtrl',
+                    params:      {
                         item: false,
                         id:   false,
                     },
-                    templateUrl: 'components/news/newsitem.html',
-                    controller:  'NewsItemCtrl',
                 },
                 cards: {
                     url:         '/cards',

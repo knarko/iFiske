@@ -1,0 +1,13 @@
+<ion-view title="{{'Admin' | translate}}">
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        <i class="icon ion-locked "></i> {{'Administration' | translate}}
+      </div>
+      <div class="item" ng-repeat="org in organizations" ui-sref="app.admin.org({id: org.orgid, org: org})">
+        <h2>{{org.ot}}</h2>
+        <p translate>{{org.levelname}}</p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

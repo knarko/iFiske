@@ -16,6 +16,7 @@ angular.module('ifiske', [
     'ui-leaflet',
     'pascalprecht.translate',
     'ifiske.translations',
+    'chart.js',
 ])
 
 .constant('$ionicLoadingConfig', {

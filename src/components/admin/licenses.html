@@ -1,0 +1,17 @@
+<ion-view>
+  <ion-nav-title>
+    {{name | translate}}
+  </ion-nav-title>
+  <ion-content>
+    <div class="list">
+      <div class="item item-full-width" ng-if="!products.length">
+        <h2 translate>{{message}}</h2>
+      </div>
+      <div class="item item-full-width {{product.validity}}" collection-repeat="prod in products" item-height="prod.subt ? '96px' : '74px'" ui-sref="^.product({product: prod, productID: prod.ID})">
+        <h2>{{prod.t}} -  {{prod.code}}</h2>
+        <p ng-if="prod.subt">{{prod.subt}}</p>
+        <p>{{prod.fullname}}</p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

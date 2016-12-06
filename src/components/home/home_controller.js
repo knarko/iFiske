@@ -18,6 +18,17 @@ angular.module('ifiske.controllers')
             }
         }
     });
+
+    $scope.openAdmin = function() {
+        Admin.getOrganizations().then(function(organizations) {
+            var orgIds = Object.keys(organizations);
+            if (orgIds.length === 1) {
+                $state.go('app.admin.org', {id: orgIds[0]});
+            } else {
+                $state.go('app.admin.main');
+            }
+        });
+    };
     console.log($ionicHistory);
     $scope.$on('$ionicView.enter', function() {
         Admin.isAdmin().then(function(isAdmin) {
@@ -39,7 +50,9 @@ angular.module('ifiske.controllers')
     $scope.myFunc = function($event) {
         if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
             var searchTerm = $event.srcElement.value;
-            $window.ga.trackMetric('Search', searchTerm);
+            if ($window.ga) {
+                $window.ga.trackMetric('Search', searchTerm);
+            }
             $state.go('app.areas', {search: searchTerm});
         }
     };

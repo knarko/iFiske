@@ -2,47 +2,31 @@
   <ion-content>
     <div class="padding">
       <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
-      <h2>{{org.ot}}</h2>
+      <h2 class="text-center">{{org.ot}}</h2>
+    </div>
+
+    <ion-scroll direction="x" zooming="false" scrollbar-x="false" class="horizontal-list">
+      <div class="list">
+        <div class="item" ng-repeat="license in licenseTypes" ui-sref="^.licenses({license: license, name: license.name})">
+          <h3>{{license.name | translate}}</h3>
+          <p>{{license.items.length}}</p>
+        </div>
+      </div>
+    </ion-scroll>
+
+    <div class="padding">
+
+    <canvas id="bar" class="chart chart-bar" chart-data="chart.data" chart-labels="chart.labels" chart-series="chart.series" chart-options="chart.options" chart-dataset-override="chart.datasetOverride" chart-click="chart.onClick"></canvas>
+
+      <label class="item item-input">
+        <input type="search" placeholder="{{'Check license' | translate}}" ng-keypress="checkLicense($event)">
+      </label>
+
       <p>
         {{'More in control panel' | translate}}
         <a href="{{image_endpoint}}/index.php/kontrollpanelen" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
       </p>
-      <button class="button button-block button-positive" ng-click="checkLicense()" translate>Check license</button>
     </div>
-    <div class="list">
-      <div class="item item-divider item-icon-left" ng-if="valid.length">
-        <i class="icon ion-checkmark"></i>{{'Active licenses' | translate}}
-      </div>
-      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in valid" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
-        <h2>{{prod.t}} -  {{prod.code}}</h2>
-        <p>{{prod.subt}}</p>
-      </div>
-      <div class="item item-divider item-icon-left" ng-if="inactive.length">
-        <i class="icon ion-clock"></i>{{'Inactive licenses' | translate}}
-      </div>
-      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in inactive" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
-        <h2>{{prod.t}} -  {{prod.code}}</h2>
-        <p>{{prod.subt}}</p>
-      </div>
-      <div class="item item-divider item-icon-left" ng-if="expired.length">
-        <i class="icon ion-close"></i>{{'Expired licenses' | translate}}
-      </div>
-      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in expired" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
-        <h2>{{prod.t}} -  {{prod.code}}</h2>
-        <p>{{prod.subt}}</p>
-      </div>
-      <div class="item item-divider item-icon-left" ng-if="revoked.length">
-        <i class="icon ion-close"></i>{{'Revoked licenses' | translate}}
-      </div>
-      <div class="item item-full-width {{product.validity}}" ng-repeat="prod in revoked" item-height="prod.subt ? '74px' : '54px'" ui-sref="^.product({product: prod, productID: prod.ID})">
-        <h2>{{prod.t}} -  {{prod.code}}</h2>
-        <p>{{prod.subt}}</p>
-      </div>
-    </div>
+
   </ion-content>
-  <ion-footer-bar class="bar-balanced">
-    <div class="button-bar">
-      <a class="button button-icon ion-camera" ng-click="scanQR()" translate>Scan QR code</a>
-    </div>
-  </ion-footer-bar>
 </ion-view>

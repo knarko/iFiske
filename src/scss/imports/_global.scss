@@ -109,3 +109,27 @@ h2 {
     //Removes all borders on buttons
     border: 0;
 }
+
+
+
+.horizontal-list {
+    $size: 40%;
+    $items: 4;
+
+    .list {
+        width: $size * $items;
+        text-align: center;
+
+        .item {
+            text-align: left;
+            overflow: hidden;
+            display: inline-block;
+            width: 100% / $items - 1;
+            height: 100px;
+
+            h3 {
+                white-space: normal;
+            }
+        }
+    }
+}

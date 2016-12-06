@@ -1,5 +1,6 @@
 angular.module('ifiske.controllers')
 .controller('AdminProductCtrl', function($scope, $stateParams, Admin, $ionicPopup, $translate, $ionicLoading, Product) {
+    console.log('stuff stuff', $stateParams);
     function init(force) {
         if ($stateParams.code) {
             $ionicLoading.show();
@@ -24,11 +25,12 @@ angular.module('ifiske.controllers')
             $scope.productID = $stateParams.productID;
             $scope.product = $stateParams.product;
             if (!$scope.product || force) {
-                Admin.getProduct($stateParams.id, $stateParams.productID).then(function(product) {
+                Admin.getProduct($stateParams.productID).then(function(product) {
                     console.log(product);
                     $scope.product = product;
                 }, function(err) {
                     console.warn(err);
+                    $scope.message = err;
                 }).finally(function() {
                     $ionicLoading.hide();
                 });

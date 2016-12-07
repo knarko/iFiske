@@ -12,7 +12,7 @@ angular.module('ifiske.controllers')
 
     function setValid(data) {
         $scope.revoked = [];
-        $scope.valid = [];
+        $scope.active = [];
         $scope.expired = [];
         $scope.inactive = [];
         for (var i = 0; i < data.length; ++i) {

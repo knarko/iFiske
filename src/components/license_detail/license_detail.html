@@ -46,7 +46,7 @@
           </defs>
           <image ng-xlink:href="{{qr}}" width="100%" height="100%"
            xlink:href=""
-           filter="url(#filter-{{product.validity==='valid'?'green':product.validity==='revoked'?'gray':'red'}})" />
+           filter="url(#filter-{{product.validity==='active'?'green':product.validity==='revoked'?'gray':'red'}})" />
         </svg>
       </div>
       <h1 class="{{product.validity}}">{{product.code}}</h1>

@@ -60,7 +60,7 @@
       <p translate translate-value-date="{{product.fr * 1000 | date:'short'}}">Valid from</p>
       <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
       <p>
-        <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{::product.code}}" ><i class="icon icon-icon_fish"></i> {{'Catch report' | translate}}</a>
+        <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{product.code}}?lang={{language}}" ><i class="icon icon-icon_fish"></i> {{'Catch report' | translate}}</a>
         <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}"  translate>PDF</a>
       </p>
       <p ng-if="product.fine" class="fineprint">{{product.fine}}</p>

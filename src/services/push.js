@@ -46,7 +46,8 @@ angular.module('ifiske.services')
                     okText:     'OK',
                 }).then(function(response) {
                     if (response) {
-                        $cordovaInAppBrowser.open(serverLocation + '/r/' + payload.code, '_system');
+                        $cordovaInAppBrowser.open(serverLocation + '/r/' + payload.code +
+                        '?lang=' + Settings.language(), '_system');
                     }
                 });
                 // $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});

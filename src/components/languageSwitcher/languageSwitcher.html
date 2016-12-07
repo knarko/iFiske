@@ -1,4 +1,9 @@
-<ion-view title="{{'Select language' | translate}}" class="image-bg">
+<ion-view class="image-bg">
+  <ion-nav-title>
+    <div class="cont">
+      <span ng-animate-swap="viewTitle" class="swap-animation">{{viewTitle}}</span>
+    </div>
+  </ion-nav-title>
   <ion-content>
     <div class="row responsive-sm">
       <a ng-repeat="lang in languages" ng-click="changeLanguage('{{lang.short}}')" class="col language-button">

@@ -7,6 +7,7 @@ angular.module('ifiske.controllers')
     $translate,
     Settings,
     $window,
+    $interval,
     Update
 ) {
     $scope.languages = Settings.availableLanguages();
@@ -32,4 +33,12 @@ angular.module('ifiske.controllers')
             $state.go('app.login');
         }
     };
+    var languages = Object.keys(Settings.availableLanguages());
+    var i = 0;
+    $scope.viewTitle = $translate.instant('Change language', null, null, languages[i++ % languages.length]);
+    $interval(function() {
+        console.log(i);
+        $scope.viewTitle = $translate.instant('Change language', null, null, languages[i++ % languages.length]);
+        console.log($scope.viewTitle, i, languages[i % languages.length]);
+    }, 3000);
 });

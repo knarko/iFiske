@@ -20,3 +20,28 @@ language-switcher {
         margin: 0 auto;
     }
 }
+
+.cont {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.swap-animation {
+    display:block;
+    position: absolute;
+}
+.swap-animation.ng-enter, .swap-animation.ng-leave {
+    transition: .8s ease-in-out all;
+}
+.swap-animation.ng-enter {
+    transform: translateY(-40px);
+}
+.swap-animation.ng-enter-active {
+    transform: translateY(0px);
+}
+.swap-animation.ng-leave {
+    transform: translateY(0px);
+}
+.swap-animation.ng-leave-active {
+    transform: translateY(40px);
+}

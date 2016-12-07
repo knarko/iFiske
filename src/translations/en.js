@@ -49,6 +49,7 @@ angular.module('ifiske.translations')
     'Favorites':                           'Favourites',
     'First name':                          'First name',
     'Fishing area':                        'Fishing area',
+    'Fishing areas':                       'Fishing areas',
     'Fishing License':                     'Fishing permit',
     'Fishing methods':                     'Fishing methods',
     'Fiskekortet gäller inte än':          'The fishing permit is not active yet',

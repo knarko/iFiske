@@ -227,4 +227,6 @@ gulp.task('foss', function(done) {
     .on('end', done);
 });
 
-gulp.task('bump', require('gulp-cordova-bump'));
+gulp.task('bump', function() {
+    require('gulp-cordova-bump').run({autofiles: true});
+});

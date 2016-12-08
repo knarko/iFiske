@@ -89,7 +89,7 @@
     "ios"
   ],
   "dependencies": {
-    "@ionic/cloud": "0.14.0",
+    "@ionic/cloud": "~0.14.1",
     "angular-chart.js": "^1.1.1",
     "moment": "^2.17.1"
   },

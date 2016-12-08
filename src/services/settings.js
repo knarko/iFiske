@@ -1,5 +1,5 @@
 angular.module('ifiske.services')
-.factory('Settings', function(localStorage, $translate, $window) {
+.factory('Settings', function(localStorage, $translate, $window, $ionicHistory) {
     // TODO: Persist some settings to Ionic Cloud?
     var settings = JSON.parse(localStorage.get('settings'));
 
@@ -51,6 +51,7 @@ angular.module('ifiske.services')
             updateSettings();
 
             $translate.use(settings.language);
+            $ionicHistory.clearCache();
 
             if ($window.ga)
                 $window.ga.trackMetric('Language', settings.language);

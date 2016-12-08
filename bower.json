@@ -8,7 +8,7 @@
     "angular-messages": "^1.5.5",
     "angular-simple-logger": "^0.1.7",
     "ionic": "1.3.1",
-    "ionic-ion-header-shrink": "maistho/ionic-ion-header-shrink#master",
+    "ionic-ion-header-shrink": "ifiske/ionic-ion-header-shrink#master",
     "ngCordova": "0.1.26-alpha",
     "ui-leaflet": "^1.0.0",
     "Leaflet.awesome-markers": "^2.0.2",

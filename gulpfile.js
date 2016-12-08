@@ -228,5 +228,49 @@ gulp.task('foss', function(done) {
 });
 
 gulp.task('bump', function() {
-    require('gulp-cordova-bump').run({autofiles: true});
+    require('gulp-cordova-bump').run({
+        packageJson: 'package.json',
+        configXml:   'config.xml',
+    });
+});
+
+var conventionalChangelog = require('gulp-conventional-changelog');
+
+gulp.task('changelog', changelog);
+function changelog() {
+    return gulp.src('CHANGELOG.md')
+    .pipe(conventionalChangelog({
+      // conventional-changelog options go here
+        preset: 'angular',
+    }, {
+      // context goes here
+    }, {
+      // git-raw-commits options go here
+    }, {
+      // conventional-commits-parser options go here
+    }, {
+      // conventional-changelog-writer options go here
+    }))
+    .pipe(gulp.dest('./'));
+}
+
+gulp.task('release', [], function() {
+    var conventionalRecommendedBump = require('conventional-recommended-bump');
+    conventionalRecommendedBump({
+        preset: 'angular',
+    }, function(err, result) {
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        var bumpConfig = {
+            packageJson: 'package.json',
+            configXml:   'config.xml',
+        };
+        console.log(result.reason);
+        bumpConfig[result.releaseType] = true;
+        require('gulp-cordova-bump').run(bumpConfig);
+        changelog();
+        // TODO: Make a git commit with the changelog and tag it
+    });
 });

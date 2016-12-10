@@ -53,7 +53,7 @@ var keys = Reflect.ownKeys;
 
 if (!Object.values) {
 	Object.values = function values(O) {
-		return reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+		return reduce(keys(O), function(v, k) {return concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : [])}, []);
 	};
 }
 })();

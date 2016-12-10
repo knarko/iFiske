@@ -106,3 +106,14 @@ h2 {
 .button {
     backface-visibility: hidden;
 }
+
+.has-footer {
+    bottom: 50px;
+}
+.bar-footer {
+    height: 50px;
+}
+.bar-footer .button-bar>.button, .bar .buttons>.button {
+    min-height: 50px;
+    line-height: 35px;
+}

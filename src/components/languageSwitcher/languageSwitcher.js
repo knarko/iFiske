@@ -43,6 +43,6 @@ angular.module('ifiske.controllers')
     }, 3000);
 
     $scope.$on('$ionicView.leave', function() {
-        interval.cancel();
+        $interval.cancel(interval);
     });
 });

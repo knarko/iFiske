@@ -34,6 +34,7 @@ angular.module('ifiske.translations')
     'Contact Information':                 'Contact',
     'Contact':                             'Contact Us',
     'County':                              'County',
+    'Counties':                            'Counties',
     'Create new account':                  'Create new account',
     'Description':                         'Description',
     'Edit favorite':                       'Edit favorite',

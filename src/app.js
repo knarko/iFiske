@@ -65,9 +65,8 @@ angular.module('ifiske', [
             }, 500);
         }
         if ($window.ga) {
-            $window.ga.debugMode(); // TODO: remove this
-            $window.ga.startTrackerWithId('UA-7371664-4'); // Live
-            // $window.ga.startTrackerWithId('UA-51749451-2'); // Gustavs
+            // $window.ga.debugMode(); // enable when debugging
+            $window.ga.startTrackerWithId('UA-7371664-4');
             $window.ga.enableUncaughtExceptionReporting(true);
 
             $rootScope.$on('$stateChangeSuccess',

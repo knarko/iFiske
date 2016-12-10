@@ -27,21 +27,25 @@ language-switcher {
     justify-content: center;
 }
 .swap-animation {
-    display:block;
+    display: block;
     position: absolute;
+    right: 0;
+    left: 0;
 }
-.swap-animation.ng-enter, .swap-animation.ng-leave {
+.swap-animation {
     transition: .8s ease-in-out all;
 }
+.swap-animation.ng-enter-prepare,
 .swap-animation.ng-enter {
-    transform: translateY(-40px);
+    transform: translate3d(0, -40px, 0);
 }
 .swap-animation.ng-enter-active {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
 }
+.swap-animation.ng-leave-prepare,
 .swap-animation.ng-leave {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
 }
 .swap-animation.ng-leave-active {
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
 }

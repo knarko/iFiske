@@ -18,27 +18,35 @@ img.revoked {
     z-index: 10;
 }
 
-.bg-active {
-    background: $gradient, $balanced;
+.bg-active,
+.bg-expired,
+.bg-inactive,
+.bg-revoked {
+    background: $gradient;
+    background-size: calc(100% + 30px) calc(100% + 30px);
     animation: 2s linear bg infinite;
+    transition: background 1s linear;
+}
+
+.bg-active {
+    background-color: $balanced;
 }
 
 .bg-inactive {
-    background: $gradient, $energized;
-    animation: 2s linear bg infinite;
+    background-color: $energized;
 }
 
 .bg-expired,
 .bg-revoked {
-    background: $gradient, $assertive;
-    animation: 2s linear bg infinite;
+    background-color: $assertive;
 }
 @keyframes bg {
     from {
-        background-position-y: 0;
+        background-position-y: -28.5px;
     }
+
     to {
-        background-position-y: 28.5px;
+        background-position-y: 0;
     }
 }
 
@@ -47,9 +55,67 @@ img.revoked {
     position: relative;
 }
 
-.bg-valid,
-.bg-expired,
-.bg-inactive,
-.bg-revoked {
-    transition: background-color 1s linear;
+
+.active {
+    color: $balanced;
+}
+
+.inactive {
+    color: $energized;
+}
+
+.horizontal-list {
+    $size: 150px;
+    $items: 4;
+
+    .list {
+        width: $size * $items;
+        text-align: center;
+
+        .item + .item {
+            margin-left: .5em;
+        }
+        .item {
+            text-align: center;
+            overflow: hidden;
+            display: inline-block;
+            width: calc(#{100% / $items} - .5em);
+            height: 100px;
+            border-radius: 4px;
+            border-color: $dark;
+
+            h3 {
+                white-space: normal;
+            }
+            span {
+                position: absolute;
+                line-height: 2em;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                text-align: center;
+                display: block;
+                font-size: 2em;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+
+.input-button {
+    padding: 0 0 0 16px;
+
+    button {
+        padding: 0 1em;
+        border: 0;
+        min-width: inherit;
+        border-radius: 0;
+    }
+}
+
+.button.button.button-text-dark {
+    color: $dark;
+    font-size: 1.5em;
+    font-weight: bold;
 }

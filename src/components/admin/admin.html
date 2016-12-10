@@ -2,25 +2,37 @@
   <ion-content>
     <div class="padding">
       <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
-      <h2 class="text-center" ng-click="pickOrg($event)">{{org.ot}}<i class="icon ion-arrow-down-b"></i></h2>
+      <button ng-if="orgs.length > 1" class="button button-block button-stable icon-right button-outline ion-arrow-down-b button-text-dark" ng-click="pickOrg($event)">{{org.ot}}</button>
+      <h2 ng-if="orgs.length < 2" class="text-center" >{{org.ot}}</h2>
     </div>
 
     <ion-scroll direction="x" zooming="false" scrollbar-x="false" class="horizontal-list">
       <div class="list">
         <div class="item" ng-repeat="license in licenseTypes" ui-sref="^.licenses({license: license, name: license.name})">
           <h3>{{license.name | translate}}</h3>
-          <p>{{license.items.length}}</p>
+          <span class="{{license.class}}">{{license.items.length}}</span>
         </div>
       </div>
     </ion-scroll>
 
     <div class="padding">
 
-    <canvas id="bar" class="chart chart-bar" chart-data="chart.data" chart-labels="chart.labels" chart-series="chart.series" chart-options="chart.options" chart-dataset-override="chart.datasetOverride" chart-click="chart.onClick"></canvas>
+      <canvas id="bar" class="chart chart-bar" chart-data="chart.data" chart-labels="chart.labels" chart-series="chart.series" chart-options="chart.options" chart-dataset-override="chart.datasetOverride" chart-click="chart.onClick"></canvas>
 
-      <label class="item item-input">
-        <input type="search" placeholder="{{'Check license' | translate}}" ng-keypress="checkLicense($event)">
-      </label>
+      <h3 translate>Check code</h3>
+
+
+      <hr/>
+      <form class="item item-input input-button" ng-submit="checkLicense($event, this)">
+        <input type="tel" name="code" placeholder="{{'Check license' | translate}}">
+        <button class="button button-balanced" type="submit">
+          Check
+        </button>
+      </form>
+
+      <a class="button button-block button-balanced" ng-click="scanQR()"><i class="icon ion-camera"></i>&nbsp;{{'Scan QR code' | translate}}</a>
+
+      <hr/>
 
       <p>
         {{'More in control panel' | translate}}

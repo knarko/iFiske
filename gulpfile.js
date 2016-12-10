@@ -68,6 +68,9 @@ var paths = {
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
 
         './node_modules/moment/moment.js',
+        './node_modules/moment/locale/sv.js',
+        './node_modules/moment/locale/en-gb.js',
+        './node_modules/moment/locale/de.js',
         './node_modules/chart.js/dist/Chart.js',
         './node_modules/angular-chart.js/dist/angular-chart.js',
     ],

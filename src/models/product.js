@@ -26,7 +26,6 @@ angular.module('ifiske.models')
 
         angular.extend(model, {
             getValidity: function(product) {
-                console.log(product, product.rev, Boolean(product.rev));
                 if (product.rev === 1) {
                     return 'revoked';
                 }

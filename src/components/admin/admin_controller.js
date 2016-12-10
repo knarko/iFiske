@@ -35,18 +35,22 @@ angular.module('ifiske.controllers')
         $scope.licenseTypes = {
             active: {
                 items: [],
+                class: 'active',
                 name:  'Active licenses',
             },
             inactive: {
                 items: [],
+                class: 'inactive',
                 name:  'Inactive licenses',
             },
             expired: {
                 items: [],
+                class: 'expired',
                 name:  'Expired licenses',
             },
             revoked: {
                 items: [],
+                class: 'revoked',
                 name:  'Revoked licenses',
             },
         };
@@ -64,14 +68,19 @@ angular.module('ifiske.controllers')
 
     $scope.$on('$ionicView.beforeEnter', function() {
         Admin.getOrganizations().then(function(orgs) {
-            $scope.orgs = orgs;
+            $scope.orgs = Object.values(orgs);
         });
 
-        API.adm_get_stats($scope.org.id).then(function(stats) {
+        API.adm_get_stats($stateParams.id).then(function(stats) {
+            stats = stats[$stateParams.id];
             console.log(stats);
             $scope.chart.data = [
-                stats.weeks,
+                Object.values(stats.weeks),
             ];
+            $scope.chart.labels = [];
+            for (var i in stats.weeks) {
+                $scope.chart.labels.push(moment().subtract(i, 'week'));
+            }
         }, function(err) {
             console.error(err);
         });
@@ -80,78 +89,68 @@ angular.module('ifiske.controllers')
             console.log($scope.org.products);
             setValid($scope.org.products);
             $ionicLoading.hide();
+        } else {
+            Admin.getOrganization($stateParams.id).then(function(org) {
+                $scope.org = org;
+                console.log($scope.org, $scope.org.products);
+                setValid(org.products);
+            }).finally(function() {
+                $ionicLoading.hide();
+            });
         }
-
-        Admin.getOrganization($stateParams.id).then(function(org) {
-            $scope.org = org;
-            console.log($scope.org, $scope.org.products);
-            setValid(org.products);
-        }).finally(function() {
-            $ionicLoading.hide();
-        });
     });
 
     $scope.checkLicense = function($event) {
-        if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
-            var code = $event.srcElement.value;
-            $event.srcElement.value = '';
-            if (code) {
-                $state.go('^.product', {code: code});
-            }
+        var code = $event.srcElement.code.value;
+        $event.srcElement.code.value = '';
+        if (code) {
+            $state.go('^.product', {code: code});
         }
     };
 
     $scope.chart = {};
-    $scope.chart.labels = []; // "January", "February", "March", "April", "May", "June", "July"];
-    var now = new Date() - 365 * 3600 * 24 * 1000;
-    for (var i = 52; i > 0; --i) {
-        $scope.chart.labels.push(moment().subtract(i, 'week'));
-    }
-    console.log($scope.chart);
     $scope.chart.series = ['Sålda fiskekort'];
-    $scope.chart.data = [
-        [
-            20, 10, 10, 12, 30, 40, 50, 10, 60, 85,
-            100, 60, 200, 30, 100, 130, 122, 130, 170, 200,
-            100, 60, 200, 30, 100, 130, 122, 130, 170, 200,
-            20, 10, 10, 12, 30, 40, 50, 10, 60, 85,
-            20, 10, 10, 12, 30, 40, 50, 10, 60, 85, 10, 20,
-        ],
+    $scope.chart.datasetOverride = [
+        {
+            type:            'bar',
+            borderWidth:     0,
+            backgroundColor: '#006696',
+        },
     ];
-    $scope.chart.onClick = function(points, evt) {
-        console.log(points, evt);
-    };
-    $scope.chart.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
     $scope.chart.options = {
-        scales: {
+        stacked:          true,
+        lineAtYearChange: true,
+        fill:             false,
+        scales:           {
+            yAxes: [{
+                id:       'y-axis-0',
+                type:     'linear',
+                display:  true,
+                position: 'left',
+            }],
             xAxes: [{
-                type: 'time',
-                time: {
+                id:                 'x-axis-0',
+                type:               'time',
+                barPercentage:      .3,
+                categoryPercentage: 1,
+                time:               {
                     min:            moment().subtract(1, 'year').subtract(1, 'week'),
                     max:            moment().add(1, 'week'),
                     round:          'week',
-                    unitStepSize:   1,
+                    unitStepSize:   3,
                     tooltipFormat:  '[vecka] W',
                     displayFormats: {
-                        week: 'MMM YYYY',
+                        week:  'MMM YYYY',
+                        month: 'MMM',
                     },
-                    unit: 'quarter',
+                    unit: 'month',
                 },
                 labels: {
                     show: false,
                 },
             }],
-            yAxes: [
-                {
-                    id:       'y-axis-1',
-                    type:     'linear',
-                    display:  true,
-                    position: 'left',
-                },
-            ],
         },
     };
-    console.log($scope, $scope.chart);
 
     $scope.pickOrg = function($event) {
         console.log($scope);
@@ -168,4 +167,34 @@ angular.module('ifiske.controllers')
         }
         $scope.orgPopover.show($event);
     };
+});
+var originalLineDraw = Chart.controllers.bar.prototype.draw;
+Chart.helpers.extend(Chart.controllers.bar.prototype, {
+    draw: function() {
+        originalLineDraw.apply(this, arguments);
+
+        var chart = this.chart;
+        var ctx = chart.chart.ctx;
+
+        if (chart.config.options.lineAtYearChange) {
+            var xaxis = chart.scales['x-axis-0'];
+            var yaxis = chart.scales['y-axis-0'];
+
+            var xPixel = xaxis.getPixelForValue(moment().startOf('year'));
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(xPixel, yaxis.top);
+            ctx.strokeStyle = '#006696';
+            ctx.lineTo(xPixel, yaxis.bottom);
+            ctx.stroke();
+
+            ctx.textAlign = 'left';
+            ctx.fillText(moment().format('[\']YY'), xPixel + 4, yaxis.top + 10);
+            ctx.textAlign = 'right';
+            ctx.fillText(moment().subtract(1, 'year').format('[\']YY'), xPixel - 4, yaxis.top + 10);
+
+            ctx.restore();
+        }
+    },
 });

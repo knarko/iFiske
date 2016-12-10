@@ -7,6 +7,14 @@ angular.module('ifiske.services')
         localStorage.set('settings', JSON.stringify(settings));
     }
 
+    function langToLocale(language) {
+        return {
+            se: 'sv',
+            en: 'en',
+            de: 'de',
+        }[language];
+    }
+
     if (!settings) {
         settings = {
             push:     true,
@@ -14,6 +22,10 @@ angular.module('ifiske.services')
         };
         updateSettings();
     }
+
+    // Init the locale
+    moment.locale(langToLocale(settings.language));
+
     return {
         push: function(setPush) {
             if (setPush === undefined) {
@@ -51,6 +63,9 @@ angular.module('ifiske.services')
             updateSettings();
 
             $translate.use(settings.language);
+
+            moment.locale(langToLocale(settings.language));
+
             $ionicHistory.clearCache();
 
             if ($window.ga)

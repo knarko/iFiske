@@ -36,28 +36,11 @@ angular.module('ifiske.models')
                 return API.adm_revoke_prod(product.code, 1);
             },
             getProduct: function(productID) {
-                var product;
-                try {
-                    for (var orgID in organizations) {
-                        if (organizations[orgID])
-                            product = organizations[orgID].products.filter(function(p) {
-                                return Number(p.ID) === Number(productID);
-                            })[0];
-                    }
-                } catch (e) {
-                }
-                if (product) {
-                    return $q.resolve(product);
-                }
-
-                console.log('waiting');
                 return model.wait.then(function() {
                     var product;
                     try {
-                        console.log(organizations);
                         for (var orgID in organizations) {
                             if (organizations[orgID]) {
-                                console.log(organizations, orgID);
                                 product = organizations[orgID].products.filter(function(p) {
                                     return Number(p.ID) === Number(productID);
                                 })[0];
@@ -83,8 +66,10 @@ angular.module('ifiske.models')
                 return API.user_organizations().then(function(orgs) {
                     var p = [];
                     for (var i in orgs) {
-                        console.log(i, organizations, orgs);
-                        organizations[i] = orgs[i];
+                        if (!organizations[i]) {
+                            organizations[i] = {};
+                        }
+                        angular.extend(organizations[i], orgs[i]);
                         p.push(initOrg(organizations[i]));
                     }
                     return $q.all(p).then(function() {

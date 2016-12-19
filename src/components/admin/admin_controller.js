@@ -97,57 +97,13 @@ angular.module('ifiske.controllers')
         }
     };
 
-    $scope.chart = {};
-    $scope.chart.series = ['Sålda fiskekort'];
-    $scope.chart.datasetOverride = [
-        {
-            type:            'bar',
-            borderWidth:     0,
-            backgroundColor: '#006696',
-        },
-    ];
-    $scope.chart.options = {
-        stacked:          true,
-        lineAtYearChange: true,
-        fill:             false,
-        scales:           {
-            yAxes: [{
-                id:       'y-axis-0',
-                type:     'linear',
-                display:  true,
-                position: 'left',
-            }],
-            xAxes: [{
-                id:                 'x-axis-0',
-                type:               'time',
-                barPercentage:      .3,
-                categoryPercentage: 1,
-                time:               {
-                    min:            moment().subtract(1, 'year').subtract(1, 'week'),
-                    max:            moment().add(1, 'week'),
-                    round:          'week',
-                    unitStepSize:   3,
-                    tooltipFormat:  '[vecka] W',
-                    displayFormats: {
-                        week:  'MMM YYYY',
-                        month: 'MMM',
-                    },
-                    unit: 'month',
-                },
-                labels: {
-                    show: false,
-                },
-            }],
-        },
-    };
-
     $scope.pickOrg = function($event) {
         console.log($scope);
         if (!$scope.orgPopover) {
             $scope.orgPopover = $ionicPopover.fromTemplate('<ion-popover-view>' +
             '<ion-content scroll="false">' +
             '<list>' +
-            '<a ng-repeat="org in orgs" class="item" ui-sref="^.org({id: org.orgid, org: org})" ng-click="orgPopover.hide()">{{org.ot}}</a>' +
+            '<a ng-repeat="org in orgs" class="item" ng-click="gotoOrg(org)">{{org.ot}}</a>' +
             '</list>' +
             '</ion-content>' +
             '</ion-popover-view>', {
@@ -156,34 +112,15 @@ angular.module('ifiske.controllers')
         }
         $scope.orgPopover.show($event);
     };
-});
-var originalLineDraw = Chart.controllers.bar.prototype.draw;
-Chart.helpers.extend(Chart.controllers.bar.prototype, {
-    draw: function() {
-        originalLineDraw.apply(this, arguments);
-
-        var chart = this.chart;
-        var ctx = chart.chart.ctx;
-
-        if (chart.config.options.lineAtYearChange) {
-            var xaxis = chart.scales['x-axis-0'];
-            var yaxis = chart.scales['y-axis-0'];
-
-            var xPixel = xaxis.getPixelForValue(moment().startOf('year'));
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(xPixel, yaxis.top);
-            ctx.strokeStyle = '#006696';
-            ctx.lineTo(xPixel, yaxis.bottom);
-            ctx.stroke();
-
-            ctx.textAlign = 'left';
-            ctx.fillText(moment().format('[\']YY'), xPixel + 4, yaxis.top + 10);
-            ctx.textAlign = 'right';
-            ctx.fillText(moment().subtract(1, 'year').format('[\']YY'), xPixel - 4, yaxis.top + 10);
-
-            ctx.restore();
-        }
-    },
+    $scope.gotoOrg = function(org) {
+        $scope.orgPopover.hide();
+        $stateParams.id = org.orgid;
+        $scope.org = false;
+        init();
+        /*
+        $ionicViewSwitcher.nextDirection('swap');
+        $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
+        $state.go('^.org', {org: org, id: org.orgid});
+        */
+    };
 });

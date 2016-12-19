@@ -12,7 +12,6 @@ angular.module('ifiske.controllers')
             res[e].levelname = levelnames[res[e].level];
         }
         $scope.organizations = res;
-        $scope.chartData = {};
     }, function(res) {
         console.error(res);
     });
@@ -23,8 +22,9 @@ angular.module('ifiske.controllers')
   $stateParams,
   Admin,
   $ionicLoading,
-  $ionicPopover,
-  API
+  $ionicViewSwitcher,
+  $ionicHistory,
+  $ionicPopover
 ) {
     $scope.id = $stateParams.id;
     $ionicLoading.show();
@@ -66,24 +66,13 @@ angular.module('ifiske.controllers')
         $scope.products = data;
     }
 
-    $scope.$on('$ionicView.beforeEnter', function() {
+    $scope.$on('$ionicView.beforeEnter', init);
+    function init() {
         Admin.getOrganizations().then(function(orgs) {
             $scope.orgs = Object.values(orgs);
         });
 
-        API.adm_get_stats($stateParams.id).then(function(stats) {
-            stats = stats[$stateParams.id];
-            console.log(stats);
-            $scope.chart.data = [
-                Object.values(stats.weeks),
-            ];
-            $scope.chart.labels = [];
-            for (var i in stats.weeks) {
-                $scope.chart.labels.push(moment().subtract(i, 'week'));
-            }
-        }, function(err) {
-            console.error(err);
-        });
+        $scope.chartOrganizationId = $stateParams.id;
 
         if ($scope.org && $scope.org.products) {
             console.log($scope.org.products);
@@ -98,7 +87,7 @@ angular.module('ifiske.controllers')
                 $ionicLoading.hide();
             });
         }
-    });
+    }
 
     $scope.checkLicense = function($event) {
         var code = $event.srcElement.code.value;

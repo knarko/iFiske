@@ -71,7 +71,7 @@ var paths = {
         './node_modules/moment/locale/sv.js',
         './node_modules/moment/locale/en-gb.js',
         './node_modules/moment/locale/de.js',
-        './node_modules/chart.js/dist/Chart.js',
+        './node_modules/angular-chart.js/node_modules/chart.js/dist/Chart.js',
         './node_modules/angular-chart.js/dist/angular-chart.js',
     ],
     templates:  ['src/components/**/*.html'],

@@ -1,3 +1,19 @@
+<a name="3.4.4"></a>
+# [3.4.4](https://github.com/ifiske/ifiske/compare/v3.4.3...v3.4.4) (2016-12-20)
+
+
+### Bug Fixes
+
+* **admin:** Fix size of organization name when logo exists ([74b23be](https://github.com/ifiske/ifiske/commit/74b23be))
+* **css:** Fix class name should be active not valid ([369f9d3](https://github.com/ifiske/ifiske/commit/369f9d3))
+
+
+### Features
+
+* **user:** Add link to own page at ifiske.se ([eb1dee0](https://github.com/ifiske/ifiske/commit/eb1dee0)), closes [#99](https://github.com/ifiske/ifiske/issues/99)
+
+
+
 <a name="3.4.3"></a>
 ## [3.4.3](https://github.com/ifiske/ifiske/compare/v3.4.2...v3.4.3) (2016-12-10)
 

@@ -5,7 +5,9 @@
     },
     "globals": {
         "goog": null,
-        "angular": false
+        "angular": false,
+        "moment": true,
+        "Chart": true
     },
     "rules": {
         "indent": ["error", 4],

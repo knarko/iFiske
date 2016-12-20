@@ -23,12 +23,17 @@
         <h2 translate>Email</h2>
         <p>{{user.email}}</p>
       </div>
-      <div class="item item-divider">
+      <div class="item item-divider" ng-if="numbers.length">
         <i class="icon ion-ios-telephone"></i> {{'User phone numbers' | translate}}
       </div>
       <div ng-repeat="number in numbers" class="item">
         <p>{{number.number}}</p>
       </div>
+      <div class="item item-divider">
+        <i class="icon ion-settings"></i> {{'Settings' | translate}}
+      </div>
+      <a ng-href="user.profile" class="item" translate>Profile</a>
+      <a ng-href="user.mypage" class="item" translate>My Page</a>
       <a ng-if="sessionData.token" class="item" ng-click="logout();" translate>Log out</a>
     </div>
     <div class="card">

@@ -13,6 +13,8 @@ angular.module('ifiske.models')
                 name:     'text',
                 email:    'text',
                 created:  'text',
+                mypage:   'text',
+                profile:  'text',
             },
         },
         number: {

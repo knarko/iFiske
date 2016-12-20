@@ -39,9 +39,9 @@ angular.module('ifiske.directives')
         scope: {
             chartOrganizationId: '=',
         },
-        controller: function($scope, API) {
+        controller: function($scope, Admin) {
             $scope.$watch('chartOrganizationId', function(id) {
-                API.adm_get_stats(id).then(function(stats) {
+                Admin.stats(id).then(function(stats) {
                     stats = stats[id];
                     console.log(stats);
                     if (stats && stats.weeks) {
@@ -57,6 +57,7 @@ angular.module('ifiske.directives')
                         $scope.showChart = false;
                     }
                 }, function(err) {
+                    $scope.showChart = false;
                     console.error(err);
                 });
             });

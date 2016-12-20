@@ -35,6 +35,9 @@ angular.module('ifiske.models')
             revokeProduct: function(product) {
                 return API.adm_revoke_prod(product.code, 1);
             },
+            stats: function(id) {
+                return API.adm_get_stats(id);
+            },
             getProduct: function(productID) {
                 return model.wait.then(function() {
                     var product;

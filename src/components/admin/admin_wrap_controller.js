@@ -8,8 +8,9 @@ angular.module('ifiske.controllers')
                 }
                 if (res.format === 'QR_CODE') {
                     var url = new URL(res.text);
-                    if (url.searchParams.get('e')) {
-                        return url.searchParams.get('e');
+                    var searchParams = new URLSearchParams(url.search);
+                    if (searchParams.has('e')) {
+                        return searchParams.get('e');
                     }
                 } else {
                     throw new Error('Not a QR code');

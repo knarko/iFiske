@@ -1,10 +1,20 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('germanTranslations', {
+    // 'revoked':                             'Revoked',
+    // 'Revoked':                             'Revoked',
+    // 'Revoked licenses':                    'Revoked fishing permits',
+    // 'Check license':                       'Check License Code',
+    // 'Check license':                       'Check License Code',
+    // 'Enter license code template':         'Please enter the license code as found on the fishing license',
+    // 'Counties':                            'Counties',
+    // 'Fishing areas':                       'Fishing areas',
+    // 'active':                              'Valid',
     // 'revoked':                             'Widerrufen werden',
     // 'Revoked':                             'Widerrufen werden',
     // 'Check license':                       'Überprüfen Fischerschein',
     // 'Enter license code template':         'NO TRANSLATION YET',
+
     'About the app':                       'Impressum',
     'Accept':                              'Zusage',
     'Activate account':                    'Account aktivieren',

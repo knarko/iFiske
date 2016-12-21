@@ -1,5 +1,5 @@
 angular.module('ifiske.controllers')
-.controller('UserCtrl', function($scope, User, Admin) {
+.controller('UserCtrl', function($scope, User, Admin, $state) {
     var levelnames = [
         'USER_LEVEL_0',
         'USER_LEVEL_1',
@@ -24,4 +24,8 @@ angular.module('ifiske.controllers')
             $scope.numbers = numbers;
         });
     });
+    $scope.logout = function() {
+        User.logout();
+        $state.go('app.home');
+    };
 });

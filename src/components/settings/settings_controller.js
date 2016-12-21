@@ -7,36 +7,51 @@ angular.module('ifiske.controllers')
     $ionicModal,
     Push,
     Settings,
-    Update
+    Update,
+    $translate
 ) {
+    function afterPushResetSuccess() {
+        console.log('Push reset returned');
+        $ionicPlatform.ready(function() {
+            if (window.plugins && window.plugins.toast) {
+                window.plugins.toast.hide();
+                if ($scope.push.checked) {
+                    $cordovaToast.showShortBottom(
+                        $translate.instant('Push notifications are turned on')
+                    );
+                } else {
+                    $cordovaToast.showShortBottom(
+                        $translate.instant('Push notifications are turned off')
+                    );
+                }
+            }
+        });
+    }
+
+    function afterPushResetFailure(error) {
+        console.warn(error);
+        $ionicPlatform.ready(function() {
+            if (window.plugins && window.plugins.toast) {
+                $cordovaToast.showLongBottom(
+                    $translate.instant('Could not set up push notifications')
+                );
+            }
+        });
+        $scope.push.checked = false;
+    }
+
     var blockChanges = false;
     var changedDuringBlock = false;
     function changeHandler() {
         console.log('Toggle push notifications');
-        if (!blockChanges) {
+        if (blockChanges) {
+            changedDuringBlock = true;
+        } else {
             blockChanges = true;
             $scope.push.checked = Settings.push($scope.push.checked);
-            Push.reset().then(function() {
-                console.log('Push reset returned');
-                $ionicPlatform.ready(function() {
-                    if (window.plugins && window.plugins.toast) {
-                        window.plugins.toast.hide();
-                        if ($scope.push.checked) {
-                            $cordovaToast.showShortBottom('Du kommer nu att få push-notifikationer');
-                        } else {
-                            $cordovaToast.showShortBottom('push-notifikationer är nu avstängda.');
-                        }
-                    }
-                });
-            }, function(error) {
-                console.warn(error);
-                $ionicPlatform.ready(function() {
-                    if (window.plugins && window.plugins.toast) {
-                        $cordovaToast.showLongBottom('Could not setup push notifications');
-                    }
-                });
-                $scope.push.checked = false;
-            }).finally(function() {
+            Push.reset()
+            .then(afterPushResetSuccess, afterPushResetFailure)
+            .finally(function() {
                 console.log('Unblocking changes');
                 blockChanges = false;
                 if (changedDuringBlock) {
@@ -44,8 +59,6 @@ angular.module('ifiske.controllers')
                     changeHandler();
                 }
             });
-        } else {
-            changedDuringBlock = true;
         }
     }
 

@@ -46,9 +46,9 @@ angular.module('ifiske.controllers')
     };
 
     /**
-    * register
-    * Submit handler for the registration form
-    */
+     * Submit handler for the registration form
+     * @param  {DOMObject} form the register form
+     */
     $scope.register = function(form) {
         $ionicLoading.show();
 
@@ -154,9 +154,9 @@ angular.module('ifiske.controllers')
     }
 
     /**
-    * verify
-    * Submit handler for the verification form
-    */
+     * Submit handler for the verification form
+     * @param  {DOMObject} form the verification form
+     */
     $scope.verify = function(form) {
         $ionicLoading.show();
 

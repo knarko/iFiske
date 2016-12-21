@@ -47,7 +47,8 @@ angular.module('ifiske.directives')
                 sendMessage('pauseVideo');
             });
             $scope.$watch('url', function(url) {
-                $scope.youtubeUrl = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + url + '?enablejsapi=1');
+                var fullUrl = 'https://www.youtube.com/embed/' + url + '?enablejsapi=1';
+                $scope.youtubeUrl = $sce.trustAsResourceUrl(fullUrl);
             });
         },
     };

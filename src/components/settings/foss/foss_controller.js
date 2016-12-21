@@ -6,6 +6,7 @@ angular.module('ifiske.services')
     function FossController($scope, $ionicModal, Licenses) {
         Licenses.get().then(function(data) {
             $scope.licenses = data.data.sort(function(a, b) {
+                // eslint-disable-next-line no-nested-ternary
                 return a.title < b.title ? -1 : b.title < a.title ? 1 : 0;
             });
         });
@@ -22,7 +23,6 @@ angular.module('ifiske.services')
                 };
                 modal.show();
             });
-
         };
-    }
+    },
 ]);

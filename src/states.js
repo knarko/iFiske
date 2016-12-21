@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 (function() {
     var settings = {
         config: {

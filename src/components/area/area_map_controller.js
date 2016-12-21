@@ -1,5 +1,12 @@
 angular.module('ifiske.controllers')
-.controller('AreaMapCtrl', function($scope, MapData, $ionicPlatform) {
+.controller('AreaMapCtrl',
+function(
+    $scope,
+    MapData,
+    $ionicPlatform,
+    $ionicPopup,
+    $translate
+) {
     $scope.map = {};
     function updateMap() {
         $scope.map.area = $scope.area;
@@ -32,8 +39,10 @@ angular.module('ifiske.controllers')
                         console.log('Opening navigator');
                     },
                     function(error) {
-                        // TODO: don't alert
-                        alert('Navigation failed!', error);
+                        $ionicPopup.alert({
+                            title:    $translate.instant('Error'),
+                            template: $translate.instant('Unknown error', {error: error}),
+                        });
                     });
             });
         };

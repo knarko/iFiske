@@ -61,7 +61,11 @@ angular.module('ifiske.controllers')
         };
 
         $scope.openProductInBrowser = function(id) {
-            var url = serverLocation + '/mobile/index.php?lang=' + Settings.language() + '&p=5&i=' + id;
+            var url = serverLocation +
+                '/mobile/index.php?lang=' +
+                Settings.language() +
+                '&p=5&i=' +
+                id;
             $cordovaInAppBrowser.open(url, '_system');
             if ($window.ga)
                 $window.ga.trackEvent('Purchase', 'Web', id);

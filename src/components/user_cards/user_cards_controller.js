@@ -2,7 +2,6 @@ angular.module('ifiske.controllers')
 .controller('UserCardsCtrl', function(
     $scope,
     User,
-    Product,
     PullToRefresh
 ) {
     $scope.pred = '-to';

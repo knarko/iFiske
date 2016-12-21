@@ -39,7 +39,8 @@ angular.module('ifiske.models')
             /**
             * Gets information about a product
             * @method getOne
-            * @param {Integer} productID
+            * @param {Integer} productID Product ID
+            * @return {object} Object with a single product
             */
             getOne: function(productID) {
                 return model.wait.then(function() {
@@ -60,7 +61,8 @@ angular.module('ifiske.models')
             /**
             * Gets all products from an area
             * @method getByArea
-            * @param {Integer} areaID
+            * @param {Integer} areaID area ID
+            * @return {array} Array of Products
             */
             getByArea: function(areaID) {
                 return model.wait.then(function() {

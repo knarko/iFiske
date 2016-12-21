@@ -59,7 +59,17 @@ angular.module('ifiske.models')
         },
     };
 
-    this.$get = function(DB, $q, API, Push, $ionicPlatform, $cordovaToast, sessionData, Product, $window) {
+    this.$get = function(
+        DB,
+        $q,
+        API,
+        Push,
+        $ionicPlatform,
+        $cordovaToast,
+        sessionData,
+        Product,
+        $window
+    ) {
         var p = [];
         for (var table in tables) {
             p.push(DB.initializeTable(tables[table]));

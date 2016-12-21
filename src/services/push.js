@@ -94,7 +94,7 @@ angular.module('ifiske.services')
     2. Tell API servers that we no longer want push notifications (how? we need a new API route)
     */
 
-    var handleNotification = function(notification) {
+    function handleNotification(notification) {
         var payload = notification.additionalData.payload;
         var i;
 
@@ -106,7 +106,7 @@ angular.module('ifiske.services')
         } else {
             pushHandlers.default(notification, payload);
         }
-    };
+    }
     $ionicPlatform.ready(function() {
         $rootScope.$on('cloud:push:notification', handleNotification);
         $rootScope.$on('cloud:push:register', function(data) {
@@ -114,7 +114,7 @@ angular.module('ifiske.services')
         });
     });
 
-    var startPush = function() {
+    function startPush() {
         if (Settings.push()) {
             console.log('Push: Registering for push notifications');
             return $ionicPlatform.ready().then(function() {
@@ -130,7 +130,7 @@ angular.module('ifiske.services')
         // $ionicPush returns a non-$q-promise, so we need to wrap it.
         console.log('Unregistering push tokens');
         return $q.when($ionicPush.unregister());
-    };
+    }
 
     function logout() {
         // TypeError in Ionic Cloud that we have to catch

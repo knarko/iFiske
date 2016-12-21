@@ -21,6 +21,7 @@ angular.module('ifiske.services')
     /**
      * Run a sql command
      * @param  {string} sql SQL string to run
+     * @param  {array} params parameters to insert into '?' of sql
      * @return {SQL_result}     SQL result
      */
     function runSql(sql, params) {
@@ -164,7 +165,8 @@ angular.module('ifiske.services')
                     while ((regexResult = re.exec(result.rows.item(0).sql))) {
                         oldTable[regexResult[1]] = regexResult[2];
                     }
-                    var primaryKey = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
+                    var primaryKey = result.rows.item(0).sql
+                        .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
                     if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
                         console.log(table.name + ' needs to update since the schema has changed.');
                         return clean(table.name).then(function() {

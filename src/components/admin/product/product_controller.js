@@ -1,5 +1,14 @@
 angular.module('ifiske.controllers')
-.controller('AdminProductCtrl', function($scope, $stateParams, Admin, $ionicPopup, $translate, $ionicLoading, Product) {
+.controller('AdminProductCtrl',
+function(
+    $scope,
+    $stateParams,
+    Admin,
+    $ionicPopup,
+    $translate,
+    $ionicLoading,
+    Product
+) {
     console.log('stuff stuff', $stateParams);
     function init(force) {
         if ($stateParams.code) {

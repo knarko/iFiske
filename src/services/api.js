@@ -5,10 +5,11 @@ angular.module('ifiske.services')
         var base_url = serverLocation + '/api/v2/api.php';
 
         /**
-        * # api_call #
-        * handles http requests
-        * returns a $http object for the requested api call
-        */
+         * internal function for making a call to the ifiske API
+         * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
+         * @param  {boolean} cache  Determines wether the request should hit the cache or not
+         * @return {promise}        $http promise
+         */
         function api_call(params, cache) {
             return $q(function(fulfill, reject) {
                 $http({
@@ -43,9 +44,12 @@ angular.module('ifiske.services')
         }
 
         /**
-        * # session_api_call #
-        * wrapper for api_call - inserts the session token into params
-        */
+         * wrapper for api_call - inserts the session token into params
+         * takes the same arguments as api_call
+         * @param  {object} params Same as api_call
+         * @param  {boolean} cache  Same as api_call
+         * @return {promise}       Same as api_call
+         */
         function session_api_call(params, cache) {
             var session = sessionData.token;
             return api_call(angular.extend(params, {s: session}), cache);

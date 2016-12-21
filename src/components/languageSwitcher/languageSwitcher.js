@@ -35,10 +35,20 @@ angular.module('ifiske.controllers')
     };
     var languages = Object.keys(Settings.availableLanguages());
     var i = 0;
-    $scope.viewTitle = $translate.instant('Change language', null, null, languages[i++ % languages.length]);
+    $scope.viewTitle = $translate.instant(
+        'Change language',
+        null,
+        null,
+        languages[i++ % languages.length]
+    );
     var interval = $interval(function() {
         console.log(i);
-        $scope.viewTitle = $translate.instant('Change language', null, null, languages[i++ % languages.length]);
+        $scope.viewTitle = $translate.instant(
+            'Change language',
+            null,
+            null,
+            languages[i++ % languages.length]
+        );
         console.log($scope.viewTitle, i, languages[i % languages.length]);
     }, 3000);
 

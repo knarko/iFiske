@@ -15,10 +15,12 @@ Chart.helpers.extend(Chart.controllers.bar.prototype, {
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(xPixel, yaxis.top);
-            ctx.strokeStyle = '#006696';
+            ctx.strokeStyle = '#669600';
             ctx.lineTo(xPixel, yaxis.bottom);
             ctx.stroke();
 
+            ctx.fillStyle = '#669600';
+            ctx.font = 'normal 12px "Helvetica Neue", Helvetica, Arial, sans-serif';
             ctx.textAlign = 'left';
             ctx.fillText(moment().format('[\']YY'), xPixel + 4, yaxis.top + 10);
             ctx.textAlign = 'right';

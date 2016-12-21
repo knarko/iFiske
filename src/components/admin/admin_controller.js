@@ -22,11 +22,8 @@ angular.module('ifiske.controllers')
   $stateParams,
   Admin,
   $ionicLoading,
-  $ionicViewSwitcher,
-  $ionicHistory,
   $ionicPopover
 ) {
-    $scope.id = $stateParams.id;
     $ionicLoading.show();
 
     $scope.org = $stateParams.org;
@@ -55,31 +52,30 @@ angular.module('ifiske.controllers')
             },
         };
         for (var i = 0; i < data.length; ++i) {
-            if (!$scope.licenseTypes[data[i].validity]) {
-                $scope.licenseTypes[data[i].validity] = {
-                    items: [],
-                    name:  data[i].validity[0].toUpperCase() + data[i].validity.substr(1) + ' licenses',
-                };
-            }
             $scope.licenseTypes[data[i].validity].items.push(data[i]);
         }
         $scope.products = data;
     }
 
-    $scope.$on('$ionicView.beforeEnter', init);
-    function init() {
+    $scope.$on('$ionicView.beforeEnter', function() {
+        $scope.org = false;
+        init();
+    });
+    function init(id) {
+        id = id || $stateParams.id;
+        console.log('initing');
         Admin.getOrganizations().then(function(orgs) {
             $scope.orgs = Object.values(orgs);
         });
 
-        $scope.chartOrganizationId = $stateParams.id;
+        $scope.chartOrganizationId = id;
 
         if ($scope.org && $scope.org.products) {
             console.log($scope.org.products);
             setValid($scope.org.products);
             $ionicLoading.hide();
         } else {
-            Admin.getOrganization($stateParams.id).then(function(org) {
+            Admin.getOrganization(id).then(function(org) {
                 $scope.org = org;
                 console.log($scope.org, $scope.org.products);
                 setValid(org.products);
@@ -114,9 +110,8 @@ angular.module('ifiske.controllers')
     };
     $scope.gotoOrg = function(org) {
         $scope.orgPopover.hide();
-        $stateParams.id = org.orgid;
         $scope.org = false;
-        init();
+        init(org.orgid);
         /*
         $ionicViewSwitcher.nextDirection('swap');
         $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;

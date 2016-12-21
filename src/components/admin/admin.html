@@ -19,14 +19,14 @@
 
     <div class="padding">
 
-<admin-chart chart-organization-id="chartOrganizationId"></admin-chart>
+      <admin-chart chart-organization-id="chartOrganizationId"></admin-chart>
 
       <h3 translate>Check code</h3>
 
 
       <hr/>
       <form class="item item-input input-button" ng-submit="checkLicense($event, this)">
-        <input type="tel" name="code" placeholder="{{'Check license' | translate}}">
+        <input type="tel" name="code" placeholder="{{'Check license' | translate}}" class="license-input">
         <button class="button button-balanced" type="submit">
           Check
         </button>

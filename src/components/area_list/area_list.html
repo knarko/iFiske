@@ -12,7 +12,7 @@
       <div style="height: 43px;"></div>
       <div class="list">
         <div class="item item-icon-left item-full-width" collection-repeat="area in areas | filter:search" item-height="area.org === area.t ? '54px' : '74px'" ui-sref="app.area.info({id: area.ID, area:area})">
-          <i class="icon ion-card" ng-class="{selling: area.wsc}"></i>
+          <i class="icon icon-license" ng-class="{selling: area.wsc}"></i>
           <h2>{{area.org}}</h2>
           <p>{{area.t === area.org ? '': area.t}}</p>
         </div>

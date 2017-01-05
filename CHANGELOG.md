@@ -1,3 +1,29 @@
+<a name="3.4.5"></a>
+# [3.4.5](https://github.com/ifiske/ifiske/compare/v3.4.4...v3.4.5) (2017-01-05)
+
+
+### Bug Fixes
+
+* **admin:** Fix scanning QR codes on safari ([9e8896a](https://github.com/ifiske/ifiske/commit/9e8896a))
+* **admin:** Increase code input field font size ([cd5b475](https://github.com/ifiske/ifiske/commit/cd5b475)), closes [#113](https://github.com/ifiske/ifiske/issues/113)
+* **admin:** Increase distance between button/heading and logo ([21b9218](https://github.com/ifiske/ifiske/commit/21b9218)), closes [#112](https://github.com/ifiske/ifiske/issues/112)
+* **admin:** Load the correct area even after navigating back after popover change ([c3f06d2](https://github.com/ifiske/ifiske/commit/c3f06d2))
+* **admin_chart:** Use the green color for year line and year numbers on the graph ([07e77bf](https://github.com/ifiske/ifiske/commit/07e77bf)), closes [#114](https://github.com/ifiske/ifiske/issues/114)
+* **color:** Update template colours to match new colours ([477a3fe](https://github.com/ifiske/ifiske/commit/477a3fe))
+* **home:** Increase size of logo in header ([12f69e2](https://github.com/ifiske/ifiske/commit/12f69e2))
+* Change custom icon naming and add a better fishing license icon ([b1440f2](https://github.com/ifiske/ifiske/commit/b1440f2)), closes [#111](https://github.com/ifiske/ifiske/issues/111)
+* Change logotype to match new assets ([8d48dd0](https://github.com/ifiske/ifiske/commit/8d48dd0)), closes [#115](https://github.com/ifiske/ifiske/issues/115)
+* **translations:** add missing swedish translations ([7b8cbad](https://github.com/ifiske/ifiske/commit/7b8cbad)), closes [#109](https://github.com/ifiske/ifiske/issues/109)
+* **user:** Fix links ([be08971](https://github.com/ifiske/ifiske/commit/be08971))
+* **user:** Go back to home screen after logging out ([5953130](https://github.com/ifiske/ifiske/commit/5953130))
+
+
+### Features
+
+* **colors:** Update color scheme to match new version of website ([6a28258](https://github.com/ifiske/ifiske/commit/6a28258)), closes [#110](https://github.com/ifiske/ifiske/issues/110)
+
+
+
 <a name="3.4.4"></a>
 # [3.4.4](https://github.com/ifiske/ifiske/compare/v3.4.3...v3.4.4) (2016-12-20)
 

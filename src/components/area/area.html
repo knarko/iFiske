@@ -2,7 +2,7 @@
     <hip-tabs>
         <hip-tab name="{{'Information' | translate}}" view-name="app.area.info" icon="ion-information-circled" index="0"></hip-tab>
         <hip-tab name="{{(area.ptab == 'Fiskekort' ? '' : area.ptab) || 'Fishing License' | translate}}" view-name="app.area.cards" icon="ion-card" index="1"></hip-tab>
-        <hip-tab ng-if="fishes.length" name="{{'Species of fish' | translate}}" view-name="app.area.fish" icon="icon-icon_fish" index="2"></hip-tab>
+        <hip-tab ng-if="fishes.length" name="{{'Species of fish' | translate}}" view-name="app.area.fish" icon="icon-fish" index="2"></hip-tab>
         <hip-tab name="{{'Map' | translate}}" view-name="app.area.map" icon="ion-map" index="3"></hip-tab>
     </hip-tabs>
 </ion-view>

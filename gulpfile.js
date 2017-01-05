@@ -26,6 +26,7 @@ var paths = {
     fonts:  [
         'lib/ionic/release/fonts/*.{woff,otf,ttf}',
         'lib/font-awesome/fonts/*.{woff,otf,ttf}',
+        'src/scss/fonts/ifiske.ttf',
     ],
     images: [
         './lib/Leaflet.awesome-markers/dist/images/*',

@@ -46,8 +46,12 @@ angular.module('ifiske', [
         }
 
         if ($window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            $window.StatusBar.styleDefault();
+            // cordova-plugin-statusbar required
+            $window.StatusBar.styleLightContent();
+            if ($ionicPlatform.is('Android')) {
+                // Color slightly darker than our navigation bar
+                $window.StatusBar.backgroundColorByHexString("#001f2d");
+            }
         }
 
         ImgCache.$init();

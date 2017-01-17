@@ -1,6 +1,14 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('swedishTranslations', {
+    'Unknown error':                     'Ett oväntat fel uppstod. Var vänlig rapportera följande till app@ifiske.se: {{error}}',
+    'Push notifications are turned off': 'Push-notifikationer avaktiverat',
+    'Push notifications are turned on':  'Push-notifikationer aktiverat',
+    'Check code':                        'Kontrollera fiskekortskod',
+    'Check':                             'Kontrollera',
+    'Open Control panel':                'Öppna kontrollpanelen',
+    'Are you sure?':                     'Är du säker?',
+    'This will revoke the license':      'Fiskekortet kommer makuleras',
 
     'About the app':                       'Om appen',
     'Accept':                              'Acceptera',
@@ -63,7 +71,7 @@ angular.module('ifiske.translations')
     'iFiske - Easier Fishing':             'iFiske - Enklare Fiskekort',
     'in':                                  'om',
     'Inactive licenses':                   'Ej ännu aktiva fiskekort',
-    'inactive':                            'Inaktiva',
+    'inactive':                            'Inaktivt',
     'Information':                         'Information',
     'Invalid reset code':                  'Ogiltig återställningskod',
     'Invalid username or password':        'Ogiltigt användarnamn eller lösenord',

@@ -28,6 +28,7 @@ angular.module('ifiske.translations')
     'Change language':                     'Byt språk',
     'Change user info':                    'För att ändra på din användarinformation hänvisas till www.ifiske.se - Där kan du också koppla fler mobilnummer till ditt konto, mm.',
     'Check license':                       'Kontrollera fiskekort',
+    'Check license placeholder':           't ex 12345678',
     'Code':                                'Kontrollnummer',
     'Contact Information':                 'Kontaktinformation',
     'Contact':                             'Kontakta oss',

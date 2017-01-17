@@ -15,6 +15,7 @@ angular.module('ifiske.translations')
     'Revoked':                             'Widerrufen werden',
     'Check license':                       'Überprüfen Fischerschein',
     'Enter license code template':         'NO TRANSLATION YET',
+    'Check license placeholder':           'z.B. 123455678',
     */
 
     'About the app':                       'Impressum',

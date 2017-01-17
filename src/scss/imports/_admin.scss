@@ -116,4 +116,13 @@ img.revoked {
 .license-input.license-input {
     font-weight: bold;
     font-size: 1.2em;
+
+    &::placeholder {
+        font-weight: normal;
+        font-size: .9em;
+    }
+}
+
+input.license-input:placeholder-shown {
+    text-align: center;
 }

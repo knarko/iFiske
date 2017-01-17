@@ -25,9 +25,9 @@
 
 
       <hr/>
-      <form class="item item-input input-button" ng-submit="checkLicense($event, this)">
-        <input type="tel" name="code" placeholder="{{'Check license' | translate}}" class="license-input">
-        <button class="button button-balanced" type="submit">
+      <form class="item item-input input-button" ng-submit="checkLicense($event, this)" name="checkLicenseForm">
+        <input type="tel" name="code" ng-model="_notused" placeholder="{{'Check license placeholder' | translate}}" class="license-input" ng-pattern="/\d{8}/" required>
+        <button class="button button-balanced" type="submit" ng-disabled="checkLicenseForm.$invalid" translate>
           Check
         </button>
       </form>

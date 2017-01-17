@@ -4,6 +4,7 @@ angular.module('ifiske.translations')
     'Unknown error':                     'There was an unexpected error. Please report the following to app@ifiske.se: {{error}}',
     'Push notifications are turned off': 'Push notifications are turned off',
     'Push notifications are turned on':  'Push notifications are turned on',
+    'Check license placeholder':         'e.g. 12345678',
     /* Add new translations to the top if they do not exist in other languages yet. */
 
     'About the app':                       'About',

@@ -1,3 +1,19 @@
+<a name="3.5.0rc0"></a>
+# [3.5.0rc0](https://github.com/ifiske/ifiske/compare/v3.4.5...v3.5.0rc0) (2017-01-17)
+
+
+### Bug Fixes
+
+* **admin:** Update code checking form ([f6b6fb9](https://github.com/ifiske/ifiske/commit/f6b6fb9)), closes [#124](https://github.com/ifiske/ifiske/issues/124)
+* **fish:** Update design of fish prevalence on areas ([44dbe51](https://github.com/ifiske/ifiske/commit/44dbe51)), closes [#123](https://github.com/ifiske/ifiske/issues/123)
+* **icons:** Use the new fishing license icons everywhere ([6423cdb](https://github.com/ifiske/ifiske/commit/6423cdb)), closes [#111](https://github.com/ifiske/ifiske/issues/111)
+* **license_detail:** Stop caching license view since the content might change ([842ec0b](https://github.com/ifiske/ifiske/commit/842ec0b)), closes [#116](https://github.com/ifiske/ifiske/issues/116)
+* **map:** Only center map using geolocation if "centerOnMe" is passed to the directive ([209141f](https://github.com/ifiske/ifiske/commit/209141f)), closes [#122](https://github.com/ifiske/ifiske/issues/122)
+* **statusbar:** Set statusbar colors to light text and dark background ([89e277d](https://github.com/ifiske/ifiske/commit/89e277d)), closes [#117](https://github.com/ifiske/ifiske/issues/117)
+* **translations:** Add some missing swedish translations ([7f2d554](https://github.com/ifiske/ifiske/commit/7f2d554)), closes [#120](https://github.com/ifiske/ifiske/issues/120)
+
+
+
 <a name="3.4.5"></a>
 # [3.4.5](https://github.com/ifiske/ifiske/compare/v3.4.4...v3.4.5) (2017-01-05)
 

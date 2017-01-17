@@ -258,6 +258,27 @@ function changelog() {
     .pipe(gulp.dest('./'));
 }
 
+function setIosBuild(version) {
+    var xmlTransformer = require('gulp-xml-transformer');
+    return xmlTransformer([{
+        path:  '.',
+        attrs: {
+            'ios-CFBundleVersion': function(val) {
+                if (version) {
+                    val = version;
+                }
+                return val.replace(/^(\d+\.\d+\.\d+).(\d+)$/, function(_, p1, p2) {
+                    return p1 + '.' + (Number(p2) + 1);
+                });
+            },
+        },
+    }]);
+}
+gulp.task('updateBuildVersion', [], function() {
+    gulp.src('./config.xml')
+    .pipe(setIosBuild())
+    .pipe(gulp.dest('./'));
+});
 gulp.task('release', [], function() {
     var conventionalRecommendedBump = require('conventional-recommended-bump');
     conventionalRecommendedBump({

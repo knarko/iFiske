@@ -10,6 +10,7 @@ angular.module('ifiske.directives')
         },
         controller: function(
             $scope,
+            $timeout,
             localStorage,
             $translate,
             MapData,
@@ -99,9 +100,6 @@ angular.module('ifiske.directives')
                     },
                 },
             });
-            setTimeout(function() {
-                lc.start();
-            }, 0);
 
             function createscope(a) {
                 return function() {
@@ -202,6 +200,9 @@ angular.module('ifiske.directives')
             $scope.$watch('mapData', function(data) {
                 if (data.centerOnMe) {
                     $scope.map.center.autoDiscover = true;
+                    $timeout(function() {
+                        lc.start();
+                    }, 0);
                 }
                 if (data.areas) {
                     createMarkers(data.areas);

@@ -20,6 +20,13 @@
 .fishcard {
     margin: 0 !important;
     border-radius: 0;
+    border-left: 0;
+    border-top: 0;
+    padding: 10px;
+
+    &:nth-child(2n) {
+        border-right-color: transparent;
+    }
 
     .item-title {
         padding-bottom: 0;
@@ -28,29 +35,43 @@
 }
 
 .lvl {
-    background-image: url('../img/levels.gif');
-    height: 16px;
-    width: 26px;
-    display: inline-block;
-    background-size: 27px;
+    display: block;
+    height: 10px;
+    border: 1px solid $dark;
+    padding: 2px;
+    padding-bottom: 1px;
+    width: 100%;
+    margin: 0 auto;
 
-    &.lvl-1 {
-        background-position: 0 0;
+    &::before {
+        content: '';
+        display: block;
+        height: 4px;
+        padding: 0;
     }
 
-    &.lvl-2 {
-        background-position: 0 -17px;
+    &.lvl-1::before {
+        width: 20%;
+        background: $assertive;
     }
 
-    &.lvl-3 {
-        background-position: 0 -33px;
+    &.lvl-2::before {
+        width: 40%;
+        background: $energized;
     }
 
-    &.lvl-4 {
-        background-position: 0 -50px;
+    &.lvl-3::before {
+        width: 60%;
+        background: $balanced;
     }
 
-    &.lvl-5 {
-        background-position: 0 -66px;
+    &.lvl-4::before {
+        width: 80%;
+        background: $balanced;
+    }
+
+    &.lvl-5::before {
+        width: 100%;
+        background: $balanced;
     }
 }

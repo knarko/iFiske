@@ -1,0 +1,67 @@
+stages:
+  - build
+  - unit_tests
+  - test_flight
+
+variables:
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+
+cache:
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
+    - lib/
+
+before_script:
+  - gem install bundler --user-install
+  - bundle install
+
+#build_android:
+#  stage: build
+#  tags:
+#    - android
+#    - fastlane
+#  script:
+#    - npm update
+#    - bower update
+#    - npm run package.android
+
+build_ios:
+  stage: build
+  tags:
+    - ios
+  script:
+    - npm update
+    - bower update
+    - bash set_bundle_version.sh
+    - npm run package.ios
+
+# unit_tests:
+#   dependencies: []
+#   stage: unit_tests
+#   artifacts:
+#     paths:
+#       - fastlane/screenshots
+#       - fastlane/logs
+#   script:
+#     - fastlane tests
+#   tags:
+#     - ios
+
+test_flight_build:
+  dependencies: []
+  stage: test_flight
+  artifacts:
+    paths:
+      - fastlane/screenshots
+      - fastlane/logs
+  script:
+    - bash download.sh
+    - fastlane pilot upload -u maistho@gmail.com
+  tags:
+    - ios
+  only:
+     - /^release-.*$/
+     - master
+     - gitlab-ci

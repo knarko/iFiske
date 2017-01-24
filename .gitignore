@@ -69,3 +69,4 @@ www/
 *.ipa
 platforms/
 plugins/
+res/

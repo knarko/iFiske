@@ -1,11 +1,7 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('englishTranslations', {
-    'Unknown error':                     'There was an unexpected error. Please report the following to app@ifiske.se: {{error}}',
-    'Push notifications are turned off': 'Push notifications are turned off',
-    'Push notifications are turned on':  'Push notifications are turned on',
-    'Check license placeholder':         'e.g. 12345678',
-    /* Add new translations to the top if they do not exist in other languages yet. */
+    /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',
     'Accept':                              'Accept',
@@ -32,6 +28,7 @@ angular.module('ifiske.translations')
     'Catch report':                        'Catch Report',
     'Change language':                     'Change language',
     'Change user info':                    'To change your user information, please go to www.ifiske.se - There you can also add more phone numbers to your account, etc.',
+    'Check license placeholder':           'e.g. 12345678',
     'Check license':                       'Check License Code',
     'Code':                                'Code',
     'Contact Information':                 'Contact',
@@ -120,6 +117,8 @@ angular.module('ifiske.translations')
     'Purchase license':                    'Buy fishing permit',
     'Purchase via text':                   'SMS-purchase',
     'Purchase via web':                    'Web-purchase',
+    'Push notifications are turned off':   'Push notifications are turned off',
+    'Push notifications are turned on':    'Push notifications are turned on',
     'Push notifications':                  'Push notifications',
     'Recovery code will soon be sent':     'Your recovery code will soon be sent{{methods.length ? " via" : "."}} {{methods.join(" and ")}} {{mailed ? "<br/>If you have issues finding your email, try checking your spam folder." : ""}}',
     'Register':                            'Register',
@@ -162,6 +161,8 @@ angular.module('ifiske.translations')
     'Turn notifications on':               'Turn notifications on',
     'Type name':                           'Enter your name',
     'Unhandled API error':                 'Unexpected API error, please try again later',
+    'Unknown error':                       'There was an unexpected error. Please report the following to app@ifiske.se: {{error}}',
+    'Unrevoke':                            'Unrevoke',
     'Update stored data':                  'Update stored data',
     'Use existing registration code':      'Use existing code',
     'User already has reset code':         'If you already have a recovery code, you can skip this step.',

@@ -13,9 +13,15 @@ angular.module('ifiske.translations')
     'active':                              'Valid',
     'revoked':                             'Widerrufen werden',
     'Revoked':                             'Widerrufen werden',
+    'Unrevoke':                            'Unrevoke',
     'Check license':                       'Überprüfen Fischerschein',
     'Enter license code template':         'NO TRANSLATION YET',
     'Check license placeholder':           'z.B. 123455678',
+    'Unknown error':                     'There was an unexpected error. Please report the following to app@ifiske.se: {{error}}',
+    'Push notifications are turned off': 'Push notifications are turned off',
+    'Push notifications are turned on':  'Push notifications are turned on',
+    'Check license placeholder':         'e.g. 12345678',
+    'Unrevoke':                          'Unrevoke',
     */
 
     'About the app':                       'Impressum',

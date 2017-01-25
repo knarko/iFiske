@@ -111,11 +111,8 @@ angular.module('ifiske.controllers')
     $scope.gotoOrg = function(org) {
         $scope.orgPopover.hide();
         $scope.org = false;
+        $state.transitionTo('app.admin.org', {id: org.orgid, org: org}, {notify: false});
+
         init(org.orgid);
-        /*
-        $ionicViewSwitcher.nextDirection('swap');
-        $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
-        $state.go('^.org', {org: org, id: org.orgid});
-        */
     };
 });

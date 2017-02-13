@@ -25,20 +25,20 @@ angular.module('ifiske.directives')
             var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
             var apikey = localStorage.get('mapbox_api');
 
-            var map = $window.L.map($element.find('div')[0]).setView([51.505, -0.09], 13);
+            var map = $window.L.map($element.find('div')[0]).setView([62.0, 15.0], 4);
             $window.map = map;
             var baseLayers = {
                 outdoors: $window.L.tileLayer(mapboxUrl, {
-                    attribution: 'test',
-                    maxZoom:     18,
-                    maptype:     'mapbox.outdoors',
-                    apikey:      apikey,
+                    maxZoom:        18,
+                    maptype:        'mapbox.outdoors',
+                    apikey:         apikey,
+                    updateWhenIdle: false,
                 }),
                 satellite: $window.L.tileLayer(mapboxUrl, {
-                    attribution: 'test',
-                    maxZoom:     16,
-                    maptype:     'mapbox.satellite',
-                    apikey:      apikey,
+                    maxZoom:        16,
+                    maptype:        'mapbox.satellite',
+                    apikey:         apikey,
+                    updateWhenIdle: false,
                 }),
             };
             map.addLayer(baseLayers.outdoors);
@@ -84,14 +84,6 @@ angular.module('ifiske.directives')
 
             var areaMarker = $window.L.layerGroup();
             map.addLayer(areaMarker);
-            /*
-            // TODO: add default map location
-                    center: {
-                        lat:  62.0,
-                        lng:  15.0,
-                        zoom: 9,
-                    },
-                    */
 
             map.on('popupopen', function(e) {
                 $scope.$emit('leaflet.popupopen', e);

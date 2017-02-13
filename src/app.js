@@ -69,13 +69,23 @@ angular.module('ifiske', [
         }
         if ($window.ga) {
             // $window.ga.debugMode(); // enable when debugging
-            $window.ga.startTrackerWithId('UA-7371664-4');
+            $window.ga.startTrackerWithId('UA-7371664-4', 30, function(success) {
+                console.log(success);
+            }, function(err) {
+                console.log(err);
+            });
             $window.ga.enableUncaughtExceptionReporting(true);
 
             $rootScope.$on('$stateChangeSuccess',
             function(_event, toState, toParams, _fromState, _fromParams) {
                 console.log(toState, toParams);
-                $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')');
+                $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')',
+                null, null,
+                function(success) {
+                    console.log(success);
+                }, function(err) {
+                    console.warn(err);
+                });
             });
         }
     });

@@ -1,21 +1,21 @@
-.angular-leaflet-map {
+.map-directive {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
-
 }
 
-.angular-leaflet-map .myposition {
+.map-directive .myposition {
     font-size: 3em;
     color: $calm;
 }
 
-.angular-leaflet-map .myposition:before {
+.map-directive .myposition:before {
     text-shadow: -1px -1px 0 $positive, 1px -1px 0 $positive, -1px 1px 0 $positive, 1px 1px 0 $positive;
 }
 
 button.button-float {
+    z-index: 5000;
     border-radius: 50%;
     position: absolute;
     right: 24px;
@@ -37,4 +37,19 @@ button.button-float {
 .button-float.ng-hide {
     transform: scale(.1) rotate(90deg);
     transition: all .1s ease-out;
+}
+
+
+.spin::before {
+    animation: spin 1s infinite linear;
+}
+
+@keyframes "spin" {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
 }

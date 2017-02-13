@@ -13,7 +13,6 @@ angular.module('ifiske', [
     'ngCordovaSms',
     'ngMessages',
     'ImgCache',
-    'ui-leaflet',
     'pascalprecht.translate',
     'ifiske.translations',
     'chart.js',

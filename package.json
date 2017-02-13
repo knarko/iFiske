@@ -55,7 +55,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.1.1",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.1",
+    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
@@ -94,7 +94,7 @@
     "ios"
   ],
   "dependencies": {
-    "@ionic/cloud": "~0.14.1",
+    "@ionic/cloud": "~0.15.1",
     "angular-chart.js": "^1.1.1",
     "chart.js": "2.3.x",
     "moment": "^2.17.1"

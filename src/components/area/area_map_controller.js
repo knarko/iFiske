@@ -52,14 +52,18 @@ function(
             enabled: enabledEvents,
         };
 
-        $scope.$on('leafletDirectiveMarker.popupopen', function(_event, args) {
+        $scope.$on('leaflet.popupopen', function(_event, args) {
                 // show navtobutton
-            $scope.navto = args.model;
+            console.log('beeop', args.popup.getLatLng());
+
+            $scope.navto = args.popup.getLatLng();
+            $scope.$digest();
         });
 
-        $scope.$on('leafletDirectiveMarker.popupclose', function() {
+        $scope.$on('leaflet.popupclose', function() {
                 // hide navtobutton
             $scope.navto = null;
+            $scope.$digest();
         });
     });
 });

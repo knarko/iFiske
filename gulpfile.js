@@ -25,7 +25,6 @@ var paths = {
     sass:   ['./src/scss/**/*.scss'],
     fonts:  [
         'lib/ionic/release/fonts/*.{woff,otf,ttf}',
-        'lib/font-awesome/fonts/*.{woff,otf,ttf}',
         'src/scss/fonts/ifiske.ttf',
     ],
     images: [
@@ -63,10 +62,10 @@ var paths = {
         './lib/angular-translate-handler-log/angular-translate-handler-log.js',
 
         './lib/leaflet/dist/leaflet-src.js',
-        './lib/ui-leaflet/dist/ui-leaflet.js',
         './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
         './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
         './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
+        './lib/leaflet-popup-angular/src/L.Popup.Angular.js',
 
         './node_modules/moment/moment.js',
         './node_modules/moment/locale/sv.js',

@@ -34,6 +34,7 @@ angular.module('ifiske.translations')
     'Code':                                'Kontrollnummer',
     'Contact Information':                 'Kontaktinformation',
     'Contact':                             'Kontakta oss',
+    'Could not set up push notifications': 'Kunde inte aktivera push-notifikationer',
     'Counties':                            'Län',
     'County':                              'Län',
     'Create new account':                  'Skapa nytt konto',

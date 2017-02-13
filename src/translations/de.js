@@ -22,6 +22,7 @@ angular.module('ifiske.translations')
     'Push notifications are turned on':  'Push notifications are turned on',
     'Check license placeholder':         'e.g. 12345678',
     'Unrevoke':                          'Unrevoke',
+    'Could not set up push notifications': 'Could not set up push notifications',
     */
 
     'About the app':                       'Impressum',

@@ -1,6 +1,7 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('englishTranslations', {
+
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',
@@ -33,6 +34,7 @@ angular.module('ifiske.translations')
     'Code':                                'Code',
     'Contact Information':                 'Contact',
     'Contact':                             'Contact Us',
+    'Could not set up push notifications': 'Could not set up push notifications',
     'Counties':                            'Counties',
     'County':                              'County',
     'Create new account':                  'Create new account',

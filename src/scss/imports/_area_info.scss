@@ -17,8 +17,9 @@
 
 .slider-image {
     background-size: cover;
-    padding-top: 41.67%; // 250/600
+    padding-top: 250px / 600px * 100%; // 250/600
     position: relative;
+
     img {
         position: absolute;
         top: 0;
@@ -44,6 +45,7 @@
 .swiper-wrapper {
     position: relative;
 }
+
 .item .area-title {
     white-space: normal;
 }

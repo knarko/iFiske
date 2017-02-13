@@ -70,7 +70,6 @@ build ios:
 #     - ios
 
 test flight build:
-  dependencies: []
   stage: deploy
   artifacts:
     paths:
@@ -85,7 +84,6 @@ test flight build:
 
 
 prod build:
-  dependencies: []
   stage: deploy
   artifacts:
     paths:

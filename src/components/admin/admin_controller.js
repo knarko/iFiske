@@ -52,7 +52,9 @@ angular.module('ifiske.controllers')
             },
         };
         for (var i = 0; i < data.length; ++i) {
-            $scope.licenseTypes[data[i].validity].items.push(data[i]);
+            if ($scope.licenseTypes[data[i].validity] &&
+                $scope.licenseTypes[data[i].validity].items)
+                $scope.licenseTypes[data[i].validity].items.push(data[i]);
         }
         $scope.products = data;
     }

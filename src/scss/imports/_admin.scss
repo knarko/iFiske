@@ -1,3 +1,11 @@
+[state="app.admin.main"][nav-view="entering"]+
+[state="app.admin.org"][nav-view="leaving"] {
+    /*
+     * Hacky solution to navigation between app.admin.org and app.admin.main
+     * But if it's a hacky solution that works, it's a good solution :)
+     */
+    opacity: 0 !important;
+}
 $gradient: repeating-linear-gradient(
     45deg,
     transparent,

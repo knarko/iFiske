@@ -22,6 +22,7 @@ angular.module('ifiske.controllers')
   $stateParams,
   Admin,
   $ionicLoading,
+  $ionicHistory,
   $ionicPopover
 ) {
     $ionicLoading.show();
@@ -113,7 +114,8 @@ angular.module('ifiske.controllers')
     $scope.gotoOrg = function(org) {
         $scope.orgPopover.hide();
         $scope.org = false;
-        $state.transitionTo('app.admin.org', {id: org.orgid, org: org}, {notify: false});
+        $ionicHistory.viewHistory().currentView = $ionicHistory.viewHistory().backView;
+        $state.go('app.admin.org', {id: org.orgid, org: org}, {notify: false, location: 'replace'});
 
         init(org.orgid);
     };

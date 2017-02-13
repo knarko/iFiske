@@ -24,6 +24,7 @@ build_android:
     - npm update
     - bower prune
     - bower update
+    - npm run ci.login
   allow_failure: true
   tags:
     - android
@@ -39,6 +40,7 @@ build_ios:
     - npm update
     - bower prune
     - bower update
+    - npm run ci.login
   script:
     - bash set_bundle_version.sh
     - npm run package.ios

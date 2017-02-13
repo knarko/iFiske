@@ -29,7 +29,8 @@
     "gulp:serve:before": "gulp serve:before",
     "gulp:serve:after": "gulp serve:after",
     "serve:before": "gulp:serve:before",
-    "serve:after": "gulp:serve:after"
+    "serve:after": "gulp:serve:after",
+    "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD"
   },
   "repository": {
     "type": "git",

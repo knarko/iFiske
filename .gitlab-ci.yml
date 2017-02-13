@@ -17,7 +17,7 @@ before_script:
   - gem install bundler --user-install
   - bundle install
 
-build_android:
+build android:
   stage: build
   before_script:
     - npm prune
@@ -26,15 +26,24 @@ build_android:
     - bower update
     - npm run ci.login
   allow_failure: true
+  artifacts:
+    paths:
+      - "*.apk"
   tags:
     - android
   script:
-    - npm run package.android
+    - npm run package.android 2>&1 | tee package_output.log
+    - bash get_build_id.sh
+    - cat packaged_number.txt
+    - bash download.sh
 
-build_ios:
+build ios:
   stage: build
   tags:
     - ios
+  artifacts:
+    paths:
+      - "*.ipa"
   before_script:
     - npm prune
     - npm update
@@ -43,7 +52,10 @@ build_ios:
     - npm run ci.login
   script:
     - bash set_bundle_version.sh
-    - npm run package.ios
+    - npm run package.ios 2>&1 | tee package_output.log
+    - bash get_build_id.sh
+    - cat packaged_number.txt
+    - bash download.sh
 
 # unit_tests:
 #   dependencies: []
@@ -57,7 +69,7 @@ build_ios:
 #   tags:
 #     - ios
 
-test_flight_build:
+test flight build:
   dependencies: []
   stage: deploy
   artifacts:
@@ -65,7 +77,6 @@ test_flight_build:
       - fastlane/screenshots
       - fastlane/logs
   script:
-    - bash download.sh
     - fastlane pilot upload -u maistho@gmail.com
   tags:
     - ios
@@ -73,7 +84,7 @@ test_flight_build:
      - master
 
 
-prod_build:
+prod build:
   dependencies: []
   stage: deploy
   artifacts:
@@ -81,7 +92,6 @@ prod_build:
       - fastlane/screenshots
       - fastlane/logs
   script:
-    - bash download.sh
     - fastlane pilot upload -u maistho@gmail.com
   tags:
     - ios

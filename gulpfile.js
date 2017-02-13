@@ -214,7 +214,6 @@ gulp.task('foss', function(done) {
     .pipe(sortJSON({
         space: 1,
         cmp:   function(a, b) {
-            console.log(a.key, b.key);
             return a.key === 'title' ? -1 : 1;
         },
         replacer: function(key, value) {

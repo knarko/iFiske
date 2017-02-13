@@ -1,7 +1,7 @@
 stages:
   - build
   - unit_tests
-  - test_flight
+  - deploy
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -17,15 +17,12 @@ before_script:
   - gem install bundler --user-install
   - bundle install
 
-#build_android:
-#  stage: build
-#  tags:
-#    - android
-#    - fastlane
-#  script:
-#    - npm update
-#    - bower update
-#    - npm run package.android
+build_android:
+  stage: build
+  script:
+    - npm update
+    - bower update
+    - npm run package.android
 
 build_ios:
   stage: build
@@ -51,7 +48,7 @@ build_ios:
 
 test_flight_build:
   dependencies: []
-  stage: test_flight
+  stage: deploy
   artifacts:
     paths:
       - fastlane/screenshots
@@ -62,6 +59,20 @@ test_flight_build:
   tags:
     - ios
   only:
-     - /^release-.*$/
      - master
-     - gitlab-ci
+
+
+prod_build:
+  dependencies: []
+  stage: deploy
+  artifacts:
+    paths:
+      - fastlane/screenshots
+      - fastlane/logs
+  script:
+    - bash download.sh
+    - fastlane pilot upload -u maistho@gmail.com
+  tags:
+    - ios
+  only:
+     - tags

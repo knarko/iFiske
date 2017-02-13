@@ -9,3 +9,6 @@
 8. Create a fastlane session by running `fastlane spaceauth -u <your_email>`. Put the session token in gitlabs web interface.
 9. Add a user to your ionic app, preferably with a good random password. Add the users email in `IONIC_EMAIL` and the users password in `IONIC_PASSWORD` in gitlabs web interface.
 10. Push code to gitlab, watch the magic happen!
+
+## Troubleshooting
+- Make sure that rubygems is the latest version by running `sudo gem update --system`

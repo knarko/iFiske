@@ -19,18 +19,27 @@ before_script:
 
 build_android:
   stage: build
-  script:
+  before_script:
+    - npm prune
     - npm update
+    - bower prune
     - bower update
+  allow_failure: true
+  tags:
+    - android
+  script:
     - npm run package.android
 
 build_ios:
   stage: build
   tags:
     - ios
-  script:
+  before_script:
+    - npm prune
     - npm update
+    - bower prune
     - bower update
+  script:
     - bash set_bundle_version.sh
     - npm run package.ios
 

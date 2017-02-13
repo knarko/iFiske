@@ -49,7 +49,7 @@
 var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
 var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
 var concat = Function.bind.call(Function.call, Array.prototype.concat);
-var keys = Reflect.ownKeys;
+var keys = (window.Reflect && window.Reflect.ownKeys) || function Reflect_ownKeys(o) { return Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o)); }
 
 if (!Object.values) {
 	Object.values = function values(O) {

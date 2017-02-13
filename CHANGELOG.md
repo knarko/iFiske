@@ -1,3 +1,21 @@
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/ifiske/ifiske/compare/v3.5.0...v3.5.1) (2017-02-13)
+
+
+### Bug Fixes
+
+* **admin:** fix navigation between admin.main and admin.org ([9a9f187](https://github.com/ifiske/ifiske/commit/9a9f187))
+* **admin_controller:** fix minor bug if scope.licenseTypes does not contain the correct license ([4629a4a](https://github.com/ifiske/ifiske/commit/4629a4a))
+* **analytics:** update analytics logging ([fce5de9](https://github.com/ifiske/ifiske/commit/fce5de9))
+* **area:** fishing permit is not translated through the API, no need to translate manually ([e0f94de](https://github.com/ifiske/ifiske/commit/e0f94de))
+* **area_info:** update css to calculate size of image using sass ([85b6986](https://github.com/ifiske/ifiske/commit/85b6986))
+* **map:** change map to use leaflet 1.0 for a nice boost in performance! :) ([118ea59](https://github.com/ifiske/ifiske/commit/118ea59))
+* **map:** load tiles while panning for snappier experience ([46f5af8](https://github.com/ifiske/ifiske/commit/46f5af8))
+* **polyfill:** Reflect is not available on all browsers, and needs to be polyfilled ([7b51f05](https://github.com/ifiske/ifiske/commit/7b51f05))
+* **translations:** added translation for push notification error message ([1740207](https://github.com/ifiske/ifiske/commit/1740207))
+
+
+
 <a name="3.5.0"></a>
 ## [3.5.0](https://github.com/ifiske/ifiske/compare/v3.4.5...v3.5.0) (2017-01-25)
 

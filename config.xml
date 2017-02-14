@@ -14,7 +14,7 @@
   <preference name="SplashScreen" value="screen"/>
   <preference name="StatusBarBackgroundColor" value="#003852"/>
   <preference name="StatusBarStyle" value="lightcontent"/>
-  <preference name="DisallowOvserscroll" value="true"/>
+  <preference name="DisallowOverscroll" value="true"/>
   <access origin="*"/>
   <access origin="cdvfile://*"/>
   <allow-navigation href="cdvfile://*"/>

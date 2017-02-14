@@ -13,6 +13,7 @@
 * **map:** load tiles while panning for snappier experience ([46f5af8](https://github.com/ifiske/ifiske/commit/46f5af8))
 * **polyfill:** Reflect is not available on all browsers, and needs to be polyfilled ([7b51f05](https://github.com/ifiske/ifiske/commit/7b51f05))
 * **translations:** added translation for push notification error message ([1740207](https://github.com/ifiske/ifiske/commit/1740207))
+* disable overscroll ([9b5c46e](https://github.com/ifiske/ifiske/commit/9b5c46e))
 
 
 

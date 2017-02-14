@@ -68,7 +68,7 @@ angular.module('ifiske.models')
         $cordovaToast,
         sessionData,
         Product,
-        $window
+        analytics
     ) {
         var p = [];
         for (var table in tables) {
@@ -157,20 +157,20 @@ angular.module('ifiske.models')
             var p = API.user_login(username, password)
             .then(update);
             p.then(Push.reset);
-            if ($window.ga) {
-                p.then(function() {
-                    $window.ga.trackEvent('Login and Signup', 'Login');
-                }, function(_error) {
-                    $window.ga.trackEvent('Login and Signup', 'Login Failure');
-                    $window.ga.trackException('Login Failure', false);
-                });
-            }
+            p.then(function() {
+                analytics.trackEvent('Login and Signup', 'Login');
+            }, function(_error) {
+                $q.all([
+                    analytics.trackEvent('Login and Signup', 'Login Failure'),
+                    analytics.trackException('Login Failure', false),
+                ]);
+                return _error;
+            });
             return p;
         }
 
         function logout() {
-            if ($window.ga)
-                $window.ga.trackEvent('Login and Signup', 'Logout');
+            analytics.trackEvent('Login and Signup', 'Logout');
             return $q.all([
                 clean(),
                 API.user_logout(),

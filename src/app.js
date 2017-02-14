@@ -32,6 +32,7 @@ angular.module('ifiske', [
     localStorage,
     Update,
     Push,
+    analytics,
     serverLocation
 ) {
     $rootScope.image_endpoint = serverLocation; // eslint-disable-line camelcase
@@ -55,8 +56,7 @@ angular.module('ifiske', [
 
         ImgCache.$init();
         if (localStorage.get('language')) {
-            if ($window.ga)
-                $window.ga.trackMetric('Language', localStorage.get('language'));
+            analytics.trackEvent('Language', 'initialized', localStorage.get('language'));
             Update.update().catch(function(err) {
                 console.error(err);
             });
@@ -67,27 +67,14 @@ angular.module('ifiske', [
                 $window.navigator.splashscreen.hide();
             }, 500);
         }
-        if ($window.ga) {
-            // $window.ga.debugMode(); // enable when debugging
-            $window.ga.startTrackerWithId('UA-7371664-4', 30, function(success) {
-                console.log(success);
-            }, function(err) {
-                console.log(err);
-            });
-            $window.ga.enableUncaughtExceptionReporting(true);
+        // analytics.debugMode(); // enable when debugging
+        analytics.startTrackerWithId('UA-7371664-4');
+        analytics.enableUncaughtExceptionReporting(true);
 
-            $rootScope.$on('$stateChangeSuccess',
+        $rootScope.$on('$stateChangeSuccess',
             function(_event, toState, toParams, _fromState, _fromParams) {
-                console.log(toState, toParams);
-                $window.ga.trackView(toState.name + '(' + (toParams.id || '') + ')',
-                null, null,
-                function(success) {
-                    console.log(success);
-                }, function(err) {
-                    console.warn(err);
-                });
+                analytics.trackView(toState.name + '(' + (toParams.id || '') + ')');
             });
-        }
     });
 })
 

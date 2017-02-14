@@ -6,16 +6,14 @@ angular.module('ifiske.controllers')
     localStorage,
     sessionData,
     Update,
-    $window,
+    analytics,
     Admin
 ) {
     $scope.$on('$ionicView.load', function() {
-        if ($window.ga) {
-            if (sessionData.token) {
-                $window.ga.trackMetric('Logged in', 'Yes');
-            } else {
-                $window.ga.trackMetric('Logged in', 'No');
-            }
+        if (sessionData.token) {
+            analytics.trackMetric('Logged in', 1);
+        } else {
+            analytics.trackMetric('Logged in', 0);
         }
     });
 
@@ -50,9 +48,7 @@ angular.module('ifiske.controllers')
     $scope.myFunc = function($event) {
         if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
             var searchTerm = $event.srcElement.value;
-            if ($window.ga) {
-                $window.ga.trackMetric('Search', searchTerm);
-            }
+            analytics.trackEvent('Search', searchTerm);
             $state.go('app.areas', {search: searchTerm});
         }
     };

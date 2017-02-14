@@ -2,10 +2,10 @@ angular.module('ngCordovaSms', [])
 .directive('ngCordovaSms', function(
     $cordovaSms,
     $ionicPopup,
-    User,
     $translate,
-    $window,
-    $rootScope
+    $rootScope,
+    User,
+    analytics
 ) {
     'use strict';
     return {
@@ -46,8 +46,7 @@ angular.module('ngCordovaSms', [])
                             },
                         }).then(function() {
                             console.log('Opened SMS application');
-                            if ($window.ga)
-                                $window.ga.trackEvent('Purchase', 'SMS', attrs.ngCordovaSms);
+                            analytics.trackEvent('Purchase', 'SMS', attrs.ngCordovaSms);
                         });
                     }
                 });

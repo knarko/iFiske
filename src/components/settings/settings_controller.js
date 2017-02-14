@@ -90,6 +90,9 @@ angular.module('ifiske.controllers')
             $cordovaAppVersion.getVersionNumber().then(function(version) {
                 $scope.version = version;
             });
+            $cordovaAppVersion.getVersionCode().then(function(code) {
+                $scope.buildId = code;
+            });
         } else {
             $scope.version = '3.3.10';
         }

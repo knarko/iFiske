@@ -1,9 +1,43 @@
 angular.module('ifiske.services')
-.service('analytics', function($q, $window, $ionicPlatform) {
-    return {
+.service('analytics', function($q, $window, $ionicPlatform, $interval) {
+    var hasGADeferred = $q.defer();
+    var isTrackerStartedDeferred = $q.defer();
+    /**
+     * returns a promise that resolves if we have google analytics
+     * @return {Promise} Only resolves if we have window.ga
+     */
+    function hasGA() {
+        return hasGADeferred.promise;
+    }
+    /**
+     * returns a promise that resolves when the tracker has started
+     * @return {Promise} Only resolves if we have started the tracker
+     */
+    function hasTrackerStarted() {
+        return isTrackerStartedDeferred.promise;
+    }
+
+    var timesChecked = 0;
+    var intervalId = $interval(function() {
+        if (timesChecked++ > 5) {
+            $interval.cancel(intervalId);
+            console.warn('We do not have Google Analytics');
+            hasGADeferred.reject('Could not find Google Analytics');
+        }
+        if ($window.ga) {
+            $interval.cancel(intervalId);
+            console.log('We have Google Analytics');
+            hasGADeferred.resolve();
+        }
+    }, 1000);
+
+    var analytics = {
         trackEvent: function(category, action, label, value, newSession) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(hasTrackerStarted)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.trackEvent(
                     category,
                     action,
@@ -20,12 +54,15 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         trackView: function(screen, campaignUrl, newSession) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(hasTrackerStarted)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.trackView(
                     screen,
                     campaignUrl,
@@ -40,12 +77,15 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         trackMetric: function(key, value) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(hasTrackerStarted)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.trackMetric(
                     key,
                     value,
@@ -58,12 +98,15 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         trackException: function(description, fatal) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(hasTrackerStarted)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.trackException(
                     description,
                     fatal,
@@ -76,12 +119,14 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         debugMode: function() {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.debugMode(
                     function(success) {
                         console.log('analytics.debugMode:', success);
@@ -92,12 +137,14 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         enableUncaughtExceptionReporting: function(enable) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.enableUncaughtExceptionReporting(
                     enable,
                     function(success) {
@@ -109,12 +156,14 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
         startTrackerWithId: function(id, dispatchPeriod) {
-            var deferred = $q.defer();
-            $ionicPlatform.ready(function() {
+            return $ionicPlatform.ready()
+            .then(hasGA)
+            .then(function() {
+                var deferred = $q.defer();
                 $window.ga.startTrackerWithId(
                     id,
                     dispatchPeriod,
@@ -127,8 +176,17 @@ angular.module('ifiske.services')
                         return deferred.reject(error);
                     }
                 );
+                return deferred.promise;
             });
-            return deferred.promise;
         },
     };
+    // analytics.debugMode(); // enable when debugging
+
+    analytics.startTrackerWithId('UA-7371664-4').then(
+        isTrackerStartedDeferred.resolve,
+        isTrackerStartedDeferred.reject);
+
+    analytics.enableUncaughtExceptionReporting(true);
+
+    return analytics;
 });

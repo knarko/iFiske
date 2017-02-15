@@ -67,9 +67,6 @@ angular.module('ifiske', [
                 $window.navigator.splashscreen.hide();
             }, 500);
         }
-        // analytics.debugMode(); // enable when debugging
-        analytics.startTrackerWithId('UA-7371664-4');
-        analytics.enableUncaughtExceptionReporting(true);
 
         $rootScope.$on('$stateChangeSuccess',
             function(_event, toState, toParams, _fromState, _fromParams) {

@@ -205,6 +205,10 @@ angular.module('ifiske.directives')
             }
 
             $scope.$watch('mapData', function(data) {
+                if (!data) {
+                    return;
+                }
+                console.log(data);
                 if (data.centerOnMe) {
                     $timeout(function() {
                         lc.start();

@@ -6,8 +6,7 @@ angular.module('ifiske.directives')
         templateUrl: 'directives/map/map.html',
 
         scope: {
-            mapData:   '=',
-            mapActive: '=',
+            mapData: '=',
         },
         controller: function(
             $scope,
@@ -15,6 +14,7 @@ angular.module('ifiske.directives')
             localStorage,
             $element,
             $translate,
+            $interval,
             $window,
             MapData,
             serverLocation,
@@ -42,6 +42,11 @@ angular.module('ifiske.directives')
             map.addLayer(baseLayers.outdoors);
 
             $window.L.control.layers(baseLayers).addTo(map);
+
+            $scope.$parent.$on('$ionicParentView.afterEnter', function() {
+                console.log('Map: entered, invalidating map size');
+                map.invalidateSize();
+            });
 
             var lc = new $window.L.control.locate({ // eslint-disable-line new-cap
                 follow:               false,
@@ -71,6 +76,7 @@ angular.module('ifiske.directives')
                 disableClusteringAtZoom:    9,
                 chunkedLoading:             true,
                 removeOutsideVisibleBounds: true,
+                spiderfyOnMaxZoom:          false,
             });
             map.addLayer(markers);
 

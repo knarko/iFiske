@@ -209,7 +209,7 @@ angular.module('ifiske.directives')
                     return;
                 }
                 console.log(data);
-                if (data.centerOnMe) {
+                if (data.centerOnMe && !lc._active) {
                     $timeout(function() {
                         lc.start();
                     }, 0);

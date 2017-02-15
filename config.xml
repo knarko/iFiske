@@ -19,6 +19,7 @@
   <access origin="cdvfile://*"/>
   <allow-navigation href="cdvfile://*"/>
   <allow-navigation href="gap://ready"/>
+  <allow-navigation href="https://youtube.com/*"/>
   <allow-intent href="cdvfile://*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>

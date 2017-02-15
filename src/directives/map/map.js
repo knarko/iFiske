@@ -29,16 +29,14 @@ angular.module('ifiske.directives')
             $window.map = map;
             var baseLayers = {
                 outdoors: $window.L.tileLayer(mapboxUrl, {
-                    maxZoom:        18,
-                    maptype:        'mapbox.outdoors',
-                    apikey:         apikey,
-                    updateWhenIdle: false,
+                    maxZoom: 18,
+                    maptype: 'mapbox.outdoors',
+                    apikey:  apikey,
                 }),
                 satellite: $window.L.tileLayer(mapboxUrl, {
-                    maxZoom:        16,
-                    maptype:        'mapbox.satellite',
-                    apikey:         apikey,
-                    updateWhenIdle: false,
+                    maxZoom: 16,
+                    maptype: 'mapbox.satellite',
+                    apikey:  apikey,
                 }),
             };
             map.addLayer(baseLayers.outdoors);

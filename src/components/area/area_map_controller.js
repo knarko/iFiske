@@ -47,21 +47,14 @@ function(
             });
         };
 
-        var enabledEvents = ['popupopen', 'popupclose'];
-        $scope.events = {
-            enabled: enabledEvents,
-        };
-
         $scope.$on('leaflet.popupopen', function(_event, args) {
-                // show navtobutton
-            console.log('beeop', args.popup.getLatLng());
-
+            // show navtobutton
             $scope.navto = args.popup.getLatLng();
             $scope.$digest();
         });
 
         $scope.$on('leaflet.popupclose', function() {
-                // hide navtobutton
+            // hide navtobutton
             $scope.navto = null;
             $scope.$digest();
         });

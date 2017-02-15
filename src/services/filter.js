@@ -1,12 +1,12 @@
 angular.module('ifiske.services')
 .filter('onebr', function() {
     return function(input) {
-        return input.replace(/(<br>\s*)+/g, '<br>');
+        return input && input.replace(/(<br>\s*)+/g, '<br>');
     };
 })
 .filter('nobrs', function() {
     return function(input) {
-        return input.replace(/(<br(\s*\/)*>)+/g, '');
+        return input && input.replace(/(<br(\s*\/)*>)+/gi, ' ');
     };
 })
 .filter('cleantables', function() {

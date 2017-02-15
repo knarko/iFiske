@@ -121,7 +121,7 @@ angular.module('ifiske.models')
                 return wait.then(function() {
                     return DB.getSingle([
                         'SELECT Area.*, Organization.t AS org,',
-                        'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
+                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite',
                         'FROM Area',
                         'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                         'LEFT JOIN Organization ON Area.orgid = Organization.ID',
@@ -164,7 +164,7 @@ angular.module('ifiske.models')
                 return wait.then(function() {
                     return DB.getMultiple([
                         'SELECT Area.*, Organization.t AS org, Organization.logo AS logo,',
-                        'CASE WHEN User_Favorite.ID IS NULL THEN 0 ELSE 1 END as favorite',
+                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite',
                         'FROM Area',
                         'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                         'LEFT JOIN Organization ON Organization.ID = Area.orgid',

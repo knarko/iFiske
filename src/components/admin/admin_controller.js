@@ -6,14 +6,16 @@ angular.module('ifiske.controllers')
         'USER_LEVEL_1',
         'USER_LEVEL_2',
     ];
-    Admin.getOrganizations().then(function(res) {
-        for (var e in res) {
-            $scope.isAdmin = true;
-            res[e].levelname = levelnames[res[e].level];
-        }
-        $scope.organizations = res;
-    }, function(res) {
-        console.error(res);
+    $scope.$on('$ionicView.beforeEnter', function() {
+        Admin.getOrganizations().then(function(res) {
+            for (var e in res) {
+                $scope.isAdmin = true;
+                res[e].levelname = levelnames[res[e].level];
+            }
+            $scope.organizations = res;
+        }, function(res) {
+            console.error(res);
+        });
     });
 })
 .controller('AdminOrgCtrl', function(

@@ -30,7 +30,8 @@
     "gulp:serve:after": "gulp serve:after",
     "serve:before": "gulp:serve:before",
     "serve:after": "gulp:serve:after",
-    "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD"
+    "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD",
+    "update": "npm prune && npm update && bower prune && bower update"
   },
   "repository": {
     "type": "git",

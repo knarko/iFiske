@@ -16,10 +16,8 @@ Install [Ionic](http://ionicframework.com) (use the latest version).
 ````Shell
 git clone https://github.com/ifiske/ifiske
 cd ifiske
-npm install
-bower install
-ionic setup sass
-ionic serve
+npm run update
+npm start
 ````
 ## Bug reports and feature requests
 Create an [issue](http://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.

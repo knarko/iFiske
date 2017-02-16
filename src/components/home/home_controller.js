@@ -25,13 +25,19 @@ angular.module('ifiske.controllers')
             } else {
                 $state.go('app.admin.main');
             }
+        }, function(err) {
+            console.warn(err);
+            $scope.$emit('$ionicView.enter');
         });
     };
-    console.log($ionicHistory);
+
     $scope.$on('$ionicView.enter', function() {
         Admin.isAdmin().then(function(isAdmin) {
             console.log(isAdmin);
             $scope.admin = isAdmin;
+        }, function(err) {
+            console.warn(err);
+            $scope.admin = false;
         });
     });
     $scope.loggedIn = sessionData;

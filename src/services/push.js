@@ -153,9 +153,9 @@ angular.module('ifiske.services')
                     return $ionicAuth.signup(details).then(function() {
                         return $ionicAuth.login('basic', details, {remember: true});
                     }, function(err) {
-                        console.log(err);
+                        console.warn(err);
                         if (err && err.details && err.details.indexOf('conflict_email') !== -1) {
-                            // alert('There was an error logging in, please contact ifiske');
+                            alert('There was an error logging in, please contact ifiske');
                         }
                     });
                 }

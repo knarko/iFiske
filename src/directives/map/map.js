@@ -77,6 +77,7 @@ angular.module('ifiske.directives')
                 chunkedLoading:             true,
                 removeOutsideVisibleBounds: true,
                 spiderfyOnMaxZoom:          false,
+                maxClusterRadius:           60,
             });
             map.addLayer(markers);
 
@@ -98,11 +99,13 @@ angular.module('ifiske.directives')
 
             function createAreaPopup(area) {
                 return $window.L.popup.angular({
-                    template:     '<a ui-sref="app.area.info({id: popup.area.ID})" ng-bind="popup.area.t"></a>',
+                    closeButton:  false,
+                    maxWidth:     $window.innerWidth - 50,
+                    template:     '<a class="center" ui-sref="app.area.info({id: popup.area.ID})" ng-bind="popup.area.t"></a>',
                     controllerAs: 'popup',
-                    controller:   ['$content', function($content) {
+                    controller:   function() {
                         this.area = area;
-                    }],
+                    },
                 });
             }
 
@@ -164,8 +167,7 @@ angular.module('ifiske.directives')
                             icon: icons[poi.type],
                         });
                         marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
-                            maxWidth:   $window.innerWidth - 50,
-                            keepInView: true, // needed to auto pan
+                            maxWidth: $window.innerWidth - 50,
                         });
                         poiMarkers.addLayer(marker);
                     }

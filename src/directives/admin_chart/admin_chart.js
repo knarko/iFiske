@@ -76,7 +76,8 @@ angular.module('ifiske.directives')
                 stacked:          true,
                 lineAtYearChange: true,
                 fill:             false,
-                scales:           {
+
+                scales: {
                     yAxes: [{
                         id:       'y-axis-0',
                         type:     'linear',
@@ -87,18 +88,18 @@ angular.module('ifiske.directives')
                         id:                 'x-axis-0',
                         type:               'time',
                         barPercentage:      1,
-                        categoryPercentage: 1,
+                        categoryPercentage: 1 / 12, // since we have 12 weeks, and want each bar to be one week wide
                         time:               {
                             min:            moment().subtract(1, 'year').subtract(1, 'week'),
                             max:            moment().add(1, 'week'),
                             round:          'week',
-                            unitStepSize:   3,
+                            unitStepSize:   12,
                             tooltipFormat:  '[vecka] W',
                             displayFormats: {
                                 week:  'MMM YYYY',
                                 month: 'MMM',
                             },
-                            unit: 'month',
+                            unit: 'week',
                         },
                         labels: {
                             show: false,

@@ -1,3 +1,47 @@
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/ifiske/ifiske/compare/v3.5.0...v3.6.0) (2017-04-20)
+
+
+### Bug Fixes
+
+* **admin:** fix navigation between admin.main and admin.org ([9a9f187](https://github.com/ifiske/ifiske/commit/9a9f187))
+* **admin:** reload organizations when entering admin view ([b630265](https://github.com/ifiske/ifiske/commit/b630265)), closes [#129](https://github.com/ifiske/ifiske/issues/129)
+* **admin_controller:** fix minor bug if scope.licenseTypes does not contain the correct license ([4629a4a](https://github.com/ifiske/ifiske/commit/4629a4a))
+* **admin-chart:** fix chart bar width overlap ([bb79906](https://github.com/ifiske/ifiske/commit/bb79906))
+* **analytics:** fix events being lost before tracker started ([5309d68](https://github.com/ifiske/ifiske/commit/5309d68))
+* **analytics:** move all analytics calls to a service to enable easier logging and debugging ([902250c](https://github.com/ifiske/ifiske/commit/902250c))
+* **analytics:** set version to 1.7.4, see if it solves android+ios issues... :( ([6286178](https://github.com/ifiske/ifiske/commit/6286178))
+* **analytics:** update analytics logging ([fce5de9](https://github.com/ifiske/ifiske/commit/fce5de9))
+* **area:** fishing permit is not translated through the API, no need to translate manually ([e0f94de](https://github.com/ifiske/ifiske/commit/e0f94de))
+* **area_info:** update css to calculate size of image using sass ([85b6986](https://github.com/ifiske/ifiske/commit/85b6986))
+* **area.model:** fix favorites not updating when added ([a817fac](https://github.com/ifiske/ifiske/commit/a817fac))
+* **config.xml:** fix typo of DisallowOverscroll ([b32274d](https://github.com/ifiske/ifiske/commit/b32274d))
+* **CSP:** add unsafe-eval to CSP, fixes an issue on older android ([56b4430](https://github.com/ifiske/ifiske/commit/56b4430))
+* **filters:** fix filters crashing on undefined input ([b36dead](https://github.com/ifiske/ifiske/commit/b36dead))
+* **home:** fix missing borders on top and bottom elements of home page ([a0534fe](https://github.com/ifiske/ifiske/commit/a0534fe))
+* **home:** set admin state to false if not logged in ([67bd3a9](https://github.com/ifiske/ifiske/commit/67bd3a9))
+* **map:** change map to use leaflet 1.0 for a nice boost in performance! :) ([118ea59](https://github.com/ifiske/ifiske/commit/118ea59))
+* **map:** do not crash if there is no data ([583eb82](https://github.com/ifiske/ifiske/commit/583eb82))
+* **map:** fix map size after navigation ([1472742](https://github.com/ifiske/ifiske/commit/1472742))
+* **map:** fix map tap events and performance on older android and iOS ([218ec67](https://github.com/ifiske/ifiske/commit/218ec67))
+* **map:** load tiles while panning for snappier experience ([46f5af8](https://github.com/ifiske/ifiske/commit/46f5af8))
+* **map:** only center on user if we have not done so already with this map instance ([066569d](https://github.com/ifiske/ifiske/commit/066569d))
+* **map:** update cluster and popup sizes ([06ed8bb](https://github.com/ifiske/ifiske/commit/06ed8bb))
+* **polyfill:** Reflect is not available on all browsers, and needs to be polyfilled ([7b51f05](https://github.com/ifiske/ifiske/commit/7b51f05))
+* **push:** added error message if user fails to login because of ionic user mismatching ([1de2c43](https://github.com/ifiske/ifiske/commit/1de2c43))
+* **push:** fix push notifications ([d185099](https://github.com/ifiske/ifiske/commit/d185099))
+* **translations:** added translation for push notification error message ([1740207](https://github.com/ifiske/ifiske/commit/1740207))
+* disable overscroll ([9b5c46e](https://github.com/ifiske/ifiske/commit/9b5c46e))
+* **youtube:** fix youtube navigation on iOS ([45ce41a](https://github.com/ifiske/ifiske/commit/45ce41a))
+* **youtube:** fixes YT on iOS ([dbee880](https://github.com/ifiske/ifiske/commit/dbee880))
+
+
+### Features
+
+* **settings.about:** added build code to about view ([e0bc381](https://github.com/ifiske/ifiske/commit/e0bc381))
+
+
+
 <a name="3.5.1"></a>
 ## [3.5.1](https://github.com/ifiske/ifiske/compare/v3.5.0...v3.5.1) (2017-02-16)
 

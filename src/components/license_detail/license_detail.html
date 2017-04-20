@@ -1,6 +1,9 @@
 <ion-view title="{{'Fishing License'| translate}}" class="bg-{{product.validity}}" cache-view="false">
   <ion-content padding="true" class="text-center">
-    <div class="padding bg-white">
+    <div class="padding bg-white" ng-if="!product">
+      <h2 translate>The license does not exist</h2>
+    </div>
+    <div class="padding bg-white" ng-if="product">
 
       <img ng-show="product.rev" src="img/makulerad.png" class="revoked"/>
       <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.logo}}">

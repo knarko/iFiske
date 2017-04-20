@@ -40,14 +40,12 @@ angular.module('ifiske.controllers')
         languages[i++ % languages.length]
     );
     var interval = $interval(function() {
-        console.log(i);
         $scope.viewTitle = $translate.instant(
             'Change language',
             null,
             null,
             languages[i++ % languages.length]
         );
-        console.log($scope.viewTitle, i, languages[i % languages.length]);
     }, 3000);
 
     $scope.$on('$ionicView.leave', function() {

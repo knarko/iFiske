@@ -1,6 +1,9 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('swedishTranslations', {
+    'Network error': 'Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?',
+    /* --- */
+
     'About the app':                       'Om appen',
     'Accept':                              'Acceptera',
     'Activate account':                    'Aktivera konto',

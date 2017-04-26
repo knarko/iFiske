@@ -1,17 +1,17 @@
 <ion-view view-title="{{county | translate}}">
     <div style="height: 43px;"></div>
     <ion-header-bar class="bar-positive item-input-inset search-bar">
-        <div class="item-input-wrapper">
+        <form class="item-input-wrapper">
             <i class="icon ion-search"></i>
-            <input type="search" placeholder="{{'Search'|translate}}" ng-model="search" ng-change="scrollTop()"/>
-            <i ng-if="search.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
-        </div>
+            <input type="search" placeholder="{{'Search' | translate}}" ng-model="searchTerm" ng-change="search(searchTerm)" ng-keypress="keyPress($event)"/>
+            <i ng-if="searchTerm.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
+        </form>
     </ion-header-bar>
 
     <ion-content header-shrink>
       <div style="height: 43px;"></div>
       <div class="list">
-        <div class="item item-icon-left item-full-width" collection-repeat="area in areas | filter:search" item-height="area.org === area.t ? '54px' : '74px'" ui-sref="app.area.info({id: area.ID, area:area})">
+        <div class="item item-icon-left item-full-width" collection-repeat="area in areas" item-height="area.org === area.t ? '54px' : '74px'" ui-sref="app.area.info({id: area.ID, area:area})">
           <i class="icon icon-license" ng-class="{selling: area.wsc}"></i>
           <h2>{{area.org}}</h2>
           <p>{{area.t === area.org ? '': area.t}}</p>

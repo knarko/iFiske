@@ -51,7 +51,7 @@ angular.module('ifiske.controllers')
         return localStorage.get('NEWS');
     };
 
-    $scope.myFunc = function($event) {
+    $scope.search = function($event) {
         if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
             var searchTerm = $event.srcElement.value;
             analytics.trackEvent('Search', searchTerm);

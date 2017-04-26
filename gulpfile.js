@@ -73,6 +73,7 @@ var paths = {
         './node_modules/moment/locale/de.js',
         './node_modules/chart.js/dist/Chart.js',
         './node_modules/angular-chart.js/dist/angular-chart.js',
+        './node_modules/fuse.js/dist/fuse.js',
     ],
     templates:  ['src/components/**/*.html'],
     directives: ['src/directives/**/*.html'],

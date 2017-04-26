@@ -9,10 +9,12 @@
 
     <ion-content class="padding">
         <div class="list list-inset">
+            <form>
             <label class="item item-input" ng-if="update.lastUpdate()">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="{{'Search' | translate}}" ng-keypress="myFunc($event)"/>
+                <input type="search" placeholder="{{'Search' | translate}}" ng-keypress="search($event)"/>
             </label>
+            </form>
             <div class="item item-icon-right item-assertive" ng-if="!update.lastUpdate()" ng-click="forcedUpdate()">
                 {{'No data' | translate}}
                 <i class="icon ion-refresh"></i>

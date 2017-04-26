@@ -54,6 +54,7 @@ angular.module('ifiske.models')
 
     this.$get = function($q, DB, API) {
         var p = [];
+        var fuse = $q.defer();
         for (var i = 0; i < tables.length; ++i) {
             p.push(DB.initializeTable(tables[i]));
         }
@@ -109,7 +110,7 @@ angular.module('ifiske.models')
             ]);
         }
 
-        return {
+        var Area = {
             update: update,
 
             /**
@@ -127,6 +128,18 @@ angular.module('ifiske.models')
                         'LEFT JOIN Organization ON Area.orgid = Organization.ID',
                         'WHERE Area.ID = ?',
                     ].join(' '), Array.isArray(id) ? id : [id]);
+                });
+            },
+
+            getAll: function getAll() {
+                return wait.then(function() {
+                    return DB.getMultiple([
+                        'SELECT Area.*, Organization.t as org, Organization.d as org_d,',
+                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite',
+                        'FROM Area',
+                        'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
+                        'LEFT JOIN Organization ON Area.orgid = Organization.ID',
+                    ].join(' '));
                 });
             },
 
@@ -160,23 +173,80 @@ angular.module('ifiske.models')
             * @param {Integer} countyID - ID for a county to filter on
             * @return {Promise<Area[]>} Promise for the matching areas
             */
-            search: function(searchstring, countyID) {
-                return wait.then(function() {
-                    return DB.getMultiple([
-                        'SELECT Area.*, Organization.t AS org, Organization.logo AS logo,',
-                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite',
-                        'FROM Area',
-                        'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
-                        'LEFT JOIN Organization ON Organization.ID = Area.orgid',
-                        'WHERE ((Area.t LIKE ?) OR (Organization.t LIKE ?))',
-                        (countyID ? 'AND ? IN (c1,c2,c3)' : ''),
-                        'ORDER BY Organization.t',
-                    ].join(' '),
-                    countyID ?
-                    ['%' + searchstring + '%', '%' + searchstring + '%', countyID] :
-                    ['%' + searchstring + '%', '%' + searchstring + '%']);
+            search: function(searchstring) {
+                var t0 = performance.now();
+                return fuse.promise.then(function(fuse) {
+                    return $q(function(resolve) {
+                        var res = fuse.search(searchstring);
+                        res.forEach(r => {
+                            r.score += mapDistance(calculateDistance(r.item.lat, r.item.lng, 58.597552, 16.167844));
+                        });
+                        resolve(res.sort((a, b) => a.score - b.score).map(r => r.item));
+                        var t1 = performance.now();
+                        console.log('Searching took:', (t1 - t0), 'ms');
+                    });
                 });
             },
         };
+
+        function mapDistance(val) {
+            return Math.log(1 + val) / Math.log(1 + 1000000) / 100;
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Implementation shamelessely stolen from http://www.movable-type.co.uk/scripts/latlong.html
+            var R = 6371e3; // metres
+            var φ1 = lat1 * (Math.PI / 180);
+            var φ2 = lat2 * (Math.PI / 180);
+            var Δφ = (lat2 - lat1) * (Math.PI / 180);
+            var Δλ = (lon2 - lon1) * (Math.PI / 180);
+
+            var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c;
+        }
+
+        Area.getAll().then(function(data) {
+            var options = {
+                keys: [{
+                    name:   't',
+                    weight: 0.8,
+                },
+                {
+                    name:   'd',
+                    weight: 0.5,
+                },
+                {
+                    name:   'note',
+                    weight: 0.4,
+                },
+                {
+                    name:   'kw',
+                    weight: 0.6,
+                },
+                {
+                    name:   'org',
+                    weight: 0.7,
+                },
+                {
+                    name:   'org_d',
+                    weight: 0.4,
+                }],
+                includeScore:     true,
+                shouldSort:       false,
+                threshold:        0.5,
+                distance:         10,
+                maxPatternLength: 16,
+            };
+
+            fuse.resolve(new Fuse(data, options));
+        }, function(err) {
+            console.warn(err);
+        });
+
+        return Area;
     };
 });

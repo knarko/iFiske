@@ -10,6 +10,7 @@ var gulpif = require('gulp-if');
 var minimist = require('minimist');
 var plumber = require('gulp-plumber');
 var sortJSON = require('gulp-json-sort').default;
+var babel = require('gulp-babel');
 
 var knownOptions = {
     string:  'env',
@@ -111,6 +112,9 @@ gulp.task('scripts', function(done) {
     .pipe(plumber({errorHandler: done}))
     .pipe(ngAnnotate())
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
+    .pipe(babel({
+        presets: ['es2015'],
+    }))
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
     .pipe(gulpif(options.env === 'development', sourcemaps.write()))

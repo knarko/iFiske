@@ -1,7 +1,7 @@
 <ion-view view-title="{{county | translate}}">
     <div style="height: 43px;"></div>
     <ion-header-bar class="bar-positive item-input-inset search-bar">
-        <form class="item-input-wrapper">
+        <form class="item-input-wrapper" action="">
             <i class="icon ion-search"></i>
             <input type="search" placeholder="{{'Search' | translate}}" ng-model="searchTerm" ng-change="search(searchTerm)" ng-keypress="keyPress($event)"/>
             <i ng-if="searchTerm.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>

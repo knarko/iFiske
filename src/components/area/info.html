@@ -4,12 +4,14 @@
         <div class="item item-image">
             <ion-slides ng-if="images.length > 1" options="slideOptions" slider="data.slider">
                 <ion-slide-page ng-repeat="img in images">
-                    <div class="slider-image">
-                      <img img-cache ic-src="{{::image_endpoint + img.url}}">
+                    <div class="slider-image" style="padding-top: {{img.ratio}};">
+                      <img img-cache ic-src="{{::image_endpoint + img.file}}">
+                      <p class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
                     </div>
                 </ion-slide-page>
             </ion-slides>
-            <img img-cache ic-src="{{::image_endpoint + images[0].url}}" ng-if="images.length == 1" />
+            <img img-cache ic-src="{{::image_endpoint + images[0].file}}" ng-if="images.length == 1" />
+            <p ng-if="images.length == 1" class="image-text">{{images[0].t}} {{images[0].t && images[0].d ? '-': ''}} {{images[0].d}}</p>
         </div>
         <div ng-if="area.t" class="item item-divider item-button-right">
             <h2 class="area-title">{{::area.t}}</h2>

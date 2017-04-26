@@ -49,3 +49,11 @@
 .item .area-title {
     white-space: normal;
 }
+
+p.image-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+}

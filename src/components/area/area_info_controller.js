@@ -12,12 +12,11 @@ angular.module('ifiske.controllers')
     $stateParams
 ) {
     $scope.slideOptions = {
-        loop:       true,
         effect:     'slide',
         speed:      250,
-        autoPlay:   1000,
         autoHeight: true,
     };
+
     Area.getPhotos($stateParams.id)
     .then(function(images) {
         $scope.images = images;

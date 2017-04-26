@@ -52,7 +52,8 @@ angular.module('ifiske.controllers')
     };
 
     $scope.search = function($event) {
-        if ($event.keyCode === 13 && !$event.shiftKey) { // if enter-key
+        if ($event.keyCode === 13) { // if enter-key
+            $event.preventDefault();
             var searchTerm = $event.srcElement.value;
             analytics.trackEvent('Search', searchTerm);
             $state.go('app.areas', {search: searchTerm});

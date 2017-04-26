@@ -45,9 +45,15 @@ angular.module('ifiske.models')
             name:    'Area_Photos',
             primary: 'ID',
             members: {
-                ID:  'text',
-                aid: 'int',
-                url: 'int',
+                ID:   'int',
+                area: 'int', // Area ID
+                file: 'int', // File name
+                t:    'text', // Title
+                d:    'text', // Description
+                h:    'int', // Height in pixels
+                w:    'int', // Width in pixels
+                org:  'int', // Organisation ID
+                s:    'int', // Size in bytes
             },
         },
     ];
@@ -67,7 +73,10 @@ angular.module('ifiske.models')
 
         function update(shouldUpdate) {
             if (shouldUpdate)
-                return API.get('get_areas').then(function(data) {
+                return $q.all([
+                    API.get('get_areas'),
+                    API.get('get_images'),
+                ]).then(function(data) {
                     if (shouldUpdate === 'skipWait')
                         return data;
                     return wait.then(function() {
@@ -77,10 +86,12 @@ angular.module('ifiske.models')
         }
 
         function insert(data) {
+            var areas = data[0];
+            var images = data[1];
             var fishArr = [];
             var photoArr = [];
-            for (var key in data) {
-                var fishes = data[key].fish;
+            for (var key in areas) {
+                var fishes = areas[key].fish;
                 for (var fishKey in fishes) {
                     fishArr.push({
                         ID:      key + '_' + fishKey,
@@ -90,23 +101,11 @@ angular.module('ifiske.models')
                         comment: fishes[fishKey][1],
                     });
                 }
-                var photos = data[key].imgs;
-                if (photos) {
-                    for (var i = 0; i < photos.length; ++i) {
-                        photoArr.push({
-                            ID:  key + '_' + i,
-                            aid: key,
-                            url: photos[i],
-                        });
-                    }
-                } else {
-                    console.log('Area did not know what to do with: ', key);
-                }
             }
             return $q.all([
-                DB.populateTable(tables[0], data),
+                DB.populateTable(tables[0], areas),
                 DB.populateTable(tables[1], fishArr),
-                DB.populateTable(tables[2], photoArr),
+                DB.populateTable(tables[2], images),
             ]);
         }
 
@@ -143,13 +142,18 @@ angular.module('ifiske.models')
                 });
             },
 
-            getPhotos: function(aid) {
+            getPhotos: function(areaId) {
                 return wait.then(function() {
                     return DB.getMultiple([
                         'SELECT Area_Photos.*',
                         'FROM Area_Photos',
-                        'WHERE Area_Photos.aid = ?',
-                    ].join(' '), [aid]);
+                        'WHERE Area_Photos.area = ?',
+                    ].join(' '), [areaId]).then(function(images) {
+                        for (var i = 0; i < images.length; ++i) {
+                            images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
+                        }
+                        return images;
+                    });
                 });
             },
 

@@ -6,6 +6,10 @@ angular.module('ifiske.controllers')
     User,
     Organization,
     $ionicModal,
+    serverLocation,
+    Settings,
+    $cordovaInAppBrowser,
+    analytics,
     $sce
 ) {
     function updateQR() {
@@ -42,6 +46,16 @@ angular.module('ifiske.controllers')
     };
     $scope.closeRulesModal = function() {
         $scope.rules_modal.hide();
+    };
+
+    $scope.openProductInBrowser = function(id) {
+        var url = serverLocation +
+            '/mobile/index.php?lang=' +
+            Settings.language() +
+            '&p=5&i=' +
+            id;
+        $cordovaInAppBrowser.open(url, '_system');
+        analytics.trackEvent('Purchase', 'Web', id);
     };
 
     $scope.$on('$destroy', function() {

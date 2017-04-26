@@ -55,6 +55,7 @@
       <h1 class="{{product.validity}}">{{product.code}}</h1>
 
       <h3 ng-if="product.validity === 'expired'" translate>License has expired</h3>
+      <button class="button button-balanced" ng-if="product.validity === 'expired'" ng-click="openProductInBrowser(product.pid)" translate>Renew license</button>
       <h3 ng-if="product.validity === 'inactive'" translate>License not yet valid</h3>
 
       <p ng-if="product.subt">{{product.subt}}</p>

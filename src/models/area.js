@@ -58,9 +58,11 @@ angular.module('ifiske.models')
         },
     ];
 
-    this.$get = function($q, DB, API) {
+    this.$get = function($q, DB, API, $cordovaGeolocation) {
         var p = [];
         var fuse = $q.defer();
+        var currentLocation, watch;
+
         for (var i = 0; i < tables.length; ++i) {
             p.push(DB.initializeTable(tables[i]));
         }
@@ -179,12 +181,22 @@ angular.module('ifiske.models')
             */
             search: function(searchstring) {
                 var t0 = performance.now();
+                if (!watch) {
+                    watch = startWatch();
+                }
                 return fuse.promise.then(function(fuse) {
                     return $q(function(resolve) {
                         var res = fuse.search(searchstring);
-                        res.forEach(r => {
-                            r.score += mapDistance(calculateDistance(r.item.lat, r.item.lng, 58.597552, 16.167844));
-                        });
+                        if (currentLocation) {
+                            res.forEach(r => {
+                                r.score += mapDistance(calculateDistance(
+                                    r.item.lat,
+                                    r.item.lng,
+                                    currentLocation.lat,
+                                    currentLocation.lng
+                                    ));
+                            });
+                        }
                         resolve(res.sort((a, b) => a.score - b.score).map(r => r.item));
                         var t1 = performance.now();
                         console.log('Searching took:', (t1 - t0), 'ms');
@@ -192,6 +204,19 @@ angular.module('ifiske.models')
                 });
             },
         };
+
+        function startWatch() {
+            watch = $cordovaGeolocation.watchPosition({
+                timeout:            10000,
+                enableHighAccuracy: false,
+            });
+            watch.then(null, err => console.warn(err), position => {
+                currentLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+            });
+        }
 
         function mapDistance(val) {
             return Math.log(1 + val) / Math.log(1 + 1000000) / 100;

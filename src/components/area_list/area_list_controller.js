@@ -7,7 +7,7 @@ angular.module('ifiske.controllers')
         debounce
     ) {
         var copy = $stateParams.search;
-        $scope.search = copy;
+        $scope.searchTerm = copy;
         $scope.county = $stateParams.county || 'Search results';
         $scope.search = debounce(function(searchTerm) {
             Area.search(searchTerm, $stateParams.id)

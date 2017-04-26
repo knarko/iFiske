@@ -37,8 +37,8 @@ angular.module('ifiske.services')
         function timedUpdate(currentTime) {
             var lastUpdate = localStorage.get(LAST_UPDATE);
 
-            var aWeek = 1000 * 3600 * 24 * 7;
-            return (currentTime - lastUpdate) > aWeek;
+            var aDay = 1000 * 3600 * 24 * 1;
+            return (currentTime - lastUpdate) > aDay;
         }
 
         function updateFunc(forced, hideLoading) {

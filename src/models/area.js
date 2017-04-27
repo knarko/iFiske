@@ -153,10 +153,26 @@ angular.module('ifiske.models')
                 return wait.then(function() {
                     return DB.getMultiple([
                         'SELECT Area.*, Organization.t as org, Organization.d as org_d,',
-                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite',
+                        'CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END as favorite,',
+                        'Fish_1.fishes as fish_1,',
+                        'Fish_2.fishes as fish_2,',
+                        'Fish_3.fishes as fish_3,',
+                        'Fish_4.fishes as fish_4,',
+                        'Fish_5.fishes as fish_5',
+
                         'FROM Area',
+
+                        'LEFT JOIN (SELECT Area_Fish.amount as amount, Area.ID as aid, GROUP_CONCAT(Fish.t, " ") as fishes from Area_Fish join Fish on Area_Fish.fid = Fish.ID JOIN Area on Area_Fish.aid = Area.ID WHERE Area_Fish.amount = 1 GROUP BY Area_Fish.amount, Area.ID) AS Fish_1 ON Area.ID = Fish_1.aid',
+                        'LEFT JOIN (SELECT Area_Fish.amount as amount, Area.ID as aid, GROUP_CONCAT(Fish.t, " ") as fishes from Area_Fish join Fish on Area_Fish.fid = Fish.ID JOIN Area on Area_Fish.aid = Area.ID WHERE Area_Fish.amount = 2 GROUP BY Area_Fish.amount, Area.ID) AS Fish_2 ON Area.ID = Fish_2.aid',
+                        'LEFT JOIN (SELECT Area_Fish.amount as amount, Area.ID as aid, GROUP_CONCAT(Fish.t, " ") as fishes from Area_Fish join Fish on Area_Fish.fid = Fish.ID JOIN Area on Area_Fish.aid = Area.ID WHERE Area_Fish.amount = 3 GROUP BY Area_Fish.amount, Area.ID) AS Fish_3 ON Area.ID = Fish_3.aid',
+                        'LEFT JOIN (SELECT Area_Fish.amount as amount, Area.ID as aid, GROUP_CONCAT(Fish.t, " ") as fishes from Area_Fish join Fish on Area_Fish.fid = Fish.ID JOIN Area on Area_Fish.aid = Area.ID WHERE Area_Fish.amount = 4 GROUP BY Area_Fish.amount, Area.ID) AS Fish_4 ON Area.ID = Fish_4.aid',
+                        'LEFT JOIN (SELECT Area_Fish.amount as amount, Area.ID as aid, GROUP_CONCAT(Fish.t, " ") as fishes from Area_Fish join Fish on Area_Fish.fid = Fish.ID JOIN Area on Area_Fish.aid = Area.ID WHERE Area_Fish.amount = 5 GROUP BY Area_Fish.amount, Area.ID) AS Fish_5 ON Area.ID = Fish_5.aid',
+
+                        'LEFT JOIN Area_Fish ON Area_Fish.aid = Area.ID',
+                        'LEFT JOIN Fish ON Area_Fish.fid = Fish.ID',
                         'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                         'LEFT JOIN Organization ON Area.orgid = Organization.ID',
+                        'GROUP BY Area.ID',
                     ].join(' '));
                 });
             },
@@ -290,6 +306,26 @@ angular.module('ifiske.models')
                 {
                     name:   'org_d',
                     weight: 0.4,
+                },
+                {
+                    name:   'fish_1',
+                    weight: 0.2,
+                },
+                {
+                    name:   'fish_2',
+                    weight: 0.3,
+                },
+                {
+                    name:   'fish_3',
+                    weight: 0.5,
+                },
+                {
+                    name:   'fish_4',
+                    weight: 0.7,
+                },
+                {
+                    name:   'fish_5',
+                    weight: 0.9,
                 }],
                 includeScore:     true,
                 shouldSort:       false,
@@ -298,6 +334,7 @@ angular.module('ifiske.models')
                 maxPatternLength: 16,
             };
 
+            // Populate Fuse search index
             fuse.resolve(new Fuse(data, options));
         }, function(err) {
             console.warn(err);

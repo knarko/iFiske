@@ -18,7 +18,7 @@ angular.module('ifiske.controllers')
                 }, function(err) {
                     console.log(err);
                 });
-        }, 200);
+        }, 500);
 
         $scope.search('');
 

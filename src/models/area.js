@@ -285,11 +285,11 @@ angular.module('ifiske.models')
             var options = {
                 keys: [{
                     name:   't',
-                    weight: 0.8,
+                    weight: 0.9,
                 },
                 {
                     name:   'd',
-                    weight: 0.5,
+                    weight: 0.4,
                 },
                 {
                     name:   'note',
@@ -297,7 +297,7 @@ angular.module('ifiske.models')
                 },
                 {
                     name:   'kw',
-                    weight: 0.6,
+                    weight: 0.5,
                 },
                 {
                     name:   'org',

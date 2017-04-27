@@ -286,7 +286,14 @@ angular.module('ifiske.models')
                         console.warn(err);
                     }).then(fuse => {
                         return $q(function(resolve) {
-                            var res = fuse.search(searchstring);
+                            let res;
+                            if (searchstring) {
+                                res = fuse.search(searchstring);
+                            } else {
+                                res = fuse.list.map(i => {
+                                    return {item: i, score: 0};
+                                });
+                            }
                             if (currentLocation) {
                                 res.forEach(r => {
                                     r.score += mapDistance(calculateDistance(

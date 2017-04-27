@@ -21,7 +21,6 @@ angular.module('ifiske.translations')
     'Administration':                      'Administration',
     'Angler record':                       'Angling records',
     'Area added to favorites':             'The area is now marked as a favorite',
-    'Area map as PDF':                     'Map of the area as PDF',
     'Area not selling':                    'This organization is unfortunately not selling fishing permits through iFiske',
     'Area removed from favorites':         'The area is no longer marked as favorite',
     'Cancel':                              'Cancel',

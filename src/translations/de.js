@@ -42,7 +42,6 @@ angular.module('ifiske.translations')
     'Administration':                      'Administration',
     'Angler record':                       'Angeleintragung',
     'Area added to favorites':             'Die Fläche ist als Favorit markiert',
-    'Area map as PDF':                     'Karte der Fläche als PDF',
     'Area not selling':                    'Diese Organisation verkauft leider keine Fischerscheine durch iFiske',
     'Area removed from favorites':         'Die Fläche ist nicht mehr als Favorit markiert',
     'Cancel':                              'Beenden',

@@ -1,7 +1,6 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('englishTranslations', {
-
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',
@@ -39,6 +38,7 @@ angular.module('ifiske.translations')
     'County':                              'County',
     'Create new account':                  'Create new account',
     'Description':                         'Description',
+    'Downloadable file':                   'Downloadable {{type}}',
     'Edit favorite':                       'Edit favorite',
     'Email adress':                        'Email address',
     'Email invalid':                       'Invalid email address',

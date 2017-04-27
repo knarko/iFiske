@@ -27,6 +27,13 @@ angular.module('ifiske.controllers')
         console.warn(err);
     });
 
+    Area.getFiles($stateParams.id)
+    .then(function(files) {
+        $scope.files = files;
+    }, function(err) {
+        console.warn(err);
+    });
+
     $scope.$on("$ionicSlides.sliderInitialized", function(_event, data) {
         // grab an instance of the slider
         $scope.slider = data.slider;

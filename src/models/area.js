@@ -23,7 +23,6 @@ angular.module('ifiske.models')
                 car:   'int',
                 eng:   'int',
                 hcp:   'int',
-                map:   'text',
                 wsc:   'int',
                 mod:   'int',
                 d:     'text',
@@ -54,6 +53,18 @@ angular.module('ifiske.models')
                 w:    'int', // Width in pixels
                 org:  'int', // Organisation ID
                 s:    'int', // Size in bytes
+            },
+        },
+        {
+            name:    'Area_Files',
+            primary: 'ID',
+            members: {
+                ID:    'int',
+                area:  'int',  // Area ID
+                t:     'text', // File headline
+                f:     'text', // Filename
+                typ:   'text', // 3 letter file type (e.g. PDF)
+                thumb: 'text', // Thumbnail
             },
         },
     ];
@@ -91,7 +102,7 @@ angular.module('ifiske.models')
             var areas = data[0];
             var images = data[1];
             var fishArr = [];
-            var photoArr = [];
+            var filesArr = [];
             for (var key in areas) {
                 var fishes = areas[key].fish;
                 for (var fishKey in fishes) {
@@ -103,11 +114,17 @@ angular.module('ifiske.models')
                         comment: fishes[fishKey][1],
                     });
                 }
+                var files = areas[key].files.map(file => {
+                    file.area = key;
+                    return file;
+                });
+                filesArr.push(...files);
             }
             return $q.all([
                 DB.populateTable(tables[0], areas),
                 DB.populateTable(tables[1], fishArr),
                 DB.populateTable(tables[2], images),
+                DB.populateTable(tables[3], filesArr),
             ]);
         }
 
@@ -156,6 +173,16 @@ angular.module('ifiske.models')
                         }
                         return images;
                     });
+                });
+            },
+
+            getFiles: function(areaId) {
+                return wait.then(function() {
+                    return DB.getMultiple([
+                        'SELECT Area_Files.*',
+                        'FROM Area_Files',
+                        'WHERE Area_Files.area = ?',
+                    ].join(' '), [areaId]);
                 });
             },
 

@@ -1,7 +1,8 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
 .constant('swedishTranslations', {
-    'Network error': 'Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?',
+    'Network error':     'Tyvärr kan appen inte komma åt iFiskes server. Är du ansluten till nätverket?',
+    'Downloadable file': 'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
     /* --- */
 
     'About the app':                       'Om appen',
@@ -23,7 +24,6 @@ angular.module('ifiske.translations')
     'Angler record':                       'Sportfiskerekord',
     'Are you sure?':                       'Är du säker?',
     'Area added to favorites':             'Området är nu tillagt i dina favoriter',
-    'Area map as PDF':                     'Karta över området som PDF',
     'Area not selling':                    'Den här fiskevårdsorganisationen säljer tyvärr inte fiskekort genom iFiske',
     'Area removed from favorites':         'Området är nu borttaget från dina favoriter',
     'Cancel':                              'Avbryt',

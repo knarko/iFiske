@@ -4,7 +4,8 @@ angular.module('ifiske.controllers')
     $scope.map = {};
     $scope.map.centerOnMe = true;
     $scope.$on('$ionicView.beforeEnter', function() {
-        Area.search('').then(function(areas) {
+        Area.getAll()
+        .then(function(areas) {
             $scope.map.areas = areas;
         });
     });

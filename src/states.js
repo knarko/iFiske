@@ -228,12 +228,12 @@
                     templateUrl: 'components/user/user.html',
                 },
                 areas: {
-                    url:         '/areas',
+                    url:         '/areas?id',
                     templateUrl: 'components/area_list/area_list.html',
                     controller:  'AreasCtrl',
                     params:      {
-                        id:     false,
-                        county: false,
+                        id:     0,
+                        county: '',
                         search: '',
                     },
                 },

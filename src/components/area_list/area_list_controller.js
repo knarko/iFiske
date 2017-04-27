@@ -10,7 +10,7 @@ angular.module('ifiske.controllers')
         $scope.searchTerm = copy;
         $scope.county = $stateParams.county || 'Search results';
         function searchImmediate(searchTerm) {
-            return Area.search(searchTerm)
+            return Area.search(searchTerm, $stateParams.id)
                 .then(function(data) {
                     console.log(data);
                     $scope.areas = data;
@@ -21,7 +21,9 @@ angular.module('ifiske.controllers')
         }
         $scope.search = debounce(searchImmediate, 500);
 
-        $scope.search('');
+        $scope.$on('$ionicView.beforeEnter', () => {
+            searchImmediate($scope.searchTerm);
+        });
 
         $scope.onChange = function($event) {
             console.log($event);

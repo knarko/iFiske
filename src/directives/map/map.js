@@ -196,9 +196,12 @@ angular.module('ifiske.directives')
                 marker.bindPopup(area.t);
                 areaMarker.addLayer(marker);
 
-                map.setView({
-                    lat: area.lat,
-                    lng: area.lng,
+                console.log(map, area);
+                $timeout(() => {
+                    map.setView({
+                        lat: area.lat,
+                        lng: area.lng,
+                    });
                 });
 
                 map.setZoom(Number(area.zoom) ? Number(area.zoom) : 9, {

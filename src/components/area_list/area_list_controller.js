@@ -9,8 +9,8 @@ angular.module('ifiske.controllers')
         var copy = $stateParams.search;
         $scope.searchTerm = copy;
         $scope.county = $stateParams.county || 'Search results';
-        $scope.search = debounce(function(searchTerm) {
-            Area.search(searchTerm, $stateParams.id)
+        function searchImmediate(searchTerm) {
+            return Area.search(searchTerm)
                 .then(function(data) {
                     console.log(data);
                     $scope.areas = data;
@@ -18,7 +18,8 @@ angular.module('ifiske.controllers')
                 }, function(err) {
                     console.log(err);
                 });
-        }, 500);
+        }
+        $scope.search = debounce(searchImmediate, 500);
 
         $scope.search('');
 
@@ -30,7 +31,7 @@ angular.module('ifiske.controllers')
             if ($event.keyCode === 13) { // if enter-key
                 $event.preventDefault();
                 var searchTerm = $event.srcElement.value;
-                $scope.search(searchTerm);
+                searchImmediate(searchTerm);
             }
         };
 

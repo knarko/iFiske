@@ -36,6 +36,7 @@ build android:
     - bash get_build_id.sh
     - cat packaged_number.txt
     - bash download.sh
+    - ls *.apk
 
 build ios:
   stage: build
@@ -56,6 +57,7 @@ build ios:
     - bash get_build_id.sh
     - cat packaged_number.txt
     - bash download.sh
+    - ls *.ipa
 
 # unit_tests:
 #   dependencies: []

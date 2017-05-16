@@ -269,6 +269,7 @@ angular.module('ifiske.services')
             get_content_menu: function() {
                 return api_call({m: 'get_content_menu'});
             },
+            get_ads_main: () => api_call({m: 'get_ads_main'}),
         };
     };
 });

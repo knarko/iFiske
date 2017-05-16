@@ -8,6 +8,7 @@
 
 
     <ion-content class="padding">
+        <div class="flex-footer-container">
         <div class="list list-inset">
             <form class="search" action="">
               <label class="item item-input" ng-if="update.lastUpdate()">
@@ -28,48 +29,50 @@
             </button>
             {{'Admin tools' | translate}}
           </div>
-            <div class="item item-button-left" ui-sref="^.find_areas.counties">
-                <button class="button button-positive button-clear">
-                    <i class="icon icon-fishingareas"></i>
-                </button>
-                {{'Fishing areas' |translate}}
-            </div>
-            <div class="item item-button-left" ui-sref="^.map">
-                <button class="button button-positive button-clear">
-                    <i class="icon ion-map"></i>
-                </button>
-                {{'Map' | translate}}
-            </div>
-            <div ng-if="loggedIn.token" class="item item-button-left" ui-sref="^.cards">
-                <button class="button button-positive button-clear">
-                    <i class="icon icon-license"></i>
-                </button>
-                {{'My fishing licenses' | translate}}
-            </div>
-            <div ng-if="news()" class="item item-button-left" ui-sref="^.news">
-                <button class="button button-positive button-clear">
-                    <i class="icon ion-information-circled"></i>
-                </button>
-                {{news()}}
-            </div>
-            <div class="item item-button-left" ui-sref="^.fishes">
-                <button class="button button-positive button-clear">
-                    <i class="icon icon-fish"></i>
-                </button>
-                {{'Species of fish' | translate}}
-            </div>
-            <div class="item item-button-left" ui-sref="^.techniques">
-                <button class="button button-positive button-clear">
-                    <i class="icon icon-bait"></i>
-                </button>
-                {{'Fishing methods' | translate}}
-            </div>
-            <!-- div class="item item-button-left" ui-sref="^.report">
-                <button class="button button-positive button-clear">
-                <i class="icon icon-writereport"></i>
-                </button>
-                Fångstrapporter
-                </div -->
-                </div>
+          <div class="item item-button-left" ui-sref="^.find_areas.counties">
+              <button class="button button-positive button-clear">
+                  <i class="icon icon-fishingareas"></i>
+              </button>
+              {{'Fishing areas' |translate}}
+          </div>
+          <div class="item item-button-left" ui-sref="^.map">
+              <button class="button button-positive button-clear">
+                  <i class="icon ion-map"></i>
+              </button>
+              {{'Map' | translate}}
+          </div>
+          <div ng-if="loggedIn.token" class="item item-button-left" ui-sref="^.cards">
+              <button class="button button-positive button-clear">
+                  <i class="icon icon-license"></i>
+              </button>
+              {{'My fishing licenses' | translate}}
+          </div>
+          <div ng-if="news()" class="item item-button-left" ui-sref="^.news">
+              <button class="button button-positive button-clear">
+                  <i class="icon ion-information-circled"></i>
+              </button>
+              {{news()}}
+          </div>
+          <div class="item item-button-left" ui-sref="^.fishes">
+              <button class="button button-positive button-clear">
+                  <i class="icon icon-fish"></i>
+              </button>
+              {{'Species of fish' | translate}}
+          </div>
+          <div class="item item-button-left" ui-sref="^.techniques">
+              <button class="button button-positive button-clear">
+                  <i class="icon icon-bait"></i>
+              </button>
+              {{'Fishing methods' | translate}}
+          </div>
+          <!-- div class="item item-button-left" ui-sref="^.report">
+              <button class="button button-positive button-clear">
+              <i class="icon icon-writereport"></i>
+              </button>
+              Fångstrapporter
+              </div -->
+      </div>
+      <ads class="ads"></ads>
+      </div>
     </ion-content>
 </ion-view>

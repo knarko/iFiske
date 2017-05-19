@@ -16,7 +16,7 @@ angular.module('ifiske.controllers')
                     effect:                       'slide',
                     speed:                        250,
                     loop:                         true,
-                    autoplay:                     5000,
+                    autoplay:                     8000,
                     autoplayDisableOnInteraction: false,
                     initialSlide:                 1, // Needs to be one since we add duplicates when looping
                     pagination:                   undefined,

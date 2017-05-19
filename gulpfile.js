@@ -11,6 +11,7 @@ var minimist = require('minimist');
 var plumber = require('gulp-plumber');
 var sortJSON = require('gulp-json-sort').default;
 var babel = require('gulp-babel');
+var expectFile = require('gulp-expect-file');
 
 var knownOptions = {
     string:  'env',
@@ -29,52 +30,52 @@ var paths = {
         'src/scss/fonts/ifiske.ttf',
     ],
     images: [
-        './lib/Leaflet.awesome-markers/dist/images/*',
-        './lib/leaflet/dist/images/*',
+        'node_modules/drmonty-leaflet-awesome-markers/dist/images/*',
+        'node_modules/leaflet/dist/images/*',
     ],
     scripts: [
-        './src/io-config.js',
-        './src/app.js',
-        './src/states.js',
-        './src/components/**/*.js',
-        './src/services/**/*.js',
-        './src/directives/**/*.js',
-        './src/models/**/*.js',
-        './src/translations/*.js',
+        'src/io-config.js',
+        'src/app.js',
+        'src/states.js',
+        'src/components/**/*.js',
+        'src/services/**/*.js',
+        'src/directives/**/*.js',
+        'src/models/**/*.js',
+        'src/translations/*.js',
     ],
     libs: [
-        './src/lib/polyfill.js',
+        'src/lib/polyfill.js',
 
-        './lib/ionic/release/js/ionic.bundle.js',
-        './node_modules/@ionic/cloud/dist/bundle/ionic.cloud.js',
-        './lib/ionic-ion-header-shrink/ionic.headerShrink.js',
+        'node_modules/ionic-angular/release/js/ionic.bundle.js',
+        'node_modules/@ionic/cloud/dist/bundle/ionic.cloud.js',
+        'node_modules/ionic-ion-header-shrink/ionic.headerShrink.js',
 
-        './lib/ngCordova/dist/ng-cordova.js',
+        'node_modules/ng-cordova/dist/ng-cordova.js',
 
-        './lib/angular-i18n/angular-locale_sv.js',
+        'node_modules/angular-i18n/angular-locale_sv.js',
         // TODO: Allow for other locales maybe?
-        './lib/angular-messages/angular-messages.js',
-        './lib/angular-simple-logger/dist/angular-simple-logger.js',
+        'node_modules/angular-messages/angular-messages.js',
+        'node_modules/angular-simple-logger/dist/angular-simple-logger.js',
 
-        './lib/imgcache.js/js/imgcache.js',
-        './lib/angular-imgcache.js/angular-imgcache.js',
+        'node_modules/imgcache.js/js/imgcache.js',
+        'node_modules/angular-imgcache.js/angular-imgcache.js',
 
-        './lib/angular-translate/angular-translate.js',
-        './lib/angular-translate-handler-log/angular-translate-handler-log.js',
+        'node_modules/angular-translate/dist/angular-translate.js',
+        'node_modules/angular-translate-handler-log/angular-translate-handler-log.js',
 
-        './lib/leaflet/dist/leaflet-src.js',
-        './lib/leaflet.markercluster/dist/leaflet.markercluster-src.js',
-        './lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
-        './lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
-        './lib/leaflet-popup-angular/src/L.Popup.Angular.js',
+        'node_modules/leaflet/dist/leaflet-src.js',
+        'node_modules/leaflet.markercluster/dist/leaflet.markercluster-src.js',
+        'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
+        'node_modules/drmonty-leaflet-awesome-markers/js/leaflet.awesome-markers.js',
+        'node_modules/leaflet-popup-angular/src/L.Popup.Angular.js',
 
-        './node_modules/moment/moment.js',
-        './node_modules/moment/locale/sv.js',
-        './node_modules/moment/locale/en-gb.js',
-        './node_modules/moment/locale/de.js',
-        './node_modules/chart.js/dist/Chart.js',
-        './node_modules/angular-chart.js/dist/angular-chart.js',
-        './node_modules/fuse.js/dist/fuse.js',
+        'node_modules/moment/moment.js',
+        'node_modules/moment/locale/sv.js',
+        'node_modules/moment/locale/en-gb.js',
+        'node_modules/moment/locale/de.js',
+        'node_modules/chart.js/dist/Chart.js',
+        'node_modules/angular-chart.js/dist/angular-chart.js',
+        'node_modules/fuse.js/dist/fuse.js',
     ],
     templates:  ['src/components/**/*.html'],
     directives: ['src/directives/**/*.html'],
@@ -110,6 +111,7 @@ gulp.task('static_images', function(done) {
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
     .pipe(plumber({errorHandler: done}))
+    // .pipe(expectFile(paths.scripts))
     .pipe(ngAnnotate())
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(babel({
@@ -148,6 +150,7 @@ gulp.task('static', ['foss'], function(done) {
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
     .pipe(plumber({errorHandler: done}))
+    // .pipe(expectFile(paths.libs))
     .pipe(gulpif(options.env === 'development', sourcemaps.init()))
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))

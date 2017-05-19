@@ -1,7 +1,7 @@
 {
   "name": "ifiske",
   "app_id": "46a4a954",
-  "gulpDependantTasks": [
+  "gulpDependentTasks": [
     "default"
   ],
   "gulpStartupTasks": [

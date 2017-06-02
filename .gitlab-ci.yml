@@ -1,4 +1,5 @@
 stages:
+  - install
   - build
   - unit_tests
   - deploy
@@ -11,19 +12,18 @@ cache:
   key: "$CI_BUILD_REF_NAME"
   paths:
     - node_modules/
-    - lib/
 
-before_script:
-  - gem install bundler --user-install
-  - bundle install
+install:
+  stage: install
+  script:
+    - npm prune
+    - npm update --depth=Infinity
+    - npm ls
 
-build android:
+build:android:
   stage: build
   before_script:
-    - npm prune
-    - npm update
-    - bower prune
-    - bower update
+    - npm install
     - npm run ci.login
   allow_failure: true
   artifacts:
@@ -38,7 +38,7 @@ build android:
     - bash download.sh
     - ls *.apk
 
-build ios:
+build:ios:
   stage: build
   tags:
     - ios
@@ -46,10 +46,7 @@ build ios:
     paths:
       - "*.ipa"
   before_script:
-    - npm prune
-    - npm update
-    - bower prune
-    - bower update
+    - npm install
     - npm run ci.login
   script:
     - bash set_bundle_version.sh
@@ -73,10 +70,15 @@ build ios:
 
 test flight build:
   stage: deploy
+  dependencies:
+    - build:ios
   artifacts:
     paths:
       - fastlane/screenshots
       - fastlane/logs
+  before_script:
+    - gem install bundler --user-install
+    - bundle install
   script:
     - fastlane pilot upload -u maistho@gmail.com
   tags:
@@ -87,10 +89,15 @@ test flight build:
 
 prod build:
   stage: deploy
+  dependencies:
+    - build:ios
   artifacts:
     paths:
       - fastlane/screenshots
       - fastlane/logs
+  before_script:
+    - gem install bundler --user-install
+    - bundle install
   script:
     - fastlane pilot upload -u maistho@gmail.com
   tags:

@@ -18,7 +18,6 @@ install:
   script:
     - npm prune
     - npm update --depth=Infinity
-    - npm ls --depth=0
 
 build:android:
   stage: build

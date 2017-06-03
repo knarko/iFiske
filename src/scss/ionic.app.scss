@@ -27,13 +27,13 @@ $energized:  #edce07 !default;
 $assertive:  #ff580a !default;
 
 //libs
-@import "lib/ionic/scss/ionic";
-@import "lib/leaflet/dist/leaflet";
-@import "lib/leaflet.markercluster/dist/MarkerCluster.Default";
-@import "lib/leaflet.markercluster/dist/MarkerCluster";
-@import "lib/leaflet.locatecontrol/dist/L.Control.Locate";
+@import "node_modules/ionic-angular/scss/ionic";
+@import "node_modules/leaflet/dist/leaflet";
+@import "node_modules/leaflet.markercluster/dist/MarkerCluster.Default";
+@import "node_modules/leaflet.markercluster/dist/MarkerCluster";
+@import "node_modules/leaflet.locatecontrol/dist/L.Control.Locate";
 
-@import "lib/Leaflet.awesome-markers/dist/leaflet.awesome-markers";
+@import "node_modules/drmonty-leaflet-awesome-markers/css/leaflet.awesome-markers";
 
 // Imports
 @import "./imports/global";

@@ -26,7 +26,7 @@ var paths = {
     static: ['./src/static/**.*'],
     sass:   ['./src/scss/**/*.scss'],
     fonts:  [
-        'lib/ionic/release/fonts/*.{woff,otf,ttf}',
+        'node_modules/ionic-angular/release/fonts/*.{woff,otf,ttf}',
         'src/scss/fonts/ifiske.ttf',
     ],
     images: [

@@ -24,13 +24,16 @@ build:android:
   before_script:
     - npm install
     - npm run ci.login
+    - npm run ionic -- cordova platform add android -r || echo 1
   allow_failure: true
   artifacts:
     paths:
+      - "resources/android"
       - "*.apk"
   tags:
     - android
   script:
+    - npm run ionic -- cordova resources android
     - npm run package.android 2>&1 | tee package_output.log
     - bash get_build_id.sh
     - cat packaged_number.txt
@@ -43,11 +46,14 @@ build:ios:
     - ios
   artifacts:
     paths:
+      - "resources/ios"
       - "*.ipa"
   before_script:
     - npm install
     - npm run ci.login
+    - npm run ionic -- cordova platform add ios -r || echo 1
   script:
+    - npm run ionic -- cordova resources ios
     - bash set_bundle_version.sh
     - npm run package.ios 2>&1 | tee package_output.log
     - bash get_build_id.sh

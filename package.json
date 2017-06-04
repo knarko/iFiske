@@ -69,9 +69,9 @@
     "dependencies": {
         "@ionic/cloud": "^0.16.0",
         "angular-chart.js": "^1.1.1",
-        "angular-i18n": "^1.6.4",
+        "angular-i18n": "~1.5.11",
         "angular-imgcache.js": "^1.0.2",
-        "angular-messages": "^1.6.4",
+        "angular-messages": "~1.5.11",
         "angular-simple-logger": "^0.1.7",
         "angular-translate": "^2.15.1",
         "angular-translate-handler-log": "^2.15.1",

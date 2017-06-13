@@ -12,6 +12,7 @@ var plumber = require('gulp-plumber');
 var sortJSON = require('gulp-json-sort').default;
 var babel = require('gulp-babel');
 var expectFile = require('gulp-expect-file');
+var templateCache = require('gulp-angular-templatecache');
 
 var knownOptions = {
     string:  'env',
@@ -30,7 +31,7 @@ var paths = {
         'src/scss/fonts/ifiske.ttf',
     ],
     images: [
-        'node_modules/drmonty-leaflet-awesome-markers/dist/images/*',
+        'node_modules/drmonty-leaflet-awesome-markers/css/images/*',
         'node_modules/leaflet/dist/images/*',
     ],
     scripts: [
@@ -77,8 +78,7 @@ var paths = {
         'node_modules/angular-chart.js/dist/angular-chart.js',
         'node_modules/fuse.js/dist/fuse.js',
     ],
-    templates:  ['src/components/**/*.html'],
-    directives: ['src/directives/**/*.html'],
+    templates: ['src/**/*.html'],
 };
 
 gulp.task('serve:before', ['default']);
@@ -91,72 +91,70 @@ gulp.task('default', [
     'libs',
     'fonts',
     'templates',
-    'directives',
     'static',
     'images',
 ]);
 
 gulp.task('index', function(done) {
     gulp.src('src/index.html')
-    .pipe(gulp.dest('./www/'))
-    .on('end', done);
+        .pipe(gulp.dest('./www/'))
+        .on('end', done);
 });
 
 gulp.task('static_images', function(done) {
     gulp.src('src/img/*')
-    .pipe(gulp.dest('./www/img'))
-    .on('end', done);
+        .pipe(gulp.dest('./www/img'))
+        .on('end', done);
 });
 
 gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
-    .pipe(plumber({errorHandler: done}))
-    // .pipe(expectFile(paths.scripts))
-    .pipe(ngAnnotate())
-    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(babel({
-        presets: ['es2015'],
-    }))
-    .pipe(concat('all.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify()))
-    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
-    .pipe(gulp.dest('./www/'))
-    .on('end', done);
+        .pipe(plumber({errorHandler: done}))
+        // .pipe(expectFile(paths.scripts))
+        .pipe(ngAnnotate())
+        .pipe(gulpif(options.env === 'development', sourcemaps.init()))
+        .pipe(babel({
+            presets: ['es2015'],
+        }))
+        .pipe(concat('all.min.js', {newLine: ';\r\n'}))
+        .pipe(gulpif(options.env === 'production', uglify()))
+        .pipe(gulpif(options.env === 'development', sourcemaps.write()))
+        .pipe(gulp.dest('./www/'))
+        .on('end', done);
 });
 
 gulp.task('fonts', function(done) {
     gulp.src(paths.fonts)
-    .pipe(gulp.dest('./www/css/fonts'))
-    .on('end', done);
+        .pipe(gulp.dest('./www/css/fonts'))
+        .on('end', done);
 });
 
-gulp.task('directives', function(done) {
-    gulp.src(paths.directives)
-    .pipe(gulp.dest('./www/directives'))
-    .on('end', done);
-});
 gulp.task('templates', function(done) {
     gulp.src(paths.templates)
-    .pipe(gulp.dest('./www/components'))
-    .on('end', done);
+        .pipe(templateCache({
+            standalone: true,
+            base:       __dirname + '/src',
+        }))
+        .pipe(gulp.dest('./www'))
+        .on('end', done);
 });
 
 gulp.task('static', ['foss'], function(done) {
     gulp.src(paths.static)
-    .pipe(gulp.dest('./www/static'))
-    .on('end', done);
+        .pipe(gulp.dest('./www/static'))
+        .on('end', done);
 });
 
 gulp.task('libs', function(done) {
     gulp.src(paths.libs)
-    .pipe(plumber({errorHandler: done}))
-    // .pipe(expectFile(paths.libs))
-    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
-    .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
-    .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
-    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
-    .pipe(gulp.dest('./www/'))
-    .on('end', done);
+        .pipe(plumber({errorHandler: done}))
+        // .pipe(expectFile(paths.libs))
+        .pipe(gulpif(options.env === 'development', sourcemaps.init()))
+        .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
+        .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
+        .pipe(gulpif(options.env === 'development', sourcemaps.write()))
+        .pipe(gulp.dest('./www/'))
+        .on('end', done);
 });
 
 gulp.task('sass', function(done) {
@@ -165,21 +163,23 @@ gulp.task('sass', function(done) {
     var postcss = require('gulp-postcss');
     var minifyCss = require('gulp-minify-css');
     gulp.src(paths.sass)
-    .pipe(plumber({errorHandler: done}))
-    .pipe(sass())
-    .pipe(postcss([autoprefixer({browsers: [
-        'Android > 4',
-        'Last 3 Chrome versions',
-        'Last 3 Safari versions',
-        'ChromeAndroid > 40',
-        'Last 3 iOS versions',
-    ]})]))
-    .pipe(minifyCss({
-        keepSpecialComments: 0,
-    }))
-    .pipe(rename({extname: '.min.css'}))
-    .pipe(gulp.dest('./www/css/'))
-    .on('end', done);
+        .pipe(plumber({errorHandler: done}))
+        .pipe(sass())
+        .pipe(postcss([autoprefixer({
+            browsers: [
+                'Android > 4',
+                'Last 3 Chrome versions',
+                'Last 3 Safari versions',
+                'ChromeAndroid > 40',
+                'Last 3 iOS versions',
+            ],
+        })]))
+        .pipe(minifyCss({
+            keepSpecialComments: 0,
+        }))
+        .pipe(rename({extname: '.min.css'}))
+        .pipe(gulp.dest('./www/css/'))
+        .on('end', done);
 });
 
 gulp.task('watch', function() {
@@ -193,48 +193,48 @@ gulp.task('watch', function() {
 
 gulp.task('images', function(done) {
     gulp.src(paths.images)
-    .pipe(gulp.dest('./www/css/images'))
-    .on('end', done);
+        .pipe(gulp.dest('./www/css/images'))
+        .on('end', done);
 });
 
 gulp.task('foss', function(done) {
     var map = require('map-stream');
     var markdown = require('gulp-markdown');
     gulp.src(['./{lib,plugins,node_modules/@ionic}/*/{license,LICENSE}*'])
-    .pipe(markdown())
-    .pipe(map(function(file, cb) {
-        var fileContent = file.contents.toString();
-        var title = file.relative
-        .match(/[\\/](.*?)[\\/][^\\/]+$/)[1]
-        .replace(/[\\/]/g, '-')
-        .replace('@', '');
-        file.contents = new Buffer(JSON.stringify({
-            title: title,
-            text:  fileContent,
-        }));
-        cb(null, file);
-    }))
-    .pipe(concat('licenses.json', {newLine: ',\r\n'}))
-    .pipe(map(function(file, cb) {
-        file.contents = new Buffer('[' + file.contents.toString() + ']');
-        cb(null, file);
-    }))
-    .pipe(sortJSON({
-        space: 1,
-        cmp:   function(a, b) {
-            return a.key === 'title' ? -1 : 1;
-        },
-        replacer: function(key, value) {
-            if (value.sort) {
-                value.sort(function(a, b) {
-                    return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 0;
-                });
-            }
-            return value;
-        },
-    }))
-    .pipe(gulp.dest('src/static'))
-    .on('end', done);
+        .pipe(markdown())
+        .pipe(map(function(file, cb) {
+            var fileContent = file.contents.toString();
+            var title = file.relative
+                .match(/[\\/](.*?)[\\/][^\\/]+$/)[1]
+                .replace(/[\\/]/g, '-')
+                .replace('@', '');
+            file.contents = new Buffer(JSON.stringify({
+                title: title,
+                text:  fileContent,
+            }));
+            cb(null, file);
+        }))
+        .pipe(concat('licenses.json', {newLine: ',\r\n'}))
+        .pipe(map(function(file, cb) {
+            file.contents = new Buffer('[' + file.contents.toString() + ']');
+            cb(null, file);
+        }))
+        .pipe(sortJSON({
+            space: 1,
+            cmp:   function(a, b) {
+                return a.key === 'title' ? -1 : 1;
+            },
+            replacer: function(key, value) {
+                if (value.sort) {
+                    value.sort(function(a, b) {
+                        return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 0;
+                    });
+                }
+                return value;
+            },
+        }))
+        .pipe(gulp.dest('src/static'))
+        .on('end', done);
 });
 
 gulp.task('bump', function() {
@@ -249,19 +249,19 @@ var conventionalChangelog = require('gulp-conventional-changelog');
 gulp.task('changelog', changelog);
 function changelog() {
     return gulp.src('CHANGELOG.md')
-    .pipe(conventionalChangelog({
-      // conventional-changelog options go here
-        preset: 'angular',
-    }, {
-      // context goes here
-    }, {
-      // git-raw-commits options go here
-    }, {
-      // conventional-commits-parser options go here
-    }, {
-      // conventional-changelog-writer options go here
-    }))
-    .pipe(gulp.dest('./'));
+        .pipe(conventionalChangelog({
+            // conventional-changelog options go here
+            preset: 'angular',
+        }, {
+                // context goes here
+        }, {
+                // git-raw-commits options go here
+        }, {
+                // conventional-commits-parser options go here
+        }, {
+                // conventional-changelog-writer options go here
+            }))
+        .pipe(gulp.dest('./'));
 }
 
 function setIosBuild(version) {
@@ -282,8 +282,8 @@ function setIosBuild(version) {
 }
 gulp.task('updateBuildVersion', [], function() {
     gulp.src('./config.xml')
-    .pipe(setIosBuild())
-    .pipe(gulp.dest('./'));
+        .pipe(setIosBuild())
+        .pipe(gulp.dest('./'));
 });
 gulp.task('release', [], function() {
     var conventionalRecommendedBump = require('conventional-recommended-bump');
@@ -305,3 +305,6 @@ gulp.task('release', [], function() {
         // TODO: Make a git commit with the changelog and tag it
     });
 });
+
+gulp.task('ionic:build:before', ['default']);
+gulp.task('ionic:watch:before', ['default', 'watch']);

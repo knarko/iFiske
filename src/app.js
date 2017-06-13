@@ -4,6 +4,7 @@ angular.module('ifiske', [
     'ionic',
     'ionic.cloud',
     'ionic.ion.headerShrink',
+    'templates',
     'ifiske.controllers',
     'ifiske.directives',
     'ifiske.services',

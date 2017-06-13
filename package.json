@@ -19,13 +19,13 @@
         "bump.minor": "gulp bump --minor",
         "bump.major": "gulp bump --major",
         "release": "gulp release",
-        "package": "ionic cordova resources && gulp --env=production && ionic package build android --release -p prod && ionic package build ios --release -p prod",
-        "package.android": "gulp --env=production && ionic package build android --prod --release -p prod",
-        "package.ios": "gulp --env=production && ionic package build ios --prod --release -p prod",
+        "package": "ionic cordova resources --no-interactive && gulp --env=production && ionic package build android --release -p prod --no-interactive && ionic package build ios --release -p prod --no-interactive",
+        "package.android": "gulp --env=production && ionic package build android --prod --release -p prod --no-interactive",
+        "package.ios": "gulp --env=production && ionic package build ios --prod --release -p prod --no-interactive",
         "resources": "ionic cordova resources",
         "lint": "eslint src",
         "lint.fix": "eslint src --fix",
-        "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD",
+        "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD --no-interactive",
         "update": "npm prune && npm update && bower prune && bower update"
     },
     "repository": {

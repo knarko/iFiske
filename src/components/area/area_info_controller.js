@@ -14,7 +14,10 @@ angular.module('ifiske.controllers')
     $scope.slideOptions = {
         effect:     'slide',
         speed:      250,
+        loop:       true,
+        autoplay:   3000,
         autoHeight: true,
+        pagination: undefined,
     };
 
     Area.getPhotos($stateParams.id)

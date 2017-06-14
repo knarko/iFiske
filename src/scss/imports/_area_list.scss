@@ -2,7 +2,7 @@
     color: $positive;
 }
 .wrap.wrap {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     white-space: normal;
@@ -15,5 +15,17 @@
     transform: translateY(-50%);
 }
 .found-fish {
+    .wrap.wrap {
+        -webkit-line-clamp: 3;
+    }
+
     padding-left: 130px;
+}
+
+.search-bar {
+    margin-top: 43px;
+}
+.has-search-bar {
+    margin-top: 42px;
+    padding: 0;
 }

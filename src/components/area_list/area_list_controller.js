@@ -5,7 +5,8 @@ angular.module('ifiske.controllers')
         $ionicScrollDelegate,
         Area,
         Fish,
-        debounce
+        debounce,
+        $cordovaKeyboard
     ) {
         var copy = $stateParams.search;
         $scope.searchTerm = copy;
@@ -56,11 +57,15 @@ angular.module('ifiske.controllers')
                 $event.preventDefault();
                 var searchTerm = $event.srcElement.value;
                 searchImmediate(searchTerm);
+                if (window.cordova) {
+                    $cordovaKeyboard.close();
+                }
             }
         };
 
         $scope.clearSearch = function() {
             $scope.searchTerm = '';
+            searchImmediate($scope.searchTerm);
         };
 
         $scope.scrollTop = function() {

@@ -31,7 +31,7 @@
             <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{'/'+org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
         </div>
-        <div class="item item-divider" translate>Files</div>
+        <div ng-if="files && files.length" class="item item-divider" translate>Files</div>
         <a class="item" ng-repeat="file in files" ng-href="{{::image_endpoint}}{{file.f}}">
           <i ng-if="file.thumb" style="content: url('{{::image_endpoint}}{{file.thumb}}');" class="icon-image"></i>
           {{ file.t || file.f.split('/').slice(-1)[0] || ( 'Downloadable file' | translate:{type: file.typ} ) }}

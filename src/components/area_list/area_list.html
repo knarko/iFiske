@@ -11,10 +11,17 @@
     <ion-content header-shrink>
       <div style="height: 43px;"></div>
       <div class="list">
-        <div class="item item-icon-left item-full-width" collection-repeat="area in areas" item-height="area.org === area.t ? '54px' : '74px'" ui-sref="app.area.info({id: area.ID, area:area})">
-          <i class="icon icon-license" ng-class="{selling: area.wsc}"></i>
+        <div ng-show="foundFish" ui-sref="app.fishdetail({fish: foundFish, id: foundFish.ID})" class="item item-thumbnail-left found-fish">
+          <img class="fish-image" img-cache ic-src="{{image_endpoint + foundFish.img}}">
+          <h2>{{foundFish.t}}</h2>
+          <p class="wrap">{{foundFish.d}}</p>
+          </div>
+        <div class="item item-thumbnail-left item-full-width" collection-repeat="area in areas" ui-sref="app.area.info({id: area.ID, area:area})">
+          <img class="cropped-image" img-cache ic-src="{{image_endpoint + area.photo}}" ng-if="area.photo" />
           <h2>{{area.org}}</h2>
-          <p>{{area.t === area.org ? '': area.t}}</p>
+          <span class="pull-right" ng-if="area.distance | distance"><i class="icon ion-location"></i> {{area.distance | distance}}</span>
+          <p class="wrap">{{area.t === area.org ? '': area.t}}</p>
+          <span ng-if="foundFish" class="lvl lvl-{{area.level}}" />
         </div>
       </div>
     </ion-content>

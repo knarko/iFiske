@@ -49,4 +49,20 @@ angular.module('ifiske.services')
             callback.apply(context, args);
         }, delay);
     };
+})
+
+.filter('distance', function distanceFilter() {
+    return function(distance) {
+        if (!distance) {
+            return '';
+        }
+
+        if (distance > 2000) {
+            return Math.round(distance / 1000) + 'km';
+        } else if (distance > 500) {
+            return Number(distance / 1000).toPrecision(2) + 'km';
+        }
+
+        return distance + 'm';
+    };
 });

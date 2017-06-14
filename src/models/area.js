@@ -157,7 +157,8 @@ angular.module('ifiske.models')
                             'Fish_2.fishes as fish_2,',
                             'Fish_3.fishes as fish_3,',
                             'Fish_4.fishes as fish_4,',
-                            'Fish_5.fishes as fish_5',
+                            'Fish_5.fishes as fish_5,',
+                            'Area_Photos.file as photo',
 
                             'FROM Area',
 
@@ -171,6 +172,7 @@ angular.module('ifiske.models')
                             'LEFT JOIN Fish ON Area_Fish.fid = Fish.ID',
                             'LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID',
                             'LEFT JOIN Organization ON Area.orgid = Organization.ID',
+                            'LEFT JOIN (SELECT min(rowid), area, file from Area_Photos GROUP BY area ORDER BY rowid ASC) as Area_Photos ON Area.ID = Area_Photos.area',
                             countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : '',
                             'GROUP BY Area.ID',
                         ].join(' '), countyId ? [countyId, countyId, countyId] : []);
@@ -296,12 +298,14 @@ angular.module('ifiske.models')
                             }
                             if (currentLocation) {
                                 res.forEach(r => {
-                                    r.score += mapDistance(calculateDistance(
+                                    let distance = calculateDistance(
                                         r.item.lat,
                                         r.item.lng,
                                         currentLocation.lat,
                                         currentLocation.lng
-                                    ));
+                                    );
+                                    r.item.distance = distance;
+                                    r.score += mapDistance(distance);
                                 });
                             }
                             resolve(res.sort((a, b) => {

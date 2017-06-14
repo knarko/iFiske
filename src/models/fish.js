@@ -40,6 +40,27 @@ angular.module('ifiske.models')
                     });
                 });
             },
+            search: function(searchString) {
+                var t0 = performance.now();
+                return model.getAll().then(data => {
+                    var options = {
+                        keys: [{
+                            name:   't',
+                            weight: 0.6,
+                        }],
+                        includeScore:     true,
+                        shouldSort:       true,
+                        threshold:        0.01,
+                        distance:         10,
+                        maxPatternLength: 16,
+                    };
+                    return new Fuse(data, options);
+                }).then(fuse => {
+                    var t1 = performance.now();
+                    console.log('Searching took:', (t1 - t0), 'ms');
+                    return fuse.search(searchString);
+                });
+            },
         });
 
         return model;

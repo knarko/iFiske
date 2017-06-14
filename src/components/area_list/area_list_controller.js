@@ -4,16 +4,36 @@ angular.module('ifiske.controllers')
         $stateParams,
         $ionicScrollDelegate,
         Area,
+        Fish,
         debounce
     ) {
         var copy = $stateParams.search;
         $scope.searchTerm = copy;
         $scope.county = $stateParams.county || 'Search results';
         function searchImmediate(searchTerm) {
+            if (searchTerm) {
+                Fish.search(searchTerm).then(fishes => {
+                    if (fishes.length) {
+                        $scope.foundFish = fishes[0].item;
+                    } else {
+                        $scope.foundFish = undefined;
+                    }
+                });
+            } else {
+                $scope.foundFish = undefined;
+            }
             return Area.search(searchTerm, $stateParams.id)
                 .then(function(data) {
-                    console.log(data);
                     $scope.areas = data;
+                    $scope.areas.forEach(area => {
+                        for (let i = 5; i >= 0; --i) {
+                            let fishes = area['fish_' + i];
+                            if (fishes && fishes.search($scope.foundFish.t) !== -1) {
+                                area.level = i;
+                                break;
+                            }
+                        }
+                    });
                     $scope.scrollTop();
                 }, function(err) {
                     console.log(err);

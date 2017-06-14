@@ -129,3 +129,9 @@ h2 {
 .item-input-wrapper {
     background: white;
 }
+
+
+.cropped-image {
+    object-fit: cover;
+    object-position: center;
+}

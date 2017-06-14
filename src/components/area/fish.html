@@ -3,14 +3,7 @@
     <ion-content>
         <div class="wrap-grid">
             <div ng-repeat="fish in fishes | orderBy:sortorder" class="c-50 item fishcard">
-                <div class="item-image" ui-sref="app.fishdetail({fish: fish, id: fish.ID})">
-                    <img ng-if="fish.img" ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
-                    <img ng-if="!fish.img" ic-src="{{image_endpoint}}{{default_img}}" img-cache />
-                    <p>
-                    <span>{{fish.t}}</span> <span class="lvl lvl-{{fish.amount}}" />
-                    </p>
-                </div>
-
+                <ifiske-fish-amount fish-id="fish.ID" amount="fish.amount" ui-sref="app.fishdetail({fish: fish, id: fish.ID})" class="item-image"></ifiske-fish-amount>
             </div>
         </div>
     </ion-content>

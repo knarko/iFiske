@@ -232,7 +232,7 @@
                     templateUrl: 'components/area_list/area_list.html',
                     controller:  'AreasCtrl',
                     params:      {
-                        id:     0,
+                        id:     undefined,
                         county: '',
                         search: '',
                     },

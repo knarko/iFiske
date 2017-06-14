@@ -25,15 +25,17 @@ angular.module('ifiske.controllers')
             return Area.search(searchTerm, $stateParams.id)
                 .then(function(data) {
                     $scope.areas = data;
-                    $scope.areas.forEach(area => {
-                        for (let i = 5; i >= 0; --i) {
-                            let fishes = area['fish_' + i];
-                            if (fishes && fishes.search($scope.foundFish.t) !== -1) {
-                                area.level = i;
-                                break;
+                    if ($scope.foundFish) {
+                        $scope.areas.forEach(area => {
+                            for (let i = 5; i >= 0; --i) {
+                                let fishes = area['fish_' + i];
+                                if (fishes && fishes.search($scope.foundFish.t) !== -1) {
+                                    area.level = i;
+                                    break;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     $scope.scrollTop();
                 }, function(err) {
                     console.log(err);

@@ -42,7 +42,12 @@ angular.module('ifiske.directives')
             chartOrganizationId: '=',
         },
         controller: function($scope, Admin) {
+            let lastId;
             $scope.$watch('chartOrganizationId', function(id) {
+                if (lastId !== id) {
+                    lastId = id;
+                    $scope.showChart = false;
+                }
                 Admin.stats(id).then(function(stats) {
                     stats = stats[id];
                     console.log(stats);

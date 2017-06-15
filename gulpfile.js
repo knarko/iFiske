@@ -24,9 +24,8 @@ var knownOptions = {
 var options = minimist(process.argv.slice(2), knownOptions);
 
 var paths = {
-    static: ['./src/static/**.*'],
-    sass:   ['./src/scss/**/*.scss'],
-    fonts:  [
+    sass:  ['./src/scss/**/*.scss'],
+    fonts: [
         'node_modules/ionic-angular/release/fonts/*.{woff,otf,ttf}',
         'src/scss/fonts/ifiske.ttf',
     ],
@@ -91,7 +90,6 @@ gulp.task('default', [
     'libs',
     'fonts',
     'templates',
-    'static',
     'images',
 ]);
 
@@ -137,12 +135,6 @@ gulp.task('templates', function(done) {
             base:       __dirname + '/src',
         }))
         .pipe(gulp.dest('./www'))
-        .on('end', done);
-});
-
-gulp.task('static', ['foss'], function(done) {
-    gulp.src(paths.static)
-        .pipe(gulp.dest('./www/static'))
         .on('end', done);
 });
 
@@ -234,7 +226,7 @@ gulp.task('foss', function(done) {
                 return value;
             },
         }))
-        .pipe(gulp.dest('src/static'))
+        .pipe(gulp.dest('www/static'))
         .on('end', done);
 });
 

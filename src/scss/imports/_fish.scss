@@ -37,10 +37,11 @@
 .lvl {
     display: block;
     clear: both;
+    overflow: hidden;
     height: 10px;
     border: 1px solid $dark;
+    border-radius: 10px;
     padding: 2px;
-    padding-bottom: 1px;
     width: 100%;
     margin: 0 auto;
 
@@ -49,6 +50,10 @@
         display: block;
         height: 4px;
         padding: 0;
+        border-radius: 10px;
+        animation: .5s level;
+        animation-timing-function: cubic-bezier(.68, -.35, .27, 1.35);
+        transition: .5s cubic-bezier(.68, -.35, .27, 1.35);
     }
 
     &.lvl-1::before {
@@ -74,5 +79,11 @@
     &.lvl-5::before {
         width: 100%;
         background: $balanced;
+    }
+}
+
+@keyframes level {
+    0% {
+        width: 0%;
     }
 }

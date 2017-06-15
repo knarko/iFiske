@@ -5,6 +5,8 @@ angular.module('ifiske.controllers')
         controller:   class AdsController {
             constructor(
                 AdService,
+                $cordovaInAppBrowser,
+                analytics,
                 $scope
             ) {
                 $scope.$on("$ionicSlides.sliderInitialized", (_event, data) => {
@@ -29,6 +31,10 @@ angular.module('ifiske.controllers')
                         this.slider.slideTo(1);
                     }
                 });
+                $scope.openInBrowser = function(ad) {
+                    analytics.trackEvent('Ads', 'clicked', ad.ID);
+                    $cordovaInAppBrowser.open(ad.URL, '_system');
+                };
             }
         },
     });

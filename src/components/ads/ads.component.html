@@ -1,5 +1,5 @@
 <ion-slides options="vm.options" slider="data.slider">
-  <ion-slide-page ng-repeat="ad in vm.ads">
-    <a ng-href="{{ad.URL}}" target="_blank"><img ic-src="{{ad.app_imageurl}}" img-cache></a>
+  <ion-slide-page ng-repeat="ad in vm.ads" ng-click="openInBrowser(ad)">
+    <img ic-src="{{ad.app_imageurl}}" img-cache>
   </ion-slide-page>
 </ion-slides>

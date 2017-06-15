@@ -9,7 +9,7 @@
 			   ng-model="user.username"></label>
 		<label class="item item-input">
 		    <input name="password" id="password" type="password" placeholder="{{'Password'|translate}}"
-			   ng-model="user.password"></label>
+			   ng-model="user.password" ui-show-password></label>
 
 		<ng-messages class="error-message" for="loginForm.$error">
 		    <div ng-message="loginError" translate>Invalid username or password</div>

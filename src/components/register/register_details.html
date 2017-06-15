@@ -33,7 +33,7 @@
 		<label ng-class="{'label-error': forms.registerForm.password.$invalid &&
 				 forms.registerForm.password.$dirty}" class="item item-input">
 		    <input id="password" name="password" ng-model="details.password"
-			   type="password" ng-pattern="/^.{6,16}$/" required>
+			   type="password" ng-pattern="/^.{6,16}$/" ui-show-password required>
 		</label>
 		<ng-messages for="forms.registerForm.password.$error" class="error-message"
 		     ng-if="forms.registerForm.password.$dirty">

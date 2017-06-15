@@ -135,3 +135,16 @@ h2 {
     object-fit: cover;
     object-position: center;
 }
+
+
+.button-display-password {
+    min-height: unset;
+
+    &.activated {
+        opacity: 1;
+    }
+
+    .ion-eye-disabled::before {
+        padding-top: .5px;
+    }
+}

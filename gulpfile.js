@@ -5,7 +5,6 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
-var ngAnnotate = require('gulp-ng-annotate');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
 var plumber = require('gulp-plumber');
@@ -111,10 +110,10 @@ gulp.task('scripts', function(done) {
     gulp.src(paths.scripts)
         .pipe(plumber({errorHandler: done}))
         // .pipe(expectFile(paths.scripts))
-        .pipe(ngAnnotate())
         .pipe(gulpif(options.env === 'development', sourcemaps.init()))
         .pipe(babel({
             presets: ['es2015'],
+            plugins: ['ng-annotate'],
         }))
         .pipe(concat('all.min.js', {newLine: ';\r\n'}))
         .pipe(gulpif(options.env === 'production', uglify()))
@@ -260,7 +259,7 @@ function changelog() {
                 // conventional-commits-parser options go here
         }, {
                 // conventional-changelog-writer options go here
-            }))
+        }))
         .pipe(gulp.dest('./'));
 }
 

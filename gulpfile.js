@@ -7,6 +7,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var minimist = require('minimist');
+var ngAnnotate = require('gulp-ng-annotate');
 var plumber = require('gulp-plumber');
 var sortJSON = require('gulp-json-sort').default;
 var babel = require('gulp-babel');
@@ -115,6 +116,7 @@ gulp.task('scripts', function(done) {
             presets: ['es2015'],
             plugins: ['ng-annotate'],
         }))
+        .pipe(ngAnnotate())
         .pipe(concat('all.min.js', {newLine: ';\r\n'}))
         .pipe(gulpif(options.env === 'production', uglify()))
         .pipe(gulpif(options.env === 'development', sourcemaps.write()))

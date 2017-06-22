@@ -148,3 +148,12 @@ h2 {
         padding-top: .5px;
     }
 }
+
+img {
+    transition: opacity .2s linear;
+}
+
+img[src=''],
+img:not([src]) {
+    opacity: 0;
+}

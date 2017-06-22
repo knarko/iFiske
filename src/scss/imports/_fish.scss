@@ -37,15 +37,26 @@
 .lvl {
     display: block;
     clear: both;
-    overflow: hidden;
     height: 10px;
     border: 1px solid $dark;
     border-radius: 10px;
     padding: 2px;
     width: 100%;
-    margin: 0 auto;
+    margin: auto 0 0 auto;
+    position: relative;
 
-    &::before {
+    &.show-icon {
+        width: calc(100% - 20px);
+        &::before {
+        content: "\e902";
+        display: block;
+        position: absolute;
+        font-family: ifiske;
+        left: -20px;
+        top: -6px;
+    }
+    }
+    &::after {
         content: '';
         display: block;
         height: 4px;
@@ -56,27 +67,27 @@
         transition: .5s cubic-bezier(.68, -.35, .27, 1.35);
     }
 
-    &.lvl-1::before {
+    &.lvl-1::after {
         width: 20%;
         background: $assertive;
     }
 
-    &.lvl-2::before {
+    &.lvl-2::after {
         width: 40%;
         background: $energized;
     }
 
-    &.lvl-3::before {
+    &.lvl-3::after {
         width: 60%;
         background: $balanced;
     }
 
-    &.lvl-4::before {
+    &.lvl-4::after {
         width: 80%;
         background: $balanced;
     }
 
-    &.lvl-5::before {
+    &.lvl-5::after {
         width: 100%;
         background: $balanced;
     }

@@ -19,9 +19,9 @@
         <div class="item {{area.photo ? 'item-thumbnail-left' : ''}} item-full-width" collection-repeat="area in areas" item-height="100px" ui-sref="app.area.info({id: area.ID, area:area})">
           <img class="cropped-image" img-cache ic-src="{{image_endpoint + area.photo}}" ng-if="area.photo" />
           <h2>{{area.org}}</h2>
-          <span class="pull-right" ng-if="area.distance | distance"><i class="icon ion-location"></i> {{area.distance | distance}}</span>
+          <span class="pull-right distance-indicator" ng-if="area.distance | distance"><i class="icon ion-location"></i> {{area.distance | distance}}</span>
           <p class="wrap">{{area.t === area.org ? '': area.t}}</p>
-          <span ng-if="foundFish" class="lvl lvl-{{area.level}}"></span>
+          <span ng-if="foundFish" class="lvl lvl-{{area.level}} show-icon"></span>
         </div>
       </div>
     </ion-content>

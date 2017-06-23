@@ -6,7 +6,7 @@
         <h3>{{::fish.lat}}</h3>
     </div>
     <div ng-if="fish.img" class="item item-image">
-        <img ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
+        <img ic-src="{{ifiskeUrl}}{{fish.img}}" img-cache />
     </div>
     <div ng-if="fish.d" class="item item-divider">
         <p translate>Description</p>

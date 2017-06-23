@@ -1,35 +1,35 @@
 angular.module('ifiske.controllers')
-.controller('AreaCtrl', function(
+  .controller('AreaCtrl', function(
     $scope,
     $stateParams,
     Area,
     Product,
-    Organization
-) {
+    Organization,
+  ) {
     Area.getOne($stateParams.id)
-    .then(function(area) {
+      .then(function(area) {
         $scope.area = area;
         $scope.$broadcast('ifiske-area');
 
         Organization.getOne(area.orgid)
-        .then(function(org) {
+          .then(function(org) {
             $scope.org = org;
-        });
-    }, function(err) {
+          });
+      }, function(err) {
         console.warn(err);
-    });
+      });
 
     Area.getFishes($stateParams.id)
-    .then(function(fishes) {
+      .then(function(fishes) {
         $scope.fishes = fishes;
-    }, function(err) {
+      }, function(err) {
         console.warn(err);
-    });
+      });
 
     Product.getByArea($stateParams.id)
-    .then(function(products) {
+      .then(function(products) {
         $scope.products = products;
-    }, function(err) {
+      }, function(err) {
         console.warn(err);
-    });
-});
+      });
+  });

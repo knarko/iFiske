@@ -23,7 +23,7 @@
         "package.android": "gulp --env=production && ionic package build android --prod --release -p prod --no-interactive",
         "package.ios": "gulp --env=production && ionic package build ios --prod --release -p prod --no-interactive",
         "resources": "ionic cordova resources",
-        "lint": "eslint src",
+        "lint": "eslint src; sass-lint -v",
         "lint.fix": "eslint src --fix",
         "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD --no-interactive",
         "update": "npm prune && npm update && bower prune && bower update"
@@ -79,6 +79,7 @@
         "angular-simple-logger": "^0.1.7",
         "angular-translate": "^2.15.1",
         "angular-translate-handler-log": "^2.15.1",
+        "babel-preset-env": "^1.5.2",
         "chart.js": "~2.5.0",
         "cordova-android": "~6.2.3",
         "cordova-ios": "~4.4.0",

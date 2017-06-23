@@ -1,30 +1,30 @@
 // 'ifiske' is the name of this angular module (also set in a <body> attribute in index.html)
 
 angular.module('ifiske', [
-    'ionic',
-    'ionic.cloud',
-    'ionic.ion.headerShrink',
-    'templates',
-    'ifiske.controllers',
-    'ifiske.directives',
-    'ifiske.services',
-    'ifiske.models',
-    'ngCordova',
-    'systemBrowser',
-    'ngCordovaSms',
-    'ngMessages',
-    'ImgCache',
-    'pascalprecht.translate',
-    'ifiske.translations',
-    'chart.js',
+  'ionic',
+  'ionic.cloud',
+  'ionic.ion.headerShrink',
+  'templates',
+  'ifiske.controllers',
+  'ifiske.directives',
+  'ifiske.services',
+  'ifiske.models',
+  'ngCordova',
+  'systemBrowser',
+  'ngCordovaSms',
+  'ngMessages',
+  'ImgCache',
+  'pascalprecht.translate',
+  'ifiske.translations',
+  'chart.js',
 ])
 
-.constant('$ionicLoadingConfig', {
+  .constant('$ionicLoadingConfig', {
     template: '<ion-spinner></ion-spinner>',
     // hideOnStateChange: true
-})
-.constant('serverLocation', 'https://www.ifiske.se')
-.run(function(
+  })
+  .constant('serverLocation', 'https://www.ifiske.se')
+  .run(function(
     $ionicPlatform,
     $window,
     ImgCache,
@@ -34,49 +34,49 @@ angular.module('ifiske', [
     Update,
     Push,
     analytics,
-    serverLocation
-) {
-    $rootScope.image_endpoint = serverLocation; // eslint-disable-line camelcase
+    serverLocation,
+  ) {
+    $rootScope.ifiskeUrl = serverLocation;
 
     $ionicPlatform.ready(function() {
-        Push.init();
+      Push.init();
 
-        if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
-            $window.MobileAccessibility.usePreferredTextZoom(false);
-            console.log("Preferred text zoom disabled");
+      if ($ionicPlatform.is('Android') && $window.MobileAccessibility) {
+        $window.MobileAccessibility.usePreferredTextZoom(false);
+        console.log('Preferred text zoom disabled');
+      }
+
+      if ($window.StatusBar) {
+        // cordova-plugin-statusbar required
+        $window.StatusBar.styleLightContent();
+        if ($ionicPlatform.is('Android')) {
+          // Color slightly darker than our navigation bar
+          $window.StatusBar.backgroundColorByHexString('#001f2d');
         }
+      }
 
-        if ($window.StatusBar) {
-            // cordova-plugin-statusbar required
-            $window.StatusBar.styleLightContent();
-            if ($ionicPlatform.is('Android')) {
-                // Color slightly darker than our navigation bar
-                $window.StatusBar.backgroundColorByHexString("#001f2d");
-            }
-        }
+      ImgCache.$init();
+      if (localStorage.get('language')) {
+        analytics.trackEvent('Language', 'initialized', localStorage.get('language'));
+        Update.update().catch(function(err) {
+          console.error(err);
+        });
+      }
 
-        ImgCache.$init();
-        if (localStorage.get('language')) {
-            analytics.trackEvent('Language', 'initialized', localStorage.get('language'));
-            Update.update().catch(function(err) {
-                console.error(err);
-            });
-        }
+      if ($window.navigator && $window.navigator.splashscreen) {
+        $timeout(function() {
+          $window.navigator.splashscreen.hide();
+        }, 500);
+      }
 
-        if ($window.navigator && $window.navigator.splashscreen) {
-            $timeout(function() {
-                $window.navigator.splashscreen.hide();
-            }, 500);
-        }
-
-        $rootScope.$on('$stateChangeSuccess',
-            function(_event, toState, toParams, _fromState, _fromParams) {
-                analytics.trackView(toState.name + '(' + (toParams.id || '') + ')');
-            });
+      $rootScope.$on('$stateChangeSuccess',
+        function(_event, toState, toParams, _fromState, _fromParams) {
+          analytics.trackView(toState.name + '(' + (toParams.id || '') + ')');
+        });
     });
-})
+  })
 
-.config(function(
+  .config(function(
     $stateProvider,
     States,
     $urlRouterProvider,
@@ -86,48 +86,48 @@ angular.module('ifiske', [
     $translateProvider,
     swedishTranslations,
     germanTranslations,
-    englishTranslations
-) {
+    englishTranslations,
+  ) {
     $translateProvider
-    .translations('se', swedishTranslations)
-    .translations('de', germanTranslations)
-    .translations('en', englishTranslations)
-    .translations('en_GB', englishTranslations)
-    .determinePreferredLanguage()
-    .fallbackLanguage(['en', 'se'])
-    .useSanitizeValueStrategy('sanitizeParameters')
-    .useMissingTranslationHandlerLog();
+      .translations('se', swedishTranslations)
+      .translations('de', germanTranslations)
+      .translations('en', englishTranslations)
+      .translations('en_GB', englishTranslations)
+      .determinePreferredLanguage()
+      .fallbackLanguage(['en', 'se'])
+      .useSanitizeValueStrategy('sanitizeParameters')
+      .useMissingTranslationHandlerLog();
     var language = localStorage.getItem('language');
     if (language) {
-        $translateProvider.preferredLanguage(language);
+      $translateProvider.preferredLanguage(language);
     } else {
-        $translateProvider.determinePreferredLanguage();
+      $translateProvider.determinePreferredLanguage();
     }
 
     /* eslint-disable camelcase */
     $ionicCloudProvider.init({
-        core: {
-            app_id: "46a4a954",
+      core: {
+        app_id: '46a4a954',
+      },
+      push: {
+        sender_id:    '196216212249',
+        pluginConfig: {
+          ios: {
+            badge: true,
+            sound: true,
+          },
+          android: {
+            iconColor: '#00ff00',
+          },
         },
-        push: {
-            sender_id:    "196216212249",
-            pluginConfig: {
-                ios: {
-                    badge: true,
-                    sound: true,
-                },
-                android: {
-                    iconColor: "#00ff00",
-                },
-            },
 
-        },
+      },
     });
     /* eslint-enable camelcase */
 
     ImgCacheProvider.setOptions({
-        debug:              false,
-        usePersistentCache: true,
+      debug:              false,
+      usePersistentCache: true,
     });
     ImgCacheProvider.manualInit = true;
 
@@ -153,26 +153,26 @@ angular.module('ifiske', [
 
     var defaultUrl = '/app/login';
     if (!window.localStorage.getItem('language')) {
-        defaultUrl = '/app/language';
+      defaultUrl = '/app/language';
     } else if (window.localStorage.getItem('session')) {
-        defaultUrl = '/app/home';
+      defaultUrl = '/app/home';
     }
     $urlRouterProvider.otherwise(defaultUrl);
 
     function parseStates(name, state) {
-        if (state.config) {
-            $stateProvider.state(name, state.config);
-        } else {
-            $stateProvider.state(name, state);
-        }
-        if (state.children) {
-            Object.keys(state.children).forEach(function(stateName) {
-                parseStates(name + '.' + stateName, state.children[stateName]);
-            });
-        }
+      if (state.config) {
+        $stateProvider.state(name, state.config);
+      } else {
+        $stateProvider.state(name, state);
+      }
+      if (state.children) {
+        Object.keys(state.children).forEach(function(stateName) {
+          parseStates(name + '.' + stateName, state.children[stateName]);
+        });
+      }
     }
     parseStates('app', States.app);
-});
+  });
 
 angular.module('ifiske.controllers', []);
 angular.module('ifiske.directives', []);

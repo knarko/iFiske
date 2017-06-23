@@ -1,20 +1,20 @@
 angular.module('ifiske.services')
-.service('DB', function($cordovaSQLite, $q) {
+  .service('DB', function($cordovaSQLite, $q) {
     var db;
     var ready = $q.defer();
     if (window.sqlitePlugin) {
-        db = $cordovaSQLite.openDB('fiskebasen.db');
+      db = $cordovaSQLite.openDB('fiskebasen.db');
     } else if (window.openDatabase) {
-        db = window.openDatabase(
-            'fiskebasen.db',
-            '',
-            'fiskebasen',
-            10 * 1024 * 1024
-        );
+      db = window.openDatabase(
+        'fiskebasen.db',
+        '',
+        'fiskebasen',
+        10 * 1024 * 1024,
+      );
     } else {
-        console.log('Not supported on this device, sorry');
-        ready.reject('Not supported');
-        return {ready: ready.promise};
+      console.log('Not supported on this device, sorry');
+      ready.reject('Not supported');
+      return {ready: ready.promise};
     }
     ready.resolve();
 
@@ -25,7 +25,7 @@ angular.module('ifiske.services')
      * @return {SQL_result}     SQL result
      */
     function runSql(sql, params) {
-        return $cordovaSQLite.execute(db, sql, params);
+      return $cordovaSQLite.execute(db, sql, params);
     }
 
     /**
@@ -34,15 +34,15 @@ angular.module('ifiske.services')
      * @return {Array}      Array of objects
      */
     function createObject(data) {
-        var retval = [];
-        for (var i = 0; i < data.rows.length; ++i) {
-            retval.push(angular.copy(data.rows.item(i)));
-        }
-        return retval;
+      var retval = [];
+      for (var i = 0; i < data.rows.length; ++i) {
+        retval.push(angular.copy(data.rows.item(i)));
+      }
+      return retval;
     }
 
     function clean(table) {
-        return runSql('DROP TABLE IF EXISTS ' + table + ';');
+      return runSql('DROP TABLE IF EXISTS ' + table + ';');
     }
 
     /**
@@ -52,20 +52,20 @@ angular.module('ifiske.services')
      * @return {Promise<array>}      Promise of an array with the selected rows
      */
     function getMultiple(sql, args) {
-        return $q(function(fulfill, reject) {
-            $cordovaSQLite.execute(db, sql, args)
-            .then(function(result) {
-                if (result.rows.length) {
-                    fulfill(createObject(result));
-                } else {
-                    reject(
-                        'Could not find any objects for sql: \n' +
+      return $q(function(fulfill, reject) {
+        $cordovaSQLite.execute(db, sql, args)
+          .then(function(result) {
+            if (result.rows.length) {
+              fulfill(createObject(result));
+            } else {
+              reject(
+                'Could not find any objects for sql: \n' +
                         sql + '\nWith arguments: \n' +
-                        (args ? args.join(',') : '')
-                    );
-                }
-            }, reject);
-        });
+                        (args ? args.join(',') : ''),
+              );
+            }
+          }, reject);
+      });
     }
 
     /**
@@ -75,9 +75,9 @@ angular.module('ifiske.services')
      * @return {Promise<Row>}      Promise of a row from the table
      */
     function getSingle(sql, args) {
-        return getMultiple(sql, args).then(function(result) {
-            return result[0];
-        });
+      return getMultiple(sql, args).then(function(result) {
+        return result[0];
+      });
     }
 
     /**
@@ -87,105 +87,105 @@ angular.module('ifiske.services')
      * @return {SQL_results}  Returns SQL results
      */
     function populateTable(table, data) {
-        return $q(function(fulfill, reject) {
-            db.transaction(function(tx) {
-                tx.executeSql('DELETE FROM ' + table.name + ';');
+      return $q(function(fulfill, reject) {
+        db.transaction(function(tx) {
+          tx.executeSql('DELETE FROM ' + table.name + ';');
 
-                for (var id in data) {
-                    var singleData = data[id];
-                    var insertData = [];
-                    for (var member in table.members) {
-                        insertData.push(singleData[member]);
-                    }
-                    var query = [
-                        'INSERT INTO',
-                        table.name,
-                        'VALUES(?',
-                        ',?'.repeat(insertData.length - 1),
-                        ')',
-                    ].join(' ');
+          for (var id in data) {
+            var singleData = data[id];
+            var insertData = [];
+            for (var member in table.members) {
+              insertData.push(singleData[member]);
+            }
+            var query = [
+              'INSERT INTO',
+              table.name,
+              'VALUES(?',
+              ',?'.repeat(insertData.length - 1),
+              ')',
+            ].join(' ');
 
-                    tx.executeSql(query, insertData);
-                }
-            }, reject, fulfill);
-        });
+            tx.executeSql(query, insertData);
+          }
+        }, reject, fulfill);
+      });
     }
 
     return {
-        ready: ready.promise,
+      ready: ready.promise,
 
-        clean:       clean,
-        getMultiple: getMultiple,
-        getSingle:   getSingle,
+      clean:       clean,
+      getMultiple: getMultiple,
+      getSingle:   getSingle,
 
-        runSql: runSql,
+      runSql: runSql,
 
-        insertHelper: function(table) {
-            return function(data) {
-                return populateTable(table, data);
-            };
-        },
+      insertHelper: function(table) {
+        return function(data) {
+          return populateTable(table, data);
+        };
+      },
 
-        populateTable: populateTable,
+      populateTable: populateTable,
 
-        initializeTable: function(table) {
-            return ready.promise.then(function() {
-                /*
+      initializeTable: function(table) {
+        return ready.promise.then(function() {
+          /*
                 * Builds a string with "" around all names, so that
                 * it can be used to create an SQL Table witout having
                 * to worry about using reserved keywords.
                 */
-                var tableMembers = [];
-                for (var member in table.members) {
-                    if (table.members.hasOwnProperty(member))
-                        tableMembers.push('"' + member + '" ' + table.members[member]);
-                }
-                tableMembers = tableMembers.join(', ');
+          var tableMembers = [];
+          for (var member in table.members) {
+            if (table.members.hasOwnProperty(member))
+              tableMembers.push('"' + member + '" ' + table.members[member]);
+          }
+          tableMembers = tableMembers.join(', ');
 
-                var query = [
-                    'CREATE TABLE IF NOT EXISTS',
-                    table.name,
-                    '(',
-                    tableMembers,
-                    ', PRIMARY KEY(',
-                    '"' + table.primary + '"',
-                    '));',
-                ].join(' ');
+          var query = [
+            'CREATE TABLE IF NOT EXISTS',
+            table.name,
+            '(',
+            tableMembers,
+            ', PRIMARY KEY(',
+            '"' + table.primary + '"',
+            '));',
+          ].join(' ');
 
-                /* Remake the table if the schema has changed */
-                return runSql('SELECT sql from sqlite_master where name is "' + table.name + '"')
-                .then(function(result) {
-                    if (!result.rows.length) {
-                        // There is no table, make it
-                        return runSql(query);
-                    }
-                    var re = /"(\w+)"\s*(\w+)/g;
-                    var regexResult;
-                    var oldTable = {};
-                    while ((regexResult = re.exec(result.rows.item(0).sql))) {
-                        oldTable[regexResult[1]] = regexResult[2];
-                    }
-                    var primaryKey = result.rows.item(0).sql
-                        .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
-                    if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
-                        console.log(table.name + ' needs to update since the schema has changed.');
-                        return clean(table.name).then(function() {
-                            return runSql(query);
-                        });
-                    }
+          /* Remake the table if the schema has changed */
+          return runSql('SELECT sql from sqlite_master where name is "' + table.name + '"')
+            .then(function(result) {
+              if (!result.rows.length) {
+                // There is no table, make it
+                return runSql(query);
+              }
+              var re = /"(\w+)"\s*(\w+)/g;
+              var regexResult;
+              var oldTable = {};
+              while ((regexResult = re.exec(result.rows.item(0).sql))) {
+                oldTable[regexResult[1]] = regexResult[2];
+              }
+              var primaryKey = result.rows.item(0).sql
+                .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
+              if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
+                console.log(table.name + ' needs to update since the schema has changed.');
+                return clean(table.name).then(function() {
+                  return runSql(query);
                 });
+              }
             });
-        },
+        });
+      },
 
-        cleanTable: function(table) {
-            return $q(function(fulfill, reject) {
-                db.transaction(function(tx) {
-                    tx.executeSql('DELETE FROM ' + table + ';');
-                },
-                reject,
-                fulfill);
-            });
-        },
+      cleanTable: function(table) {
+        return $q(function(fulfill, reject) {
+          db.transaction(function(tx) {
+            tx.executeSql('DELETE FROM ' + table + ';');
+          },
+          reject,
+          fulfill);
+        });
+      },
 
     };
-});
+  });

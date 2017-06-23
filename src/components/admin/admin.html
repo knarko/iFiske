@@ -1,7 +1,7 @@
 <ion-view title="{{'Admin' | translate}}" cache-view="false">
   <ion-content>
     <div class="padding">
-      <img ng-if="org.info.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.info.logo}}">
+      <img ng-if="org.info.logo" class="logo product" ng-src="{{ifiskeUrl}}{{'/'+org.info.logo}}">
       <div style="display: inline-block; width: calc(100% - {{org.info.logo ? '70px': '0px'}})">
         <button ng-if="orgs.length > 1" class="button button-block button-stable icon-right button-outline ion-arrow-down-b button-text-dark" ng-click="pickOrg($event)">{{org.ot}}</button>
         <h2 ng-if="orgs.length < 2" class="text-center" >{{org.ot}}</h2>
@@ -38,7 +38,7 @@
 
       <p>
         {{'More in control panel' | translate}}
-        <a href="{{image_endpoint}}/index.php/kontrollpanelen" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
+        <a href="{{ifiskeUrl}}/index.php/kontrollpanelen" class="button button-block button-positive" target="_blank" translate>Open Control panel</a>
       </p>
     </div>
 

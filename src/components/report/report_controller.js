@@ -1,3 +1,3 @@
 angular.module('ifiske.controllers')
-.controller('ReportCtrl', function() {
-});
+  .controller('ReportCtrl', function() {
+  });

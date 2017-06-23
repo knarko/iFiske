@@ -1,3 +1,3 @@
 angular.module('ifiske.controllers')
-.controller('FindAreasCtrl', function() {
-});
+  .controller('FindAreasCtrl', function() {
+  });

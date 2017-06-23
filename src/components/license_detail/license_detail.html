@@ -6,7 +6,7 @@
     <div class="padding bg-white" ng-if="product">
 
       <img ng-show="product.rev" src="img/makulerad.png" class="revoked"/>
-      <img ng-if="org.logo" class="logo product" ng-src="{{image_endpoint}}{{'/'+org.logo}}">
+      <img ng-if="org.logo" class="logo product" ng-src="{{ifiskeUrl}}{{'/'+org.logo}}">
       <h2>{{product.ot}}</h2>
       <h3>{{product.t}}</h3>
 
@@ -64,8 +64,8 @@
       <p translate translate-value-date="{{product.fr * 1000 | date:'short'}}">Valid from</p>
       <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
       <p>
-        <a ng-if="product.code" class="button button-positive" href="{{::image_endpoint}}/r/{{product.code}}?lang={{language}}" ><i class="icon icon-fish"></i> {{'Catch report' | translate}}</a>
-        <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::image_endpoint}}{{::product.pdf}}"  translate>PDF</a>
+        <a ng-if="product.code" class="button button-positive" href="{{::ifiskeUrl}}/r/{{product.code}}?lang={{language}}" ><i class="icon icon-fish"></i> {{'Catch report' | translate}}</a>
+        <a ng-if="product.pdf" class="button button-dark icon-left ion-document" href="{{::ifiskeUrl}}{{::product.pdf}}"  translate>PDF</a>
       </p>
       <p ng-if="product.fine" class="fineprint">{{product.fine}}</p>
     </div>

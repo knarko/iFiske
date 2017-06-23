@@ -5,12 +5,12 @@
             <ion-slides ng-if="images.length > 1" options="slideOptions" slider="data.slider">
                 <ion-slide-page ng-repeat="img in images">
                     <div class="slider-image" style="padding-top: {{img.ratio}};">
-                      <img img-cache ic-src="{{::image_endpoint + img.file}}">
+                      <img img-cache ic-src="{{::ifiskeUrl + img.file}}">
                       <p class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
                     </div>
                 </ion-slide-page>
             </ion-slides>
-            <img img-cache ic-src="{{::image_endpoint + images[0].file}}" ng-if="images.length == 1" />
+            <img img-cache ic-src="{{::ifiskeUrl + images[0].file}}" ng-if="images.length == 1" />
             <p ng-if="images.length == 1" class="image-text">{{images[0].t}} {{images[0].t && images[0].d ? '-': ''}} {{images[0].d}}</p>
         </div>
         <div ng-if="area.t" class="item item-divider item-button-right">
@@ -28,12 +28,12 @@
             <p>{{::org.t}}</p>
         </div>
         <div ng-if="org.d" class="item item-body">
-            <img ng-if="org.logo" class="logo large" ng-src="{{image_endpoint}}{{'/'+org.logo}}">
+            <img ng-if="org.logo" class="logo large" ng-src="{{ifiskeUrl}}{{'/'+org.logo}}">
             <p ng-bind-html="org.d | onebr"></p>
         </div>
         <div ng-if="files && files.length" class="item item-divider" translate>Files</div>
-        <a class="item" ng-repeat="file in files" ng-href="{{::image_endpoint}}{{file.f}}">
-          <i ng-if="file.thumb" style="content: url('{{::image_endpoint}}{{file.thumb}}');" class="icon-image"></i>
+        <a class="item" ng-repeat="file in files" ng-href="{{::ifiskeUrl}}{{file.f}}">
+          <i ng-if="file.thumb" style="content: url('{{::ifiskeUrl}}{{file.thumb}}');" class="icon-image"></i>
           {{ file.t || file.f.split('/').slice(-1)[0] || ( 'Downloadable file' | translate:{type: file.typ} ) }}
         </a>
         <div ng-if="org.cp" class="item item-divider">

@@ -12,12 +12,12 @@
     <ion-content header-shrink>
       <div class="list has-search-bar">
         <div ng-if="foundFish" ui-sref="app.fishdetail({fish: foundFish, id: foundFish.ID})" class="item item-thumbnail-left found-fish">
-          <img class="fish-image" img-cache ic-src="{{image_endpoint + foundFish.img}}">
+          <img class="fish-image" img-cache ic-src="{{ifiskeUrl + foundFish.img}}">
           <h2>{{foundFish.t}}</h2>
           <p class="wrap" ng-bind-html="foundFish.d"></p>
           </div>
         <div class="item {{area.photo ? 'item-thumbnail-left' : ''}} item-full-width" collection-repeat="area in areas" item-height="100px" ui-sref="app.area.info({id: area.ID, area:area})">
-          <img class="cropped-image" img-cache ic-src="{{image_endpoint + area.photo}}" ng-if="area.photo" />
+          <img class="cropped-image" img-cache ic-src="{{ifiskeUrl + area.photo}}" ng-if="area.photo" />
           <h2>{{area.org}}</h2>
           <span class="pull-right distance-indicator" ng-if="area.distance | distance"><i class="icon ion-location"></i> {{area.distance | distance}}</span>
           <p class="wrap">{{area.t === area.org ? '': area.t}}</p>

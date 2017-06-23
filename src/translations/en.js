@@ -1,6 +1,6 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
-.constant('englishTranslations', {
+  .constant('englishTranslations', {
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',
@@ -184,4 +184,4 @@ angular.module('ifiske.translations')
     'Valid until':                         'Valid until <b>{{date}}</b>',
     'Version':                             'Version mumber',
     'Youtube':                             'YouTube',
-});
+  });

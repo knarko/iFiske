@@ -1,5 +1,5 @@
-<img ng-if="fish.img" ic-src="{{image_endpoint}}{{fish.img}}" img-cache />
-<img ng-if="!fish.img" ic-src="{{image_endpoint}}{{default_img}}" img-cache />
+<img ng-if="fish.img" ic-src="{{ifiskeUrl}}{{fish.img}}" img-cache />
+<img ng-if="!fish.img" ic-src="{{ifiskeUrl}}{{default_img}}" img-cache />
 <p>
   <span>{{fish.t}}</span> <span ng-show="amount" class="lvl lvl-{{amount}}" />
 </p>

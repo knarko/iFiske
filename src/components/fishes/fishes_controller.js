@@ -1,11 +1,11 @@
 angular.module('ifiske.controllers')
-.controller('FishesCtrl', function($scope, Fish) {
+  .controller('FishesCtrl', function($scope, Fish) {
     $scope.sortorder = 'so';
     Fish.getAll()
-    .then(function(data) {
+      .then(function(data) {
         $scope.fishes = data;
         $scope.default_img = data[0].img; // eslint-disable-line camelcase
-    }, function(err) {
+      }, function(err) {
         console.log(err);
-    });
-});
+      });
+  });

@@ -49,7 +49,7 @@
                 "initialized": "never"
             }
         ],
-        "require-jsdoc": ["warn",
+        "require-jsdoc": ["off",
             {
                 "require": {
                     "FunctionDeclaration": true,

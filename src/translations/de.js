@@ -1,6 +1,6 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
-.constant('germanTranslations', {
+  .constant('germanTranslations', {
     /* Missing translations:
     'revoked':                             'Revoked',
     'Revoked':                             'Revoked',
@@ -192,4 +192,4 @@ angular.module('ifiske.translations')
     'valid':                               'Gültig',
     'Version':                             'Version',
     'Youtube':                             'YouTube',
-});
+  });

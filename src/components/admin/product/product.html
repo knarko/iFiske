@@ -17,7 +17,7 @@
         <p translate translate-value-date="{{product.to * 1000 | date:'short'}}">Valid until</p>
       </section>
       <hr />
-        <a ng-if="product.pdf" class="button button-dark button-block icon-left ion-document" href="{{::image_endpoint}}{{product.pdf}}" translate>PDF</a>
+        <a ng-if="product.pdf" class="button button-dark button-block icon-left ion-document" href="{{::ifiskeUrl}}{{product.pdf}}" translate>PDF</a>
         <a ng-if="!product.rev" class="button icon-left ion-document-text button-block button-assertive" ng-click="confirmRevokeLicense(1)" translate>Revoke</a>
         <a ng-if="product.rev" class="button icon-left ion-document-text button-block button-balanced" ng-click="confirmRevokeLicense(0)" translate>Unrevoke</a>
     </div>

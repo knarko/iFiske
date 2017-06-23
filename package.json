@@ -37,6 +37,7 @@
         "@ionic/cli-plugin-gulp": "^1.0.1",
         "@ionic/cli-plugin-ionic1": "^2.0.0",
         "autoprefixer": "^7.1.0",
+        "babel-eslint": "^7.2.3",
         "babel-plugin-ng-annotate": "^0.3.2",
         "babel-preset-es2015": "^6.24.1",
         "concurrently": "^3.4.0",

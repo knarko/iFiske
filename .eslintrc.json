@@ -1,5 +1,6 @@
 {
     "extends": "google",
+    "parser": "babel-eslint",
     "env": {
         "browser" :true
     },
@@ -10,7 +11,10 @@
         "Chart": true
     },
     "rules": {
-        "indent": ["error", 4],
+        "quotes": ["error", "single", {
+            "avoidEscape": true
+        }],
+        "indent": ["error", 2],
         "func-style": ["warn", "declaration"],
         "max-len": ["error",
             {
@@ -19,7 +23,13 @@
             }
         ],
         "guard-for-in": "off",
-        "comma-dangle": ["error", "always-multiline"],
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline"
+        }],
         "key-spacing": ["error",
             {
                 "align": "value"

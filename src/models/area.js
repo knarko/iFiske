@@ -57,7 +57,6 @@ angular.module('ifiske.models')
     },
     {
       name:    'Area_Files',
-      primary: 'ID',
       members: {
         ID:    'int',
         area:  'int', // Area ID
@@ -73,9 +72,8 @@ angular.module('ifiske.models')
       var p = [];
       var currentLocation, watch;
 
-      for (var i = 0; i < tables.length; ++i) {
-        p.push(DB.initializeTable(tables[i]));
-      }
+      tables.forEach(table => p.push(DB.initializeTable(table)));
+
       var wait = $q.all(p).then(function(results) {
         for (var i = 0; i < results.length; ++i) {
           if (results[i])

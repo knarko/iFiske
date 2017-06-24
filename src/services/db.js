@@ -91,8 +91,7 @@ angular.module('ifiske.services')
         db.transaction(function(tx) {
           tx.executeSql('DELETE FROM ' + table.name + ';');
 
-          for (var id in data) {
-            var singleData = data[id];
+          data.forEach(singleData => {
             var insertData = [];
             for (var member in table.members) {
               insertData.push(singleData[member]);
@@ -106,7 +105,7 @@ angular.module('ifiske.services')
             ].join(' ');
 
             tx.executeSql(query, insertData);
-          }
+          });
         }, reject, fulfill);
       });
     }
@@ -142,15 +141,11 @@ angular.module('ifiske.services')
           }
           tableMembers = tableMembers.join(', ');
 
-          var query = [
-            'CREATE TABLE IF NOT EXISTS',
-            table.name,
-            '(',
-            tableMembers,
-            ', PRIMARY KEY(',
-            '"' + table.primary + '"',
-            '));',
-          ].join(' ');
+          var query = `
+          CREATE TABLE IF NOT EXISTS ${table.name} (
+            ${tableMembers}
+            ${table.primary ? `, PRIMARY KEY(${table.primary})` : ''}
+          );`;
 
           /* Remake the table if the schema has changed */
           return runSql('SELECT sql from sqlite_master where name is "' + table.name + '"')
@@ -165,8 +160,9 @@ angular.module('ifiske.services')
               while ((regexResult = re.exec(result.rows.item(0).sql))) {
                 oldTable[regexResult[1]] = regexResult[2];
               }
-              var primaryKey = result.rows.item(0).sql
-                .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i)[1];
+              const matched = result.rows.item(0).sql
+                .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i);
+              const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
               if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
                 console.log(table.name + ' needs to update since the schema has changed.');
                 return clean(table.name).then(function() {

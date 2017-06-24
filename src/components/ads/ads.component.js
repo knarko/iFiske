@@ -8,27 +8,29 @@ angular.module('ifiske.controllers')
         $cordovaInAppBrowser,
         analytics,
         $scope,
+        $timeout,
       ) {
         $scope.$on('$ionicSlides.sliderInitialized', (_event, data) => {
           // grab an instance of the slider
           this.slider = data.slider;
-          console.log(this.slider);
         });
         this.options = {
           effect:                       'slide',
-          speed:                        250,
+          speed:                        300,
           loop:                         true,
-          autoplay:                     8000,
+          autoplay:                     5000,
           autoplayDisableOnInteraction: false,
-          initialSlide:                 1, // Needs to be one since we add duplicates when looping
+          preloadImages:                true,
           pagination:                   undefined,
         };
         AdService.main().then(ads => {
-          console.log(ads);
           this.ads = ads;
           if (this.slider) {
-            this.slider.updateLoop();
-            this.slider.slideTo(1);
+            $timeout(() => {
+              this.slider.update();
+              this.slider.slideTo(1);
+              this.slider.startAutoplay();
+            }, 10);
           }
         });
         $scope.openInBrowser = function(ad) {

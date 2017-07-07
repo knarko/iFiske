@@ -20,7 +20,8 @@ angular.module('ifiske.controllers')
           .then(function(polygons) {
             $scope.map.polygons = polygons;
           }, function(err) {
-            console.error(err);
+            $scope.map.polygons = [];
+            console.warn(err);
           });
       }
 

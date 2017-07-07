@@ -91,7 +91,7 @@ angular.module('ifiske.services')
         db.transaction(function(tx) {
           tx.executeSql('DELETE FROM ' + table.name + ';');
 
-          data.forEach(singleData => {
+          (Array.isArray(data) ? data : Object.values(data)).forEach(singleData => {
             var insertData = [];
             for (var member in table.members) {
               insertData.push(singleData[member]);
@@ -161,7 +161,7 @@ angular.module('ifiske.services')
                 oldTable[regexResult[1]] = regexResult[2];
               }
               const matched = result.rows.item(0).sql
-                .match(/PRIMARY KEY\(\s*"(\w+)"\s*\)/i);
+                .match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
               const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
               if (!angular.equals(table.members, oldTable) || table.primary !== primaryKey) {
                 console.log(table.name + ' needs to update since the schema has changed.');

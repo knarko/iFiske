@@ -96,14 +96,7 @@ angular.module('ifiske.services')
             for (var member in table.members) {
               insertData.push(singleData[member]);
             }
-            var query = [
-              'INSERT INTO',
-              table.name,
-              'VALUES(?',
-              ',?'.repeat(insertData.length - 1),
-              ')',
-            ].join(' ');
-
+            var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length).fill('?').join(',')})`;
             tx.executeSql(query, insertData);
           });
         }, reject, fulfill);

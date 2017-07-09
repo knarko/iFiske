@@ -33,6 +33,7 @@ build:android:
     - android
   script:
     - npm run ionic -- cordova resources android --no-interactive
+    - bash set_bundle_version.sh
     - npm run package.android 2>&1 | tee package_output.log
     - bash get_build_id.sh
     - cat packaged_number.txt

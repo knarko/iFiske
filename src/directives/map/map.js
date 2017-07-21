@@ -59,7 +59,7 @@ angular.module('ifiske.directives')
             console.log(context);
           },
           locateOptions: {
-            watch:   false, // Watch is broken in chrome
+            watch:   true, // Watch is broken in chrome
             maxZoom: 14,
           },
           icon:        'icon ion-android-locate',

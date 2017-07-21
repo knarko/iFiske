@@ -256,6 +256,14 @@ angular.module('ifiske.models')
             watch = startWatch();
           }
           return Area.getAll(countyId)
+            .then(data => data.map(d => {
+              d.fish_1 = d.fish_1 && d.fish_1.split(' ');
+              d.fish_2 = d.fish_2 && d.fish_2.split(' ');
+              d.fish_3 = d.fish_3 && d.fish_3.split(' ');
+              d.fish_4 = d.fish_4 && d.fish_4.split(' ');
+              d.fish_5 = d.fish_5 && d.fish_5.split(' ');
+              return d;
+            }))
             .then(function(data) {
               var options = {
                 keys: [{

@@ -30,7 +30,7 @@ angular.module('ifiske.controllers')
             $scope.areas.forEach(area => {
               for (let i = 5; i >= 0; --i) {
                 let fishes = area['fish_' + i];
-                if (fishes && fishes.search($scope.foundFish.t) !== -1) {
+                if (fishes && fishes.indexOf($scope.foundFish.t) !== -1) {
                   area.level = i;
                   break;
                 }

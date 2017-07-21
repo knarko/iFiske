@@ -115,6 +115,7 @@
         "phonegap-plugin-barcodescanner": "^6.0.6",
         "phonegap-plugin-mobile-accessibility": "^1.0.5",
         "phonegap-plugin-push": "^1.10.4",
+        "swiper": "^3.4.2",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.0.0"
     },
     "config": {

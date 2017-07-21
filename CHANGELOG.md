@@ -1,3 +1,17 @@
+<a name="3.6.1"></a>
+## [3.6.1](https://github.com/ifiske/ifiske/compare/v3.6.0...v3.6.1) (2017-07-21)
+
+
+### Bug Fixes
+
+* **area/cards:** add OS tracking information when opening a web license purchase ([0c46a5c](https://github.com/ifiske/ifiske/commit/0c46a5c))
+* **area/search:** Modify fish searching ([415e5c6](https://github.com/ifiske/ifiske/commit/415e5c6))
+* **map:** watch location ([2d8a62c](https://github.com/ifiske/ifiske/commit/2d8a62c))
+* **slides:** fix slides autolooping ([acc470c](https://github.com/ifiske/ifiske/commit/acc470c))
+* **slides:** Replace all ion-slides with swiper ([14ad1ac](https://github.com/ifiske/ifiske/commit/14ad1ac))
+
+
+
 <a name="3.6.0"></a>
 # [3.6.0](https://github.com/ifiske/ifiske/compare/v3.5.0...v3.6.0) (2017-07-09)
 

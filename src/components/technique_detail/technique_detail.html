@@ -2,13 +2,13 @@
 <ion-content>
 <div class="list">
     <div class="item item-image">
-      <ion-slides ng-if="images.length > 1" options="slideOptions" slider="data.slider">
-        <ion-slide-page ng-repeat="img in images">
+      <swiper options="slideOptions" ng-if="images.length > 1">
+        <div class="swiper-slide" ng-repeat="img in images">
           <div class="slider-image">
             <img img-cache ic-src="{{::ifiskeUrl + img}}">
           </div>
-        </ion-slide-page>
-      </ion-slides>
+        </div>
+      </swiper>
       <img img-cache ic-src="{{::ifiskeUrl + images[0]}}" ng-if="images.length == 1" />
     </div>
     <div class="item">

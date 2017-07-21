@@ -19,9 +19,6 @@ angular.module('ifiske.controllers')
     Area.getPhotos($stateParams.id)
       .then(function(images) {
         $scope.images = images;
-        if ($scope.slider) {
-          $scope.slider.updateLoop();
-        }
       }, function(err) {
         console.warn(err);
       });
@@ -32,12 +29,6 @@ angular.module('ifiske.controllers')
       }, function(err) {
         console.warn(err);
       });
-
-    $scope.$on('$ionicSlides.sliderInitialized', function(_event, data) {
-      // grab an instance of the slider
-      $scope.slider = data.slider;
-      $scope.slider.updateLoop();
-    });
 
     $scope.changeFavorite = function() {
       if (sessionData.token) {

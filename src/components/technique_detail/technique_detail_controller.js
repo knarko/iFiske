@@ -4,38 +4,23 @@ angular.module('ifiske.controllers')
     $scope.images = [];
 
     $scope.slideOptions = {
-      loop:       true,
-      effect:     'slide',
-      speed:      250,
-      autoPlay:   1000,
-      autoHeight: true,
+      loop:     true,
+      autoplay: 3000,
     };
 
-    $scope.$on('$ionicSlides.sliderInitialized', function(_event, data) {
-      // grab an instance of the slider
-      $scope.slider = data.slider;
-      $scope.slider.updateLoop();
-    });
-
-    if ($scope.tech) {
-      var data = $scope.tech;
+    function loadImages(data) {
       $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
         return !/\/$/.test(el);
       });
-      if ($scope.slider) {
-        $scope.slider.updateLoop();
-      }
+    }
+
+    if ($scope.tech) {
+      loadImages($scope.tech);
     } else {
       Technique.getOne($stateParams.id)
         .then(function(data) {
-          $scope.images = [data.img1, data.img2, data.img3].filter(function(el) {
-            return !/\/$/.test(el);
-          });
-          if ($scope.slider) {
-            $scope.slider.updateLoop();
-          }
-
           $scope.tech = data;
+          loadImages(data);
         });
     }
   });

@@ -8,7 +8,6 @@ angular.module('ifiske.controllers')
         $cordovaInAppBrowser,
         analytics,
         $scope,
-        $timeout,
       ) {
         AdService.main().then(ads => {
           this.ads = ads;

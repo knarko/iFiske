@@ -10,8 +10,9 @@
             <p class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
           </div>
         </div>
-        <img img-cache ic-src="{{::ifiskeUrl + images[0].file}}" ng-if="images.length == 1" />
-        <p ng-if="images.length == 1" class="image-text">{{images[0].t}} {{images[0].t && images[0].d ? '-': ''}} {{images[0].d}}</p>
+      </swiper>
+      <img img-cache ic-src="{{::ifiskeUrl + images[0].file}}" ng-if="images.length == 1" />
+      <p ng-if="images.length == 1" class="image-text">{{images[0].t}} {{images[0].t && images[0].d ? '-': ''}} {{images[0].d}}</p>
     </div>
     <div ng-if="area.t" class="item item-divider item-button-right">
       <h2 class="area-title">{{::area.t}}</h2>

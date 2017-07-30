@@ -15,6 +15,7 @@ angular.module('ifiske.controllers')
             loop:                         true,
             autoplay:                     5000,
             autoplayDisableOnInteraction: false,
+            spaceBetween:                 100,
           };
         });
         $scope.openInBrowser = function(ad) {

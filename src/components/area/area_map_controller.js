@@ -13,8 +13,6 @@ angular.module('ifiske.controllers')
         MapData.getPois($scope.area.orgid)
           .then(function(pois) {
             $scope.map.pois = pois;
-          }, function(err) {
-            console.error(err);
           });
         MapData.getPolygons($scope.area.orgid)
           .then(function(polygons) {

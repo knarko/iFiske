@@ -64,9 +64,7 @@ angular.module('ifiske', modules)
       ImgCache.$init();
       if (localStorage.get('language')) {
         analytics.trackEvent('Language', 'initialized', localStorage.get('language'));
-        Update.update().catch(function(err) {
-          console.error(err);
-        });
+        Update.update();
       }
 
       if ($window.navigator && $window.navigator.splashscreen) {

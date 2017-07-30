@@ -21,8 +21,9 @@ angular.module('ifiske.controllers')
         }, function(err) {
           console.warn(err);
         });
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
+        Raven.captureException(err);
         // $state.go('^.product', {code: '904192'});
       }
     };

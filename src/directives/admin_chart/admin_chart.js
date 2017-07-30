@@ -66,6 +66,7 @@ angular.module('ifiske.directives')
           }, function(err) {
             $scope.showChart = false;
             console.error(err);
+            Raven.captureException(err);
           });
         });
         $scope.chart = {};

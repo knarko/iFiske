@@ -54,6 +54,7 @@ angular.module('ifiske.directives')
           remainActive:         true,
           onLocationError:      function(err) {
             console.error(err);
+            Raven.captureException(err);
           },
           onLocationOutsideMapBounds: function(context) {
             console.log(context);

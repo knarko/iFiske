@@ -115,8 +115,9 @@ angular.module('ifiske.controllers')
           if (window.plugins && window.plugins.toast) {
             $cordovaToast.showShortBottom('Ny aktiveringskod skickad');
           }
-        }, function(error) {
-          console.error(error);
+        }, function(err) {
+          console.error(err);
+          Raven.captureException(err);
           if (window.plugins && window.plugins.toast) {
             $cordovaToast.showLongBottom(
               'Ett fel uppstod, aktiveringskoden kunde inte skickas.',
@@ -146,9 +147,10 @@ angular.module('ifiske.controllers')
     function getUserDetails() {
       try {
         return JSON.parse(localStorage.get('register_user_details'));
-      } catch (e) {
+      } catch (err) {
         // TODO: this is shit, more user info pls
-        console.error(e);
+        console.error(err);
+        Raven.captureException(err);
         return false;
       }
     }

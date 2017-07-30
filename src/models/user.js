@@ -90,6 +90,7 @@ angular.module('ifiske.models')
         for (var table in tables) {
           p.push(DB.initializeTable(tables[table]));
         }
+        Raven.setUserContext();
         return $q.all(p)
           .then(function() {
             console.log('Removed user info from database');
@@ -115,6 +116,9 @@ angular.module('ifiske.models')
             for (var i = 0; i < numbers.length; ++i) {
               numArr.push({number: numbers[i]});
             }
+
+            Raven.setUserContext(data);
+
             return $q.all([
               DB.populateTable(tables.info, [data])
                 .then(function() {
@@ -159,12 +163,12 @@ angular.module('ifiske.models')
         p.then(Push.reset);
         p.then(function() {
           analytics.trackEvent('Login and Signup', 'Login');
-        }, function(_error) {
+        }, function(error) {
           $q.all([
             analytics.trackEvent('Login and Signup', 'Login Failure'),
             analytics.trackException('Login Failure', false),
           ]);
-          return _error;
+          return error;
         });
         return p;
       }

@@ -156,6 +156,7 @@ angular.module('ifiske.services')
               return $ionicAuth.login('basic', details, {remember: true});
             }, function(err) {
               console.warn(err);
+              Raven.captureException(err);
               if (err && err.details && err.details.indexOf('conflict_email') !== -1) {
                 alert('There was an error logging in, please contact ifiske');
               }
@@ -170,6 +171,7 @@ angular.module('ifiske.services')
         return API.user_set_pushtoken($ionicUser.id);
       }).catch(function(err) {
         console.error('Push: we got an error!', err);
+        Raven.captureException(err);
       });
     }
 

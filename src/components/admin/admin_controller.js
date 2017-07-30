@@ -13,8 +13,6 @@ angular.module('ifiske.controllers')
           res[e].levelname = levelnames[res[e].level];
         }
         $scope.organizations = res;
-      }, function(res) {
-        console.error(res);
       });
     });
   })

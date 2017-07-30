@@ -116,7 +116,7 @@ gulp.task('scripts', function(done) {
   gulp.src(paths.scripts)
     .pipe(plumber({errorHandler: done}))
   // .pipe(expectFile(paths.scripts))
-    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
+    .pipe(sourcemaps.init())
     .pipe(babel({
       presets: [['env', {
         targets: {
@@ -136,7 +136,7 @@ gulp.task('scripts', function(done) {
     .pipe(ngAnnotate())
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
-    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -161,10 +161,10 @@ gulp.task('libs', function(done) {
   gulp.src(paths.libs)
     .pipe(plumber({errorHandler: done}))
   // .pipe(expectFile(paths.libs))
-    .pipe(gulpif(options.env === 'development', sourcemaps.init()))
+    .pipe(sourcemaps.init())
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
-    .pipe(gulpif(options.env === 'development', sourcemaps.write()))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });

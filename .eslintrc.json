@@ -8,7 +8,9 @@
         "goog": null,
         "angular": false,
         "moment": true,
-        "Chart": true
+        "Chart": true,
+        "ionic": true,
+        "Raven": true
     },
     "rules": {
         "quotes": ["error", "single", {

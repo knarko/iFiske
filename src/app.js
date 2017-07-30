@@ -1,6 +1,6 @@
 // 'ifiske' is the name of this angular module (also set in a <body> attribute in index.html)
 
-angular.module('ifiske', [
+const modules = [
   'ionic',
   'ionic.cloud',
   'ionic.ion.headerShrink',
@@ -17,7 +17,13 @@ angular.module('ifiske', [
   'pascalprecht.translate',
   'ifiske.translations',
   'chart.js',
-])
+];
+
+if (ionic.Platform.isWebView()) {
+  modules.push('ngRaven');
+}
+
+angular.module('ifiske', modules)
 
   .constant('$ionicLoadingConfig', {
     template: '<ion-spinner></ion-spinner>',

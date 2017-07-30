@@ -29,7 +29,7 @@ angular.module('ifiske.models')
           if (shouldupdate)
             return API.get_fishes()
               .then(function(data) {
-                console.log('Downloading all fish images: ', data);
+                console.log('Downloading all fish images');
                 for (var fish in data) {
                   if (data.hasOwnProperty(fish))
                     ImgCache.cacheFile(serverLocation + data[fish].img);

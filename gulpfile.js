@@ -34,7 +34,6 @@ var paths = {
     'node_modules/leaflet/dist/images/*',
   ],
   scripts: [
-    'src/io-config.js',
     'src/app.js',
     'src/states.js',
     'src/components/**/*.js',
@@ -49,6 +48,10 @@ var paths = {
     'node_modules/ionic-angular/release/js/ionic.bundle.js',
     'node_modules/@ionic/cloud/dist/bundle/ionic.cloud.js',
     'node_modules/ionic-ion-header-shrink/ionic.headerShrink.js',
+
+    'node_modules/raven-js/dist/raven.js',
+    'node_modules/raven-js/dist/plugins/angular.js',
+    'src/lib/raven.js',
 
     'node_modules/ng-cordova/dist/ng-cordova.js',
 

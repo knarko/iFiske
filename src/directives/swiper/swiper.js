@@ -36,10 +36,12 @@ angular.module('ifiske.directives')
         });
 
         $scope.$on('ImgCache.loaded', () => {
-          $scope.swiper.update(true);
-          if ($scope.swiper && $scope.swiper.params.loop) {
-            $scope.swiper.reLoop();
-          }
+          $timeout(() => {
+            $scope.swiper.update(true);
+            if ($scope.swiper && $scope.swiper.params.loop) {
+              $scope.swiper.reLoop();
+            }
+          });
         });
       },
     };

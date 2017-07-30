@@ -152,8 +152,8 @@ angular.module('ifiske.models')
               }
             });
             logout();
-            throw err;
           }
+          throw err;
         });
       }
 

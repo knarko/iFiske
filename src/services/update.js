@@ -57,6 +57,13 @@ angular.module('ifiske.services')
             localStorage.set(LAST_UPDATE, currentTime);
           }
         }, function(err) {
+          console.error(err);
+
+          try {
+            console.error(JSON.stringify(err));
+          } catch (e) {}
+
+          Raven.captureException(err);
           // TODO: move this error handling somewhere else
           $ionicPlatform.ready(function() {
             if (window.plugins) {

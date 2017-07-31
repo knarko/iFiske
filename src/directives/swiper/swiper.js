@@ -32,7 +32,7 @@ angular.module('ifiske.directives')
           const params = Object.assign({}, defaultOptions, options);
           $timeout(() => {
             $scope.swiper = new Swiper($element[0].firstChild, params);
-          });
+          }, 10);
         });
 
         $scope.$on('ImgCache.loaded', () => {
@@ -41,7 +41,7 @@ angular.module('ifiske.directives')
             if ($scope.swiper && $scope.swiper.params.loop) {
               $scope.swiper.reLoop();
             }
-          });
+          }, 10);
         });
       },
     };

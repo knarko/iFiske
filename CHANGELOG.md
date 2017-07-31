@@ -1,15 +1,23 @@
 <a name="3.6.1"></a>
-## [3.6.1](https://github.com/ifiske/ifiske/compare/v3.6.0...v3.6.1) (2017-07-21)
+# [3.6.1](https://github.com/ifiske/ifiske/compare/v3.6.0...v3.6.1) (2017-07-31)
 
 
 ### Bug Fixes
 
+* **ads:** change size and add drop shadow ([02520a1](https://github.com/ifiske/ifiske/commit/02520a1))
+* **ads:** Load initial slide size correctly ([c9ab475](https://github.com/ifiske/ifiske/commit/c9ab475))
 * **area/cards:** add OS tracking information when opening a web license purchase ([0c46a5c](https://github.com/ifiske/ifiske/commit/0c46a5c))
 * **area/search:** Modify fish searching ([415e5c6](https://github.com/ifiske/ifiske/commit/415e5c6))
 * **map:** watch location ([2d8a62c](https://github.com/ifiske/ifiske/commit/2d8a62c))
+* **raven:** Capture caught errors in Raven ([81db164](https://github.com/ifiske/ifiske/commit/81db164))
 * **slides:** fix slides autolooping ([acc470c](https://github.com/ifiske/ifiske/commit/acc470c))
 * **slides:** Replace all ion-slides with swiper ([14ad1ac](https://github.com/ifiske/ifiske/commit/14ad1ac))
+* log network errors in  a more verbose way ([8a47356](https://github.com/ifiske/ifiske/commit/8a47356))
 
+
+### Features
+
+* **raven:** add Raven and Sentry logging ([0edb449](https://github.com/ifiske/ifiske/commit/0edb449))
 
 
 <a name="3.6.0"></a>

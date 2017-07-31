@@ -1,3 +1,15 @@
+<a name="3.6.2"></a>
+# [3.6.2](https://github.com/ifiske/ifiske/compare/v3.6.1...v3.6.2) (2017-07-31)
+
+
+### Bug Fixes
+
+* **ads:** open link to ad when clicked ([c3cbf37](https://github.com/ifiske/ifiske/commit/c3cbf37))
+* **map:** Ignore navigation cancelled error ([98f4179](https://github.com/ifiske/ifiske/commit/98f4179))
+* **swiper:** add small delay to swiper initialization to fix issue with ads not displaying properly ([26ff128](https://github.com/ifiske/ifiske/commit/26ff128))
+
+
+
 <a name="3.6.1"></a>
 # [3.6.1](https://github.com/ifiske/ifiske/compare/v3.6.0...v3.6.1) (2017-07-31)
 

@@ -154,8 +154,7 @@
       "phonegap-plugin-push": {
         "SENDER_ID": "196216212249"
       },
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
-      "cordova-sms-plugin": {}
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
     }
   }
 }

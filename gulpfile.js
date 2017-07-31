@@ -43,6 +43,7 @@ var paths = {
     'src/translations/*.js',
   ],
   libs: [
+    'node_modules/babel-polyfill/dist/polyfill.js',
     'src/lib/polyfill.js',
 
     'node_modules/ionic-angular/release/js/ionic.bundle.js',

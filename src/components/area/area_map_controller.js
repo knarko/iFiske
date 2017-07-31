@@ -38,9 +38,13 @@ angular.module('ifiske.controllers')
                 console.log('Opening navigator');
               },
               function(error) {
+                Raven.captureException(error);
+                if (error === 'cancelled') {
+                  return;
+                }
                 $ionicPopup.alert({
                   title:    $translate.instant('Error'),
-                  template: $translate.instant('Unknown error', {error: error}),
+                  template: $translate.instant('Unknown error', {error}),
                 });
               });
           });

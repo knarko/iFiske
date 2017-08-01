@@ -1,46 +1,56 @@
 /* eslint-disable camelcase */
 angular.module('ifiske.services')
   .provider('API', function APIProvider() {
-    this.$get = function($http, sessionData, $q, Settings, serverLocation) {
+    this.$get = function($http, sessionData, $timeout, Settings, serverLocation) {
       var base_url = serverLocation + '/api/v2/api.php';
+      const maxRetries = 3;
+
+      function delay(fn, t) {
+        return new Promise((resolve, reject) => {
+          $timeout(() => {
+            fn().then(resolve, reject);
+          }, t);
+        });
+      }
 
       /**
          * internal function for making a call to the ifiske API
          * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
          * @param  {boolean} cache  Determines wether the request should hit the cache or not
+         * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
          * @return {promise}        $http promise
          */
-      function api_call(params, cache) {
-        return $q(function(fulfill, reject) {
-          $http({
-            method: 'get',
-            url:    base_url,
-            params: angular.extend(params, {
-              lang: Settings.language(),
-              key:  'ox07xh8aaypwvq7a',
-            }),
-            timeout: 7000,
-            cache:   (cache !== false),
-          })
-          // ToDo: Proper logging
-            .success(function(data) {
-              if (data.status === 'error') {
-                reject(data.message);
-              } else if (data.data) {
-                fulfill(data.data.response);
-              } else {
-                reject(data);
-              }
-            })
-          // .error(function(data, status, headers, config, statusText) {
-            .error(function(data, status) {
-              if (status === 0) {
-                reject(new Error('Request timeout'));
-              } else {
-                reject(data);
-              }
-            });
-        });
+      function api_call(params, cache, retries) {
+        retries = retries || 0;
+        return $http({
+          method: 'get',
+          url:    base_url,
+          params: angular.extend(params, {
+            lang: Settings.language(),
+            key:  'ox07xh8aaypwvq7a',
+          }),
+          timeout: 7000,
+          cache:   (cache !== false),
+        })
+          .then(response => {
+            const data = response.data;
+            if (data.status === 'error') {
+              return Promise.reject(data.message);
+            } else if (data.data) {
+              return data.data.response;
+            }
+            return Promise.reject(data);
+          }).catch(response => {
+            if (retries < maxRetries) {
+              return delay(() => {
+                return api_call(params, false, ++retries);
+              }, 2000 * retries);
+            }
+            if (response && response.status === 0) {
+              return Promise.reject('Request timeout');
+            }
+            return Promise.reject('Network error: ' + JSON.stringify((response.response || response.data || response || 'Unknown network failure'), null, 1));
+          });
       }
 
       /**

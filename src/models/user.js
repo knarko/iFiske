@@ -143,7 +143,7 @@ angular.module('ifiske.models')
 
           return $q.all(p);
         }).catch(function(err) {
-          if (err.error_code === 7) {
+          if (err && err.error_code === 7) {
             $ionicPlatform.ready(function() {
               if (window.plugins) {
                 $cordovaToast.show('Du har blivit utloggad', 'short', 'bottom');

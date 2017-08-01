@@ -1,6 +1,7 @@
 stages:
   - install
   - build
+  - package
   - unit_tests
   - deploy
 
@@ -10,21 +11,33 @@ variables:
 
 cache:
   key: "$CI_BUILD_REF_NAME"
+  policy: pull
   paths:
     - node_modules/
 
+
 install:
   stage: install
+  cache:
+    policy: push
   script:
-    - npm prune
-    - npm update --depth=Infinity
+    - npm install
 
-build:android:
+build:
   stage: build
+  artifacts:
+    paths:
+      - "www"
   before_script:
     - npm install
-    - npm run ionic -- cordova platform add android --no-interactive -r || echo 1
-  allow_failure: true
+  script:
+    - npm run build
+    - npm run sentry
+
+package:android:
+  stage: package
+  before_script:
+    - npm install
   artifacts:
     paths:
       - "resources/android"
@@ -32,16 +45,11 @@ build:android:
   tags:
     - android
   script:
-    - npm run ionic -- cordova resources android --no-interactive
-    - bash set_bundle_version.sh
-    - npm run package.android 2>&1 | tee package_output.log
-    - bash get_build_id.sh
-    - cat packaged_number.txt
-    - bash download.sh
+    - npm run package -- android
     - ls *.apk
 
-build:ios:
-  stage: build
+package:ios:
+  stage: package
   tags:
     - ios
   artifacts:
@@ -50,14 +58,8 @@ build:ios:
       - "*.ipa"
   before_script:
     - npm install
-    - npm run ionic -- cordova platform add ios -r --no-interactive || echo 1
   script:
-    - npm run ionic -- cordova resources ios --no-interactive
-    - bash set_bundle_version.sh
-    - npm run package.ios 2>&1 | tee package_output.log
-    - bash get_build_id.sh
-    - cat packaged_number.txt
-    - bash download.sh
+    - npm run package -- ios
     - ls *.ipa
 
 # unit_tests:
@@ -72,10 +74,10 @@ build:ios:
 #   tags:
 #     - ios
 
-test flight build:
+deploy:testflight:
   stage: deploy
   dependencies:
-    - build:ios
+    - package:ios
   artifacts:
     paths:
       - fastlane/screenshots
@@ -91,20 +93,21 @@ test flight build:
      - master
 
 
-prod build:
-  stage: deploy
-  dependencies:
-    - build:ios
-  artifacts:
-    paths:
-      - fastlane/screenshots
-      - fastlane/logs
-  before_script:
-    - gem install bundler --user-install
-    - bundle install
-  script:
-    - fastlane pilot upload -u maistho@gmail.com
-  tags:
-    - ios
-  only:
-     - tags
+#deploy:appstore:
+#  stage: deploy
+#  dependencies:
+#    - package:ios
+#  artifacts:
+#    paths:
+#      - fastlane/screenshots
+#      - fastlane/logs
+#  before_script:
+#    - gem install bundler --user-install
+#    - bundle install
+#  script:
+#    - fastlane pilot upload -u maistho@gmail.com
+#  tags:
+#    - ios
+#  only:
+#     - tags
+#

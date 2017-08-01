@@ -20,7 +20,7 @@ Make sure to use at least NodeJS v6 and npm v4. Using the most recent version is
 ```Shell
 git clone https://github.com/ifiske/ifiske
 cd ifiske
-npm run update
+npm install
 npm start
 ```
 

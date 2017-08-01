@@ -251,7 +251,9 @@ angular.module('ifiske.models')
          * @return {Promise<Area[]>} Promise for the matching areas
          */
         search: function(searchstring, countyId) {
-          var t0 = performance.now();
+          if (performance && performance.now) {
+            var t0 = performance.now();
+          }
           if (!watch) {
             watch = startWatch();
           }
@@ -349,8 +351,10 @@ angular.module('ifiske.models')
                     return 0;
                   })
                   .map(r => r.item));
-                var t1 = performance.now();
-                console.log('Searching took:', t1 - t0, 'ms');
+                if (performance && performance.now) {
+                  var t1 = performance.now();
+                  console.log('Searching took:', t1 - t0, 'ms');
+                }
               });
             });
         },

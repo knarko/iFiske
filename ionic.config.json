@@ -1,12 +1,6 @@
 {
   "name": "ifiske",
   "app_id": "46a4a954",
-  "gulpDependentTasks": [
-    "default"
-  ],
-  "gulpStartupTasks": [
-    "watch"
-  ],
   "watchPatterns": [
     "www/**/*"
   ],

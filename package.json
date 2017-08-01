@@ -7,26 +7,27 @@
   "scripts": {
     "start": "NODE_ENV=development ionic serve",
     "start.prod": "ionic serve",
+
     "build": "gulp",
     "build.dev": "gulp --env=development",
-    "android.dev": "NODE_ENV=development ionic cordova run android --device",
-    "ios.dev": "NODE_ENV=development ionic cordova run ios --device",
+
     "android": "ionic cordova run android --device",
+    "android.dev": "NODE_ENV=development ionic cordova run android --device",
+
     "ios": "ionic run ios --device",
+    "ios.dev": "NODE_ENV=development ionic cordova run ios --device",
+
     "ionic": "ionic",
-    "bump": "gulp bump",
-    "bump.patch": "gulp bump --patch",
-    "bump.minor": "gulp bump --minor",
-    "bump.major": "gulp bump --major",
+
+    "package": "node scripts/package.js",
     "release": "gulp release",
-    "package": "ionic cordova resources --no-interactive && gulp --env=production && ionic package build android --release -p prod --no-interactive && ionic package build ios --release -p prod --no-interactive",
-    "package.android": "gulp --env=production && ionic package build android --prod --release -p prod --no-interactive",
-    "package.ios": "gulp --env=production && ionic package build ios --prod --release -p prod --no-interactive",
-    "resources": "ionic cordova resources",
+
     "lint": "eslint src; sass-lint -v",
     "lint.fix": "eslint src --fix",
+
     "ci.login": "ionic login --email $IONIC_EMAIL --password $IONIC_PASSWORD --no-interactive",
-    "update": "npm prune && npm update && bower prune && bower update"
+
+    "sentry": "node scripts/sentry.js"
   },
   "repository": {
     "type": "git",
@@ -68,7 +69,8 @@
     "ionic": "^3.5.0",
     "map-stream": "0.0.7",
     "minimist": "^1.2.0",
-    "sass-lint": "^1.10.2"
+    "sass-lint": "^1.10.2",
+    "shelljs": "^0.7.8"
   },
   "dependencies": {
     "@ionic/cloud": "^0.16.0",

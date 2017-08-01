@@ -114,7 +114,7 @@ gulp.task('static_images', function(done) {
 });
 
 gulp.task('scripts', function(done) {
-  gulp.src(paths.scripts)
+  gulp.src(paths.scripts, {base: './'})
     .pipe(plumber({errorHandler: done}))
   // .pipe(expectFile(paths.scripts))
     .pipe(sourcemaps.init())
@@ -137,7 +137,7 @@ gulp.task('scripts', function(done) {
     .pipe(ngAnnotate())
     .pipe(concat('all.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify()))
-    .pipe(sourcemaps.write('maps'))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -159,13 +159,13 @@ gulp.task('templates', function(done) {
 });
 
 gulp.task('libs', function(done) {
-  gulp.src(paths.libs)
+  gulp.src(paths.libs, {base: './'})
     .pipe(plumber({errorHandler: done}))
-  // .pipe(expectFile(paths.libs))
+    .pipe(expectFile(paths.libs))
     .pipe(sourcemaps.init())
     .pipe(concat('libs.min.js', {newLine: ';\r\n'}))
     .pipe(gulpif(options.env === 'production', uglify().on('error', gutil.log)))
-    .pipe(sourcemaps.write('maps'))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -319,5 +319,4 @@ gulp.task('release', [], function() {
   });
 });
 
-gulp.task('ionic:build:before', ['default']);
 gulp.task('ionic:watch:before', ['default', 'watch']);

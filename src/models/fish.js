@@ -42,7 +42,9 @@ angular.module('ifiske.models')
               });
         },
         search: function(searchString) {
-          var t0 = performance.now();
+          if (performance && performance.now) {
+            var t0 = performance.now();
+          }
           return model.getAll().then(data => {
             var options = {
               keys: [{
@@ -57,8 +59,10 @@ angular.module('ifiske.models')
             };
             return new Fuse(data, options);
           }).then(fuse => {
-            var t1 = performance.now();
-            console.log('Searching took:', (t1 - t0), 'ms');
+            if (performance && performance.now) {
+              var t1 = performance.now();
+              console.log('Searching took:', (t1 - t0), 'ms');
+            }
             return fuse.search(searchString);
           });
         },

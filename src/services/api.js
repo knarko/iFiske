@@ -1,8 +1,10 @@
 /* eslint-disable camelcase */
 angular.module('ifiske.services')
   .provider('API', function APIProvider() {
-    this.$get = function($http, sessionData, $timeout, Settings, serverLocation) {
-      var base_url = serverLocation + '/api/v2/api.php';
+    this.$get = function($http, $cacheFactory, $httpParamSerializer, sessionData, $timeout, Settings, serverLocation) {
+      const httpCache = $cacheFactory.get('$http');
+      console.log(httpCache);
+      const base_url = serverLocation + '/api/v2/api.php';
       const maxRetries = 3;
 
       function delay(fn, t) {
@@ -22,35 +24,47 @@ angular.module('ifiske.services')
          */
       function api_call(params, cache, retries) {
         retries = retries || 0;
+
+        angular.extend(params, {
+          lang: Settings.language(),
+          key:  'ox07xh8aaypwvq7a',
+        });
+
         return $http({
-          method: 'get',
-          url:    base_url,
-          params: angular.extend(params, {
-            lang: Settings.language(),
-            key:  'ox07xh8aaypwvq7a',
-          }),
+          method:  'get',
+          url:     base_url,
+          params:  params,
           timeout: 7000,
           cache:   (cache !== false),
-        })
-          .then(response => {
-            const data = response.data;
-            if (data.status === 'error') {
-              return Promise.reject(data.message);
-            } else if (data.data) {
-              return data.data.response;
-            }
-            return Promise.reject(data);
-          }).catch(response => {
-            if (retries < maxRetries) {
-              return delay(() => {
-                return api_call(params, false, ++retries);
-              }, 2000 * retries);
-            }
-            if (response && response.status === 0) {
-              return Promise.reject('Request timeout');
-            }
-            return Promise.reject('Network error: ' + JSON.stringify((response.response || response.data || response || 'Unknown network failure'), null, 1));
-          });
+        }).then(response => {
+          const data = response.data;
+          if (data.status === 'error') {
+            return Promise.reject(data.message);
+          } else if (data.data) {
+            return data.data.response;
+          }
+          return Promise.reject(data);
+        }).catch(response => {
+          // Remove failed requests from cache
+          httpCache.remove(`${base_url}?${$httpParamSerializer(params)}`);
+
+          // Only retry cacheable requests (so no actions will be cached)
+          if (cache && retries < maxRetries) {
+            return delay(() => {
+              return api_call(params, cache, ++retries);
+            }, 2000 * retries);
+          }
+          if (response && response.status === 0) {
+            return Promise.reject('Request timeout');
+          }
+          let reason = JSON.stringify((
+            response.response ||
+            response.data ||
+            response ||
+            'Unknown network failure'
+          ), null, 1);
+          return Promise.reject(`Network Error: ${reason}`);
+        });
       }
 
       /**

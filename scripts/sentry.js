@@ -6,7 +6,7 @@ var SENTRY_URL = 'https://app.getsentry.com/api/0/projects/kada-development-ab/i
 var SENTRY_API_KEY = process.env.SENTRY_API_KEY;
 
 // create release
-shell.exec(`curl ${SENTRY_URL} -H 'Authorization: Bearer ${SENTRY_API_KEY}' -X POST -d ${JSON.stringify({version: APP_VERSION})} -H 'Content-Type: application/json'`);
+shell.exec(`curl ${SENTRY_URL} -H 'Authorization: Bearer ${SENTRY_API_KEY}' -X POST -d '${JSON.stringify({version: APP_VERSION})}' -H 'Content-Type: application/json'`);
 
 const files = ['all.min.js', 'libs.min.js'];
 let exit = 0;

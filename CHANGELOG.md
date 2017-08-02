@@ -1,3 +1,15 @@
+<a name=""></a>
+# [](https://github.com/ifiske/ifiske/compare/v3.6.3...v) (2017-08-02)
+
+
+### Bug Fixes
+
+* **api:** remove errors from cache, don't retry non-cacheable requests ([f4a5e0f](https://github.com/ifiske/ifiske/commit/f4a5e0f))
+* **api:** retry failed network requests ([6fd892a](https://github.com/ifiske/ifiske/commit/6fd892a))
+* **search:** fix issue in browsers that do not support performance.now() ([219cc72](https://github.com/ifiske/ifiske/commit/219cc72))
+
+
+
 <a name="3.6.3"></a>
 ## [3.6.3](https://github.com/ifiske/ifiske/compare/v3.6.2...v3.6.3) (2017-07-31)
 

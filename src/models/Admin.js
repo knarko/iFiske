@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('Admin', function() {
-    this.$get = function($q, API, Organization, Product) {
+    this.$get = function($q, API, Organization, Product, sessionData) {
       var organizations = {};
 
       function initOrg(org) {
@@ -18,6 +18,9 @@ angular.module('ifiske.models')
       }
       var model = {
         isAdmin: function() {
+          if (!sessionData.token) {
+            return Promise.reject('Not logged in');
+          }
           return API.user_organizations().then(function(orgs) {
             console.log(orgs);
             for (var i in orgs) {
@@ -66,6 +69,9 @@ angular.module('ifiske.models')
           });
         },
         getOrganizations: function() {
+          if (!sessionData.token) {
+            return Promise.reject('Not logged in');
+          }
           return API.user_organizations().then(function(orgs) {
             var p = [];
             for (var i in orgs) {
@@ -88,6 +94,9 @@ angular.module('ifiske.models')
         },
       };
       model.wait = model.getOrganizations();
+      model.wait.catch(err => {
+        console.warn(err);
+      });
 
       return model;
     };

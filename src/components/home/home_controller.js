@@ -34,8 +34,7 @@ angular.module('ifiske.controllers')
     $scope.$on('$ionicView.enter', function() {
       Admin.isAdmin().then(function(isAdmin) {
         $scope.admin = isAdmin;
-      }, function(err) {
-        console.warn(err);
+      }, () => {
         $scope.admin = false;
       });
     });

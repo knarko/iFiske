@@ -1,4 +1,4 @@
-<ion-view title="{{'My fishing licenses' |translate}}" class="image-bg">
+<ion-view title="{{'My fishing licenses' |translate}}" class="license image-bg">
   <!-- overflow-scroll must be false in order to manually activate pull to refresh -->
   <ion-content delegate-handle="licenses-content" overflow-scroll="false">
     <ion-refresher
@@ -11,19 +11,19 @@
     </div>
     <div class="item item-divider item-icon-left" ng-if="active.length">
       <i class="icon ion-checkmark"></i>{{'Active licenses' | translate}}</div>
-    <div class="item" ng-repeat="product in active" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
+    <div ng-repeat="product in active" class="item {{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
       <h2>{{product.ot}}</h2>
       <p>{{product.t}}</p>
     </div>
     <div class="item item-divider item-icon-left" ng-if="inactive.length">
       <i class="icon ion-clock"></i>{{'Inactive licenses' | translate}}</div>
-    <div class="item" ng-repeat="product in inactive" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
+    <div ng-repeat="product in inactive" class="item {{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
       <h2>{{product.ot}}</h2>
       <p>{{product.t}}</p>
     </div>
     <div class="item item-divider item-icon-left" ng-if="expired.length">
       <i class="icon ion-close"></i>{{'Expired licenses' | translate}}</div>
-    <div class="item" ng-repeat="product in expired" class="{{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
+    <div ng-repeat="product in expired" class="item {{product.validity}}" ui-sref="^.license_detail({license: product, id: product.ID})">
       <h2>{{product.ot}}</h2>
       <p>{{product.t}}</p>
     </div>

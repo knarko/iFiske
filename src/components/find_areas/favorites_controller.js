@@ -2,7 +2,7 @@ angular.module('ifiske.controllers')
   .controller('FavoritesCtrl', function(
     $scope,
     User,
-    $cordovaToast,
+    ToastService,
     API,
     $translate,
     $ionicActionSheet,
@@ -22,13 +22,8 @@ angular.module('ifiske.controllers')
       API.user_remove_favorite(area.ID).then(function() {
         User.removeFavorite(area.ID);
         $scope.favorites.splice($scope.favorites.indexOf(area), 1);
-        $ionicPlatform.ready(function() {
-          window.plugins.toast.hide();
-          $cordovaToast.show(
-            $translate.instant('Area removed from favorites'),
-            'short',
-            'bottom',
-          );
+        ToastService.hide().then(() => {
+          ToastService.show('Area removed from favorites');
         });
       });
     }
@@ -37,12 +32,11 @@ angular.module('ifiske.controllers')
       console.log(area);
       API.user_set_favorite_notification(area.ID, area.not).then(function() {
         User.setFavoriteNotification(area.ID, area.not);
-        $ionicPlatform.ready(function() {
-          window.plugins.toast.hide();
-          $cordovaToast.show((area.not ?
-            $translate.instant('Notifications are turned on') :
-            $translate.instant('Notifications are turned off')),
-          'short', 'bottom');
+        ToastService.hide().then(() => {
+          ToastService.show(area.not ?
+            'Notifications are turned on' :
+            'Notifications are turned off',
+          );
         });
       });
     };

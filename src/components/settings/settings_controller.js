@@ -1,7 +1,7 @@
 angular.module('ifiske.controllers')
   .controller('SettingsCtrl', function(
     $scope,
-    $cordovaToast,
+    ToastService,
     $cordovaAppVersion,
     $ionicPlatform,
     $ionicModal,
@@ -12,31 +12,18 @@ angular.module('ifiske.controllers')
   ) {
     function afterPushResetSuccess() {
       console.log('Push reset returned');
-      $ionicPlatform.ready(function() {
-        if (window.plugins && window.plugins.toast) {
-          window.plugins.toast.hide();
-          if ($scope.push.checked) {
-            $cordovaToast.showShortBottom(
-              $translate.instant('Push notifications are turned on'),
-            );
-          } else {
-            $cordovaToast.showShortBottom(
-              $translate.instant('Push notifications are turned off'),
-            );
-          }
+      ToastService.hide().then(() => {
+        if ($scope.push.checked) {
+          ToastService.show('Push notifications are turned on');
+        } else {
+          ToastService.show('Push notifications are turned off');
         }
       });
     }
 
     function afterPushResetFailure(error) {
       console.warn(error);
-      $ionicPlatform.ready(function() {
-        if (window.plugins && window.plugins.toast) {
-          $cordovaToast.showLongBottom(
-            $translate.instant('Could not set up push notifications'),
-          );
-        }
-      });
+      ToastService.show('Could not set up push notifications', 'long');
       $scope.push.checked = false;
     }
 

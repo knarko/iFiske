@@ -11,18 +11,23 @@ angular.module('ifiske.translations')
     'Counties':                            'Counties',
     'Fishing areas':                       'Fishing areas',
     'active':                              'Valid',
+
     'revoked':                             'Widerrufen werden',
     'Revoked':                             'Widerrufen werden',
     'Unrevoke':                            'Unrevoke',
     'Check license':                       'Überprüfen Fischerschein',
     'Enter license code template':         'NO TRANSLATION YET',
     'Check license placeholder':           'z.B. 123455678',
+
     'Unknown error':                     'There was an unexpected error. Please report the following to app@ifiske.se: {{error}}',
     'Push notifications are turned off': 'Push notifications are turned off',
     'Push notifications are turned on':  'Push notifications are turned on',
     'Check license placeholder':         'e.g. 12345678',
     'Unrevoke':                          'Unrevoke',
     'Could not set up push notifications': 'Could not set up push notifications',
+    'Renew license':         'Renew license',
+    'License not yet valid': 'License is not valid yet',
+    'Downloadable file':     'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
     */
 
     'About the app':                       'Impressum',
@@ -100,7 +105,7 @@ angular.module('ifiske.translations')
     'More in control panel':               'Mehr Funktionalität ist im Kontrollfenster auf www.ifiske.se erhältlich',
     'My fishing licenses':                 'Mein Fischerschein',
     'Name':                                'Name',
-    'Network Error':                       'Es gab einen Netzwerkfehler, bitte später noch einmal versuchen.',
+    'Network Error':                       'Es gab einen Netzwerkfehler, bitte später noch einmal versuchen. {{error}}',
     'New account':                         'Neuer Account',
     'New password':                        'Neues Passwort',
     'Next':                                'Nächste',

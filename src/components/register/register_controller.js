@@ -6,7 +6,7 @@ angular.module('ifiske.controllers')
     $ionicModal,
     $ionicScrollDelegate,
     $ionicPlatform,
-    $cordovaToast,
+    ToastService,
     $ionicViewSwitcher,
     $ionicHistory,
     $timeout,
@@ -112,17 +112,11 @@ angular.module('ifiske.controllers')
       }
       API.user_register(userDetails)
         .then(function() {
-          if (window.plugins && window.plugins.toast) {
-            $cordovaToast.showShortBottom('Ny aktiveringskod skickad');
-          }
+          ToastService.show('Activation code resent');
         }, function(err) {
           console.error(err);
           Raven.captureException(err);
-          if (window.plugins && window.plugins.toast) {
-            $cordovaToast.showLongBottom(
-              'Ett fel uppstod, aktiveringskoden kunde inte skickas.',
-            );
-          }
+          ToastService.show('Activation code failed', 'long');
         });
     };
 
@@ -172,11 +166,7 @@ angular.module('ifiske.controllers')
 
       API.user_confirm(username, form.vercode.$viewValue)
         .then(function() {
-          $ionicPlatform.ready(function() {
-            if (window.plugins && window.plugins.toast) {
-              $cordovaToast.showLongBottom('Ditt konto har skapats');
-            }
-          });
+          ToastService.show('Your account has been created');
           $scope.formErrors.validationError = false;
           $scope.details = {};
 

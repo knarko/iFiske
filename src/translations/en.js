@@ -1,7 +1,11 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
   .constant('englishTranslations', {
-    'Renew license': 'Renew license',
+    'Renew license':            'Renew license',
+    'License not yet valid':    'License is not valid yet',
+    'Activation code resent':   'A new activation code has been sent',
+    'Account created':          'Your account has been created',
+    'You have been logged out': 'You have been logged out',
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',
@@ -87,7 +91,7 @@ angular.module('ifiske.translations')
     'More in control panel':               'More functionality is available in the control panel at www.ifiske.se',
     'My fishing licenses':                 'My fishing permits',
     'Name':                                'Name',
-    'Network Error':                       'There was an error with the network, please make sure you are connected and try again.',
+    'Network Error':                       'There was an error with the network, please make sure you are connected and try again. {{error}}',
     'New account':                         'New account',
     'New password':                        'New password',
     'Next':                                'Next',

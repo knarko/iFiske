@@ -1,12 +1,10 @@
 angular.module('ifiske.controllers')
   .controller('languageSwitcher', function languageSwitcherController(
     $scope,
-    $cordovaToast,
     $state,
-    $ionicPlatform,
     $translate,
     Settings,
-    $window,
+    ToastService,
     $interval,
     Update,
   ) {
@@ -17,14 +15,7 @@ angular.module('ifiske.controllers')
         Settings.language(lang);
         Update.forcedUpdate();
       }
-      $ionicPlatform.ready(function() {
-        var text = $translate.instant('Language selected');
-        if ($window.plugins && $window.plugins.toast) {
-          $cordovaToast.showLongBottom(text);
-        } else {
-          console.log('Toast: ', text);
-        }
-      });
+      ToastService.show('Language selected', 'long');
       if ($scope.$parent.closeModal) {
         $scope.$parent.closeModal();
       } else {

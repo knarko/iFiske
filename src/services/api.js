@@ -3,7 +3,6 @@ angular.module('ifiske.services')
   .provider('API', function APIProvider() {
     this.$get = function($http, $cacheFactory, $httpParamSerializer, sessionData, $timeout, Settings, serverLocation) {
       const httpCache = $cacheFactory.get('$http');
-      console.log(httpCache);
       const base_url = serverLocation + '/api/v2/api.php';
       const maxRetries = 3;
 
@@ -54,16 +53,16 @@ angular.module('ifiske.services')
               return api_call(params, cache, ++retries);
             }, 2000 * retries);
           }
-          if (response && response.status === 0) {
+          if (!response) {
+            return Promise.reject('Unknown network failure');
+          } else if (response.status === 0) {
             return Promise.reject('Request timeout');
+          } else if (response.response) {
+            return Promise.reject(response);
+          } else if (response.data) {
+            return Promise.reject(response.data);
           }
-          let reason = JSON.stringify((
-            response.response ||
-            response.data ||
-            response ||
-            'Unknown network failure'
-          ), null, 1);
-          return Promise.reject(`Network Error: ${reason}`);
+          return Promise.reject(`Network Error: ${JSON.stringify(response, null, 1)}`);
         });
       }
 

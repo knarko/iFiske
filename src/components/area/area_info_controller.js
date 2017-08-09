@@ -7,7 +7,7 @@ angular.module('ifiske.controllers')
     Area,
     User,
     $ionicPlatform,
-    $cordovaToast,
+    ToastService,
     $translate,
     $stateParams,
   ) {
@@ -39,29 +39,13 @@ angular.module('ifiske.controllers')
             .then(function() {
               return User.addFavorite($scope.area.ID);
             }).then(function() {
-              return $ionicPlatform.ready(function() {
-                $translate('Area added to favorites').then(function(translation) {
-                  $cordovaToast.show(
-                    translation,
-                    'short',
-                    'bottom',
-                  );
-                });
-              });
+              ToastService.show('Area added to favorites');
             });
         } else {
           promise = API.user_remove_favorite($scope.area.ID).then(function() {
             return User.removeFavorite($scope.area.ID);
           }).then(function() {
-            $ionicPlatform.ready(function() {
-              $translate('Area removed from favorites').then(function(translation) {
-                $cordovaToast.show(
-                  translation,
-                  'short',
-                  'bottom',
-                );
-              });
-            });
+            ToastService.show('Area removed from favorites');
           });
         }
         promise.catch(function(err) {

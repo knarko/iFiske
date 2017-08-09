@@ -4,7 +4,7 @@ angular.module('ifiske.services')
       localStorage,
       $q,
       $ionicLoading,
-      $cordovaToast,
+      ToastService,
       $ionicPlatform,
       Area,
       County,
@@ -56,23 +56,14 @@ angular.module('ifiske.services')
           if (shouldUpdate) {
             localStorage.set(LAST_UPDATE, currentTime);
           }
-        }, function(err) {
-          console.error(err);
+        }, function(error) {
+          console.error(error);
 
-          Raven.captureException(err);
-          // TODO: move this error handling somewhere else
-          $ionicPlatform.ready(function() {
-            if (window.plugins) {
-              $cordovaToast.show(
-                'Tyvärr kan appen inte komma åt iFiskes server.' +
-                            'Är du ansluten till nätverket?',
-                'long', 'bottom');
-            } else {
-              console.warn('Cannot toast');
-            }
-          });
+          Raven.captureException(error);
+          ToastService.show(['Network Error', {error: error.response || error}], 'long');
+
           // Must rethrow error to fail later
-          throw err;
+          throw error;
         })
           .finally(function() {
             $ionicLoading.hide();

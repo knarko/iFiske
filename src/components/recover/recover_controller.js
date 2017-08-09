@@ -2,9 +2,8 @@ angular.module('ifiske.controllers')
   .controller('RecoverCtrl', function(
     $scope,
     $state,
-    $ionicPlatform,
     $ionicLoading,
-    $cordovaToast,
+    ToastService,
     $translate,
     API,
   ) {
@@ -64,11 +63,7 @@ angular.module('ifiske.controllers')
       API.user_reset_password(user, password, code)
         .then(function(_data) {
           // Success toast
-          $translate('Password changed').then(function(translation) {
-            $ionicPlatform.ready(function() {
-              $cordovaToast.showShortBottom(translation);
-            });
-          });
+          ToastService.show('Password changed');
 
           $state.go('app.login');
 
@@ -88,11 +83,7 @@ angular.module('ifiske.controllers')
             break;
           default:
             console.warn('Unhandled error code from api', error);
-            $translate('Unhandled API error').then(function(translation) {
-              $ionicPlatform.ready(function() {
-                $cordovaToast.showShortBottom(translation);
-              });
-            });
+            ToastService.show('Unhandled API error');
             break;
           }
         })

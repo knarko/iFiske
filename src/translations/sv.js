@@ -1,8 +1,14 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
   .constant('swedishTranslations', {
-    'Downloadable file': 'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
-    'Renew license':     'Förnya fiskekort',
+    'Downloadable file':        'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
+    'Renew license':            'Förnya fiskekort',
+    'License not yet valid':    'Fiskekortet har inte börjat gälla än',
+    'Activation code failed':   'Ett fel uppstod, aktiveringskoden kunde inte skickas.',
+    'Activation code resent':   'Ny aktiveringskod skickad',
+    'Account created':          'Ditt konto har skapats',
+    'You have been logged out': 'Du har blivit utloggad',
+
     /* --- */
 
     'About the app':                       'Om appen',
@@ -89,7 +95,7 @@ angular.module('ifiske.translations')
     'More in control panel':               'Mer funktionalitet finns i kontrollpanelen på www.ifiske.se',
     'My fishing licenses':                 'Mina fiskekort',
     'Name':                                'Namn',
-    'Network Error':                       'Det uppstod ett nätverksfel, försök igen senare',
+    'Network Error':                       'Det uppstod ett nätverksfel, försök igen senare. {{error}}',
     'New account':                         'Nytt konto',
     'New password':                        'Nytt lösenord',
     'Next':                                'Nästa',

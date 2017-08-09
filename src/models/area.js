@@ -68,7 +68,7 @@ angular.module('ifiske.models')
     },
     ];
 
-    this.$get = function($q, DB, API, $cordovaGeolocation) {
+    this.$get = function($q, DB, API, $cordovaGeolocation, Fish) {
       var p = [];
       var currentLocation, watch;
 
@@ -251,19 +251,18 @@ angular.module('ifiske.models')
          * @return {Promise<Area[]>} Promise for the matching areas
          */
         search: function(searchstring, countyId) {
+          let t0;
           if (performance && performance.now) {
-            var t0 = performance.now();
+            t0 = performance.now();
           }
           if (!watch) {
             watch = startWatch();
           }
-          return Area.getAll(countyId)
+          let result = Area.getAll(countyId)
             .then(data => data.map(d => {
-              d.fish_1 = d.fish_1 && d.fish_1.split(' ');
-              d.fish_2 = d.fish_2 && d.fish_2.split(' ');
-              d.fish_3 = d.fish_3 && d.fish_3.split(' ');
-              d.fish_4 = d.fish_4 && d.fish_4.split(' ');
-              d.fish_5 = d.fish_5 && d.fish_5.split(' ');
+              for (let i = 1; i < 6; ++i) {
+                d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(' ');
+              }
               return d;
             }))
             .then(function(data) {
@@ -311,52 +310,70 @@ angular.module('ifiske.models')
 
               // Populate Fuse search index
               return new Fuse(data, options);
-            }, function(err) {
-              console.warn(err);
             })
             .then(fuse => {
-              return $q(function(resolve) {
-                let res;
-                if (searchstring) {
-                  res = fuse.search(searchstring);
-                } else {
-                  res = fuse.list.map(i => {
-                    return {
-                      item:  i,
-                      score: 0,
-                    };
-                  });
-                }
-                if (currentLocation) {
-                  res.forEach(r => {
-                    let distance = calculateDistance(
-                      r.item.lat,
-                      r.item.lng,
-                      currentLocation.lat,
-                      currentLocation.lng,
-                    );
-                    r.item.distance = distance;
-                    r.score += mapDistance(distance);
-                  });
-                }
-                resolve(res
-                  .sort((a, b) => {
-                    let res = a.score - b.score;
-                    if (res) return res;
-                    if (a.item.org > b.item.org) {
-                      return 1;
-                    } else if (a.item.org < b.item.org) {
-                      return -1;
-                    }
-                    return 0;
-                  })
-                  .map(r => r.item));
-                if (performance && performance.now) {
-                  var t1 = performance.now();
-                  console.log('Searching took:', t1 - t0, 'ms');
-                }
+              if (searchstring) {
+                return fuse.search(searchstring);
+              }
+              return fuse.list.map(i => {
+                return {
+                  item:  i,
+                  score: 0,
+                };
               });
+            })
+            .then(res => {
+              return Fish.search(searchstring)
+                .then(fishes => {
+                  return fishes.length ? fishes[0].item.t : undefined;
+                })
+                .then(foundFish => {
+                  if (currentLocation || foundFish) {
+                    res.forEach(r => {
+                      if (currentLocation) {
+                        let distance = calculateDistance(
+                          r.item.lat,
+                          r.item.lng,
+                          currentLocation.lat,
+                          currentLocation.lng,
+                        );
+                        r.item.distance = distance;
+                        r.score += mapDistance(distance);
+                      }
+
+                      if (foundFish) {
+                        for (let i = 1; i < 6; ++i) {
+                          let fishArr = r.item['fish_' + i];
+                          if (fishArr && fishArr.some(fish => fish.indexOf(foundFish) !== -1)) {
+                            r.score -= i / 1500;
+                            break;
+                          }
+                        }
+                      }
+                    });
+                  }
+                  return res;
+                });
+            }).then(res => {
+              return res.sort((a, b) => {
+                let res = a.score - b.score;
+                if (res) return res;
+                if (a.item.org > b.item.org) {
+                  return 1;
+                } else if (a.item.org < b.item.org) {
+                  return -1;
+                }
+                return 0;
+              })
+                .map(r => r.item);
             });
+          result.finally(() => {
+            if (performance && performance.now) {
+              let t1 = performance.now();
+              console.log('Searching took:', t1 - t0, 'ms');
+            }
+          });
+          return result;
         },
       };
 

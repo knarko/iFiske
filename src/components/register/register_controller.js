@@ -166,7 +166,7 @@ angular.module('ifiske.controllers')
 
       API.user_confirm(username, form.vercode.$viewValue)
         .then(function() {
-          ToastService.show('Your account has been created');
+          ToastService.show('Account created');
           $scope.formErrors.validationError = false;
           $scope.details = {};
 

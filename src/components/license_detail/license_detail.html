@@ -1,6 +1,6 @@
 <ion-view title="{{'Fishing License'| translate}}" class="bg-{{product.validity}}" cache-view="false">
   <ion-content padding="true" class="text-center">
-    <div class="padding bg-white" ng-if="!product">
+    <div class="padding bg-white" ng-if="product === null">
       <h2 translate>The license does not exist</h2>
     </div>
     <div class="padding bg-white" ng-if="product">

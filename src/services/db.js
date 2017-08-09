@@ -76,7 +76,7 @@ angular.module('ifiske.services')
      */
     function getSingle(sql, args) {
       return getMultiple(sql, args).then(function(result) {
-        return result[0];
+        return result && result[0];
       });
     }
 

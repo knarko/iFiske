@@ -206,22 +206,36 @@ angular.module('ifiske.models')
         },
 
         getProduct: function(id) {
-          // TODO: get license from DB, or from api
-          return wait.then(function() {
-            return DB.getSingle([
-              'SELECT User_Product.*, Product.ai,',
-              'Rule.t as rule_t,',
-              'Rule.ver as rule_ver,',
-              'Rule.d as rule_d',
-              'FROM User_Product',
-              'LEFT JOIN Product ON Product.ID = User_Product.pid',
-              'LEFT JOIN Rule ON Rule.ID = Product.ri',
-              'WHERE User_Product.ID = ?',
-            ].join(' '), [id]).then(function(product) {
-              console.log(product);
-              product.validity = Product.getValidity(product);
-              return product;
+          function getter(id) {
+            return wait.then(function() {
+              return DB.getSingle(`
+                SELECT User_Product.*, Product.ai,
+                Rule.t as rule_t,
+                Rule.ver as rule_ver,
+                Rule.d as rule_d
+                FROM User_Product
+                LEFT JOIN Product ON Product.ID = User_Product.pid
+                LEFT JOIN Rule ON Rule.ID = Product.ri
+                WHERE User_Product.ID = ?
+              `, [id]).then(function(product) {
+                if (!product) {
+                  return Promise.reject(`Couldn't find product with id '${id}`);
+                }
+                product.validity = Product.getValidity(product);
+                return product;
+              });
             });
+          }
+
+          return getter(id).catch(err => {
+            console.warn(err);
+            return API.user_products()
+              .then(products => {
+                return DB.populateTable(tables.product, products);
+              })
+              .then(() => {
+                return getter(id);
+              });
           });
         },
 

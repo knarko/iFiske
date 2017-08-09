@@ -30,6 +30,9 @@ angular.module('ifiske.controllers')
             });
           });
         }
+      }).catch(err => {
+        console.warn(err);
+        $scope.product = null;
       });
     }
     $scope.now = Date.now();

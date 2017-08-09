@@ -86,7 +86,7 @@ angular.module('ifiske.translations')
     'More in control panel':               'More functionality is available in the control panel at www.ifiske.se',
     'My fishing licenses':                 'My fishing permits',
     'Name':                                'Name',
-    'Network error':                       'There was an error with the network, please make sure you are connected and try again.',
+    'Network Error':                       'There was an error with the network, please make sure you are connected and try again.',
     'New account':                         'New account',
     'New password':                        'New password',
     'Next':                                'Next',

@@ -24,7 +24,7 @@ angular.module('ifiske.controllers')
               $scope.message = 'Not authorized to view this license';
               break;
             default:
-              $scope.message = 'Network error';
+              $scope.message = 'Network Error';
             }
             console.warn(err);
           }).finally(function() {

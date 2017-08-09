@@ -6,6 +6,7 @@ angular.module('ifiske.controllers')
     $ionicLoading,
     $ionicHistory,
     $ionicViewSwitcher,
+    $translate,
   ) {
     /**
     * signIn
@@ -28,8 +29,12 @@ angular.module('ifiske.controllers')
           $state.go('app.home');
         }, function(error) {
           $ionicLoading.hide();
-          loginForm.$setValidity('loginError', false);
-          $scope.error = error.response;
+          if (error) {
+            loginForm.$setValidity('loginError', false);
+            $scope.error = error.response;
+          } else {
+            $scope.error = $translate.instant('Network Error');
+          }
         });
     };
 

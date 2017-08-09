@@ -11,6 +11,10 @@
 
     <ion-content header-shrink>
       <div class="list has-search-bar">
+        <div ng-if="!areas" class="spinner-container">
+          <ion-spinner></ion-spinner>
+        </div>
+        <div ng-if="areas.length === 0" translate>No areas found</div>
         <div ng-if="foundFish" ui-sref="app.fishdetail({fish: foundFish, id: foundFish.ID})" class="item item-thumbnail-left found-fish">
           <img class="fish-image" img-cache ic-src="{{ifiskeUrl + foundFish.img}}">
           <h2>{{foundFish.t}}</h2>

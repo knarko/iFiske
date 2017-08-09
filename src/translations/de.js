@@ -28,6 +28,7 @@ angular.module('ifiske.translations')
     'Renew license':         'Renew license',
     'License not yet valid': 'License is not valid yet',
     'Downloadable file':     'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
+    'No areas found':           'No areas found',
     */
 
     'About the app':                       'Impressum',

@@ -6,6 +6,7 @@ angular.module('ifiske.translations')
     'Activation code resent':   'A new activation code has been sent',
     'Account created':          'Your account has been created',
     'You have been logged out': 'You have been logged out',
+    'No areas found':           'No areas found',
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',

@@ -8,6 +8,7 @@ angular.module('ifiske.translations')
     'Activation code resent':   'Ny aktiveringskod skickad',
     'Account created':          'Ditt konto har skapats',
     'You have been logged out': 'Du har blivit utloggad',
+    'No areas found':           'Inga fiskevatten hittades',
 
     /* --- */
 

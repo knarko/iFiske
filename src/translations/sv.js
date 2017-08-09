@@ -2,6 +2,7 @@
 angular.module('ifiske.translations')
   .constant('swedishTranslations', {
     'Downloadable file': 'Nedladdningsbar {{type}}', // Exampelvis 'Nedladdningsbar PDF'
+    'Renew license':     'Förnya fiskekort',
     /* --- */
 
     'About the app':                       'Om appen',

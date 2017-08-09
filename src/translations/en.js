@@ -1,6 +1,7 @@
 /* eslint-disable max-len*/
 angular.module('ifiske.translations')
   .constant('englishTranslations', {
+    'Renew license': 'Renew license',
     /* Add new translations to the top if they do not exist in swedish yet. */
 
     'About the app':                       'About',

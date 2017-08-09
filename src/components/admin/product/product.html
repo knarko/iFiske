@@ -1,4 +1,4 @@
-<ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}" class="license bg-{{product.validity}}">
+<ion-view title="{{'Fishing License' | translate}} {{product.validity | translate}}" class="bg-{{product.validity}}">
   <ion-content padding="true">
     <div ng-if="product" class="padding bg-white">
       <img ng-show="product.rev" src="img/makulerad.png" class="revoked"/>
@@ -6,7 +6,7 @@
         <h3>{{product.t}}</h3>
         <p ng-if="product.subt">{{product.subt}}</p>
         <h2>{{product.code}}</h2>
-        <h1 class="{{product.validity}}">{{product.validity | translate}}</h1>
+        <h1 class="license-{{product.validity}}">{{product.validity | translate}}</h1>
       </section>
       <hr />
       <section>

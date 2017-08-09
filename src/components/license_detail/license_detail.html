@@ -1,4 +1,4 @@
-<ion-view title="{{'Fishing License'| translate}}" class="license bg-{{product.validity}}" cache-view="false">
+<ion-view title="{{'Fishing License'| translate}}" class="bg-{{product.validity}}" cache-view="false">
   <ion-content padding="true" class="text-center">
     <div class="padding bg-white" ng-if="product === null">
       <h2 translate>The license does not exist</h2>
@@ -52,7 +52,7 @@
            filter="url(#filter-{{product.validity==='active'?'green':product.validity==='revoked'?'gray':'red'}})" />
         </svg>
       </div>
-      <h1 class="{{product.validity}}">{{product.code}}</h1>
+      <h1 class="license-{{product.validity}}">{{product.code}}</h1>
 
       <h3 ng-if="product.validity === 'expired'" translate>License has expired</h3>
       <button class="button button-balanced" ng-if="product.validity === 'expired'" ng-click="openProductInBrowser(product.pid)" translate>Renew license</button>

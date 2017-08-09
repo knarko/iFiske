@@ -34,16 +34,16 @@
   display: block;
 }
 
-.license .active {
+.license-active {
   color: $balanced;
 }
 
-.license .inactive {
+.license-inactive {
   color: $energized;
 }
 
-.license .revoked,
-.license .expired {
+.license-revoked,
+.license-expired {
   color: $assertive;
 }
 

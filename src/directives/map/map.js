@@ -172,6 +172,7 @@ angular.module('ifiske.directives')
               });
               marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
                 maxWidth: $window.innerWidth - 50,
+                title:    poi.t,
               });
               poiMarkers.addLayer(marker);
             }

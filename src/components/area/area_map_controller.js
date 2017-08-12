@@ -33,19 +33,21 @@ angular.module('ifiske.controllers')
           $ionicPlatform.ready(function() {
             window.launchnavigator.navigate(
               [$scope.navto.lat, $scope.navto.lng],
-              null,
-              function() {
-                console.log('Opening navigator');
-              },
-              function(error) {
-                Raven.captureException(error);
-                if (error === 'cancelled') {
-                  return;
-                }
-                $ionicPopup.alert({
-                  title:    $translate.instant('Error'),
-                  template: $translate.instant('Unknown error', {error}),
-                });
+              {
+                successCallback: () => {
+                  console.log('Opening navigator');
+                },
+                errorCallback: error => {
+                  Raven.captureException(error);
+                  if (error === 'cancelled') {
+                    return;
+                  }
+                  $ionicPopup.alert({
+                    title:    $translate.instant('Error'),
+                    template: $translate.instant('Unknown error', {error}),
+                  });
+                },
+                destinationName: $scope.navto.title,
               });
           });
         };
@@ -53,6 +55,7 @@ angular.module('ifiske.controllers')
         $scope.$on('leaflet.popupopen', function(_event, args) {
           // show navtobutton
           $scope.navto = args.popup.getLatLng();
+          $scope.navto.title = args.popup.options.title;
           $scope.$digest();
         });
 

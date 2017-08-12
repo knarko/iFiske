@@ -13,7 +13,7 @@
         <label for="vercode" class="input-label" translate>Activation code</label>
         <label ng-class="{'label-error': verifyForm.vercode.$invalid &&
 				 verifyForm.vercode.$dirty && verifyForm.vercode.length}" class="item item-input">
-          <input id="vercode" name="vercode" ng-model="details.vercode" type="text" placeholder="1234" ng-pattern="/^\d{4}$/" required ng-change="verifyForm.vercode.$setValidity('verified',true)">
+          <input id="vercode" name="vercode" ng-model="details.vercode" type="tel" placeholder="1234" ng-pattern="/^\d{4}$/" required ng-change="verifyForm.vercode.$setValidity('verified',true)">
         </label>
         <div class="error-message" ng-messages="verifyForm.vercode.$error" ng-if="verifyForm.vercode.$dirty">
           <p ng-message="verified" translate>Activation code failed</p>

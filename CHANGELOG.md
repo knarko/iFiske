@@ -1,11 +1,24 @@
-<a name=""></a>
-# [](https://github.com/ifiske/ifiske/compare/v3.6.3...v) (2017-08-02)
+<a name="3.6.4"></a>
+## [3.6.4](https://github.com/ifiske/ifiske/compare/v3.6.3...v3.6.4) (2017-08-16)
 
 
 ### Bug Fixes
 
+* **admin:** add short error message regarding charts ([40597e2](https://github.com/ifiske/ifiske/commit/40597e2))
+* **Admin:** don't hit network if we're not logged in ([ea0351e](https://github.com/ifiske/ifiske/commit/ea0351e))
 * **api:** remove errors from cache, don't retry non-cacheable requests ([f4a5e0f](https://github.com/ifiske/ifiske/commit/f4a5e0f))
 * **api:** retry failed network requests ([6fd892a](https://github.com/ifiske/ifiske/commit/6fd892a))
+* **area_list:** show a spinner while searching ([95ca2d9](https://github.com/ifiske/ifiske/commit/95ca2d9))
+* **area/maps:** fix navigation to poi ([2627c4d](https://github.com/ifiske/ifiske/commit/2627c4d))
+* **area/search:** modify weighting to prefer fishes and nearby even more ([0836f0b](https://github.com/ifiske/ifiske/commit/0836f0b))
+* **deps(sms:** Update sms plugin to include fix for permission bug): ([f254b8b](https://github.com/ifiske/ifiske/commit/f254b8b))
+* **license:** only add validity color to text on license screens ([12da78b](https://github.com/ifiske/ifiske/commit/12da78b))
+* **license:** set license validity colours without affecting other things ([605b0d7](https://github.com/ifiske/ifiske/commit/605b0d7))
+* **license_detail:** refresh fishing licenses if license is not found in db ([11b918a](https://github.com/ifiske/ifiske/commit/11b918a))
+* **login:** improve network error message ([37b480b](https://github.com/ifiske/ifiske/commit/37b480b))
+* **register:** fix translation message key ([f8433ca](https://github.com/ifiske/ifiske/commit/f8433ca))
+* **register/verify:** set verification input to type=tel ([ef12157](https://github.com/ifiske/ifiske/commit/ef12157))
+* **translations:** add missing translation for 'Renew license' ([36fb036](https://github.com/ifiske/ifiske/commit/36fb036))
 * **search:** fix issue in browsers that do not support performance.now() ([219cc72](https://github.com/ifiske/ifiske/commit/219cc72))
 
 

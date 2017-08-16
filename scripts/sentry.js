@@ -2,7 +2,7 @@ var shell = require('shelljs');
 
 const APP_VERSION = process.env.CI_COMMIT_TAG || process.env.CI_COMMIT_SHA || 'local-test';
 
-var SENTRY_URL = 'https://app.getsentry.com/api/0/projects/kada-development-ab/ifiske/releases/';
+var SENTRY_URL = process.env.SENTRY_URL;
 var SENTRY_API_KEY = process.env.SENTRY_API_KEY;
 
 // create release

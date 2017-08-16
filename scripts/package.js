@@ -8,6 +8,7 @@ if (['android', 'ios', 'both'].indexOf(platform) === -1) {
   process.exit(1);
 }
 
+shell.rm('www/*.map');
 shell.exec(`ionic cordova platform add ${platform} --no-interactive -r`);
 
 shell.config.fatal = true;

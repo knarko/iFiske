@@ -1,7 +1,15 @@
 /* eslint-disable camelcase */
 angular.module('ifiske.services')
   .provider('API', function APIProvider() {
-    this.$get = function($http, $cacheFactory, $httpParamSerializer, sessionData, $timeout, Settings, serverLocation) {
+    this.$get = function(
+      $http,
+      $cacheFactory,
+      $httpParamSerializer,
+      sessionData,
+      $timeout,
+      Settings,
+      serverLocation,
+    ) {
       const httpCache = $cacheFactory.get('$http');
       const base_url = serverLocation + '/api/v2/api.php';
       const maxRetries = 3;
@@ -74,7 +82,7 @@ angular.module('ifiske.services')
          * @return {promise}       Same as api_call
          */
       function session_api_call(params, cache) {
-        var session = sessionData.token;
+        const session = sessionData.token;
         return api_call(angular.extend(params, {s: session}), cache);
       }
 
@@ -90,7 +98,7 @@ angular.module('ifiske.services')
           return api_call({m: 'get_counties'});
         },
         user_exists: function(username, email) {
-          var args = {m: 'user_exists'};
+          const args = {m: 'user_exists'};
 
           if (username && typeof username === 'string') {
             args.username = username;

@@ -7,8 +7,8 @@ angular.module('ifiske.controllers')
             throw new Error('Cancelled');
           }
           if (res.format === 'QR_CODE') {
-            var url = new URL(res.text);
-            var searchParams = new URLSearchParams(url.search);
+            const url = new URL(res.text);
+            const searchParams = new URLSearchParams(url.search);
             if (searchParams.has('e')) {
               return searchParams.get('e');
             }

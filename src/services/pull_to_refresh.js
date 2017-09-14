@@ -11,7 +11,7 @@ angular.module('ifiske.services')
         */
       this.trigger = function(delegateHandle) {
         $timeout(function() {
-          var scrollView = $ionicScrollDelegate.$getByHandle(delegateHandle).getScrollView();
+          const scrollView = $ionicScrollDelegate.$getByHandle(delegateHandle).getScrollView();
 
           if (!scrollView) {
             return;
@@ -22,7 +22,7 @@ angular.module('ifiske.services')
             scrollView.__zoomLevel, true,
           );
 
-          var d = new Date();
+          const d = new Date();
 
           scrollView.refreshStartTime = d.getTime();
 

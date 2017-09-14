@@ -1,5 +1,5 @@
 {
-    "extends": "google",
+    "extends": ["eslint:recommended", "google"],
     "parser": "babel-eslint",
     "env": {
         "browser" :true
@@ -10,9 +10,16 @@
         "moment": true,
         "Chart": true,
         "ionic": true,
-        "Raven": true
+        "Raven": true,
+        "Swiper": true
     },
     "rules": {
+      "no-console": "off",
+      "no-empty": ["error", {
+        "allowEmptyCatch": true
+      }],
+      "prefer-const": "warn",
+      "no-var": "warn",
         "quotes": ["error", "single", {
             "avoidEscape": true
         }],

@@ -52,7 +52,7 @@ angular.module('ifiske.controllers')
     };
 
     $scope.openProductInBrowser = function(id) {
-      var url = serverLocation +
+      const url = serverLocation +
             '/mobile/index.php?lang=' +
             Settings.language() +
             '&p=5&i=' +

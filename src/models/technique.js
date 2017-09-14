@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('Technique', function TechniqueProvider() {
-    var table = {
+    const table = {
       name:      'Technique',
       apiMethod: 'get_techniques',
       primary:   'ID',
@@ -20,7 +20,7 @@ angular.module('ifiske.models')
     };
 
     this.$get = function(BaseModel) {
-      var model = new BaseModel(table);
+      const model = new BaseModel(table);
 
       return model;
     };

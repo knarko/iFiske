@@ -20,12 +20,12 @@ angular.module('ifiske.directives')
       ) {
         console.log('starting a map');
         // eslint-disable-next-line max-len
-        var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
-        var apikey = localStorage.get('mapbox_api');
+        const mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
+        const apikey = localStorage.get('mapbox_api');
 
-        var map = $window.L.map($element.find('div')[0]).setView([62.0, 15.0], 4);
+        const map = $window.L.map($element.find('div')[0]).setView([62.0, 15.0], 4);
         $window.map = map;
-        var baseLayers = {
+        const baseLayers = {
           outdoors: $window.L.tileLayer(mapboxUrl, {
             maxZoom: 18,
             maptype: 'mapbox.outdoors',
@@ -46,7 +46,7 @@ angular.module('ifiske.directives')
           map.invalidateSize();
         });
 
-        var lc = new $window.L.control.locate({ // eslint-disable-line new-cap
+        const lc = new $window.L.control.locate({ // eslint-disable-line new-cap
           follow:               false,
           position:             'bottomright',
           keepCurrentZoomLevel: false,
@@ -70,7 +70,7 @@ angular.module('ifiske.directives')
 
         lc.addTo(map);
 
-        var markers = $window.L.markerClusterGroup({
+        const markers = $window.L.markerClusterGroup({
           showCoverageOnHover:        false,
           disableClusteringAtZoom:    9,
           chunkedLoading:             true,
@@ -80,13 +80,13 @@ angular.module('ifiske.directives')
         });
         map.addLayer(markers);
 
-        var poiMarkers = $window.L.layerGroup();
+        const poiMarkers = $window.L.layerGroup();
         map.addLayer(poiMarkers);
 
-        var polygons = $window.L.layerGroup();
+        const polygons = $window.L.layerGroup();
         map.addLayer(polygons);
 
-        var areaMarker = $window.L.layerGroup();
+        const areaMarker = $window.L.layerGroup();
         map.addLayer(areaMarker);
 
         map.on('popupopen', function(e) {
@@ -113,7 +113,7 @@ angular.module('ifiske.directives')
           });
         }
 
-        var icons;
+        let icons;
         function createIcons() {
           if (icons) {
             return $q.when(icons);
@@ -121,8 +121,8 @@ angular.module('ifiske.directives')
           return MapData.getPoiTypes()
             .then(function(poiTypes) {
               icons = {};
-              for (var i = 0; i < poiTypes.length; ++i) {
-                var type = poiTypes[i];
+              for (let i = 0; i < poiTypes.length; ++i) {
+                const type = poiTypes[i];
                 icons[type.ID] = $window.L.icon({
                   iconUrl:     serverLocation + type.icon,
                   iconAnchor:  [16, 37], // point of the icon which will correspond to marker's location
@@ -134,10 +134,10 @@ angular.module('ifiske.directives')
         }
 
         function createMarkers(areas) {
-          var newMarkers = [];
-          for (var i = 0; i < areas.length; ++i) {
-            var a = areas[i];
-            var marker = $window.L.marker({
+          const newMarkers = [];
+          for (let i = 0; i < areas.length; ++i) {
+            const a = areas[i];
+            const marker = $window.L.marker({
               // layer:           'areas',
               lat: a.lat,
               lng: a.lng,
@@ -161,10 +161,10 @@ angular.module('ifiske.directives')
         function createPois(pois) {
           createIcons().then(function(icons) {
             poiMarkers.clearLayers();
-            for (var i = 0; i < pois.length; ++i) {
-              var poi = pois[i];
+            for (let i = 0; i < pois.length; ++i) {
+              const poi = pois[i];
 
-              var marker = $window.L.marker({
+              const marker = $window.L.marker({
                 lat: poi.la,
                 lng: poi.lo,
               }, {
@@ -181,8 +181,8 @@ angular.module('ifiske.directives')
 
         function createPolygons(polys) {
           polygons.clearLayers();
-          for (var i = 0; i < polys.length; ++i) {
-            var poly = polys[i];
+          for (let i = 0; i < polys.length; ++i) {
+            const poly = polys[i];
             polygons.addLayer($window.L.polygon(JSON.parse('[' + poly.poly + ']'), {
               color:     poly.c,
               weight:    2,
@@ -194,7 +194,7 @@ angular.module('ifiske.directives')
 
         function createArea(area) {
           areaMarker.clearLayers();
-          var marker = $window.L.marker({
+          const marker = $window.L.marker({
             lat: area.lat,
             lng: area.lng,
           });

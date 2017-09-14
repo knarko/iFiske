@@ -22,15 +22,15 @@ angular.module('ifiske.controllers')
         $state.go('app.login');
       }
     };
-    var languages = Object.keys(Settings.availableLanguages());
-    var i = 0;
+    const languages = Object.keys(Settings.availableLanguages());
+    let i = 0;
     $scope.viewTitle = $translate.instant(
       'Change language',
       null,
       null,
       languages[i++ % languages.length],
     );
-    var interval = $interval(function() {
+    const interval = $interval(function() {
       $scope.viewTitle = $translate.instant(
         'Change language',
         null,

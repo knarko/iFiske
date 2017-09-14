@@ -1,7 +1,7 @@
 angular.module('ifiske.services')
   .service('DB', function($cordovaSQLite, $q) {
-    var db;
-    var ready = $q.defer();
+    let db;
+    const ready = $q.defer();
     if (window.sqlitePlugin) {
       db = $cordovaSQLite.openDB('fiskebasen.db');
     } else if (window.openDatabase) {
@@ -34,8 +34,8 @@ angular.module('ifiske.services')
      * @return {Array}      Array of objects
      */
     function createObject(data) {
-      var retval = [];
-      for (var i = 0; i < data.rows.length; ++i) {
+      const retval = [];
+      for (let i = 0; i < data.rows.length; ++i) {
         retval.push(angular.copy(data.rows.item(i)));
       }
       return retval;
@@ -92,11 +92,14 @@ angular.module('ifiske.services')
           tx.executeSql('DELETE FROM ' + table.name + ';');
 
           (Array.isArray(data) ? data : Object.values(data)).forEach(singleData => {
-            var insertData = [];
-            for (var member in table.members) {
+            const insertData = [];
+            for (const member in table.members) {
               insertData.push(singleData[member]);
             }
-            var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length).fill('?').join(',')})`;
+            const query = `
+            INSERT OR IGNORE INTO ${table.name}
+            VALUES(${Array(insertData.length).fill('?').join(',')})
+            `;
             tx.executeSql(query, insertData);
           });
         }, reject, fulfill);
@@ -127,14 +130,14 @@ angular.module('ifiske.services')
                 * it can be used to create an SQL Table witout having
                 * to worry about using reserved keywords.
                 */
-          var tableMembers = [];
-          for (var member in table.members) {
+          let tableMembers = [];
+          for (const member in table.members) {
             if (table.members.hasOwnProperty(member))
               tableMembers.push('"' + member + '" ' + table.members[member]);
           }
           tableMembers = tableMembers.join(', ');
 
-          var query = `
+          const query = `
           CREATE TABLE IF NOT EXISTS ${table.name} (
             ${tableMembers}
             ${table.primary ? `, PRIMARY KEY(${table.primary})` : ''}
@@ -147,9 +150,9 @@ angular.module('ifiske.services')
                 // There is no table, make it
                 return runSql(query);
               }
-              var re = /"(\w+)"\s*(\w+)/g;
-              var regexResult;
-              var oldTable = {};
+              const re = /"(\w+)"\s*(\w+)/g;
+              let regexResult;
+              const oldTable = {};
               while ((regexResult = re.exec(result.rows.item(0).sql))) {
                 oldTable[regexResult[1]] = regexResult[2];
               }

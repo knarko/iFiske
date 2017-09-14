@@ -6,7 +6,6 @@ angular.module('ifiske.controllers')
     API,
     $translate,
     $ionicActionSheet,
-    $ionicPlatform,
   ) {
     function initialize() {
       User.getFavorites()

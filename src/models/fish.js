@@ -1,7 +1,7 @@
 /* global Fuse */
 angular.module('ifiske.models')
   .provider('Fish', function FishProvider() {
-    var table = {
+    const table = {
       name:    'Fish',
       primary: 'ID',
       members: {
@@ -22,7 +22,7 @@ angular.module('ifiske.models')
     };
 
     this.$get = function(API, DB, ImgCache, BaseModel, serverLocation) {
-      var model = new BaseModel(table);
+      const model = new BaseModel(table);
 
       angular.extend(model, {
         update: function(shouldupdate) {
@@ -30,7 +30,7 @@ angular.module('ifiske.models')
             return API.get_fishes()
               .then(function(data) {
                 console.log('Downloading all fish images');
-                for (var fish in data) {
+                for (const fish in data) {
                   if (data.hasOwnProperty(fish))
                     ImgCache.cacheFile(serverLocation + data[fish].img);
                 }
@@ -42,11 +42,12 @@ angular.module('ifiske.models')
               });
         },
         search: function(searchString) {
+          let t0;
           if (performance && performance.now) {
-            var t0 = performance.now();
+            t0 = performance.now();
           }
           return model.getAll().then(data => {
-            var options = {
+            const options = {
               keys: [{
                 name:   't',
                 weight: 0.6,
@@ -60,7 +61,7 @@ angular.module('ifiske.models')
             return new Fuse(data, options);
           }).then(fuse => {
             if (performance && performance.now) {
-              var t1 = performance.now();
+              const t1 = performance.now();
               console.log('Searching took:', (t1 - t0), 'ms');
             }
             return fuse.search(searchString);

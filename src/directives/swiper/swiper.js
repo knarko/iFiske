@@ -11,7 +11,11 @@ angular.module('ifiske.directives')
     return {
       restrict:   'E',
       transclude: true,
-      template:   '<div class="swiper-container"><div class="swiper-wrapper" ng-transclude></div></div>',
+      template:   `
+      <div class="swiper-container">
+        <div class="swiper-wrapper" ng-transclude></div>
+      </div>
+      `,
 
       scope: {
         options: '=',

@@ -1,7 +1,7 @@
 angular.module('ifiske.services')
   .factory('Settings', function(localStorage, $translate, $ionicHistory, analytics) {
     // TODO: Persist some settings to Ionic Cloud?
-    var settings = JSON.parse(localStorage.get('settings'));
+    let settings = JSON.parse(localStorage.get('settings'));
 
     function updateSettings() {
       localStorage.set('settings', JSON.stringify(settings));

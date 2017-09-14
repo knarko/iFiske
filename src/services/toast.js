@@ -11,6 +11,7 @@ angular.module('ifiske.services')
      * @param {string|array} text translatable text string or array of arguments to translate function
      * @param {string} duration (optional) 'short' or 'long'
      * @param {string} position (optional) 'top', 'center' or 'bottom'
+     * @return {Promise} void promise
      */
     show(text, duration, position) {
       if (!duration) {

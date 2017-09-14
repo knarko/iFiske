@@ -12,7 +12,7 @@ angular.module('ifiske.services')
       });
 
       $scope.alert = function(l) {
-        var scope = $scope.$new();
+        const scope = $scope.$new();
         scope.l = l;
         $ionicModal.fromTemplateUrl(
           'components/settings/foss/modal.html',

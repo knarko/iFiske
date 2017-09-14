@@ -1,14 +1,14 @@
 angular.module('ifiske.controllers')
   .controller('AdminCtrl', function($stateParams, Admin, $scope) {
     console.log($stateParams);
-    var levelnames = [
+    const levelnames = [
       'USER_LEVEL_0',
       'USER_LEVEL_1',
       'USER_LEVEL_2',
     ];
     $scope.$on('$ionicView.beforeEnter', function() {
       Admin.getOrganizations().then(function(res) {
-        for (var e in res) {
+        for (const e in res) {
           $scope.isAdmin = true;
           res[e].levelname = levelnames[res[e].level];
         }
@@ -52,7 +52,7 @@ angular.module('ifiske.controllers')
           name:  'Revoked licenses',
         },
       };
-      for (var i = 0; i < data.length; ++i) {
+      for (let i = 0; i < data.length; ++i) {
         if ($scope.licenseTypes[data[i].validity] &&
                 $scope.licenseTypes[data[i].validity].items)
           $scope.licenseTypes[data[i].validity].items.push(data[i]);
@@ -89,7 +89,7 @@ angular.module('ifiske.controllers')
     }
 
     $scope.checkLicense = function($event) {
-      var code = $event.srcElement.code.value;
+      const code = $event.srcElement.code.value;
       $event.srcElement.code.value = '';
       if (code) {
         $state.go('^.product', {code: code});

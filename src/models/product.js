@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('Product', function() {
-    var table = {
+    const table = {
       name:      'Product',
       primary:   'ID',
       apiMethod: 'get_products',
@@ -22,14 +22,14 @@ angular.module('ifiske.models')
     };
 
     this.$get = function(DB, BaseModel) {
-      var model = new BaseModel(table);
+      const model = new BaseModel(table);
 
       angular.extend(model, {
         getValidity: function(product) {
           if (product.rev === 1) {
             return 'revoked';
           }
-          var now = parseInt(Date.now() / 1000);
+          const now = parseInt(Date.now() / 1000);
           if (product.fr < now) {
             return now < product.to ? 'active' : 'expired';
           }

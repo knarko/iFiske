@@ -1,29 +1,29 @@
 angular.module('ifiske.models')
   .provider('Admin', function() {
     this.$get = function($q, API, Organization, Product, sessionData) {
-      var organizations = {};
+      const organizations = {};
 
       function initOrg(org) {
         Organization.getOne(org.orgid).then(function(o) {
           org.info = o;
         });
         return API.adm_products(org.orgid).then(function(products) {
-          var prods = [];
-          for (var j in products) {
+          const prods = [];
+          for (const j in products) {
             products[j].validity = Product.getValidity(products[j]);
             prods.push(products[j]);
           }
           org.products = prods;
         });
       }
-      var model = {
+      const model = {
         isAdmin: function() {
           if (!sessionData.token) {
             return Promise.reject('Not logged in');
           }
           return API.user_organizations().then(function(orgs) {
             console.log(orgs);
-            for (var i in orgs) {
+            for (const i in orgs) {
               return orgs[i].orgid;
             }
             return false;
@@ -43,9 +43,9 @@ angular.module('ifiske.models')
         },
         getProduct: function(productID) {
           return model.wait.then(function() {
-            var product;
+            let product;
             try {
-              for (var orgID in organizations) {
+              for (const orgID in organizations) {
                 if (organizations[orgID]) {
                   product = organizations[orgID].products.filter(function(p) {
                     return Number(p.ID) === Number(productID);
@@ -73,8 +73,8 @@ angular.module('ifiske.models')
             return Promise.reject('Not logged in');
           }
           return API.user_organizations().then(function(orgs) {
-            var p = [];
-            for (var i in orgs) {
+            const p = [];
+            for (const i in orgs) {
               if (!organizations[i]) {
                 organizations[i] = {};
               }

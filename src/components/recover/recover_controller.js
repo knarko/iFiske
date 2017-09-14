@@ -15,12 +15,12 @@ angular.module('ifiske.controllers')
     $scope.lostPassword = function(form) {
       $ionicLoading.show();
 
-      var user = form.user.$viewValue;
+      const user = form.user.$viewValue;
 
       API.user_lost_password(user)
         .then(function(data) {
           // Set info message for next view
-          var methods = [];
+          const methods = [];
           if (data.mailed) {
             methods.push($translate.instant('Email'));
           }
@@ -56,9 +56,9 @@ angular.module('ifiske.controllers')
     $scope.resetPassword = function(form) {
       $ionicLoading.show();
 
-      var user = form.user.$viewValue;
-      var password = form.password.$viewValue;
-      var code = form.code.$viewValue;
+      const user = form.user.$viewValue;
+      const password = form.password.$viewValue;
+      const code = form.code.$viewValue;
 
       API.user_reset_password(user, password, code)
         .then(function(_data) {

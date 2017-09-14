@@ -12,7 +12,7 @@ angular.module('ngCordovaSms', [])
       restrict: 'A',
       link:     function(_scope, el, attrs) {
         function showPopup(user) {
-          var scope = $rootScope.$new();
+          const scope = $rootScope.$new();
           if (!user || !user.name) {
             user = {
               name: '',
@@ -38,7 +38,7 @@ angular.module('ngCordovaSms', [])
             }],
           }).then(function(name) {
             if (name) {
-              var message = 'FISKA ' + attrs.ngCordovaSms + ' ' + name;
+              const message = 'FISKA ' + attrs.ngCordovaSms + ' ' + name;
               console.log('before sending sms', $cordovaSms);
               $cordovaSms.send('72456', message, {
                 android: {

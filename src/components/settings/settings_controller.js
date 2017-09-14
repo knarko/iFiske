@@ -8,7 +8,6 @@ angular.module('ifiske.controllers')
     Push,
     Settings,
     Update,
-    $translate,
   ) {
     function afterPushResetSuccess() {
       console.log('Push reset returned');
@@ -27,8 +26,8 @@ angular.module('ifiske.controllers')
       $scope.push.checked = false;
     }
 
-    var blockChanges = false;
-    var changedDuringBlock = false;
+    let blockChanges = false;
+    let changedDuringBlock = false;
     function changeHandler() {
       console.log('Toggle push notifications');
       if (blockChanges) {

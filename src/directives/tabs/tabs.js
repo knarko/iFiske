@@ -8,15 +8,15 @@ angular
       templateUrl: 'directives/tabs/tabs.html',
 
       controller: function($scope, $ionicHistory, $state, $ionicViewSwitcher) {
-        var tabs = [];
+        const tabs = [];
         this.scope = $scope;
         this.addTab = function(tab) {
           tabs.push(tab);
         };
 
         $scope.goto = function(elementScope) {
-          var target = -1;
-          for (var i = 0; i < tabs.length; ++i) {
+          let target = -1;
+          for (let i = 0; i < tabs.length; ++i) {
             if ($state.is(tabs[i].viewName)) {
               target = tabs[i].index;
             }

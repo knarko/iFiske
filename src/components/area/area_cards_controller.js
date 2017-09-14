@@ -60,7 +60,8 @@ angular.module('ifiske.controllers')
       };
 
       $scope.openProductInBrowser = function(id) {
-        var url = `${serverLocation}/mobile/index.php?lang=${Settings.language()}&p=5&i=${id}&app=true&device=${ionic.Platform.platform()}`;
+        // eslint-disable-next-line max-len
+        const url = `${serverLocation}/mobile/index.php?lang=${Settings.language()}&p=5&i=${id}&app=true&device=${ionic.Platform.platform()}`;
         $cordovaInAppBrowser.open(url, '_system');
         analytics.trackEvent('Purchase', 'Web', id);
       };

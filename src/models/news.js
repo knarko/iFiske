@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('News', function NewsProvider() {
-    var table = {
+    const table = {
       name:    'News',
       primary: 'ID',
       members: {
@@ -12,7 +12,7 @@ angular.module('ifiske.models')
       },
     };
     this.$get = function(DB, API, $q, localStorage, ImgCache, BaseModel) {
-      var model = new BaseModel(table);
+      const model = new BaseModel(table);
 
       angular.extend(model, {
         update: function(shouldupdate) {
@@ -25,7 +25,7 @@ angular.module('ifiske.models')
             });
           }).then(function(data) {
             localStorage.set('NEWS', data.title);
-            for (var nItem in data.contents) {
+            for (const nItem in data.contents) {
               ImgCache.cacheFile(data.contents[nItem].icon);
             }
             return DB.populateTable(table, data.contents)

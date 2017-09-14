@@ -4,7 +4,7 @@ angular.module('ifiske.directives')
       priority: 99,
       restrict: 'A',
       link:     function(_scope, _element, attr) {
-        var attrName = 'xlink:href';
+        const attrName = 'xlink:href';
         attr.$observe('ngXlinkHref', function(value) {
           if (!value)
             return;

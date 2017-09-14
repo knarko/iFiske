@@ -10,11 +10,11 @@ angular.module('ifiske.directives')
       templateUrl: 'directives/youtube/youtube.html',
 
       link: function(scope, element, _attrs) {
-        var iframe = element.find('iframe');
+        const iframe = element.find('iframe');
         scope.iframe = iframe[0];
       },
       controller: function($scope, $sce) {
-        var fullscreenListeners = 'fullscreenchange webkitfullscreenchange mozfullscreenchange';
+        const fullscreenListeners = 'fullscreenchange webkitfullscreenchange mozfullscreenchange';
         function sendMessage(func) {
           console.log(func, $scope.iframe);
           return $scope.iframe.contentWindow.postMessage(JSON.stringify({
@@ -27,7 +27,7 @@ angular.module('ifiske.directives')
           console.log('before enter in yt!');
           angular.element(document).on(fullscreenListeners, function(e) {
             console.log('Changing fullscreen mode', e);
-            var fullScreenElement = document.fullscreenElement ||
+            const fullScreenElement = document.fullscreenElement ||
                         document.webkitFullscreenElement ||
                         document.mozFullscreenElement;
             console.log(fullScreenElement);
@@ -47,7 +47,7 @@ angular.module('ifiske.directives')
           sendMessage('pauseVideo');
         });
         $scope.$watch('url', function(url) {
-          var fullUrl = 'https://www.youtube.com/embed/' + url + '?enablejsapi=1';
+          const fullUrl = 'https://www.youtube.com/embed/' + url + '?enablejsapi=1';
           $scope.youtubeUrl = $sce.trustAsResourceUrl(fullUrl);
         });
       },

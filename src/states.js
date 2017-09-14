@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 (function() {
-  var settings = {
+  const settings = {
     config: {
       url:         '/settings',
       templateUrl: 'components/settings/settings.html',
@@ -35,7 +35,7 @@
     },
   };
 
-  var recover = {
+  const recover = {
     config: {
       url:         '/recover',
       templateUrl: 'components/recover/recover.html',
@@ -53,7 +53,7 @@
     },
   };
 
-  var register = {
+  const register = {
     config: {
       url:         '/register',
       templateUrl: 'components/register/register.html',
@@ -80,7 +80,7 @@
       },
     },
   };
-  var find_areas = {
+  const find_areas = {
     config: {
       url:         '/find_areas',
       templateUrl: 'components/find_areas/tabs.html',
@@ -107,7 +107,7 @@
       },
     },
   };
-  var admin = {
+  const admin = {
     config: {
       url:         '/admin',
       templateUrl: 'components/admin/admin_wrap.html',
@@ -139,7 +139,7 @@
       },
     },
   };
-  var area = {
+  const area = {
     config: {
       url:         '/area/:id',
       templateUrl: 'components/area/area.html',

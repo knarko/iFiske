@@ -5,7 +5,6 @@ angular.module('ifiske.controllers')
     $ionicLoading,
     $ionicModal,
     $ionicScrollDelegate,
-    $ionicPlatform,
     ToastService,
     $ionicViewSwitcher,
     $ionicHistory,
@@ -52,7 +51,7 @@ angular.module('ifiske.controllers')
     $scope.register = function(form) {
       $ionicLoading.show();
 
-      var userDetails = {
+      const userDetails = {
         username: $scope.details.username,
         fullname: $scope.details.fullname,
         password: $scope.details.password,
@@ -105,7 +104,7 @@ angular.module('ifiske.controllers')
     };
 
     $scope.retryRegister = function() {
-      var userDetails = getUserDetails();
+      const userDetails = getUserDetails();
       if (!userDetails) {
         // Navigate back to initial registration
         return;
@@ -120,7 +119,7 @@ angular.module('ifiske.controllers')
         });
     };
 
-    var timer, endoftime;
+    let timer, endoftime;
     function startTimer() {
       $scope.timePassed = false;
       $scope.timeLeft = 1000 * 60 * 3;
@@ -156,13 +155,13 @@ angular.module('ifiske.controllers')
     $scope.verify = function(form) {
       $ionicLoading.show();
 
-      var userDetails = getUserDetails();
+      const userDetails = getUserDetails();
       if (!userDetails) {
         $ionicLoading.hide();
         return;
       }
 
-      var username = (form.username && form.username.$viewValue) || userDetails.username;
+      const username = (form.username && form.username.$viewValue) || userDetails.username;
 
       API.user_confirm(username, form.vercode.$viewValue)
         .then(function() {

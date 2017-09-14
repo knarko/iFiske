@@ -16,7 +16,7 @@ angular.module('ifiske.services')
     serverLocation,
     $q,
   ) {
-    var pushHandlers = {
+    const pushHandlers = {
       default: function(notification) {
         $ionicPopup.alert(notification.message);
       },
@@ -96,8 +96,8 @@ angular.module('ifiske.services')
 
     function handleNotification(_event, notification) {
       console.log(notification);
-      var payload = notification.raw.additionalData.payload;
-      var i;
+      const payload = notification.raw.additionalData.payload;
+      let i;
 
       console.log('Push: Recieved a new push notification', notification, payload);
       if (payload.action in pushHandlers) {
@@ -141,14 +141,13 @@ angular.module('ifiske.services')
           .finally(function() {
             return $ionicAuth.logout();
           });
-      } finally {
-        return $ionicAuth.logout();
-      }
+      } catch (e) {}
+      return $ionicAuth.logout();
     }
 
     function login(email, password) {
       return $ionicPlatform.ready().then(function() {
-        var details = {email: email, password: password};
+        const details = {email: email, password: password};
         return $ionicAuth.login('basic', details, {remember: true}).catch(function(errors) {
           console.warn('Push: errors on logging in:', errors);
           if (errors && errors.response && errors.response.statusCode === 401) {
@@ -183,13 +182,13 @@ angular.module('ifiske.services')
       if ($ionicAuth.isAuthenticated() && !$ionicUser.isAnonymous()) {
         return startPush();
       }
-      var promises = [
+      const promises = [
         API.user_info(),
         API.user_get_secret(),
       ];
       return $q.all(promises).then(function(userInfo) {
-        var email = userInfo[0].email;
-        var password = userInfo[1];
+        const email = userInfo[0].email;
+        const password = userInfo[1];
         return login(email, password).then(function() {
           return startPush();
         });

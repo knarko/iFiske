@@ -7,9 +7,9 @@ angular.module('ifiske.services')
     main() {
       return this.API.get_ads_main().then(ads => {
         return ads.filter(ad => {
-          let start = new Date(ad.start).getTime();
-          let end = new Date(ad.end).getTime();
-          let now = new Date().getTime();
+          const start = new Date(ad.start).getTime();
+          const end = new Date(ad.end).getTime();
+          const now = new Date().getTime();
           return start < now && now < end;
         });
       });

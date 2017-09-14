@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('County', function() {
-    var table = {
+    const table = {
       name:      'County',
       apiMethod: 'get_counties',
       primary:   'ID',
@@ -13,7 +13,7 @@ angular.module('ifiske.models')
     };
 
     this.$get = function(DB, BaseModel) {
-      var model = new BaseModel(table);
+      const model = new BaseModel(table);
       angular.extend(model, {
         getAll: function() {
           return model.wait.then(function() {

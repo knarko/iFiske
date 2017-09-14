@@ -64,7 +64,7 @@ angular.module('ifiske.controllers')
               text:  $translate.instant(flag ? 'Revoke' : 'Unrevoke'),
               type:  'button-' + flag ? 'assertive' : 'balanced',
               onTap: function(_e) {
-                var p;
+                let p;
                 if (flag) {
                   p = Admin.revokeProduct($scope.product);
                 } else {

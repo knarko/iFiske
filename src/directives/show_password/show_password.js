@@ -5,14 +5,14 @@ angular.module('ifiske.directives')
         restrict: 'A',
         scope:    true,
         link:     function(_scope, elem, _attrs) {
-          var btnShowPass = angular.element(`
+          const btnShowPass = angular.element(`
             <button type="button"
               class="button button-clear button-positive button-display-password"
             >
               <i class="icon ion-eye"></i>
             </button>
           `);
-          var elemType = elem.attr('type');
+          const elemType = elem.attr('type');
 
           // this hack is needed because Ionic prevents browser click event
           // from elements inside label with input
@@ -29,7 +29,7 @@ angular.module('ifiske.directives')
           });
 
           btnShowPass.on('touchend', function(evt) {
-            var syntheticClick = new Event('mousedown');
+            const syntheticClick = new Event('mousedown');
             evt.currentTarget.dispatchEvent(syntheticClick);
 
             // stop to block ionic default event

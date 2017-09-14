@@ -1,7 +1,7 @@
 angular.module('ifiske.services')
   .service('analytics', function($q, $window, $ionicPlatform, $interval) {
-    var hasGADeferred = $q.defer();
-    var isTrackerStartedDeferred = $q.defer();
+    const hasGADeferred = $q.defer();
+    const isTrackerStartedDeferred = $q.defer();
     /**
      * returns a promise that resolves if we have google analytics
      * @return {Promise} Only resolves if we have window.ga
@@ -17,8 +17,8 @@ angular.module('ifiske.services')
       return isTrackerStartedDeferred.promise;
     }
 
-    var timesChecked = 0;
-    var intervalId = $interval(function() {
+    let timesChecked = 0;
+    const intervalId = $interval(function() {
       if (timesChecked++ > 5) {
         $interval.cancel(intervalId);
         console.warn('We do not have Google Analytics');
@@ -31,13 +31,13 @@ angular.module('ifiske.services')
       }
     }, 1000);
 
-    var analytics = {
+    const analytics = {
       trackEvent: function(category, action, label, value, newSession) {
         return $ionicPlatform.ready()
           .then(hasGA)
           .then(hasTrackerStarted)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.trackEvent(
               category,
               action,
@@ -62,7 +62,7 @@ angular.module('ifiske.services')
           .then(hasGA)
           .then(hasTrackerStarted)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.trackView(
               screen,
               campaignUrl,
@@ -85,7 +85,7 @@ angular.module('ifiske.services')
           .then(hasGA)
           .then(hasTrackerStarted)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.trackMetric(
               key,
               value,
@@ -106,7 +106,7 @@ angular.module('ifiske.services')
           .then(hasGA)
           .then(hasTrackerStarted)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.trackException(
               description,
               fatal,
@@ -126,7 +126,7 @@ angular.module('ifiske.services')
         return $ionicPlatform.ready()
           .then(hasGA)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.debugMode(
               function(success) {
                 console.log('analytics.debugMode:', success);
@@ -144,7 +144,7 @@ angular.module('ifiske.services')
         return $ionicPlatform.ready()
           .then(hasGA)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.enableUncaughtExceptionReporting(
               enable,
               function(success) {
@@ -163,7 +163,7 @@ angular.module('ifiske.services')
         return $ionicPlatform.ready()
           .then(hasGA)
           .then(function() {
-            var deferred = $q.defer();
+            const deferred = $q.defer();
             $window.ga.startTrackerWithId(
               id,
               dispatchPeriod,

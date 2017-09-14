@@ -1,7 +1,7 @@
 angular.module('ifiske.models')
   .service('BaseModel', function(DB, API) {
     function BaseModel(table) {
-      var model = {
+      const model = {
         update: update,
         table:  table,
         getAll: function() {

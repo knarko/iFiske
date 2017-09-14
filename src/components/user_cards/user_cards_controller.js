@@ -14,7 +14,7 @@ angular.module('ifiske.controllers')
       $scope.active = [];
       $scope.expired = [];
       $scope.inactive = [];
-      for (var i = 0; i < data.length; ++i) {
+      for (let i = 0; i < data.length; ++i) {
         $scope[data[i].validity].push(data[i]);
       }
       $scope.products = data;

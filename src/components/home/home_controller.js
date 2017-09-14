@@ -19,7 +19,7 @@ angular.module('ifiske.controllers')
 
     $scope.openAdmin = function() {
       Admin.getOrganizations().then(function(organizations) {
-        var orgIds = Object.keys(organizations);
+        const orgIds = Object.keys(organizations);
         if (orgIds.length === 1) {
           $state.go('app.admin.org', {id: orgIds[0]});
         } else {
@@ -52,7 +52,7 @@ angular.module('ifiske.controllers')
     $scope.search = function($event) {
       if ($event.keyCode === 13) { // if enter-key
         $event.preventDefault();
-        var searchTerm = $event.srcElement.value;
+        const searchTerm = $event.srcElement.value;
         analytics.trackEvent('Search', searchTerm);
         $state.go('app.areas', {search: searchTerm});
       }

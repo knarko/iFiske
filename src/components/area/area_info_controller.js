@@ -6,7 +6,6 @@ angular.module('ifiske.controllers')
     API,
     Area,
     User,
-    $ionicPlatform,
     ToastService,
     $translate,
     $stateParams,
@@ -33,7 +32,7 @@ angular.module('ifiske.controllers')
     $scope.changeFavorite = function() {
       if (sessionData.token) {
         $scope.area.favorite = !$scope.area.favorite;
-        var promise;
+        let promise;
         if ($scope.area.favorite) {
           promise = API.user_add_favorite($scope.area.ID)
             .then(function() {

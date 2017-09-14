@@ -1,7 +1,7 @@
 /* global Fuse */
 angular.module('ifiske.models')
   .provider('Area', function AreaProvider() {
-    var tables = [{
+    const tables = [{
       name:    'Area',
       primary: 'ID',
       members: {
@@ -69,13 +69,13 @@ angular.module('ifiske.models')
     ];
 
     this.$get = function($q, DB, API, $cordovaGeolocation, Fish) {
-      var p = [];
-      var currentLocation, watch;
+      const p = [];
+      let currentLocation, watch;
 
       tables.forEach(table => p.push(DB.initializeTable(table)));
 
-      var wait = $q.all(p).then(function(results) {
-        for (var i = 0; i < results.length; ++i) {
+      const wait = $q.all(p).then(function(results) {
+        for (let i = 0; i < results.length; ++i) {
           if (results[i])
             return update('skipWait');
         }
@@ -96,13 +96,13 @@ angular.module('ifiske.models')
       }
 
       function insert(data) {
-        var areas = data[0];
-        var images = data[1];
-        var fishArr = [];
-        var filesArr = [];
-        for (var key in areas) {
-          var fishes = areas[key].fish;
-          for (var fishKey in fishes) {
+        const areas = data[0];
+        const images = data[1];
+        const fishArr = [];
+        const filesArr = [];
+        for (const key in areas) {
+          const fishes = areas[key].fish;
+          for (const fishKey in fishes) {
             fishArr.push({
               ID:      key + '_' + fishKey,
               fid:     fishKey,
@@ -112,7 +112,7 @@ angular.module('ifiske.models')
             });
           }
           // eslint-disable-next-line no-loop-func
-          var files = areas[key].files.map(file => {
+          const files = areas[key].files.map(file => {
             file.area = key;
             return file;
           });
@@ -126,7 +126,7 @@ angular.module('ifiske.models')
         ]);
       }
 
-      var Area = {
+      const Area = {
         update: update,
         /**
          * Fetches a single Area
@@ -210,7 +210,7 @@ angular.module('ifiske.models')
                 'WHERE Area_Photos.area = ?',
               ].join(' '), [areaId],
             ).then(function(images) {
-              for (var i = 0; i < images.length; ++i) {
+              for (let i = 0; i < images.length; ++i) {
                 images[i].ratio = images[i].h / images[i].w * 100 + '%';
               }
               return images;
@@ -258,7 +258,7 @@ angular.module('ifiske.models')
           if (!watch) {
             watch = startWatch();
           }
-          let result = Area.getAll(countyId)
+          const result = Area.getAll(countyId)
             .then(data => data.map(d => {
               for (let i = 1; i < 6; ++i) {
                 d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(' ');
@@ -266,7 +266,7 @@ angular.module('ifiske.models')
               return d;
             }))
             .then(function(data) {
-              var options = {
+              const options = {
                 keys: [{
                   name:   't',
                   weight: 0.9,
@@ -331,7 +331,7 @@ angular.module('ifiske.models')
                   if (currentLocation || foundFish) {
                     res.forEach(r => {
                       if (currentLocation) {
-                        let distance = calculateDistance(
+                        const distance = calculateDistance(
                           r.item.lat,
                           r.item.lng,
                           currentLocation.lat,
@@ -343,7 +343,7 @@ angular.module('ifiske.models')
 
                       if (foundFish) {
                         for (let i = 1; i < 6; ++i) {
-                          let fishArr = r.item['fish_' + i];
+                          const fishArr = r.item['fish_' + i];
                           if (fishArr && fishArr.some(fish => fish.indexOf(foundFish) !== -1)) {
                             r.score -= i / 1500;
                             break;
@@ -356,7 +356,7 @@ angular.module('ifiske.models')
                 });
             }).then(res => {
               return res.sort((a, b) => {
-                let res = a.score - b.score;
+                const res = a.score - b.score;
                 if (res) return res;
                 if (a.item.org > b.item.org) {
                   return 1;
@@ -369,7 +369,7 @@ angular.module('ifiske.models')
             });
           result.finally(() => {
             if (performance && performance.now) {
-              let t1 = performance.now();
+              const t1 = performance.now();
               console.log('Searching took:', t1 - t0, 'ms');
             }
           });
@@ -396,16 +396,16 @@ angular.module('ifiske.models')
 
       function calculateDistance(lat1, lon1, lat2, lon2) {
         // Implementation shamelessely stolen from http://www.movable-type.co.uk/scripts/latlong.html
-        var R = 6371e3; // metres
-        var φ1 = lat1 * (Math.PI / 180);
-        var φ2 = lat2 * (Math.PI / 180);
-        var Δφ = (lat2 - lat1) * (Math.PI / 180);
-        var Δλ = (lon2 - lon1) * (Math.PI / 180);
+        const R = 6371e3; // metres
+        const φ1 = lat1 * (Math.PI / 180);
+        const φ2 = lat2 * (Math.PI / 180);
+        const Δφ = (lat2 - lat1) * (Math.PI / 180);
+        const Δλ = (lon2 - lon1) * (Math.PI / 180);
 
-        var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
           Math.cos(φ1) * Math.cos(φ2) *
           Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c;
       }

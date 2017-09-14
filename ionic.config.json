@@ -1,8 +1,12 @@
 {
   "name": "ifiske",
-  "app_id": "46a4a954",
+  "app_id": "37198a9f",
   "watchPatterns": [
     "www/**/*"
   ],
-  "type": "ionic1"
+  "type": "ionic1",
+  "integrations": {
+    "gulp": {},
+    "cordova": {}
+  }
 }

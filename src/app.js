@@ -101,7 +101,7 @@ angular.module('ifiske', modules)
       .fallbackLanguage(['en', 'se'])
       .useSanitizeValueStrategy('sanitizeParameters')
       .useMissingTranslationHandlerLog();
-    var language = localStorage.getItem('language');
+    const language = localStorage.getItem('language');
     if (language) {
       $translateProvider.preferredLanguage(language);
     } else {
@@ -155,7 +155,7 @@ angular.module('ifiske', modules)
     * https://github.com/angular-ui/ui-router
     */
 
-    var defaultUrl = '/app/login';
+    let defaultUrl = '/app/login';
     if (!window.localStorage.getItem('language')) {
       defaultUrl = '/app/language';
     } else if (window.localStorage.getItem('session')) {

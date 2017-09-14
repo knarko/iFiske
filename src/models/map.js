@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('MapData', function MapDataProvider() {
-    var tables = {
+    const tables = {
       poi: {
         name:    'Poi',
         primary: 'ID',
@@ -41,18 +41,18 @@ angular.module('ifiske.models')
     };
 
     this.$get = function(DB, API, $q, localStorage) {
-      var wait = $q.all([
+      const wait = $q.all([
         DB.initializeTable(tables.poi),
         DB.initializeTable(tables.poiType),
         DB.initializeTable(tables.polygon),
       ]).then(function(results) {
-        for (var i = 0; i < results.length; ++i) {
+        for (let i = 0; i < results.length; ++i) {
           if (results[i])
             return update('skipWait');
         }
       });
       function update(shouldUpdate) {
-        var innerWait = wait;
+        let innerWait = wait;
         if (shouldUpdate) {
           if (shouldUpdate === 'skipWait')
             innerWait = $q.resolve();

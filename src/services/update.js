@@ -5,7 +5,6 @@ angular.module('ifiske.services')
       $q,
       $ionicLoading,
       ToastService,
-      $ionicPlatform,
       Area,
       County,
       Fish,
@@ -18,9 +17,9 @@ angular.module('ifiske.services')
       Terms,
       User,
     ) {
-      var LAST_UPDATE = 'last_update';
+      const LAST_UPDATE = 'last_update';
 
-      var updates = [
+      const updates = [
         Area.update,
         County.update,
         Fish.update,
@@ -35,20 +34,20 @@ angular.module('ifiske.services')
       ];
 
       function timedUpdate(currentTime) {
-        var lastUpdate = localStorage.get(LAST_UPDATE);
+        const lastUpdate = localStorage.get(LAST_UPDATE);
 
-        var aDay = 1000 * 3600 * 24 * 1;
+        const aDay = 1000 * 3600 * 24 * 1;
         return (currentTime - lastUpdate) > aDay;
       }
 
       function updateFunc(forced, hideLoading) {
         if (!hideLoading)
           $ionicLoading.show();
-        var currentTime = Date.now();
-        var shouldUpdate = (forced || timedUpdate(currentTime));
+        const currentTime = Date.now();
+        const shouldUpdate = (forced || timedUpdate(currentTime));
 
-        var promises = [];
-        for (var i = 0; i < updates.length; ++i) {
+        const promises = [];
+        for (let i = 0; i < updates.length; ++i) {
           promises.push(updates[i](shouldUpdate));
         }
 

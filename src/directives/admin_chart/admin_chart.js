@@ -1,16 +1,16 @@
-var originalLineDraw = Chart.controllers.bar.prototype.draw;
+const originalLineDraw = Chart.controllers.bar.prototype.draw;
 Chart.helpers.extend(Chart.controllers.bar.prototype, {
   draw: function() {
     originalLineDraw.apply(this, arguments);
 
-    var chart = this.chart;
-    var ctx = chart.chart.ctx;
+    const chart = this.chart;
+    const ctx = chart.chart.ctx;
 
     if (chart.config.options.lineAtYearChange) {
-      var xaxis = chart.scales['x-axis-0'];
-      var yaxis = chart.scales['y-axis-0'];
+      const xaxis = chart.scales['x-axis-0'];
+      const yaxis = chart.scales['y-axis-0'];
 
-      var xPixel = xaxis.getPixelForValue(moment().startOf('year'));
+      const xPixel = xaxis.getPixelForValue(moment().startOf('year'));
 
       ctx.save();
       ctx.beginPath();
@@ -57,7 +57,7 @@ angular.module('ifiske.directives')
                 Object.values(stats.weeks),
               ];
               $scope.chart.labels = [];
-              for (var i in stats.weeks) {
+              for (const i in stats.weeks) {
                 $scope.chart.labels.push(moment().subtract(i, 'week'));
               }
             } else {

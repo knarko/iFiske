@@ -1,6 +1,6 @@
 angular.module('ifiske.models')
   .provider('User', function() {
-    var tables = {
+    const tables = {
       info: {
         name:    'User_Info',
         primary: 'ID',
@@ -64,18 +64,17 @@ angular.module('ifiske.models')
       $q,
       API,
       Push,
-      $ionicPlatform,
       ToastService,
       sessionData,
       Product,
       analytics,
     ) {
-      var p = [];
-      for (var table in tables) {
+      const p = [];
+      for (const table in tables) {
         p.push(DB.initializeTable(tables[table]));
       }
-      var wait = $q.all(p).then(function(changed) {
-        for (var i = 0; i < changed.length; ++i) {
+      const wait = $q.all(p).then(function(changed) {
+        for (let i = 0; i < changed.length; ++i) {
           if (changed[i])
             return update('skipWait');
         }
@@ -86,8 +85,8 @@ angular.module('ifiske.models')
         * @return {Promise}  Promise when done
         */
       function clean() {
-        var p = [];
-        for (var table in tables) {
+        const p = [];
+        for (const table in tables) {
           p.push(DB.initializeTable(tables[table]));
         }
         Raven.setUserContext();
@@ -102,18 +101,18 @@ angular.module('ifiske.models')
         if (!sessionData.token) {
           return;
         }
-        var innerWait = wait;
+        let innerWait = wait;
         if (shouldUpdate === 'skipWait')
           innerWait = $q.resolve();
         return innerWait.then(function() {
-          var p = [];
+          const p = [];
           p.push(API.user_get_favorites().then(function(favorites) {
             DB.populateTable(tables.favorite, favorites);
           }));
           p.push(API.user_info().then(function(data) {
-            var numbers = data.numbers;
-            var numArr = [];
-            for (var i = 0; i < numbers.length; ++i) {
+            const numbers = data.numbers;
+            const numArr = [];
+            for (let i = 0; i < numbers.length; ++i) {
               numArr.push({number: numbers[i]});
             }
 
@@ -152,7 +151,7 @@ angular.module('ifiske.models')
       }
 
       function login(username, password) {
-        var p = API.user_login(username, password)
+        const p = API.user_login(username, password)
           .then(update);
         p.then(Push.reset);
         p.then(function() {

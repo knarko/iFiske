@@ -52,7 +52,6 @@ export class MapDataProvider {
       DB.initializeTable(this.tables.poiType),
       DB.initializeTable(this.tables.polygon),
     ]).then((results) => {
-      console.log(results);
       for (var i = 0; i < results.length; ++i) {
         if (results[i])
           return this.update('skipWait');

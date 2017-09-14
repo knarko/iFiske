@@ -7,7 +7,7 @@ import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 
 import 'leaflet.markercluster';
-import * as L from 'leaflet';
+declare var L: any;
 
 /**
  * Generated class for the MapComponent component.
@@ -83,7 +83,7 @@ export class MapComponent implements AfterViewInit {
 
     this.lc.addTo(this.map);
 
-    this.markers = new (L as any).MarkerCluster({
+    this.markers = new L.MarkerClusterGroup({
       showCoverageOnHover: false,
       disableClusteringAtZoom: 9,
       chunkedLoading: true,

@@ -12,12 +12,13 @@
 
 @mixin makeIcon($arg, $val) {
   .ifiske-#{$arg},
-  .ion-ios-ifiske-#{arg},
-  .ion-ios-ifiske-#{arg}-outline,
-  .ion-md-ifiske-#{arg},
-  .ion-md-ifiske-#{arg}-outline {
+  .ion-ios-ifiske-#{$arg},
+  .ion-ios-ifiske-#{$arg}-outline,
+  .ion-md-ifiske-#{$arg},
+  .ion-md-ifiske-#{$arg}-outline {
     &:before {
       content: $val;
+      font-family: ifiske;
     }
   }
 }

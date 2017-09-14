@@ -152,7 +152,7 @@ export class AreaProvider {
    * @param {Integer} id - ID for the requested area
    * @return {Promise<Area>} - A promise for the requested area
    */
-  getOne(id) {
+  getOne(id: number) {
     return this.wait.then(() => {
       return this.DB.getSingle(`
             SELECT
@@ -167,7 +167,7 @@ export class AreaProvider {
     });
   }
 
-  getAll(countyId) {
+  getAll(countyId?: number) {
     return this.wait.then(() => {
       function selectFish(id) {
         return `Fish_${id}.fishes as fish_${id}`;

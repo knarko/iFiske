@@ -32,17 +32,17 @@ angular.module('ifiske.directives')
                         document.mozFullscreenElement;
             console.log(fullScreenElement);
             if (fullScreenElement) {
-              window.screen.unlockOrientation();
+              window.screen.orientation.unlock();
             } else {
-              window.screen.lockOrientation('portrait');
+              window.screen.orientation.lock('portrait');
             }
           });
         });
         $scope.$on('$ionicParentView.beforeLeave', function() {
           console.log('Pausing YT video');
           angular.element(document).off(fullscreenListeners);
-          if (window.screen.lockOrientation) {
-            window.screen.lockOrientation('portrait');
+          if (window.screen.orientation) {
+            window.screen.orientation.lock('portrait');
           }
           sendMessage('pauseVideo');
         });

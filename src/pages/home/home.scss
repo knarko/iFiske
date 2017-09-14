@@ -1,3 +1,18 @@
 page-home {
-
+  .content {
+    background-image: url('/assets/img/bg-login.png');
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+  }
+  .toolbar-title {
+    height: 100%;
+  }
+  .header-logo {
+    height: 100%;
+  }
+  .list {
+    border: 1px solid #c8c7cc;
+  }
 }
+

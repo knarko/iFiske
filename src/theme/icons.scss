@@ -1,0 +1,29 @@
+@import "icons_variables";
+
+@font-face {
+  font-family: 'ifiske';
+  src:
+    url('#{$icomoon-font-path}/ifiske.ttf?oohnsk') format('truetype'),
+    url('#{$icomoon-font-path}/ifiske.woff?oohnsk') format('woff'),
+    url('#{$icomoon-font-path}/ifiske.svg?oohnsk#ifiske') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin makeIcon($arg, $val) {
+  .ifiske-#{$arg},
+  .ion-ios-ifiske-#{arg},
+  .ion-ios-ifiske-#{arg}-outline,
+  .ion-md-ifiske-#{arg},
+  .ion-md-ifiske-#{arg}-outline {
+    &:before {
+      content: $val;
+    }
+  }
+}
+
+@include makeIcon(license, $ifiske-license);
+@include makeIcon(hook, $ifiske-hook);
+@include makeIcon(favorite, $ifiske-favorite);
+@include makeIcon(fish, $ifiske-fish);
+@include makeIcon(fishing, $ifiske-fishing);

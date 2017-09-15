@@ -18,7 +18,7 @@ import { AreaProvider } from '../../providers/area/area';
 })
 export class MapPage {
 
-  mapOptions: any = {}
+  mapOptions: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private area: AreaProvider) {
@@ -27,7 +27,9 @@ export class MapPage {
   ionViewWillEnter() {
     this.area.getAll()
     .then(areas => {
-      this.mapOptions.areas = areas;
+      this.mapOptions = {
+        areas,
+      };
     }, err => console.warn(err));
   }
 

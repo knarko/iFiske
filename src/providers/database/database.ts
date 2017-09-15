@@ -93,7 +93,7 @@ export class DatabaseProvider {
    * @param  {Array} args Array containing arguments to be inserted wit '?'
    * @return {Promise<Row>}      Promise of a row from the table
    */
-  getSingle(sql, args) {
+  getSingle(sql: string, args?: any[]) {
     return this.getMultiple(sql, args).then(result => {
       return result && result[0];
     });

@@ -1,13 +1,14 @@
-import { Component, ElementRef, ViewChild, OnInit, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
 import * as LocateControl from 'leaflet.locatecontrol';
-import * as AwesomeMarkers from 'drmonty-leaflet-awesome-markers';
-import { Raven } from 'raven';
+import * as Raven from 'raven';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 
 import 'leaflet.markercluster';
+import 'drmonty-leaflet-awesome-markers';
 declare var L: any;
+
 
 /**
  * Generated class for the MapComponent component.
@@ -19,7 +20,7 @@ declare var L: any;
   selector: 'map',
   templateUrl: 'map.html'
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnChanges {
   areaMarker: LayerGroup;
   polygons: LayerGroup;
   map: Map;
@@ -32,6 +33,8 @@ export class MapComponent implements AfterViewInit {
 
   @Output('popupopen') popupopen = new EventEmitter();
   @Output('popupclose') popupclose = new EventEmitter();
+
+  @Input() options: any;
   constructor(private mapData: MapDataProvider) {
   }
 
@@ -67,7 +70,8 @@ export class MapComponent implements AfterViewInit {
       remainActive: true,
       onLocationError: function (err) {
         console.error(err);
-        Raven.captureException(err);
+        // TODO: Raven
+        // Raven.captureException(err);
       },
       onLocationOutsideMapBounds: function (context) {
         console.log(context);
@@ -76,8 +80,8 @@ export class MapComponent implements AfterViewInit {
         watch: true, // Watch is broken in chrome
         maxZoom: 14,
       },
-      icon: 'icon ion-android-locate',
-      iconLoading: 'icon ion-load-a spin',
+      icon: 'locate-icon icon ion-md-locate',
+      iconLoading: 'icon locate-icon ion-md-refresh spin',
 
     });
 
@@ -102,10 +106,10 @@ export class MapComponent implements AfterViewInit {
     this.areaMarker = new LayerGroup();
     this.map.addLayer(this.areaMarker);
 
-    this.map.on('popupopen', (e) => {
+    this.map.on('popupopen', e => {
       this.popupopen.emit(e);
     });
-    this.map.on('popupclose', function (e) {
+    this.map.on('popupclose', e => {
       this.popupclose.emit(e);
     });
   }
@@ -152,10 +156,10 @@ export class MapComponent implements AfterViewInit {
       }, {
           title: a.ID,
 
-          icon: AwesomeMarkers.icon({
+          icon: L.AwesomeMarkers.icon({
             icon: a.favorite ? 'star' : '',
             // eslint-disable-next-line no-nested-ternary
-            markerColor: a.wsc ? (a.favorite ? 'orange' : 'blue') : 'lightgray',
+            markerColor: a.wsc ? (a.favorite ? 'orange' : 'darkblue') : 'lightgray',
             prefix: 'ion',
           }),
         });
@@ -221,26 +225,25 @@ export class MapComponent implements AfterViewInit {
   }
 
   ngOnChanges(data) {
-    if (!data) {
+    if (!data || !data.options || !this.options) {
       return;
     }
-    console.log(data);
-    if (data.centerOnMe && !this.lc._active) {
+    if (this.options.centerOnMe && !this.lc._active) {
       setTimeout(() => {
         this.lc.start();
       }, 0);
     }
-    if (data.areas) {
-      this.createMarkers(data.areas);
+    if (this.options.areas) {
+      this.createMarkers(this.options.areas);
     }
-    if (data.pois) {
-      this.createPois(data.pois);
+    if (this.options.pois) {
+      this.createPois(this.options.pois);
     }
-    if (data.polygons) {
-      this.createPolygons(data.polygons);
+    if (this.options.polygons) {
+      this.createPolygons(this.options.polygons);
     }
-    if (data.area) {
-      this.createArea(data.area);
+    if (this.options.area) {
+      this.createArea(this.options.area);
     }
   }
 

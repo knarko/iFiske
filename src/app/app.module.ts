@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SQLite } from '@ionic-native/sqlite';
 import { Geolocation } from '@ionic-native/geolocation';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { MyApp } from './app.component';
 import { MapDataProvider } from '../providers/map-data/map-data';
@@ -16,6 +17,10 @@ import { SessionProvider } from '../providers/session/session';
 import { UpdateProvider } from '../providers/update/update';
 import { AreaProvider } from '../providers/area/area';
 import { FishProvider } from '../providers/fish/fish';
+import { UserProvider } from '../providers/user/user';
+import { PushProvider } from '../providers/push/push';
+import { ProductProvider } from '../providers/product/product';
+import { OrganizationProvider } from '../providers/organization/organization';
 
 @NgModule({
   declarations: [
@@ -44,6 +49,11 @@ import { FishProvider } from '../providers/fish/fish';
     AreaProvider,
     Geolocation,
     FishProvider,
+    UserProvider,
+    PushProvider,
+    ProductProvider,
+    InAppBrowser,
+    OrganizationProvider,
   ]
 })
 export class AppModule {}

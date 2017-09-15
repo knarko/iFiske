@@ -94,15 +94,15 @@ export class AreaProvider {
 
     this.tables.forEach(table => p.push(DB.initializeTable(table)));
 
-    this.wait = Promise.all(p).then(function (results) {
+    this.wait = Promise.all(p).then(results => {
       for (let i = 0; i < results.length; ++i) {
         if (results[i])
           return this.update('skipWait');
       }
-    });
+    }) as Promise<any>;
 
   }
-  update(shouldUpdate) {
+  update = (shouldUpdate) => {
     if (shouldUpdate)
       return Promise.all([
         this.API.get('get_areas'),
@@ -116,7 +116,7 @@ export class AreaProvider {
       }).then(this.insert);
   }
 
-  insert(data) {
+  insert = (data) => {
     const areas = data[0];
     const images = data[1];
     const fishArr = [];

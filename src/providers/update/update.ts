@@ -5,13 +5,10 @@ import 'rxjs/add/operator/map';
 import { MapDataProvider } from '../map-data/map-data';
 import { LoadingController, ToastController, Loading } from 'ionic-angular';
 import { AreaProvider } from '../area/area';
+import { FishProvider } from '../fish/fish';
+import { UserProvider } from '../user/user';
+import { OrganizationProvider } from '../organization/organization';
 
-/*
-  Generated class for the UpdateProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class UpdateProvider {
   // TODO: Better type
@@ -26,29 +23,29 @@ export class UpdateProvider {
 
     private area: AreaProvider,
     // County,
-    // Fish,
+    private fish: FishProvider,
     private mapData: MapDataProvider,
     // News,
-    // Organization,
+    private organization: OrganizationProvider,
     // Product,
     // Rule,
     // Technique,
     // Terms,
-    // User,
+    private user: UserProvider,
   ) {
 
     this.updates = [
       area,
+      fish,
       mapData,
+      organization,
+      user,
       // County.update,
-      // Fish.update,
       // News.update,
-      // Organization.update,
       // Product.update,
       // Rule.update,
       // Technique.update,
       // Terms.update,
-      // User.update,
     ];
 
   }

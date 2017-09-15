@@ -1,0 +1,44 @@
+@mixin cluster($size, $color) {
+  $outer-color: rgba(lighten($color, 10%), 0.6);
+  .marker-cluster-#{$size} {
+    background-color: rgba($outer-color, 0.6);
+    div {
+      background-color: $color;
+    }
+    span {
+      @if (lightness($color) > 50) {
+        color: rgba(black, .95);
+      }
+      @else {
+        color: rgba(white, .95);
+      }
+    }
+  }
+}
+
+@include cluster(small, map-get($colors, secondary));
+@include cluster(medium, rgba(241, 211, 87, 0.6));
+@include cluster(large, map-get($colors, primary));
+
+.marker-cluster {
+  $size: 30px;
+  background-clip: padding-box;
+  border-radius: 50%;
+
+  div {
+    border-radius: 50%;
+    font-size: 14px;
+    height: $size;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    width: $size;
+  }
+
+  span {
+    line-height: $size;
+  }
+}
+
+
+

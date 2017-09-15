@@ -1,7 +1,45 @@
-map, map>.map {
+@import 'leaflet/dist/leaflet';
+@import 'leaflet.locatecontrol/dist/L.Control.Locate';
+@import 'leaflet.markercluster/dist/MarkerCluster';
+@import './markercluster';
+@import 'drmonty-leaflet-awesome-markers/css/leaflet.awesome-markers';
+
+map,
+map>.map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .locate-icon {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    font-family: "Ionicons";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 30px;
+    font-size: 25px;
+    text-rendering: auto;
+    text-transform: none;
+    speak: none;
+  }
+  .spin {
+    animation: 1s linear spin infinite;
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
+

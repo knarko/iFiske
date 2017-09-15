@@ -56,6 +56,10 @@
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-4.2.1.tgz#0b4aa9792fd7f7396b1b07fe90769be112a8a7ee"
 
+"@ionic-native/in-app-browser@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@ionic-native/in-app-browser/-/in-app-browser-4.2.1.tgz#a1fed3ea095b75733563250ac48edbfec4830b99"
+
 "@ionic-native/splash-screen@3.12.1":
   version "3.12.1"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-3.12.1.tgz#1c2e468e225d5b90cad7b48fc05505d4c761ace6"
@@ -2267,6 +2271,10 @@ ieee754@^1.1.4:
 ignore@^3.1.2:
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.5.tgz#c4e715455f6073a8d7e5dae72d2fc9d71663dba6"
+
+imgcache.js@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/imgcache.js/-/imgcache.js-1.1.1.tgz#8ae818e7cd0c3408c05d1d0f93025a77b3cbcca0"
 
 immediate@~3.0.5:
   version "3.0.6"

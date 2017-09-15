@@ -18,6 +18,7 @@ export interface Fish {
   icon: string;
   in: string;
   geo: string;
+  img: string;
   size: string;
   lat: string;
   rec: string;
@@ -58,9 +59,11 @@ export class FishProvider extends BaseModel {
       return this.API.get_fishes()
         .then(data => {
           console.log('Downloading all fish images');
-          for (const fish in data) {
-            if (data.hasOwnProperty(fish))
-              ImgCache.cacheFile(serverLocation + data[fish].img);
+          for (const fish of Object.values(data)) {
+              fish.icon = serverLocation + fish.icon;
+              fish.img = serverLocation + fish.img;
+              ImgCache.cacheFile(fish.img);
+              console.log(fish);
           }
           if (shouldupdate === 'skipWait')
             return this.DB.populateTable(this.table, data);

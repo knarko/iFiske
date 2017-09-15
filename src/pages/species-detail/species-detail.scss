@@ -1,0 +1,39 @@
+page-species-detail {
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  p,
+  h2,
+  h3 {
+    padding: 0 1.6rem;
+  }
+
+  h2 {
+    color: map-get($colors, dark);
+    font-size: 2rem;
+    font-weight: normal;
+
+    span {
+      font-size: 1.4rem;
+      font-style: italic;
+    }
+  }
+
+  p {
+    line-height: 1.3em;
+    margin: 1em 0;
+  }
+
+  h3 {
+    background-color: lighten(map-get($colors, light), 8%);
+    border-bottom: 1px solid map-get($colors, light);
+    border-top: 1px solid map-get($colors, light);
+    color: map-get($colors, dark);
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 1.6rem;
+  }
+
+}

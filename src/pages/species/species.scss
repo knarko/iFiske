@@ -1,0 +1,21 @@
+page-species {
+  .list-item {
+    $border: 1px solid map-get($colors, light);
+    border-bottom: $border;
+    border-right: $border;
+    text-align: center;
+
+    &:nth-child(2n) {
+      border-right: 0;
+    }
+
+    img {
+      max-width: 100%;
+      object-fit: contain;
+    }
+  }
+  .grid {
+    padding: 0;
+  }
+}
+

@@ -8,6 +8,7 @@ import { AreaProvider } from '../area/area';
 import { FishProvider } from '../fish/fish';
 import { UserProvider } from '../user/user';
 import { OrganizationProvider } from '../organization/organization';
+import { InformationProvider } from '../information/information';
 
 @Injectable()
 export class UpdateProvider {
@@ -24,6 +25,7 @@ export class UpdateProvider {
     private area: AreaProvider,
     // County,
     private fish: FishProvider,
+    private information: InformationProvider,
     private mapData: MapDataProvider,
     // News,
     private organization: OrganizationProvider,
@@ -37,11 +39,11 @@ export class UpdateProvider {
     this.updates = [
       area,
       fish,
+      information,
       mapData,
       organization,
       user,
       // County.update,
-      // News.update,
       // Product.update,
       // Rule.update,
       // Technique.update,

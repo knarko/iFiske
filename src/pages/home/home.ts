@@ -15,7 +15,7 @@ export class HomePage {
     {title: 'Fishing Areas', icon: 'ifiske-fishing'},
     {title: 'Map', icon: 'map', uri: 'MapPage'},
     {title: 'My Fishing Permits', icon: 'ifiske-license'},
-    {title: 'Information', icon: 'information-circle'},
+    {title: 'Information', icon: 'information-circle', uri: 'InformationPage'},
     {title: 'Species', icon: 'ifiske-fish'},
     {title: 'Fishing Methods', icon: 'ifiske-hook'},
   ];

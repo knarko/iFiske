@@ -21,6 +21,7 @@ import { UserProvider } from '../providers/user/user';
 import { PushProvider } from '../providers/push/push';
 import { ProductProvider } from '../providers/product/product';
 import { OrganizationProvider } from '../providers/organization/organization';
+import { InformationProvider } from '../providers/information/information';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { OrganizationProvider } from '../providers/organization/organization';
     ProductProvider,
     InAppBrowser,
     OrganizationProvider,
+    InformationProvider,
   ]
 })
 export class AppModule {}

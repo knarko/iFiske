@@ -23,6 +23,7 @@ import { ProductProvider } from '../providers/product/product';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { InformationProvider } from '../providers/information/information';
 import { AdsProvider } from '../providers/ads/ads';
+import { TechniqueProvider } from '../providers/technique/technique';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AdsProvider } from '../providers/ads/ads';
     OrganizationProvider,
     InformationProvider,
     AdsProvider,
+    TechniqueProvider,
   ]
 })
 export class AppModule {}

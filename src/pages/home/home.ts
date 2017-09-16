@@ -17,7 +17,7 @@ export class HomePage {
     {title: 'My Fishing Permits', icon: 'ifiske-license'},
     {title: 'Information', icon: 'information-circle', uri: 'InformationPage'},
     {title: 'Species', icon: 'ifiske-fish', uri: 'SpeciesPage'},
-    {title: 'Fishing Methods', icon: 'ifiske-hook'},
+    {title: 'Fishing Methods', icon: 'ifiske-hook', uri: 'FishingMethodsPage'},
   ];
 
   constructor(public navCtrl: NavController) {

@@ -26,6 +26,11 @@ export class BaseModel {
     });
   }
 
+  protected transform(item: any): void {
+    // Don't do anything
+    return;
+  }
+
   /**
      * Update function.
      * @param  {boolean|string} shouldupdate - `true` if enough time has passed in order to
@@ -48,20 +53,21 @@ export class BaseModel {
     }
   }
 
-  getAll() {
-    return this.wait.then(() => {
-      return this.DB.getMultiple(`
-      SELECT * FROM ${this.table.name}
-      `);
-    });
+  async getAll() {
+    await this.wait;
+    const res = await this.DB.getMultiple(`SELECT * FROM ${this.table.name}`);
+    res.forEach(a => this.transform(a));
+    console.log(res);
+    return res;
   }
 
-  getOne(id) {
-    return this.wait.then(() => {
-      return this.DB.getSingle(`
+  async getOne(id) {
+    await this.wait;
+    const res = await this.DB.getSingle(`
         SELECT * FROM ${this.table.name}
         WHERE "${this.table.primary}" = ?
       `, [id]);
-    });
+    this.transform(res);
+    return res;
   }
 }

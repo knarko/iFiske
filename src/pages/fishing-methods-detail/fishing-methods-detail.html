@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{tech?.t}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="information-page">
+  <ion-slides *ngIf="tech?.images.length > 1; else singleImage" loop>
+    <ion-slide *ngFor="let img of tech.images">
+      <img [src]="img">
+    </ion-slide>
+  </ion-slides>
+  <ng-template #singleImage>
+    <img [src]="tech?.images[0]">
+  </ng-template>
+  <h2>{{tech?.t}}</h2>
+
+  <h3>Technique description</h3>
+  <p [innerHtml]="tech?.d"></p>
+  <h3>YouTube</h3>
+  <youtube [url]="tech?.youtube"></youtube>
+  <h3>Technique Gear</h3>
+  <p [innerHtml]="tech?.de"></p>
+  <h3>Technique Advanced</h3>
+  <p [innerHtml]="tech?.da"></p>
+
+</ion-content>

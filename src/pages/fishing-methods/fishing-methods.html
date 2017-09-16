@@ -1,0 +1,22 @@
+<!--
+  Generated template for the FishingMethodsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>FishingMethods</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card *ngFor="let item of items" (click)="goto(item)">
+    <img [src]="item.img1">
+    <h2>{{item.t}}</h2>
+  </ion-card>
+
+</ion-content>

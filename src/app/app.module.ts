@@ -22,6 +22,7 @@ import { PushProvider } from '../providers/push/push';
 import { ProductProvider } from '../providers/product/product';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { InformationProvider } from '../providers/information/information';
+import { AdsProvider } from '../providers/ads/ads';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { InformationProvider } from '../providers/information/information';
     InAppBrowser,
     OrganizationProvider,
     InformationProvider,
+    AdsProvider,
   ]
 })
 export class AppModule {}

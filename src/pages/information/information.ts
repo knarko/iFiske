@@ -24,20 +24,13 @@ export class InformationPage {
     public navParams: NavParams,
     private info: InformationProvider,
   ) {
-  }
-
-  ionViewWillEnter() {
     this.info.getAll().then(info => {
       console.log(info);
       this.items = info;
-    })
+    });
   }
+
   goto(item) {
     this.navCtrl.push('InformationDetailPage', item);
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad InformationPage');
-  }
-
 }

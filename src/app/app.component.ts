@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Config } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UpdateProvider } from '../providers/update/update';
+import { MDTransition } from '../transitions/transition-md';
 
 @Component({
   templateUrl: 'app.html'
@@ -10,7 +11,8 @@ import { UpdateProvider } from '../providers/update/update';
 export class MyApp {
   rootPage:any = 'HomePage';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, update: UpdateProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, update: UpdateProvider, config: Config) {
+    config.setTransition('md-transition', MDTransition);
     platform.ready().then(() => {
         if (true || localStorage.getItem('language')) {
           update.update();

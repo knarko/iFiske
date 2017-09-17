@@ -17,6 +17,7 @@ import { InformationProvider } from '../../providers/information/information';
   templateUrl: 'information.html',
 })
 export class InformationPage {
+  title: string;
   items: any[];
 
   constructor(
@@ -25,9 +26,9 @@ export class InformationPage {
     private info: InformationProvider,
   ) {
     this.info.getAll().then(info => {
-      console.log(info);
       this.items = info;
     });
+    this.title = this.info.getTitle();
   }
 
   goto(item) {

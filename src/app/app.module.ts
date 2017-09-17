@@ -32,7 +32,9 @@ import { TechniqueProvider } from '../providers/technique/technique';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      preloadMOdules: true,
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -3,7 +3,7 @@ import { Platform, Config } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UpdateProvider } from '../providers/update/update';
-import { MDTransition } from '../transitions/transition-md';
+import { MDTransition } from 'ionic-page-transitions';
 
 @Component({
   templateUrl: 'app.html'

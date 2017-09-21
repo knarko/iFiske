@@ -53,7 +53,7 @@ angular.module('ifiske.services')
 
   .filter('distance', function distanceFilter() {
     return function(distance) {
-      if (!distance) {
+      if (!distance || Number.isNaN(Number(distance))) {
         return '';
       }
 
@@ -63,6 +63,6 @@ angular.module('ifiske.services')
         return Number(distance / 1000).toPrecision(2) + 'km';
       }
 
-      return distance + 'm';
+      return Math.round(distance) + 'm';
     };
   });

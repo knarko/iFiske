@@ -4,10 +4,11 @@ import { BaseModel } from '../database/basemodel';
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
 import { serverLocation } from '../api/serverLocation';
+import { TableDef } from '../database/table';
 
 @Injectable()
 export class TechniqueProvider extends BaseModel {
-  protected readonly table = {
+  protected readonly table: TableDef = {
       name:      'Technique',
       apiMethod: 'get_techniques',
       primary:   'ID',

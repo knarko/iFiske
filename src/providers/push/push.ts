@@ -20,8 +20,8 @@ export class PushProvider {
   private navCtrl: NavController;
 
   constructor(
-    private platform: Platform,
-    private API: ApiProvider,
+    // private platform: Platform,
+    // private API: ApiProvider,
     private app: App,
     private sessionData: SessionProvider,
     private alertCtrl: AlertController,
@@ -129,7 +129,7 @@ export class PushProvider {
   2. Tell API servers that we no longer want push notifications (how? we need a new API route)
   */
 
-  private handleNotification = (_event, notification) => {
+  private _handleNotification = (_event, notification) => {
     console.log(notification);
     const payload = notification.raw.additionalData.payload;
     let i;

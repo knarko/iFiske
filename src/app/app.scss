@@ -18,3 +18,54 @@
 ion-nav {
   background-color: black;
 }
+
+
+.right {
+  float: right !important;
+  margin-left: auto !important;
+}
+
+.left {
+  float: left !important;
+  margin-right: auto !important;
+}
+
+.center {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center;
+}
+
+
+super-tabs-container {
+  height: calc(100% - 54px) !important;
+}
+
+super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
+  &.title-and-icon {
+    height: 54px;
+  }
+
+  .title {
+    font-size: .9em;
+    text-transform: capitalize;
+  }
+
+  &.title-and-icon ion-icon {
+    margin-bottom: 0;
+  }
+}
+
+.list-ios, .list-md {
+  margin: -1px 0;
+}
+
+
+.card-header .icon {
+  vertical-align: middle;
+}
+
+.icon.large {
+  font-size: 2em;
+}

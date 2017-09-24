@@ -3,10 +3,19 @@ import * as ImgCache from 'imgcache.js';
 import { BaseModel } from '../database/basemodel';
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
+import { TableDef } from '../database/table';
+
+export interface InformationArticle {
+  ID: number;
+  t: string;
+  text: string;
+  img: string;
+  icon: string;
+}
 
 @Injectable()
-export class InformationProvider extends BaseModel {
-  protected readonly table = {
+export class InformationProvider extends BaseModel<InformationArticle> {
+  protected readonly table: TableDef = {
     name: 'Information',
     primary: 'ID',
     members: {
@@ -26,29 +35,21 @@ export class InformationProvider extends BaseModel {
     this.initialize();
   }
 
-  update(shouldupdate) {
+  async update(shouldupdate: boolean | 'skipWait'): Promise<boolean> {
     // Always update
-    return this.API.get_content_menu()
-      .then(data => {
-        if (shouldupdate === 'skipWait')
-          return data;
-        return this.wait.then(() => {
-          return data;
-        });
-      })
-      .then(data => {
-        localStorage.setItem('NEWS', data.title);
-        for (const item of data.contents) {
-          ImgCache.cacheFile(item.icon);
-        }
-        return this.DB.populateTable(this.table, data.contents);
-      })
-      .then(() => {
-        return 'News';
-      }, err => {
-        console.warn(err);
-        return Promise.reject(err);
-      });
+    const data = await this.API.get_content_menu();
+    if (shouldupdate !== 'skipWait') {
+      await this.ready;
+    }
+
+    localStorage.setItem('NEWS', data.title);
+
+    for (const item of data.contents) {
+      ImgCache.cacheFile(item.icon);
+    }
+
+    await this.DB.populateTable(this.table, data.contents);
+    return true;
   }
 
   getTitle() {

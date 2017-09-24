@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { isEqual } from 'lodash';
+import { TableDef } from './table';
 
 @Injectable()
 export class DatabaseProvider {
@@ -17,6 +18,7 @@ export class DatabaseProvider {
           'fiskebasen',
           10 * 1024 * 1024,
         );
+        // tslint:disable-next-line:only-arrow-functions
         db.executeSql = function(statement, params) {
           return new Promise((resolve, reject) => {
             db.transaction(tx => {
@@ -28,6 +30,13 @@ export class DatabaseProvider {
             });
           });
         };
+        const trans: Function = db.transaction;
+        // tslint:disable-next-line:only-arrow-functions
+        db.transaction = function(tx) {
+          return new Promise((resolve, reject) => {
+            trans.apply(db, [tx, reject, resolve]);
+          });
+        }
         return Promise.resolve(db);
       } else {
         return Promise.reject(err);
@@ -105,7 +114,7 @@ export class DatabaseProvider {
    * @param  {Enumerable} data  Object or Array with data to insert, should be contain objects with the same keys as the table columns
    * @return {SQL_results}  Returns SQL results
    */
-  populateTable(table, data) {
+  populateTable(table: TableDef, data) {
     return this.db.transaction(tx => {
       tx.executeSql('DELETE FROM ' + table.name + ';');
 
@@ -126,7 +135,7 @@ export class DatabaseProvider {
     };
   }
 
-  initializeTable(table) {
+  initializeTable(table: TableDef) {
     return this.ready.then(() => {
       /*
             * Builds a string with "" around all names, so that

@@ -2,19 +2,91 @@ import { Injectable } from '@angular/core';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { Geolocation } from '@ionic-native/geolocation';
-import { FishProvider } from '../fish/fish';
+import { FishProvider, Fish } from '../fish/fish';
 import * as Fuse from 'fuse.js';
+import { BaseModel } from '../database/basemodel';
+import { serverLocation } from '../api/serverLocation';
+import { Subscription } from 'rxjs/Subscription';
 
-/*
-  Generated class for the AreaProvider provider.
+import 'rxjs/add/operator/filter';
+import { TableDef } from '../database/table';
+import { DBMethod } from '../database/decorators';
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+
+export interface Area {
+  ID: number;
+  orgid: number;
+  t: string;
+  kw: string;
+  note: string;
+  c1: number;
+  c2: number;
+  c3: number;
+  m1: number;
+  m2: number;
+  m3: number;
+  lat: number;
+  lng: number;
+  zoom: string;
+  pnt: number;
+  car: number;
+  eng: number;
+  hcp: number;
+  mod: number;
+  d: string;
+  ptab: string;
+
+  // Not in db
+  photo: string;
+  images?: Promise<string[]>;
+  files?: Promise<AreaFile[]>;
+  org: string;
+  level?: number;
+  distance?: number;
+}
+
+export interface AreaFile {
+  ID: number;
+  /**
+   * Area ID
+   */
+  area: number;
+  /**
+   *  File Headline
+   */
+  t: string;
+  /**
+   * File location relative to serverLocation
+   */
+  f: string;
+  /**
+   * 3 letter file type (e.g. PDF)
+   */
+  typ: string;
+  /**
+   * Thumbnail
+   */
+  thumb: string;
+
+  /**
+   * url to resource
+   * Not stored in Database
+   */
+  url: string;
+
+  /**
+   * File name
+   * Not stored in Database
+   */
+  filename: string;
+}
+
 @Injectable()
-export class AreaProvider {
-  wait: Promise<void>;
-  private readonly tables = [{
+export class AreaProvider extends BaseModel<Area> {
+  searchCache: any = {};
+  watch: Subscription;
+
+  private readonly tables: TableDef[] = [{
     name: 'Area',
     primary: 'ID',
     members: {
@@ -82,19 +154,19 @@ export class AreaProvider {
   ];
 
   currentLocation: any;
-  watch: any;
 
   constructor(
-    private DB: DatabaseProvider,
-    private API: ApiProvider,
+    protected DB: DatabaseProvider,
+    protected API: ApiProvider,
     private geo: Geolocation,
     private fishProvider: FishProvider,
   ) {
+    super();
     const p = [];
 
     this.tables.forEach(table => p.push(DB.initializeTable(table)));
 
-    this.wait = Promise.all(p).then(results => {
+    this.ready = Promise.all(p).then(results => {
       for (let i = 0; i < results.length; ++i) {
         if (results[i])
           return this.update('skipWait');
@@ -102,23 +174,23 @@ export class AreaProvider {
     }) as Promise<any>;
 
   }
-  update = (shouldUpdate) => {
-    if (shouldUpdate)
-      return Promise.all([
-        this.API.get('get_areas'),
-        this.API.get('get_images'),
-      ]).then(data => {
-        if (shouldUpdate === 'skipWait')
-          return data;
-        return this.wait.then(function () {
-          return data;
-        });
-      }).then(this.insert);
+
+  async update(shouldUpdate): Promise<boolean> {
+    if (!shouldUpdate) {
+      return false;
+    }
+    const data = Promise.all([
+      this.API.get('get_areas'),
+      this.API.get('get_images'),
+    ]);
+    if (shouldUpdate !== 'skipWait' && await this.ready) {
+      return false;
+    }
+    await data.then(this.insert);
+    return true;
   }
 
-  insert = (data) => {
-    const areas = data[0];
-    const images = data[1];
+  insert = ([areas, images]: [any, any]) => {
     const fishArr = [];
     const filesArr = [];
     for (const key in areas) {
@@ -147,121 +219,126 @@ export class AreaProvider {
     ]);
   }
 
+  transform(area: Area, single: boolean = false) {
+    area.photo = area.photo ? serverLocation + area.photo : area.photo;
+    if (single) {
+      area.images = this.getPhotos(area.ID);
+      area.files = this.getFiles(area.ID);
+    }
+  }
+
   /**
    * Fetches a single Area
    * @param {Integer} id - ID for the requested area
    * @return {Promise<Area>} - A promise for the requested area
    */
-  getOne(id: number) {
-    return this.wait.then(() => {
-      return this.DB.getSingle(`
-            SELECT
-              Area.*,
-              Organization.t AS org,
-              CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END AS favorite
-            FROM Area
-            LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
-            LEFT JOIN Organization ON Area.orgid = Organization.ID
-            WHERE Area.ID = ?
-          `, Array.isArray(id) ? id : [id]);
-    });
+  @DBMethod
+  async getOne(id: number): Promise<Area> {
+    const res = await this.DB.getSingle(`
+      SELECT
+        Area.*,
+        Organization.t AS org,
+        CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END AS favorite
+        FROM Area
+      LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
+      LEFT JOIN Organization ON Area.orgid = Organization.ID
+      WHERE Area.ID = ?
+    `, Array.isArray(id) ? id : [id]);
+    this.transform(res, true);
+    return res;
   }
 
-  getAll(countyId?: number) {
-    return this.wait.then(() => {
-      function selectFish(id) {
-        return `Fish_${id}.fishes as fish_${id}`;
-      }
+  @DBMethod
+  async getAll(countyId?: number): Promise<Area[]> {
+    function selectFish(id) {
+      return `Fish_${id}.fishes as fish_${id}`;
+    }
 
-      function joinFish(id) {
-        return `LEFT JOIN (
-              SELECT
-                Area_Fish.amount AS amount,
-                Area.ID AS aid,
-                GROUP_CONCAT(Fish.t, " ") AS fishes
-              FROM Area_Fish
-              JOIN Fish ON Area_Fish.fid = Fish.ID
-              JOIN Area ON Area_Fish.aid = Area.ID
-              WHERE Area_Fish.amount = ${id}
-              GROUP BY Area_Fish.amount, Area.ID
-            ) AS Fish_${id} ON Area.ID = Fish_${id}.aid`;
-      }
+    function joinFish(id) {
+      return `
+        LEFT JOIN (SELECT
+            Area_Fish.amount AS amount,
+            Area.ID AS aid,
+            GROUP_CONCAT(Fish.t, " "
+        ) AS fishes
+        FROM Area_Fish
+        JOIN Fish ON Area_Fish.fid = Fish.ID
+        JOIN Area ON Area_Fish.aid = Area.ID
+        WHERE Area_Fish.amount = ${id}
+        GROUP BY Area_Fish.amount, Area.ID
+        ) AS Fish_${id} ON Area.ID = Fish_${id}.aid
+      `;
+    }
 
-      return this.DB.getMultiple(`
-            SELECT
-              Area.*,
-              Organization.t AS org,
-              Organization.d AS org_d,
-              CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END AS favorite,
-              ${selectFish(1)},
-              ${selectFish(2)},
-              ${selectFish(3)},
-              ${selectFish(4)},
-              ${selectFish(5)},
-              Area_Photos.file AS photo
-            FROM Area
+    const res = await this.DB.getMultiple(`
+      SELECT
+        Area.*,
+        Organization.t AS org,
+        Organization.d AS org_d,
+        CASE WHEN User_Favorite.a IS NULL THEN 0 ELSE 1 END AS favorite,
+        ${selectFish(1)},
+        ${selectFish(2)},
+        ${selectFish(3)},
+        ${selectFish(4)},
+        ${selectFish(5)},
+        Area_Photos.file AS photo
+      FROM Area
 
-            ${joinFish(1)}
-            ${joinFish(2)}
-            ${joinFish(3)}
-            ${joinFish(4)}
-            ${joinFish(5)}
+      ${joinFish(1)}
+      ${joinFish(2)}
+      ${joinFish(3)}
+      ${joinFish(4)}
+      ${joinFish(5)}
 
-            LEFT JOIN Area_Fish ON Area_Fish.aid = Area.ID
-            LEFT JOIN Fish ON Area_Fish.fid = Fish.ID
-            LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
-            LEFT JOIN Organization ON Area.orgid = Organization.ID
-            LEFT JOIN (
-              SELECT MIN(rowid), area, file FROM Area_Photos
-              GROUP BY area
-              ORDER BY rowid ASC
-            ) AS Area_Photos ON Area.ID = Area_Photos.area
-            ${countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
-            GROUP BY Area.ID
-          `, countyId ? [countyId, countyId, countyId] : []);
-    });
+      LEFT JOIN Area_Fish ON Area_Fish.aid = Area.ID
+      LEFT JOIN Fish ON Area_Fish.fid = Fish.ID
+      LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
+      LEFT JOIN Organization ON Area.orgid = Organization.ID
+      LEFT JOIN (
+        SELECT MIN(rowid), area, file FROM Area_Photos
+        GROUP BY area
+          ORDER BY rowid ASC
+      ) AS Area_Photos ON Area.ID = Area_Photos.area
+      ${countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
+      GROUP BY Area.ID
+    `, countyId ? [countyId, countyId, countyId] : []);
+    res.forEach(a => this.transform(a));
+    return res;
   }
 
-  getPhotos(areaId) {
-    return this.wait.then(() => {
-      return this.DB.getMultiple(
-        [
-          'SELECT Area_Photos.*',
-          'FROM Area_Photos',
-          'WHERE Area_Photos.area = ?',
-        ].join(' '), [areaId],
-      ).then(function (images) {
+  @DBMethod
+  async getPhotos(areaId) {
+    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId])
+    .then(images => {
         for (let i = 0; i < images.length; ++i) {
           images[i].ratio = images[i].h / images[i].w * 100 + '%';
+          images[i].file = serverLocation + images[i].file;
         }
         return images;
+      }).catch(err => []);
+  }
+
+  @DBMethod
+  async getFiles(areaId): Promise<AreaFile[]> {
+    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId])
+      .catch(() => [])
+      .then((files: AreaFile[]) => {
+        files.forEach(file => {
+          file.thumb = serverLocation + file.thumb
+          file.url = serverLocation + file.f;
+          file.filename = file.f.split('/').slice(-1)[0];
+        });
+        return files;
       });
-    });
   }
 
-  getFiles(areaId) {
-    return this.wait.then(() => {
-      return this.DB.getMultiple(
-        [
-          'SELECT Area_Files.*',
-          'FROM Area_Files',
-          'WHERE Area_Files.area = ?',
-        ].join(' '), [areaId],
-      );
-    });
-  }
-
-  getFishes(aid) {
-    return this.wait.then(() => {
-      return this.DB.getMultiple(
-        [
-          'SELECT *',
-          'FROM Area_Fish',
-          'JOIN Fish ON Area_Fish.fid = Fish.ID',
-          'WHERE Area_Fish.aid = ?',
-        ].join(' '), [aid],
-      );
-    });
+  @DBMethod
+  async getFishes(aid): Promise<Fish[]> {
+    return this.DB.getMultiple(`
+      SELECT * FROM Area_Fish
+      JOIN Fish ON Area_Fish.fid = Fish.ID
+      WHERE Area_Fish.aid = ?
+    `, [aid]);
   }
 
   /**
@@ -273,14 +350,15 @@ export class AreaProvider {
    * @param {Integer} countyId - ID for a county to filter on
    * @return {Promise<Area[]>} Promise for the matching areas
    */
-  search(searchstring, countyId) {
+  search(searchstring, countyId): Promise<Area[]> {
+    if (this.searchCache[searchstring + countyId]) {
+      return this.searchCache[searchstring + countyId];
+    }
     let t0;
     if (performance && performance.now) {
       t0 = performance.now();
     }
-    if (!this.watch) {
-      this.watch = this.startWatch();
-    }
+    this.startWatch();
     const result = this.getAll(countyId)
       .then(data => data.map(d => {
         for (let i = 1; i < 6; ++i) {
@@ -396,14 +474,19 @@ export class AreaProvider {
         console.log('Searching took:', t1 - t0, 'ms');
       }
     });
+    this.searchCache[searchstring + countyId] = result;
     return result;
   }
   private startWatch() {
+    if (this.watch) {
+      return;
+    }
     this.watch = this.geo.watchPosition({
       timeout: 10000,
       enableHighAccuracy: false,
-    });
-    this.watch.then(null, err => console.warn(err), position => {
+    })
+    .filter(geo => !!geo.coords)
+    .subscribe(position => {
       this.currentLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,

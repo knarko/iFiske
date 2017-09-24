@@ -1,0 +1,7 @@
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="goto(item)">
+      <h2>{{item.t}}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

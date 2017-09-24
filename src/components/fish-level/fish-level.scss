@@ -1,0 +1,47 @@
+fish-level {
+  border: 1px solid map-get($colors, dark);
+  border-radius: 10px;
+  clear: both;
+  contain: content;
+  display: block;
+  height: 10px;
+  margin: auto 0 0 auto;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 2px;
+
+  &.show-icon {
+    width: calc(100% - 20px);
+    &::before {
+      content: "\e902";
+      display: block;
+      position: absolute;
+      font-family: ifiske;
+      left: -20px;
+      top: -6px;
+    }
+  }
+  .wrapper {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .level {
+    width: 100%;
+    display: block;
+    height: 4px;
+    padding: 0;
+    border-radius: 10px;
+    animation: .5s level;
+    animation-timing-function: cubic-bezier(.68, -.35, .27, 1.35);
+    transition: .5s cubic-bezier(.68, -.35, .27, 1.35);
+    background: map-get($colors, danger);
+  }
+}
+
+@keyframes level {
+  0% {
+    width: 0%;
+  }
+}
+

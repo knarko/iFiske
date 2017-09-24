@@ -3,7 +3,12 @@
     "no-duplicate-variable": true,
     "no-unused-variable": [
       true
-    ]
+    ],
+    "trailing-comma": [true, {
+      "multiline": "always",
+      "singleline": "never"
+    }],
+    "only-arrow-functions": [true, "allow-named-functions"]
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

@@ -1,33 +1,59 @@
-.information-page {
-  p,
-  h2,
-  h3 {
-    padding: 0 1.6rem;
+.information-page .scroll-content {
+  &>section,
+  &>h2,
+  &>h3 {
+    margin: 0;
+    padding: 1.6rem;
+  }
+  ion-slides {
+    height: unset;
+  }
+
+  &>h2,
+  &>h3 {
+    color: map-get($colors, dark);
+  }
+
+  &>h3 {
+    background-color: lighten(map-get($colors, light), 8%);
+    border-bottom: 1px solid map-get($colors, light);
+    border-top: 1px solid map-get($colors, light);
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 1.6rem;
   }
 
   h2 {
-    color: map-get($colors, dark);
     font-size: 2rem;
     font-weight: normal;
-
     span {
       font-size: 1.4rem;
       font-style: italic;
     }
   }
 
+  br {
+    line-height: 2em;
+  }
   p {
-    line-height: 1.3em;
-    margin: 1em 0;
-  }
-
-  h3 {
-    background-color: lighten(map-get($colors, light), 8%);
-    border-bottom: 1px solid map-get($colors, light);
-    border-top: 1px solid map-get($colors, light);
-    color: map-get($colors, dark);
-    font-size: 1.4rem;
     margin: 0;
-    padding: 1.6rem;
+    line-height: 1.3em;
   }
+  p+p {
+    margin-top: 1em;
+  }
+}
+
+.content.background-image {
+    background-image: url('/assets/img/bg-login.png');
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.content.background-abstract {
+    background-image: url('/assets/img/bg-abstract.jpg');
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
 }

@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { BaseModel } from '../database/basemodel';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
+import { TableDef } from '../database/table';
+import { DBMethod } from '../database/decorators';
 
-/*
-  Generated class for the ProductProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+export interface Product {
+  ID: number;
+  t: string;
+  t2: string;
+  no: string;
+  im: string;
+  pf: string;
+  ai: number;
+  ri: number;
+  ch: number;
+  price: number;
+  mod: number;
+  so: number;
+  hl: string;
+}
 @Injectable()
-export class ProductProvider extends BaseModel {
-  protected readonly table = {
+export class ProductProvider extends BaseModel<Product> {
+  protected readonly table: TableDef = {
     name: 'Product',
     primary: 'ID',
     apiMethod: 'get_products',
@@ -59,20 +69,19 @@ export class ProductProvider extends BaseModel {
       * @param {Integer} productID Product ID
       * @return {object} Object with a single product
       */
-  getOne(productID) {
-    return this.wait.then(function () {
-      return this.DB.getSingle([
-        'SELECT DISTINCT Product.*,',
-        'Rule.t as rule_t,',
-        'Rule.ver as rule_ver,',
-        'Rule.d as rule_d',
-        'FROM Product',
-        'JOIN Rule ON Rule.ID = Product.ri',
-        'WHERE ID = ?',
-        'ORDER BY so',
-      ].join(' '),
-        [productID]);
-    });
+  @DBMethod
+  async getOne(productID): Promise<Product> {
+    return this.DB.getSingle([
+      'SELECT DISTINCT Product.*,',
+      'Rule.t as rule_t,',
+      'Rule.ver as rule_ver,',
+      'Rule.d as rule_d',
+      'FROM Product',
+      'JOIN Rule ON Rule.ID = Product.ri',
+      'WHERE ID = ?',
+      'ORDER BY so',
+    ].join(' '),
+      [productID]);
   }
 
   /**
@@ -81,8 +90,8 @@ export class ProductProvider extends BaseModel {
       * @param {Integer} areaID area ID
       * @return {array} Array of Products
       */
-  getByArea(areaID) {
-    return this.wait.then(function () {
+  @DBMethod
+  async getByArea(areaID): Promise<Product[]> {
       return this.DB.getMultiple([
         'SELECT DISTINCT Product.*,',
         'Rule.t as rule_t,',
@@ -94,6 +103,5 @@ export class ProductProvider extends BaseModel {
         'ORDER BY so',
       ].join(' '),
         [areaID]);
-    });
   }
 }

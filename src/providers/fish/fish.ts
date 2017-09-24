@@ -5,7 +5,8 @@ import * as Fuse from 'fuse.js';
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
 import { serverLocation } from '../api/serverLocation';
-import { DBTable, BaseModel } from '../database/basemodel';
+import { BaseModel } from '../database/basemodel';
+import { TableDef } from '../database/table';
 
 
 export interface Fish {
@@ -25,8 +26,8 @@ export interface Fish {
 }
 
 @Injectable()
-export class FishProvider extends BaseModel {
-  protected readonly table: DBTable = {
+export class FishProvider extends BaseModel<Fish> {
+  protected readonly table: TableDef = {
     name: 'Fish',
     primary: 'ID',
     members: {
@@ -54,50 +55,48 @@ export class FishProvider extends BaseModel {
     this.initialize();
   }
 
-  update(shouldupdate) {
-    if (shouldupdate)
-      return this.API.get_fishes()
-        .then(data => {
-          console.log('Downloading all fish images');
-          for (const fish of Object.values(data)) {
-              fish.icon = serverLocation + fish.icon;
-              fish.img = serverLocation + fish.img;
-              ImgCache.cacheFile(fish.img);
-              console.log(fish);
-          }
-          if (shouldupdate === 'skipWait')
-            return this.DB.populateTable(this.table, data);
-          return this.wait.then(() => {
-            return this.DB.populateTable(this.table, data);
-          });
-        });
+  async update(shouldUpdate): Promise<boolean> {
+    if (!shouldUpdate) {
+      return false;
+    }
+    let data = this.API.get_fishes();
+    if (shouldUpdate !== 'skipWait' && await this.ready) {
+      return false;
+    }
+
+    data = await data;
+    console.log('Downloading all fish images');
+    for (const fish of Object.values(data)) {
+      fish.icon = serverLocation + fish.icon;
+      fish.img = serverLocation + fish.img;
+      ImgCache.cacheFile(fish.img);
+    }
+    return this.DB.populateTable(this.table, data).then(() => true);
   }
 
-  search(searchString): Promise<{item: Fish}[]> {
+  async search(searchString): Promise<{ item: Fish }[]> {
     let t0;
     if (performance && performance.now) {
       t0 = performance.now();
     }
-    return this.getAll().then(data => {
-      const options = {
-        keys: [{
-          name: 't',
-          weight: 0.6,
-        }],
-        includeScore: true,
-        shouldSort: true,
-        threshold: 0.01,
-        distance: 10,
-        maxPatternLength: 16,
-      };
-      return new Fuse(data, options);
-    }).then(fuse => {
-      if (performance && performance.now) {
-        const t1 = performance.now();
-        console.log('Searching took:', (t1 - t0), 'ms');
-      }
-      return fuse.search(searchString) as {item: Fish}[];
-    });
+    const data = await this.getAll();
+    const options = {
+      keys: [{
+        name: 't',
+        weight: 0.6,
+      }],
+      includeScore: true,
+      shouldSort: true,
+      threshold: 0.01,
+      distance: 10,
+      maxPatternLength: 16,
+    };
+    const fuse = new Fuse(data, options);
+    if (performance && performance.now) {
+      const t1 = performance.now();
+      console.log('Searching took:', (t1 - t0), 'ms');
+    }
+    return fuse.search(searchString) as { item: Fish }[];
   }
 
 }

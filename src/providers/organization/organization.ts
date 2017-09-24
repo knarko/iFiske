@@ -3,10 +3,28 @@ import { Injectable } from '@angular/core';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { BaseModel } from '../database/basemodel';
+import { serverLocation } from '../api/serverLocation';
+import { TableDef } from '../database/table';
+
+export interface Organization {
+  ID: number;
+  t: string;
+  d: string;
+  cp: string;
+  url: string;
+  co: number;
+  mod: number;
+  vat: number;
+  dp: number;
+  fva: number;
+  org: number;
+  ml: number;
+  logo: string;
+}
 
 @Injectable()
-export class OrganizationProvider extends BaseModel {
-  protected readonly table = {
+export class OrganizationProvider extends BaseModel<Organization> {
+  protected readonly table: TableDef = {
     name: 'Organization',
     apiMethod: 'get_organizations',
     primary: 'ID',
@@ -32,5 +50,9 @@ export class OrganizationProvider extends BaseModel {
   ) {
     super();
     this.initialize();
+  }
+
+  protected transform(org: Organization) {
+    org.logo = org.logo ? serverLocation + '/' + org.logo : org.logo;
   }
 }

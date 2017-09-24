@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
+import { BaseModel } from '../database/basemodel';
+import { TableDef } from '../database/table';
+import { Dictionary } from '../../types';
+import { DBMethod } from '../database/decorators';
+
+interface POI {
+  ID: Number;
+  orgid: number;
+  type: number;
+  price: number;
+  t: string;
+  d: string;
+  la: number;
+  lo: number;
+}
 
 @Injectable()
-export class MapDataProvider {
-  wait: Promise<any>;
+export class MapDataProvider extends BaseModel {
 
-  private readonly tables = {
+  private readonly tables: Dictionary<TableDef> = {
     poi: {
       name: 'Poi',
       primary: 'ID',
@@ -46,8 +60,12 @@ export class MapDataProvider {
     },
   };
 
-  constructor(private DB: DatabaseProvider, private API: ApiProvider) {
-    this.wait = Promise.all([
+  constructor(
+    protected DB: DatabaseProvider,
+    protected API: ApiProvider,
+  ) {
+    super();
+    this.ready = Promise.all([
       DB.initializeTable(this.tables.poi),
       DB.initializeTable(this.tables.poiType),
       DB.initializeTable(this.tables.polygon),
@@ -56,55 +74,40 @@ export class MapDataProvider {
         if (results[i])
           return this.update('skipWait');
       }
+      return false;
     });
   }
 
-  update = (shouldUpdate) => {
-    console.log(this, shouldUpdate);
-    let innerWait = this.wait;
-    if (shouldUpdate) {
-      if (shouldUpdate === 'skipWait')
-        innerWait = Promise.resolve();
-
-      return innerWait.then(() => {
-        return Promise.all([
-          this.API.get_mapbox_api().then((data) => {
-            return localStorage.setItem('mapbox_api', data);
-          }),
-          this.API.get_map_pois().then(this.DB.insertHelper(this.tables.poi)),
-          this.API.get_map_poi_types().then(this.DB.insertHelper(this.tables.poiType)),
-          this.API.get_map_polygons().then(this.DB.insertHelper(this.tables.polygon)),
-        ]);
-      });
+  async update(shouldUpdate): Promise<boolean> {
+    if (!shouldUpdate) {
+      return false;
     }
+    if (shouldUpdate !== 'skipWait' && await this.ready) {
+      return false;
+    }
+    return Promise.all([
+      this.API.get_mapbox_api().then((data) => {
+        return localStorage.setItem('mapbox_api', data);
+      }),
+      this.API.get_map_pois().then(this.DB.insertHelper(this.tables.poi)),
+      this.API.get_map_poi_types().then(this.DB.insertHelper(this.tables.poiType)),
+      this.API.get_map_polygons().then(this.DB.insertHelper(this.tables.polygon)),
+    ])
+      .then(() => true);
   }
 
-    getPois(id) {
-      return this.wait.then(function () {
-        return this.DB.getMultiple([
-          'SELECT *',
-          'FROM Poi',
-          'WHERE orgid = ?',
-        ].join(' '), [id]);
-      });
-    }
+  @DBMethod
+  async getPois(id): Promise<POI[]> {
+    return this.DB.getMultiple(`SELECT * FROM Poi WHERE orgid = ?`, [id]);
+  }
 
-    getPoiTypes() {
-      return this.wait.then(function () {
-        return this.DB.getMultiple([
-          'SELECT *',
-          'FROM Poi_Type',
-        ].join(' '));
-      });
-    }
+  @DBMethod
+  async getPoiTypes(): Promise<any> {
+    return this.DB.getMultiple(`SELECT * FROM Poi_Type`);
+  }
 
-    getPolygons(id) {
-      return this.wait.then(function () {
-        return this.DB.getMultiple([
-          'SELECT *',
-          'FROM Polygon',
-          'WHERE orgid = ?',
-        ].join(' '), [id]);
-      });
-    }
+  @DBMethod
+  async getPolygons(id): Promise<any> {
+    return this.DB.getMultiple(`SELECT * FROM Polygon WHERE orgid = ?`, [id]);
+  }
 }

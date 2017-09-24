@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Fish, FishProvider } from '../../providers/fish/fish';
-import { serverLocation } from '../../providers/api/serverLocation';
 
 /**
  * Generated class for the SpeciesPage page.

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { LinkyModule } from 'angular-linky';
 import { InformationDetailPage } from './information-detail';
-import { PipesModule } from '../../shared/pipes.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild, OnInit, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
 import * as LocateControl from 'leaflet.locatecontrol';
-import * as Raven from 'raven';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 

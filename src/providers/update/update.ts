@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { MapDataProvider } from '../map-data/map-data';
@@ -9,6 +8,8 @@ import { FishProvider } from '../fish/fish';
 import { UserProvider } from '../user/user';
 import { OrganizationProvider } from '../organization/organization';
 import { InformationProvider } from '../information/information';
+import { CountyProvider } from '../county/county';
+import { RuleProvider } from '../rule/rule';
 
 @Injectable()
 export class UpdateProvider {
@@ -23,14 +24,14 @@ export class UpdateProvider {
     private toastCtrl: ToastController,
 
     private area: AreaProvider,
-    // County,
+    private county: CountyProvider,
     private fish: FishProvider,
     private information: InformationProvider,
     private mapData: MapDataProvider,
     // News,
     private organization: OrganizationProvider,
     // Product,
-    // Rule,
+    private rule: RuleProvider,
     // Technique,
     // Terms,
     private user: UserProvider,
@@ -38,14 +39,14 @@ export class UpdateProvider {
 
     this.updates = [
       area,
+      county,
       fish,
       information,
       mapData,
       organization,
+      rule,
       user,
-      // County.update,
       // Product.update,
-      // Rule.update,
       // Technique.update,
       // Terms.update,
     ];
@@ -58,6 +59,7 @@ export class UpdateProvider {
     return (currentTime - lastUpdate) > aDay;
   }
   updateFunc(forced, hideLoading) {
+    console.count('in update!');
     if (!hideLoading)
       this.loading = this.loadingCtrl.create();
     var currentTime = Date.now();

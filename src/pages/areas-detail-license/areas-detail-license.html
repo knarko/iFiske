@@ -1,0 +1,34 @@
+<ion-content class="background-abstract">
+  <section class="note" *ngIf="area?.note">
+    <h2>Information</h2>
+    <div [innerHtml]="area.note | formatInfo"></div>
+  </section>
+  <ion-card *ngFor="let product of products">
+    <ion-card-header>
+      <ion-icon name="ifiske-license" class="large"></ion-icon>
+      <h2>{{product.t}}</h2>
+      <span class="right">{{product.price}} SEK</span>
+    </ion-card-header>
+    <ion-card-content>
+      <section *ngIf="product.im">
+        <ion-icon name="alert"></ion-icon>
+        <div [innerHtml]="product.im | formatInfo"></div>
+      </section>
+      <section *ngIf="product.no">
+        <div [innerHtml]="product.no | formatInfo"></div>
+      </section>
+      <hr />
+      <section class="purchase-buttons">
+        <h3 class="left">Purchase via:</h3>
+        <button ion-button icon-left round color="primary" *ngIf="product.ch === 0 || product.ch === 1">
+        <ion-icon name="phone-portrait"></ion-icon>
+        SMS
+      </button>
+        <button ion-button icon-left round color="primary" *ngIf="product.ch === 0 || product.ch === 2">
+        <ion-icon name="globe" item-start></ion-icon>
+        Web
+      </button>
+      </section>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

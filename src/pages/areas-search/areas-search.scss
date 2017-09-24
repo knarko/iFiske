@@ -1,0 +1,39 @@
+page-areas-search {
+  img {
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10%;
+  }
+  .item.item-thumbnail-left {
+    .fish-image {
+      max-width: 112px;
+      height: unset;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &>img:first-child {
+      border-radius: 10%;
+    }
+  }
+  .found-fish {
+    .wrap.wrap {
+      -webkit-line-clamp: 3;
+    }
+    padding-left: 130px;
+  }
+  .search-bar {
+    margin-top: 43px;
+  }
+  .has-search-bar {
+    margin-top: 42px;
+    padding: 0;
+  }
+  .distance-indicator {
+    margin-bottom: 22px;
+  }
+  .spinner-container {
+    padding: 16px;
+    text-align: center;
+  }
+}
+

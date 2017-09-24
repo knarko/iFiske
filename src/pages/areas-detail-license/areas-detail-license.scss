@@ -1,0 +1,29 @@
+page-areas-detail-license {
+
+  .card-header h2 {
+    display: inline-block;
+  }
+
+  .note {
+    padding: 1.6rem;
+    text-align: center;
+  }
+
+  .purchase-buttons {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    @media screen and (max-width: 400px) {
+      &>h3 {
+        flex-basis: 100%;
+        font-size: 1.1em;
+      }
+    }
+
+    .button {
+      padding: 2rem 2.6rem;
+    }
+  }
+
+}

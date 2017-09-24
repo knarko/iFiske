@@ -1,0 +1,43 @@
+<ion-content class="information-page">
+  <ion-slides #slides *ngIf="images?.length > 1" autoplay="10000" loop>
+    <ion-slide *ngFor="let img of images; let i = index">
+      <div class="slider-image">
+        <img [src]="img.file" (load)="imageLoaded(i)">
+        <p class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <img [src]="images[0]" *ngIf="images?.length === 1">
+
+  <h2>{{area?.t}}</h2>
+
+  <section>
+    <button ion-button class="right" *ngIf="products?.length" (click)="gotoLicenses()">Purchase license</button>
+    <div [innerHTML]="area?.d | formatInfo"></div>
+  </section>
+  <ng-container *ngIf="org?.t && org?.d">
+    <h3>{{org?.t}}</h3>
+    <section>
+      <img *ngIf="org?.logo" class="center logo" [src]="org?.logo">
+      <div [innerHTML]="org?.d | formatInfo"></div>
+    </section>
+  </ng-container>
+  <ng-container *ngIf="area?.files | async as files">
+    <h3 *ngIf="files.length">Files</h3>
+    <ion-list>
+      <a ion-item *ngFor="let file of files" [href]="file.url" target="_system">
+        <ion-avatar item-start>
+          <img *ngIf="file.thumb" [src]="file.thumb">
+        </ion-avatar>
+        <h3>{{file.t || file.filename}}</h3>
+      </a>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="org?.cp || org?.url">
+    <h3>Contact Information</h3>
+    <section>
+      <div [innerHtml]="org?.cp"></div>
+      <a [href]="org?.url">{{org?.url}}</a>
+    </section>
+  </ng-container>
+</ion-content>

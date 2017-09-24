@@ -1,0 +1,21 @@
+page-areas-detail-info {
+  .slider-image {
+    position: relative;
+    img {
+      display: block;
+    }
+    .image-text {
+      font-size: 14px;
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, .5);
+      color: white;
+    }
+  }
+  .logo {
+    margin-bottom: 1.6rem;
+  }
+}
+

@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SQLite } from '@ionic-native/sqlite';
 import { Geolocation } from '@ionic-native/geolocation';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { SuperTabsModule } from 'ionic2-super-tabs';
 
 import { MyApp } from './app.component';
 import { MapDataProvider } from '../providers/map-data/map-data';
@@ -24,6 +25,8 @@ import { OrganizationProvider } from '../providers/organization/organization';
 import { InformationProvider } from '../providers/information/information';
 import { AdsProvider } from '../providers/ads/ads';
 import { TechniqueProvider } from '../providers/technique/technique';
+import { CountyProvider } from '../providers/county/county';
+import { RuleProvider } from '../providers/rule/rule';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import { TechniqueProvider } from '../providers/technique/technique';
     IonicModule.forRoot(MyApp, {
       preloadMOdules: true,
     }),
+    SuperTabsModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,6 +66,8 @@ import { TechniqueProvider } from '../providers/technique/technique';
     InformationProvider,
     AdsProvider,
     TechniqueProvider,
-  ]
+    CountyProvider,
+    RuleProvider,
+  ],
 })
 export class AppModule {}

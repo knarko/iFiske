@@ -12,7 +12,7 @@ export class HomePage {
 
   links = [
     {title: 'Admin Tools', icon: 'unlock'},
-    {title: 'Fishing Areas', icon: 'ifiske-fishing'},
+    {title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage'},
     {title: 'Map', icon: 'map', uri: 'MapPage'},
     {title: 'My Fishing Permits', icon: 'ifiske-license'},
     {title: 'Information', icon: 'information-circle', uri: 'InformationPage'},

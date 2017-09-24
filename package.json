@@ -10,7 +10,8 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "start": "ionic-app-scripts serve"
+    "start": "ionic-app-scripts serve",
+    "deploy": "ionic-app-scripts build --prod --release --aot && firebase deploy --only hosting"
   },
   "dependencies": {
     "@angular/common": "4.1.3",

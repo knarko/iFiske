@@ -2,7 +2,8 @@
   "rules": {
     "no-duplicate-variable": true,
     "no-unused-variable": [
-      true
+      true,
+      {"ignore-pattern": "^_"}
     ],
     "trailing-comma": [true, {
       "multiline": "always",

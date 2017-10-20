@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
  */
 @Component({
   selector: 'youtube',
-  templateUrl: 'youtube.html'
+  templateUrl: 'youtube.html',
 })
 export class YoutubeComponent {
   ytUrl: SafeResourceUrl;

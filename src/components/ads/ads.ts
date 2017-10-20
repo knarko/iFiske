@@ -3,7 +3,7 @@ import { AdsProvider } from '../../providers/ads/ads';
 
 @Component({
   selector: 'ads',
-  templateUrl: 'ads.html'
+  templateUrl: 'ads.html',
 })
 export class AdsComponent {
   ads: any[];

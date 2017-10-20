@@ -17,7 +17,7 @@ declare var L: any;
  */
 @Component({
   selector: 'map',
-  templateUrl: 'map.html'
+  templateUrl: 'map.html',
 })
 export class MapComponent implements AfterViewInit, OnChanges {
   areaMarker: LayerGroup;

@@ -10,7 +10,7 @@ import { AreaProvider } from '../../providers/area/area';
  */
 
 @IonicPage({
-  defaultHistory: ['HomePage']
+  defaultHistory: ['HomePage'],
 })
 @Component({
   selector: 'page-map',

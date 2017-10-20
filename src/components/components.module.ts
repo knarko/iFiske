@@ -19,6 +19,6 @@ import { FishLevelComponent } from './fish-level/fish-level';
     AdsComponent,
     YoutubeComponent,
     FishLevelComponent,
-  ]
+  ],
 })
 export class ComponentsModule {}

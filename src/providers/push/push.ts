@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Platform, NavController, AlertController, App } from 'ionic-angular';
+import { NavController, AlertController, App } from 'ionic-angular';
 import { SessionProvider } from '../session/session';
-import { ApiProvider } from '../api/api';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
@@ -69,7 +68,7 @@ export class PushProvider {
                   this.inAppBrowser.create(`${serverLocation}/r/${payload.code}?lang=${this.settings.language()}`, '_system');
                 },
               },
-            ]
+            ],
           });
           // $state.go('app.create_report', {orgid: payload.orgid, code: payload.code});
         }

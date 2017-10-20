@@ -57,3 +57,12 @@
     background-position: bottom;
     background-repeat: no-repeat;
 }
+
+.content.transparent {
+  &,
+  >.fixed-content,
+  >.scroll-content {
+    background: transparent !important;
+  }
+
+}

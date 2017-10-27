@@ -11,6 +11,7 @@ map>.map {
   bottom: 0;
   left: 0;
   right: 0;
+
   .locate-icon {
     position: absolute;
     top: 0;
@@ -18,7 +19,7 @@ map>.map {
     width: 100%;
     text-align: center;
     display: inline-block;
-    font-family: "Ionicons";
+    font-family: 'Ionicons';
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-style: normal;
@@ -30,16 +31,43 @@ map>.map {
     text-transform: none;
     speak: none;
   }
+
   .spin {
     animation: 1s linear spin infinite;
   }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(360deg);
     }
   }
-}
 
+  .leaflet-container a.leaflet-popup-close-button {
+    $size: 24px;
+    $padding: 8px;
+    font-size: $size;
+    height: $size + $padding * 2;
+    line-height: $size;
+    padding: $padding;
+    width: $size + $padding * 2;
+  }
+
+  .leaflet-control-container .leaflet-top {
+    transition: opacity .3s;
+  }
+
+  .popup-open {
+    .leaflet-control-container .leaflet-top {
+      opacity: 0;
+
+      &,
+      & * {
+        pointer-events: none;
+      }
+    }
+  }
+}

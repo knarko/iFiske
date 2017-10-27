@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { ProductProvider, Product } from '../../providers/product/product';
+import { SuperTabs } from 'ionic2-super-tabs';
 
 @IonicPage({
   segment: 'area-detail/:ID',
@@ -25,6 +26,8 @@ export class AreasDetailPage {
   ];
   tabParams = new ReplaySubject<any>(1);
 
+  @ViewChild(SuperTabs) superTabs: SuperTabs;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,6 +47,10 @@ export class AreasDetailPage {
         this.products = products;
         this.updateParams();
       }).catch(e => console.warn(e));
+  }
+
+  ngAfterViewInit() {
+    this.superTabs.enableTabSwipe(this.tabs[2].page, false);
   }
 
   private getOrg() {

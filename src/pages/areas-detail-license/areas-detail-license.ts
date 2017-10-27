@@ -20,10 +20,15 @@ export class AreasDetailLicensePage {
   products: Product[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  this.navParams.get('params').subscribe(({ area, org, products }) => {
-    this.area = area;
-    this.products = products;
-  });
+    this.navParams.get('params').subscribe(({ area, org, products }) => {
+      this.area = area;
+      this.products = products;
+    });
+  }
+
+  buy(product: Product, method: {b}) {
+    // TODO: do anything
+    console.log('buy', product, method);
   }
 
   ionViewDidLoad() {

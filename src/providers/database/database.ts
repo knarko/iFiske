@@ -19,7 +19,7 @@ export class DatabaseProvider {
           10 * 1024 * 1024,
         );
         // tslint:disable-next-line:only-arrow-functions
-        db.executeSql = function(statement, params) {
+        db.executeSql = function executeSql(statement, params) {
           return new Promise((resolve, reject) => {
             db.transaction(tx => {
               tx.executeSql(statement, params, (itx, res) => {
@@ -32,7 +32,7 @@ export class DatabaseProvider {
         };
         const trans: Function = db.transaction;
         // tslint:disable-next-line:only-arrow-functions
-        db.transaction = function(tx) {
+        db.transaction = function transaction(tx) {
           return new Promise((resolve, reject) => {
             trans.apply(db, [tx, reject, resolve]);
           });

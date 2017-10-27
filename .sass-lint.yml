@@ -1,0 +1,4 @@
+rules:
+  force-attribute-nesting: 0
+  force-element-nesting: 0
+  property-sort-order: 0

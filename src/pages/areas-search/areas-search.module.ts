@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { AreasSearchPage } from './areas-search';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ComponentsModule } from '../../components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { ComponentsModule } from '../../components/components.module';
   ],
   imports: [
     IonicPageModule.forChild(AreasSearchPage),
+    TranslateModule.forChild(),
     ComponentsModule,
     PipesModule,
   ],

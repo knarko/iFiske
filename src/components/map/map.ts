@@ -3,10 +3,21 @@ import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } fro
 import * as LocateControl from 'leaflet.locatecontrol';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
+import { Area } from '../../providers/area/area';
+import { POI, FiskePolygon } from '../../providers/map-data/map-data';
 
 import 'leaflet.markercluster';
 import 'drmonty-leaflet-awesome-markers';
 declare var L: any;
+
+
+export interface MapOptions {
+  areas?: Area[];
+  centerOnMe?: boolean;
+  pois?: POI[];
+  polygons?: FiskePolygon[];
+  area?: Area;
+}
 
 
 /**
@@ -20,6 +31,7 @@ declare var L: any;
   templateUrl: 'map.html',
 })
 export class MapComponent implements AfterViewInit, OnChanges {
+  poiMarkers: LayerGroup;
   areaMarker: LayerGroup;
   polygons: LayerGroup;
   map: Map;
@@ -27,13 +39,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
   icons: any;
   lc: any;
 
+  shouldRefresh = false;
+
   text: string;
   @ViewChild('map') mapElement: ElementRef;
 
-  @Output('popupopen') popupopen = new EventEmitter();
-  @Output('popupclose') popupclose = new EventEmitter();
+  @Output('popupOpen') popupOpen = new EventEmitter();
+  @Output('popupClose') popupClose = new EventEmitter();
 
-  @Input() options: any;
+  @Input() options: MapOptions;
   constructor(private mapData: MapDataProvider) {
   }
 
@@ -67,12 +81,12 @@ export class MapComponent implements AfterViewInit, OnChanges {
       keepCurrentZoomLevel: false,
       stopFollowingOnDrag: true,
       remainActive: true,
-      onLocationError: function (err) {
+      onLocationError: (err) => {
         console.error(err);
         // TODO: Raven
         // Raven.captureException(err);
       },
-      onLocationOutsideMapBounds: function (context) {
+      onLocationOutsideMapBounds: context => {
         console.log(context);
       },
       locateOptions: {
@@ -86,31 +100,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     this.lc.addTo(this.map);
 
-    this.markers = new L.MarkerClusterGroup({
-      showCoverageOnHover: false,
-      disableClusteringAtZoom: 9,
-      chunkedLoading: true,
-      removeOutsideVisibleBounds: true,
-      spiderfyOnMaxZoom: false,
-      maxClusterRadius: 60,
-    });
-    this.map.addLayer(this.markers);
-
-    var poiMarkers = new LayerGroup();
-    this.map.addLayer(poiMarkers);
-
-    this.polygons = new LayerGroup();
-    this.map.addLayer(this.polygons);
-
-    this.areaMarker = new LayerGroup();
-    this.map.addLayer(this.areaMarker);
 
     this.map.on('popupopen', e => {
-      this.popupopen.emit(e);
+      this.map.getContainer().classList.add('popup-open');
+      this.popupOpen.emit(e);
     });
     this.map.on('popupclose', e => {
-      this.popupclose.emit(e);
+      this.map.getContainer().classList.remove('popup-open');
+      this.popupClose.emit(e);
     });
+
+    if (this.shouldRefresh) {
+      this.refresh()
+      this.shouldRefresh = false;
+    }
   }
 
   createAreaPopup(area) {
@@ -118,11 +121,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       closeButton: false,
       maxWidth: window.innerWidth - 50,
       // TODO: bind popup
-    }).setContent(`<a class="center"
-                            ui-sref="app.area.info({id: popup.area.ID})"
-                            ng-bind="popup.area.t"
-                        ></a>
-                    `);
+    }).setContent(area.t);
   }
 
   createIcons() {
@@ -130,7 +129,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       return Promise.resolve(this.icons);
     }
     return this.mapData.getPoiTypes()
-      .then(function (poiTypes) {
+      .then(poiTypes => {
         this.icons = {};
         for (var i = 0; i < poiTypes.length; ++i) {
           var type = poiTypes[i];
@@ -144,7 +143,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
       });
   }
 
-  createMarkers(areas) {
+  createMarkers(areas: Area[]) {
+    if (this.markers) {
+      this.markers.clearLayers();
+    } else {
+      this.markers = new L.MarkerClusterGroup({
+        showCoverageOnHover: false,
+        disableClusteringAtZoom: 9,
+        chunkedLoading: true,
+        removeOutsideVisibleBounds: true,
+        spiderfyOnMaxZoom: false,
+        maxClusterRadius: 60,
+      });
+      this.map.addLayer(this.markers);
+    }
+
     var newMarkers = [];
     for (var i = 0; i < areas.length; ++i) {
       var a = areas[i];
@@ -153,7 +166,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         lat: a.lat,
         lng: a.lng,
       }, {
-          title: a.ID,
+          title: a.t,
 
           icon: L.AwesomeMarkers.icon({
             icon: a.favorite ? 'star' : '',
@@ -165,13 +178,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
       marker.bindPopup(this.createAreaPopup(a));
       newMarkers.push(marker);
     }
-    this.markers.clearLayers();
     this.markers.addLayers(newMarkers);
   }
 
-  createPois(pois) {
-    this.createIcons().then(function (icons) {
+  createPois(pois: POI[]) {
+    if (this.poiMarkers) {
       this.poiMarkers.clearLayers();
+    } else {
+      this.poiMarkers = new LayerGroup();
+      this.map.addLayer(this.poiMarkers);
+    }
+    this.createIcons().then(icons => {
       for (var i = 0; i < pois.length; ++i) {
         var poi = pois[i];
 
@@ -180,11 +197,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
           lng: poi.lo,
         }, {
             icon: icons[poi.type],
+            title: poi.t,
           });
         marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
           maxWidth: window.innerWidth - 50,
           // TODO: readd this
-          // title:    poi.t,
         });
         this.poiMarkers.addLayer(marker);
       }
@@ -192,8 +209,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
 
-  createPolygons(polys) {
-    this.polygons.clearLayers();
+  createPolygons(polys: FiskePolygon[]) {
+    console.log(polys);
+    if (this.polygons) {
+      this.polygons.clearLayers();
+    } else {
+      this.polygons = new LayerGroup();
+      this.map.addLayer(this.polygons);
+    }
+
     for (var i = 0; i < polys.length; ++i) {
       var poly = polys[i];
       this.polygons.addLayer(new Polygon(JSON.parse('[' + poly.poly + ']'), {
@@ -206,7 +230,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   createArea(area) {
-    this.areaMarker.clearLayers();
+    console.log(this);
+    if (this.areaMarker) {
+      this.areaMarker.clearLayers();
+    } else {
+      this.areaMarker = new LayerGroup();
+      this.map.addLayer(this.areaMarker);
+    }
     var marker = new Marker({
       lat: area.lat,
       lng: area.lng,
@@ -224,7 +254,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(data) {
-    if (!data || !data.options || !this.options) {
+    if (!this.map) {
+      this.shouldRefresh = true;
+      return;
+    }
+    this.refresh();
+  }
+  refresh() {
+    console.log(this.options);
+    if (!this.options) {
       return;
     }
     if (this.options.centerOnMe && !this.lc._active) {

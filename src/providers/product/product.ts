@@ -20,9 +20,16 @@ export interface Product {
   mod: number;
   so: number;
   hl: string;
+
+  methods: {name: string}[];
 }
 @Injectable()
 export class ProductProvider extends BaseModel<Product> {
+  private static readonly methods = {
+    web: {name: 'Web', icon: 'globe'},
+    sms: {name: 'SMS', icon: 'phone-portrait'},
+  };
+
   protected readonly table: TableDef = {
     name: 'Product',
     primary: 'ID',
@@ -63,6 +70,19 @@ export class ProductProvider extends BaseModel<Product> {
     return 'inactive';
   }
 
+  transform(product: Product) {
+    if (!product.methods) {
+      product.methods = [];
+    }
+    if (product.ch === 0 || product.ch === 1) {
+      product.methods.push(ProductProvider.methods.sms);
+    }
+    if (product.ch === 0 || product.ch === 2) {
+      product.methods.push(ProductProvider.methods.web);
+    }
+    return product;
+  }
+
   /**
       * Gets information about a product
       * @method getOne
@@ -81,7 +101,7 @@ export class ProductProvider extends BaseModel<Product> {
       'WHERE ID = ?',
       'ORDER BY so',
     ].join(' '),
-      [productID]);
+      [productID]).then(this.transform);
   }
 
   /**
@@ -102,6 +122,6 @@ export class ProductProvider extends BaseModel<Product> {
         'WHERE ai = ?',
         'ORDER BY so',
       ].join(' '),
-        [areaID]);
+        [areaID]).then(products => products.map(this.transform))
   }
 }

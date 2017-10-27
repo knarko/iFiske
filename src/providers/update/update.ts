@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { TranslateService } from '@ngx-translate/core';
 
 import { MapDataProvider } from '../map-data/map-data';
 import { LoadingController, ToastController, Loading } from 'ionic-angular';
@@ -22,19 +23,20 @@ export class UpdateProvider {
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private translate: TranslateService,
 
-    private area: AreaProvider,
-    private county: CountyProvider,
-    private fish: FishProvider,
-    private information: InformationProvider,
-    private mapData: MapDataProvider,
+    area: AreaProvider,
+    county: CountyProvider,
+    fish: FishProvider,
+    information: InformationProvider,
+    mapData: MapDataProvider,
     // News,
-    private organization: OrganizationProvider,
+    organization: OrganizationProvider,
     // Product,
-    private rule: RuleProvider,
+    rule: RuleProvider,
     // Technique,
     // Terms,
-    private user: UserProvider,
+    user: UserProvider,
   ) {
 
     this.updates = [
@@ -75,13 +77,16 @@ export class UpdateProvider {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
       this.loading.dismiss();
-    }, (error) => {
+    }, async (error) => {
       console.error(error);
 
       // TODO: raven
       // Raven.captureException(error);
-      // TODO: toast
-      // ToastService.show(['Network Error', { error: error.response || error }], 'long');
+      this.toastCtrl.create({
+        message: await this.translate.get('Network Error', {error: error.response || error}).toPromise(),
+        duration: 4000,
+      }).present();
+
 
       // Must rethrow error to fail later
       this.loading.dismiss();

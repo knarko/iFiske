@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'app.html',
@@ -11,12 +12,22 @@ import { MDTransition } from 'ionic-page-transitions';
 export class MyApp {
   rootPage:any = 'HomePage';
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, update: UpdateProvider, config: Config) {
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    update: UpdateProvider,
+    config: Config,
+    translate: TranslateService,
+  ) {
     config.setTransition('md-transition', MDTransition);
-    platform.ready().then(() => {
+    translate.setDefaultLang('sv');
+    translate.use('sv');
+    platform.ready().then(async () => {
         if (true || localStorage.getItem('language')) {
-          update.update();
+          update.update().catch(e => console.warn(e));
         }
+        config.set('ios', 'backButtonText', await translate.get('ui.general.back').toPromise());
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();

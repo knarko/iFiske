@@ -1,6 +1,6 @@
 <ion-content class="background-abstract">
   <section class="note" *ngIf="area?.note">
-    <h2>Information</h2>
+    <h2>{{'Information' | translate}}</h2>
     <div [innerHtml]="area.note | formatInfo"></div>
   </section>
   <ion-card *ngFor="let product of products">
@@ -19,15 +19,11 @@
       </section>
       <hr />
       <section class="purchase-buttons">
-        <h3 class="left">Purchase via:</h3>
-        <button ion-button icon-left round color="primary" *ngIf="product.ch === 0 || product.ch === 1">
-        <ion-icon name="phone-portrait"></ion-icon>
-        SMS
-      </button>
-        <button ion-button icon-left round color="primary" *ngIf="product.ch === 0 || product.ch === 2">
-        <ion-icon name="globe" item-start></ion-icon>
-        Web
-      </button>
+        <h3 class="left">{{'Purchase via:' | translate}}</h3>
+        <button ion-button icon-left round color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
+          <ion-icon [name]="type.icon"></ion-icon>
+          {{type.name | translate}}
+        </button>
       </section>
     </ion-card-content>
   </ion-card>

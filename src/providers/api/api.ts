@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { serverLocation } from './serverLocation';
 
 import 'rxjs/add/operator/toPromise';
@@ -15,12 +15,16 @@ function delay(fn, t) {
   });
 }
 
+interface ApiResponse {
+  data: any;
+}
+
 @Injectable()
 export class ApiProvider {
 
   private base_url = serverLocation + '/api/v2/api.php';
   private readonly maxRetries = 1;
-  constructor(private http: Http, private sessionData: SessionProvider, private settings: SettingsProvider) {
+  constructor(private http: HttpClient, private sessionData: SessionProvider, private settings: SettingsProvider) {
 
   }
 
@@ -45,11 +49,11 @@ export class ApiProvider {
     });
 
     return this.http.get(this.base_url, {
-      params,
+      params: Object.keys(params).reduce((p, k) => p.set(k, params[k]), new HttpParams()),
     })
       .toPromise()
-      .then(response => {
-        const data = response.json().data;
+      .then((response: ApiResponse) => {
+        const data = response.data;
         if (data.status === 'error') {
           return Promise.reject(data.message);
         } else if (data.response) {

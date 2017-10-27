@@ -27,9 +27,4 @@ export class AreasPage {
   tabSelect(ev: any) {
     this.selectedTab = this.tabs[ev.index];
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AreasPage');
-  }
-
 }

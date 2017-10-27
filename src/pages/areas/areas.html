@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>{{selectedTab?.title}}</ion-title>
+    <ion-title>{{selectedTab?.title | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,6 +15,6 @@
 
 <ion-content no-bounce class="transparent">
   <super-tabs tabsPlacement="bottom" toolbarBackground="dark" toolbarColor="light" (tabSelect)="tabSelect($event)">
-    <super-tab *ngFor="let tab of tabs" [root]="tab.page" [icon]="tab.icon" [title]="tab.title"></super-tab>
+    <super-tab *ngFor="let tab of tabs" [root]="tab.page" [icon]="tab.icon" [title]="tab.title | translate"></super-tab>
   </super-tabs>
 </ion-content>

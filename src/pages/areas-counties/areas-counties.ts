@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, NavController } from 'ionic-angular';
 import { CountyProvider, County } from '../../providers/county/county';
 
 @IonicPage()
@@ -8,9 +8,7 @@ import { CountyProvider, County } from '../../providers/county/county';
   templateUrl: 'areas-counties.html',
 })
 export class AreasCountiesPage {
-  navCtrl: any;
-  static title = 'Counties';
-  static icon = 'fishing';
+  navCtrl: NavController;
 
   items: County[];
 

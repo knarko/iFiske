@@ -6,7 +6,7 @@ import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
 
-interface POI {
+export interface POI {
   ID: Number;
   orgid: number;
   type: number;
@@ -15,6 +15,16 @@ interface POI {
   d: string;
   la: number;
   lo: number;
+}
+
+export interface FiskePolygon {
+  ID: number;
+  orgid: number;
+  t: string;
+  c: string;
+  ver: number;
+  mod: number;
+  poly: string;
 }
 
 @Injectable()
@@ -107,7 +117,7 @@ export class MapDataProvider extends BaseModel {
   }
 
   @DBMethod
-  async getPolygons(id): Promise<any> {
+  async getPolygons(id): Promise<FiskePolygon[]> {
     return this.DB.getMultiple(`SELECT * FROM Polygon WHERE orgid = ?`, [id]);
   }
 }

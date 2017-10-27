@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { LinkyModule } from 'angular-linky';
 import { InformationDetailPage } from './information-detail';
 import { PipesModule } from '../../pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { PipesModule } from '../../pipes/pipes.module';
   ],
   imports: [
     IonicPageModule.forChild(InformationDetailPage),
+    TranslateModule.forChild(),
     PipesModule,
     LinkyModule,
   ],

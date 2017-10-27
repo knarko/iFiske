@@ -16,6 +16,7 @@ import { DBMethod } from '../database/decorators';
 export interface Area {
   ID: number;
   orgid: number;
+  /** Title */
   t: string;
   kw: string;
   note: string;
@@ -32,6 +33,10 @@ export interface Area {
   car: number;
   eng: number;
   hcp: number;
+  /**
+   * Do we sell cards for this area?
+   */
+  wsc: boolean;
   mod: number;
   d: string;
   ptab: string;
@@ -43,6 +48,7 @@ export interface Area {
   org: string;
   level?: number;
   distance?: number;
+  favorite?: boolean;
 }
 
 export interface AreaFile {
@@ -79,6 +85,7 @@ export interface AreaFile {
    * Not stored in Database
    */
   filename: string;
+
 }
 
 @Injectable()

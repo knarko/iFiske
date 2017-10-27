@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AreaProvider } from '../../providers/area/area';
+import { AreaProvider, Area } from '../../providers/area/area';
 
 /**
  * Generated class for the MapPage page.
@@ -17,6 +17,7 @@ import { AreaProvider } from '../../providers/area/area';
   templateUrl: 'map.html',
 })
 export class MapPage {
+  areas: Promise<Area[]>;
 
   mapOptions: any;
 
@@ -25,16 +26,13 @@ export class MapPage {
   }
 
   ionViewWillEnter() {
-    this.area.getAll()
-    .then(areas => {
-      this.mapOptions = {
-        areas,
-      };
-    }, err => console.warn(err));
+    this.areas = this.area.getAll();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapPage');
+  ionViewDidEnter() {
+    this.areas.then(areas => {
+      this.mapOptions = { areas };
+    }, err => console.warn(err));
   }
 
 }

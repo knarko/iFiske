@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { DistancePipe } from './distance/distance';
-import { StripTagsPipe } from 'ngx-pipes/src/app/pipes/string/strip-tags';
+import { StripTagsPipe } from 'ngx-pipes';
 import { FormatInfoPipe } from './format-info/format-info';
 import { LinkyPipe } from './linky/linky';
 

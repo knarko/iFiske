@@ -14,6 +14,7 @@
 // automatically applied to the <body> element in the app.
 @import '../theme/icons';
 @import '../theme/shared';
+@import './super-tabs';
 
 ion-nav {
   background-color: black;
@@ -44,7 +45,7 @@ super-tabs-container {
 
 super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
   &.title-and-icon {
-    height: 54px;
+    height: 54px !important;
   }
 
   .title {
@@ -53,7 +54,7 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
   }
 
   &.title-and-icon ion-icon {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
 }
 

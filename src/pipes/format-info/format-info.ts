@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { StripTagsPipe } from 'ngx-pipes/src/app/pipes/string/strip-tags';
+import { StripTagsPipe } from 'ngx-pipes';
 import { LinkyPipe } from '../linky/linky';
 
 /**

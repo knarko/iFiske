@@ -7,7 +7,7 @@ import { Directive } from '@angular/core';
  * Directives.
  */
 @Directive({
-  selector: '[show-password]' // Attribute selector
+  selector: '[show-password]', // Attribute selector
 })
 export class ShowPasswordDirective {
 

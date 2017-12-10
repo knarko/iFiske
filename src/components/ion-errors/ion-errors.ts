@@ -1,9 +1,8 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Dictionary } from '../../types';
 import { AbstractControl } from '@angular/forms';
 import {
   trigger,
-  state,
   style,
   transition,
   animate,

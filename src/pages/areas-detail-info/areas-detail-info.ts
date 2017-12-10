@@ -1,14 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { Area, AreaProvider } from '../../providers/area/area';
+import { Area } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
 import { SuperTabsController } from 'ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';
-import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 /**
  * Generated class for the AreasDetailInfoPage page.
@@ -41,13 +39,10 @@ export class AreasDetailInfoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private areaProvider: AreaProvider,
     private tabsController: SuperTabsController,
     private sessionData: SessionProvider,
     private userProvider: UserProvider,
-    private alertCtrl: TranslateAlertController,
     private toastCtrl: TranslateToastController,
-    private modalCtrl: ModalController,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products }) => {
       this.area = area;

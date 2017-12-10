@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
-import { TranslateService } from '@ngx-translate/core';
 import { Form } from '../../components/ion-data-form/form';
 
 /**
@@ -34,7 +33,6 @@ export class ConfirmPasswordRecoveryPage {
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
     private loadingCtrl: TranslateLoadingController,
-    private translate: TranslateService,
     fb: FormBuilder,
   ) {
     this.form = new Form({

@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlertController, App, Config, Alert } from 'ionic-angular';
+import { AlertController, Alert } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertOptions, AlertButton } from 'ionic-angular/components/alert/alert-options';
 

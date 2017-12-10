@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastController, ToastOptions, Toast } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';

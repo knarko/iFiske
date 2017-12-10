@@ -7,8 +7,8 @@
 </ion-header>
 
 
-<ion-content class="information-page">
-  <ion-slides *ngIf="tech?.images.length > 1; else singleImage" loop>
+<ion-content class="information-page" padding-horizontal padding-bottom>
+  <ion-slides class="full-width" *ngIf="tech?.images.length > 1; else singleImage" loop>
     <ion-slide *ngFor="let img of tech.images">
       <img [src]="img">
     </ion-slide>
@@ -16,15 +16,25 @@
   <ng-template #singleImage>
     <img [src]="tech?.images[0]">
   </ng-template>
-  <h2>{{tech?.t}}</h2>
+  <ion-toolbar class="full-width" padding>
+    <h2>{{tech?.t}}</h2>
+  </ion-toolbar>
 
-  <h3>Technique description</h3>
-  <p [innerHtml]="tech?.d"></p>
-  <h3>YouTube</h3>
-  <youtube [url]="tech?.youtube"></youtube>
-  <h3>Technique Gear</h3>
-  <p [innerHtml]="tech?.de"></p>
-  <h3>Technique Advanced</h3>
-  <p [innerHtml]="tech?.da"></p>
+  <ng-container *ngIf="tech?.d">
+    <h3>{{'Technique description' | translate}}</h3>
+    <p [innerHtml]="tech?.d"></p>
+  </ng-container>
+  <ng-container *ngIf="tech?.youtube">
+    <h3>{{'YouTube' | translate}}</h3>
+    <youtube class="full-width" [url]="tech?.youtube"></youtube>
+  </ng-container>
+  <ng-container *ngIf="tech?.de">
+    <h3>{{'Technique gear' | translate}}</h3>
+    <p [innerHtml]="tech?.de"></p>
+  </ng-container>
+  <ng-container *ngIf="tech?.da">
+    <h3>{{'Technique advanced' | translate}}</h3>
+    <p [innerHtml]="tech?.da"></p>
+  </ng-container>
 
 </ion-content>

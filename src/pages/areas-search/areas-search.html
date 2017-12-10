@@ -11,23 +11,32 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
-    <ion-searchbar animated (ionInput)="search($event)" [placeholder]="'Search' | translate"></ion-searchbar>
+    <ion-searchbar animated (ionInput)="search($event)" [(ngModel)]="searchTerm" [placeholder]="'Search' | translate"></ion-searchbar>
   </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-list [virtualScroll]="areas" approxItemHeight="96px">
+  <ion-list [virtualScroll]="areas" approxItemHeight="96px" approxHeaderHeight="190px" [headerFn]="scrollHeaders" [virtualTrackBy]="trackFn">
+
+    <ion-item class="fish" *virtualHeader="let fish" [navPush]="'SpeciesDetailPage'" [navParams]="fish">
+      <img class="fish-image" [src]="fish.img">
+      <h2>{{fish.t}}</h2>
+      <p [innerHTML]="fish.d | stripTags"></p>
+    </ion-item>
+
     <ion-item *virtualItem="let area" (click)="goto(area)">
       <ion-thumbnail item-start *ngIf="area.photo">
         <img [src]="area.photo">
       </ion-thumbnail>
 
       <h2>{{area.org}}</h2>
-      <span class="right distance-indicator" *ngIf="area.distance | distance"><fa-icon name="map-marker"></fa-icon> {{area.distance | distance}}</span>
+      <span class="right distance-indicator" *ngIf="area.distance | distance">
+        <fa-icon name="map-marker"></fa-icon> {{area.distance | distance}}</span>
       <p [innerText]="area.t" *ngIf="area.org !== area.t"></p>
       <fish-level [level]="area.level" icon="true" *ngIf="foundFish"></fish-level>
     </ion-item>
+
   </ion-list>
 </ion-content>

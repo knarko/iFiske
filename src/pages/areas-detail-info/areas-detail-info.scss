@@ -3,6 +3,13 @@ page-areas-detail-info {
     display: block;
   }
 
+  h3 {
+    margin: 0 !important;
+    padding: $content-padding !important;
+    background-color: lighten(map-get($colors, light), 8%);
+    border-bottom: 1px solid map-get($colors, light);
+    border-top: 1px solid map-get($colors, light);
+  }
 
   .slider-image {
     position: relative;

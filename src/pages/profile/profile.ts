@@ -25,6 +25,11 @@ export class ProfilePage {
   }
 
   close() {
-    this.viewCtrl.dismiss();
+    return this.viewCtrl.dismiss();
+  }
+
+  async logout() {
+    await this.userProvider.logout();
+    return this.close();
   }
 }

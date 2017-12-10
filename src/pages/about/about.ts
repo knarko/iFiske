@@ -27,10 +27,10 @@ export class AboutPage {
       if ((window as any).cordova) {
         this.appVersion.getVersionNumber()
           .then(version => this.version = version)
-          .catch();
+          .catch(() => {});
         this.appVersion.getVersionCode()
           .then(buildId => this.buildId = buildId)
-          .catch();
+          .catch(() => {});
       } else {
         this.buildId = 'abc123';
         this.version = '4.0.0';

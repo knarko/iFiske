@@ -227,7 +227,7 @@ export class UserProvider extends BaseModel {
       this.API.user_logout(),
       this.Push.logout(),
     ]);
-    promise.catch().then(async () => {
+    promise.catch(() => {}).then(async () => {
       loading.dismiss();
       (await this.toastCtrl.create({
         message: 'You are logged out',

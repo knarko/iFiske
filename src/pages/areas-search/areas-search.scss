@@ -2,8 +2,23 @@ page-areas-search {
   img {
     object-fit: cover;
     object-position: center;
-    border-radius: 10%;
+    border-radius: 10px;
   }
+
+
+  .item-ios {
+    height: 97px;
+  }
+
+  .item-md,
+  .item-wp {
+    height: 101px;
+  }
+
+  .fish {
+    height: 190px;
+  }
+
   .item-ios ion-thumbnail img {
     height: 72px;
     width: 72px;

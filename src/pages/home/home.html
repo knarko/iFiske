@@ -4,24 +4,32 @@
       <img class="header-logo" src="/assets/img/logo_plain.svg">
     </ion-title>
     <ion-buttons first>
-      <button ion-button icon-only (click)="gotoProfile()"><ion-icon name="person"></ion-icon></button>
+      <button ion-button icon-only (click)="gotoProfile()">
+        <ion-icon name="person"></ion-icon>
+      </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only [navPush]="'SettingsPage'"><ion-icon name="settings"></ion-icon></button>
+      <button ion-button icon-only [navPush]="'SettingsPage'">
+        <ion-icon name="settings"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="background-image" no-bounce>
-  <ion-list inset border>
-    <ion-item class="search">
-    <ion-input placeholder="Search"></ion-input>
-    <ion-icon name="search" item-left></ion-icon>
-    </ion-item>
-  </ion-list>
+  <form (ngSubmit)="search()">
+    <ion-list inset border>
+      <ion-item class="search">
+        <ion-input placeholder="Search" [(ngModel)]="searchTerm" name="search"></ion-input>
+        <ion-icon name="search" item-left></ion-icon>
+      </ion-item>
+    </ion-list>
+    <button type="submit" hidden></button>
+  </form>
   <ion-list inset border>
     <ng-container *ngFor="let link of links">
-      <button ion-item *ngIf="!link.show || (link.show | async)" [navPush]="link.uri"><ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
+      <button ion-item *ngIf="!link.show || (link.show | async)" [navPush]="link.uri">
+        <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
     </ng-container>
   </ion-list>
   <ads></ads>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
@@ -16,13 +16,6 @@ function debounce(callback, delay) {
   };
 };
 
-/**
- * Generated class for the AreasSearchPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   segment: 'area-search/:ID',
   defaultHistory: ['HomePage'],
@@ -32,7 +25,7 @@ function debounce(callback, delay) {
   templateUrl: 'areas-search.html',
 })
 export class AreasSearchPage {
-  county: County;
+  county?: County;
   searchTerm: string;
   areas: Area[] = [];
   foundFish: Fish;
@@ -46,10 +39,26 @@ export class AreasSearchPage {
 
   ionViewWillEnter() {
     console.log(this.navParams);
-    this.county = this.navParams.data.county;
+    this.county = this.navParams.get('county');
+    this.searchTerm = this.navParams.get('searchTerm') || '';
 
-    this.searchImmediate('');
+    this.searchImmediate(this.searchTerm);
   }
+
+  ionViewWillLeave() {
+    this.navParams.data.searchTerm = this.searchTerm;
+  }
+
+  scrollHeaders = (_area: Area, index: number) => {
+    if (index === 0 && this.foundFish) {
+      return this.foundFish;
+    }
+    return null;
+  };
+
+  trackFn = (index: number, area: Area) => {
+    return area.ID;
+  };
 
   searchImmediate(e: any) {
     const searchTerm: string = e.target ? e.target.value : e;
@@ -67,7 +76,7 @@ export class AreasSearchPage {
     }
     return this.area.search(searchTerm, this.county && this.county.ID)
       .then(data => {
-        this.areas = data;
+        this.areas = data.slice();
         if (this.foundFish) {
           this.areas.forEach(area => {
             for (let i = 5; i >= 0; --i) {

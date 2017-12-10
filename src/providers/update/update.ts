@@ -97,7 +97,7 @@ export class UpdateProvider {
       // Must rethrow error to fail later
       throw error;
     });
-    result.catch().then(() => {
+    result.catch(() => {}).then(() => {
       this.loading.dismiss();
     });
     return result;

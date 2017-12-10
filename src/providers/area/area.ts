@@ -471,7 +471,7 @@ export class AreaProvider extends BaseModel<Area> {
         })
           .map(r => r.item);
       });
-    result.catch().then(() => {
+    result.catch(() => {}).then(() => {
       if (performance && performance.now) {
         const t1 = performance.now();
         console.log('Searching took:', t1 - t0, 'ms');

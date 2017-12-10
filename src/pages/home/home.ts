@@ -22,11 +22,12 @@ interface Link {
 })
 export class HomePage {
 
+  searchTerm: string;
   profileColor: Observable<string>;
   showAdmin = this.userProvider.loggedIn;
 
   links: Link[] = [
-    { title: 'Admin Tools', icon: 'unlock', show: this.showAdmin },
+    // { title: 'Admin Tools', icon: 'unlock', show: this.showAdmin },
     { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
     { title: 'Map', icon: 'map', uri: 'MapPage' },
     { title: 'My Fishing Permits', icon: 'ifiske-license' },
@@ -44,6 +45,10 @@ export class HomePage {
     } else {
       this.modalCtrl.create('LoginPage').present();
     }
+  }
+
+  search() {
+    this.navCtrl.push('AreasSearchPage', {searchTerm: this.searchTerm});
   }
 }
 

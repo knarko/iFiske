@@ -117,3 +117,12 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 .virtual-scroll.list-ios > .item-block:first-child {
   border-top: none;
 }
+
+.item h2 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.header-md[transparent]::after {
+  display: none;
+}

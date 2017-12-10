@@ -3,4 +3,69 @@ page-login {
     display: flex;
     flex-direction: column;
   }
+  .centered-content {
+    flex-basis: auto;
+    flex-shrink: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .button:not([color]) {
+    background-color: rgba(color($colors, primary), 0.9);
+  }
+
+  .button[color="secondary"] {
+    background-color: rgba(color($colors, secondary), 0.9);
+  }
+
+  button[disabled],
+  [ion-button][disabled] {
+    opacity: 1;
+
+    &.button:not([color]) {
+      background-color: rgba(color($colors, primary), 0.4);
+    }
+    &.button[color="secondary"] {
+      background-color: rgba(color($colors, secondary), 0.4);
+    }
+  }
+}
+
+login {
+
+  ion-data-form {
+    margin: 16px 0;
+
+    input::placeholder {
+      color: $primary-text-color!important;
+    }
+    ion-errors {
+      text-shadow: 1px 1px 2px black;
+    }
+    .item-input {
+      color: $primary-text-color;
+      background: transparent;
+      margin: 8px 0;
+    }
+  }
+}
+
+.md login {
+  ion-data-form {
+    border-radius: $list-inset-md-border-radius;
+  }
+}
+
+.ios login {
+  ion-data-form {
+    border-radius: $list-inset-ios-border-radius;
+  }
+}
+
+.wp login {
+  ion-data-form {
+    border-radius: $list-inset-wp-border-radius;
+  }
 }

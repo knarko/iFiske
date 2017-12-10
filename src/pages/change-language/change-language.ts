@@ -22,7 +22,7 @@ export class ChangeLanguagePage {
   }
 
   changed() {
-    if (this.settings.language === this.currentLanguage) {
+    if (this.settings.language === this.currentLanguage || !this.currentLanguage) {
       return;
     }
     this.settings.language = this.currentLanguage;

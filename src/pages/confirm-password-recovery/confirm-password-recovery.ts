@@ -142,7 +142,7 @@ export class ConfirmPasswordRecoveryPage {
         toast.present();
         break;
       }
-    }).catch().then(() => {
+    }).catch(() => {}).then(() => {
       loading.dismiss();
     })
   }

@@ -1,44 +1,55 @@
-.information-page .scroll-content {
-  &>section,
-  &>h2,
-  &>h3 {
-    margin: 0;
-    padding: 1.6rem;
+.information-page:not([padding]) .scroll-content {
+  section {
+    padding: $content-padding;
   }
+}
+.information-page .scroll-content {
+  font-size: 1.2em;
+  line-height: 1.4;
+
+  section,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    padding: 0;
+
+  }
+
+  h2,
+  h3,
+  h4 {
+    color: map-get($colors, dark);
+
+    &:not(:first-child) {
+      margin: $content-padding 0 0;
+    }
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  h3 {
+    font-size: 1.1em;
+  }
+
   ion-slides {
     height: unset;
   }
 
-  &>h2,
-  &>h3 {
-    color: map-get($colors, dark);
+  .full-width {
+    $width: calc(100% + #{2 * $content-padding});
+    margin-left: -$content-padding;
+    width: $width;
+    max-width: $width;
   }
 
-  &>h3 {
-    background-color: lighten(map-get($colors, light), 8%);
-    border-bottom: 1px solid map-get($colors, light);
-    border-top: 1px solid map-get($colors, light);
-    font-size: 1.4rem;
-    margin: 0;
-    padding: 1.6rem;
-  }
 
-  h2 {
-    font-size: 2rem;
-    font-weight: normal;
-    span {
-      font-size: 1.4rem;
-      font-style: italic;
-    }
-  }
-
-  br {
-    line-height: 2em;
-  }
   p {
     margin: 0;
-    line-height: 1.3em;
   }
+
   p+p {
     margin-top: 1em;
   }

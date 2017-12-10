@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SQLite } from '@ionic-native/sqlite';
 import { Geolocation } from '@ionic-native/geolocation';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppVersion } from '@ionic-native/app-version';
 import { SuperTabsModule } from 'ionic2-super-tabs';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -30,6 +31,10 @@ import { AdsProvider } from '../providers/ads/ads';
 import { TechniqueProvider } from '../providers/technique/technique';
 import { CountyProvider } from '../providers/county/county';
 import { RuleProvider } from '../providers/rule/rule';
+import { TranslateAlertController } from '../providers/translate-alert-controller/translate-alert-controller';
+import { TranslateToastController } from '../providers/translate-toast-controller/translate-toast-controller';
+import { TranslateLoadingController } from '../providers/translate-loading-controller/translate-loading-controller';
+import { TermsProvider } from '../providers/terms/terms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -84,6 +89,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     TechniqueProvider,
     CountyProvider,
     RuleProvider,
+    TranslateAlertController,
+    TranslateToastController,
+    TranslateLoadingController,
+    TermsProvider,
+    AppVersion,
   ],
 })
 export class AppModule {}

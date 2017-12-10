@@ -53,6 +53,7 @@ export class AreasDetailPage {
     this.superTabs.enableTabSwipe(this.tabs[2].page, false);
   }
 
+
   private getOrg() {
     this.organizationProvider.getOne(this.area.orgid)
       .then(org => {
@@ -68,5 +69,6 @@ export class AreasDetailPage {
       products: this.products,
     });
   }
+
 
 }

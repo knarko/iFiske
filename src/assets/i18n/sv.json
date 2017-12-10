@@ -8,11 +8,49 @@
   "Account created": "Ditt konto har skapats",
   "You have been logged out": "Du har blivit utloggad",
   "No areas found": "Inga fiskevatten hittades",
+  "Updating": "Uppdaterar...",
+
+  "Continue": "Vidare",
 
   "ui": {
     "general": {
       "back": "Tillbaka"
+    },
+    "placeholder": {
+      "email": "fnamn@doman.se",
+      "password": "••••••••",
+      "recovery_code": "123456"
+    },
+    "issues": {
+      "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>"
     }
+  },
+
+  "errors": {
+    "recovery_code": {
+      "required": "Du måste ange en återställnigskod",
+      "invalid": "Ogiltig återställningskod"
+    },
+    "password": {
+      "required": "Du måste ange ett lösenord",
+      "invalid": "Ogiltligt lösenord"
+    },
+    "username": {
+      "required": "Du måste ange ett användarnamn",
+      "invalid": "Ogiltigt användarnamn",
+      "pattern_mismatch": "Mellan 5 och 25 tecken",
+      "taken": "Användarnamnet är upptaget"
+    },
+    "general": {
+      "Invalid username or password": "Ogiltigt användarnamn eller lösenord"
+    }
+  },
+
+  "recovery": {
+    "start": "En återställningskod kommer inom kort att skickas till dig via",
+    "and": " och ",
+    "end": ".",
+    "mail_spam_notice": "Om du har problem med att hitta ditt mejl, kolla att det inte fastnat i spamfiltret."
   },
 
   "About the app": "Om appen",
@@ -75,14 +113,12 @@
   "Full name required": "Du måste ange ett namn",
   "Full name": "För- och efternamn",
   "I approve the text message rules": "Jag godkänner SMS-reglerna",
-  "I have a reset code": "Jag har en återställningskod",
+  "I have a recovery code": "Jag har en återställningskod",
   "iFiske - Easier Fishing": "iFiske - Enklare Fiskekort",
   "in": "om",
   "Inactive licenses": "Ej ännu aktiva fiskekort",
   "inactive": "Inaktivt",
   "Information": "Information",
-  "Invalid reset code": "Ogiltig återställningskod",
-  "Invalid username or password": "Ogiltigt användarnamn eller lösenord",
   "invalid": "Ogiltliga",
   "Issued at": "Utfärdat <b>{{date}}</b>",
   "Issued to": "Utfärdat till {{name}}",
@@ -118,8 +154,6 @@
   "Open Source Licenses": "Öppen mjukvara",
   "Outdoors": "Utomhus",
   "Password changed": "Ditt lösenord har ändrats",
-  "Password pattern mismatch": "Mellan 6 och 16 tecken",
-  "Password required": "Du måste ange ett lösenord",
   "Password": "Lösenord",
   "PDF": "PDF",
   "Phone invalid": "Ogiltigt mobilnummer",
@@ -136,16 +170,14 @@
   "Push notifications are turned off": "Push-notifikationer avaktiverat",
   "Push notifications are turned on": "Push-notifikationer aktiverat",
   "Push notifications": "Push-notifikationer",
-  "Recovery code will soon be sent": "En återställningskod kommer skickas till dig inom kort{{methods.length ? ', via' : '.'}} {{methods.join(' och ')}} {{mailed ? '<br/>Om du har problem med att hitta ditt mejl, kolla att det inte fastnat i spamfiltret.' : ''}}",
   "Register": "Registrera",
   "Registering account approves": "Genom att registrera ett konto godkänner du våra",
   "Registration failed": "Registreringen misslyckades, försök igen",
   "Remove favorite": "Ta bort favorit",
-  "Report bug long text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>",
   "Report issue": "Rapportera Bugg",
   "Request new activation code": "Om du behöver få en ny aktiveringskod, tryck här.",
-  "Reset code": "Återställningskod",
-  "Reset password": "Återställ lösenord",
+  "Recovery code": "Återställningskod",
+  "Recover password": "Återställ lösenord",
   "Revoke": "Makulera",
   "Revoked licenses": "Makulerade fiskekort",
   "revoked": "Makulerad",
@@ -168,7 +200,7 @@
   "Technique advanced": "Avancerade tips",
   "Technique description": "Beskrivning (Grunderna)",
   "Technique gear": "Utrustning",
-  "Terms of subscription": "Användarvillkor",
+  "Terms of service": "Användarvillkor",
   "Text message format": "Formatet för att skicka ett sms är:",
   "Text message instructions": "När du klickar på knappen kommer din vanliga sms-app att öppnas med ett förskrivet SMS till 72456.",
   "This will revoke the license": "Fiskekortet kommer makuleras",
@@ -182,7 +214,7 @@
   "Unrevoke": "Avmakulera",
   "Update stored data": "Uppdatera databas",
   "Use existing registration code": "Använd befintlig kod",
-  "User already has reset code": "Om du redan har en återställningskod kan du hoppa över det här steget.",
+  "User already has recovery code": "Om du redan har en återställningskod kan du hoppa över det här steget.",
   "User does not exist": "Användaren finns ej",
   "User Id": "AnvändarId",
   "User information": "Användarinformation",
@@ -190,11 +222,7 @@
   "USER_LEVEL_0": "Tillsyningsman",
   "USER_LEVEL_1": "Kassör",
   "USER_LEVEL_2": "Full insyn",
-  "Username invalid": "Ogiltigt användarnamn",
   "Username or email": "Användarnamn eller e-post:",
-  "Username pattern mismatch": "Mellan 5 och 25 tecken",
-  "Username required": "Du måste välja ett användarnamn",
-  "Username taken": "Användarnamnet är upptaget",
   "Username": "Användarnamn",
   "Valid from": "Giltligt från <b>{{date}}</b>",
   "Valid until": "Giltligt t.o.m. <b>{{date}}</b>",

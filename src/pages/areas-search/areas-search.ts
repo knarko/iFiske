@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
+import { County } from '../../providers/county/county';
 
 function debounce(callback, delay) {
   let timeout;
@@ -23,6 +24,7 @@ function debounce(callback, delay) {
  */
 
 @IonicPage({
+  segment: 'area-search/:ID',
   defaultHistory: ['HomePage'],
 })
 @Component({
@@ -30,6 +32,7 @@ function debounce(callback, delay) {
   templateUrl: 'areas-search.html',
 })
 export class AreasSearchPage {
+  county: County;
   searchTerm: string;
   areas: Area[] = [];
   foundFish: Fish;
@@ -39,7 +42,13 @@ export class AreasSearchPage {
     public navParams: NavParams,
     private area: AreaProvider,
     private fish: FishProvider,
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
+    console.log(this.navParams);
+    this.county = this.navParams.data.county;
+
+    this.searchImmediate('');
   }
 
   searchImmediate(e: any) {
@@ -56,7 +65,7 @@ export class AreasSearchPage {
     } else {
       this.foundFish = undefined;
     }
-    return this.area.search(searchTerm, this.navParams.get('ID'))
+    return this.area.search(searchTerm, this.county.ID)
       .then(data => {
         this.areas = data;
         if (this.foundFish) {
@@ -77,10 +86,6 @@ export class AreasSearchPage {
   }
 
   search = debounce(this.searchImmediate, 500);
-
-  ionViewWillEnter() {
-    this.searchImmediate('');
-  }
 
   keyPress($event) {
     if ($event.keyCode === 13) { // if enter-key

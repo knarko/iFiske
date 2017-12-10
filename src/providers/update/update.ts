@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { TranslateService } from '@ngx-translate/core';
 
 import { MapDataProvider } from '../map-data/map-data';
-import { LoadingController, ToastController, Loading } from 'ionic-angular';
+import { Loading } from 'ionic-angular';
 import { AreaProvider } from '../area/area';
 import { FishProvider } from '../fish/fish';
 import { UserProvider } from '../user/user';
@@ -11,6 +10,9 @@ import { OrganizationProvider } from '../organization/organization';
 import { InformationProvider } from '../information/information';
 import { CountyProvider } from '../county/county';
 import { RuleProvider } from '../rule/rule';
+import { TermsProvider } from '../terms/terms';
+import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
+import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
 @Injectable()
 export class UpdateProvider {
@@ -21,9 +23,8 @@ export class UpdateProvider {
   loading: Loading;
 
   constructor(
-    private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController,
-    private translate: TranslateService,
+    private loadingCtrl: TranslateLoadingController,
+    private toastCtrl: TranslateToastController,
 
     area: AreaProvider,
     county: CountyProvider,
@@ -35,7 +36,7 @@ export class UpdateProvider {
     // Product,
     rule: RuleProvider,
     // Technique,
-    // Terms,
+    terms: TermsProvider,
     user: UserProvider,
   ) {
 
@@ -48,6 +49,7 @@ export class UpdateProvider {
       organization,
       rule,
       user,
+      terms,
       // Product.update,
       // Technique.update,
       // Terms.update,
@@ -60,10 +62,14 @@ export class UpdateProvider {
     var aDay = 1000 * 3600 * 24 * 1;
     return (currentTime - lastUpdate) > aDay;
   }
-  updateFunc(forced, hideLoading) {
+  async updateFunc(forced, hideLoading) {
     console.count('in update!');
-    if (!hideLoading)
-      this.loading = this.loadingCtrl.create();
+    if (!hideLoading) {
+      this.loading = await this.loadingCtrl.create({
+        content: 'Updating',
+      });
+      this.loading.present();
+    }
     var currentTime = Date.now();
     var shouldUpdate = (forced || this.timedUpdate(currentTime));
 
@@ -72,26 +78,29 @@ export class UpdateProvider {
       promises.push(this.updates[i].update(shouldUpdate));
     }
 
-    return Promise.all(promises).then(() => {
+    const result = Promise.all(promises).then(() => {
       if (shouldUpdate) {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
-      this.loading.dismiss();
     }, async (error) => {
       console.error(error);
 
       // TODO: raven
       // Raven.captureException(error);
-      this.toastCtrl.create({
-        message: await this.translate.get('Network Error', {error: error.response || error}).toPromise(),
+      (await this.toastCtrl.create({
+        // TODO: Give more error details
+        message: 'Network Error',
         duration: 4000,
-      }).present();
+      })).present();
 
 
       // Must rethrow error to fail later
-      this.loading.dismiss();
       throw error;
     });
+    result.catch().then(() => {
+      this.loading.dismiss();
+    });
+    return result;
   }
 
   update(hideLoading = false) {
@@ -102,7 +111,7 @@ export class UpdateProvider {
     return this.updateFunc(true, hideLoading);
   }
 
-  lastUpdate() {
+  get lastUpdate() {
     return localStorage.getItem(UpdateProvider.LAST_UPDATE);
   }
 }

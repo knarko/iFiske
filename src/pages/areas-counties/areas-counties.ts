@@ -23,7 +23,7 @@ export class AreasCountiesPage {
     this.items = await this.county.getAll();
   }
 
-  goto(item: County) {
-    this.navCtrl.push('AreasSearchPage', {county: item});
+  goto(county: County) {
+    this.navCtrl.push('AreasSearchPage', { county, ID: county.ID });
   }
 }

@@ -357,7 +357,8 @@ export class AreaProvider extends BaseModel<Area> {
    * @param {Integer} countyId - ID for a county to filter on
    * @return {Promise<Area[]>} Promise for the matching areas
    */
-  search(searchstring, countyId): Promise<Area[]> {
+  @DBMethod
+  search(searchstring: string, countyId: number): Promise<Area[]> {
     if (this.searchCache[searchstring + countyId]) {
       return this.searchCache[searchstring + countyId];
     }
@@ -415,7 +416,6 @@ export class AreaProvider extends BaseModel<Area> {
           distance: 10,
           maxPatternLength: 16,
         };
-
         // Populate Fuse search index
         return new Fuse(data, options);
       })
@@ -439,16 +439,10 @@ export class AreaProvider extends BaseModel<Area> {
             if (this.currentLocation || foundFish) {
               res.forEach(r => {
                 if (this.currentLocation) {
-                  const distance = this.calculateDistance(
-                    r.item.lat,
-                    r.item.lng,
-                    this.currentLocation.lat,
-                    this.currentLocation.lng,
-                  );
+                  const distance = this.calculateDistance(r.item.lat, r.item.lng, this.currentLocation.lat, this.currentLocation.lng);
                   r.item.distance = distance;
                   r.score += this.mapDistance(distance);
                 }
-
                 if (foundFish) {
                   for (let i = 1; i < 6; ++i) {
                     const fishArr = r.item['fish_' + i];
@@ -465,10 +459,12 @@ export class AreaProvider extends BaseModel<Area> {
       }).then(res => {
         return res.sort((a, b) => {
           const res = a.score - b.score;
-          if (res) return res;
+          if (res)
+            return res;
           if (a.item.org > b.item.org) {
             return 1;
-          } else if (a.item.org < b.item.org) {
+          }
+          else if (a.item.org < b.item.org) {
             return -1;
           }
           return 0;

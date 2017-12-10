@@ -1,0 +1,9 @@
+<ion-content class="background-image" padding no-bounce>
+  <login (loggedIn)="loggedIn()"></login>
+  <ion-footer no-border padding-horizontal>
+    <button ion-button (click)="forgotPassword()" small>{{'Forgot password' | translate}}</button>
+    <button ion-button (click)="skip()" small icon-right class="pull-right">{{'Skip' | translate}}
+      <ion-icon right name="arrow-forward"></ion-icon>
+    </button>
+  </ion-footer>
+</ion-content>

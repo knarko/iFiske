@@ -1,9 +1,11 @@
 page-areas-detail-info {
+  img {
+    display: block;
+  }
+
+
   .slider-image {
     position: relative;
-    img {
-      display: block;
-    }
     .image-text {
       font-size: 14px;
       margin: 0;
@@ -17,5 +19,13 @@ page-areas-detail-info {
   .logo {
     margin-bottom: 1.6rem;
   }
-}
 
+  .toolbar {
+    padding-left: 1.6rem;
+    border-bottom: 1px solid $toolbar-border-color;
+  }
+
+  section {
+    background: white;
+  }
+}

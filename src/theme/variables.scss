@@ -33,21 +33,22 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 $calm:       #52c8ff !default;
-$energized:  #edce07 !default;
 $colors: (
   primary:    #003852,
   secondary:  #669600,
   danger:     #ff580a,
   light:      #e4e4e4,
-  dark:       #222
+  dark:       #222,
+  gold: #edce07,
 );
+
+$primary-text-color: rgba(black, 0.87);
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
-
+$text-input-ios-show-focus-highlight: true;
 
 
 // App Material Design Variables
@@ -80,6 +81,9 @@ $colors: (
 // http://ionicframework.com/docs/ionicons/
 
 @import "ionic.ionicons";
+
+$fa-font-path: $font-path;
+@import "font-awesome/scss/font-awesome";
 
 
 // Fonts

@@ -8,6 +8,7 @@ import { PushProvider } from '../push/push';
 import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
+import { Area } from '../area/area';
 
 @Injectable()
 export class UserProvider extends BaseModel {
@@ -164,13 +165,11 @@ export class UserProvider extends BaseModel {
     }
   }
 
-  login(username, password) {
+  login({username, password}) {
     const p = this.API.user_login(username, password)
       .then(() => this.update(true));
     p.then(() => {
-      return this.Push.reset();
-    });
-    p.then(() => {
+      this.Push.reset();
       // TODO: Analytics
       // analytics.trackEvent('Login and Signup', 'Login');
     }, error => {
@@ -288,5 +287,26 @@ export class UserProvider extends BaseModel {
       'UPDATE User_Favorite',
       'SET "not" = ? WHERE a = ?',
     ].join(' '), [not, id]);
+  }
+
+  async toggleFavorite(area: Area) {
+    area.favorite = !area.favorite;
+    if (area.favorite) {
+      await this.API.user_add_favorite(area.ID);
+      await this.addFavorite(area.ID);
+    } else {
+      await this.API.user_remove_favorite(area.ID);
+      await this.removeFavorite(area.ID);
+    }
+    return area.favorite;
+  }
+
+  async resetPassword({username, code, password}) {
+    await this.API.user_reset_password({
+      username,
+      password,
+      code,
+    });
+    return this.login({username, password});
   }
 }

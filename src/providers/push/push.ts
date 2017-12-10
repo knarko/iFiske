@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { NavController, AlertController, App } from 'ionic-angular';
+import { NavController, App } from 'ionic-angular';
 import { SessionProvider } from '../session/session';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
+import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 
 
 interface PushHandler {
@@ -23,17 +24,17 @@ export class PushProvider {
     // private API: ApiProvider,
     private app: App,
     private sessionData: SessionProvider,
-    private alertCtrl: AlertController,
+    private alertCtrl: TranslateAlertController,
     private inAppBrowser: InAppBrowser,
     private settings: SettingsProvider,
   ) {
     // TODO: fix this hack
     this.navCtrl = this.app.getRootNav();
     this.pushHandlers = {
-      default: (notification) => {
-        this.alertCtrl.create({
+      default: async (notification) => {
+        (await this.alertCtrl.create({
           message: notification.message,
-        }).present();
+        })).present();
       },
 
       /*
@@ -65,7 +66,7 @@ export class PushProvider {
               {
                 text: 'OK',
                 handler: () => {
-                  this.inAppBrowser.create(`${serverLocation}/r/${payload.code}?lang=${this.settings.language()}`, '_system');
+                  this.inAppBrowser.create(`${serverLocation}/r/${payload.code}?lang=${this.settings.language}`, '_system');
                 },
               },
             ],
@@ -90,11 +91,11 @@ export class PushProvider {
         * Payload should contain:
         * message: a string that we should Display
         */
-      NOTE: [(_notification, payload) => {
+      NOTE: [async (_notification, payload) => {
         if (payload && payload.message) {
-          this.alertCtrl.create({
+          (await this.alertCtrl.create({
             message: payload.message,
-          }).present();
+          })).present();
         }
       }],
     };

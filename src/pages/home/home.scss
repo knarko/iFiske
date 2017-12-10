@@ -16,10 +16,7 @@ page-home {
   .header-logo {
     height: 100%;
   }
-  .list {
-    border: 1px solid #c8c7cc;
-  }
-  .item .icon {
+ .item .icon {
     width: 28px;
   }
   .item-ios {
@@ -27,3 +24,6 @@ page-home {
   }
 }
 
+.wp page-home .header-logo {
+  max-height: 34px;
+}

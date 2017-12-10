@@ -7,11 +7,11 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>AreasSearch</ion-title>
+    <ion-title>{{county?.t || 'Search results' | translate}}</ion-title>
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
-    <ion-searchbar animated (ionInput)="search($event)"></ion-searchbar>
+    <ion-searchbar animated (ionInput)="search($event)" [placeholder]="'Search' | translate"></ion-searchbar>
   </ion-toolbar>
 
 </ion-header>
@@ -25,8 +25,8 @@
       </ion-thumbnail>
 
       <h2>{{area.org}}</h2>
-      <span class="right distance-indicator" *ngIf="area.distance | distance"><ion-icon name="navigate"></ion-icon> {{area.distance | distance}}</span>
-      <p [innerText]="area.t"></p>
+      <span class="right distance-indicator" *ngIf="area.distance | distance"><fa-icon name="map-marker"></fa-icon> {{area.distance | distance}}</span>
+      <p [innerText]="area.t" *ngIf="area.org !== area.t"></p>
       <fish-level [level]="area.level" icon="true" *ngIf="foundFish"></fish-level>
     </ion-item>
   </ion-list>

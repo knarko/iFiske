@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'Change language' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">{{'Close' | translate}}</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="background-image">
+  <ion-list radio-group [(ngModel)]="currentLanguage" (ionChange)="changed()">
+    <ion-item *ngFor="let language of languages">
+      <ion-label>
+        <img [src]="'assets/img/flags/' + language.short + '.png'"> {{language.long}}
+      </ion-label>
+      <ion-radio [value]="language.short"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>

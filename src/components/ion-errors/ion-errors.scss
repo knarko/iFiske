@@ -1,0 +1,10 @@
+ion-errors {
+  display: block;
+  color: $text-input-highlight-color-invalid;
+
+  p {
+    color: inherit !important;
+    transform-origin: top;
+    margin: 0;
+  }
+}

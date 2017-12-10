@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 
+interface Link {
+  title: string;
+  icon: string;
+  uri?: string;
+}
+
 @IonicPage({
   priority: 'high',
 })
@@ -10,7 +16,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class HomePage {
 
-  links = [
+  links: Link[] = [
     {title: 'Admin Tools', icon: 'unlock'},
     {title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage'},
     {title: 'Map', icon: 'map', uri: 'MapPage'},

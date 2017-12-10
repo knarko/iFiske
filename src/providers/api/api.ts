@@ -16,7 +16,14 @@ function delay(fn, t) {
 }
 
 interface ApiResponse {
-  data: any;
+  message?: any;
+  data?: any;
+  status: 'success' | 'error';
+}
+
+export interface ApiError {
+  response: string;
+  error_code: number;
 }
 
 @Injectable()
@@ -44,7 +51,7 @@ export class ApiProvider {
     }
 
     Object.assign(params, {
-      lang: this.settings.language(),
+      lang: this.settings.language,
       key: 'ox07xh8aaypwvq7a',
     });
 
@@ -53,13 +60,10 @@ export class ApiProvider {
     })
       .toPromise()
       .then((response: ApiResponse) => {
-        const data = response.data;
-        if (data.status === 'error') {
-          return Promise.reject(data.message);
-        } else if (data.response) {
-          return Promise.resolve(data.response);
+        if (response.status !== 'error' && response.data && response.data.response) {
+          return Promise.resolve(response.data.response);
         }
-        return Promise.reject(data);
+        return Promise.reject(response);
       }).catch(response => {
         if (retries < this.maxRetries) {
           return delay(() => {
@@ -70,8 +74,8 @@ export class ApiProvider {
           return Promise.reject('Unknown network failure');
         } else if (response.status === 0) {
           return Promise.reject('Request timeout');
-        } else if (response.response) {
-          return Promise.reject(response);
+        } else if (response.message) {
+          return Promise.reject(response.message);
         } else if (response.data) {
           return Promise.reject(response.data);
         }
@@ -132,12 +136,16 @@ export class ApiProvider {
       user_identification: user,
     }, false);
   }
-  user_reset_password(user_identification, password, code) {
+  user_reset_password({
+    username,
+    password,
+    code,
+  }) {
     return this.api_call({
       m: 'user_reset_password',
-      user_identification: user_identification,
-      password: password,
-      code: code,
+      user_identification: username,
+      password,
+      code,
     }, false);
   }
   user_change_password(old_password, new_password) {

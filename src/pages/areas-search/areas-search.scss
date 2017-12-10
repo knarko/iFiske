@@ -4,6 +4,11 @@ page-areas-search {
     object-position: center;
     border-radius: 10%;
   }
+  .item-ios ion-thumbnail img {
+    height: 72px;
+    width: 72px;
+  }
+
   .item.item-thumbnail-left {
     .fish-image {
       max-width: 112px;

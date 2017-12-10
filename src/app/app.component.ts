@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
+import { SettingsProvider } from '../providers/settings/settings';
 
 @Component({
   templateUrl: 'app.html',
@@ -19,10 +20,11 @@ export class MyApp {
     update: UpdateProvider,
     config: Config,
     translate: TranslateService,
+    settings: SettingsProvider,
   ) {
     config.setTransition('md-transition', MDTransition);
     translate.setDefaultLang('sv');
-    translate.use('sv');
+    translate.use(settings.language);
     platform.ready().then(async () => {
         if (true || localStorage.getItem('language')) {
           update.update().catch(e => console.warn(e));

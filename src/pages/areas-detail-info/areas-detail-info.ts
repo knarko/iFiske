@@ -4,6 +4,11 @@ import { Area, AreaProvider } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
 import { SuperTabsController } from 'ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
+import { UserProvider } from '../../providers/user/user';
+import { SessionProvider } from '../../providers/session/session';
+import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 /**
  * Generated class for the AreasDetailInfoPage page.
@@ -38,6 +43,11 @@ export class AreasDetailInfoPage {
     public navParams: NavParams,
     private areaProvider: AreaProvider,
     private tabsController: SuperTabsController,
+    private sessionData: SessionProvider,
+    private userProvider: UserProvider,
+    private alertCtrl: TranslateAlertController,
+    private toastCtrl: TranslateToastController,
+    private modalCtrl: ModalController,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products }) => {
       this.area = area;
@@ -48,6 +58,33 @@ export class AreasDetailInfoPage {
       }
     });
   }
+
+  async toggleFavorite() {
+    if (this.sessionData.token) {
+      const favorite = await this.userProvider.toggleFavorite(this.area);
+      const message = favorite ? 'Area added to favorites' : 'Area removed from favorites';
+      const toast = await this.toastCtrl.create({
+        message,
+        duration: 4000,
+      });
+      toast.present();
+    } else {
+      const toast = await this.toastCtrl.create({
+        message: 'Login required for favorite',
+        duration: 6000,
+        dismissOnPageChange: true,
+        showCloseButton: true,
+        closeButtonText: 'Log in',
+      });
+      toast.present();
+      toast.onDidDismiss((data, role) => {
+        if (role === 'close') {
+          // this.modalCtrl.create(LoginComponent).present();
+        }
+      })
+    }
+  }
+
   gotoLicenses() {
     this.tabsController.slideTo('AreasDetailLicensePage', 'areas-details');
   }

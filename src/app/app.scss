@@ -70,3 +70,42 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 .icon.large {
   font-size: 2em;
 }
+
+.item-md,
+.item-ios {
+  &.item-input.ng-invalid.ng-dirty:not(.input-has-focus):not(.item-input-has-focus) {
+    &.item-md .item-inner {
+      box-shadow: inset 0 -1px 0 0 $text-input-highlight-color-invalid;
+    }
+
+    .item-inner {
+      border-bottom-color: $text-input-highlight-color-invalid;
+    }
+  }
+}
+
+
+.item-label-floating {
+  .input-md,
+  .input-ios {
+    transition: opacity 150ms ease-in-out;
+  }
+
+  &:not(.item-input-has-focus) input::placeholder {
+    opacity: 0;
+  }
+}
+
+// Removes the padding-left for inputs
+:not([inset])>.item-ios.item-input,
+:not([inset])>.item-md.item-input {
+  padding-left: 0;
+}
+
+.list[border][inset] {
+  border: 1px solid #c8c7cc;
+}
+
+.item + .list-header-md {
+  margin-top: -1px;
+}

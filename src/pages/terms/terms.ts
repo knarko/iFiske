@@ -22,7 +22,7 @@ export class TermsPage {
   constructor(private termsProvider: TermsProvider) {
   }
 
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     this.terms = this.termsProvider.termsOfService;
   }
 

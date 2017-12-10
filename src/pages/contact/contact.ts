@@ -22,7 +22,7 @@ export class ContactPage {
   constructor(private terms: TermsProvider) {
   }
 
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     this.contactInfo = this.terms.contactInfo;
   }
 }

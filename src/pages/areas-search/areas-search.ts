@@ -65,7 +65,7 @@ export class AreasSearchPage {
     } else {
       this.foundFish = undefined;
     }
-    return this.area.search(searchTerm, this.county.ID)
+    return this.area.search(searchTerm, this.county && this.county.ID)
       .then(data => {
         this.areas = data;
         if (this.foundFish) {

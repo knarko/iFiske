@@ -81,7 +81,7 @@ export class ConfirmPasswordRecoveryPage {
     });
   }
 
-  async ionViewWillLoad() {
+  async ionViewWillEnter() {
     this.form.controls.username.control.setValue(this.navParams.data.username);
     const methods = this.navParams.data.methods;
     if (methods) {

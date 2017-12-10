@@ -21,7 +21,7 @@ export class AboutPage {
     private update: UpdateProvider,
   ) { }
 
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     this.lastUpdated = this.update.lastUpdate;
     this.platform.ready().then(() => {
       if ((window as any).cordova) {

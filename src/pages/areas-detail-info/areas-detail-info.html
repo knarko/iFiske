@@ -3,7 +3,7 @@
     <ion-slide *ngFor="let img of images; let i = index">
       <div class="slider-image">
         <img [src]="img.file" (load)="imageLoaded(i)">
-        <p class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
+        <p *ngIf="img.t || img.d" class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
       </div>
     </ion-slide>
   </ion-slides>

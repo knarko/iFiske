@@ -45,6 +45,9 @@
     },
     "general": {
       "Invalid username or password": "Ogiltigt användarnamn eller lösenord"
+    },
+    "favorite": {
+      "notification_update": "Ett fel uppstod. Notifikationsstatusen har inte ändrats."
     }
   },
 

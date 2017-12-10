@@ -20,7 +20,9 @@
     </ion-item>
   </ion-list>
   <ion-list inset border>
-    <button ion-item *ngFor="let link of links" [navPush]="link.uri"><ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
+    <ng-container *ngFor="let link of links">
+      <button ion-item *ngIf="!link.show || (link.show | async)" [navPush]="link.uri"><ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
+    </ng-container>
   </ion-list>
   <ads></ads>
 </ion-content>

@@ -26,6 +26,10 @@ ion-nav {
   margin-left: auto !important;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .left {
   float: left !important;
   margin-right: auto !important;
@@ -108,4 +112,8 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 
 .item + .list-header-md {
   margin-top: -1px;
+}
+
+.virtual-scroll.list-ios > .item-block:first-child {
+  border-top: none;
 }

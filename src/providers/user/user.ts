@@ -25,6 +25,14 @@ export interface User {
   profile: string;
 }
 
+export interface Favorite {
+  ID: number;
+  a: number;
+  add: number;
+  not: number;
+  cnt: number;
+}
+
 @Injectable()
 export class UserProvider extends BaseModel {
   private readonly tables: Dictionary<TableDef> = {
@@ -293,7 +301,7 @@ export class UserProvider extends BaseModel {
   }
 
   @DBMethod
-  async getFavorites() {
+  async getFavorites(): Promise<(Favorite & Area)[]> {
     return this.DB.getMultiple([
       'SELECT *',
       'FROM User_Favorite',
@@ -319,6 +327,7 @@ export class UserProvider extends BaseModel {
 
   @DBMethod
   async setFavoriteNotification(id, not) {
+    await this.API.user_set_favorite_notification(id, not);
     return this.DB.runSql([
       'UPDATE User_Favorite',
       'SET "not" = ? WHERE a = ?',

@@ -23,22 +23,19 @@ interface Link {
 export class HomePage {
 
   profileColor: Observable<string>;
-  showAdmin: Observable<boolean>;
+  showAdmin = this.userProvider.loggedIn;
 
   links: Link[] = [
-    {title: 'Admin Tools', icon: 'unlock', show: this.showAdmin},
-    {title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage'},
-    {title: 'Map', icon: 'map', uri: 'MapPage'},
-    {title: 'My Fishing Permits', icon: 'ifiske-license'},
-    {title: 'Information', icon: 'information-circle', uri: 'InformationPage'},
-    {title: 'Species', icon: 'ifiske-fish', uri: 'SpeciesPage'},
-    {title: 'Fishing Methods', icon: 'ifiske-hook', uri: 'FishingMethodsPage'},
+    { title: 'Admin Tools', icon: 'unlock', show: this.showAdmin },
+    { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
+    { title: 'Map', icon: 'map', uri: 'MapPage' },
+    { title: 'My Fishing Permits', icon: 'ifiske-license' },
+    { title: 'Information', icon: 'information-circle', uri: 'InformationPage' },
+    { title: 'Species', icon: 'ifiske-fish', uri: 'SpeciesPage' },
+    { title: 'Fishing Methods', icon: 'ifiske-hook', uri: 'FishingMethodsPage' },
   ];
 
-  constructor(private userProvider: UserProvider, private navCtrl: NavController, private modalCtrl: ModalController) {
-    // TODO: not all logged in  users are admins
-    this.showAdmin = this.userProvider.loggedIn;
-  }
+  constructor(private userProvider: UserProvider, private navCtrl: NavController, private modalCtrl: ModalController) { }
 
   async gotoProfile() {
     const loggedIn = await this.userProvider.loggedIn.pipe(take(1)).toPromise();

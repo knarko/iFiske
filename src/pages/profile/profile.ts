@@ -20,7 +20,7 @@ export class ProfilePage {
   constructor(private userProvider: UserProvider, private viewCtrl: ViewController) {
   }
 
-  async ionViewWillLoad() {
+  async ionViewWillEnter() {
     this.user = await this.userProvider.getInfo()
   }
 

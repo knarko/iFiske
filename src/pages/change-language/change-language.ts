@@ -29,7 +29,7 @@ export class ChangeLanguagePage {
     this.close();
   }
 
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     this.languages = Object.values(this.settings.availableLanguages);
     this.currentLanguage = this.settings.language;
   }

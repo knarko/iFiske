@@ -60,7 +60,7 @@
     "firebase-tools": "^3.13.1",
     "ionic": "^3.13.2",
     "sass-lint": "^1.12.1",
-    "typescript": "2.6.2"
+    "typescript": "~2.5.0"
   },
   "config": {
     "ionic_copy": "./scripts/copy.config.js",

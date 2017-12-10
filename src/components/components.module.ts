@@ -5,7 +5,6 @@ import { IonicModule } from 'ionic-angular';
 import { YoutubeComponent } from './youtube/youtube';
 import { FishLevelComponent } from './fish-level/fish-level';
 import { FaIconComponent } from './fa-icon/fa-icon.component';
-import { LoginComponent } from './login/login.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonErrorsComponent } from './ion-errors/ion-errors';
 import { IonDataFormComponent } from './ion-data-form/ion-data-form';
@@ -17,7 +16,6 @@ import { PipesModule } from '../pipes/pipes.module';
     YoutubeComponent,
     FishLevelComponent,
     FaIconComponent,
-    LoginComponent,
     IonErrorsComponent,
     IonDataFormComponent,
   ],
@@ -32,7 +30,6 @@ import { PipesModule } from '../pipes/pipes.module';
     YoutubeComponent,
     FishLevelComponent,
     FaIconComponent,
-    LoginComponent,
     IonErrorsComponent,
     IonDataFormComponent,
   ],

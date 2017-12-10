@@ -3,8 +3,11 @@
     <ion-title>
       <img class="header-logo" src="/assets/img/logo_plain.svg">
     </ion-title>
+    <ion-buttons first>
+      <button ion-button icon-only (click)="gotoProfile()"><ion-icon name="person"></ion-icon></button>
+    </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only color="light" (click)="goto('SettingsPage')"><ion-icon name="settings"></ion-icon></button>
+      <button ion-button icon-only [navPush]="'SettingsPage'"><ion-icon name="settings"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -17,7 +20,7 @@
     </ion-item>
   </ion-list>
   <ion-list inset border>
-    <button ion-item *ngFor="let link of links" (click)="goto(link.uri)"><ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
+    <button ion-item *ngFor="let link of links" [navPush]="link.uri"><ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
   </ion-list>
   <ads></ads>
 </ion-content>

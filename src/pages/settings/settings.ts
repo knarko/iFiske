@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UserProvider } from '../../providers/user/user';
+import { Observable } from 'rxjs/Observable';
 
 interface SettingsItem {
   title: string;
@@ -11,6 +13,7 @@ interface SettingsItem {
   toggle?: (state: boolean) => void;
   toggleState?: boolean;
   toggleColor?: string;
+  show?: Observable<boolean>;
 }
 
 @IonicPage({
@@ -33,6 +36,7 @@ export class SettingsPage {
     },
     { title: 'Update stored data', click: () => this.updateProvider.forcedUpdate() },
     { title: 'Change language', click: () => this.modalCtrl.create('ChangeLanguagePage').present() },
+    { title: 'Log out', click: () => this.userProvider.logout(), show: this.userProvider.loggedIn },
     { title: 'Information', isHeader: true },
     { title: 'Contact', page: 'ContactPage' },
     { title: 'Report issue', page: 'ReportIssuePage' },
@@ -46,6 +50,7 @@ export class SettingsPage {
     private updateProvider: UpdateProvider,
     private modalCtrl: ModalController,
     private settingsProvider: SettingsProvider,
+    private userProvider: UserProvider,
   ) { }
 
   toggleItem(item: SettingsItem, shouldToggle = false) {

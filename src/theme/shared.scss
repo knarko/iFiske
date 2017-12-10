@@ -65,10 +65,10 @@
 }
 
 .content.background-abstract {
-    background-image: url('/assets/img/bg-abstract.jpg');
-    background-size: 100%;
-    background-position: bottom;
-    background-repeat: no-repeat;
+  background-image: url('/assets/img/bg-abstract.jpg');
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 
 .content.transparent {

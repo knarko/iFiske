@@ -64,7 +64,6 @@ export class LoginComponent {
       content: 'Logging in',
     });
     loading.present();
-    // TODO: show loading spinner
     this.userProvider.login({
       username: group.controls.username.value,
       password: group.controls.password.value,

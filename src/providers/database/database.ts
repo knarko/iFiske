@@ -180,7 +180,7 @@ export class DatabaseProvider {
     });
   }
 
-  cleanTable(table) {
+  cleanTable(table: string) {
     return this.db.transaction(tx => {
       tx.executeSql('DELETE FROM ' + table + ';');
     });

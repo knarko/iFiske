@@ -9,6 +9,21 @@ import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
 import { Area } from '../area/area';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
+import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
+
+export interface User {
+  username: string;
+  loggedin: string;
+  IP1: string;
+  IP2: string;
+  name: string;
+  email: string;
+  created: string;
+  mypage: string;
+  profile: string;
+}
 
 @Injectable()
 export class UserProvider extends BaseModel {
@@ -71,16 +86,21 @@ export class UserProvider extends BaseModel {
     },
   };
 
+  loggedIn = new ReplaySubject<boolean>(1);
+
   constructor(
     protected DB: DatabaseProvider,
     protected API: ApiProvider,
     private Push: PushProvider,
     // TODO: Toasts
     // ToastService,
+    private loadingCtrl: TranslateLoadingController,
+    private toastCtrl: TranslateToastController,
     private session: SessionProvider,
     private product: ProductProvider,
   ) {
     super();
+    this.loggedIn.next(!!session.token);
     const p = [];
     for (const table of Object.values(this.tables)) {
       p.push(DB.initializeTable(table));
@@ -101,7 +121,7 @@ export class UserProvider extends BaseModel {
   clean() {
     const p = [];
     for (const table of Object.values(this.tables)) {
-      p.push(this.DB.initializeTable(table));
+      p.push(this.DB.cleanTable(table.name));
     }
     // TODO: Raven
     // Raven.setUserContext();
@@ -169,10 +189,12 @@ export class UserProvider extends BaseModel {
     const p = this.API.user_login(username, password)
       .then(() => this.update(true));
     p.then(() => {
+      this.loggedIn.next(true);
       this.Push.reset();
       // TODO: Analytics
       // analytics.trackEvent('Login and Signup', 'Login');
     }, error => {
+      this.loggedIn.next(false);
       Promise.all([
         // TODO: Analytics
         // analytics.trackEvent('Login and Signup', 'Login Failure'),
@@ -183,18 +205,32 @@ export class UserProvider extends BaseModel {
     return p;
   }
 
-  logout() {
+  async logout() {
     // TODO: Analytics
     // analytics.trackEvent('Login and Signup', 'Logout');
-    return Promise.all([
+    const loading = await this.loadingCtrl.create({
+      content: 'Logging out',
+    });
+    loading.present();
+    this.loggedIn.next(false);
+
+    const promise = Promise.all([
       this.clean(),
       this.API.user_logout(),
       this.Push.logout(),
     ]);
+    promise.catch().then(async () => {
+      loading.dismiss();
+      (await this.toastCtrl.create({
+        message: 'You are logged out',
+        duration: 4000,
+      })).present()
+    });
+    return promise;
   }
 
   @DBMethod
-  async getInfo() {
+  async getInfo(): Promise<User> {
     return this.DB.getSingle(`SELECT * FROM User_Info`);
   }
 

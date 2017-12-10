@@ -162,7 +162,7 @@ export class ApiProvider {
       password: password,
     }, false)
       .then((data) => {
-        this.sessionData.setToken(data);
+        this.sessionData.token = data;
         // needed for chaining of promises
         return data;
       });
@@ -170,7 +170,7 @@ export class ApiProvider {
   user_logout() {
     return this.session_api_call({ m: 'user_logout' }, false)
       .then(() => {
-        this.sessionData.deleteToken();
+        this.sessionData.token = undefined;
       });
   }
   user_products() {

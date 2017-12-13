@@ -3,12 +3,6 @@ import { AlertController, Alert } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertOptions, AlertButton } from 'ionic-angular/components/alert/alert-options';
 
-/*
-  Generated class for the TranslateAlertControllerProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class TranslateAlertController {
   constructor(private translate: TranslateService, private alertCtrl: AlertController) { }
@@ -40,6 +34,12 @@ export class TranslateAlertController {
       }
     }
     return this.alertCtrl.create(opts)
+  }
+
+  async show(opts?: AlertOptions): Promise<Alert> {
+    const alert = await this.create(opts);
+    await alert.present();
+    return alert;
   }
 
 }

@@ -90,3 +90,13 @@
   }
 
 }
+
+.alert-large {
+  .alert-wrapper {
+    max-width: 90%;
+  }
+  .alert-message {
+    max-height: unset;
+  }
+}
+

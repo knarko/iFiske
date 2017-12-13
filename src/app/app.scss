@@ -101,6 +101,7 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 }
 
 // Removes the padding-left for inputs
+:not([inset])>.item-checkbox,
 :not([inset])>.item-ios.item-input,
 :not([inset])>.item-md.item-input {
   padding-left: 0;
@@ -126,3 +127,8 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 .header-md[transparent]::after {
   display: none;
 }
+
+.alert-button-group {
+  flex-shrink: 0;
+}
+

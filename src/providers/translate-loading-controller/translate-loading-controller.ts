@@ -2,12 +2,6 @@ import { Injectable } from '@angular/core';
 import { LoadingController, LoadingOptions, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
-/*
-  Generated class for the TranslateLoadingControllerProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class TranslateLoadingController {
   constructor(private loadingCtrl: LoadingController, private translate: TranslateService) { }
@@ -17,6 +11,12 @@ export class TranslateLoadingController {
       opts.content = await this.translate.get(opts.content).toPromise()
     }
     return this.loadingCtrl.create(opts);
+  }
+
+  async show(opts?: LoadingOptions): Promise<Loading> {
+    const loading = await this.create(opts);
+    await loading.present();
+    return loading;
   }
 
 }

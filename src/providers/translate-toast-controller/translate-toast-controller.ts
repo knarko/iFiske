@@ -28,7 +28,7 @@ export class TranslateToastController {
 
   async show(opts?: ToastOptions): Promise<Toast> {
     const toast = await this.create(opts);
-    toast.present();
+    await toast.present();
     return toast;
   }
 

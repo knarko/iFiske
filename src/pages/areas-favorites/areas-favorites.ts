@@ -31,7 +31,11 @@ export class AreasFavoritesPage {
   }
 
   async ionViewWillEnter() {
-    this.favorites = await this.userProvider.getFavorites();
+    try {
+      this.favorites = await this.userProvider.getFavorites();
+    } catch (e) {
+      // Probably not logged in
+    }
   }
 
   gotoArea(area: Favorite & Area) {

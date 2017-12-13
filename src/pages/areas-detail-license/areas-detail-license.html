@@ -19,8 +19,7 @@
       </section>
       <hr />
       <section class="purchase-buttons">
-        <h3 class="left">{{'Purchase via:' | translate}}</h3>
-        <button ion-button icon-left round color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
+        <button ion-button icon-left color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
           <ion-icon [name]="type.icon"></ion-icon>
           {{type.name | translate}}
         </button>

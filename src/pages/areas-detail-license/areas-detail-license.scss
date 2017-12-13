@@ -1,7 +1,17 @@
 page-areas-detail-license {
 
+  .card-header {
+    padding-bottom: 0;
+  }
+
+  .card hr {
+    height: 1px;
+  }
+
   .card-header h2 {
     display: inline-block;
+    font-size: 1.2em;
+    font-weight: bold;
   }
 
   .note {

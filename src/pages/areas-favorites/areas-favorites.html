@@ -1,6 +1,8 @@
 <ion-content>
   <ion-list>
-    <ion-list-header *ngIf="favorites?.length" class="text-right right-icon-header" padding-horizontal>{{'Notify via email' | translate}} <span class="icon">&#8628;</span></ion-list-header>
+    <ion-list-header *ngIf="favorites?.length" class="text-right right-icon-header" padding-horizontal>{{'Notify via email' | translate}}
+      <span class="icon">&#8628;</span>
+    </ion-list-header>
     <ion-list-header *ngIf="favorites && !favorites?.length">{{'No favorites' | translate}}</ion-list-header>
     <ion-item *ngFor="let area of favorites">
       <ion-label (click)="gotoArea(area)">{{area.t}}</ion-label>
@@ -8,6 +10,9 @@
     </ion-item>
   </ion-list>
 
-  <div padding [innerHTML]="'Mark favorites' | translate" ></div>
+  <div padding>
+    <p *ngIf="!favorites">{{'Login required for favorite' | translate}}</p>
+    <div *ngIf="favorites" [innerHTML]="'Mark favorites' | translate"></div>
+  </div>
   <!-- &#8505; {{'Mark favorites' | translate}}-->
 </ion-content>

@@ -10,6 +10,7 @@
   "No areas found": "Inga fiskevatten hittades",
   "Updating": "Uppdaterar...",
   "What is your name?": "Vad heter du?",
+  "Mark favorites": "Håll koll på när det nappar! Markera dina favorit- och hemmavatten som favoriter med en stjärna, så prenumererar du via e-post på alla nya publika fångstrapporter som kommer in till oss.",
 
   "Close": "Stäng",
 
@@ -138,7 +139,6 @@
   "Login required for favorite": "Du måste vara inloggad för att kunna markera fiskevatten som favoriter.",
   "Make sure you have the correct name": "Se till att rätt namn står innan du skickar ditt SMS!",
   "Map": "Karta",
-  "Mark favorites": "Håll koll på när det nappar! Markera dina favorit- och hemmavatten som favoriter med en stjärna, så prenumererar du via ePost på alla nya publika fångstrapporter som kommer in till oss. Om du vill ta bort en favorit, tryck och håll ner på fiskevattnets namn.",
   "More in control panel": "Mer funktionalitet finns i kontrollpanelen på www.ifiske.se",
   "My Fishing Permits": "Mina fiskekort",
   "Name": "Namn",

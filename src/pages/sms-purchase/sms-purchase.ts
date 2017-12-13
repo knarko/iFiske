@@ -65,23 +65,32 @@ export class SmsPurchasePage {
   }
 
   async sendSms() {
+    let name = "";
+    try {
+      name = (await this.userProvider.getInfo()).name;
+    } catch (e) {
+      // No user found, maybe not logged in
+    }
+
     const alert = await this.alertCtrl.create({
       title: 'What is your name?',
       inputs: [
         {
           name: 'name',
           placeholder: 'ui.placeholder.full_name',
-          value: (await this.userProvider.getInfo()).name,
+          value: name,
         },
       ],
       buttons: [{
         text: 'Send',
+        role: 'send',
       }],
     });
     alert.present();
-    const name = await new Promise((resolve) => alert.onDidDismiss(({name}) => name && resolve(name)));
+    name = await new Promise<string>((resolve) => alert.onDidDismiss(({name}: {name: string}, role) => role === 'send' && name && resolve(name)));
     const message = `FISKA ${this.product.pf} ${name}`;
     try {
+      // TODO: analytics
       await this.sms.send(SMS_PURCHASE_NUMBER, message, { android: { intent: 'INTENT' } });
     } catch (e) {
       this.alertCtrl.show({

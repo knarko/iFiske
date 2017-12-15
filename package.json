@@ -69,5 +69,14 @@
     "ionic_copy": "./scripts/copy.config.js",
     "ionic_sass": "./scripts/sass.config.js"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-ionic": {
+        "APP_ID": "37198a9f",
+        "CHANNEL_NAME": "Master",
+        "UPDATE_METHOD": "background"
+      }
+    }
+  }
 }

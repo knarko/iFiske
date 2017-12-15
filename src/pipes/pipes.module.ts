@@ -4,6 +4,7 @@ import { NgStringPipesModule } from 'ngx-pipes';
 import { FormatInfoPipe } from './format-info/format-info';
 import { LinkyPipe } from './linky/linky';
 import { KeysPipe } from './keys/keys';
+import { MkObjectPipe } from './mk-object/mk-object';
 
 @NgModule({
 	declarations: [
@@ -11,6 +12,7 @@ import { KeysPipe } from './keys/keys';
     FormatInfoPipe,
     LinkyPipe,
     KeysPipe,
+    MkObjectPipe,
   ],
   imports: [
     NgStringPipesModule,
@@ -21,6 +23,7 @@ import { KeysPipe } from './keys/keys';
     FormatInfoPipe,
     LinkyPipe,
     KeysPipe,
+    MkObjectPipe,
   ],
 })
 export class PipesModule {}

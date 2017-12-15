@@ -18,7 +18,8 @@
 
   "ui": {
     "general": {
-      "back": "Tillbaka"
+      "back": "Tillbaka",
+      "pull_to_refresh": "Uppdatera"
     },
     "placeholder": {
       "email": "fnamn@doman.se",

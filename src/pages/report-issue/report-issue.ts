@@ -20,8 +20,4 @@ export class ReportIssuePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ReportIssuePage');
-  }
-
 }

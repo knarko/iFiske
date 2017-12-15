@@ -1,25 +1,54 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
+import { Product } from '../../providers/product/product';
+import { UserProvider } from '../../providers/user/user';
 
-/**
- * Generated class for the MyPermitsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
+@IonicPage({
+  defaultHistory: ['HomePage'],
+})
 @Component({
   selector: 'page-my-permits',
   templateUrl: 'my-permits.html',
 })
 export class MyPermitsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  permits = [
+    {title: 'Active', permits: [], icon: 'checkmark'},
+    {title: 'Inactive', permits: [], icon: 'clock'},
+    {title: 'Expired', permits: [], icon: 'close'},
+    {title: 'Revoked', permits: [], icon: 'close'},
+  ]
+
+  allPermits: any[];
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private userProvider: UserProvider,
+  ) { }
+
+  ionViewWillEnter() {
+    this.update();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MyPermitsPage');
+  async refresh(refresher: Refresher) {
+    await this.userProvider.update(true);
+    await this.update();
+    refresher.complete();
+  }
+  update = async () => {
+    const permits = await this.userProvider.getProducts();
+    for (const type of this.permits) {
+      type.permits = [];
+    }
+
+    for (const permit of permits) {
+      this.permits.find(p => p.title.toLocaleLowerCase() === permit.validity).permits.push(permit);
+    }
+    this.allPermits = permits;
   }
 
+  gotoPermit(permit: Product) {
+    this.navCtrl.push('PermitDetailPage', permit);
+  }
 }

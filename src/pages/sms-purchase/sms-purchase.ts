@@ -100,9 +100,4 @@ export class SmsPurchasePage {
     }
     this.close();
   }
-
-  ionViewWillLoad() {
-    console.log('ionViewDidLoad SmsPurchasePage');
-  }
-
 }

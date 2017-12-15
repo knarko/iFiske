@@ -3,7 +3,7 @@ import { BaseModel } from '../database/basemodel';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { SessionProvider } from '../session/session';
-import { ProductProvider } from '../product/product';
+import { ProductProvider, Product } from '../product/product';
 import { PushProvider } from '../push/push';
 import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
@@ -12,6 +12,7 @@ import { Area } from '../area/area';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
+import { Rule } from '../rule/rule';
 
 export interface User {
   username: string;
@@ -31,6 +32,25 @@ export interface Favorite {
   add: number;
   not: number;
   cnt: number;
+}
+
+export interface UserProduct {
+  ID: number;
+  at: number;
+  code: number;
+  fr: number;
+  fullname: string;
+  ot: string;
+  ref1: number;
+  ref2: number;
+  t: string;
+  subt: string;
+  to: number;
+  pid: number;
+  pdf: string;
+  qr: string;
+  fint: string;
+  rev: number;
 }
 
 @Injectable()
@@ -282,7 +302,7 @@ export class UserProvider extends BaseModel {
   }
 
   @DBMethod
-  async getProducts() {
+  async getProducts(): Promise<(UserProduct & Product & Rule)[]> {
     return this.DB.getMultiple([
       'SELECT User_Product.*,',
       'Rule.t as rule_t,',

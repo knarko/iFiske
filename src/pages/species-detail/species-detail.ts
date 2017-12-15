@@ -31,9 +31,4 @@ export class SpeciesDetailPage {
       this.fish = this.navParams.data;
     }
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SpeciesDetailPage');
-  }
-
 }

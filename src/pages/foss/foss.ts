@@ -15,8 +15,4 @@ export class FossPage {
     // TODO: load them somehow
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FossPage');
-  }
-
 }

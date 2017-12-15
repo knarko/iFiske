@@ -23,6 +23,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 // Components
 import { MyApp } from './app.component';
 
+import { IonicProErrorHandler } from './pro';
+
 // Providers
 import { AdsProvider } from '../providers/ads/ads';
 import { ApiProvider } from '../providers/api/api';
@@ -80,7 +82,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyApp,
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    IonicErrorHandler,
+    [{ provide: ErrorHandler, useClass: IonicProErrorHandler }],
 
     // Ionic native
     AppVersion,

@@ -252,6 +252,10 @@
   dependencies:
     netmask "^1.0.6"
 
+"@ionic/pro@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@ionic/pro/-/pro-1.0.16.tgz#4011507d276bb31983bdac8a2a1b51d6cdf41409"
+
 "@ionic/storage@2.1.3":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-2.1.3.tgz#05dcf396a759879bf7aea42cfed61519562a13c7"
@@ -753,6 +757,10 @@ base64-js@0.0.8:
 base64-js@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.1.2.tgz#d6400cac1c4c660976d90d07a04351d89395f5e8"
+
+base64-js@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
 
 base64-js@^1.0.2:
   version "1.2.1"
@@ -1652,6 +1660,15 @@ cordova-lib@7.1.0:
     unorm "1.4.1"
     valid-identifier "0.0.1"
     xcode "^0.9.0"
+
+cordova-plugin-ionic@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-ionic/-/cordova-plugin-ionic-2.0.3.tgz#842cfdaf151f6c041f19d218d29741a75d490676"
+  dependencies:
+    mkpath ">=1.0.0"
+    node-version-compare ">=1.0.1"
+    plist ">=1.2.0"
+    xml2js ">=0.4"
 
 cordova-registry-mapper@^1.1.8:
   version "1.1.15"
@@ -4480,6 +4497,10 @@ mkdirp@0.5.x, mkdirp@0.x.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
+mkpath@>=1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mkpath/-/mkpath-1.0.0.tgz#ebb3a977e7af1c683ae6fda12b545a6ba6c5853d"
+
 modelo@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/modelo/-/modelo-4.2.0.tgz#3b4b420023a66ca7e32bdba16e710937e14d1b0b"
@@ -4669,6 +4690,10 @@ node-status-codes@^1.0.0:
 node-uuid@1.x, node-uuid@^1.4.7, node-uuid@~1.4.7:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
+
+node-version-compare@>=1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/node-version-compare/-/node-version-compare-1.0.1.tgz#d85bfd20f0acade33577f56682c7109c34c550cd"
 
 "nopt@2 || 3", nopt@~3.0.6:
   version "3.0.6"
@@ -5243,6 +5268,14 @@ plist@2.0.1:
   resolved "https://registry.yarnpkg.com/plist/-/plist-2.0.1.tgz#0a32ca9481b1c364e92e18dc55c876de9d01da8b"
   dependencies:
     base64-js "1.1.2"
+    xmlbuilder "8.2.2"
+    xmldom "0.1.x"
+
+plist@>=1.2.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
+  dependencies:
+    base64-js "1.2.0"
     xmlbuilder "8.2.2"
     xmldom "0.1.x"
 
@@ -7315,7 +7348,7 @@ xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
 
-xml2js@^0.4.19:
+xml2js@>=0.4, xml2js@^0.4.19:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
   dependencies:

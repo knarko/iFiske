@@ -21,7 +21,7 @@ export class AreasDetailPage {
   area: Area;
   tabs: TabItem[] = [
     { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
-    { page: 'AreasDetailLicensePage', title: 'Fishing Permits', icon: 'ifiske-license' },
+    { page: 'AreasDetailPermitPage', title: 'Fishing Permits', icon: 'ifiske-permit' },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];
   tabParams = new ReplaySubject<any>(1);

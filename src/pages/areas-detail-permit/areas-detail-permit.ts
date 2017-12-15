@@ -8,10 +8,10 @@ import { PlatformProvider } from '../../providers/platform/platform';
 
 @IonicPage()
 @Component({
-  selector: 'page-areas-detail-license',
-  templateUrl: 'areas-detail-license.html',
+  selector: 'page-areas-detail-permit',
+  templateUrl: 'areas-detail-permit.html',
 })
-export class AreasDetailLicensePage {
+export class AreasDetailPermitPage {
   area: Area;
   products: Product[];
 
@@ -44,9 +44,4 @@ export class AreasDetailLicensePage {
       }).present();
     }
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AreasDetailLicensePage');
-  }
-
 }

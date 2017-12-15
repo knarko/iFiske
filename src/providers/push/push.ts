@@ -38,13 +38,13 @@ export class PushProvider {
       },
 
       /*
-        * We got a new fishing license. We will get the Code of the new license
+        * We got a new fishing permit. We will get the Code of the new permit
         * Payload should contain:
-        * code: fishing license code
+        * code: fishing permit code
         */
       NEW: [(_notification, payload) => {
         if (payload && payload.code) {
-          this.navCtrl.push('LicenseDetailPage', {id: payload.code});
+          this.navCtrl.push('PermitDetailPage', {id: payload.code});
         }
       }],
 
@@ -52,7 +52,7 @@ export class PushProvider {
         * We got a request to make a fishing report
         * Payload should contain:
         * orgid: organisation id,
-        * code: fishing license code,
+        * code: fishing permit code,
         */
       REP_REQ: [(_notification, payload) => {
         if (payload && payload.orgid && payload.code) {

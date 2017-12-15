@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AreasDetailLicensePage } from './areas-detail-license';
+import { AreasDetailPermitPage } from './areas-detail-permit';
 import { PipesModule } from '../../pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    AreasDetailLicensePage,
+    AreasDetailPermitPage,
   ],
   imports: [
-    IonicPageModule.forChild(AreasDetailLicensePage),
+    IonicPageModule.forChild(AreasDetailPermitPage),
     TranslateModule.forChild(),
     PipesModule,
   ],
 })
-export class AreasDetailLicensePageModule {}
+export class AreasDetailPermitPageModule {}

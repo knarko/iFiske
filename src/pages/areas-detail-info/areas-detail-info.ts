@@ -80,8 +80,8 @@ export class AreasDetailInfoPage {
     }
   }
 
-  gotoLicenses() {
-    this.tabsController.slideTo('AreasDetailLicensePage', 'areas-details');
+  gotoPermits() {
+    this.tabsController.slideTo('AreasDetailPermitPage', 'areas-details');
   }
 
   imageLoaded(i: number) {

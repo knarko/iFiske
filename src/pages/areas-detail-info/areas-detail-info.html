@@ -19,7 +19,7 @@
   </ion-toolbar>
 
   <section *ngIf="products?.length || area?.d">
-    <button ion-button class="right" *ngIf="products?.length" (click)="gotoLicenses()">{{'Purchase license' | translate}}</button>
+    <button ion-button class="right" *ngIf="products?.length" (click)="gotoPermits()">{{'Purchase permit' | translate}}</button>
     <div [innerHTML]="area?.d | formatInfo"></div>
   </section>
   <ng-container *ngIf="org?.t && org?.d">

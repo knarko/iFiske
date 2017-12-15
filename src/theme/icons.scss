@@ -23,7 +23,7 @@
   }
 }
 
-@include makeIcon(license, $ifiske-license);
+@include makeIcon(permit, $ifiske-permit);
 @include makeIcon(hook, $ifiske-hook);
 @include makeIcon(favorite, $ifiske-favorite);
 @include makeIcon(fish, $ifiske-fish);

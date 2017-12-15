@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, PopoverController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { UserProvider } from '../../providers/user/user';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 interface Link {
@@ -30,7 +30,7 @@ export class HomePage {
     // { title: 'Admin Tools', icon: 'unlock', show: this.showAdmin },
     { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
     { title: 'Map', icon: 'map', uri: 'MapPage' },
-    { title: 'My Fishing Permits', icon: 'ifiske-license' },
+    { title: 'My Fishing Permits', icon: 'ifiske-permit', uri: 'MyPermitsPage' },
     { title: 'Information', icon: 'information-circle', uri: 'InformationPage' },
     { title: 'Species', icon: 'ifiske-fish', uri: 'SpeciesPage' },
     { title: 'Fishing Methods', icon: 'ifiske-hook', uri: 'FishingMethodsPage' },

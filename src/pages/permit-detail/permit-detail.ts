@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Product } from '../../providers/product/product';
-import { UserProduct, UserProvider, Permit } from '../../providers/user/user';
-import { Rule } from '../../providers/rule/rule';
+import { UserProvider, Permit } from '../../providers/user/user';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
@@ -19,7 +16,7 @@ import { AreaProvider } from '../../providers/area/area';
 })
 export class PermitDetailPage {
   serverLocation = serverLocation;
-  qr: SafeResourceUrl;
+  qr: string;
 
   permit: Permit = {} as any;
   org: Organization;
@@ -27,7 +24,6 @@ export class PermitDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private sanitizer: DomSanitizer,
     private userProvider: UserProvider,
     private settings: SettingsProvider,
     private organizationProvider: OrganizationProvider,

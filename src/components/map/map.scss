@@ -56,8 +56,16 @@ map>.map {
     width: $size + $padding * 2;
   }
 
+  .awesome-marker .ion-icon {
+    font-size: 16px;
+  }
+
   .leaflet-control-container .leaflet-top {
     transition: opacity .3s;
+  }
+
+  .leaflet-popup-content div {
+    font-size: 1.5em;
   }
 
   .popup-open {

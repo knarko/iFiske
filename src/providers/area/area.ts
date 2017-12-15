@@ -490,6 +490,9 @@ export class AreaProvider extends BaseModel<Area> {
     })
     .filter(geo => !!geo.coords)
     .subscribe(position => {
+      if (!this.currentLocation) {
+        this.searchCache = {};
+      }
       this.currentLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,

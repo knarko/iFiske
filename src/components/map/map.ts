@@ -8,6 +8,8 @@ import { POI, FiskePolygon } from '../../providers/map-data/map-data';
 
 import 'leaflet.markercluster';
 import 'drmonty-leaflet-awesome-markers';
+import { NavController } from 'ionic-angular';
+import { PlatformProvider } from '../../providers/platform/platform';
 declare var L: any;
 
 
@@ -48,7 +50,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
   @Output('popupClose') popupClose = new EventEmitter();
 
   @Input() options: MapOptions;
-  constructor(private mapData: MapDataProvider) {
+  constructor(
+    private mapData: MapDataProvider,
+    private navCtrl: NavController,
+    private platform: PlatformProvider,
+  ) {
   }
 
   ngAfterViewInit() {
@@ -117,11 +123,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   createAreaPopup(area) {
-    return new Popup({
+    const popup = new Popup({
       closeButton: false,
       maxWidth: window.innerWidth - 50,
-      // TODO: bind popup
-    }).setContent(area.t);
+    });
+
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(area.t));
+    div.addEventListener('click', () => {
+      this.navCtrl.push('AreasDetailPage', area);
+    });
+
+    popup.setContent(div);
+
+    return popup;
   }
 
   createIcons() {
@@ -172,7 +187,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
             icon: a.favorite ? 'star' : '',
             // eslint-disable-next-line no-nested-ternary
             markerColor: a.wsc ? (a.favorite ? 'orange' : 'darkblue') : 'lightgray',
-            prefix: 'ion',
+            prefix: `ion-${this.platform.cssClass}`,
+            extraClasses: 'ion-icon',
           }),
         });
       marker.bindPopup(this.createAreaPopup(a));

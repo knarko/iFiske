@@ -132,3 +132,16 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
   flex-shrink: 0;
 }
 
+.ion-icon {
+  display: inline-block;
+  font-family: "Ionicons";
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  text-rendering: auto;
+  text-transform: none;
+  speak: none;
+}

@@ -45,6 +45,7 @@ import { TranslateLoadingController } from '../providers/translate-loading-contr
 import { TranslateToastController } from '../providers/translate-toast-controller/translate-toast-controller';
 import { UpdateProvider } from '../providers/update/update';
 import { UserProvider } from '../providers/user/user';
+import { PlatformProvider } from '../providers/platform/platform';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -112,6 +113,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateToastController,
     UpdateProvider,
     UserProvider,
+    PlatformProvider,
   ],
 })
 export class AppModule {}

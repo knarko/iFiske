@@ -63,7 +63,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
 
     IonicModule.forRoot(MyApp, {
-      preloadMOdules: true,
+      preloadModules: true,
+      ios: {
+        statusbarPadding: true,
+      },
     }),
 
     SuperTabsModule.forRoot(),

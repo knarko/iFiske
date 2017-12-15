@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Product } from '../../providers/product/product';
-import { UserProduct, UserProvider } from '../../providers/user/user';
+import { UserProduct, UserProvider, Permit } from '../../providers/user/user';
 import { Rule } from '../../providers/rule/rule';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { AreaProvider } from '../../providers/area/area';
-
-type Permit = UserProduct & Product & Rule;
 
 @IonicPage({
   defaultHistory: ['HomePage', 'MyPermitsPage'],

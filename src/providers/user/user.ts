@@ -51,7 +51,10 @@ export interface UserProduct {
   qr: string;
   fint: string;
   rev: number;
+
+  validity?: string;
 }
+export type Permit = UserProduct & Product & Rule;
 
 @Injectable()
 export class UserProvider extends BaseModel {
@@ -279,12 +282,12 @@ export class UserProvider extends BaseModel {
 								LEFT JOIN Product ON Product.ID = User_Product.pid
 								LEFT JOIN Rule ON Rule.ID = Product.ri
 								WHERE User_Product.ID = ?
-							`, [id]).then(product => {
+							`, [id]).then((product: Permit) => {
             if (!product) {
               return Promise.reject(`Couldn't find product with id '${id}`);
             }
             product.validity = this.product.getValidity(product);
-            return product;
+            return Promise.resolve(product);
           });
       });
     }
@@ -302,7 +305,7 @@ export class UserProvider extends BaseModel {
   }
 
   @DBMethod
-  async getProducts(): Promise<(UserProduct & Product & Rule)[]> {
+  async getProducts(): Promise<Permit[]> {
     return this.DB.getMultiple([
       'SELECT User_Product.*,',
       'Rule.t as rule_t,',

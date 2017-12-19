@@ -1,6 +1,6 @@
 {
   "name": "ifiske4",
-  "version": "4.0.0-rc.0",
+  "version": "3.99.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
@@ -42,6 +42,7 @@
     "autolinker": "^1.4.4",
     "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-ionic": "^2.0.3",
+    "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-migrate-localstorage": "0.0.2",
     "cordova-plugin-screen-orientation": "^2.0.2",
     "cordova-sqlite-storage": "^2.1.4",
@@ -91,7 +92,8 @@
         "GEOLOCATION_USAGE_DESCRIPTION": "In order to help you find the best fishing nearby"
       },
       "cordova-plugin-migrate-localstorage": {},
-      "cordova-plugin-screen-orientation": {}
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-ionic-webview": {}
     }
   }
 }

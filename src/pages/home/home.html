@@ -1,14 +1,14 @@
 <ion-header>
   <ion-navbar color="primary">
+    <ion-title>
+      <img class="header-logo" src="assets/img/logo_plain.svg">
+    </ion-title>
+
     <ion-buttons first>
       <button ion-button icon-only (click)="gotoProfile()">
         <ion-icon name="person"></ion-icon>
       </button>
     </ion-buttons>
-
-    <ion-title>
-      <img class="header-logo" src="assets/img/logo_plain.svg">
-    </ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only [navPush]="'SettingsPage'">

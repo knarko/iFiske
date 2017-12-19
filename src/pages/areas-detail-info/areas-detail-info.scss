@@ -3,7 +3,11 @@ page-areas-detail-info {
     display: block;
   }
 
-  h3 {
+  .item ion-avatar img {
+    border-radius: 4px;
+  }
+
+  :not(.label) > h3 {
     margin: 0 !important;
     padding: $content-padding !important;
     background-color: lighten(map-get($colors, light), 8%);

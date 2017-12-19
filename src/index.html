@@ -31,7 +31,7 @@
       for (let registration of registrations) {
         registration.unregister();
       }
-    });
+    }).catch(err => console.warn('Error removing service workers:', err));
 
     //*/
   }

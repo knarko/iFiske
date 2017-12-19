@@ -26,6 +26,8 @@
     "@ionic-native/core": "^4.5.0",
     "@ionic-native/geolocation": "^4.5.0",
     "@ionic-native/launch-navigator": "^4.5.2",
+    "@ionic-native/pro": "^4.5.2",
+    "@ionic-native/screen-orientation": "^4.5.2",
     "@ionic-native/sms": "^4.5.2",
     "@ionic-native/splash-screen": "^4.5.0",
     "@ionic-native/sqlite": "^4.5.0",
@@ -41,6 +43,7 @@
     "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-ionic": "^2.0.3",
     "cordova-plugin-migrate-localstorage": "0.0.2",
+    "cordova-plugin-screen-orientation": "^2.0.2",
     "cordova-sqlite-storage": "^2.1.4",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
     "font-awesome": "^4.7.0",
@@ -87,7 +90,8 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "In order to help you find the best fishing nearby"
       },
-      "cordova-plugin-migrate-localstorage": {}
+      "cordova-plugin-migrate-localstorage": {},
+      "cordova-plugin-screen-orientation": {}
     }
   }
 }

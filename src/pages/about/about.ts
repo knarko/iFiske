@@ -3,8 +3,9 @@ import { IonicPage, Platform } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
-
-declare var IonicCordova: any;
+import { Pro, DeployInfo } from '@ionic-native/pro';
+import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -14,9 +15,8 @@ declare var IonicCordova: any;
   templateUrl: 'about.html',
 })
 export class AboutPage {
-  channel?: string;
-  deployVersion?: string;
   lastUpdated: string;
+  proInfo?: DeployInfo;
   buildId?: string;
   version?: string;
 
@@ -26,7 +26,10 @@ export class AboutPage {
     private appVersion: AppVersion,
     private platform: Platform,
     private update: UpdateProvider,
-    private settings: SettingsProvider,
+    public settings: SettingsProvider,
+    private pro: Pro,
+    private alertCtrl: TranslateAlertController,
+    private toastCtrl: TranslateToastController,
   ) { }
 
   ionViewWillEnter() {
@@ -35,20 +38,13 @@ export class AboutPage {
       if ((window as any).cordova) {
         this.appVersion.getVersionNumber()
           .then(version => this.version = version)
-          .catch(() => {});
+          .catch(() => { });
         this.appVersion.getVersionCode()
           .then(buildId => this.buildId = buildId)
-          .catch(() => {});
-          try {
-            IonicCordova.deploy.info(info => {
-              this.deployVersion = info.deploy_uuid;
-              this.channel = info.channel;
-            }, err => {
-              console.warn(err);
-            });
-          } catch (err) {
-            console.warn(err);
-          }
+          .catch(() => { });
+        this.pro.deploy.info()
+          .then(info => this.proInfo = info)
+          .catch(err => console.warn(err));
       } else {
         this.buildId = 'abc123';
         this.version = '4.0.0';
@@ -56,18 +52,46 @@ export class AboutPage {
     });
   }
 
-  activateDeveloperMode() {
-    /** TODO: add developermode
-    if (this.developerClicked > 10) {
-      this.settings.isDeveloper = true;
-    }
+  async activateDeveloperMode() {
     if (this.settings.isDeveloper) {
-      try {
-        IonicCordova.deploy.init({
-          channel: 'Developer',
-        });
-      }
+      const alert = await this.alertCtrl.show({
+        title: 'Select Build Channel',
+        buttons: [
+          {
+            text: 'Master',
+            role: 'Master',
+          },
+          {
+            text: 'Developer',
+            role: 'Developer',
+          },
+        ],
+      });
+      alert.onDidDismiss(async (_data, role) => {
+        if (role === 'Developer' || role === 'Master') {
+          await this.pro.deploy.init({
+            channel: role,
+          });
+        }
+        this.pro.deploy.info()
+          .then(info => this.proInfo = info)
+          .catch(err => console.warn(err));
+      });
+    } else if (this.developerClicked > 10) {
+      this.settings.isDeveloper = true;
+      this.toastCtrl.show({
+        message: 'You are now a developer',
+      });
+    } else {
+      this.developerClicked++;
     }
-    */
+  }
+
+  async checkForUpdates() {
+    if (await this.pro.deploy.check()) {
+      await this.pro.deploy.download().toPromise();
+      await this.pro.deploy.extract().toPromise();
+      await this.pro.deploy.redirect();
+    }
   }
 }

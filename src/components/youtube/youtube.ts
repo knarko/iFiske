@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 /**
  * Generated class for the YoutubeComponent component.
@@ -21,7 +22,10 @@ export class YoutubeComponent {
   @Input() url: string;
   @ViewChild('player') player: ElementRef;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private orientation: ScreenOrientation,
+  ) {
     this.fullscreen = Observable.merge(
       Observable.fromEvent(document, 'fullscreenchange'),
       Observable.fromEvent(document, 'webkitfullscreenchange'),
@@ -44,21 +48,17 @@ export class YoutubeComponent {
         document.webkitFullscreenElement ||
         (document as any).mozFullscreenElement;
       console.log(fullScreenElement);
-      if ((window.screen as any).orientation) {
-        if (fullScreenElement) {
-          (window.screen as any).orientation.unlock();
-        } else {
-          (window.screen as any).orientation.lock('portrait');
-        }
+      if (fullScreenElement) {
+        this.orientation.unlock();
+      } else {
+        this.orientation.lock('portrait');
       }
     });
   }
 
   stop() {
     this.sub.unsubscribe();
-    if ((window.screen as any).orientation) {
-      (window.screen as any).orientation.lock('portrait');
-    }
+    this.orientation.lock('portrait');
     this.sendMessage('pauseVideo');
   }
 

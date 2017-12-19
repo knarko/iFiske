@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 import { SessionProvider } from '../session/session';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
@@ -25,7 +24,6 @@ export class PushProvider {
     private app: App,
     private sessionData: SessionProvider,
     private alertCtrl: TranslateAlertController,
-    private inAppBrowser: InAppBrowser,
     private settings: SettingsProvider,
   ) {
     // TODO: fix this hack
@@ -66,7 +64,7 @@ export class PushProvider {
               {
                 text: 'OK',
                 handler: () => {
-                  this.inAppBrowser.create(`${serverLocation}/r/${payload.code}?lang=${this.settings.language}`, '_system');
+                  window.open(`${serverLocation}/r/${payload.code}?lang=${this.settings.language}`, '_system');
                 },
               },
             ],

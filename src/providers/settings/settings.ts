@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 interface Settings {
   push: boolean;
   language: string;
+  isDeveloper?: boolean;
 }
 
 export interface Language {
@@ -72,6 +73,15 @@ export class SettingsProvider {
   set push(push: boolean) {
     this.settings.push = push;
     // this.pushProvider.reset();
+    this.persistSettings();
+  }
+
+  get isDeveloper() {
+    return this.settings.isDeveloper;
+  }
+
+  set isDeveloper(state: boolean) {
+    this.settings.isDeveloper = state;
     this.persistSettings();
   }
 }

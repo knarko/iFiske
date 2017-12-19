@@ -25,7 +25,7 @@
     "@ionic-native/app-version": "^4.5.0",
     "@ionic-native/core": "^4.5.0",
     "@ionic-native/geolocation": "^4.5.0",
-    "@ionic-native/in-app-browser": "^4.5.0",
+    "@ionic-native/launch-navigator": "^4.5.2",
     "@ionic-native/sms": "^4.5.2",
     "@ionic-native/splash-screen": "^4.5.0",
     "@ionic-native/sqlite": "^4.5.0",
@@ -38,7 +38,9 @@
     "ajv": "^5.5.2",
     "angular-linky": "^1.2.2",
     "autolinker": "^1.4.4",
+    "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-ionic": "^2.0.3",
+    "cordova-plugin-migrate-localstorage": "0.0.2",
     "cordova-sqlite-storage": "^2.1.4",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
     "font-awesome": "^4.7.0",
@@ -57,6 +59,7 @@
     "reflect-metadata": "^0.1.10",
     "rxjs": "5.5.5",
     "sw-toolbox": "3.6.0",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.1.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
@@ -79,7 +82,12 @@
         "CHANNEL_NAME": "Master",
         "UPDATE_METHOD": "background"
       },
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "In order to help you find the best fishing nearby"
+      },
+      "cordova-plugin-migrate-localstorage": {}
     }
   }
 }

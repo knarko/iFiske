@@ -24,7 +24,7 @@
       <h2>{{'Version' | translate}}</h2>
       <p>{{version}} ({{buildId}})</p>
     </ion-item>
-    <ion-item>
+    <ion-item (click)="activateDeveloperMode()">
       <h2>{{'Deploy channel' | translate}}</h2>
       <p>{{channel}} ({{deployVersion}})</p>
     </ion-item>

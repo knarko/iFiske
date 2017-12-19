@@ -13,7 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
 import { Geolocation } from '@ionic-native/geolocation';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SMS } from '@ionic-native/sms';
 import { SQLite } from '@ionic-native/sqlite';
@@ -91,7 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     // Ionic native
     AppVersion,
     Geolocation,
-    InAppBrowser,
+    LaunchNavigator,
     SMS,
     SplashScreen,
     SQLite,

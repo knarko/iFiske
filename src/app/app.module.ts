@@ -50,7 +50,7 @@ import { UserProvider } from '../providers/user/user';
 import { PlatformProvider } from '../providers/platform/platform';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({

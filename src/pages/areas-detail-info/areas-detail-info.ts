@@ -2,18 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Area } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
-import { SuperTabsController } from 'ionic2-super-tabs';
+import { SuperTabs } from 'ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-
-/**
- * Generated class for the AreasDetailInfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -29,6 +22,8 @@ export class AreasDetailInfoPage {
 
   private slides: Slides;
 
+  private tabsCtrl: SuperTabs;
+
   @ViewChild('slides') set slidesSetter(slides: Slides) {
     if (!this.slides && slides) {
       this.slides = slides;
@@ -39,12 +34,12 @@ export class AreasDetailInfoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private tabsController: SuperTabsController,
     private sessionData: SessionProvider,
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products }) => {
+    this.navParams.get('params').subscribe(({ area, org, products, tabsCtrl }) => {
+      this.tabsCtrl = tabsCtrl;
       this.area = area;
       this.org = org;
       this.products = products;
@@ -81,7 +76,7 @@ export class AreasDetailInfoPage {
   }
 
   gotoPermits() {
-    this.tabsController.slideTo('AreasDetailPermitPage', 'areas-details');
+    this.tabsCtrl.slideTo('AreasDetailPermitPage');
   }
 
   imageLoaded(i: number) {

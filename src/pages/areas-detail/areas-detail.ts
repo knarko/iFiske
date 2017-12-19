@@ -26,7 +26,7 @@ export class AreasDetailPage {
   ];
   tabParams = new ReplaySubject<any>(1);
 
-  @ViewChild(SuperTabs) superTabs: SuperTabs;
+  @ViewChild(SuperTabs) superTabsCtrl: SuperTabs;
 
   constructor(
     public navCtrl: NavController,
@@ -50,7 +50,8 @@ export class AreasDetailPage {
   }
 
   ngAfterViewInit() {
-    this.superTabs.enableTabSwipe(this.tabs[2].page, false);
+    this.superTabsCtrl.enableTabSwipe(this.tabs[2].page, false);
+    this.updateParams();
   }
 
 
@@ -67,6 +68,7 @@ export class AreasDetailPage {
       area: this.area,
       org: this.org,
       products: this.products,
+      tabsCtrl: this.superTabsCtrl,
     });
   }
 

@@ -1,8 +1,8 @@
 {
-  "name": "ifiske4",
-  "version": "3.99.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "ifiske",
+  "version": "3.99.2",
+  "author": "Kåda Development",
+  "homepage": "https://www.ifiske.se",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -93,7 +93,7 @@
     "ionic_copy": "./scripts/copy.config.js",
     "ionic_sass": "./scripts/sass.config.js"
   },
-  "description": "An Ionic project",
+  "description": "iFiske - Easier fishing permits",
   "cordova": {
     "plugins": {
       "cordova-plugin-ionic": {

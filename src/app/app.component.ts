@@ -6,6 +6,7 @@ import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../providers/settings/settings';
+import { PushProvider } from '../providers/push/push';
 
 @Component({
   templateUrl: 'app.html',
@@ -21,11 +22,13 @@ export class MyApp {
     config: Config,
     translate: TranslateService,
     settings: SettingsProvider,
+    push: PushProvider,
   ) {
     config.setTransition('md-transition', MDTransition);
     translate.setDefaultLang('sv');
     translate.use(settings.language);
     platform.ready().then(async () => {
+      push.initialize();
       if (true || localStorage.getItem('language')) {
         update.update().catch(e => console.warn(e));
       }

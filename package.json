@@ -11,7 +11,8 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "start": "ionic serve",
-    "deploy": "ionic-app-scripts build --prod --release --aot && firebase deploy --only hosting"
+    "deploy": "node deploy.js",
+    "deploy:firebase": "ionic-app-scripts build --prod --release --aot && firebase deploy --only hosting"
   },
   "dependencies": {
     "@angular/animations": "~5.0.0",
@@ -86,7 +87,9 @@
     "@ionic/app-scripts": "^3.1.6",
     "cordova": "^7.1.0",
     "firebase-tools": "^3.13.1",
+    "inquirer": "^4.0.1",
     "ionic": "^3.13.2",
+    "prompt": "^1.0.0",
     "sass-lint": "^1.12.1",
     "typescript": "2.4.2"
   },

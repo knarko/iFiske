@@ -16,8 +16,7 @@ import { TranslateToastController } from '../translate-toast-controller/translat
 
 @Injectable()
 export class UpdateProvider {
-  // TODO: Better type
-  updates: any[];
+  updates: {update: (shouldUpdate?: boolean) => Promise<boolean>}[];
   private static readonly LAST_UPDATE = 'last_update';
 
   loading: Loading;
@@ -82,16 +81,15 @@ export class UpdateProvider {
       if (shouldUpdate) {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
-    }, async (error) => {
+    }, (error) => {
       console.error(error);
 
       // TODO: raven
       // Raven.captureException(error);
-      (await this.toastCtrl.create({
-        // TODO: Give more error details
+      this.toastCtrl.show({
         message: 'Network Error',
         duration: 4000,
-      })).present();
+      });
 
 
       // Must rethrow error to fail later

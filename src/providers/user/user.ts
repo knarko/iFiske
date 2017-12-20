@@ -4,7 +4,6 @@ import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { SessionProvider } from '../session/session';
 import { ProductProvider, Product } from '../product/product';
-import { PushProvider } from '../push/push';
 import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
@@ -122,9 +121,6 @@ export class UserProvider extends BaseModel {
   constructor(
     protected DB: DatabaseProvider,
     protected API: ApiProvider,
-    private Push: PushProvider,
-    // TODO: Toasts
-    // ToastService,
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
@@ -208,8 +204,10 @@ export class UserProvider extends BaseModel {
       return Promise.all(p).then(() => true);
     } catch (err) {
       if (err && err.error_code === 7) {
-        // TODO: Toasts
-        // ToastService.show('You have been logged out');
+        this.toastCtrl.show({
+          message: 'You have been logged out',
+          duration: 4000,
+        })
         this.logout();
       }
       throw err;
@@ -248,12 +246,12 @@ export class UserProvider extends BaseModel {
       this.clean(),
       this.API.user_logout(),
     ]);
-    promise.catch(() => {}).then(async () => {
+    promise.catch(() => {}).then(() => {
       loading.dismiss();
-      (await this.toastCtrl.create({
+      this.toastCtrl.show({
         message: 'You are logged out',
         duration: 4000,
-      })).present()
+      });
     });
     return promise;
   }

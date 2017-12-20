@@ -217,7 +217,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
           });
         marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
           maxWidth: window.innerWidth - 50,
-          // TODO: readd this
         });
         this.poiMarkers.addLayer(marker);
       }

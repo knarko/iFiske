@@ -32,7 +32,7 @@ export class AreasDetailPermitPage {
     console.log('buy', product, method);
 
     if (method.name === 'Web') {
-      // TODO: persist user to server
+      // TODO: pass user session to server
       const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${product.ID}&app=true&device=${this.platform.platform}`;
       window.open(url, '_system');
 

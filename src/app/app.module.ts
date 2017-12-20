@@ -12,6 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
+import { FCM } from '@ionic-native/fcm';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Pro } from '@ionic-native/pro';
@@ -92,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     // Ionic native
     AppVersion,
+    FCM,
     Geolocation,
     LaunchNavigator,
     Pro,

@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~5.0.0",
     "@ionic-native/app-version": "^4.5.0",
     "@ionic-native/core": "^4.5.0",
+    "@ionic-native/fcm": "^4.5.2",
     "@ionic-native/geolocation": "^4.5.0",
     "@ionic-native/launch-navigator": "^4.5.2",
     "@ionic-native/pro": "^4.5.2",
@@ -40,18 +41,30 @@
     "ajv": "^5.5.2",
     "angular-linky": "^1.2.2",
     "autolinker": "^1.4.4",
+    "cordova-android": "~6.3.0",
+    "cordova-plugin-actionsheet": "^2.3.3",
+    "cordova-plugin-add-swift-support": "^1.7.0",
+    "cordova-plugin-app-version": "^0.1.9",
+    "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-dialogs": "^1.3.4",
+    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-geolocation": "^3.0.0",
-    "cordova-plugin-ionic": "^2.0.3",
-    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-ionic": "^2.0.4",
     "cordova-plugin-migrate-localstorage": "0.0.2",
     "cordova-plugin-screen-orientation": "^2.0.2",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-statusbar": "^2.3.0",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sms-plugin-no-send-sms-permission": "^1.0.0",
     "cordova-sqlite-storage": "^2.1.4",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
+    "es6-promise-plugin": "^4.1.1",
     "font-awesome": "^4.7.0",
     "fuse.js": "^3.2.0",
     "imgcache.js": "^1.1.1",
     "ionic-angular": "3.9.2",
     "ionic-page-transitions": "^1.0.0",
+    "ionic-plugin-keyboard": "^2.2.1",
     "ionic2-super-tabs": "^4.1.3",
     "ionicons": "3.0.0",
     "leaflet": "^1.2.0",
@@ -84,7 +97,9 @@
       "cordova-plugin-ionic": {
         "APP_ID": "37198a9f",
         "CHANNEL_NAME": "Master",
-        "UPDATE_METHOD": "background"
+        "UPDATE_METHOD": "background",
+        "UPDATE_API": "https://api.ionicjs.com",
+        "MAX_STORE": "2"
       },
       "cordova-sqlite-storage": {},
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
@@ -93,7 +108,17 @@
       },
       "cordova-plugin-migrate-localstorage": {},
       "cordova-plugin-screen-orientation": {},
-      "cordova-plugin-ionic-webview": {}
-    }
+      "cordova-plugin-fcm": {},
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-app-version": {},
+      "cordova-sms-plugin-no-send-sms-permission": {}
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }

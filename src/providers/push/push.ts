@@ -4,6 +4,7 @@ import { SessionProvider } from '../session/session';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
+import { FCM } from '@ionic-native/fcm';
 
 
 interface PushHandler {
@@ -21,6 +22,7 @@ export class PushProvider {
   constructor(
     // private platform: Platform,
     // private API: ApiProvider,
+    private fcm: FCM,
     private app: App,
     private sessionData: SessionProvider,
     private alertCtrl: TranslateAlertController,
@@ -98,36 +100,20 @@ export class PushProvider {
       }],
     };
 
-    // TODO: Push notifications
-    /*
-    $ionicPlatform.ready(() => {
-      $rootScope.$on('cloud:push:notification', this.handleNotification);
-      $rootScope.$on('cloud:push:register', function (_event, data) {
-        console.log('Registered a push token:', data);
-      });
-    });
-    */
+    this.initialize();
   }
 
-  /*
-  // TODO: Update this
-  Flow of push notifications:
-  1. Register with Ionic Cloud
-  2. Get settings from Ionic Cloud
-  Note: Do we want to persist all settings to cloud? We might want to keep some settings only on certain devices (push for example)
-  3. Check if the user has enabled push notifications
-  4. Enable/Disable push notifications
+  async initialize() {
+    console.log(await this.fcm.getToken());
+    if (this.settings.isDeveloper) {
+      this.fcm.subscribeToTopic('developer');
+    }
+    this.fcm.subscribeToTopic('marketing');
+    this.fcm.onNotification().subscribe(this.handleNotification);
+    // TODO: register
+  }
 
-  Enabling:
-  1. Register a push token with ionic
-  2. Send the Ionic User ID to API servers
-
-  Disabling:
-  1. Unregister the push token with IonicCloud
-  2. Tell API servers that we no longer want push notifications (how? we need a new API route)
-  */
-
-  private _handleNotification = (_event, notification) => {
+  private handleNotification = (notification) => {
     console.log(notification);
     const payload = notification.raw.additionalData.payload;
     let i;

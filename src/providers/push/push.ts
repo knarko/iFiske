@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
-import { SessionProvider } from '../session/session';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
@@ -22,16 +21,21 @@ export interface PushHandler {
 @Injectable()
 export class PushProvider {
   token: string;
-  private defaultHandler: PushHandler;
+  private defaultHandler: PushHandler = (notification) => {
+    this.alertCtrl.show({
+      message: notification.message,
+    });
+  };
+
   private pushHandlers: Dictionary<PushHandler[]> = {
     /*
       * We got a new fishing permit. We will get the Code of the new permit
       * Payload should contain:
       * code: fishing permit code
       */
-    NEW: [(not) => {
-      if (not.code) {
-        this.navCtrl.push('PermitDetailPage', { id: not.code });
+    NEW: [(notification) => {
+      if (notification.code) {
+        this.navCtrl.push('PermitDetailPage', { id: notification.code });
       }
     }],
 
@@ -41,8 +45,8 @@ export class PushProvider {
       * orgid: organisation id,
       * code: fishing permit code,
       */
-    REP_REQ: [(not) => {
-      if (not.orgid && not.code) {
+    REP_REQ: [(notification) => {
+      if (notification.orgid && notification.code) {
         this.alertCtrl.create({
           title: 'Do you want to create a catch report?',
           buttons: [
@@ -53,7 +57,7 @@ export class PushProvider {
             {
               text: 'OK',
               handler: () => {
-                window.open(`${serverLocation}/r/${not.code}?lang=${this.settings.language}`, '_system');
+                window.open(`${serverLocation}/r/${notification.code}?lang=${this.settings.language}`, '_system');
               },
             },
           ],
@@ -66,9 +70,9 @@ export class PushProvider {
       * Payload should contain:
       * RepId: ID of the new report
       */
-    NEW_FAV: [(not) => {
-      if (not.repid) {
-        // this.navCtrl.push('app.report', {id: not.repid});
+    NEW_FAV: [(notification) => {
+      if (notification.repid) {
+        // this.navCtrl.push('app.report', {id: notification.repid});
       }
     }],
 
@@ -77,10 +81,10 @@ export class PushProvider {
       * Payload should contain:
       * message: a string that we should Display
       */
-    NOTE: [(not) => {
-      if (not.message) {
+    NOTE: [(notification) => {
+      if (notification.message) {
         this.alertCtrl.show({
-          message: not.message,
+          message: notification.message,
         });
       }
     }],
@@ -91,17 +95,11 @@ export class PushProvider {
   constructor(
     private fcm: FCM,
     private app: App,
-    private sessionData: SessionProvider,
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
   ) {
     this.navCtrl = this.app.getRootNav();
 
-    this.defaultHandler = async (notification) => {
-      (await this.alertCtrl.create({
-        message: notification.message,
-      })).present();
-    };
   }
 
   async initialize() {
@@ -115,7 +113,7 @@ export class PushProvider {
     this.fcm.onNotification().subscribe(this.handleNotification);
   }
 
-  private handleNotification = (notification) => {
+  private handleNotification = (notification: IfiskeNotification & NotificationData) => {
     console.log('New push notification:', notification);
 
     if (notification.action && notification.action in this.pushHandlers) {

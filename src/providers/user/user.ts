@@ -221,7 +221,6 @@ export class UserProvider extends BaseModel {
       .then(() => this.update(true));
     p.then(() => {
       this.loggedIn.next(true);
-      this.Push.reset();
       // TODO: Analytics
       // analytics.trackEvent('Login and Signup', 'Login');
     }, error => {
@@ -248,7 +247,6 @@ export class UserProvider extends BaseModel {
     const promise = Promise.all([
       this.clean(),
       this.API.user_logout(),
-      this.Push.logout(),
     ]);
     promise.catch(() => {}).then(async () => {
       loading.dismiss();

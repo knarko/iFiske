@@ -42,6 +42,7 @@
     "angular-linky": "^1.2.2",
     "autolinker": "^1.4.4",
     "cordova-android": "~6.3.0",
+    "cordova-ios": "~4.5.4",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^1.7.0",
     "cordova-plugin-app-version": "^0.1.9",
@@ -50,7 +51,8 @@
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-geolocation": "^3.0.0",
     "cordova-plugin-ionic": "^2.0.4",
-    "cordova-plugin-migrate-localstorage": "0.0.2",
+    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-migrate-localstorage": "https://github.com/ifiske/cordova-plugin-migrate-localstorage",
     "cordova-plugin-screen-orientation": "^2.0.2",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-statusbar": "^2.3.0",
@@ -106,7 +108,6 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "In order to help you find the best fishing nearby"
       },
-      "cordova-plugin-migrate-localstorage": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-fcm": {},
       "ionic-plugin-keyboard": {},
@@ -115,10 +116,13 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-app-version": {},
-      "cordova-sms-plugin-no-send-sms-permission": {}
+      "cordova-sms-plugin-no-send-sms-permission": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-migrate-localstorage": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

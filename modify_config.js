@@ -4,7 +4,7 @@ const { version } = require('./package.json');
 
 var versionCode = mkVersionCode(version);
 
-shell.sed('-i', /__REPLACE_WITH_ACTUAL_BUNDLE_VERSION__/g, versionCode, 'config.xml');
+shell.sed('-i', /((?:ios-CFBundleVersion)|(?:android-versionCode))="\d*?"/g, `$1="${versionCode}"`, 'config.xml');
 
 /**
  * @param {string} version

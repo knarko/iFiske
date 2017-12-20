@@ -24,3 +24,11 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+
+
+## How to deploy:
+
+1. Update the version number in package.json and config.xml
+2. Run `node modify_config.js` in order to increase the versionCode
+3. Push code to Ionic Pro `git push ionic master`
+4. Wait until the code has built on Ionic, then trigger a native build (if needed. Otherwise to a live-deploy to Production)

@@ -56,19 +56,20 @@ export class AboutPage {
     if (this.settings.isDeveloper) {
       const alert = await this.alertCtrl.show({
         title: 'Select Build Channel',
+        message: 'Master is for developers only',
         buttons: [
           {
             text: 'Master',
             role: 'Master',
           },
           {
-            text: 'Developer',
-            role: 'Developer',
+            text: 'Production',
+            role: 'Production',
           },
         ],
       });
       alert.onDidDismiss(async (_data, role) => {
-        if (role === 'Developer' || role === 'Master') {
+        if (role === 'Production' || role === 'Master') {
           await this.pro.deploy.init({
             channel: role,
           });

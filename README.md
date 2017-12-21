@@ -29,4 +29,7 @@ Substitute ios for android if not on a Mac.
 ## How to deploy:
 1. Run `npm run deploy` in order to bump major, minor or patch
 2. Push code to Ionic Pro `git push ionic master`
-3. Wait until the code has built on Ionic, then trigger a native build (if needed. Otherwise to a live-deploy to Production)
+3. Wait until the code has built on Ionic, then trigger a native build if plugins have changed.
+4. If no plugins have changed, deploy to Production in Ionic Pro.
+
+If plugins have changed, you might also need to setup max/min versions or something.

@@ -90,6 +90,11 @@ const deploy = async () => {
   shell.exec('git add package.json config.xml')
   shell.exec(`git commit -m "chore: release v${version}"`)
   shell.exec(`git tag -a v${version} -m "release v${version}"`)
+
+  console.log(`Commited and tagged!
+Now all you need to do is
+
+$ git push ionic master`);
 };
 
 

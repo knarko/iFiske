@@ -107,7 +107,7 @@
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="In order to help you find the best fishing nearby" />
     </plugin>
     <plugin name="cordova-plugin-screen-orientation" spec="^2.0.2" />
-    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
+    <plugin name="cordova-plugin-fcm" spec="https://github.com/maistho/cordova-plugin-fcm" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />

@@ -146,4 +146,9 @@ export class ConfirmPasswordRecoveryPage {
       loading.dismiss();
     })
   }
+
+  async dismiss() {
+    this.navCtrl.popToRoot({animate: false});
+    this.navCtrl.first().dismiss();
+  }
 }

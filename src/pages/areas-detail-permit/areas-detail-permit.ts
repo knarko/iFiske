@@ -5,6 +5,7 @@ import { Area } from '../../providers/area/area';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { PlatformProvider } from '../../providers/platform/platform';
+import { Pro } from '@ionic/pro';
 
 @IonicPage()
 @Component({
@@ -42,6 +43,8 @@ export class AreasDetailPermitPage {
       this.modalCtrl.create('SmsPurchasePage', {
         product,
       }).present();
+    } else {
+      Pro.getApp().monitoring.log('There was no valid method: ' + method + JSON.stringify(product), { level: 'error'});
     }
   }
 }

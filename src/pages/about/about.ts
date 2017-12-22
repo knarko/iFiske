@@ -6,6 +6,7 @@ import { SettingsProvider } from '../../providers/settings/settings';
 import { Pro, DeployInfo } from '@ionic-native/pro';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -30,6 +31,7 @@ export class AboutPage {
     private pro: Pro,
     private alertCtrl: TranslateAlertController,
     private toastCtrl: TranslateToastController,
+    private loadingCtrl: TranslateLoadingController,
   ) { }
 
   ionViewWillEnter() {
@@ -82,6 +84,7 @@ export class AboutPage {
       this.settings.isDeveloper = true;
       this.toastCtrl.show({
         message: 'You are now a developer',
+        duration: 4000,
       });
     } else {
       this.developerClicked++;
@@ -89,10 +92,31 @@ export class AboutPage {
   }
 
   async checkForUpdates() {
-    if (await this.pro.deploy.check()) {
-      await this.pro.deploy.download().toPromise();
-      await this.pro.deploy.extract().toPromise();
-      await this.pro.deploy.redirect();
+    const loading = await this.loadingCtrl.show({ content: 'Checking for updates' });
+    try {
+
+      if (await this.pro.deploy.check()) {
+        await this.pro.deploy.download().toPromise();
+        await this.pro.deploy.extract().toPromise();
+        await this.pro.deploy.redirect();
+        this.alertCtrl.show({
+          message: 'Updated!',
+          buttons: [{
+            text: 'OK',
+          }],
+        });
+      } else {
+        this.alertCtrl.show({
+          message: 'No updates available',
+          buttons: [{
+            text: 'OK',
+          }],
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      loading.dismiss();
     }
   }
 }

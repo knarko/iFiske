@@ -2,11 +2,11 @@ fish-level {
   border: 1px solid map-get($colors, dark);
   border-radius: 10px;
   clear: both;
-  contain: content;
+  // contain: content;
   display: block;
   height: 10px;
   margin: auto 0 0 auto;
-  overflow: hidden;
+  // overflow: hidden;
   position: relative;
   width: 100%;
   padding: 2px;
@@ -14,6 +14,7 @@ fish-level {
   &.show-icon {
     width: calc(100% - 20px);
     &::before {
+      color: color($colors, primary);
       content: "\e902";
       display: block;
       position: absolute;
@@ -35,8 +36,22 @@ fish-level {
     animation: .5s level;
     animation-timing-function: cubic-bezier(.68, -.35, .27, 1.35);
     transition: .5s cubic-bezier(.68, -.35, .27, 1.35);
-    background: map-get($colors, danger);
+
+    &-1 {
+      background: map-get($colors, danger);
+    }
+
+    &-2 {
+      background: map-get($colors, gold);
+    }
+
+    &-3,
+    &-4,
+    &-5 {
+      background: map-get($colors, secondary);
+    }
   }
+
 }
 
 @keyframes level {

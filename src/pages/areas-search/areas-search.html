@@ -11,7 +11,9 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
-    <ion-searchbar animated (ionInput)="search($event)" [(ngModel)]="searchTerm" [placeholder]="'Search' | translate"></ion-searchbar>
+    <form action="">
+    <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" [placeholder]="'Search' | translate"></ion-searchbar>
+    </form>
   </ion-toolbar>
 
 </ion-header>

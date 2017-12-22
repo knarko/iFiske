@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
@@ -35,6 +35,7 @@ export class AreasSearchPage {
     public navParams: NavParams,
     private area: AreaProvider,
     private fish: FishProvider,
+    private keyboard: Keyboard,
   ) { }
 
   ionViewWillEnter() {
@@ -96,16 +97,12 @@ export class AreasSearchPage {
 
   search = debounce(this.searchImmediate, 500);
 
-  keyPress($event) {
+  keypress($event) {
     if ($event.keyCode === 13) { // if enter-key
       $event.preventDefault();
       const searchTerm = $event.srcElement.value;
       this.searchImmediate(searchTerm);
-      /*
-      if (window.cordova) {
-        $cordovaKeyboard.close();
-      }
-      */
+      this.keyboard.close();
     }
   }
 

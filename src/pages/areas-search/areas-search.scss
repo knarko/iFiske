@@ -17,6 +17,11 @@ page-areas-search {
 
   .fish {
     height: 190px;
+    img {
+      max-height: 130px;
+      margin: 0 auto;
+      display: block;
+    }
   }
 
   .item-ios ion-thumbnail img {

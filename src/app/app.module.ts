@@ -56,6 +56,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+// Import locale
+import localeSv from '@angular/common/locales/sv';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeSv);
+
 @NgModule({
   declarations: [
     MyApp,

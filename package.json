@@ -51,6 +51,7 @@
     "cordova-plugin-dialogs": "^2.0.0",
     "cordova-plugin-fcm": "https://github.com/maistho/cordova-plugin-fcm",
     "cordova-plugin-geolocation": "^4.0.0",
+    "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic": "^2.0.4",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-migrate-localstorage": "https://github.com/ifiske/cordova-plugin-migrate-localstorage",
@@ -122,7 +123,8 @@
       "cordova-plugin-app-version": {},
       "cordova-sms-plugin-no-send-sms-permission": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-migrate-localstorage": {}
+      "cordova-plugin-migrate-localstorage": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android",

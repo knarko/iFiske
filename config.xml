@@ -126,4 +126,5 @@
     <plugin name="cordova-sms-plugin-no-send-sms-permission" spec="^1.0.0" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-migrate-localstorage" spec="https://github.com/ifiske/cordova-plugin-migrate-localstorage" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
 </widget>

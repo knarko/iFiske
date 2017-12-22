@@ -35,7 +35,7 @@ export class PushProvider {
       */
     NEW: [(notification) => {
       if (notification.code) {
-        this.navCtrl.push('PermitDetailPage', { id: notification.code });
+        this.navCtrl.push('PermitDetailPage', { ID: notification.code });
       }
     }],
 
@@ -84,6 +84,7 @@ export class PushProvider {
     NOTE: [(notification) => {
       if (notification.message) {
         this.alertCtrl.show({
+          title: notification.title,
           message: notification.message,
         });
       }

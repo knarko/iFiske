@@ -88,7 +88,7 @@ img.revoked {
     background: $gradient;
     background-size: calc(100% + 30px) calc(100% + 30px);
     animation: 2s linear bg infinite;
-    transition: background 1s linear;
+    transition: all 1s linear;
 }
 
 .bg-active {

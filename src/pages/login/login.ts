@@ -62,7 +62,7 @@ export class LoginPage {
     });
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.statusBar.styleDefault();
   }
 

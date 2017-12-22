@@ -5,6 +5,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ApiError } from '../../providers/api/api';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /**
  * Generated class for the LoginPage page.
@@ -29,6 +30,7 @@ export class LoginPage {
     private userProvider: UserProvider,
     private loadingCtrl: TranslateLoadingController,
     private viewCtrl: ViewController,
+    private statusBar: StatusBar,
     fb: FormBuilder,
   ) {
     this.form = new Form({
@@ -58,6 +60,14 @@ export class LoginPage {
         },
       },
     });
+  }
+
+  ionViewWillEnter() {
+    this.statusBar.styleDefault();
+  }
+
+  ionViewWillLeave() {
+    this.statusBar.styleBlackTranslucent();
   }
 
   close() {

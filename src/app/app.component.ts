@@ -15,9 +15,9 @@ export class MyApp {
   rootPage: any = 'HomePage';
 
   constructor(
-    platform: Platform,
+    private platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
+    private splashScreen: SplashScreen,
     update: UpdateProvider,
     config: Config,
     translate: TranslateService,
@@ -36,7 +36,12 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-      splashScreen.hide();
+    });
+  }
+
+  ionViewDidEnter() {
+    this.platform.ready().then(() => {
+      this.splashScreen.hide();
     });
   }
 }

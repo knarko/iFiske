@@ -73,8 +73,14 @@
     <p *ngIf="permit.fine" class="fineprint">{{permit.fine}}</p>
   </div>
 </ion-content>
-<ion-footer *ngIf="permit.rule_t" class="bar-balanced">
-  <div class="button-bar">
-    <a class="button button-icon ion-document-text" ng-click="openRulesModal()">{{'Rules' | translate}}</a>
-  </div>
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button (click)="openRulesModel()" icon-left *ngIf="permit?.rule_t">
+      <ion-icon name="document"></ion-icon>
+      {{'Rules' | translate}}
+    </button>
+    <a ion-button icon-start *ngIf="permit.code" [href]="serverLocation + '/r/' + permit.code + '?lang=' + language" target="_system">
+      <ion-icon name="ifiske-fish"></ion-icon>
+      {{'Catch report' | translate}}</a>
+  </ion-toolbar>
 </ion-footer>

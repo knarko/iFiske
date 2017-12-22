@@ -54,6 +54,7 @@ export class AreasFavoritesPage {
       // TODO: raven
       this.toastCtrl.show({
         message: 'errors.favorite.notification_update',
+        duration: 4000,
       });
     });
   }

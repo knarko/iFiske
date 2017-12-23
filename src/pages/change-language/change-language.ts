@@ -35,7 +35,7 @@ export class ChangeLanguagePage {
     this.statusBar.styleDefault();
   }
 
-  ionViewWilLeave() {
+  ionViewWillLeave() {
     this.statusBar.styleBlackTranslucent();
   }
 

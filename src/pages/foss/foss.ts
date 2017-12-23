@@ -24,7 +24,7 @@ export class FossPage {
     this.statusBar.styleDefault();
   }
 
-  ionViewWilLeave() {
+  ionViewWillLeave() {
     this.statusBar.styleBlackTranslucent();
   }
 

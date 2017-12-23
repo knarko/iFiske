@@ -36,16 +36,16 @@ export class DeployProvider {
     await this.platform.ready();
     console.log(this.pro);
 
-    const hasUpdate = await this.pro.deploy.check().pipe(timeout(8000)).toPromise();
+    const hasUpdate = await this.pro.deploy.check().pipe(take(1), timeout(8000)).toPromise();
     console.log(hasUpdate);
     if (hasUpdate === 'true') {
       // TODO: check if we are on wifi
       await this.pro.deploy.download().pipe(
-        filter(status => status === 'true'),
         tap(status => console.log('Download status:', status)),
+        filter(status => status === 'true'),
         switchMap(() => this.pro.deploy.extract()),
         tap(status => console.log('Extract status:', status)),
-        filter(status => status === 'true'),
+        filter(status => status === 'done'),
         take(1),
       ).toPromise();
       const alert = await this.alertCtrl.show({

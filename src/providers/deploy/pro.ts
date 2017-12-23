@@ -36,9 +36,16 @@ export interface DeployConfig {
 /**
  * @hidden
  */
-export class ProDeploy {
+@Plugin({
+  pluginName: 'ProDeploy',
+  plugin: 'ionic-pro-deploy',
+})
+export class ProDeploy extends IonicNativePlugin {
 
-  constructor(private _objectInstance: any) { window['dummy'] = this._objectInstance; }
+  constructor(private _objectInstance: any) {
+    super();
+    window['dummy'] = this._objectInstance;
+  }
 
   /**
    * Re-initialize Deploy plugin with a new App ID and host.  Not used in most cases.
@@ -49,12 +56,15 @@ export class ProDeploy {
 
   /**
    * Check a channel for an available update
-   * @return {Promise<string>} Resolves with 'true' or 'false', or rejects with an error.
+   * @return {Observable<string>} Resolves with 'true' or 'false', or rejects with an error.
    */
   @CordovaInstance({
     observable: true,
+    clearFunction: 'noop',
   })
   check(): Observable<string> { return; }
+
+  noop() { }
 
   /**
    * Download an available version
@@ -62,6 +72,7 @@ export class ProDeploy {
    */
   @CordovaInstance({
     observable: true,
+    clearFunction: 'noop',
   })
   download(): Observable<any> { return; }
 
@@ -71,6 +82,7 @@ export class ProDeploy {
    */
   @CordovaInstance({
     observable: true,
+    clearFunction: 'noop',
   })
   extract(): Observable<any> { return; }
 

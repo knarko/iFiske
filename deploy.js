@@ -66,27 +66,29 @@ const deploy = async () => {
         }
         return `'${value}' is not a valid version number`;
       },
-    }, {
-        type: 'confirm',
-        name: 'sourcemaps',
-        message: 'Do you want to upload source maps to Ionic Pro?',
-        default: true,
-      }, {
-        type: 'confirm',
-        name: 'push',
-        message: 'Do you want to push to Ionic Pro immediately?',
-        default: false,
     }]);
     versions = splitVersion(next);
   } else {
     versions[bump]++;
   }
+
+  const { sourcemaps, push } = await inquirer.prompt([{
+    type: 'confirm',
+    name: 'sourcemaps',
+    message: 'Do you want to upload source maps to Ionic Pro?',
+    default: true,
+  }, {
+    type: 'confirm',
+    name: 'push',
+    message: 'Do you want to push to Ionic Pro immediately?',
+    default: false,
+  }]);
   switch (bump) {
     case 'major':
-    versions.minor = 0;
+      versions.minor = 0;
     case 'minor':
-    versions.patch = 0;
-    break;
+      versions.patch = 0;
+      break;
   }
   version = mergeVersion(versions);
   packageJson.version = version;

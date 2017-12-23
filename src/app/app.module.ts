@@ -15,7 +15,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { FCM } from '@ionic-native/fcm';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-import { Pro } from '@ionic-native/pro';
+import { Pro } from '../providers/deploy/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SMS } from '@ionic-native/sms';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -59,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 // Import locale
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
+import { DeployProvider } from '../providers/deploy/deploy';
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -131,6 +132,7 @@ registerLocaleData(localeSv);
     UpdateProvider,
     UserProvider,
     PlatformProvider,
+    DeployProvider,
   ],
 })
 export class AppModule {}

@@ -3,10 +3,11 @@ import { IonicPage, Platform } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { Pro, DeployInfo } from '@ionic-native/pro';
+import { Pro, DeployInfo } from '../../providers/deploy/pro';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
+import { DeployProvider } from '../../providers/deploy/deploy';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -32,6 +33,7 @@ export class AboutPage {
     private alertCtrl: TranslateAlertController,
     private toastCtrl: TranslateToastController,
     private loadingCtrl: TranslateLoadingController,
+    private deploy: DeployProvider,
   ) { }
 
   ionViewWillEnter() {
@@ -94,11 +96,8 @@ export class AboutPage {
   async checkForUpdates() {
     const loading = await this.loadingCtrl.show({ content: 'Checking for updates' });
     try {
-
-      if (await this.pro.deploy.check()) {
-        await this.pro.deploy.download().toPromise();
-        await this.pro.deploy.extract().toPromise();
-        await this.pro.deploy.redirect();
+    const updated = await this.deploy.checkForUpdates()
+    if (updated) {
         this.alertCtrl.show({
           message: 'Updated!',
           buttons: [{
@@ -115,6 +114,12 @@ export class AboutPage {
       }
     } catch (e) {
       console.error(e);
+        this.alertCtrl.show({
+          message: 'No updates available',
+          buttons: [{
+            text: 'OK',
+          }],
+        });
     } finally {
       loading.dismiss();
     }

@@ -7,6 +7,7 @@ interface Settings {
   push: boolean;
   language: string;
   isDeveloper?: boolean;
+  channel: string;
 }
 
 export interface Language {
@@ -20,6 +21,7 @@ export class SettingsProvider {
   private static defaultSettings = {
     push: true,
     language: 'sv',
+    channel: 'Production',
   }
   private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
 
@@ -82,6 +84,14 @@ export class SettingsProvider {
 
   set isDeveloper(state: boolean) {
     this.settings.isDeveloper = state;
+    this.persistSettings();
+  }
+
+  get channel() {
+    return this.settings.channel;
+  }
+  set channel(channel: string) {
+    this.settings.channel = channel;
     this.persistSettings();
   }
 }

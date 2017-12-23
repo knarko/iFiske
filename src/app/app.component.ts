@@ -36,15 +36,12 @@ export class MyApp {
         this.update.update().catch(e => console.warn(e));
       }
       this.config.set('ios', 'backButtonText', await translate.get('ui.general.back').toPromise());
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.statusBar.styleBlackTranslucent();
     });
   }
 
   ionViewDidEnter() {
     this.platform.ready().then(() => {
+      this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
     });
   }

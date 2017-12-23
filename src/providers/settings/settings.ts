@@ -29,10 +29,8 @@ export class SettingsProvider {
     private translate: TranslateService,
     // private pushProvider: PushProvider,
   ) {
-    if (!this.settings) {
-      this.settings = SettingsProvider.defaultSettings;
-      this.persistSettings();
-    }
+    this.settings = Object.assign({}, SettingsProvider.defaultSettings, this.settings);
+    this.persistSettings();
     console.log(this.settings);
   }
 

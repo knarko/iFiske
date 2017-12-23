@@ -34,7 +34,7 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
 
-    <icon src="resources/icon.png">
+    <icon src="resources/icon.png" />
     <platform name="android">
         <!-- Push notification icons -->
         <resource-file src="resources/android/notifications/drawable-ldpi-icon.png" target="res/drawable-ldpi/fcm_push_icon.png" />

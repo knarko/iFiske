@@ -77,6 +77,7 @@ export class AboutPage {
           await this.pro.deploy.init({
             channel: role,
           });
+          this.settings.channel = role;
         }
         this.pro.deploy.info()
           .then(info => this.proInfo = info)

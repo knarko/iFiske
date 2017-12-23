@@ -106,7 +106,8 @@ const deploy = async () => {
   console.log(`Tagged a release as v${version}`);
 
   if (sourcemaps) {
-    shell.exec(`ionic monitoring syncmaps`)
+    shell.exec(`npm run build`);
+    shell.exec(`ionic monitoring syncmaps --no-interactive`);
   }
 
   if (push) {

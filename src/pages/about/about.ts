@@ -8,6 +8,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { DeployProvider } from '../../providers/deploy/deploy';
+import { APP_VERSION } from '../../app/config';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -51,7 +52,7 @@ export class AboutPage {
           .catch(err => console.warn(err));
       } else {
         this.buildId = 'abc123';
-        this.version = '4.0.0';
+        this.version = APP_VERSION;
       }
     });
   }
@@ -74,10 +75,7 @@ export class AboutPage {
       });
       alert.onDidDismiss(async (_data, role) => {
         if (role === 'Production' || role === 'Master') {
-          await this.pro.deploy.init({
-            channel: role,
-          });
-          this.settings.channel = role;
+          await this.deploy.setChannel(role);
         }
         this.pro.deploy.info()
           .then(info => this.proInfo = info)
@@ -97,8 +95,8 @@ export class AboutPage {
   async checkForUpdates() {
     const loading = await this.loadingCtrl.show({ content: 'Checking for updates' });
     try {
-    const updated = await this.deploy.checkForUpdates()
-    if (updated) {
+      const updated = await this.deploy.checkForUpdates()
+      if (updated) {
         this.alertCtrl.show({
           message: 'Updated!',
           buttons: [{
@@ -115,12 +113,12 @@ export class AboutPage {
       }
     } catch (e) {
       console.error(e);
-        this.alertCtrl.show({
-          message: 'No updates available',
-          buttons: [{
-            text: 'OK',
-          }],
-        });
+      this.alertCtrl.show({
+        message: 'No updates available',
+        buttons: [{
+          text: 'OK',
+        }],
+      });
     } finally {
       loading.dismiss();
     }

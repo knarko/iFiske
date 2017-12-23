@@ -30,6 +30,14 @@ export class DeployProvider {
     this.checkForUpdates();
   }
 
+  async setChannel(channel: string) {
+    this.settings.channel = channel;
+    return this.pro.deploy.init({
+      appId: APP_ID,
+      channel,
+    });
+  }
+
   async checkForUpdates() {
     await this.platform.ready();
     console.log(this.pro);

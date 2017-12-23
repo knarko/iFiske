@@ -26,20 +26,20 @@ export class MyApp {
     private push: PushProvider,
     private deploy: DeployProvider,
   ) {
-    config.setTransition('md-transition', MDTransition);
-    translate.setDefaultLang('sv');
-    translate.use(settings.language);
+    this.config.setTransition('md-transition', MDTransition);
+    this.translate.setDefaultLang('sv');
+    this.translate.use(this.settings.language);
     this.deploy.initialize();
     platform.ready().then(async () => {
-      push.initialize();
+      this.push.initialize();
       if (true || localStorage.getItem('language')) {
-        update.update().catch(e => console.warn(e));
+        this.update.update().catch(e => console.warn(e));
       }
-      config.set('ios', 'backButtonText', await translate.get('ui.general.back').toPromise());
+      this.config.set('ios', 'backButtonText', await translate.get('ui.general.back').toPromise());
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      statusBar.styleBlackTranslucent();
+      this.statusBar.styleDefault();
+      this.statusBar.styleBlackTranslucent();
     });
   }
 

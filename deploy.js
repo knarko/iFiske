@@ -56,7 +56,7 @@ const deploy = async () => {
 
 
   if (bump === 'custom') {
-    const { next } = await inquirer.prompt([{
+    const { next, sourcemaps, push } = await inquirer.prompt([{
       type: 'input',
       name: 'next',
       message: 'What is the new version number?',
@@ -66,6 +66,16 @@ const deploy = async () => {
         }
         return `'${value}' is not a valid version number`;
       },
+    }, {
+        type: 'confirm',
+        name: 'sourcemaps',
+        message: 'Do you want to upload source maps to Ionic Pro?',
+        default: true,
+      }, {
+        type: 'confirm',
+        name: 'push',
+        message: 'Do you want to push to Ionic Pro immediately?',
+        default: false,
     }]);
     versions = splitVersion(next);
   } else {
@@ -91,10 +101,17 @@ const deploy = async () => {
   shell.exec(`git commit -m "chore: release v${version}"`)
   shell.exec(`git tag -a v${version} -m "release v${version}"`)
 
-  console.log(`Commited and tagged!
-Now all you need to do is
+  console.log(`Tagged a release as v${version}`);
 
-$ git push ionic master`);
+  if (sourcemaps) {
+    shell.exec(`ionic monitoring syncmaps`)
+  }
+
+  if (push) {
+    shell.exec(`git push ionic master`);
+  } else {
+    console.log(`Now all you need to do is\n$ git push ionic master`);
+  }
 };
 
 

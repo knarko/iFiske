@@ -55,11 +55,11 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
 
-        <icon density="mdpi" src="resources/android/res/mipmap-mdpi/ic_launcer.png" />
-        <icon density="hdpi" src="resources/android/res/mipmap-hdpi/ic_launcer.png" />
-        <icon density="xhdpi" src="resources/android/res/mipmap-xhdpi/ic_launcer.png" />
-        <icon density="xxhdpi" src="resources/android/res/mipmap-xxhdpi/ic_launcer.png" />
-        <icon density="xxxhdpi" src="resources/android/res/mipmap-xxxhdpi/ic_launcer.png" />
+        <icon density="mdpi" src="resources/android/res/mipmap-mdpi/ic_launcher.png" />
+        <icon density="hdpi" src="resources/android/res/mipmap-hdpi/ic_launcher.png" />
+        <icon density="xhdpi" src="resources/android/res/mipmap-xhdpi/ic_launcher.png" />
+        <icon density="xxhdpi" src="resources/android/res/mipmap-xxhdpi/ic_launcher.png" />
+        <icon density="xxxhdpi" src="resources/android/res/mipmap-xxxhdpi/ic_launcher.png" />
     </platform>
     <platform name="ios">
         <!-- Needed for FCM to work -->

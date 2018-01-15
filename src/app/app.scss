@@ -80,13 +80,19 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 
 .item-md,
 .item-ios {
-  &.item-input.ng-invalid.ng-dirty:not(.input-has-focus):not(.item-input-has-focus) {
-    &.item-md .item-inner {
+  &.item-inputng-dirty:not(.input-has-focus):not(.item-input-has-focus) {
+    &.ng-invalid.item-md .item-inner {
       box-shadow: inset 0 -1px 0 0 $text-input-highlight-color-invalid;
     }
-
-    .item-inner {
+    &.ng-invalid .item-inner {
       border-bottom-color: $text-input-highlight-color-invalid;
+    }
+
+    &.ng-valid.item-md .item-inner {
+      box-shadow: inset 0 -1px 0 0 $text-input-highlight-color-valid;
+    }
+    &.ng-valid .item-inner {
+      border-bottom-color: $text-input-highlight-color-valid;
     }
   }
 }

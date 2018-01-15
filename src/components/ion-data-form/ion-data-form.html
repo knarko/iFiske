@@ -1,6 +1,6 @@
-<form *ngIf="form" [formGroup]="form.group" (ngSubmit)="submit()" novalidate>
+<form *ngIf="form && form.group" [formGroup]="form.group" (ngSubmit)="submit()" novalidate>
   <ng-container *ngFor="let item of form.controlArray; let i = index">
-    <ion-item [ngSwitch]="item.type" [class.ng-invalid]="item.control.invalid">
+    <ion-item [ngSwitch]="item.type" [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
       <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
 
       <ion-textarea *ngSwitchCase="'textarea'" [formControl]="item.control" [placeholder]="item.placeholder | translate" [required]="item.required"></ion-textarea>

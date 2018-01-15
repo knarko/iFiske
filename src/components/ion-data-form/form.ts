@@ -4,6 +4,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
+  ValidatorFn,
+  AsyncValidatorFn,
 } from '@angular/forms';
 import { Dictionary } from '../../types';
 
@@ -12,7 +14,8 @@ export interface FormControl {
   placeholder?: string;
   type?: 'password' | 'text' | 'number' | 'email' | 'textarea' | 'tel';
   required?: boolean;
-  validators?: Validators[];
+  validators?: ValidatorFn[];
+  asyncValidators?: AsyncValidatorFn[];
   errors?: {
     [error: string]: string;
   };
@@ -51,7 +54,7 @@ export class Form {
     this.errors = form.errors;
     const groupOptions = {};
     for (let id in this.controls) {
-      groupOptions[id] = ['', this.controls[id].validators];
+      groupOptions[id] = ['', this.controls[id].validators || [], this.controls[id].asyncValidators || []];
       this.controlArray.push(this.controls[id]);
     }
     this.group = this.builder.group(groupOptions);

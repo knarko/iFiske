@@ -12,6 +12,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 import { Rule } from '../rule/rule';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 export interface User {
   username: string;
@@ -116,7 +118,7 @@ export class UserProvider extends BaseModel {
     },
   };
 
-  loggedIn = new ReplaySubject<boolean>(1);
+  loggedIn: Observable<boolean>;
 
   constructor(
     protected DB: DatabaseProvider,
@@ -127,7 +129,7 @@ export class UserProvider extends BaseModel {
     private product: ProductProvider,
   ) {
     super();
-    this.loggedIn.next(!!session.token);
+    this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
     const p = [];
     for (const table of Object.values(this.tables)) {
       p.push(DB.initializeTable(table));
@@ -214,15 +216,17 @@ export class UserProvider extends BaseModel {
     }
   }
 
-  login({username, password}) {
+  async login({username, password}) {
+    await this.clean();
+
     const p = this.API.user_login(username, password)
       .then(() => this.update(true));
+
     p.then(() => {
-      this.loggedIn.next(true);
       // TODO: Analytics
       // analytics.trackEvent('Login and Signup', 'Login');
     }, error => {
-      this.loggedIn.next(false);
+      this.session.token = undefined;
       Promise.all([
         // TODO: Analytics
         // analytics.trackEvent('Login and Signup', 'Login Failure'),
@@ -236,11 +240,9 @@ export class UserProvider extends BaseModel {
   async logout() {
     // TODO: Analytics
     // analytics.trackEvent('Login and Signup', 'Logout');
-    const loading = await this.loadingCtrl.create({
+    const loading = await this.loadingCtrl.show({
       content: 'Logging out',
     });
-    loading.present();
-    this.loggedIn.next(false);
 
     const promise = Promise.all([
       this.clean(),
@@ -316,6 +318,8 @@ export class UserProvider extends BaseModel {
         product.validity = this.product.getValidity(product);
       });
       return products;
+    }, err => {
+      return [];
     });
   }
 

@@ -42,7 +42,7 @@ export class SmsPurchasePage {
   async persistApproval() {
     console.log(this);
     if (this.approvedRules) {
-      const alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.show({
         cssClass: 'alert-large sms-rules',
         message: this.terms.smsTerms,
         title: 'SMS Rules',
@@ -53,7 +53,6 @@ export class SmsPurchasePage {
           role: 'accept',
         }],
       });
-      alert.present();
       const role = await new Promise((resolve) => {
         alert.onDidDismiss((_, role) => resolve(role));
       });
@@ -72,12 +71,12 @@ export class SmsPurchasePage {
       // No user found, maybe not logged in
     }
 
-    const alert = await this.alertCtrl.create({
+    const alert = await this.alertCtrl.show({
       title: 'What is your name?',
       inputs: [
         {
           name: 'name',
-          placeholder: 'ui.placeholder.full_name',
+          placeholder: 'ui.placeholder.fullname',
           value: name,
         },
       ],
@@ -86,7 +85,6 @@ export class SmsPurchasePage {
         role: 'send',
       }],
     });
-    alert.present();
     name = await new Promise<string>((resolve) => alert.onDidDismiss(({name}: {name: string}, role) => role === 'send' && name && resolve(name)));
     const message = `FISKA ${this.product.pf} ${name}`;
     try {

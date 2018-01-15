@@ -6,6 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
+import { timeout } from 'rxjs/operators';
+import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
 function delay(fn, t) {
   return new Promise((resolve, reject) => {
@@ -31,7 +33,12 @@ export class ApiProvider {
 
   private base_url = serverLocation + '/api/v2/api.php';
   private readonly maxRetries = 1;
-  constructor(private http: HttpClient, private sessionData: SessionProvider, private settings: SettingsProvider) {
+  constructor(
+    private http: HttpClient,
+    private sessionData: SessionProvider,
+    private settings: SettingsProvider,
+    private toastCtrl: TranslateToastController,
+  ) {
 
   }
 
@@ -41,7 +48,7 @@ export class ApiProvider {
      * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
      * @return {promise}        $http promise
      */
-  private api_call(params, retry?: number | false) {
+  private api_call(params, retry?: number | false): Promise<any> {
 
     let retries: number;
     if (retry === false) {
@@ -58,9 +65,10 @@ export class ApiProvider {
     return this.http.get(this.base_url, {
       params: Object.keys(params).reduce((p, k) => p.set(k, params[k]), new HttpParams()),
     })
+      .pipe(timeout(10000))
       .toPromise()
       .then((response: ApiResponse) => {
-        if (response.status !== 'error' && response.data && response.data.response) {
+        if (response.status !== 'error' && response.data != undefined && response.data.response != undefined) {
           return Promise.resolve(response.data.response);
         }
         return Promise.reject(response);
@@ -75,6 +83,18 @@ export class ApiProvider {
         } else if (response.status === 0) {
           return Promise.reject('Request timeout');
         } else if (response.message) {
+          switch (response.message.error_code) {
+            case 7:
+              // Authentication error
+              if (this.sessionData.token) {
+                this.sessionData.token = undefined;
+                this.toastCtrl.show({
+                  message: 'You have been logged out',
+                  duration: 6000,
+                });
+              }
+              break;
+          }
           return Promise.reject(response.message);
         } else if (response.data) {
           return Promise.reject(response.data);
@@ -105,7 +125,7 @@ export class ApiProvider {
   get_counties() {
     return this.api_call({ m: 'get_counties' });
   }
-  user_exists(username, email) {
+  user_exists(username?: string, email?: string) {
     var args: any = { m: 'user_exists' };
 
     if (username && typeof username === 'string') {

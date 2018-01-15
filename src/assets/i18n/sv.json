@@ -11,6 +11,7 @@
   "Updating": "Uppdaterar...",
   "What is your name?": "Vad heter du?",
   "Mark favorites": "Håll koll på när det nappar! Markera dina favorit- och hemmavatten som favoriter med en stjärna, så prenumererar du via e-post på alla nya publika fångstrapporter som kommer in till oss.",
+  "Coming soon": "Kommer snart",
 
   "Close": "Stäng",
 
@@ -21,11 +22,22 @@
       "back": "Tillbaka",
       "pull_to_refresh": "Uppdatera"
     },
+    "admin": {
+      "functionalityNotAvailable": "Den här funktionaliteten finns tyvärr inte i appen idag, men kommer inom kort.",
+      "check": {
+        "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
+        "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
+      }
+    },
     "placeholder": {
-      "email": "fnamn@doman.se",
+      "email": "ex. fnamn@doman.se",
       "password": "••••••••",
       "recovery_code": "123456",
-      "full_name": "ex. Sven Svensson"
+      "fullname": "ex. Sven Svensson",
+      "activationCode": "ex. 1234",
+      "username": "ex. Svenne77",
+      "phone": "ex. 070 123 45 67",
+      "permit": "ex. 12345678"
     },
     "issues": {
       "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>"
@@ -33,19 +45,49 @@
   },
 
   "errors": {
+    "admin": {
+      "permit": {
+        "failed": "Du har inte rättighet att visa fiskekortet med kod <b>{{code}}</b>. Om du får det här felet men tror att du borde ha tillgång att visa fiskekortet, dubbelkolla att koden är korrekt."
+      },
+      "scanQR": {
+        "invalid": "QR-koden kunde inte skannas"
+      }
+    },
     "recovery_code": {
       "required": "Du måste ange en återställnigskod",
       "invalid": "Ogiltig återställningskod"
     },
+    "activationCode": {
+      "required": "Du måste ange en aktiveringskod",
+      "invalid": "Ogiltig aktiveringskod",
+      "invalidRequest": "Ogiltigt användarnamn eller aktiveringskod",
+      "failed": "Aktiveringen misslyckades, försök igen",
+      "pattern": "Exakt 4 siffror"
+    },
     "password": {
       "required": "Du måste ange ett lösenord",
-      "invalid": "Ogiltligt lösenord"
+      "invalid": "Ogiltligt lösenord",
+      "pattern_mismatch": "Mellan 6 och 16 tecken"
     },
     "username": {
       "required": "Du måste ange ett användarnamn",
       "invalid": "Ogiltigt användarnamn",
       "pattern_mismatch": "Mellan 5 och 25 tecken",
       "taken": "Användarnamnet är upptaget"
+    },
+    "fullname": {
+      "required": "Du måste ange för- och efternamn",
+      "pattern_mismatch": "Mellan 5 och 50 tecken"
+    },
+    "email": {
+      "required": "Du måste ange en e-postadress",
+      "taken": "E-postadressen är redan registrerad",
+      "invalid": "Ogiltlig e-postadress"
+    },
+    "phone": {
+      "invalid": "Ogiltigt mobilnummer",
+      "pattern": "Mellan 5 och 25 siffror",
+      "required": "Du måste ange ett mobilnummer"
     },
     "general": {
       "Invalid username or password": "Ogiltigt användarnamn eller lösenord"
@@ -54,6 +96,7 @@
       "notification_update": "Ett fel uppstod. Notifikationsstatusen har inte ändrats."
     }
   },
+  "Statistics": "Statistik",
 
   "recovery": {
     "start": "En återställningskod kommer inom kort att skickas till dig via",
@@ -66,6 +109,7 @@
   "Accept": "Acceptera",
   "Activate account": "Aktivera konto",
   "Activate": "Aktivera",
+  "Activating": "Aktiverar...",
   "Activation code invalid": "Ogiltig aktiveringskod",
   "Activation code lost": "Om du har tappat bort din aktiveringskod går det också bra att skapa ett nytt konto med samma användaruppgifter som förut.",
   "Activation code sent": "En aktiveringskod kommer skickas via SMS till {{phone}} inom kort. Detta kan ta ett par minuter.",
@@ -121,6 +165,7 @@
   "Full name placeholder": "t.ex. Erik Johansson",
   "Full name required": "Du måste ange ett namn",
   "Full name": "För- och efternamn",
+  "Home": "Hem",
   "I approve the text message rules": "Jag godkänner SMS-reglerna",
   "I have a recovery code": "Jag har en återställningskod",
   "iFiske - Easier Fishing": "iFiske - Enklare Fiskekort",
@@ -162,7 +207,7 @@
   "Open Control panel": "Öppna kontrollpanelen",
   "Open Source Licenses": "Öppen mjukvara",
   "Outdoors": "Utomhus",
-  "Password changed": "Ditt lösenord har ändrats",
+  "Password changed": "Ditt lösenord har ändrats och du har loggats in",
   "Password": "Lösenord",
   "PDF": "PDF",
   "Phone invalid": "Ogiltigt mobilnummer",
@@ -189,6 +234,7 @@
   "Recovery code": "Återställningskod",
   "Recover password": "Återställ lösenord",
   "Revoke": "Makulera",
+  "Revoking": "Makulerar",
   "Revoked permits": "Makulerade fiskekort",
   "revoked": "Makulerad",
   "Revoked": "Makulerad",
@@ -214,6 +260,7 @@
   "Text message format": "Formatet för att skicka ett sms är:",
   "Text message instructions": "När du klickar på knappen kommer din vanliga sms-app att öppnas med ett förskrivet SMS till 72456.",
   "This will revoke the permit": "Fiskekortet kommer makuleras",
+  "This will unrevoke the permit": "Fiskekortet kommer avmakuleras",
   "to": "till",
   "Try again": "Försök igen",
   "Turn notifications off": "Stäng av notifikationer",
@@ -222,6 +269,7 @@
   "Unhandled API error": "Oväntat API-fel, var god försök igen senare",
   "Unknown error": "Ett oväntat fel uppstod. Var vänlig rapportera följande till app@ifiske.se: {{error}}",
   "Unrevoke": "Avmakulera",
+  "Unrevoking": "Avmakulerar",
   "Update stored data": "Uppdatera databas",
   "Use existing registration code": "Använd befintlig kod",
   "User already has recovery code": "Om du redan har en återställningskod kan du hoppa över det här steget.",

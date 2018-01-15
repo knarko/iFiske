@@ -65,6 +65,7 @@ export class Form {
         this.controls[id].required = true;
       }
     }
+    console.log(this.controlArray, this.group, this);
   }
 
   submit() {

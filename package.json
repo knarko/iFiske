@@ -12,7 +12,9 @@
     "ionic:serve": "ionic-app-scripts serve",
     "start": "ionic serve",
     "deploy": "node deploy.js",
-    "deploy:firebase": "ionic-app-scripts build --prod --release --aot && firebase deploy --only hosting"
+    "deploy:firebase": "ionic-app-scripts build --prod --release --aot && firebase deploy --only hosting",
+    "i18n:en": "json-diff --keys-only src/assets/i18n/sv.json src/assets/i18n/en.json",
+    "i18n:de": "json-diff --keys-only src/assets/i18n/sv.json src/assets/i18n/de.json"
   },
   "dependencies": {
     "@angular/animations": "~5.0.0",
@@ -24,6 +26,7 @@
     "@angular/platform-browser": "~5.0.0",
     "@angular/platform-browser-dynamic": "~5.0.0",
     "@ionic-native/app-version": "^4.5.2",
+    "@ionic-native/barcode-scanner": "^4.5.2",
     "@ionic-native/core": "^4.5.2",
     "@ionic-native/fcm": "^4.5.2",
     "@ionic-native/geolocation": "^4.5.2",
@@ -77,6 +80,7 @@
     "leaflet.markercluster": "^1.1.0",
     "lodash": "^4.17.4",
     "ngx-pipes": "^2.0.5",
+    "phonegap-plugin-barcodescanner": "^7.0.2",
     "reflect-metadata": "^0.1.10",
     "rxjs": "5.5.5",
     "shelljs": "^0.7.8",
@@ -90,6 +94,7 @@
     "firebase-tools": "^3.13.1",
     "inquirer": "^4.0.1",
     "ionic": "^3.13.2",
+    "json-diff": "^0.5.2",
     "prompt": "^1.0.0",
     "sass-lint": "^1.12.1",
     "typescript": "2.4.2"
@@ -124,7 +129,10 @@
       "cordova-sms-plugin-no-send-sms-permission": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-migrate-localstorage": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "phonegap-plugin-barcodescanner": {
+        "CAMERA_USAGE_DESCRIPTION": " "
+      }
     },
     "platforms": [
       "android",

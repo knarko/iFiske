@@ -11,8 +11,8 @@
   </ion-list>
 
   <div padding>
-    <p *ngIf="!favorites">{{'Login required for favorite' | translate}}</p>
-    <div *ngIf="favorites" [innerHTML]="'Mark favorites' | translate"></div>
+    <p *ngIf="!loggedIn | async">{{'Login required for favorite' | translate}}</p>
+    <div *ngIf="loggedIn | async" [innerHTML]="'Mark favorites' | translate"></div>
   </div>
   <!-- &#8505; {{'Mark favorites' | translate}}-->
 </ion-content>

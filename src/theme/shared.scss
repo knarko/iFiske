@@ -73,6 +73,7 @@
     background-position: bottom;
     background-repeat: no-repeat;
   }
+
 }
 
 .content.background-abstract {
@@ -89,6 +90,30 @@
     background: transparent !important;
   }
 
+}
+.content.background-image,
+.content.background-abstract {
+  $active-opacity: 0.95;
+  $disabled-opacity: 0.7;
+  .button:not([color]) {
+    background-color: rgba(color($colors, primary), $active-opacity);
+  }
+
+  .button[color="secondary"] {
+    background-color: rgba(color($colors, secondary), $active-opacity);
+  }
+
+  button[disabled],
+  [ion-button][disabled] {
+    opacity: 1;
+
+    &.button:not([color]) {
+      background-color: rgba(color($colors, primary), $disabled-opacity);
+    }
+    &.button[color="secondary"] {
+      background-color: rgba(color($colors, secondary), $disabled-opacity);
+    }
+  }
 }
 
 .alert-large {

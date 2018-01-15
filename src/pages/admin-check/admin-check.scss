@@ -1,0 +1,33 @@
+page-admin-check {
+  .spacer {
+    height: 2em;
+  }
+
+}
+
+.item.item-input-button {
+  .item-inner {
+    border-bottom: 0;
+    padding-right: 0;
+  }
+
+  &.item-ios .input-wrapper {
+    $border: $hairlines-width solid $list-ios-border-color;
+    border-top: $border;
+    border-top-left-radius: $button-ios-border-radius;
+    border-bottom-left-radius: $button-ios-border-radius;
+    border-left: $border;
+    border-bottom: $border;
+  }
+
+  .text-input {
+    margin-left: 8px;
+  }
+
+  .button {
+    margin: 0;
+    height: 100%;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}

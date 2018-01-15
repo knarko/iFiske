@@ -18,25 +18,6 @@ page-login {
     }
   }
 
-  .button:not([color]) {
-    background-color: rgba(color($colors, primary), 0.9);
-  }
-
-  .button[color="secondary"] {
-    background-color: rgba(color($colors, secondary), 0.9);
-  }
-
-  button[disabled],
-  [ion-button][disabled] {
-    opacity: 1;
-
-    &.button:not([color]) {
-      background-color: rgba(color($colors, primary), 0.4);
-    }
-    &.button[color="secondary"] {
-      background-color: rgba(color($colors, secondary), 0.4);
-    }
-  }
 }
 
 login {

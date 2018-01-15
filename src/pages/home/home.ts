@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserProvider } from '../../providers/user/user';
 import { take } from 'rxjs/operators';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { AdminProvider } from '../../providers/admin/admin';
 
 interface Link {
   title: string;
@@ -24,19 +25,24 @@ export class HomePage {
 
   searchTerm: string;
   profileColor: Observable<string>;
-  showAdmin = this.userProvider.loggedIn;
+  showAdmin = this.adminProvider.isAdmin;
 
   links: Link[] = [
-    // { title: 'Admin Tools', icon: 'unlock', show: this.showAdmin },
+    { title: 'Admin Tools', icon: 'unlock', uri: 'AdminPage', show: this.showAdmin },
     { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
     { title: 'Map', icon: 'map', uri: 'MapPage' },
-    { title: 'My Fishing Permits', icon: 'ifiske-permit', uri: 'MyPermitsPage' },
+    { title: 'My Fishing Permits', icon: 'ifiske-permit', uri: 'MyPermitsPage', show: this.userProvider.loggedIn },
     { title: 'Information', icon: 'information-circle', uri: 'InformationPage' },
     { title: 'Species', icon: 'ifiske-fish', uri: 'SpeciesPage' },
     { title: 'Fishing Methods', icon: 'ifiske-hook', uri: 'FishingMethodsPage' },
   ];
 
-  constructor(private userProvider: UserProvider, private navCtrl: NavController, private modalCtrl: ModalController) { }
+  constructor(
+    private userProvider: UserProvider,
+    private navCtrl: NavController,
+    private modalCtrl: ModalController,
+    private adminProvider: AdminProvider,
+  ) { }
 
   async gotoProfile() {
     const loggedIn = await this.userProvider.loggedIn.pipe(take(1)).toPromise();
@@ -48,7 +54,7 @@ export class HomePage {
   }
 
   search() {
-    this.navCtrl.push('AreasSearchPage', {searchTerm: this.searchTerm});
+    this.navCtrl.push('AreasSearchPage', { searchTerm: this.searchTerm });
   }
 }
 

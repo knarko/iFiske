@@ -12,6 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FCM } from '@ionic-native/fcm';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
@@ -60,6 +61,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
 import { DeployProvider } from '../providers/deploy/deploy';
+import { CreateAccountProvider } from '../providers/create-account/create-account';
+import { AdminProvider } from '../providers/admin/admin';
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -99,6 +102,7 @@ registerLocaleData(localeSv);
 
     // Ionic native
     AppVersion,
+    BarcodeScanner,
     FCM,
     Geolocation,
     LaunchNavigator,
@@ -133,6 +137,8 @@ registerLocaleData(localeSv);
     UserProvider,
     PlatformProvider,
     DeployProvider,
+    CreateAccountProvider,
+    AdminProvider,
   ],
 })
 export class AppModule {}

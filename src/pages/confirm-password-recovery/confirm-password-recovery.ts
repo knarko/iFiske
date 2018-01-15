@@ -99,20 +99,18 @@ export class ConfirmPasswordRecoveryPage {
   }
 
   async resetPassword(group: FormGroup) {
-    const loading = await this.loadingCtrl.create({
+    const loading = await this.loadingCtrl.show({
       content: 'Resetting password',
     });
-    loading.present();
     this.userProvider.resetPassword({
       username: group.controls.username.value,
       code: group.controls.code.value,
       password: group.controls.password.value,
     }).then(async () => {
-      const toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.show({
         message: 'Password changed',
         duration: 4000,
       });
-      toast.present();
       this.navCtrl.popToRoot();
       this.navCtrl.first().dismiss();
     }, async (error) => {
@@ -135,20 +133,14 @@ export class ConfirmPasswordRecoveryPage {
         break;
       default:
         console.warn('Unhandled error code from api', error);
-        const toast = await this.toastCtrl.create({
+        const toast = await this.toastCtrl.show({
           message: 'Unhandled API error',
           duration: 6000,
         })
-        toast.present();
         break;
       }
     }).catch(() => {}).then(() => {
       loading.dismiss();
     })
-  }
-
-  async dismiss() {
-    this.navCtrl.popToRoot({animate: false});
-    this.navCtrl.first().dismiss();
   }
 }

@@ -53,20 +53,18 @@ export class AreasDetailInfoPage {
     if (this.sessionData.token) {
       const favorite = await this.userProvider.toggleFavorite(this.area);
       const message = favorite ? 'Area added to favorites' : 'Area removed from favorites';
-      const toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.show({
         message,
         duration: 4000,
       });
-      toast.present();
     } else {
-      const toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.show({
         message: 'Login required for favorite',
         duration: 6000,
         dismissOnPageChange: true,
         showCloseButton: true,
         closeButtonText: 'Log in',
       });
-      toast.present();
       toast.onDidDismiss((data, role) => {
         if (role === 'close') {
           // this.modalCtrl.create(LoginComponent).present();

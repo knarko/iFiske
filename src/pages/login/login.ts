@@ -75,7 +75,11 @@ export class LoginPage {
   }
 
   forgotPassword() {
-    this.modalCtrl.create('RecoverPasswordPage').present();
+    this.navCtrl.push('RecoverPasswordPage');
+  }
+
+  createAccount() {
+    this.navCtrl.push('CreateAccountPage');
   }
 
   /**
@@ -91,7 +95,7 @@ export class LoginPage {
       }
       return;
     }
-    const loading = await this.loadingCtrl.create({
+    const loading = await this.loadingCtrl.show({
       content: 'Logging in',
     });
     loading.present();

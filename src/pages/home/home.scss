@@ -1,4 +1,7 @@
 page-home {
+  .hidden {
+    display: none;
+  }
   .scroll-content {
     display: flex;
     flex-direction: column;

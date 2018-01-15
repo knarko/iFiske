@@ -13,6 +13,9 @@ import { RuleProvider } from '../rule/rule';
 import { TermsProvider } from '../terms/terms';
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
+import { TranslateService } from '@ngx-translate/core';
+import { SettingsProvider } from '../settings/settings';
+import { ProductProvider } from '../product/product';
 
 @Injectable()
 export class UpdateProvider {
@@ -24,13 +27,15 @@ export class UpdateProvider {
   constructor(
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
+    private translate: TranslateService,
+    private settings: SettingsProvider,
 
     area: AreaProvider,
     county: CountyProvider,
     fish: FishProvider,
     information: InformationProvider,
     mapData: MapDataProvider,
-    // News,
+    product: ProductProvider,
     organization: OrganizationProvider,
     // Product,
     rule: RuleProvider,
@@ -38,6 +43,14 @@ export class UpdateProvider {
     terms: TermsProvider,
     user: UserProvider,
   ) {
+    let savedLanguage = this.settings.language;
+
+    this.translate.onLangChange.subscribe(()=> {
+      if (savedLanguage !== this.settings.language) {
+        savedLanguage = this.settings.language;
+        this.forcedUpdate();
+      }
+    });
 
     this.updates = [
       area,
@@ -64,10 +77,9 @@ export class UpdateProvider {
   async updateFunc(forced, hideLoading) {
     console.count('in update!');
     if (!hideLoading) {
-      this.loading = await this.loadingCtrl.create({
+      this.loading = await this.loadingCtrl.show({
         content: 'Updating',
       });
-      this.loading.present();
     }
     var currentTime = Date.now();
     var shouldUpdate = (forced || this.timedUpdate(currentTime));

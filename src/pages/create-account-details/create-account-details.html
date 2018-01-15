@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{'Create Account' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="background-image">
+  <ion-data-form [form]="form" [hideSubmit]="true"></ion-data-form>
+  <p>
+    {{'Registering account approves' | translate}}
+    <a (click)="showEula()">{{'Terms of subscription' | translate}}</a>
+  </p>
+  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid">{{'Register' | translate}}</button>
+</ion-content>

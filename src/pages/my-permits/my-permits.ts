@@ -32,10 +32,14 @@ export class MyPermitsPage {
   }
 
   async refresh(refresher: Refresher) {
-    await this.userProvider.update(true);
-    await this.update();
-    refresher.complete();
+    try {
+      await this.userProvider.update(true);
+      await this.update();
+    } finally {
+      refresher.complete();
+    }
   }
+
   update = async () => {
     const permits = await this.userProvider.getProducts();
     for (const type of this.permits) {

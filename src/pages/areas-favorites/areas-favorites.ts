@@ -3,13 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider, Favorite } from '../../providers/user/user';
 import { Area } from '../../providers/area/area';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-
-/**
- * Generated class for the AreasFavoritesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -21,6 +15,7 @@ export class AreasFavoritesPage {
   favorites: (Favorite & Area)[];
   static title = 'Favorites';
   static icon = 'star';
+  loggedIn: Observable<boolean>;
 
   constructor(
     public navParams: NavParams,
@@ -28,6 +23,7 @@ export class AreasFavoritesPage {
     private toastCtrl: TranslateToastController,
   ) {
     this.navCtrl = this.navParams.get('rootNavCtrl');
+    this.loggedIn = this.userProvider.loggedIn;
   }
 
   async ionViewWillEnter() {

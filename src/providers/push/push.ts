@@ -47,7 +47,7 @@ export class PushProvider {
       */
     REP_REQ: [(notification) => {
       if (notification.orgid && notification.code) {
-        this.alertCtrl.create({
+        this.alertCtrl.show({
           title: 'Do you want to create a catch report?',
           buttons: [
             {

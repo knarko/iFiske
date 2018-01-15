@@ -34,9 +34,4 @@ export class RecoverPasswordPage {
       methods,
     });
   }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-
 }

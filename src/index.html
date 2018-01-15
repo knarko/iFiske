@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
-  <title>Ionic App</title>
+  <title>iFiske Fiskekort</title>
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
 
-  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+  <link rel="icon" type="image/png" href="assets/icon.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#003852">
 
   <script src="cordova.js"></script>
 
 
-<!-- Service Workers -->
-<script>
-  if ('serviceWorker' in navigator) {
-    /*
+  <!-- Service Workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      /*
 
-    // Add service worker
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('service worker installed'))
-      .catch(err => console.error('Error', err));
+      // Add service worker
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('service worker installed'))
+        .catch(err => console.error('Error', err));
 
-    /*/
+      /*/
 
-    // Remove all service workers
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister();
-      }
-    }).catch(err => console.warn('Error removing service workers:', err));
+      // Remove all service workers
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      }).catch(err => console.warn('Error removing service workers:', err));
 
-    //*/
-  }
-</script>
+      //*/
+    }
+  </script>
 
 
   <link href="build/main.css" rel="stylesheet">
 
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -57,4 +59,5 @@
   <script src="build/main.js"></script>
 
 </body>
+
 </html>

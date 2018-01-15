@@ -5,8 +5,71 @@
   "Account created": "Your account has been created",
   "You have been logged out": "You have been logged out",
   "No areas found": "No areas found",
+  "Home": "Home",
 
-  "Back": "Back",
+  "ui": {
+    "general": {
+      "back": "Back",
+      "pull_to_refresh": "Update"
+    },
+    "placeholder": {
+      "email": "e.g. name@domain.com",
+      "password": "••••••••",
+      "recovery_code": "123456",
+      "fullname": "e.g. John Smith",
+      "activationCode": "e.g. 1234",
+      "username": "e.g. John77",
+      "phone": "e.g. +46 70 123 45 67"
+    },
+    "issues": {
+      "long_text": "<p>Have you found a bug or a problem with the app?</p><p>We encourage you to report any bugs on <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>You must be logged in at GitHub to write a report - but in return you will also get feedback as soon as the issue is handled! Making an account on GitHub is free.</p><p>If you are unable use GitHub, we also receive bug reports on <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a>. Make sure to describe the error carefully and also tell us what phone you are using. Bug Reports such as “It doesn't work” aren't very useful for us.</p>"
+    }
+  },
+
+  "errors": {
+    "recovery_code": {
+      "required": "You must enter a recovery code",
+      "invalid": "Invalid recovery code"
+    },
+    "activationCode": {
+      "required": "You must enter an activation code",
+      "invalid": "Invalid activation code",
+      "invalidRequest": "Invalid username or activation code",
+      "failed": "Activation failed, try again",
+      "pattern": "Must be exactly 4 digits"
+    },
+    "password": {
+      "required": "You must enter a password",
+      "invalid": "Invalid password",
+      "pattern_mismatch": "Between 6 and 16 characters"
+    },
+    "username": {
+      "required": "You must enter a username",
+      "invalid": "Invalid username",
+      "pattern_mismatch": "Must be between 5 and 25 characters",
+      "taken": "Username is already taken"
+    },
+    "fullname": {
+      "required": "You must enter first and last name",
+      "pattern_mismatch": "Must be between 5 and 50 characters"
+    },
+    "email": {
+      "required": "You must enter an email",
+      "taken": "The email is already registered",
+      "invalid": "Invalid email"
+    },
+    "phone": {
+      "invalid": "Invalid phone number",
+      "pattern": "Must be between 5 and 25 digits",
+      "required": "You must enter a phone number"
+    },
+    "general": {
+      "Invalid username or password": "Invalid username or password"
+    },
+    "favorite": {
+      "notification_update": "There was an error. You notification settings have not been changed."
+    }
+  },
 
   "About the app": "About",
   "Accept": "Accept",

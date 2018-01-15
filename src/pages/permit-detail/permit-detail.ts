@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider, Permit } from '../../providers/user/user';
 import { serverLocation } from '../../providers/api/serverLocation';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { OrganizationProvider, Organization } from '../../providers/organization/organization';
-import { AreaProvider } from '../../providers/area/area';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'MyPermitsPage'],
@@ -16,48 +13,30 @@ import { AreaProvider } from '../../providers/area/area';
 })
 export class PermitDetailPage {
   serverLocation = serverLocation;
-  qr: string;
 
-  permit: Permit = {} as any;
-  org: Organization;
+  permit: Permit;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
-    private settings: SettingsProvider,
-    private organizationProvider: OrganizationProvider,
-    private areaProvider: AreaProvider,
   ) {
   }
 
   async ionViewWillEnter() {
     this.permit = this.navParams.data;
-    if (!this.permit || !this.permit.t && this.permit.ID) {
-      this.permit = await this.userProvider.getProduct(this.navParams.get('ID'))
+    if (!this.permit) {
+      // Ingen indata alls, det här kommer garanterat inte att fungera
+    } else if (!this.permit.t) {
+      // Ingen titel, det saknas data) {
+      if (this.permit.ID) {
+        // Det finns ett ID, hämta data från DB
+        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'))
+      } else {
+        // Vi kan inte hämta data på något bra sätt, visa fel
+      }
     }
-    this.updateQR();
     console.log(this.permit);
-    try {
-      this.org = await this.areaProvider.getOne(this.permit.ai)
-        .then((area) => {
-          return this.organizationProvider.getOne(area.orgid);
-        });
-    } catch (e) {
-      console.warn(e);
-      // Don't do anything
-    }
-    console.log(this.org)
   }
 
-  openProductInBrowser() {
-    const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${this.permit.pid}`;
-    window.open(url, '_system');
-    // TODO: analytics
-    // analytics.trackEvent('Purchase', 'Web', id);
-  };
-
-  private updateQR() {
-    this.qr = `data:image/png;base64,${this.permit.qr}`;
-  }
 }

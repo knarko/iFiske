@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Pro } from './pro';
-import { filter, tap, switchMap, take } from 'rxjs/operators';
+import { filter, tap, switchMap, take, timeout } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { APP_ID } from '../../app/config';
 import { SettingsProvider } from '../settings/settings';
 import { Platform } from 'ionic-angular';
-import { timeout } from 'rxjs/operators/timeout';
 
 @Injectable()
 export class DeployProvider {

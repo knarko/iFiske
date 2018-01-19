@@ -76,7 +76,7 @@ const deploy = async () => {
     type: 'confirm',
     name: 'sourcemaps',
     message: 'Do you want to upload source maps to Ionic Pro?',
-    default: true,
+    default: false,
   }, {
     type: 'confirm',
     name: 'push',

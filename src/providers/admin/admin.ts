@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrganizationProvider, Organization } from '../organization/organization';
+import { OrganizationProvider } from '../organization/organization';
 import { ApiProvider } from '../api/api';
 import { ProductProvider } from '../product/product';
 import { UserProvider, Permit } from '../user/user';

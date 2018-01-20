@@ -107,7 +107,7 @@ export class ConfirmPasswordRecoveryPage {
       code: group.controls.code.value,
       password: group.controls.password.value,
     }).then(async () => {
-      const toast = await this.toastCtrl.show({
+      this.toastCtrl.show({
         message: 'Password changed',
         duration: 4000,
       });
@@ -133,7 +133,7 @@ export class ConfirmPasswordRecoveryPage {
         break;
       default:
         console.warn('Unhandled error code from api', error);
-        const toast = await this.toastCtrl.show({
+        this.toastCtrl.show({
           message: 'Unhandled API error',
           duration: 6000,
         })

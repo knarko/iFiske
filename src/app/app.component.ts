@@ -8,10 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../providers/settings/settings';
 import { PushProvider } from '../providers/push/push';
 import { DeployProvider } from '../providers/deploy/deploy';
-import { Toolbar } from 'ionic-angular/components/toolbar/toolbar';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { Dictionary } from '../types';
 
 @Component({
   templateUrl: 'app.html',

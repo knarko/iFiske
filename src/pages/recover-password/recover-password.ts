@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 
 @IonicPage()
@@ -11,9 +11,7 @@ export class RecoverPasswordPage {
   username: string;
 
   constructor(
-    private viewCtrl: ViewController,
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
     private API: ApiProvider,
   ) { }
 

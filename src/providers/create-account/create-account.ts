@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { timer } from 'rxjs/observable/timer';
-import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { timeoutWith, timeout, takeUntil, map, switchAll } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 import { ApiProvider } from '../api/api';
 import { UserProvider } from '../user/user';
@@ -46,7 +45,7 @@ export class CreateAccountProvider {
         throw new Error('No username');
     }
 
-    const res = await this.API.user_confirm(username, activationCode);
+    await this.API.user_confirm(username, activationCode);
 
     localStorage.removeItem(CreateAccountProvider.REGISTER_DATA_KEY);
 

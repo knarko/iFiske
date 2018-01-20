@@ -52,9 +52,8 @@ export class AreasDetailInfoPage {
   async toggleFavorite() {
     if (this.sessionData.token) {
       const favorite = await this.userProvider.toggleFavorite(this.area);
-      const message = favorite ? 'Area added to favorites' : 'Area removed from favorites';
-      const toast = await this.toastCtrl.show({
-        message,
+      this.toastCtrl.show({
+        message: favorite ? 'Area added to favorites' : 'Area removed from favorites',
         duration: 4000,
       });
     } else {

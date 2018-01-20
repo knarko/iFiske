@@ -4,7 +4,6 @@ import { Validators, FormGroup } from '@angular/forms';
 
 import { Form, FormOptions } from '../../components/ion-data-form/form';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { CreateAccountProvider, UserDetails } from '../../providers/create-account/create-account';
 import { Observable } from 'rxjs/Observable';

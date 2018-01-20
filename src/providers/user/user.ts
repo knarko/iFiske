@@ -8,7 +8,6 @@ import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
 import { Area } from '../area/area';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 import { Rule } from '../rule/rule';

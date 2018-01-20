@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ApiError } from '../../providers/api/api';
@@ -26,7 +26,6 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private modalCtrl: ModalController,
     private userProvider: UserProvider,
     private loadingCtrl: TranslateLoadingController,
     private viewCtrl: ViewController,

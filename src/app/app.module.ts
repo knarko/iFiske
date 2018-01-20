@@ -16,7 +16,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FCM } from '@ionic-native/fcm';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-import { Pro } from '../providers/deploy/pro';
+import { Pro } from '@ionic-native/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SMS } from '@ionic-native/sms';
 import { SplashScreen } from '@ionic-native/splash-screen';

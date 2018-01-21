@@ -47,7 +47,7 @@ export class AboutPage {
         this.appVersion.getVersionCode()
           .then(buildId => this.buildId = buildId)
           .catch(() => { });
-        this.pro.deploy.info()
+        this.pro.deploy().info()
           .then(info => this.proInfo = info)
           .catch(err => console.warn(err));
       } else {
@@ -77,7 +77,7 @@ export class AboutPage {
         if (role === 'Production' || role === 'Master') {
           await this.deploy.setChannel(role);
         }
-        this.pro.deploy.info()
+        this.pro.deploy().info()
           .then(info => this.proInfo = info)
           .catch(err => console.warn(err));
       });

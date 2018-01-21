@@ -3,7 +3,7 @@ import { IonicPage, Platform } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { Pro, DeployInfo } from '@ionic-native/pro';
+import { Pro, DeployInfo } from '@ionic-native/pro/ngx';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';

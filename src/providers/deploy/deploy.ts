@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Pro } from '@ionic-native/pro';
+import { Pro } from '@ionic-native/pro/ngx';
 import { filter, tap, switchMap, take } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { APP_ID } from '../../app/config';

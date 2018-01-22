@@ -7,6 +7,8 @@ import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -37,6 +39,7 @@ export class AreasDetailInfoPage {
     private sessionData: SessionProvider,
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
+    private modalCtrl: ModalController,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products, tabsCtrl }) => {
       this.tabsCtrl = tabsCtrl;
@@ -51,9 +54,18 @@ export class AreasDetailInfoPage {
 
   async toggleFavorite() {
     if (this.sessionData.token) {
+      try {
       const favorite = await this.userProvider.toggleFavorite(this.area);
+      } catch (e) {
+        console.log(e);
+        if (e && e.error_code === 19) {
+          return;
+        } else {
+          throw e;
+        }
+      }
       this.toastCtrl.show({
-        message: favorite ? 'Area added to favorites' : 'Area removed from favorites',
+        message: this.area.favorite ? 'Area added to favorites' : 'Area removed from favorites',
         duration: 4000,
       });
     } else {
@@ -66,7 +78,7 @@ export class AreasDetailInfoPage {
       });
       toast.onDidDismiss((data, role) => {
         if (role === 'close') {
-          // this.modalCtrl.create(LoginComponent).present();
+          this.modalCtrl.create(LoginPage).present();
         }
       })
     }

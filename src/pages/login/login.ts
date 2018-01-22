@@ -7,13 +7,6 @@ import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { StatusBar } from '@ionic-native/status-bar';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -103,7 +96,7 @@ export class LoginPage {
       password: group.controls.password.value,
     })
       .then(() => {
-        this.navCtrl.setRoot('HomePage');
+        return this.close();
       }, (error: ApiError) => {
 
         switch (error.error_code) {

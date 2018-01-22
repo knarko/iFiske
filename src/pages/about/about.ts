@@ -3,7 +3,7 @@ import { IonicPage, Platform } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { Pro, DeployInfo } from '@ionic-native/pro/ngx';
+import { Pro, DeployInfo } from '../../providers/deploy/pro';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
@@ -47,7 +47,7 @@ export class AboutPage {
         this.appVersion.getVersionCode()
           .then(buildId => this.buildId = buildId)
           .catch(() => { });
-        this.pro.deploy().info()
+        this.pro.deploy.info()
           .then(info => this.proInfo = info)
           .catch(err => console.warn(err));
       } else {
@@ -77,7 +77,7 @@ export class AboutPage {
         if (role === 'Production' || role === 'Master') {
           await this.deploy.setChannel(role);
         }
-        this.pro.deploy().info()
+        this.pro.deploy.info()
           .then(info => this.proInfo = info)
           .catch(err => console.warn(err));
       });

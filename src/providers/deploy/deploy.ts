@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Pro } from '@ionic-native/pro/ngx';
-import { filter, tap, switchMap, take } from 'rxjs/operators';
+import { Pro } from './pro';
+import { filter, tap, switchMap, take, timeout } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { APP_ID } from '../../app/config';
 import { SettingsProvider } from '../settings/settings';
@@ -19,11 +19,11 @@ export class DeployProvider {
   async initialize() {
     await this.platform.ready();
 
-    await this.pro.deploy().init({
+    await this.pro.deploy.init({
       appId: APP_ID,
       channel: this.settings.channel,
     });
-    const versions = this.pro.deploy().getVersions()
+    const versions = this.pro.deploy.getVersions()
     console.log(versions);
     // TODO: remove old versions
     this.checkForUpdates();
@@ -31,7 +31,7 @@ export class DeployProvider {
 
   async setChannel(channel: string) {
     this.settings.channel = channel;
-    return this.pro.deploy().init({
+    return this.pro.deploy.init({
       appId: APP_ID,
       channel,
     });
@@ -41,18 +41,14 @@ export class DeployProvider {
     await this.platform.ready();
     console.log(this.pro);
 
-
-    const hasUpdate = await Promise.race([
-      this.pro.deploy().check(),
-      new Promise((_, reject) => setTimeout(reject, 8000)),
-    ]);
+    const hasUpdate = await this.pro.deploy.check().pipe(take(1), timeout(8000)).toPromise();
     console.log(hasUpdate);
     if (hasUpdate === 'true') {
       // TODO: check if we are on wifi
-      await this.pro.deploy().download().pipe(
+      await this.pro.deploy.download().pipe(
         tap(status => console.log('Download status:', status)),
         filter(status => status === 'true'),
-        switchMap(() => this.pro.deploy().extract()),
+        switchMap(() => this.pro.deploy.extract()),
         tap(status => console.log('Extract status:', status)),
         filter(status => status === 'done'),
         take(1),
@@ -70,7 +66,7 @@ export class DeployProvider {
       return new Promise((resolve) => {
         alert.onDidDismiss((_, role) => {
           if (role === 'install') {
-            this.pro.deploy().redirect();
+            this.pro.deploy.redirect();
             resolve(true)
           } else {
             resolve(false)

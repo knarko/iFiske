@@ -50,7 +50,7 @@ export class DeployProvider {
         filter(status => status === 'true'),
         switchMap(() => this.pro.deploy.extract()),
         tap(status => console.log('Extract status:', status)),
-        filter(status => status === 'done'),
+        filter(status => status === 'true'),
         take(1),
       ).toPromise();
       const alert = await this.alertCtrl.show({

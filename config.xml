@@ -109,4 +109,5 @@
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova-plugin-fcm" spec="@ifiske/cordova-plugin-fcm@~3.0.5" />
+    <plugin name="cordova-plugin-sms" spec="@ifiske/cordova-plugin-sms@~1.0.1" />
 </widget>

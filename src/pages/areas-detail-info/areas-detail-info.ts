@@ -55,7 +55,7 @@ export class AreasDetailInfoPage {
   async toggleFavorite() {
     if (this.sessionData.token) {
       try {
-      const favorite = await this.userProvider.toggleFavorite(this.area);
+        await this.userProvider.toggleFavorite(this.area);
       } catch (e) {
         console.log(e);
         if (e && e.error_code === 19) {

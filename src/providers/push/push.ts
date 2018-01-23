@@ -5,7 +5,6 @@ import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { FCM, NotificationData } from '@ionic-native/fcm';
 import { Dictionary } from '../../types';
-import { setTimeout } from 'timers';
 
 interface IfiskeNotification {
   action?: string;

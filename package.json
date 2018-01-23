@@ -42,6 +42,7 @@
     "@ngx-translate/core": "^9.0.1",
     "@ngx-translate/http-loader": "^2.0.0",
     "@types/leaflet": "^1.2.0",
+    "@types/node": "^9.3.0",
     "angular-linky": "^1.2.2",
     "autolinker": "^1.4.4",
     "cordova-android": "6.3.0",

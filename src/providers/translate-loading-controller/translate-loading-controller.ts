@@ -30,7 +30,6 @@ export class TranslateLoadingController {
     const loading = await this.create(opts);
 
     const dismissed = () => {
-      console.log('will dismissing a thing', loading, opts);
       const index = this.queue.indexOf(loading);
       if (index !== -1) {
         this.queue.splice(this.queue.indexOf(loading), 1);

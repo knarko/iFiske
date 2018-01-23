@@ -82,16 +82,6 @@
         <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <plugin name="@ifiske/cordova-plugin-migrate-localstorage" spec="^0.0.2" />
-    <plugin name="@ifiske/cordova-plugin-fcm" spec="^3.0.4" />
-    <plugin name="@ifiske/cordova-plugin-sms" spec="^1.0.0" />
-
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.1" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^2.0.1" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.2">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
-    </plugin>
     <plugin name="cordova-plugin-ionic" spec="^3.0.0">
         <variable name="APP_ID" value="37198a9f" />
         <variable name="CHANNEL_NAME" value="Production" />
@@ -108,7 +98,14 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.1" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^2.0.1" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.2">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
+    </plugin>
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="~4.5.4" />
 </widget>

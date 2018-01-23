@@ -25,9 +25,6 @@
     "@angular/forms": "~5.0.0",
     "@angular/platform-browser": "~5.0.0",
     "@angular/platform-browser-dynamic": "~5.0.0",
-    "@ifiske/cordova-plugin-fcm": "^3.0.4",
-    "@ifiske/cordova-plugin-migrate-localstorage": "^0.0.2",
-    "@ifiske/cordova-plugin-sms": "^1.0.0",
     "@ionic-native/app-version": "^4.5.2",
     "@ionic-native/barcode-scanner": "^4.5.2",
     "@ionic-native/core": "^4.5.2",
@@ -106,9 +103,6 @@
   "description": "iFiske - Easier fishing permits",
   "cordova": {
     "plugins": {
-      "@ifiske/cordova-plugin-fcm": {},
-      "@ifiske/cordova-plugin-migrate-localstorage": {},
-      "@ifiske/cordova-plugin-sms": {},
       "cordova-plugin-ionic": {
         "APP_ID": "37198a9f",
         "CHANNEL_NAME": "Production",

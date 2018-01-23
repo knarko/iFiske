@@ -15,8 +15,12 @@
       <p>&copy; 2017 Jighead AB (iFiske.se)</p>
     </ion-item>
     <ion-item>
-      <h2>{{'Version' | translate}}</h2>
+      <h2>{{'ui.about.version' | translate}}</h2>
       <p>{{version}} ({{buildId}})</p>
+    </ion-item>
+    <ion-item *ngIf="settings?.isDeveloper">
+      <h2>{{'ui.about.codeVersion' | translate}}</h2>
+      <p>{{codeVersion}}</p>
     </ion-item>
     <ion-item (click)="activateDeveloperMode()">
       <h2>{{'Deploy channel' | translate}}</h2>

@@ -18,6 +18,7 @@ import { APP_VERSION } from '../../app/config';
   templateUrl: 'about.html',
 })
 export class AboutPage {
+  codeVersion: string;
   lastUpdated: string;
   proInfo?: DeployInfo;
   buildId?: string;
@@ -38,6 +39,7 @@ export class AboutPage {
   ) { }
 
   ionViewWillEnter() {
+    this.codeVersion = APP_VERSION;
     this.lastUpdated = this.update.lastUpdate;
     this.platform.ready().then(() => {
       if ((window as any).cordova) {

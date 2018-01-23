@@ -22,6 +22,10 @@
       "back": "Tillbaka",
       "pull_to_refresh": "Uppdatera"
     },
+    "about": {
+      "version": "Versionsnummer",
+      "codeVersion": "Installerad version"
+    },
     "admin": {
       "functionalityNotAvailable": "Den här funktionaliteten finns tyvärr inte i appen idag, men kommer inom kort.",
       "check": {

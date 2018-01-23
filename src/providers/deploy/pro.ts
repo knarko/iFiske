@@ -52,19 +52,14 @@ export class ProDeploy extends IonicNativePlugin {
    * @param config A valid Deploy config object
    */
   @CordovaInstance()
-  init(config: DeployConfig): Promise<any> { return; }
+  init(config: DeployConfig): Promise<void> { return; }
 
   /**
    * Check a channel for an available update
    * @return {Observable<string>} Resolves with 'true' or 'false', or rejects with an error.
    */
-  @CordovaInstance({
-    observable: true,
-    clearFunction: 'noop',
-  })
-  check(): Observable<string> { return; }
-
-  noop() { }
+  @CordovaInstance()
+  check(): Promise<string> { return; }
 
   /**
    * Download an available version
@@ -72,9 +67,8 @@ export class ProDeploy extends IonicNativePlugin {
    */
   @CordovaInstance({
     observable: true,
-    clearFunction: 'noop',
   })
-  download(): Observable<any> { return; }
+  download(): Observable<number | string> { return; }
 
   /**
    * Unzip the latest downloaded version
@@ -82,15 +76,14 @@ export class ProDeploy extends IonicNativePlugin {
    */
   @CordovaInstance({
     observable: true,
-    clearFunction: 'noop',
   })
-  extract(): Observable<any> { return; }
+  extract(): Observable<number | string> { return; }
 
   /**
    * Reload app with the deployed version
    */
   @CordovaInstance()
-  redirect(): Promise<any> { return; }
+  redirect(): Promise<void> { return; }
 
   /**
    * Get info about the version running on the device
@@ -103,14 +96,19 @@ export class ProDeploy extends IonicNativePlugin {
    * List versions stored on the device
    */
   @CordovaInstance()
-  getVersions(): Promise<any> { return; }
+  getVersions(): Promise<string[]> { return; }
 
   /**
    * Delete a version stored on the device by UUID
+   * Is completely broken on ios, DO NOT USE IT
+   * // TODO: let ionic devs know it crashes the app
    * @param version A version UUID
    */
+  /**
+   * Commenting this out since it is completely broken on iOS
   @CordovaInstance()
   deleteVersion(version: string): Promise<any> { return; }
+  */
 }
 
 /**
@@ -149,7 +147,12 @@ export class Pro extends IonicNativePlugin {
   /**
    * Ionic Pro Deploy .js API.
    */
-  deploy: ProDeploy = new ProDeploy((Pro.getPlugin() || {}).deploy);
+  deploy: ProDeploy;
+
+  constructor() {
+    super();
+    this.deploy = new ProDeploy((window as any).IonicCordova.deploy);
+  }
 
   /**
    * Not yet implemented

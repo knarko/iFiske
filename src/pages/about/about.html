@@ -22,9 +22,9 @@
       <h2>{{'ui.about.codeVersion' | translate}}</h2>
       <p>{{codeVersion}}</p>
     </ion-item>
-    <ion-item (click)="activateDeveloperMode()">
+    <ion-item *ngIf="proInfo" (click)="activateDeveloperMode()">
       <h2>{{'Deploy channel' | translate}}</h2>
-      <p>{{proInfo?.channel}} ({{proInfo?.deploy_uuid}})</p>
+      <p>{{proInfo.channel}} ({{proInfo.deploy_uuid}})</p>
     </ion-item>
     <ion-item *ngIf="settings?.isDeveloper" (click)="checkForUpdates()">
       {{'Check for updates' | translate}}

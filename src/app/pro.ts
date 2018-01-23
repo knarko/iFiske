@@ -3,7 +3,7 @@ import { Pro } from '@ionic/pro';
 import { IonicErrorHandler } from 'ionic-angular';
 import { APP_VERSION, APP_ID } from './config';
 
-const IonicPro = Pro.init(APP_ID, {
+export const IonicPro = Pro.init(APP_ID, {
   appVersion: APP_VERSION,
 });
 

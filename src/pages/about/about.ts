@@ -9,6 +9,7 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { DeployProvider } from '../../providers/deploy/deploy';
 import { APP_VERSION } from '../../app/config';
+import { Pro as IonicPro } from '@ionic/pro';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -51,7 +52,10 @@ export class AboutPage {
           .catch(() => { });
         this.pro.deploy.info()
           .then(info => this.proInfo = info)
-          .catch(err => console.warn(err));
+          .catch(err => {
+            IonicPro.getApp().monitoring.log(err);
+            console.warn(err)
+          });
       } else {
         this.buildId = 'abc123';
         this.version = APP_VERSION;

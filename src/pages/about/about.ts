@@ -50,11 +50,14 @@ export class AboutPage {
         this.appVersion.getVersionCode()
           .then(buildId => this.buildId = buildId)
           .catch(() => { });
-        this.pro.deploy.info()
-          .then(info => this.proInfo = info)
+          console.log(this.pro);
+        Promise.race([
+          this.pro.deploy.info(),
+          new Promise<any>((_, reject) => setTimeout(reject, 8000)),
+        ]).then(info => this.proInfo = info)
           .catch(err => {
-            IonicPro.getApp().monitoring.log(err);
-            console.warn(err)
+            IonicPro.getApp().monitoring.exception(err);
+            console.warn(err);
           });
       } else {
         this.buildId = 'abc123';

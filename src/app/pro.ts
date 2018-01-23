@@ -16,7 +16,7 @@ export class IonicProErrorHandler implements ErrorHandler {
       this.ionicErrorHandler = injector.get(IonicErrorHandler);
     } catch(e) {
       // Unable to get the IonicErrorHandler provider, ensure
-      // IonicErrorHandler has been added to the providers list below
+      // IonicErrorHandler has been added to the providers in app.module.ts
     }
   }
 
@@ -24,6 +24,8 @@ export class IonicProErrorHandler implements ErrorHandler {
     if (err.message.indexOf('cordova_not_available') !== -1) {
       return;
     }
+    console.warn(err);
+    console.log(IonicPro);
     IonicPro.monitoring.handleNewError(err);
     // Remove this if you want to disable Ionic's auto exception handling
     // in development mode.

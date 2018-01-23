@@ -26,7 +26,7 @@
       <h2>{{'Deploy channel' | translate}}</h2>
       <p>{{proInfo.channel}} ({{proInfo.deploy_uuid}})</p>
     </ion-item>
-    <ion-item *ngIf="settings?.isDeveloper" (click)="checkForUpdates()">
+    <ion-item *ngIf="proInfo && settings?.isDeveloper" (click)="checkForUpdates()">
       {{'Check for updates' | translate}}
     </ion-item>
     <ion-item>

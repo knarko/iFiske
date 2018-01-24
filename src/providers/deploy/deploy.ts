@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pro } from './pro';
-import { filter, tap, switchMap, take } from 'rxjs/operators';
+import { filter, tap, switchMap, take, timeout } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { APP_ID } from '../../app/config';
 import { SettingsProvider } from '../settings/settings';
@@ -52,11 +52,12 @@ export class DeployProvider {
       // TODO: check if we are on wifi
       await this.pro.deploy().download().pipe(
         tap(status => console.log('Download status:', status)),
-        filter(status => status === 'true'),
+        filter(status => status === 'true' || status === 'done'),
         switchMap(() => this.pro.deploy().extract()),
         tap(status => console.log('Extract status:', status)),
-        filter(status => status === 'true'),
+        filter(status => status === 'true' || status === 'done'),
         take(1),
+        timeout(30 * 1000),
       ).toPromise();
       const alert = await this.alertCtrl.show({
         title: 'New update available',

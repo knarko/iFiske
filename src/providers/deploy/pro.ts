@@ -1,7 +1,7 @@
 // TODO: remove after the changes in GIT history are fixed on the original an then change all includes of this file to: @ionic-native/pro
 
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, CordovaInstance, IonicNativePlugin } from '@ionic-native/core';
+import { Plugin, Cordova, CordovaInstance, IonicNativePlugin, CordovaCheck } from '@ionic-native/core';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -147,11 +147,16 @@ export class Pro extends IonicNativePlugin {
   /**
    * Ionic Pro Deploy .js API.
    */
-  deploy: ProDeploy;
 
-  constructor() {
-    super();
-    this.deploy = new ProDeploy((window as any).IonicCordova.deploy);
+  _deploy: ProDeploy;
+
+  @CordovaCheck()
+  deploy() {
+    if (this._deploy) {
+      return this._deploy;
+    } else {
+      return this._deploy = new ProDeploy(Pro.getPlugin().deploy);
+    }
   }
 
   /**

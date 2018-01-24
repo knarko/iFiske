@@ -52,7 +52,7 @@ export class AboutPage {
           .catch(() => { });
           console.log(this.pro);
         Promise.race([
-          this.pro.deploy.info(),
+          this.pro.deploy().info(),
           new Promise<any>((_, reject) => setTimeout(reject, 8000)),
         ]).then(info => this.proInfo = info)
           .catch(err => {
@@ -86,7 +86,7 @@ export class AboutPage {
         if (role === 'Production' || role === 'Master') {
           await this.deploy.setChannel(role);
         }
-        this.pro.deploy.info()
+        this.pro.deploy().info()
           .then(info => this.proInfo = info)
           .catch(err => console.warn(err));
       });

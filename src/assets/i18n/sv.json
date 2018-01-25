@@ -14,6 +14,10 @@
   "Coming soon": "Kommer snart",
   "Permits": "Fiskekort",
   "Loading": "Laddar...",
+  "New update available": "Ny uppdatering tillgänglig",
+  "There is a new update available": "Det finns en ny uppdatering till appen. Du kan installera den direkt (det tar bara några sekunder). Om du inte vill installera den nu kommer den att installeras automatiskt nästa gång du startar appen.",
+  "Install": "Installera",
+  "Postpone": "Senare",
 
   "Close": "Stäng",
 

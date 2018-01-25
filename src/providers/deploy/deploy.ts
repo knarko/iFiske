@@ -38,7 +38,7 @@ export class DeployProvider {
       appId: APP_ID,
       channel: this.settings.channel,
     });
-    const versions = deploy.getVersions()
+    const versions = deploy.getVersions();
     console.log(versions);
     // TODO: remove old versions
     this.platform.resume.subscribe(() => {

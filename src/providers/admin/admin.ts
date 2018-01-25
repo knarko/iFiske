@@ -12,7 +12,6 @@ import { OrganizationProvider, Organization } from '../organization/organization
 import { ApiProvider } from '../api/api';
 import { ProductProvider } from '../product/product';
 import { UserProvider, Permit } from '../user/user';
-import { DBMethod } from '../database/decorators';
 import { TranslateActionSheetController } from '../translate-action-sheet-controller/translate-action-sheet-controller';
 import { Dictionary } from '../../types';
 
@@ -30,7 +29,7 @@ export class AdminProvider {
 
   isAdmin: Observable<boolean>;
 
-  currentOrganization = new ReplaySubject<AdminOrganization>(1);
+  currentOrganization = new ReplaySubject<AdminOrganization | undefined>(1);
 
   private _orgId: number;
 
@@ -42,6 +41,9 @@ export class AdminProvider {
     if (this.organizations.has(orgId)) {
     this._orgId = orgId;
     this.currentOrganization.next(this.organizations.get(orgId));
+    } else {
+      this._orgId = undefined;
+    this.currentOrganization.next(undefined);
     }
   }
 
@@ -66,9 +68,17 @@ export class AdminProvider {
         }));
       }),
     );
-    this.getOrganizations().then(() => {
-      this.setDefaultOrgId();
-    })
+    this.isAdmin.subscribe((admin) => {
+      if (admin) {
+        this.getOrganizations().then(() => {
+          this.setDefaultOrgId();
+        });
+      } else {
+        this.organizations = new Map();
+        this.permits = new Map();
+        this.orgId = undefined;
+      }
+    });
   }
 
   pickOrganization() {
@@ -211,6 +221,10 @@ export class AdminProvider {
 
     if (!this.organizations.has(this.orgId)) {
       this.setDefaultOrgId();
+    }
+
+    if (!this.organizations.has(this.orgId)) {
+      return [];
     }
 
     const permits = this.organizations.get(this.orgId).products;

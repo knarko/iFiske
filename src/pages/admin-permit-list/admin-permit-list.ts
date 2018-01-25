@@ -6,6 +6,7 @@ import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'admin-permit-list.html',
 })
 export class AdminPermitListPage {
+  sub: Subscription;
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
   permits: Observable<Permit[]>;
@@ -29,9 +31,6 @@ export class AdminPermitListPage {
     this.permits = this.searchSubject.pipe(
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
     );
-    this.permits.subscribe(() => {
-      this.content.scrollToTop();
-    });
   }
 
   ionViewWillLoad() {
@@ -42,9 +41,17 @@ export class AdminPermitListPage {
 
   ionViewWillLeave() {
     this.navParams.data.searchTerm = this.searchTerm;
+    if (this.sub) {
+      this.sub.unsubscribe();
+      this.sub = undefined;
+    }
   }
 
   ionViewWillEnter() {
+    this.sub = this.permits.subscribe(() => {
+      this.content.scrollToTop();
+    });
+
     this.searchTerm = this.navParams.get('searchTerm') || '';
 
     this.searchSubject.next(this.searchTerm);

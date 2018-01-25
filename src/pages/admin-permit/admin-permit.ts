@@ -5,6 +5,7 @@ import { AdminProvider } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'AdminPage'],
@@ -17,7 +18,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 export class AdminPermitPage {
   code: string;
 
-  permit: Permit;
+  permit: Observable<Permit>;
   failed = false;
 
   constructor(
@@ -27,7 +28,9 @@ export class AdminPermitPage {
     private adminProvider: AdminProvider,
     private toastCtrl: TranslateToastController,
     private alertCtrl: TranslateAlertController,
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
     this.code = this.navParams.get('code');
     if (this.code) {
       this.loadPermit();
@@ -37,23 +40,39 @@ export class AdminPermitPage {
   }
 
   async loadPermit() {
-    const loading = await this.loadingCtrl.show({
-      content: 'loadpermit',
-    });
+    this.permit = this.adminProvider.getPermit(this.code);
+    this.permit.subscribe(p => console.log(p));
 
-    try {
-      const permit = await this.adminProvider.getPermit(this.code);
-      this.permit = permit;
-    } catch (err) {
+    let loading;
+    let timeout = setTimeout(async () => {
+      loading = await this.loadingCtrl.show({
+        content: 'Loading',
+      });
+    }, 100);
+
+    const dismissLoading = () => {
+      if (timeout != undefined) {
+        clearTimeout(timeout);
+        timeout = undefined;
+      }
+      if (loading) {
+        loading.dismiss();
+        loading = undefined;
+      }
+    };
+
+    this.permit.subscribe(() => {
+      dismissLoading();
+    }, err => {
+      dismissLoading();
+
       console.warn(err);
       this.toastCtrl.show({
         message: err.response,
         duration: 6000,
       });
       this.failed = true;
-    } finally {
-      loading.dismiss();
-    }
+    });
   }
 
   async revoke(status: boolean) {

@@ -3,18 +3,7 @@ import { IonicPage, NavController, NavParams, Keyboard } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
-
-function debounce(callback, delay) {
-  let timeout;
-  return function () {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      callback.apply(context, args);
-    }, delay);
-  };
-};
+import { debounce } from '../../util';
 
 @IonicPage({
   segment: 'area-search/:ID',

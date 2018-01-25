@@ -239,3 +239,8 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 .force-back-button .back-button {
   display: inline-block;
 }
+
+
+.admin-pick-organization .current {
+  color: map-get($colors, secondary);
+}

@@ -18,12 +18,13 @@ export class DeployProvider {
 
   async initialize() {
     await this.platform.ready();
+    const deploy = await this.pro.deploy();
 
-    await this.pro.deploy().init({
+    await deploy.init({
       appId: APP_ID,
       channel: this.settings.channel,
     });
-    const versions = this.pro.deploy().getVersions()
+    const versions = deploy.getVersions()
     console.log(versions);
     // TODO: remove old versions
     this.checkForUpdates();
@@ -31,9 +32,10 @@ export class DeployProvider {
 
   async setChannel(channel: string) {
     await this.platform.ready();
+    const deploy = await this.pro.deploy();
 
     this.settings.channel = channel;
-    return this.pro.deploy().init({
+    return deploy.init({
       appId: APP_ID,
       channel,
     });
@@ -44,16 +46,17 @@ export class DeployProvider {
     console.log(this.pro);
 
     const hasUpdate = await Promise.race([
-      this.pro.deploy().check(),
+      this.pro.deploy().then(deploy => deploy.check()),
       new Promise((_, reject) => setTimeout(reject, 8000)),
     ]);
     console.log(hasUpdate);
     if (hasUpdate === 'true') {
       // TODO: check if we are on wifi
-      await this.pro.deploy().download().pipe(
+      const deploy = await this.pro.deploy();
+      await deploy.download().pipe(
         tap(status => console.log('Download status:', status)),
         filter(status => status === 'true' || status === 'done'),
-        switchMap(() => this.pro.deploy().extract()),
+        switchMap(() => deploy.extract()),
         tap(status => console.log('Extract status:', status)),
         filter(status => status === 'true' || status === 'done'),
         take(1),
@@ -72,7 +75,7 @@ export class DeployProvider {
       return new Promise((resolve) => {
         alert.onDidDismiss((_, role) => {
           if (role === 'install') {
-            this.pro.deploy().redirect();
+            deploy.redirect();
             resolve(true)
           } else {
             resolve(false)

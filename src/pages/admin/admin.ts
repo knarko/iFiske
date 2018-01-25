@@ -14,6 +14,7 @@ export class AdminPage {
   tabs = [
     { uri: 'AdminCheckPage', title: 'Check', icon: 'barcode' },
     { uri: 'AdminStatsPage', title: 'Statistics', icon: 'stats' },
+    { uri: 'AdminPermitListPage', title: 'Permits', icon: 'ifiske-permit' },
   ];
 
   tabParams: any;

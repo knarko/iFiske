@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar color="primary" class="force-back-button">
+    <ion-title>{{'Permits' | translate}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="pickOrganization()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top color="primary">
+    <form action="">
+      <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
+        [placeholder]="'Search' | translate"></ion-searchbar>
+    </form>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list [virtualScroll]="permits | async">
+    <ion-item *virtualItem="let permit" (click)="goto(permit)">
+      <h2>{{permit.t}}</h2>
+      <p>{{permit.fullname}} - {{permit.tel}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

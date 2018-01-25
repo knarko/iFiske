@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar color="primary" class="force-back-button">
     <ion-title>{{'Check permit' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="pickOrganization()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

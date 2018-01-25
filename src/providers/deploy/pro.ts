@@ -151,7 +151,7 @@ export class Pro extends IonicNativePlugin {
   _deploy: ProDeploy;
 
   @CordovaCheck()
-  deploy() {
+  async deploy(): Promise<ProDeploy> {
     if (this._deploy) {
       return this._deploy;
     } else {

@@ -9,7 +9,7 @@ import { SessionProvider } from '../session/session';
 import { timeout } from 'rxjs/operators';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
-function delay(fn, t) {
+function delay(fn: () => Promise<any>, t: number) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       fn().then(resolve, reject);
@@ -67,12 +67,12 @@ export class ApiProvider {
     })
       .pipe(timeout(10000))
       .toPromise()
-      .then((response: ApiResponse) => {
+      .then(async (response: ApiResponse) => {
         if (response.status !== 'error' && response.data != undefined && response.data.response != undefined) {
           return Promise.resolve(response.data.response);
         }
         return Promise.reject(response);
-      }).catch(response => {
+      }).catch(async (response) => {
         if (retries < this.maxRetries) {
           return delay(() => {
             return this.api_call(params, ++retries);

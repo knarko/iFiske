@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { AdminProvider } from '../../providers/admin/admin';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,11 @@ export class AdminCheckPage {
     private barcodeScanner: BarcodeScanner,
     private toastCtrl: TranslateToastController,
     private navCtrl: NavController,
-  ) {
+    private adminProvider: AdminProvider,
+  ) { }
+
+  pickOrganization() {
+    this.adminProvider.pickOrganization();
   }
 
   ionViewWillLoad() {

@@ -16,7 +16,7 @@ export class PermitComponent {
   @Input() admin: boolean = false;
   @Input() permit: Permit;
   @Output() revoke = new EventEmitter<boolean>();
-  org: Organization;
+  org?: Organization;
 
   constructor(
     private organizationProvider: OrganizationProvider,
@@ -29,14 +29,10 @@ export class PermitComponent {
       this.updateQR();
       try {
         this.org = await this.areaProvider.getOne(this.permit.ai)
-          .then((area) => {
-            return this.organizationProvider.getOne(area.orgid);
-          });
+          .then((area) => this.organizationProvider.getOne(area.orgid));
       } catch (e) {
-        console.warn(e);
         // Don't do anything
       }
-      console.log(this.org)
     }
   }
 

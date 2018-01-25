@@ -46,12 +46,16 @@ import { SessionProvider } from '../providers/session/session';
 import { SettingsProvider } from '../providers/settings/settings';
 import { TechniqueProvider } from '../providers/technique/technique';
 import { TermsProvider } from '../providers/terms/terms';
+import { TranslateActionSheetController } from '../providers/translate-action-sheet-controller/translate-action-sheet-controller';
 import { TranslateAlertController } from '../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateLoadingController } from '../providers/translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../providers/translate-toast-controller/translate-toast-controller';
 import { UpdateProvider } from '../providers/update/update';
 import { UserProvider } from '../providers/user/user';
 import { PlatformProvider } from '../providers/platform/platform';
+import { DeployProvider } from '../providers/deploy/deploy';
+import { CreateAccountProvider } from '../providers/create-account/create-account';
+import { AdminProvider } from '../providers/admin/admin';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,9 +64,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 // Import locale
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
-import { DeployProvider } from '../providers/deploy/deploy';
-import { CreateAccountProvider } from '../providers/create-account/create-account';
-import { AdminProvider } from '../providers/admin/admin';
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -114,15 +115,19 @@ registerLocaleData(localeSv);
     StatusBar,
 
     //Providers
+    AdminProvider,
     AdsProvider,
     ApiProvider,
     AreaProvider,
     CountyProvider,
+    CreateAccountProvider,
     DatabaseProvider,
+    DeployProvider,
     FishProvider,
     InformationProvider,
     MapDataProvider,
     OrganizationProvider,
+    PlatformProvider,
     ProductProvider,
     PushProvider,
     RuleProvider,
@@ -130,15 +135,12 @@ registerLocaleData(localeSv);
     SettingsProvider,
     TechniqueProvider,
     TermsProvider,
+    TranslateActionSheetController,
     TranslateAlertController,
     TranslateLoadingController,
     TranslateToastController,
     UpdateProvider,
     UserProvider,
-    PlatformProvider,
-    DeployProvider,
-    CreateAccountProvider,
-    AdminProvider,
   ],
 })
 export class AppModule {}

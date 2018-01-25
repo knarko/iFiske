@@ -34,6 +34,7 @@
     "@ionic-native/fcm": "^4.5.2",
     "@ionic-native/geolocation": "^4.5.2",
     "@ionic-native/launch-navigator": "^4.5.2",
+    "@ionic-native/network": "^4.5.3",
     "@ionic-native/pro": "^4.5.2",
     "@ionic-native/screen-orientation": "^4.5.2",
     "@ionic-native/sms": "^4.5.2",
@@ -60,6 +61,7 @@
     "cordova-plugin-ionic": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.1",
     "cordova-plugin-statusbar": "^2.4.1",
@@ -132,7 +134,8 @@
       },
       "cordova-plugin-fcm": {},
       "cordova-plugin-sms": {},
-      "cordova-plugin-migrate-localstorage": {}
+      "cordova-plugin-migrate-localstorage": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "android",

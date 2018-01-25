@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Network } from '@ionic-native/network';
 import { Pro } from './pro';
 import { filter, tap, switchMap, take, timeout } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
@@ -6,14 +7,27 @@ import { APP_ID } from '../../app/config';
 import { SettingsProvider } from '../settings/settings';
 import { Platform } from 'ionic-angular';
 
+enum Connection {
+  UNKNOWN = 'unknown',
+  ETHERNET = 'ethernet',
+  WIFI = 'wifi',
+  CELL_2G = '2g',
+  CELL_3G = '3g',
+  CELL_4G = '4g',
+  CELL = 'cellular',
+  NONE = 'none',
+}
+
 @Injectable()
 export class DeployProvider {
+  checking: boolean;
 
   constructor(
     private pro: Pro,
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
     private platform: Platform,
+    private network: Network,
   ) { }
 
   async initialize() {
@@ -27,6 +41,9 @@ export class DeployProvider {
     const versions = deploy.getVersions()
     console.log(versions);
     // TODO: remove old versions
+    this.platform.resume.subscribe(() => {
+      this.checkForUpdates();
+    });
     this.checkForUpdates();
   }
 
@@ -42,16 +59,43 @@ export class DeployProvider {
   }
 
   async checkForUpdates() {
-    await this.platform.ready();
-    console.log(this.pro);
+    if (this.checking) {
+      return;
+    } else {
+      this.checking = true;
+    }
 
-    const hasUpdate = await Promise.race([
-      this.pro.deploy().then(deploy => deploy.check()),
-      new Promise((_, reject) => setTimeout(reject, 8000)),
-    ]);
-    console.log(hasUpdate);
-    if (hasUpdate === 'true') {
-      // TODO: check if we are on wifi
+    try {
+      await this.platform.ready();
+
+      const hasUpdate = await Promise.race([
+        this.pro.deploy().then(deploy => deploy.check()),
+        new Promise((_, reject) => setTimeout(reject, 8000)),
+      ]);
+
+      console.log(hasUpdate);
+      if (hasUpdate !== 'true') {
+        return false;
+      }
+
+      switch (this.network.type) {
+        // Don't update if the network type is slow (it probably costs a little bit)
+        case Connection.CELL:
+        case Connection.CELL_2G:
+        case Connection.CELL_3G:
+        case Connection.UNKNOWN:
+        case Connection.NONE:
+          this.network.onchange().pipe(take(1)).subscribe(() => {
+            this.checkForUpdates();
+          });
+          return false;
+
+        case Connection.WIFI:
+        case Connection.CELL_4G:
+        default:
+          break;
+      }
+
       const deploy = await this.pro.deploy();
       await deploy.download().pipe(
         tap(status => console.log('Download status:', status)),
@@ -62,6 +106,7 @@ export class DeployProvider {
         take(1),
         timeout(30 * 1000),
       ).toPromise();
+
       const alert = await this.alertCtrl.show({
         title: 'New update available',
         message: 'There is a new update available',
@@ -72,6 +117,7 @@ export class DeployProvider {
           text: 'Postpone',
         }],
       });
+
       return new Promise((resolve) => {
         alert.onDidDismiss((_, role) => {
           if (role === 'install') {
@@ -82,7 +128,8 @@ export class DeployProvider {
           }
         });
       });
+    } finally {
+      this.checking = false;
     }
   }
-
 }

@@ -3,7 +3,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
@@ -56,11 +56,14 @@ export class AdminProvider {
     this.isAdmin = this.userProvider.loggedIn.pipe(
       switchMap(loggedIn => {
         if (!loggedIn) {
-          return of(loggedIn);
+          return of(false);
         }
-        return fromPromise(this.API.user_organizations()).pipe(
-          map(orgs => !!Object.keys(orgs).length),
-        );
+        return fromPromise(this.API.user_organizations().then(orgs => {
+          return !!Object.keys(orgs).length
+        }, err => {
+          console.log(err);
+          return false
+        }));
       }),
     );
     this.getOrganizations().then(() => {
@@ -151,7 +154,6 @@ export class AdminProvider {
     ]);
   }
 
-  @DBMethod
   async getProduct(productID) {
     let product;
     try {
@@ -169,7 +171,6 @@ export class AdminProvider {
     return Promise.reject('License with this code not found');
   }
 
-  @DBMethod
   getOrganization(orgID: number) {
     return this.organizations.get(orgID);
   }
@@ -179,16 +180,20 @@ export class AdminProvider {
       return Promise.reject('Not logged in')
     }
 
-    const orgs = await this.API.user_organizations();
-    const p = [];
-    for (let id in orgs) {
-      const orgId = Number(id);
-      const org: AdminOrganization = this.organizations.get(orgId) || {};
-      Object.assign(org, orgs[id]);
-      p.push(this.initOrg(org));
-      this.organizations.set(orgId, org);
+    try {
+      const orgs = await this.API.user_organizations();
+      const p = [];
+      for (let id in orgs) {
+        const orgId = Number(id);
+        const org: AdminOrganization = this.organizations.get(orgId) || {};
+        Object.assign(org, orgs[id]);
+        p.push(this.initOrg(org));
+        this.organizations.set(orgId, org);
+      }
+      return Promise.all(p).then(() => orgs);
+    } catch (err) {
+      return [];
     }
-    return Promise.all(p).then(() => orgs);
   }
 
   search(searchTerm?: string) {

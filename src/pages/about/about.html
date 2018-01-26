@@ -14,18 +14,17 @@
       <h2>{{'iFiske - Easier Fishing' | translate}}</h2>
       <p>&copy; 2017 Jighead AB (iFiske.se)</p>
     </ion-item>
-    <ion-item>
+    <button ion-item detail-none (click)="activateDeveloperMode()">
       <h2>{{'ui.about.version' | translate}}</h2>
-      <p>{{version}} ({{buildId}})</p>
-    </ion-item>
-    <ion-item *ngIf="settings?.isDeveloper">
-      <h2>{{'ui.about.codeVersion' | translate}}</h2>
-      <p>{{codeVersion}}</p>
-    </ion-item>
-    <ion-item *ngIf="proInfo" (click)="activateDeveloperMode()">
+      <p>{{version}} ({{codeVersion}})</p>
+    </button>
+    <button ion-item detail-none *ngIf="settings?.isDeveloper" (click)="selectDeployChannel()">
       <h2>{{'Deploy channel' | translate}}</h2>
-      <p>{{proInfo.channel}} ({{proInfo.deploy_uuid}})</p>
-    </ion-item>
+      <p>
+        {{proInfo?.channel ||settings?.channel}}
+        <span *ngIf="proInfo?.deploy_uuid !== 'NO_DEPLOY_LABEL'">({{proInfo?.deploy_uuid}})</span>
+      </p>
+    </button>
     <ion-item *ngIf="proInfo && settings?.isDeveloper" (click)="checkForUpdates()">
       {{'Check for updates' | translate}}
     </ion-item>

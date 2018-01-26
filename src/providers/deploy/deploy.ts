@@ -49,9 +49,10 @@ export class DeployProvider {
 
   async setChannel(channel: string) {
     await this.platform.ready();
+    this.settings.channel = channel;
+
     const deploy = await this.pro.deploy();
 
-    this.settings.channel = channel;
     return deploy.init({
       appId: APP_ID,
       channel,
@@ -115,6 +116,7 @@ export class DeployProvider {
           role: 'install',
         }, {
           text: 'Postpone',
+          role: 'cancel',
         }],
       });
 

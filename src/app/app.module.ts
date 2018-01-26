@@ -64,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 // Import locale
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
+import { Network } from '@ionic-native/network';
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -107,6 +108,7 @@ registerLocaleData(localeSv);
     FCM,
     Geolocation,
     LaunchNavigator,
+    Network,
     Pro,
     ScreenOrientation,
     SMS,

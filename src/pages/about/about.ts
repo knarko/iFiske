@@ -40,6 +40,7 @@ export class AboutPage {
   ) { }
 
   ionViewWillEnter() {
+    this.developerClicked = 0;
     this.codeVersion = APP_VERSION;
     this.lastUpdated = this.update.lastUpdate;
     this.platform.ready().then(() => {
@@ -66,32 +67,41 @@ export class AboutPage {
     });
   }
 
+
+  async selectDeployChannel() {
+    if (!this.settings.isDeveloper) {
+      return;
+    }
+    const alert = await this.alertCtrl.show({
+      title: 'Select Build Channel',
+      message: 'Master is for developers only',
+      buttons: [
+        {
+          text: 'Master',
+          role: 'Master',
+        },
+        {
+          text: 'Production',
+          role: 'Production',
+        },
+      ],
+    });
+    alert.onDidDismiss(async (_data, role) => {
+      if (role === 'Production' || role === 'Master') {
+        await this.deploy.setChannel(role);
+      }
+      this.pro.deploy()
+        .then(deploy => deploy.info())
+        .then(info => this.proInfo = info)
+        .catch(err => console.warn(err));
+    });
+  }
   async activateDeveloperMode() {
     if (this.settings.isDeveloper) {
-      const alert = await this.alertCtrl.show({
-        title: 'Select Build Channel',
-        message: 'Master is for developers only',
-        buttons: [
-          {
-            text: 'Master',
-            role: 'Master',
-          },
-          {
-            text: 'Production',
-            role: 'Production',
-          },
-        ],
-      });
-      alert.onDidDismiss(async (_data, role) => {
-        if (role === 'Production' || role === 'Master') {
-          await this.deploy.setChannel(role);
-        }
-        this.pro.deploy()
-          .then(deploy => deploy.info())
-          .then(info => this.proInfo = info)
-          .catch(err => console.warn(err));
-      });
-    } else if (this.developerClicked > 10) {
+      return;
+    }
+
+    if (this.developerClicked > 10) {
       this.settings.isDeveloper = true;
       this.toastCtrl.show({
         message: 'You are now a developer',

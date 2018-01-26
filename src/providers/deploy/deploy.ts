@@ -32,13 +32,12 @@ export class DeployProvider {
 
   async initialize() {
     await this.platform.ready();
-    const deploy = await this.pro.deploy();
 
-    await deploy.init({
+    await this.pro.deploy().init({
       appId: APP_ID,
       channel: this.settings.channel,
     });
-    const versions = deploy.getVersions();
+    const versions = this.pro.deploy().getVersions();
     console.log(versions);
     // TODO: remove old versions
     this.platform.resume.subscribe(() => {
@@ -51,9 +50,8 @@ export class DeployProvider {
     await this.platform.ready();
     this.settings.channel = channel;
 
-    const deploy = await this.pro.deploy();
 
-    return deploy.init({
+    return this.pro.deploy().init({
       appId: APP_ID,
       channel,
     });
@@ -70,7 +68,7 @@ export class DeployProvider {
       await this.platform.ready();
 
       const hasUpdate = await Promise.race([
-        this.pro.deploy().then(deploy => deploy.check()),
+        this.pro.deploy().check(),
         new Promise((_, reject) => setTimeout(reject, 8000)),
       ]);
 
@@ -97,11 +95,10 @@ export class DeployProvider {
           break;
       }
 
-      const deploy = await this.pro.deploy();
-      await deploy.download().pipe(
+      await this.pro.deploy().download().pipe(
         tap(status => console.log('Download status:', status)),
         filter(status => status === 'true' || status === 'done'),
-        switchMap(() => deploy.extract()),
+        switchMap(() => this.pro.deploy().extract()),
         tap(status => console.log('Extract status:', status)),
         filter(status => status === 'true' || status === 'done'),
         take(1),
@@ -123,7 +120,7 @@ export class DeployProvider {
       return new Promise((resolve) => {
         alert.onDidDismiss((_, role) => {
           if (role === 'install') {
-            deploy.redirect();
+            this.pro.deploy().redirect();
             resolve(true)
           } else {
             resolve(false)

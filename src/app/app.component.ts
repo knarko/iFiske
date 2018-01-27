@@ -10,6 +10,7 @@ import { PushProvider } from '../providers/push/push';
 import { DeployProvider } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
+import { IonicPro } from './pro';
 
 @Component({
   templateUrl: 'app.html',
@@ -33,7 +34,10 @@ export class MyApp {
     this.config.setTransition('md-transition', MDTransition);
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
-    this.deploy.initialize();
+    this.deploy.initialize().catch(err => {
+      console.warn(err);
+      IonicPro.monitoring.handleNewError(err);
+    });
     platform.ready().then(async () => {
       this.push.initialize();
       if (true || localStorage.getItem('language')) {

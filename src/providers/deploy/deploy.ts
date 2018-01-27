@@ -30,8 +30,15 @@ export class DeployProvider {
     private network: Network,
   ) { }
 
+  async hasDeploy() {
+    if (!this.pro.deploy()) {
+      throw new Error('Deploy not loaded');
+    }
+  }
+
   async initialize() {
     await this.platform.ready();
+    await this.hasDeploy();
 
     await this.pro.deploy().init({
       appId: APP_ID,
@@ -50,6 +57,7 @@ export class DeployProvider {
     await this.platform.ready();
     this.settings.channel = channel;
 
+    await this.hasDeploy();
 
     return this.pro.deploy().init({
       appId: APP_ID,
@@ -66,6 +74,7 @@ export class DeployProvider {
 
     try {
       await this.platform.ready();
+      await this.hasDeploy();
 
       const hasUpdate = await Promise.race([
         this.pro.deploy().check(),

@@ -4,7 +4,7 @@
     <ion-title>{{(currentOrganization | async)?.info?.t}}</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="pickOrganization()">
+      <button *ngIf="numberOfOrganizations() > 1" ion-button icon-only (click)="pickOrganization()">
         <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>

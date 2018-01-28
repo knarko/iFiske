@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AdminCheckPage {
   currentOrganization: Observable<AdminOrganization>;
+  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
   @ViewChild(Navbar) navbar: Navbar;
 
   permitCode: string;

@@ -31,6 +31,10 @@ export class AdminProvider {
 
   currentOrganization = new ReplaySubject<AdminOrganization | undefined>(1);
 
+  numberOfOrganizations = () => {
+    return this.organizations.size;
+  }
+
   private _orgId: number;
 
   get orgId() {

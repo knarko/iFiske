@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AdminStatsPage {
   currentOrganization: Observable<AdminOrganization>;
+  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
 
   @ViewChild(Navbar) navbar: Navbar;
 

@@ -35,6 +35,8 @@ export class AdminPermitListPage {
     );
   }
 
+  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
+
   ionViewWillLoad() {
     this.navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss().then(() => {
@@ -67,6 +69,7 @@ export class AdminPermitListPage {
 
     this.searchSubject.next(this.searchTerm);
   }
+
 
   pickOrganization() {
     this.adminProvider.pickOrganization();

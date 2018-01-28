@@ -12,6 +12,10 @@
       "back": "Back",
       "pull_to_refresh": "Update"
     },
+    "map": {
+      "outdoors": "Outdoors",
+      "satellite": "Satellite"
+    },
     "placeholder": {
       "email": "e.g. name@domain.com",
       "password": "••••••••",

@@ -30,6 +30,10 @@
       "back": "Tillbaka",
       "pull_to_refresh": "Uppdatera"
     },
+    "map": {
+      "outdoors": "Karta",
+      "satellite": "Satellit"
+    },
     "about": {
       "version": "Versionsnummer",
       "codeVersion": "Installerad version"

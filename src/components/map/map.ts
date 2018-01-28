@@ -10,6 +10,7 @@ import 'leaflet.markercluster';
 import 'drmonty-leaflet-awesome-markers';
 import { NavController } from 'ionic-angular';
 import { PlatformProvider } from '../../providers/platform/platform';
+import { TranslateService } from '@ngx-translate/core';
 declare var L: any;
 
 
@@ -54,6 +55,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private mapData: MapDataProvider,
     private navCtrl: NavController,
     private platform: PlatformProvider,
+    private translate: TranslateService,
   ) {
   }
 
@@ -64,24 +66,33 @@ export class MapComponent implements AfterViewInit, OnChanges {
     this.map = new Map(this.mapElement.nativeElement)
       .setView([62.0, 15.0], 4);
 
-    var baseLayers = {
-      outdoors: new TileLayer(mapboxUrl, {
+      const outdoors = new TileLayer(mapboxUrl, {
         maxZoom: 18,
         maptype: 'mapbox.outdoors',
         apikey: apikey,
-      }),
-      satellite: new TileLayer(mapboxUrl, {
+      });
+      const satellite = new TileLayer(mapboxUrl, {
         maxZoom: 16,
         maptype: 'mapbox.satellite',
         apikey: apikey,
-      }),
-    };
+      });
 
-    this.map.addLayer(baseLayers.outdoors);
+    this.map.addLayer(outdoors);
 
-    this.map.addControl(new Control.Layers(baseLayers));
+    let baseLayers = new Control.Layers({outdoors, satellite});
+    this.map.addControl(baseLayers);
+    this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
+      this.map.removeControl(baseLayers);
+      const newControlLayers = {};
+      newControlLayers[stuff['ui.map.outdoors']] = outdoors;
+      newControlLayers[stuff['ui.map.satellite']] = satellite;
+      baseLayers = new Control.Layers(newControlLayers)
+      this.map.addControl(baseLayers);
+      console.log(stuff);
+    });
 
-    this.lc = new LocateControl({ // eslint-disable-line new-cap
+
+    this.lc = new LocateControl({
       follow: false,
       position: 'bottomright',
       keepCurrentZoomLevel: false,

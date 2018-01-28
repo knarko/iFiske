@@ -261,3 +261,17 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
     text-align: left;
   }
 }
+
+.footer-button {
+  margin: 0;
+
+  .md & {
+    min-height: $toolbar-md-height;
+  }
+  .ios & {
+    min-height: $toolbar-ios-height;
+  }
+  .wp & {
+    min-height: $toolbar-wp-height;
+  }
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider, Permit } from '../../providers/user/user';
 import { serverLocation } from '../../providers/api/serverLocation';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'MyPermitsPage'],
@@ -20,6 +21,7 @@ export class PermitDetailPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
+    private modalCtrl: ModalController,
   ) {
   }
 
@@ -37,6 +39,14 @@ export class PermitDetailPage {
       }
     }
     console.log(this.permit);
+  }
+
+  openRules() {
+    this.modalCtrl.create('PermitRulesPage', {
+      t: this.permit.rule_t,
+      d: this.permit.rule_d,
+      ver: this.permit.rule_ver,
+    }).present();
   }
 
 }

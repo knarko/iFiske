@@ -21,11 +21,30 @@ export interface AdminOrganization {
   orgid?: number;
 }
 
+export interface AdminPermit {
+  ID: number;
+  at: number;
+  code: number;
+  fr: number;
+  fullname: string;
+  pdf: string;
+  ref1: number;
+  ref2: number;
+  rev: number;
+  suborgid: number;
+  subt: string;
+  t: string;
+  tel: string;
+  to: number;
+
+  validity?: string;
+}
+
 @Injectable()
 export class AdminProvider {
   ready: Promise<void>;
   organizations = new Map<number, AdminOrganization>();
-  private permits = new Map<string, ReplaySubject<Permit>>();
+  private permits = new Map<string, ReplaySubject<AdminPermit>>();
 
   isAdmin: Observable<boolean>;
 
@@ -110,12 +129,12 @@ export class AdminProvider {
     });
   }
 
-  getPermit(code: string): Observable<Permit> {
-    let subject: ReplaySubject<Permit>;
+  getPermit(code: string): Observable<AdminPermit> {
+    let subject: ReplaySubject<AdminPermit>;
     if (this.permits.has(code)) {
       subject = this.permits.get(code);
     } else {
-      subject = new ReplaySubject<Permit>(1);
+      subject = new ReplaySubject<AdminPermit>(1);
       this.permits.set(code, subject);
     }
     this.getPermitApi(code).then(([err, permit]) => {

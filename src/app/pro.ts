@@ -21,7 +21,7 @@ export class IonicProErrorHandler implements ErrorHandler {
   }
 
   handleError(err: any): void {
-    if (err.message.indexOf('cordova_not_available') !== -1) {
+    if (err && err.message && err.message.indexOf('cordova_not_available') !== -1) {
       return;
     }
     console.warn(err);

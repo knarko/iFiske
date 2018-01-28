@@ -10,7 +10,6 @@ import { DBMethod } from '../database/decorators';
 import { Area } from '../area/area';
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
-import { Rule } from '../rule/rule';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
@@ -54,7 +53,12 @@ export interface UserProduct {
 
   validity?: string;
 }
-export type Permit = UserProduct & Product & Rule;
+interface PermitRules {
+  rule_ver: number;
+  rule_d: string;
+  rule_t: string;
+}
+export type Permit = UserProduct & Product & PermitRules;
 
 @Injectable()
 export class UserProvider extends BaseModel {

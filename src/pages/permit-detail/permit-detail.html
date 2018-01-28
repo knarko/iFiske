@@ -11,13 +11,8 @@
   <app-permit *ngIf="permit" [permit]="permit"></app-permit>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <button ion-button (click)="openRulesModel()" icon-left *ngIf="permit?.rule_t">
-      <ion-icon name="document"></ion-icon>
-      {{'Rules' | translate}}
-    </button>
-    <a ion-button icon-start *ngIf="permit?.code" [href]="serverLocation + '/r/' + permit.code + '?lang=' + language" target="_system">
-      <ion-icon name="ifiske-fish"></ion-icon>
-      {{'Catch report' | translate}}</a>
-  </ion-toolbar>
+  <button full ion-button color="secondary" (click)="openRules()" icon-left *ngIf="permit?.rule_t" class="footer-button">
+    <ion-icon name="document"></ion-icon>
+    {{'Rules' | translate}}
+  </button>
 </ion-footer>

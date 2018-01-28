@@ -81,11 +81,14 @@ export class AdminProvider {
     });
   }
 
-  pickOrganization() {
+  async pickOrganization() {
     const buttons = [];
     for (const org of this.organizations.values()) {
+      if (!org.info || !org.info.t) {
+        await this.getOrganizations();
+      }
       buttons.push({
-        text: org.info.t,
+        text: org.info && org.info.t,
         handler: () => this.orgId = org.orgid,
         cssClass: this.orgId === org.orgid ? 'current' : undefined,
       });

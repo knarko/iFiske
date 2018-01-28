@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { AdminProvider } from '../../providers/admin/admin';
+import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -11,6 +12,7 @@ import { AdminProvider } from '../../providers/admin/admin';
   templateUrl: 'admin-check.html',
 })
 export class AdminCheckPage {
+  currentOrganization: Observable<AdminOrganization>;
   @ViewChild(Navbar) navbar: Navbar;
 
   permitCode: string;
@@ -30,6 +32,7 @@ export class AdminCheckPage {
   }
 
   ionViewWillLoad() {
+    this.currentOrganization = this.adminProvider.currentOrganization;
     this.navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss();
     }

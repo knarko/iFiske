@@ -61,6 +61,7 @@ export class SettingsProvider {
     this.settings.language = lang;
     this.persistSettings();
     this.translate.use(this.settings.language);
+    document.getElementsByTagName('html').item(0).lang = lang;
 
     // TODO: analytics
     // analytics.trackEvent('Language', 'changed', settings.language);

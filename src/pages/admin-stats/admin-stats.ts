@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { serverLocation } from '../../providers/api/serverLocation';
-import { AdminProvider } from '../../providers/admin/admin';
+import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -9,6 +10,7 @@ import { AdminProvider } from '../../providers/admin/admin';
   templateUrl: 'admin-stats.html',
 })
 export class AdminStatsPage {
+  currentOrganization: Observable<AdminOrganization>;
 
   @ViewChild(Navbar) navbar: Navbar;
 
@@ -25,6 +27,7 @@ export class AdminStatsPage {
   }
 
   ionViewDidLoad() {
+    this.currentOrganization = this.adminProvider.currentOrganization;
     this.navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss();
     }

@@ -244,3 +244,20 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 .admin-pick-organization .current {
   color: map-get($colors, secondary);
 }
+
+.toolbar.large-title {
+  .title-ios {
+    padding: 0 0.5em;
+    position: relative;
+  }
+
+  .toolbar-title {
+    white-space: normal;
+    line-height: 1.2em;
+    max-height: calc(3em * 1.2); // max 3 rows
+  }
+
+  .toolbar-title-ios {
+    text-align: left;
+  }
+}

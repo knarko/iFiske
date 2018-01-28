@@ -18,6 +18,7 @@
   "There is a new update available": "Det finns en ny uppdatering till appen. Du kan installera den direkt (det tar bara några sekunder). Om du inte vill installera den nu kommer den att installeras automatiskt nästa gång du startar appen.",
   "Install": "Installera",
   "Postpone": "Senare",
+  "My Page": "Min sida",
 
   "Close": "Stäng",
 
@@ -213,8 +214,7 @@
   "Notifications are turned on": "Notifikationer är aktiverade",
   "Notify via email": "Notifikationer via email",
   "OK": "OK",
-  "Open Control Panel": "Öppna kontrollpanelen",
-  "Open Control panel": "Öppna kontrollpanelen",
+  "Open control panel": "Öppna kontrollpanelen",
   "Open Source Licenses": "Öppen mjukvara",
   "Outdoors": "Utomhus",
   "Password changed": "Ditt lösenord har ändrats och du har loggats in",

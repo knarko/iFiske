@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { AdminProvider, AdminPermit } from '../../providers/admin/admin';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
@@ -40,16 +40,23 @@ export class AdminPermitPage {
 
   async loadPermit() {
     this.permit = this.adminProvider.getPermit(this.code);
-    this.permit.subscribe(p => console.log(p));
 
-    let loading;
+    let loading: Loading;
+    let dismissed = false;
+
     let timeout = setTimeout(async () => {
-      loading = await this.loadingCtrl.show({
+      loading = await this.loadingCtrl.create({
         content: 'Loading',
       });
+      if (!dismissed) {
+        loading.present();
+      } else {
+        dismissLoading();
+      }
     }, 100);
 
     const dismissLoading = () => {
+      dismissed = true;
       if (timeout != undefined) {
         clearTimeout(timeout);
         timeout = undefined;

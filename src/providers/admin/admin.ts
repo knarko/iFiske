@@ -108,7 +108,7 @@ export class AdminProvider {
     });
   }
 
-  async pickOrganization() {
+  pickOrganization = async () => {
     const buttons = [];
     for (const org of this.organizations.values()) {
       buttons.push({
@@ -124,7 +124,7 @@ export class AdminProvider {
     });
 
     this.actionSheetCtrl.show({
-      title: 'Select Organization',
+      title: 'ui.admin.selectOrg',
       cssClass: 'admin-pick-organization',
       buttons,
     });
@@ -138,28 +138,20 @@ export class AdminProvider {
       subject = new ReplaySubject<AdminPermit>(1);
       this.permits.set(code, subject);
     }
-    this.getPermitApi(code).then(([err, permit]) => {
-      if (err) {
-        subject.error(err);
-      } else {
-        subject.next(permit);
-      }
-    }).catch(err => {
+    this.getPermitApi(code).then(permit => {
+      subject.next(permit);
+    }, err => {
       subject.error(err);
     });
 
     return subject.asObservable();
   }
 
-  async getPermitApi(code) {
-    // For some reason I have to use a weird promise thatn cannot be rejected, since it complains about an uncaught error (even if the error is caught....)
-    try {
-      const permit = await this.API.adm_check_prod(code)
+  getPermitApi(code) {
+    return this.API.adm_check_prod(code).then(permit => {
       permit.validity = this.productProvider.getValidity(permit);
-      return [undefined, permit];
-    } catch (err) {
-      return [err, undefined];
-    }
+      return permit;
+    });
   }
 
   private setDefaultOrgId() {

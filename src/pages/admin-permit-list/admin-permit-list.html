@@ -1,14 +1,5 @@
 <ion-header>
-
-  <ion-navbar color="primary" class="force-back-button large-title">
-    <ion-title>{{(currentOrganization | async)?.ot}}</ion-title>
-
-    <ion-buttons end>
-      <button *ngIf="numberOfOrganizations() > 1" ion-button icon-only (click)="pickOrganization()">
-        <ion-icon name="contact"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+  <admin-header (back)="back()"></admin-header>
 
   <ion-toolbar no-border-top color="primary">
     <form action="">
@@ -16,15 +7,15 @@
         [placeholder]="'Search' | translate"></ion-searchbar>
     </form>
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content>
   <ion-list [virtualScroll]="permits | async">
     <ion-item *virtualItem="let permit" (click)="goto(permit)">
-      <h2>{{permit.t}}</h2>
-      <p>{{permit.fullname}} - {{permit.tel}}</p>
+      <h2>{{permit.fullname}}</h2>
+      <p>{{permit.t}}</p>
+      <p>{{permit.tel}}</p>
+      <p item-end class="code">{{permit.code}}</p>
     </ion-item>
   </ion-list>
 

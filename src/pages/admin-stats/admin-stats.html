@@ -1,16 +1,6 @@
 <ion-header>
-
-  <ion-navbar color="primary" class="force-back-button large-title">
-    <ion-title>{{(currentOrganization | async)?.ot}}</ion-title>
-    <ion-buttons end>
-      <button *ngIf="numberOfOrganizations() > 1" ion-button icon-only (click)="pickOrganization()">
-        <ion-icon name="contact"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-
+  <admin-header></admin-header>
 </ion-header>
-
 
 <ion-content padding>
   <h2 class="text-center">{{'Coming soon' | translate}}</h2>

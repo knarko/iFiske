@@ -3,26 +3,21 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { AdminProvider } from '../../providers/admin/admin';
-import { AdminBasePage } from '../admin/admin-base';
 
 @IonicPage()
 @Component({
   selector: 'page-admin-check',
   templateUrl: 'admin-check.html',
 })
-export class AdminCheckPage extends AdminBasePage {
+export class AdminCheckPage {
   permitCode: string;
   serverLocation = serverLocation;
 
   constructor(
     private navCtrl: NavController,
-    adminProvider: AdminProvider,
     private barcodeScanner: BarcodeScanner,
     private toastCtrl: TranslateToastController,
-  ) {
-    super(adminProvider, navCtrl);
-  }
+  ) { }
 
   checkPermit() {
     this.navCtrl.push('AdminPermitPage', { code: this.permitCode });

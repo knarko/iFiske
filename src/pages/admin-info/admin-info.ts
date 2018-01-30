@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-import { AdminBasePage } from '../admin/admin-base';
-import { AdminProvider } from '../../providers/admin/admin';
+import { IonicPage } from 'ionic-angular';
 import { UserProvider, User } from '../../providers/user/user';
+import { AdminProvider } from '../../providers/admin/admin';
 
 
 @IonicPage({
@@ -12,16 +11,17 @@ import { UserProvider, User } from '../../providers/user/user';
   selector: 'page-admin-info',
   templateUrl: 'admin-info.html',
 })
-export class AdminInfoPage extends AdminBasePage {
+export class AdminInfoPage {
   user: Promise<User>;
 
+  currentOrganization = this.adminProvider.currentOrganization;
+  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
+  pickOrganization = this.adminProvider.pickOrganization;
+
   constructor(
-    adminProvider: AdminProvider,
-    navCtrl: NavController,
+    private adminProvider: AdminProvider,
     private userProvider: UserProvider,
-  ) {
-    super(adminProvider, navCtrl);
-  }
+  ) { }
 
   ionViewWillEnter() {
     this.user = this.userProvider.getInfo();

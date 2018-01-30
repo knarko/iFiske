@@ -12,7 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class AdminPage {
 
   tabs = [
-    { uri: 'AdminPermitListPage', title: 'Permits', icon: 'ifiske-permit' },
+    { uri: 'AdminPermitListPage', title: 'List', icon: 'ifiske-permit' },
     { uri: 'AdminCheckPage', title: 'Check', icon: 'barcode' },
     { uri: 'AdminStatsPage', title: 'Statistics', icon: 'stats' },
     { uri: 'AdminInfoPage', title: 'Information', icon: 'information-circle' },

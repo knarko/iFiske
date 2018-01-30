@@ -72,12 +72,15 @@ export class AdminPermitPage {
     }, err => {
       dismissLoading();
 
-      console.warn(err);
-      this.toastCtrl.show({
-        message: err.response,
-        duration: 6000,
-      });
       this.failed = true;
+
+      console.warn(err);
+      if (err.error_code !== 17) {
+        this.toastCtrl.show({
+          message: err.response,
+          duration: 6000,
+        });
+      }
     });
   }
 

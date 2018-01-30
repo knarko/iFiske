@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar, Keyboard, Content, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, Content, ViewController } from 'ionic-angular';
 import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { debounce } from '../../util';
@@ -7,20 +7,19 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { AdminBasePage } from '../admin/admin-base';
 
 @IonicPage()
 @Component({
   selector: 'page-admin-permit-list',
   templateUrl: 'admin-permit-list.html',
 })
-export class AdminPermitListPage extends AdminBasePage {
+export class AdminPermitListPage {
   currentOrganization: Observable<AdminOrganization>;
   sub: Subscription;
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
   permits: Observable<Permit[]>;
-  @ViewChild(Navbar) navbar: Navbar;
+
   @ViewChild(Content) content: Content;
 
   constructor(
@@ -30,22 +29,15 @@ export class AdminPermitListPage extends AdminBasePage {
     private keyboard: Keyboard,
     private viewCtrl: ViewController,
   ) {
-    super(adminProvider, navCtrl);
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits = this.searchSubject.pipe(
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
     );
   }
 
-  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
-
-  ionViewDidLoad() {
-    this.navbar.backButtonClick = () => {
-      this.navCtrl.parent.viewCtrl.dismiss().then(() => {
-        this.ionViewWillLeave();
-        this.viewCtrl.dismiss();
-      });
-    }
+  back() {
+    this.ionViewWillLeave();
+    this.viewCtrl.dismiss();
   }
 
   ionViewWillLeave() {

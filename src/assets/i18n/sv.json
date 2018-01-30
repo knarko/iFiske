@@ -19,7 +19,7 @@
   "Install": "Installera",
   "Postpone": "Senare",
   "My Page": "Min sida",
-  "Select Organization": "Välj fiskevårdsområde",
+  "List": "Lista",
 
 
   "Close": "Stäng",
@@ -40,8 +40,9 @@
       "codeVersion": "Installerad version"
     },
     "admin": {
-      "since:date": "Admin för organisationen sedan {{date}}",
+      "since:date": "Adminstratör för organisationen sedan {{date}}",
       "changeOrgButton": "Byt organisation",
+      "selectOrg": "Välj organisation",
       "functionalityNotAvailable": "Den här funktionaliteten finns tyvärr inte i appen idag, men kommer inom kort.",
       "check": {
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
@@ -71,7 +72,7 @@
   "errors": {
     "admin": {
       "permit": {
-        "failed": "Du har inte rättighet att visa fiskekortet med kod <b>{{code}}</b>. Om du får det här felet men tror att du borde ha tillgång att visa fiskekortet, dubbelkolla att koden är korrekt."
+        "failed": "<h3 class='text-center'>Det gick inte att hitta fiskekortet med kod <strong>{{code}}</strong>.</h3><p>Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.</p><p>Om du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven.</p>"
       },
       "scanQR": {
         "invalid": "QR-koden kunde inte skannas"

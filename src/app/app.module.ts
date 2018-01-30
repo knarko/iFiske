@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -101,6 +101,9 @@ registerLocaleData(localeSv);
   providers: [
     IonicErrorHandler,
     [{ provide: ErrorHandler, useClass: IonicProErrorHandler }],
+
+    // TODO: dynamic locale
+    { provide: LOCALE_ID, useValue: 'sv' },
 
     // Ionic native
     AppVersion,

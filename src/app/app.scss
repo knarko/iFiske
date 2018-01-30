@@ -250,6 +250,12 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 
   .toolbar-content {
     align-self: center;
+
+    .title-ios {
+      min-height: unset !important;
+      height: auto !important;
+      padding-top: 0 !important;
+    }
   }
 
   .back-button-ios,

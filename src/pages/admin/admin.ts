@@ -15,6 +15,7 @@ export class AdminPage {
     { uri: 'AdminPermitListPage', title: 'Permits', icon: 'ifiske-permit' },
     { uri: 'AdminCheckPage', title: 'Check', icon: 'barcode' },
     { uri: 'AdminStatsPage', title: 'Statistics', icon: 'stats' },
+    { uri: 'AdminInfoPage', title: 'Information', icon: 'information-circle' },
   ];
 
   tabParams: any;

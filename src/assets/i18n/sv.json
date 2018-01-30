@@ -21,6 +21,7 @@
   "My Page": "Min sida",
   "Select Organization": "Välj fiskevårdsområde",
 
+
   "Close": "Stäng",
 
   "Continue": "Vidare",
@@ -39,10 +40,17 @@
       "codeVersion": "Installerad version"
     },
     "admin": {
+      "since:date": "Admin för organisationen sedan {{date}}",
+      "changeOrgButton": "Byt organisation",
       "functionalityNotAvailable": "Den här funktionaliteten finns tyvärr inte i appen idag, men kommer inom kort.",
       "check": {
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
         "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
+      },
+      "userLevel": {
+        "0": "Tillsyningsman",
+        "1": "Kassör",
+        "2": "Full insyn"
       }
     },
     "placeholder": {
@@ -292,9 +300,6 @@
   "User Id": "AnvändarId",
   "User information": "Användarinformation",
   "User phone numbers": "Anslutna mobilnummer (På iFiske.se)",
-  "USER_LEVEL_0": "Tillsyningsman",
-  "USER_LEVEL_1": "Kassör",
-  "USER_LEVEL_2": "Full insyn",
   "Username or email": "Användarnamn eller e-post:",
   "Username": "Användarnamn",
   "Valid from": "Giltligt från <b>{{date}}</b>",

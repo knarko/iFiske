@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="primary" class="force-back-button large-title">
-    <ion-title>{{(currentOrganization | async)?.info?.t}}</ion-title>
+    <ion-title>{{(currentOrganization | async)?.ot}}</ion-title>
 
     <ion-buttons end>
       <button *ngIf="numberOfOrganizations() > 1" ion-button icon-only (click)="pickOrganization()">

@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ProfilePage } from './profile';
+import { AdminInfoPage } from './admin-info';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from '../../components/components.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    ProfilePage,
+    AdminInfoPage,
   ],
   imports: [
-    IonicPageModule.forChild(ProfilePage),
+    IonicPageModule.forChild(AdminInfoPage),
     TranslateModule,
     ComponentsModule,
+    PipesModule,
   ],
 })
-export class ProfilePageModule {}
+export class AdminInfoPageModule {}

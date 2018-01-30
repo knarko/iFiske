@@ -10,6 +10,7 @@ import { IonErrorsComponent } from './ion-errors/ion-errors';
 import { IonDataFormComponent } from './ion-data-form/ion-data-form';
 import { PipesModule } from '../pipes/pipes.module';
 import { PermitComponent } from './permit/permit';
+import { UserInformationComponent } from './user-information/user-information';
 @NgModule({
 	declarations: [
     MapComponent,
@@ -20,6 +21,7 @@ import { PermitComponent } from './permit/permit';
     IonErrorsComponent,
     IonDataFormComponent,
     PermitComponent,
+    UserInformationComponent,
   ],
 	imports: [
     IonicModule,
@@ -35,6 +37,7 @@ import { PermitComponent } from './permit/permit';
     IonErrorsComponent,
     IonDataFormComponent,
     PermitComponent,
+    UserInformationComponent,
   ],
 })
 export class ComponentsModule {}

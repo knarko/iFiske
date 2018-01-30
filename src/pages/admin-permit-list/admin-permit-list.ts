@@ -7,13 +7,14 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { AdminBasePage } from '../admin/admin-base';
 
 @IonicPage()
 @Component({
   selector: 'page-admin-permit-list',
   templateUrl: 'admin-permit-list.html',
 })
-export class AdminPermitListPage {
+export class AdminPermitListPage extends AdminBasePage {
   currentOrganization: Observable<AdminOrganization>;
   sub: Subscription;
   searchSubject: ReplaySubject<string>;
@@ -23,12 +24,13 @@ export class AdminPermitListPage {
   @ViewChild(Content) content: Content;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
     private adminProvider: AdminProvider,
+    private navParams: NavParams,
     private keyboard: Keyboard,
     private viewCtrl: ViewController,
   ) {
+    super(adminProvider, navCtrl);
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits = this.searchSubject.pipe(
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
@@ -37,7 +39,7 @@ export class AdminPermitListPage {
 
   numberOfOrganizations = this.adminProvider.numberOfOrganizations;
 
-  ionViewWillLoad() {
+  ionViewDidLoad() {
     this.navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss().then(() => {
         this.ionViewWillLeave();
@@ -68,11 +70,6 @@ export class AdminPermitListPage {
     this.searchTerm = this.navParams.get('searchTerm') || '';
 
     this.searchSubject.next(this.searchTerm);
-  }
-
-
-  pickOrganization() {
-    this.adminProvider.pickOrganization();
   }
 
   goto(permit: Permit) {

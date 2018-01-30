@@ -1,42 +1,27 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
-import { Observable } from 'rxjs/Observable';
+import { AdminProvider } from '../../providers/admin/admin';
+import { AdminBasePage } from '../admin/admin-base';
 
 @IonicPage()
 @Component({
   selector: 'page-admin-check',
   templateUrl: 'admin-check.html',
 })
-export class AdminCheckPage {
-  currentOrganization: Observable<AdminOrganization>;
-  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
-  @ViewChild(Navbar) navbar: Navbar;
-
+export class AdminCheckPage extends AdminBasePage {
   permitCode: string;
   serverLocation = serverLocation;
 
-
   constructor(
-    public navParams: NavParams,
+    private navCtrl: NavController,
+    adminProvider: AdminProvider,
     private barcodeScanner: BarcodeScanner,
     private toastCtrl: TranslateToastController,
-    private navCtrl: NavController,
-    private adminProvider: AdminProvider,
-  ) { }
-
-  pickOrganization() {
-    this.adminProvider.pickOrganization();
-  }
-
-  ionViewWillLoad() {
-    this.currentOrganization = this.adminProvider.currentOrganization;
-    this.navbar.backButtonClick = () => {
-      this.navCtrl.parent.viewCtrl.dismiss();
-    }
+  ) {
+    super(adminProvider, navCtrl);
   }
 
   checkPermit() {

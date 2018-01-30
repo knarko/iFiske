@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar color="primary" class="force-back-button large-title">
+
+    <ion-title>{{(currentOrganization | async)?.ot}}</ion-title>
+
+    <ion-buttons end>
+      <button *ngIf="numberOfOrganizations() > 1" ion-button icon-only (click)="pickOrganization()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="currentOrganization | async; let org" padding>
+    <div class="text-center">
+      <h2 class="subtitle">{{org.ot}}</h2>
+      <span>{{'ui.admin.userLevel.' + org.level | translate}}</span>
+    </div>
+
+    <p>{{'ui.admin.since:date' | translate : (org.at * 1000 | date: 'longDate' | mkObject: 'date')}}</p>
+
+    <button *ngIf="numberOfOrganizations() > 1" ion-button icon-left block (click)="pickOrganization()">
+      <ion-icon name="contact"></ion-icon>
+      {{'ui.admin.changeOrgButton' | translate}}
+    </button>
+  </div>
+
+  <ion-list *ngIf="user | async; let u;">
+    <user-information [user]="u"></user-information>
+  </ion-list>
+
+  <p padding>
+    {{'More in control panel' | translate}}
+    <a ion-button block [href]="serverLocation + '/index.php/kontrollpanelen'" rel="noopener noreferrer" target="_system">{{'Open control panel' | translate}}</a>
+  </p>
+
+</ion-content>

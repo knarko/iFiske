@@ -1,0 +1,9 @@
+user-information {
+  display: block;
+
+  .item + &,
+  &+.list-header-ios,
+  &+.list-header-md {
+    margin-top: -1px;
+  }
+}

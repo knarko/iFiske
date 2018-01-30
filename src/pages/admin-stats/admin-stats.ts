@@ -1,37 +1,21 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
 import { serverLocation } from '../../providers/api/serverLocation';
-import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
-import { Observable } from 'rxjs/Observable';
+import { AdminProvider } from '../../providers/admin/admin';
+import { AdminBasePage } from '../admin/admin-base';
 
 @IonicPage()
 @Component({
   selector: 'page-admin-stats',
   templateUrl: 'admin-stats.html',
 })
-export class AdminStatsPage {
-  currentOrganization: Observable<AdminOrganization>;
-  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
-
-  @ViewChild(Navbar) navbar: Navbar;
-
+export class AdminStatsPage extends AdminBasePage {
   serverLocation = serverLocation;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private adminProvider: AdminProvider,
-  ) { }
-
-  pickOrganization() {
-    this.adminProvider.pickOrganization();
+    navCtrl: NavController,
+    adminProvider: AdminProvider,
+  ) {
+    super(adminProvider, navCtrl);
   }
-
-  ionViewDidLoad() {
-    this.currentOrganization = this.adminProvider.currentOrganization;
-    this.navbar.backButtonClick = () => {
-      this.navCtrl.parent.viewCtrl.dismiss();
-    }
-  }
-
 }

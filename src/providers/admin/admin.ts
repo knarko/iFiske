@@ -17,9 +17,12 @@ import { TranslateActionSheetController } from '../translate-action-sheet-contro
 import { Dictionary } from '../../types';
 
 export interface AdminOrganization {
+  at?: number;
+  ot?: string;
+  orgid?: number;
+  level?: number;
   products?: any[];
   info?: Organization;
-  orgid?: number;
 }
 
 export interface AdminPermit {
@@ -108,11 +111,8 @@ export class AdminProvider {
   async pickOrganization() {
     const buttons = [];
     for (const org of this.organizations.values()) {
-      if (!org.info || !org.info.t) {
-        await this.getOrganizations();
-      }
       buttons.push({
-        text: org.info && org.info.t,
+        text: org.ot,
         handler: () => this.orgId = org.orgid,
         cssClass: this.orgId === org.orgid ? 'current' : undefined,
       });

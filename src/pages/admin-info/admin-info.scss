@@ -1,0 +1,10 @@
+page-admin-info {
+  .subtitle {
+    margin-bottom: 0;
+
+    &+span {
+      display: block;
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators';
+import { Pro } from '@ionic/pro';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
@@ -186,6 +187,8 @@ export class AdminProvider {
       }),
       this.orgProvider.getOne(org.orgid).then((o) => {
         org.info = o;
+      }, err => {
+        Pro.getApp().monitoring.exception(new Error('Could not find an organisation that matches ' + JSON.stringify(org)));
       }),
     ]);
   }

@@ -246,6 +246,24 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
 }
 
 .toolbar.large-title {
+  align-items: flex-start;
+
+  .toolbar-content {
+    align-self: center;
+  }
+
+  .back-button-ios,
+  .bar-buttons-ios {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  .back-button-md,
+  .bar-buttons-md {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
   .title-ios {
     padding: 0 0.5em;
     position: relative;

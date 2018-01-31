@@ -41,7 +41,7 @@
       "codeVersion": "Installerad version"
     },
     "admin": {
-      "since:date": "Adminstratör för organisationen sedan {{date}}",
+      "since:date": "Kopplad till organisationen sedan {{date}}",
       "changeOrgButton": "Byt organisation",
       "selectOrg": "Välj organisation",
       "functionalityNotAvailable": "Den här funktionaliteten finns tyvärr inte i appen idag, men kommer inom kort.",
@@ -50,9 +50,9 @@
         "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
       },
       "userLevel": {
-        "0": "Tillsyningsman",
-        "1": "Kassör",
-        "2": "Full insyn"
+        "0": "Nivå 0",
+        "1": "Nivå 1",
+        "2": "Nivå 2 (Full insyn)"
       }
     },
     "placeholder": {

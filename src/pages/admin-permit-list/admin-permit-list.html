@@ -4,7 +4,7 @@
   <ion-toolbar no-border-top color="primary">
     <form action="">
       <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
-        [placeholder]="'Search' | translate"></ion-searchbar>
+        [placeholder]="'Search' | translate" autocomplete="on"></ion-searchbar>
     </form>
   </ion-toolbar>
 </ion-header>

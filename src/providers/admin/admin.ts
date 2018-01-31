@@ -46,6 +46,7 @@ export interface AdminPermit {
 
 @Injectable()
 export class AdminProvider {
+  static readonly private CURRENT_ORGANIZATION = 'ADMIN_CURRENT_ORGANIZATION';
   ready: Promise<void>;
   organizations = new Map<number, AdminOrganization>();
   private permits = new Map<string, ReplaySubject<AdminPermit>>();
@@ -66,11 +67,12 @@ export class AdminProvider {
 
   set orgId(orgId: number) {
     if (this.organizations.has(orgId)) {
-    this._orgId = orgId;
-    this.currentOrganization.next(this.organizations.get(orgId));
+      this._orgId = orgId;
+      this.currentOrganization.next(this.organizations.get(orgId));
+      localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, orgId);
     } else {
       this._orgId = undefined;
-    this.currentOrganization.next(undefined);
+      this.currentOrganization.next(undefined);
     }
   }
 
@@ -155,8 +157,14 @@ export class AdminProvider {
   }
 
   private setDefaultOrgId() {
-    if (this.organizations.size)
-    this.orgId = this.organizations.keys().next().value;
+    if (this.organizations.size) {
+      const orgId = Number(localStorage.getItem(AdminProvider.CURRENT_ORGANIZATION));
+      if (this.organizations.has(orgId)) {
+        this.orgId = orgId;
+      } else {
+        this.orgId = this.organizations.keys().next().value;
+      }
+    }
   }
 
   revokePermit(product, revoke = true) {

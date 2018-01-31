@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, Content, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, Content } from 'ionic-angular';
 import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap, map, refCount, publish, distinctUntilChanged } from 'rxjs/operators';
+import { switchMap, map, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { combineLatest } from 'rxjs/observable/combineLatest';
 
 const headers = {
   active:   { title: 'ui.permit.validity.plural.active',   icon: 'checkmark' },
@@ -40,7 +39,6 @@ export class AdminPermitListPage {
     private adminProvider: AdminProvider,
     private navParams: NavParams,
     private keyboard: Keyboard,
-    private viewCtrl: ViewController,
   ) {
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits = this.searchSubject.pipe(

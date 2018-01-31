@@ -70,12 +70,12 @@
     },
     "permit": {
       "validity": {
-        "active": "Giltigt",
+        "active": "Giltligt",
         "inactive": "Inaktivt",
-        "revoked": "Makulerad",
+        "revoked": "Makulerat",
         "expired": "Utgånget",
         "plural": {
-          "active": "Giltiga",
+          "active": "Giltliga",
           "inactive": "Inaktiva",
           "revoked": "Makulerade",
           "expired": "Utgångna"

@@ -1,6 +1,11 @@
 ion-errors {
   display: block;
   color: $text-input-highlight-color-invalid;
+  font-size: 1.5rem;
+
+  &.empty {
+    display: none;
+  }
 
   p {
     color: inherit !important;

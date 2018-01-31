@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 import { Dictionary } from '../../types';
 import { AbstractControl } from '@angular/forms';
 import {
@@ -28,5 +28,11 @@ import {
 export class IonErrorsComponent {
   @Input() errors: Dictionary<string>
   @Input() control: AbstractControl;
+  @HostBinding('class.empty') get empty() {
+    if (this.control && this.control.invalid && this.control.dirty && this.errors && this.control.errors) {
+      return false;
+    }
+    return true;
+  }
   constructor() { }
 }

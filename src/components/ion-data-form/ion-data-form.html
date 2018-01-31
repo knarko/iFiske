@@ -1,23 +1,27 @@
 <form *ngIf="form && form.group" [formGroup]="form.group" (ngSubmit)="submit()" novalidate>
-  <ng-container *ngFor="let item of form.controlArray; let i = index">
-    <ion-item [ngSwitch]="item.type" [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
-      <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
+  <div class="ion-data-form-inputs">
+    <ng-container *ngFor="let item of form.controlArray; let i = index">
+      <ion-item [ngSwitch]="item.type" [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
+        <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
 
-      <ion-textarea *ngSwitchCase="'textarea'" [formControl]="item.control" [placeholder]="item.placeholder | translate" [required]="item.required"></ion-textarea>
+        <ion-textarea *ngSwitchCase="'textarea'" [formControl]="item.control" [placeholder]="item.placeholder | translate" [required]="item.required"></ion-textarea>
 
-      <ion-input *ngSwitchCase="'password'" [clearOnEdit]="false" [placeholder]="item.placeholder | translate" type="password" [formControl]="item.control" autocomplete="off" [required]="item.required"></ion-input>
+        <ion-input *ngSwitchCase="'password'" [clearOnEdit]="false" [placeholder]="item.placeholder | translate" type="password"
+          [formControl]="item.control" autocomplete="off" [required]="item.required"></ion-input>
 
-      <ion-select *ngSwitchCase="'select'" [placeholder]="item.placeholder | translate" [formControl]="item.control" [required]="item.required">
-        <ion-option *ngFor="let option of item.options" [value]="option">{{option}}</ion-option>
-      </ion-select>
+        <ion-select *ngSwitchCase="'select'" [placeholder]="item.placeholder | translate" [formControl]="item.control" [required]="item.required">
+          <ion-option *ngFor="let option of item.options" [value]="option">{{option}}</ion-option>
+        </ion-select>
 
-      <!--<app-number-picker *ngSwitchCase="'number'" [placeholder]="item.label" [formControl]="item.control" [required]="item.required"></app-number-picker-->
-      <ion-input *ngSwitchDefault [placeholder]="item.placeholder | translate" [type]="item.type" [formControl]="item.control" [required]="item.required"></ion-input>
+        <!--<app-number-picker *ngSwitchCase="'number'" [placeholder]="item.label" [formControl]="item.control" [required]="item.required"></app-number-picker-->
+        <ion-input *ngSwitchDefault [placeholder]="item.placeholder | translate" [type]="item.type" [formControl]="item.control"
+          [required]="item.required"></ion-input>
 
-    </ion-item>
-    <ion-errors [control]="item.control" [errors]="item.errors"></ion-errors>
-  </ng-container>
-  <ion-errors [control]="form.group" [errors]="form.errors"></ion-errors>
+      </ion-item>
+      <ion-errors [control]="item.control" [errors]="item.errors"></ion-errors>
+    </ng-container>
+    <ion-errors [control]="form.group" [errors]="form.errors"></ion-errors>
+  </div>
   <button ion-button block icon-right *ngIf="!hideSubmit" type="submit" name="action" [disabled]="!form.group?.valid">{{form.submitMessage | translate}}
     <ion-icon name="send"></ion-icon>
   </button>

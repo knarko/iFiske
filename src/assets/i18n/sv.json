@@ -94,6 +94,9 @@
         "invalid": "QR-koden kunde inte skannas"
       }
     },
+    "area": {
+      "notSelling": "Den här fiskevårdsorganisationen säljer tyvärr inte fiskekort genom iFiske"
+    },
     "recovery_code": {
       "required": "Du måste ange en återställnigskod",
       "invalid": "Ogiltig återställningskod"

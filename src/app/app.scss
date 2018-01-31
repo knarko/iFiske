@@ -255,9 +255,11 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   align-items: flex-start;
 
   .toolbar-content {
+    display: flex;
     align-self: center;
 
     .title-ios {
+      padding-left: 1em;
       min-height: unset !important;
       height: auto !important;
       padding-top: 0 !important;

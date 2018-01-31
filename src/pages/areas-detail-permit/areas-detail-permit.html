@@ -3,6 +3,9 @@
     <h2>{{'Information' | translate}}</h2>
     <div [innerHtml]="area.note | formatInfo"></div>
   </section>
+
+  <h2 padding-horizontal class="empty" *ngIf="!products?.length">{{'errors.area.notSelling' | translate}}</h2>
+
   <ion-card *ngFor="let product of products">
     <ion-card-header>
       <ion-icon name="ifiske-permit" class="large"></ion-icon>

@@ -20,6 +20,7 @@
   "Postpone": "Senare",
   "My Page": "Min sida",
   "List": "Lista",
+  "Control panel": "Kontrollpanelen",
 
 
   "Close": "Stäng",
@@ -66,11 +67,26 @@
     },
     "issues": {
       "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>"
+    },
+    "permit": {
+      "validity": {
+        "active": "Giltigt",
+        "inactive": "Inaktivt",
+        "revoked": "Makulerad",
+        "expired": "Utgånget",
+        "plural": {
+          "active": "Giltiga",
+          "inactive": "Inaktiva",
+          "revoked": "Makulerade",
+          "expired": "Utgångna"
+        }
+      }
     }
   },
 
   "errors": {
     "admin": {
+      "noPermits": "Inga fiskekort hittades",
       "permit": {
         "failed": "<h3 class='text-center'>Det gick inte att hitta fiskekortet med kod <strong>{{code}}</strong>.</h3><p>Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.</p><p>Om du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven.</p>"
       },
@@ -122,6 +138,7 @@
     }
   },
   "Statistics": "Statistik",
+
 
   "recovery": {
     "start": "En återställningskod kommer inom kort att skickas till dig via",

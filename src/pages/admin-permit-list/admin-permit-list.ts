@@ -1,12 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Keyboard, Content, ViewController } from 'ionic-angular';
-import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
+import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map, refCount, publish, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+
+const headers = {
+  active:   { title: 'ui.permit.validity.plural.active',   icon: 'checkmark' },
+  inactive: { title: 'ui.permit.validity.plural.inactive', icon: 'time' },
+  expired:  { title: 'ui.permit.validity.plural.expired',  icon: 'close' },
+  revoked:  { title: 'ui.permit.validity.plural.revoked',  icon: 'close' },
+}
 
 @IonicPage()
 @Component({
@@ -14,11 +23,15 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'admin-permit-list.html',
 })
 export class AdminPermitListPage {
+  scrollSub: Subscription;
+  shouldScrollToTop: boolean;
   currentOrganization: Observable<AdminOrganization>;
-  sub: Subscription;
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
-  permits: Observable<Permit[]>;
+  permits: Observable<AdminPermit[]>;
+  scrollSubject: Subject<void>;
+
+  private sub: Subscription;
 
   @ViewChild(Content) content: Content;
 
@@ -31,13 +44,42 @@ export class AdminPermitListPage {
   ) {
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits = this.searchSubject.pipe(
+      distinctUntilChanged(),
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
+      map((permits: AdminPermit[])=> {
+        return permits.sort((a, b) => a.validity.localeCompare(b.validity));
+      }),
     );
+    this.scrollSubject = new Subject();
+    this.scrollSub = this.permits.subscribe(() => {
+      if (!this.scrollSubject.observers.length) {
+        this.shouldScrollToTop = true;
+      }
+      this.scrollSubject.next();
+    });
+  }
+
+  ionViewWillUnload() {
+    this.searchSubject.complete();
+    this.scrollSubject.complete();
+    this.scrollSub.unsubscribe();
+  }
+
+  isNewValidity (record: AdminPermit, recordIndex: number, records: AdminPermit[]) {
+    if (records[recordIndex - 1] && records[recordIndex -1].validity === record.validity) {
+      return null;
+    } else {
+      headers[record.validity].count = records.filter(val => val.validity === record.validity).length;
+      return headers[record.validity];
+    }
+  };
+
+  permitTrackFn(index: number, item: AdminPermit) {
+    return item.ID;
   }
 
   back() {
     this.ionViewWillLeave();
-    this.viewCtrl.dismiss();
   }
 
   ionViewWillLeave() {
@@ -48,8 +90,15 @@ export class AdminPermitListPage {
     }
   }
 
+  ionViewDidEnter() {
+    if (this.shouldScrollToTop) {
+      this.shouldScrollToTop = false;
+      this.scrollSubject.next();
+    }
+  }
+
   ionViewWillEnter() {
-    this.sub = this.permits.subscribe(async () => {
+    this.sub = this.scrollSubject.subscribe(() => {
       try {
         this.content.scrollToTop();
       } catch (err) {

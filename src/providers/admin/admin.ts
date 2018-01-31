@@ -46,7 +46,7 @@ export interface AdminPermit {
 
 @Injectable()
 export class AdminProvider {
-  static readonly private CURRENT_ORGANIZATION = 'ADMIN_CURRENT_ORGANIZATION';
+  private static readonly CURRENT_ORGANIZATION = 'ADMIN_CURRENT_ORGANIZATION';
   ready: Promise<void>;
   organizations = new Map<number, AdminOrganization>();
   private permits = new Map<string, ReplaySubject<AdminPermit>>();
@@ -69,7 +69,7 @@ export class AdminProvider {
     if (this.organizations.has(orgId)) {
       this._orgId = orgId;
       this.currentOrganization.next(this.organizations.get(orgId));
-      localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, orgId);
+      localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
     } else {
       this._orgId = undefined;
       this.currentOrganization.next(undefined);

@@ -37,6 +37,7 @@ ion-nav {
 .text-center {
   text-align: center;
 }
+
 .center {
   display: block;
   margin-left: auto !important;
@@ -49,7 +50,7 @@ super-tabs-container {
   height: calc(100% - 54px) !important;
 }
 
-super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
+super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
   &.title-and-icon {
     height: 54px !important;
   }
@@ -64,7 +65,8 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
   }
 }
 
-.list-ios, .list-md {
+.list-ios,
+.list-md {
   margin: -1px 0;
 }
 
@@ -119,11 +121,16 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
   border: 1px solid #c8c7cc;
 }
 
-.item {
+.item:not(.virtal-position) {
   &+.list-header-md,
   &+.list-header-ios {
     margin-top: -1px;
   }
+}
+
+.list-header.virtual-position {
+  margin-top: -1px;
+  z-index: 1;
 }
 
 .list-header-ios {
@@ -148,7 +155,7 @@ super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons sup
   }
 }
 
-.virtual-scroll.list-ios > .item-block:first-child {
+.virtual-scroll.list-ios>.item-block:first-child {
   border-top: none;
 }
 

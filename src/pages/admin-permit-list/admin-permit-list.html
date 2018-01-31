@@ -4,13 +4,22 @@
   <ion-toolbar no-border-top color="primary">
     <form action="">
       <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
-        [placeholder]="'Search' | translate" autocomplete="on"></ion-searchbar>
+        [placeholder]="'Search' | translate"></ion-searchbar>
     </form>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list [virtualScroll]="permits | async">
+  <ion-list *ngIf="(permits | async)?.length === 0">
+    <ion-item>
+      {{'errors.admin.noPermits' | translate}}
+    </ion-item>
+  </ion-list>
+  <ion-list [virtualScroll]="permits | async" [headerFn]="isNewValidity" approxItemHeight="88px" approxHeaderHeight="50px" [virtualTrackBy]="permitTrackFn">
+    <ion-list-header *virtualHeader="let header">
+      <ion-icon item-start [name]="header.icon"></ion-icon>
+      <span>{{header.title | translate}}: {{header.count}}</span>
+    </ion-list-header>
     <ion-item *virtualItem="let permit" (click)="goto(permit)">
       <h2>{{permit.fullname}}</h2>
       <p>{{permit.t}}</p>

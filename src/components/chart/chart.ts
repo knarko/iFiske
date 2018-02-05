@@ -1,18 +1,30 @@
 import { Component, ViewChild, ElementRef, Input, AfterViewInit, OnChanges } from '@angular/core';
 import * as Chart from 'chart.js';
+import * as moment from 'moment';
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+
+export interface ChartOptions {
+  accumulate?: boolean;
+  type: string;
+}
 
 @Component({
   selector: 'app-chart',
   templateUrl: 'chart.html',
 })
 export class ChartComponent implements AfterViewInit, OnChanges {
+  timeSettings: any;
   ctx: CanvasRenderingContext2D;
   chart: Chart;
 
   @ViewChild('canvas') canvas: ElementRef;
 
   @Input() data: any;
+  @Input() options: ChartOptions = {
+    type: 'line',
+    accumulate: false,
+  };
+
 
   constructor() {
   }
@@ -47,57 +59,62 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     const labels = data.map(d => d.x);
 
     console.log(data, labels);
+
+    if (this.options.accumulate) {
+      let acc = 0
+      data.forEach(d => d.y = acc = d.y + acc);
+    }
+
     return {data, labels};
   }
 
   ngAfterViewInit() {
-    console.log(this.data);
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
 
     const {data, labels} = this.makeData();
 
     this.chart = new Chart(this.ctx, {
-      type: 'bar',
+      type: this.options.type,
       data: {
         labels,
         datasets: [{
-          label: 'Sålda fiskekort',
-          data,
           backgroundColor: '#003852',
           borderWidth: 0,
-        }, {
-          label: 'Sålda fiskekort (linje)',
           data,
-          type: 'line',
+          label: 'Sålda fiskekort',
+          type: 'bar',
+        }, {
+          backgroundColor: 'rgba(0, 56, 82, 0.2)',
           borderColor: '#003852',
-          backgroundColor: 'rgba(0, 56, 82, 0.1)',
+          data,
+          label: 'Sålda fiskekort',
+          spanGaps: true,
+          type: 'line',
         }],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        // stacked: true,
-        // lineAtYearChange: true,
-        // fill: false,
+        legend: {
+          display: false,
+        },
 
         scales: {
           yAxes: [{
             type: 'linear',
             display: true,
             position: 'left',
+            ticks: {
+              min: 0,
+            },
           }],
           xAxes: [{
             type: 'time',
-            // barPercentage: 1,
-            // categoryPercentage: 1 / 12, // since we have 12 weeks, and want each bar to be one week wide
             time: {
+              min: moment(data[0] && data[0].x).subtract(1, 'week').toISOString(),
+              max: moment(data[data.length - 1] && data[data.length - 1].x).add(1, 'week').toISOString(),
               round: 'week',
-              // unitStepSize: 12,
               tooltipFormat: '[vecka] W',
-              //displayFormats: {
-                // week: 'MMM YYYY',
-                // month: 'MMM',
-              //},
             },
           }],
         },
@@ -112,9 +129,22 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       return;
     }
 
-    this.chart.data.datasets.forEach(dataset => dataset.data = data);
+    this.chart.data.datasets.forEach(dataset => {
+      dataset.data = data
+      if (dataset.type !== this.options.type) {
+        dataset.hidden = true;
+      } else {
+        dataset.hidden = false;
+      }
+    });
+
+    const timeSettings = this.chart.config.options.scales.xAxes[0].time;
+    timeSettings.min = moment(data[0] && data[0].x).subtract(1, 'week').toISOString();
+    timeSettings.max = moment(data[data.length - 1] && data[data.length - 1].x).add(1, 'week').toISOString();
 
     this.chart.data.labels = labels;
+
+    console.log(this.timeSettings, this.chart.config.options.scales.xAxes[0].time)
 
     this.chart.update();
   }

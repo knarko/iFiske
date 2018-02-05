@@ -2,8 +2,8 @@
   <admin-header></admin-header>
 </ion-header>
 
-<ion-content padding>
-  <div *ngIf="stats | async; let stat" class="text-center">
+<ion-content>
+  <div padding-horizontal *ngIf="stats | async; let stat" class="text-center">
     <h2 class="subtitle">{{stat.account_balance}} kr</h2>
     <span>{{'Wallet Balance' | translate}}</span>
   </div>

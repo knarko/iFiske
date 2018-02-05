@@ -6,16 +6,14 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
-import { timeout } from 'rxjs/operators';
+import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay } from 'rxjs/operators';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
-
-function delay(fn: () => Promise<any>, t: number) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      fn().then(resolve, reject);
-    }, t);
-  });
-}
+import { Observable } from 'rxjs/Observable';
+import { timer } from 'rxjs/observable/timer';
+import { range } from 'rxjs/observable/range';
+import { Dictionary } from '../../types';
+import { observeOn } from 'rxjs/operators/observeOn';
+import { publishReplay } from 'rxjs/operators/publishReplay';
 
 interface ApiResponse {
   message?: any;
@@ -28,62 +26,105 @@ export interface ApiError {
   error_code: number;
 }
 
+export interface ApiOptions {
+  retry?: boolean;
+  cacheTime?: number;
+  session?: boolean;
+}
+
+export interface CachedResult {
+  result: Observable<any>;
+  removeAt: number;
+  cacheTime: number;
+}
+
+
 @Injectable()
 export class ApiProvider {
 
-  private base_url = serverLocation + '/api/v2/api.php';
+  private static readonly DefaultOptions = {
+    retry: true,
+    cacheTime: 0,
+    session: false,
+  }
+
+  private static readonly BASE_URL = serverLocation + '/api/v2/api.php';
   private readonly maxRetries = 1;
+
+  private cache = new Map<string, CachedResult>();
+
   constructor(
     private http: HttpClient,
     private sessionData: SessionProvider,
     private settings: SettingsProvider,
     private toastCtrl: TranslateToastController,
   ) {
-
+    /* Clear cache periodically */
+    setInterval(() => {
+      console.log('Clearing API cache');
+      this.cache.forEach((val, key) => {
+        if (val.removeAt < Date.now()) {
+          this.cache.delete(key);
+        }
+      });
+    }, 10 * 1000);
   }
 
-  /**
-     * internal function for making a call to the ifiske API
-     * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
-     * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
-     * @return {promise}        $http promise
-     */
-  private api_call(params, retry?: number | false): Promise<any> {
+  private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
+    options = Object.assign({}, ApiProvider.DefaultOptions, options)
 
-    let retries: number;
-    if (retry === false) {
-      retries = this.maxRetries;
-    } else {
-      retries = Number(retry) || 0;
-    }
-
-    Object.assign(params, {
+    inputParams = Object.assign({}, inputParams, {
       lang: this.settings.language,
       key: 'ox07xh8aaypwvq7a',
     });
 
-    return this.http.get(this.base_url, {
-      params: Object.keys(params).reduce((p, k) => p.set(k, params[k]), new HttpParams()),
-    })
-      .pipe(timeout(10000))
-      .toPromise()
-      .then(async (response: ApiResponse) => {
+    if (options.session) {
+      inputParams.s = this.sessionData.token;
+    }
+
+    const params = Object.keys(inputParams).reduce((p, k) => p.set(k, '' + inputParams[k]), new HttpParams());
+
+    if (options.cacheTime) {
+      console.log(params.toString(), this.cache, this.cache.get(params.toString()));
+    }
+
+    if (options.cacheTime && this.cache.has(params.toString())) {
+      const res = this.cache.get(params.toString());
+      console.log('found cached observable', res);
+      if (res.cacheTime === options.cacheTime) {
+        res.removeAt = Date.now() + options.cacheTime;
+        return res.result;
+      }
+    }
+
+    const result$ = this.http.get(ApiProvider.BASE_URL, { params }).pipe(
+      timeout(10000),
+      map((response: ApiResponse) => {
         if (response.status !== 'error' && response.data != undefined && response.data.response != undefined) {
-          return Promise.resolve(response.data.response);
+          return response.data.response;
         }
-        return Promise.reject(response);
-      }).catch(async (response) => {
-        if (retries < this.maxRetries) {
-          return delay(() => {
-            return this.api_call(params, ++retries);
-          }, 2000 * retries);
-        }
-        if (!response) {
-          return Promise.reject('Unknown network failure');
-        } else if (response.status === 0) {
-          return Promise.reject('Request timeout');
-        } else if (response.message) {
-          switch (response.message.error_code) {
+        throw response;
+      }),
+      retryWhen(attempts => attempts.pipe(
+        zip(
+          range(1, this.maxRetries + 1),
+          (err, i) => {
+            if (i > this.maxRetries) {
+              throw err;
+            }
+            console.log('delaying API retry by ' + i * 2 + ' second(s).')
+            return timer(i * 2000)
+          },
+        ),
+        switchAll(),
+      )),
+      catchError(err => {
+        if (!err) {
+          throw new Error('Unknown network failure');
+        } else if (err.status === 0) {
+          throw new Error('Request timeout');
+        } else if (err.message) {
+          switch (err.message.error_code) {
             case 7:
               // Authentication error
               if (this.sessionData.token) {
@@ -95,12 +136,34 @@ export class ApiProvider {
               }
               break;
           }
-          return Promise.reject(response.message);
-        } else if (response.data) {
-          return Promise.reject(response.data);
+          throw err.message;
+        } else if (err.data) {
+          throw err.data;
         }
-        return Promise.reject(`Network Error: ${JSON.stringify(response, null, 1)}`);
+        throw new Error(`Network Error: ${JSON.stringify(err, null, 1)}`);
+      }),
+    );
+
+    if (options.cacheTime) {
+      this.cache.set(params.toString(), {
+        result: result$.pipe(
+          shareReplay(1),
+        ),
+        cacheTime: options.cacheTime,
+        removeAt: Date.now() + options.cacheTime,
       });
+    }
+
+    return result$;
+  }
+  /**
+     * internal function for making a call to the ifiske API
+     * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
+     * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
+     * @return {promise}        $http promise
+     */
+  private api_call(params, retry?: boolean): Promise<any> {
+    return this.getObservable(params, { retry }).toPromise()
   }
 
   /**
@@ -227,6 +290,13 @@ export class ApiProvider {
   }
   adm_get_stats(orgid) {
     return this.session_api_call({ m: 'adm_get_stats', orgid: orgid }, false);
+  }
+
+  admGetStats(orgid?: number | string) {
+    return this.getObservable({ m: 'adm_get_stats', orgid }, {
+      session: true,
+      cacheTime: 30 * 1000,
+    })
   }
 
   get_fishes() {

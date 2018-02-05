@@ -11,6 +11,7 @@ import { DeployProvider } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { IonicPro } from './pro';
+import { publishReplay } from 'rxjs/operators/publishReplay';
 
 @Component({
   templateUrl: 'app.html',
@@ -43,7 +44,9 @@ export class MyApp {
       if (true || localStorage.getItem('language')) {
         this.update.update().catch(e => console.warn(e));
       }
-      const backButtonText = translate.stream('ui.general.back');
+      const backButtonText = translate.stream('ui.general.back').pipe(
+        publishReplay(1),
+      );
 
       this.config.set('ios', 'backButtonText', await backButtonText.pipe(take(1)).toPromise());
       if (platform.is('ios')) {

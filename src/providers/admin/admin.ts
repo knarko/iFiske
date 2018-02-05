@@ -3,7 +3,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 import { Pro } from '@ionic/pro';
 
 import * as Fuse from 'fuse.js';
@@ -83,7 +83,11 @@ export class AdminProvider {
     private userProvider: UserProvider,
     private actionSheetCtrl: TranslateActionSheetController,
   ) {
-    this.ready = Promise.resolve();
+    let resolve, reject
+    this.ready = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
     this.isAdmin = this.userProvider.loggedIn.pipe(
       switchMap(loggedIn => {
         if (!loggedIn) {
@@ -99,9 +103,9 @@ export class AdminProvider {
     );
     this.isAdmin.subscribe((admin) => {
       if (admin) {
-        this.getOrganizations().then(() => {
-          this.setDefaultOrgId();
-        });
+        this.ready = this.getOrganizations().then(() => {
+          return this.setDefaultOrgId();
+        }).then(resolve, reject);
       } else {
         this.organizations = new Map();
         this.permits = new Map();
@@ -172,7 +176,14 @@ export class AdminProvider {
   }
 
   stats() {
-    return this.API.adm_get_stats(this.orgId);
+    return this.currentOrganization.pipe(
+      filter(org => !!org),
+      switchMap(org => {
+        return this.API.admGetStats(org.orgid).pipe(
+          map(stats => stats[org.orgid]),
+        );
+      }),
+    )
   }
 
   private async initOrg(org: AdminOrganization) {

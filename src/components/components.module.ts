@@ -12,6 +12,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { PermitComponent } from './permit/permit';
 import { UserInformationComponent } from './user-information/user-information';
 import { AdminHeaderComponent } from './admin-header/admin-header';
+import { ChartComponent } from './chart/chart';
 @NgModule({
 	declarations: [
     MapComponent,
@@ -24,6 +25,7 @@ import { AdminHeaderComponent } from './admin-header/admin-header';
     PermitComponent,
     UserInformationComponent,
     AdminHeaderComponent,
+    ChartComponent,
   ],
 	imports: [
     IonicModule,
@@ -41,6 +43,7 @@ import { AdminHeaderComponent } from './admin-header/admin-header';
     PermitComponent,
     UserInformationComponent,
     AdminHeaderComponent,
+    ChartComponent,
   ],
 })
 export class ComponentsModule {}

@@ -307,3 +307,13 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
     min-height: $toolbar-wp-height;
   }
 }
+
+
+.subtitle {
+  margin-bottom: 0;
+
+  &+span {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}

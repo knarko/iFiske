@@ -3,7 +3,9 @@
 </ion-header>
 
 <ion-content padding>
-  <h2 class="text-center">{{'Coming soon' | translate}}</h2>
-  <p>{{'ui.admin.functionalityNotAvailable' | translate}}</p>
-  <a ion-button block [href]="serverLocation + '/index.php/kontrollpanelen'" rel="noopener noreferrer" target="_system">{{'Open control panel' | translate}}</a>
+  <div *ngIf="stats | async; let stat" class="text-center">
+    <h2 class="subtitle">{{stat.account_balance}} kr</h2>
+    <span>{{'Wallet Balance' | translate}}</span>
+  </div>
+  <app-chart [data]="(stats | async)?.weeks"></app-chart>
 </ion-content>

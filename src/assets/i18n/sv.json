@@ -31,7 +31,8 @@
   "ui": {
     "general": {
       "back": "Tillbaka",
-      "pull_to_refresh": "Uppdatera"
+      "pull_to_refresh": "Uppdatera",
+      "shortAmount": "st"
     },
     "map": {
       "outdoors": "Karta",

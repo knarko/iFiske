@@ -10,10 +10,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
 const headers = {
-  active:   { title: 'ui.permit.validity.plural.active',   icon: 'checkmark' },
+  active:   { title: 'ui.permit.validity.plural.active',   icon: 'ifiske-permit', class: 'header-active' },
   inactive: { title: 'ui.permit.validity.plural.inactive', icon: 'time' },
-  expired:  { title: 'ui.permit.validity.plural.expired',  icon: 'close' },
-  revoked:  { title: 'ui.permit.validity.plural.revoked',  icon: 'close' },
+  expired:  { title: 'ui.permit.validity.plural.expired',  icon: 'close-circle' },
+  revoked:  { title: 'ui.permit.validity.plural.revoked',  icon: 'close-circle' },
 }
 
 @IonicPage()
@@ -44,8 +44,13 @@ export class AdminPermitListPage {
     this.permits = this.searchSubject.pipe(
       distinctUntilChanged(),
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
-      map((permits: AdminPermit[])=> {
-        return permits.sort((a, b) => a.validity.localeCompare(b.validity));
+      map(permits => {
+        return permits.sort((a, b) => {
+          return a.validity.localeCompare(b.validity) ||
+                 a.score - b.score ||
+                 // TODO: get locale from settings?
+                 a.fullname.localeCompare(b.fullname, 'sv');
+        });
       }),
     );
     this.scrollSubject = new Subject();

@@ -9,16 +9,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="outer-content">
   <ion-list *ngIf="(permits | async)?.length === 0">
     <ion-item>
       {{'errors.admin.noPermits' | translate}}
     </ion-item>
   </ion-list>
   <ion-list [virtualScroll]="permits | async" [headerFn]="isNewValidity" approxItemHeight="88px" approxHeaderHeight="50px" [virtualTrackBy]="permitTrackFn">
-    <ion-list-header *virtualHeader="let header">
+    <ion-list-header *virtualHeader="let header" [ngClass]="header.class">
       <ion-icon item-start [name]="header.icon"></ion-icon>
-      <span>{{header.title | translate}}: {{header.count}}</span>
+      <span>{{header.title | translate}}: {{header.count}} {{'ui.general.shortAmount' | translate}}</span>
     </ion-list-header>
     <ion-item *virtualItem="let permit" (click)="goto(permit)">
       <h2>{{permit.fullname}}</h2>

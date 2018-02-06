@@ -21,7 +21,7 @@ export interface AdminOrganization {
   ot?: string;
   orgid?: number;
   level?: number;
-  products?: any[];
+  products?: AdminPermit[];
   info?: Organization;
 }
 
@@ -254,7 +254,7 @@ export class AdminProvider {
     );
   }
 
-  async getPermits(searchTerm?: string) {
+  async getPermits(searchTerm?: string): Promise<(AdminPermit & {score?: number})[]> {
     if (this.organizations.size < 1) {
       await this.getOrganizations();
     }
@@ -285,10 +285,14 @@ export class AdminProvider {
         weight: 0.7,
       }],
       threshold: 0.5,
+      shouldSort: false,
+      includeScore: true,
     };
 
     const fuse = new Fuse(permits, options);
 
-    return fuse.search(searchTerm);
+    return fuse.search(searchTerm).map(({ item, score }) => {
+      return { ...item, score };
+    });
   }
 }

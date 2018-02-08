@@ -47,10 +47,13 @@ export class DeployProvider {
     const versions = this.pro.deploy().getVersions();
     console.log(versions);
     // TODO: remove old versions
+    // TODO: disable for debug builds
+    /*
     this.platform.resume.subscribe(() => {
       this.checkForUpdates();
     });
     this.checkForUpdates();
+    */
   }
 
   async setChannel(channel: string) {

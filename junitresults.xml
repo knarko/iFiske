@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites disabled="10" errors="0" failures="0" tests="11" time="7041">
+ <testsuite name="Login and logout" timestamp="2018-04-05T17:10:07" hostname="localhost" time="7.039" errors="0" tests="4" skipped="0" disabled="3" failures="0">
+  <testcase classname="Login and logout" name="has info on the profile page" time="7.037" />
+  <testcase classname="Login and logout" name="can log in" time="0.001">
+   <skipped />
+  </testcase>
+  <testcase classname="Login and logout" name="can not log in with false password" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Login and logout" name="can log in and then log out" time="0">
+   <skipped />
+  </testcase>
+ </testsuite>
+ <testsuite name="Search for stuff" timestamp="2018-04-05T17:10:14" hostname="localhost" time="0.002" errors="0" tests="5" skipped="0" disabled="5" failures="0">
+  <testcase classname="Search for stuff" name="can search for Bolmen" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Search for stuff" name="can search for Roxen" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Search for stuff" name="can search for Regnbåge" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Search for stuff" name="can search for Gädda" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Search for stuff" name="can search for Abbo" time="0.002">
+   <skipped />
+  </testcase>
+ </testsuite>
+ <testsuite name="Settings" timestamp="2018-04-05T17:10:14" hostname="localhost" time="0" errors="0" tests="2" skipped="0" disabled="2" failures="0">
+  <testcase classname="Settings" name="can open settings" time="0">
+   <skipped />
+  </testcase>
+  <testcase classname="Settings" name="can change language" time="0">
+   <skipped />
+  </testcase>
+ </testsuite>
+</testsuites>

@@ -3,9 +3,17 @@
 </ion-header>
 
 <ion-content>
-  <div padding-horizontal *ngIf="stats | async; let stat" class="text-center">
-    <h2 class="subtitle">{{stat.account_balance}} kr</h2>
-    <span>{{'Wallet Balance' | translate}}</span>
+  <div ion-fixed *ngIf="stats | async; let stat">
+    <div class="chart-container" *ngIf="stat.weeks; let weeks">
+      <div class="header-text">
+      <h2>{{'Sold products' | translate}}</h2>
+      <span>{{'Last year' | translate}}</span>
+      </div>
+      <app-chart [data]="stat.weeks"></app-chart>
+    </div>
+    <div class="header-text">
+      <h2>{{stat.account_balance}} kr</h2>
+      <span>{{'Wallet Balance' | translate}}</span>
+    </div>
   </div>
-  <app-chart [data]="(stats | async)?.weeks"></app-chart>
 </ion-content>

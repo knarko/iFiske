@@ -1,3 +1,29 @@
 page-admin-stats {
+  $header-size: 70px;
+
+  [ion-fixed] {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  .chart-container,
+  app-chart {
+    height: calc(100% - #{$header-size});
+  }
+
+  .header-text {
+    padding: 0 $content-padding;
+    height: $header-size;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
 }

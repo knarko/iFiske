@@ -1,2 +1,2 @@
-
-import 'core-js/fn/object/values';
+import 'core-js/es7/object';
+import 'core-js/es7/string';

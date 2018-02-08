@@ -30,30 +30,30 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   }
 
   private makeData() {
-    let padToTwo = number => number <= 9 ? ("0"+number).slice(-2) : number;
 
     if (!this.data) {
       return {labels: [], data: []};
     }
 
-    const data = Object.keys(this.data).map(key => {
-      let [year, week]: any[] = key.split(':');
-      week = Number(week)
-      return {
-        year,
-        week,
-        data: this.data[key],
-      };
-    }).sort((a, b) => {
-      return a.year - b.year || a.week - b.week;
-    }).filter(({ week }) => {
-      return week > 0 && week < 53;
-    }).map(({ year, week, data }) => {
-      return {
-        x: `${year}W${padToTwo(week)}`,
-        y: data as number,
-      };
-    });
+    const data = Object.keys(this.data)
+      .map(key => {
+        let [year, week]: any[] = key.split(':');
+        year = Number(year);
+        week = Number(week);
+        return {
+          year,
+          week,
+          data: this.data[key],
+        };
+      })
+      .sort((a, b) => a.year - b.year || a.week - b.week)
+      .map(({ year, week, data }) => {
+        return {
+          x: `${year}W${("" + week).padStart(2, '0')}`,
+          y: data as number,
+        };
+      })
+      .filter(({ x }) => moment(x).isValid());
 
 
     const labels = data.map(d => d.x);

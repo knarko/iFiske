@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Area } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
-import { SuperTabs } from 'ionic2-super-tabs';
+import { SuperTabs } from '@ifiske/ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';

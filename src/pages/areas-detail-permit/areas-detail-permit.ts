@@ -44,7 +44,7 @@ export class AreasDetailPermitPage {
         product,
       }).present();
     } else {
-      Pro.getApp().monitoring.log('There was no valid method: ' + method + JSON.stringify(product), { level: 'error'});
+      Pro.getApp().monitoring.log('There was no valid method: ' + method, { level: 'error'}, product);
     }
   }
 }

@@ -10,7 +10,9 @@
 
 <ion-content no-bounce class="transparent">
   <super-tabs tabsPlacement="bottom" id="areas-detail">
-    <super-tab *ngFor="let tab of tabs" [root]="tab.page" [title]="tab.title | translate" [icon]="tab.icon" [rootParams]="{params:tabParams}" [id]="tab.page"></super-tab>
+    <ng-container *ngFor="let tab of tabs; index as i">
+    <super-tab *ngIf="!tab.hide" [root]="tab.page" [title]="tab.title | translate" [icon]="tab.icon" [rootParams]="{params:tabParams}" [id]="tab.page" [index]="i"></super-tab>
+    </ng-container>
   </super-tabs>
 
 </ion-content>

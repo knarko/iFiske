@@ -5,7 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { SuperTabsModule } from 'ionic2-super-tabs';
+import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';

@@ -57,7 +57,7 @@ export class AboutPage {
           new Promise<any>((_, reject) => setTimeout(reject, 8000)),
         ]).then(info => this.proInfo = info)
           .catch(err => {
-            IonicPro.getApp().monitoring.exception(err);
+            IonicPro.getApp().monitoring.exception(err, {});
             console.warn(err);
           });
       } else {

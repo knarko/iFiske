@@ -199,7 +199,7 @@ export class AdminProvider {
       this.orgProvider.getOne(org.orgid).then((o) => {
         org.info = o;
       }, err => {
-        Pro.getApp().monitoring.exception(new Error('Could not find an organisation that matches ' + JSON.stringify(org)));
+        Pro.getApp().monitoring.exception(new Error('Could not find a matching organization'), org);
       }),
     ]);
   }

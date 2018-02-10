@@ -5,7 +5,8 @@ import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { ProductProvider, Product } from '../../providers/product/product';
-import { SuperTabs } from 'ionic2-super-tabs';
+import { SuperTabs } from '@ifiske/ionic2-super-tabs';
+import { Fish } from '../../providers/fish/fish';
 
 @IonicPage({
   segment: 'area-detail/:ID',
@@ -16,12 +17,14 @@ import { SuperTabs } from 'ionic2-super-tabs';
   templateUrl: 'areas-detail.html',
 })
 export class AreasDetailPage {
+  species: Fish[];
   products: Product[];
   org: Organization;
   area: Area;
   tabs: TabItem[] = [
     { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
     { page: 'AreasDetailPermitPage', title: 'Fishing Permits', icon: 'ifiske-permit' },
+    { page: 'AreasDetailSpeciesPage', title: 'Species', icon: 'ifiske-fish', hide: true },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];
   tabParams = new ReplaySubject<any>(1);
@@ -42,11 +45,20 @@ export class AreasDetailPage {
         this.updateParams();
         this.getOrg();
       });
-      this.productProvider.getByArea(this.navParams.get('ID'))
+
+    this.productProvider.getByArea(this.navParams.get('ID'))
       .then(products => {
         this.products = products;
         this.updateParams();
       }).catch(e => console.warn(e));
+
+    this.areaProvider.getFishes(this.navParams.get('ID'))
+      .then(species => {
+        this.species = species;
+        this.tabs[2].hide = false;
+        this.updateParams();
+      }).catch(e => console.warn(e));
+
   }
 
   ngAfterViewInit() {
@@ -69,6 +81,8 @@ export class AreasDetailPage {
       org: this.org,
       products: this.products,
       tabsCtrl: this.superTabsCtrl,
+      rootNavCtrl: this.navCtrl,
+      species: this.species,
     });
   }
 

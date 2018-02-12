@@ -9,7 +9,7 @@ page-areas-detail-info {
 
   :not(.label) > h3 {
     margin: 0 !important;
-    padding: $content-padding !important;
+    padding: $content-padding / 1.5 $content-padding !important;
     background-color: lighten(map-get($colors, light), 8%);
     border-bottom: 1px solid map-get($colors, light);
     border-top: 1px solid map-get($colors, light);

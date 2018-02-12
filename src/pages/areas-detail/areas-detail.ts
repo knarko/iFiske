@@ -55,14 +55,14 @@ export class AreasDetailPage {
     this.areaProvider.getFishes(this.navParams.get('ID'))
       .then(species => {
         this.species = species;
-        this.tabs[2].hide = false;
+        //this.tabs[2].hide = false;
         this.updateParams();
       }).catch(e => console.warn(e));
 
   }
 
   ngAfterViewInit() {
-    this.superTabsCtrl.enableTabSwipe(this.tabs[2].page, false);
+    this.superTabsCtrl.enableTabSwipe(this.tabs[3].page, false);
     this.updateParams();
   }
 
@@ -73,7 +73,7 @@ export class AreasDetailPage {
         this.org = org;
         this.updateParams();
       });
-    }
+  }
 
   private updateParams() {
     this.tabParams.next({

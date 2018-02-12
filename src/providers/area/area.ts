@@ -345,6 +345,7 @@ export class AreaProvider extends BaseModel<Area> {
       SELECT * FROM Area_Fish
       JOIN Fish ON Area_Fish.fid = Fish.ID
       WHERE Area_Fish.aid = ?
+      ORDER BY Area_Fish.amount DESC
     `, [aid]);
   }
 

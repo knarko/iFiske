@@ -12,8 +12,6 @@ import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
 import { range } from 'rxjs/observable/range';
 import { Dictionary } from '../../types';
-import { observeOn } from 'rxjs/operators/observeOn';
-import { publishReplay } from 'rxjs/operators/publishReplay';
 
 interface ApiResponse {
   message?: any;

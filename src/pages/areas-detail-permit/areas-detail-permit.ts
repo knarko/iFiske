@@ -6,6 +6,7 @@ import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { Pro } from '@ionic/pro';
+import { Permit } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -46,5 +47,13 @@ export class AreasDetailPermitPage {
     } else {
       Pro.getApp().monitoring.log('There was no valid method: ' + method, { level: 'error'}, product);
     }
+  }
+
+  openRules(permit: Permit) {
+    this.modalCtrl.create('PermitRulesPage', {
+      t: permit.rule_t,
+      d: permit.rule_d,
+      ver: permit.rule_ver,
+    }).present();
   }
 }

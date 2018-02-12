@@ -41,4 +41,30 @@ page-areas-detail-info {
   section {
     background: white;
   }
+
+  .species-list {
+    $padding: 8px;
+    button {
+      padding-left: $padding;
+    }
+    ion-thumbnail[item-start] {
+      margin-right: $padding;
+      &,
+      img {
+        height: auto;
+        min-height: unset;
+      }
+      img {
+        width: 20vw;
+      }
+    }
+
+    .label {
+      flex-shrink: 0;
+    }
+
+    [item-content] {
+      flex-grow: 1;
+    }
+  }
 }

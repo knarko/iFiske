@@ -17,7 +17,7 @@ export class AreasDetailSpeciesPage {
   ) {
     this.navParams.get('params').subscribe(({ species, rootNavCtrl }) => {
       this.navCtrl = rootNavCtrl;
-      this.items = species && species.sort((a,b) => b.amount - a.amount);
+      this.items = species;
       console.log(this);
     });
   }

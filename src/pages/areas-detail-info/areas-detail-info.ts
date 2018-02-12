@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import { Area } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
 import { SuperTabs } from '@ifiske/ionic2-super-tabs';
@@ -7,8 +7,8 @@ import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { LoginPage } from '../login/login';
+import { Fish } from '../../providers/fish/fish';
 
 @IonicPage()
 @Component({
@@ -21,10 +21,12 @@ export class AreasDetailInfoPage {
   org: Organization;
   images: any[];
   files: any[];
+  species?: Fish[];
 
   private slides: Slides;
 
   private tabsCtrl: SuperTabs;
+  private navCtrl: NavController;
 
   @ViewChild('slides') set slidesSetter(slides: Slides) {
     if (!this.slides && slides) {
@@ -34,15 +36,16 @@ export class AreasDetailInfoPage {
   }
 
   constructor(
-    public navCtrl: NavController,
     public navParams: NavParams,
     private sessionData: SessionProvider,
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
     private modalCtrl: ModalController,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products, tabsCtrl }) => {
+    this.navParams.get('params').subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl}) => {
+      this.navCtrl = rootNavCtrl
       this.tabsCtrl = tabsCtrl;
+      this.species = species;
       this.area = area;
       this.org = org;
       this.products = products;
@@ -86,6 +89,10 @@ export class AreasDetailInfoPage {
 
   gotoPermits() {
     this.tabsCtrl.slideTo('AreasDetailPermitPage');
+  }
+
+  gotoSpecies(fish: Fish) {
+    this.navCtrl.push('SpeciesDetailPage', fish);
   }
 
   imageLoaded(i: number) {

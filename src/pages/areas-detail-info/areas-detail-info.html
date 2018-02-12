@@ -18,10 +18,12 @@
     </ion-buttons>
   </ion-toolbar>
 
+
   <section *ngIf="products?.length || area?.d">
     <button ion-button class="right" *ngIf="products?.length" (click)="gotoPermits()">{{'Purchase permit' | translate}}</button>
     <div [innerHTML]="area?.d | formatInfo"></div>
   </section>
+
   <ng-container *ngIf="org?.t && org?.d">
     <h3 *ngIf="area?.t !== org.t">{{org?.t}}</h3>
     <section>
@@ -29,6 +31,24 @@
       <div [innerHTML]="org?.d | formatInfo"></div>
     </section>
   </ng-container>
+
+  <ng-container *ngIf="species?.length">
+    <h3>{{'Species' | translate}}</h3>
+    <ion-list class="species-list">
+      <button ion-item detail-none *ngFor="let item of species" (click)="gotoSpecies(item)">
+        <ion-thumbnail item-start>
+          <img [src]="item.img">
+        </ion-thumbnail>
+        <ion-label>
+          {{item.t}}
+        </ion-label>
+        <div item-content class="level-content">
+          <fish-level [level]="item.amount"></fish-level>
+        </div>
+      </button>
+    </ion-list>
+  </ng-container>
+
   <ng-container *ngIf="area?.files | async as files">
     <h3 *ngIf="files.length">{{'Files' | translate}}</h3>
     <ion-list *ngIf="files?.length">

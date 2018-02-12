@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, Config, App, ViewController, ToolbarTitle } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UpdateProvider } from '../providers/update/update';
@@ -7,7 +8,7 @@ import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../providers/settings/settings';
 import { PushProvider } from '../providers/push/push';
-import { DeployProvider } from '../providers/deploy/deploy';
+import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { IonicPro } from './pro';
@@ -17,6 +18,7 @@ import { publishReplay } from 'rxjs/operators/publishReplay';
   templateUrl: 'app.html',
 })
 export class MyApp {
+  offline: boolean;
   rootPage: any = 'HomePage';
 
   constructor(
@@ -30,6 +32,7 @@ export class MyApp {
     private settings: SettingsProvider,
     private push: PushProvider,
     private deploy: DeployProvider,
+    private network: Network,
   ) {
 
     this.config.setTransition('md-transition', MDTransition);
@@ -73,8 +76,23 @@ export class MyApp {
           subs.set(view, sub);
         });
       }
+
+      this.setOffline();
+      this.network.onchange().subscribe(type => {
+        this.setOffline();
+      });
     });
   }
+  setOffline() {
+    this.offline = false;
+    switch (this.network.type) {
+      case Connection.NONE:
+      case Connection.UNKNOWN:
+        this.offline = true;
+        break;
+    }
+  }
+
   getPreviousViewTitle(view: ViewController) {
       const previousView = view.getNav().getPrevious(view);
       if (!previousView) {

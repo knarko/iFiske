@@ -7,7 +7,7 @@ import { APP_ID } from '../../app/config';
 import { SettingsProvider } from '../settings/settings';
 import { Platform } from 'ionic-angular';
 
-enum Connection {
+export enum Connection {
   UNKNOWN = 'unknown',
   ETHERNET = 'ethernet',
   WIFI = 'wifi',

@@ -19,6 +19,62 @@ ion-nav {
   background-color: black;
 }
 
+$offline-padding: 4px;
+$offline-font-size: 12px;
+$offline-size: $offline-padding + $offline-font-size;
+
+.offline .ion-page>ion-header .toolbar:first-child {
+  padding-top: $offline-size;
+
+  .md & .toolbar-content .title {
+    top: $offline-size;
+    height: calc(100% - #{$offline-size});
+  }
+
+  .ios &.statusbar-padding {
+    padding-top: calc(20px + 4px + #{$offline-size});
+    padding-top: calc(constant(safe-area-inset-top) + 4px + #{$offline-size});
+    padding-top: calc(env(safe-area-inset-top) + 4px + #{$offline-size});
+
+    ion-title {
+      padding-top: calc(20px + #{$offline-size});
+      padding-top: calc(constant(safe-area-inset-top) + #{$offline-size});
+      padding-top: calc(env(safe-area-inset-top) + #{$offline-size});
+
+      height: calc(44px + 20px + #{$offline-size});
+      height: calc(44px + constant(safe-area-inset-top) + #{$offline-size});
+      height: calc(44px + env(safe-area-inset-top) + #{$offline-size});
+
+      min-height: calc(44px + 20px + #{$offline-size});
+      min-height: calc(44px + constant(safe-area-inset-top) + #{$offline-size});
+      min-height: calc(44px + env(safe-area-inset-top) + #{$offline-size});
+    }
+
+    &::before {
+      padding-top: calc(20px + #{$offline-padding});
+      padding-top: calc(constant(safe-area-inset-top) + #{$offline-padding});
+      padding-top: calc(env(safe-area-inset-top) + #{$offline-padding});
+    }
+  }
+
+  &::before {
+    content: 'Ingen nätverksanslutning';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: $offline-font-size;
+    line-height: 1;
+    padding: $offline-padding;
+    width: 100%;
+
+    color: white;
+    text-align: center;
+    display: block;
+    background: desaturate(map-get($colors, primary), 40%);
+  }
+
+}
+
 
 .right {
   float: right !important;

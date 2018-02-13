@@ -42,40 +42,15 @@ export class MyApp {
       console.warn(err);
       IonicPro.monitoring.handleNewError(err);
     });
-    platform.ready().then(async () => {
+    platform.ready().then(() => {
       this.push.initialize();
       if (true || localStorage.getItem('language')) {
         this.update.update().catch(e => console.warn(e));
       }
-      const backButtonText = translate.stream('ui.general.back').pipe(
-        publishReplay(1),
-      );
 
-      this.config.set('ios', 'backButtonText', await backButtonText.pipe(take(1)).toPromise());
-      if (platform.is('ios')) {
-        const subs = new Map<ViewController, Subscription>();
+      this.setupBackButtonText();
 
-        this.app.viewWillLeave.subscribe(view => {
-          if (subs.has(view)) {
-            subs.get(view).unsubscribe()
-            subs.delete(view);
-          }
-        });
-
-        this.app.viewWillEnter.subscribe((view: ViewController) => {
-          const sub = backButtonText.subscribe(backButtonText => {
-            // Bug with width of back button on ios
-            //const previousViewTitle = this.getPreviousViewTitle(view);
-            //view.setBackButtonText(previousViewTitle || backButtonText);
-            view.setBackButtonText(backButtonText);
-          });
-
-          if (subs.has(view)) {
-            subs.get(view).unsubscribe();
-          }
-          subs.set(view, sub);
-        });
-      }
+      console.log(this.network);
 
       this.setOffline();
       this.network.onchange().subscribe(type => {
@@ -83,6 +58,39 @@ export class MyApp {
       });
     });
   }
+
+  async setupBackButtonText() {
+    const backButtonText = this.translate.stream('ui.general.back').pipe(
+      publishReplay(1),
+    );
+
+    this.config.set('ios', 'backButtonText', await backButtonText.pipe(take(1)).toPromise());
+    if (this.platform.is('ios')) {
+      const subs = new Map<ViewController, Subscription>();
+
+      this.app.viewWillLeave.subscribe(view => {
+        if (subs.has(view)) {
+          subs.get(view).unsubscribe()
+          subs.delete(view);
+        }
+      });
+
+      this.app.viewWillEnter.subscribe((view: ViewController) => {
+        const sub = backButtonText.subscribe(backButtonText => {
+          // Bug with width of back button on ios
+          //const previousViewTitle = this.getPreviousViewTitle(view);
+          //view.setBackButtonText(previousViewTitle || backButtonText);
+          view.setBackButtonText(backButtonText);
+        });
+
+        if (subs.has(view)) {
+          subs.get(view).unsubscribe();
+        }
+        subs.set(view, sub);
+      });
+    }
+  }
+
   setOffline() {
     this.offline = false;
     switch (this.network.type) {

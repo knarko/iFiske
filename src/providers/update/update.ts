@@ -16,6 +16,8 @@ import { TranslateToastController } from '../translate-toast-controller/translat
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../settings/settings';
 import { ProductProvider } from '../product/product';
+import { Network } from '@ionic-native/network';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class UpdateProvider {
@@ -29,6 +31,7 @@ export class UpdateProvider {
     private toastCtrl: TranslateToastController,
     private translate: TranslateService,
     private settings: SettingsProvider,
+    private network: Network,
 
     area: AreaProvider,
     county: CountyProvider,
@@ -74,8 +77,10 @@ export class UpdateProvider {
     var aDay = 1000 * 3600 * 24 * 1;
     return (currentTime - lastUpdate) > aDay;
   }
+
   async updateFunc(forced, hideLoading) {
-    console.count('in update!');
+    await this.network.onConnect().pipe(take(1)).toPromise();
+
     if (!hideLoading) {
       this.loading = await this.loadingCtrl.show({
         content: 'Updating',

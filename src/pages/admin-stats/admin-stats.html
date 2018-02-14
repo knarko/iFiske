@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content>
-  <div ion-fixed *ngIf="stats | async; let stat">
+  <div ion-fixed *ngIf="stats | async; let stat; else offline">
     <div class="chart-container" *ngIf="stat.weeks; let weeks">
       <div class="header-text">
       <h2>{{'Sold products' | translate}}</h2>
@@ -16,4 +16,9 @@
       <span>{{'Wallet Balance' | translate}}</span>
     </div>
   </div>
+  <ng-template #offline>
+    <p class="text-center">
+      {{'ui.admin.stats.offline' | translate}}
+    </p>
+  </ng-template>
 </ion-content>

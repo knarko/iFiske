@@ -15,18 +15,15 @@ import { serverLocation } from '../../providers/api/serverLocation';
 export class AdminInfoPage {
   user: Promise<User>;
 
-  currentOrganization = this.adminProvider.currentOrganization;
-  numberOfOrganizations = this.adminProvider.numberOfOrganizations;
-  pickOrganization = this.adminProvider.pickOrganization;
   serverLocation = serverLocation;
 
   constructor(
-    private adminProvider: AdminProvider,
+    public admin: AdminProvider,
     private userProvider: UserProvider,
   ) { }
 
   ionViewWillEnter() {
-    this.user = this.userProvider.getInfo();
+    this.user = this.userProvider.getInfo().catch(() => undefined);
   }
 
 }

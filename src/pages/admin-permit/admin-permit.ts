@@ -109,7 +109,7 @@ export class AdminPermitPage {
       content: status ? 'Revoking' : 'Unrevoking',
     });
     try {
-      await this.adminProvider.revokePermit(this.permit, status);
+      await this.adminProvider.revokePermit(this.code, status);
       await this.loadPermit()
     } finally {
       loading.dismiss();

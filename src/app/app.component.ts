@@ -52,10 +52,12 @@ export class MyApp {
 
       console.log(this.network);
 
+      /* enable this code in order to show/hide the offline notification
       this.setOffline();
       this.network.onchange().subscribe(type => {
         this.setOffline();
       });
+      */
     });
   }
 

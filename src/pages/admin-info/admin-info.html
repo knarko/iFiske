@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="currentOrganization | async; let org" padding>
+  <div *ngIf="admin.currentOrganization | async; let org" padding>
     <div class="text-center">
       <h2 class="subtitle">{{org.ot}}</h2>
       <span>{{'ui.admin.userLevel.' + org.level | translate}}</span>
@@ -11,7 +11,7 @@
 
     <p>{{'ui.admin.since:date' | translate : (org.at * 1000 | date: 'longDate' | mkObject: 'date')}}</p>
 
-    <button *ngIf="numberOfOrganizations() > 1" ion-button icon-left block (click)="pickOrganization()">
+    <button *ngIf="admin.numberOfOrganizations > 1" ion-button icon-left block (click)="admin.pickOrganization()">
       <ion-icon name="contact"></ion-icon>
       {{'ui.admin.changeOrgButton' | translate}}
     </button>

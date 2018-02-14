@@ -17,5 +17,6 @@ export class AdminStatsPage {
     private adminProvider: AdminProvider,
   ) {
     this.stats = this.adminProvider.stats();
+    console.log(this.stats);
   }
 }

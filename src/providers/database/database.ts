@@ -114,9 +114,11 @@ export class DatabaseProvider {
    * @param  {Enumerable} data  Object or Array with data to insert, should be contain objects with the same keys as the table columns
    * @return {SQL_results}  Returns SQL results
    */
-  populateTable(table: TableDef, data) {
+  populateTable(table: TableDef, data, shouldDelete = true) {
     return this.db.transaction(tx => {
-      tx.executeSql('DELETE FROM ' + table.name + ';');
+      if (shouldDelete) {
+        tx.executeSql('DELETE FROM ' + table.name + ';');
+      }
 
       (Array.isArray(data) ? data : Object.values(data)).forEach(singleData => {
         var insertData = [];

@@ -12,18 +12,9 @@ export class AdminHeaderComponent {
   @ViewChild(Navbar) private _navbar: Navbar;
   @Output() back = new EventEmitter<void>();
 
-  public currentOrganization: Observable<AdminOrganization>;
-  public numberOfOrganizations = this.adminProvider.numberOfOrganizations;
-
-  constructor(private adminProvider: AdminProvider, private navCtrl: NavController) { }
-
-
-  pickOrganization() {
-    this.adminProvider.pickOrganization();
-  }
+  constructor(public admin: AdminProvider, private navCtrl: NavController) { }
 
   ngAfterViewInit() {
-    this.currentOrganization = this.adminProvider.currentOrganization;
     this._navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss();
       this.back.emit();

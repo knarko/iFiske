@@ -15,14 +15,17 @@ import { ProductProvider } from '../product/product';
 import { UserProvider, Permit } from '../user/user';
 import { TranslateActionSheetController } from '../translate-action-sheet-controller/translate-action-sheet-controller';
 import { Dictionary } from '../../types';
+import { BaseModel } from '../database/basemodel';
+import { TableDef } from '../database/table';
+import { DatabaseProvider } from '../database/database';
+import { DBMethod } from '../database/decorators';
+import { catchError } from 'rxjs/operators/catchError';
 
 export interface AdminOrganization {
-  at?: number;
-  ot?: string;
-  orgid?: number;
-  level?: number;
-  products?: AdminPermit[];
-  info?: Organization;
+  ID: number;
+  at: number;
+  ot: string;
+  level: number;
 }
 
 export interface AdminPermit {
@@ -45,19 +48,50 @@ export interface AdminPermit {
 }
 
 @Injectable()
-export class AdminProvider {
+export class AdminProvider extends BaseModel {
   private static readonly CURRENT_ORGANIZATION = 'ADMIN_CURRENT_ORGANIZATION';
-  ready: Promise<void>;
-  organizations = new Map<number, AdminOrganization>();
-  private permits = new Map<string, ReplaySubject<AdminPermit>>();
+  protected readonly tables: Dictionary<TableDef> = {
+    organizations: {
+      name: 'Admin_Organizations',
+      members: {
+        ID: 'int',
+        at: 'int',
+        ot: 'text',
+        level: 'int',
+      },
+      primary: 'ID',
+    },
+    permits: {
+      name: 'Admin_Permits',
+      members: {
+        ID: 'int',
+        org: 'int',
+        at: 'int',
+        code: 'int',
+        fr: 'int',
+        fullname: 'text',
+        pdf: 'text',
+        ref1: 'int',
+        ref2: 'int',
+        rev: 'int',
+        subt: 'text',
+        t: 'text',
+        tel: 'text',
+        to: 'int',
+      },
+      primary: 'ID',
+    },
+  }
+
+  ready: Promise<boolean>;
 
   isAdmin: Observable<boolean>;
 
+  private permits = new Map<string, ReplaySubject<AdminPermit>>();
+
   currentOrganization = new ReplaySubject<AdminOrganization | undefined>(1);
 
-  numberOfOrganizations = () => {
-    return this.organizations.size;
-  }
+  numberOfOrganizations: number;
 
   private _orgId: number;
 
@@ -66,61 +100,95 @@ export class AdminProvider {
   }
 
   set orgId(orgId: number) {
-    if (this.organizations.has(orgId)) {
-      this._orgId = orgId;
-      this.currentOrganization.next(this.organizations.get(orgId));
+    this._orgId = orgId;
+    this.getOrganization(orgId).then(org => {
+      this.currentOrganization.next(org);
       localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
-    } else {
+    }, err => {
+      console.warn(err);
       this._orgId = undefined;
       this.currentOrganization.next(undefined);
-    }
+    });
   }
 
   constructor(
+    protected API: ApiProvider,
+    protected DB: DatabaseProvider,
     private orgProvider: OrganizationProvider,
-    private API: ApiProvider,
     private productProvider: ProductProvider,
     private userProvider: UserProvider,
     private actionSheetCtrl: TranslateActionSheetController,
   ) {
-    let resolve, reject
-    this.ready = new Promise((res, rej) => {
-      resolve = res;
-      reject = rej;
+    super();
+    this.initialize();
+    // this.ready.then(() => this.update(true));
+  }
+
+  initialize() {
+    const p = [];
+    for (const table of Object.values(this.tables)) {
+      p.push(this.DB.initializeTable(table));
+    }
+
+    this.ready = Promise.all(p).then(changed => {
+      for (let i = 0; i < changed.length; ++i) {
+        if (changed[i] || true)
+          return this.update('skipWait');
+      }
+      return false;
     });
+
     this.isAdmin = this.userProvider.loggedIn.pipe(
       switchMap(loggedIn => {
         if (!loggedIn) {
           return of(false);
         }
-        return fromPromise(this.API.user_organizations().then(orgs => {
-          return !!Object.keys(orgs).length
-        }, err => {
-          console.log(err);
-          return false
-        }));
+        return this.currentOrganization.pipe(map(org => !!org));
       }),
     );
+
+    this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
+
     this.isAdmin.subscribe((admin) => {
-      if (admin) {
-        this.ready = this.getOrganizations().then(() => {
-          return this.setDefaultOrgId();
-        }).then(resolve, reject);
-      } else {
-        this.organizations = new Map();
-        this.permits = new Map();
+      if (!admin) {
         this.orgId = undefined;
       }
     });
   }
 
+  async update(shouldUpdate: boolean | 'skipWait'): Promise<boolean> {
+    if (shouldUpdate !== 'skipWait' && await this.ready) {
+      return false;
+    }
+    try {
+      let deletePermits = true;
+      const p = this.API.user_organizations().then(async (orgs: Dictionary<AdminOrganization>) => {
+        const organizations = Object.values(orgs);
+        organizations.forEach(org => org.ID = (org as any).orgid);
+        await this.DB.populateTable(this.tables.organizations, orgs);
+        for (let org of organizations) {
+          const permits = await this.API.adm_products(org.ID);
+          Object.values(permits).forEach(permit => permit.org = org.ID);
+          this.DB.populateTable(this.tables.permits, permits, deletePermits);
+          deletePermits = false;
+        }
+        this.numberOfOrganizations = organizations.length;
+      }).then(() => true).catch(err => false);
+      p.then(() => this.setDefaultOrgId());
+      return p;
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
   pickOrganization = async () => {
     const buttons = [];
-    for (const org of this.organizations.values()) {
+    const organizations = await this.getOrganizations()
+    for (const org of organizations) {
       buttons.push({
         text: org.ot,
-        handler: () => this.orgId = org.orgid,
-        cssClass: this.orgId === org.orgid ? 'current' : undefined,
+        handler: () => this.orgId = org.ID,
+        cssClass: this.orgId === org.ID ? 'current' : undefined,
       });
     }
 
@@ -136,114 +204,43 @@ export class AdminProvider {
     });
   }
 
-  getPermit(code: string): Observable<AdminPermit> {
-    let subject: ReplaySubject<AdminPermit>;
-    if (this.permits.has(code)) {
-      subject = this.permits.get(code);
-    } else {
-      subject = new ReplaySubject<AdminPermit>(1);
-      this.permits.set(code, subject);
-    }
-    this.getPermitApi(code).then(permit => {
-      subject.next(permit);
-    }, err => {
-      subject.error(err);
-    });
 
-    return subject.asObservable();
-  }
-
-  getPermitApi(code) {
-    return this.API.adm_check_prod(code).then(permit => {
-      permit.validity = this.productProvider.getValidity(permit);
-      return permit;
-    });
-  }
-
-  private setDefaultOrgId() {
-    if (this.organizations.size) {
+  private async setDefaultOrgId() {
+    const organizations = await this.getOrganizations();
+    if (organizations.length) {
       const orgId = Number(localStorage.getItem(AdminProvider.CURRENT_ORGANIZATION));
-      if (this.organizations.has(orgId)) {
+      if (organizations.find(org => org.ID === orgId)) {
         this.orgId = orgId;
       } else {
-        this.orgId = this.organizations.keys().next().value;
+        this.orgId = organizations[0].ID;
       }
     }
-  }
-
-  revokePermit(product, revoke = true) {
-    return this.API.adm_revoke_prod(product.code, revoke ? 1 : 0);
   }
 
   stats() {
     return this.currentOrganization.pipe(
       filter(org => !!org),
       switchMap(org => {
-        return this.API.admGetStats(org.orgid).pipe(
-          map(stats => stats[org.orgid]),
+        return this.API.admGetStats(org.ID).pipe(
+          map(stats => stats[org.ID]),
+          catchError(() => of(undefined)),
         );
       }),
-    )
+    );
   }
 
-  private async initOrg(org: AdminOrganization) {
-    return Promise.all([
-      this.API.adm_products(org.orgid).then((products: Dictionary<Permit>) => {
-        const prods = [];
-        for (const product of Object.values(products)) {
-          product.validity = this.productProvider.getValidity(product);
-          prods.push(product);
-        }
-        org.products = prods;
-      }),
-      this.orgProvider.getOne(org.orgid).then((o) => {
-        org.info = o;
-      }, err => {
-        Pro.getApp().monitoring.exception(new Error('Could not find a matching organization'), org);
-      }),
-    ]);
+  @DBMethod
+  async getOrganization(orgID: number) {
+    return this.DB.getSingle(`SELECT * FROM Admin_Organizations WHERE ID = ?`, [orgID]);
   }
 
-  async getProduct(productID) {
-    let product;
-    try {
-      for (const org of this.organizations.values()) {
-          product = org.products.find(p => Number(p.ID) === Number(productID))
-          if (product) {
-            break;
-          }
-        }
-    } catch (e) {
-    }
-    if (product) {
-      return product;
-    }
-    return Promise.reject('License with this code not found');
-  }
-
-  getOrganization(orgID: number) {
-    return this.organizations.get(orgID);
-  }
-
-  async getOrganizations() {
+  @DBMethod
+  async getOrganizations(): Promise<AdminOrganization[]> {
     if (await !this.userProvider.loggedIn.toPromise()) {
       return Promise.reject('Not logged in')
     }
 
-    try {
-      const orgs = await this.API.user_organizations();
-      const p = [];
-      for (let id in orgs) {
-        const orgId = Number(id);
-        const org: AdminOrganization = this.organizations.get(orgId) || {};
-        Object.assign(org, orgs[id]);
-        p.push(this.initOrg(org));
-        this.organizations.set(orgId, org);
-      }
-      return Promise.all(p).then(() => orgs);
-    } catch (err) {
-      return [];
-    }
+    return this.DB.getMultiple(`SELECT * FROM Admin_Organizations`);
   }
 
   search(searchTerm?: string) {
@@ -254,20 +251,43 @@ export class AdminProvider {
     );
   }
 
+  getPermit(code: string): Observable<AdminPermit> {
+    let subject: ReplaySubject<AdminPermit>;
+    if (this.permits.has(code)) {
+      subject = this.permits.get(code);
+    } else {
+      subject = new ReplaySubject<AdminPermit>(1);
+      this.permits.set(code, subject);
+    }
+
+    const successHandler = permit => {
+      this.transformPermit(permit);
+      subject.next(permit);
+    };
+
+    const errorHandler = err => {
+      subject.error(err);
+    }
+
+    this.DB.getSingle(`
+      SELECT * FROM Admin_Permits
+      WHERE code = ?
+    `, [code]).then(successHandler, errorHandler);
+
+    this.API.adm_check_prod(code).then(successHandler, errorHandler);
+
+    return subject.asObservable();
+  }
+
+  @DBMethod
   async getPermits(searchTerm?: string): Promise<(AdminPermit & {score?: number})[]> {
-    if (this.organizations.size < 1) {
-      await this.getOrganizations();
-    }
+    const permits = await this.DB.getMultiple(`
+      SELECT * FROM Admin_Permits
+      WHERE org = ?
+      ORDER BY fullname
+    `, [this.orgId]).catch(() => []);
 
-    if (!this.organizations.has(this.orgId)) {
-      this.setDefaultOrgId();
-    }
-
-    if (!this.organizations.has(this.orgId)) {
-      return [];
-    }
-
-    const permits = this.organizations.get(this.orgId).products;
+    permits.forEach(this.transformPermit);
 
     if (!searchTerm) {
       return permits;
@@ -295,4 +315,14 @@ export class AdminProvider {
       return { ...item, score };
     });
   }
+
+  transformPermit = (permit: AdminPermit) => {
+    permit.validity = this.productProvider.getValidity(permit);
+    return permit;
+  };
+
+  revokePermit(code: string, revoke = true) {
+    return this.API.adm_revoke_prod(code, revoke ? 1 : 0);
+  }
+
 }

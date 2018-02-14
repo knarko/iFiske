@@ -53,6 +53,9 @@
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
         "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
       },
+      "stats": {
+        "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen."
+      },
       "userLevel": {
         "0": "Nivå 0",
         "1": "Nivå 1",

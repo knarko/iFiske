@@ -31,6 +31,16 @@ $offline-size: $offline-padding + $offline-font-size;
     height: calc(100% - #{$offline-size});
   }
 
+  .ios & {
+    height: 44px + $offline-size;
+    min-height: 44px + $offline-size;
+
+  ion-title {
+    padding-top: $offline-size;
+    height: 44px + $offline-size;
+    min-height: 44px + $offline-size;
+  }
+  }
   .ios &.statusbar-padding {
     padding-top: calc(20px + 4px + #{$offline-size});
     padding-top: calc(constant(safe-area-inset-top) + 4px + #{$offline-size});
@@ -70,9 +80,8 @@ $offline-size: $offline-padding + $offline-font-size;
     color: white;
     text-align: center;
     display: block;
-    background: desaturate(map-get($colors, primary), 40%);
+    background: lighten(desaturate(map-get($colors, primary), 60%), 10%);
   }
-
 }
 
 

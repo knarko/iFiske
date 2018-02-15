@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 import { of } from 'rxjs/observable/of';
 import { switchMap, filter, map } from 'rxjs/operators';
-import { Pro } from '@ionic/pro';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
 
-import { OrganizationProvider, Organization } from '../organization/organization';
 import { ApiProvider } from '../api/api';
 import { ProductProvider } from '../product/product';
-import { UserProvider, Permit } from '../user/user';
+import { UserProvider } from '../user/user';
 import { TranslateActionSheetController } from '../translate-action-sheet-controller/translate-action-sheet-controller';
 import { Dictionary } from '../../types';
 import { BaseModel } from '../database/basemodel';
@@ -114,7 +111,6 @@ export class AdminProvider extends BaseModel {
   constructor(
     protected API: ApiProvider,
     protected DB: DatabaseProvider,
-    private orgProvider: OrganizationProvider,
     private productProvider: ProductProvider,
     private userProvider: UserProvider,
     private actionSheetCtrl: TranslateActionSheetController,

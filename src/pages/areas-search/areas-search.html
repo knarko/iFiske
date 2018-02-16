@@ -23,14 +23,14 @@
   <ion-list [virtualScroll]="areas" approxItemHeight="96px" approxHeaderHeight="190px" [headerFn]="scrollHeaders" [virtualTrackBy]="trackFn">
 
     <ion-item class="fish" *virtualHeader="let fish" [navPush]="'SpeciesDetailPage'" [navParams]="fish">
-      <img class="fish-image" [src]="fish.img">
+      <img class="fish-image" [icSrc]="fish.img">
       <h2>{{fish.t}}</h2>
       <p [innerHTML]="fish.d | stripTags"></p>
     </ion-item>
 
     <ion-item *virtualItem="let area" (click)="goto(area)">
       <ion-thumbnail item-start *ngIf="area.photo">
-        <img [src]="area.photo">
+        <img [icSrc]="area.photo">
       </ion-thumbnail>
 
       <h2>{{area.org}}</h2>

@@ -24,7 +24,7 @@
     <h3>{{'Technique description' | translate}}</h3>
     <p [innerHtml]="tech?.d"></p>
   </ng-container>
-  <ng-container *ngIf="tech?.youtube">
+  <ng-container *ngIf="entered && tech?.youtube">
     <h3>{{'YouTube' | translate}}</h3>
     <youtube class="full-width" [url]="tech?.youtube"></youtube>
   </ng-container>

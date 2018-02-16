@@ -1,8 +1,7 @@
 import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
 import { NavController, Navbar } from 'ionic-angular';
 
-import { Observable } from "rxjs/Observable";
-import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
+import { AdminProvider } from '../../providers/admin/admin';
 
 @Component({
   selector: 'admin-header',

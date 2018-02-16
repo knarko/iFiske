@@ -16,6 +16,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FCM } from '@ionic-native/fcm';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic-native/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SMS } from '@ionic-native/sms';
@@ -64,7 +65,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 // Import locale
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
-import { Network } from '@ionic-native/network';
+
+import { ImgcacheModule } from '../imgcache/imgcache.module';
+
 registerLocaleData(localeSv);
 
 @NgModule({
@@ -84,6 +87,8 @@ registerLocaleData(localeSv);
     }),
 
     SuperTabsModule.forRoot(),
+
+    ImgcacheModule.forRoot(),
 
     TranslateModule.forRoot({
       loader: {

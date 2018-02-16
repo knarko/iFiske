@@ -12,6 +12,12 @@ import 'rxjs/add/operator/filter';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
 
+export interface AreaImage {
+  h: number;
+  w: number;
+  file: string;
+  ratio: string;
+}
 
 export interface Area {
   ID: number;
@@ -43,7 +49,7 @@ export interface Area {
 
   // Not in db
   photo: string;
-  images?: Promise<string[]>;
+  images?: Promise<AreaImage[]>;
   files?: Promise<AreaFile[]>;
   org: string;
   level?: number;
@@ -314,7 +320,7 @@ export class AreaProvider extends BaseModel<Area> {
   }
 
   @DBMethod
-  async getPhotos(areaId) {
+  async getPhotos(areaId): Promise<AreaImage[]> {
     return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId])
     .then(images => {
         for (let i = 0; i < images.length; ++i) {
@@ -322,13 +328,12 @@ export class AreaProvider extends BaseModel<Area> {
           images[i].file = serverLocation + images[i].file;
         }
         return images;
-      }).catch(err => []);
+      });
   }
 
   @DBMethod
   async getFiles(areaId): Promise<AreaFile[]> {
     return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId])
-      .catch(() => [])
       .then((files: AreaFile[]) => {
         files.forEach(file => {
           file.thumb = serverLocation + file.thumb

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Keyboard, Content } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
@@ -19,6 +19,8 @@ export class AreasSearchPage {
   areas: Area[] = [];
   foundFish: Fish;
 
+  @ViewChild(Content) content: Content;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -27,16 +29,11 @@ export class AreasSearchPage {
     private keyboard: Keyboard,
   ) { }
 
-  ionViewWillEnter() {
-    console.log(this.navParams);
+  ionViewDidLoad() {
     this.county = this.navParams.get('county');
     this.searchTerm = this.navParams.get('searchTerm') || '';
 
     this.searchImmediate(this.searchTerm);
-  }
-
-  ionViewWillLeave() {
-    this.navParams.data.searchTerm = this.searchTerm;
   }
 
   scrollHeaders = (_area: Area, index: number) => {
@@ -78,7 +75,7 @@ export class AreasSearchPage {
             }
           });
         }
-        this.scrollTop();
+        this.content.scrollToTop();
       }, err => {
         console.log(err);
       });
@@ -93,12 +90,6 @@ export class AreasSearchPage {
       this.searchImmediate(searchTerm);
       this.keyboard.close();
     }
-  }
-
-  scrollTop() {
-    /*
-    $ionicScrollDelegate.scrollTop();
-    */
   }
 
   goto(area: Area) {

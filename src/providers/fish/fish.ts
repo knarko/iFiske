@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as ImgCache from 'imgcache.js';
 import * as Fuse from 'fuse.js';
 
 import { ApiProvider } from '../api/api';
@@ -7,6 +6,7 @@ import { DatabaseProvider } from '../database/database';
 import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
 import { TableDef } from '../database/table';
+import { ImgcacheService } from '../../imgcache/imgcache.service';
 
 
 export interface Fish {
@@ -50,6 +50,7 @@ export class FishProvider extends BaseModel<Fish> {
   constructor(
     protected API: ApiProvider,
     protected DB: DatabaseProvider,
+    private imgcache: ImgcacheService,
   ) {
     super();
     this.initialize();
@@ -69,7 +70,7 @@ export class FishProvider extends BaseModel<Fish> {
     for (const fish of Object.values(data)) {
       fish.icon = serverLocation + fish.icon;
       fish.img = serverLocation + fish.img;
-      ImgCache.cacheFile(fish.img);
+      this.imgcache.cacheFile(fish.img);
     }
     return this.DB.populateTable(this.table, data).then(() => true);
   }

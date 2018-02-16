@@ -7,7 +7,10 @@
       </div>
     </ion-slide>
   </ion-slides>
-  <img [src]="images[0].file" *ngIf="images?.length === 1">
+  <div class="slider-image" *ngIf="images?.length === 1 && images[0]; let img">
+    <img [src]="img.file">
+    <p *ngIf="img.t || img.d" class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
+  </div>
 
   <ion-toolbar>
     <h2>{{area?.t}}</h2>
@@ -27,7 +30,7 @@
   <ng-container *ngIf="org?.t && org?.d">
     <h3 *ngIf="area?.t !== org.t">{{org?.t}}</h3>
     <section>
-      <img *ngIf="org?.logo" class="center logo" [src]="org?.logo">
+      <img *ngIf="org?.logo" class="center logo" [icSrc]="org?.logo">
       <div [innerHTML]="org?.d | formatInfo"></div>
     </section>
   </ng-container>
@@ -37,7 +40,7 @@
     <ion-list class="species-list">
       <button ion-item detail-none *ngFor="let item of species" (click)="gotoSpecies(item)">
         <ion-thumbnail item-start>
-          <img [src]="item.img">
+          <img [icSrc]="item.img">
         </ion-thumbnail>
         <ion-label>
           {{item.t}}
@@ -55,7 +58,7 @@
     <ion-list *ngIf="files?.length">
       <a ion-item *ngFor="let file of files" [href]="file.url" target="_system">
         <ion-avatar item-start>
-          <img *ngIf="file.thumb" [src]="file.thumb">
+          <img *ngIf="file.thumb" [icSrc]="file.thumb">
         </ion-avatar>
         <h3>{{(file.t || file.filename) | translate}}</h3>
       </a>

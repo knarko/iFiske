@@ -87,11 +87,13 @@ export class DatabaseProvider {
         if (result.rows.length) {
           return Promise.resolve(this.createObject(result));
         } else {
-          return Promise.reject(
-            'Could not find any objects for sql: \n' +
-            sql + '\nWith arguments: \n' +
-            (args ? args.join(',') : ''),
+          console.warn(
+            `Could not find any objects for sql:
+            ${sql}
+            With arguments:`,
+            args,
           );
+          return Promise.resolve([]);
         }
       });
   }

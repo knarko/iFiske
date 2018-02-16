@@ -15,7 +15,7 @@
 
 <ion-content class="information-page" padding>
   <h2>{{fish?.t}}<br><span>{{fish?.lat}}</span></h2>
-  <img class="full-width" [src]="fish?.img">
+  <img class="full-width" [icSrc]="fish?.img">
   <h3>{{'Description' | translate}}</h3>
   <p [innerHtml]="fish?.d"></p>
   <h3>{{'Prevalence' | translate}}</h3>

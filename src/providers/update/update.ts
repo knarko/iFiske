@@ -18,6 +18,7 @@ import { SettingsProvider } from '../settings/settings';
 import { ProductProvider } from '../product/product';
 import { Network } from '@ionic-native/network';
 import { take } from 'rxjs/operators';
+import { TechniqueProvider } from '../technique/technique';
 
 @Injectable()
 export class UpdateProvider {
@@ -42,12 +43,11 @@ export class UpdateProvider {
     organization: OrganizationProvider,
     // Product,
     rule: RuleProvider,
-    // Technique,
+    technique: TechniqueProvider,
     terms: TermsProvider,
     user: UserProvider,
   ) {
     let savedLanguage = this.settings.language;
-
     this.translate.onLangChange.subscribe(()=> {
       if (savedLanguage !== this.settings.language) {
         savedLanguage = this.settings.language;
@@ -65,6 +65,7 @@ export class UpdateProvider {
       rule,
       user,
       terms,
+      technique,
       // Product.update,
       // Technique.update,
       // Terms.update,
@@ -79,7 +80,8 @@ export class UpdateProvider {
   }
 
   async updateFunc(forced, hideLoading) {
-    await this.network.onConnect().pipe(take(1)).toPromise();
+    // TODO: this seems to block updating sometimes :/
+    // await this.network.onConnect().pipe(take(1)).toPromise();
 
     if (!hideLoading) {
       this.loading = await this.loadingCtrl.show({
@@ -99,8 +101,6 @@ export class UpdateProvider {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
     }, (error) => {
-      console.error(error);
-
       // TODO: raven
       // Raven.captureException(error);
       this.toastCtrl.show({
@@ -112,6 +112,7 @@ export class UpdateProvider {
       // Must rethrow error to fail later
       throw error;
     });
+
     result.catch(() => {}).then(() => {
       this.loading.dismiss();
     });

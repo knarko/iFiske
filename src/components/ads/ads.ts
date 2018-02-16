@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { AdsProvider } from '../../providers/ads/ads';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ads',
   templateUrl: 'ads.html',
 })
 export class AdsComponent {
-  ads: Observable<any[]>;
+  ads: any[];
 
-  constructor(private adsProvider: AdsProvider) {
-    this.ads = this.adsProvider.getAdsForHome();
+  constructor(
+    private adsProvider: AdsProvider,
+  ) {
+    this.adsProvider.getAdsForHome().subscribe(async (ads) => {
+      console.log(ads);
+      this.ads = ads;
+    });
   }
 
 }

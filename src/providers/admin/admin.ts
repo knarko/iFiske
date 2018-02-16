@@ -102,7 +102,6 @@ export class AdminProvider extends BaseModel {
       this.currentOrganization.next(org);
       localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
     }, err => {
-      console.warn(err);
       this._orgId = undefined;
       this.currentOrganization.next(undefined);
     });
@@ -281,7 +280,7 @@ export class AdminProvider extends BaseModel {
       SELECT * FROM Admin_Permits
       WHERE org = ?
       ORDER BY fullname
-    `, [this.orgId]).catch(() => []);
+    `, [this.orgId]);
 
     permits.forEach(this.transformPermit);
 

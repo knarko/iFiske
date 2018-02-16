@@ -4,6 +4,7 @@ import { AreasSearchPage } from './areas-search';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ComponentsModule } from '../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule.forChild(),
     ComponentsModule,
     PipesModule,
+    ImgcacheModule,
   ],
 })
 export class AreasSearchPageModule {}

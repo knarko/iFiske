@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { TechniqueProvider } from '../../providers/technique/technique';
-
-/**
- * Generated class for the FishingMethodsDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ViewChild } from '@angular/core';
 
 @IonicPage({
   segment: 'fishing-methods/detail/:ID',
@@ -18,6 +12,7 @@ import { TechniqueProvider } from '../../providers/technique/technique';
   templateUrl: 'fishing-methods-detail.html',
 })
 export class FishingMethodsDetailPage {
+  entered: boolean = false;
   tech: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private techProvider: TechniqueProvider) {
@@ -27,5 +22,13 @@ export class FishingMethodsDetailPage {
     } else {
       this.tech = this.navParams.data;
     }
+  }
+
+  ionViewDidEnter() {
+    this.entered = true;
+  }
+
+  ionViewWillLeave() {
+    this.entered = false;
   }
 }

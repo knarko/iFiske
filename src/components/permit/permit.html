@@ -3,7 +3,7 @@
 <h2 *ngIf="permit === null">{{'The permit does not exist' | translate}}</h2>
 <div *ngIf="permit" class="bg-white" padding>
   <img *ngIf="permit.rev" src="assets/img/makulerad.png" class="revoked" />
-  <img *ngIf="org?.logo" class="logo permit" [src]="serverLocation + '/' + org.logo">
+  <img *ngIf="org?.logo" class="logo permit" [icSrc]="serverLocation + '/' + org.logo">
 
   <h2>{{permit.ot}}</h2>
   <h3>{{permit.t}}</h3>

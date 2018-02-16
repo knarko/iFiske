@@ -383,3 +383,8 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
     margin-bottom: 1rem;
   }
 }
+
+
+img:not([src]) {
+  visibility: hidden;
+}

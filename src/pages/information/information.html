@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item *ngFor="let item of items" (click)="goto(item)">
       <ion-thumbnail item-start>
-        <img [src]="item.img">
+        <img [icSrc]="item.img">
       </ion-thumbnail>
       <h2>{{item.t}}</h2>
       <p [innerText]="item.text | stripTags"></p>

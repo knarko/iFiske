@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
@@ -30,6 +30,9 @@ export class AreasDetailPage {
   tabParams = new ReplaySubject<any>(1);
 
   @ViewChild(SuperTabs) superTabsCtrl: SuperTabs;
+
+  @ViewChild(Content) content: Content;
+
 
   constructor(
     public navCtrl: NavController,
@@ -84,6 +87,7 @@ export class AreasDetailPage {
       rootNavCtrl: this.navCtrl,
       species: this.species,
     });
+    this.content.resize();
   }
 
 

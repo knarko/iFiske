@@ -1,5 +1,5 @@
 <ion-slides autoplay="5000" centeredSlides loop *ngIf="ads?.length">
-  <ion-slide *ngFor="let ad of ads | async">
+  <ion-slide *ngFor="let ad of ads">
     <a [href]="ad.URL" target="_system" rel="noopener noreferrer">
       <img [src]="ad.app_imageurl">
     </a>

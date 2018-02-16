@@ -6,15 +6,12 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
-import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay, take } from 'rxjs/operators';
+import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay } from 'rxjs/operators';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
 import { range } from 'rxjs/observable/range';
 import { Dictionary } from '../../types';
-import { Network } from '@ionic-native/network';
-import { Connection } from '../deploy/deploy';
-import { switchMap } from 'rxjs/operators/switchMap';
 
 interface ApiResponse {
   message?: any;
@@ -59,7 +56,6 @@ export class ApiProvider {
     private sessionData: SessionProvider,
     private settings: SettingsProvider,
     private toastCtrl: TranslateToastController,
-    private network: Network,
   ) {
     /* Clear cache periodically */
     setInterval(() => {
@@ -407,7 +403,7 @@ export class ApiProvider {
 
   get_ads_main = () => this.api_call({ m: 'get_ads_main' });
 
-  getAdsMain = () => this.getObservable({m: 'get_ads_main' });
+  getAdsMain = () => this.getObservable({m: 'get_ads_main' }, { cacheTime: 60000 });
 
 
 }

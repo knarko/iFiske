@@ -321,8 +321,6 @@ export class UserProvider extends BaseModel {
         product.validity = this.product.getValidity(product);
       });
       return products;
-    }, err => {
-      return [];
     });
   }
 

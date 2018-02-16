@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
-import { Area } from '../../providers/area/area';
+import { Area, AreaImage } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
 import { SuperTabs } from '@ifiske/ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
@@ -9,6 +9,8 @@ import { SessionProvider } from '../../providers/session/session';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ImgcacheService } from '../../imgcache/imgcache.service';
 
 @IonicPage()
 @Component({
@@ -41,17 +43,38 @@ export class AreasDetailInfoPage {
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
     private modalCtrl: ModalController,
+    private sanitizer: DomSanitizer,
+    private imgcache: ImgcacheService,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl}) => {
+      if (this.area !== area && area) {
+        area.images
+          .then(images => this.getCachedImages(images))
+          .then(images => {
+            console.log(images);
+            this.images = images;
+          });
+      }
       this.navCtrl = rootNavCtrl
       this.tabsCtrl = tabsCtrl;
       this.species = species;
-      this.area = area;
       this.org = org;
       this.products = products;
-      if (this.area) {
-        this.area.images.then(images => this.images = images);
-      }
+      this.area = area;
+    });
+  }
+
+  private getCachedImages(images: AreaImage[]): Promise<AreaImage[]> {
+    return Promise.all(
+      images.map(async (img) => {
+        const cachedImg = await this.imgcache.getCachedFileURL(img.file);
+        console.log(img.file, cachedImg);
+        img.file = cachedImg && this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string;
+        return img;
+      }),
+    ).then(imgs => {
+      console.log(imgs);
+      return imgs.filter(img => !!img.file)
     });
   }
 

@@ -15,6 +15,6 @@
 
 <ion-content padding class="information-page">
   <h1>{{item?.t}}</h1>
-  <img [src]="item?.img">
+  <img [icSrc]="item?.img">
   <section *ngIf="item" [innerHtml]="item?.text | stripTags : 'p' : 'h2' : 'h3' : 'a' | linky"></section>
 </ion-content>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { switchMap, filter, map } from 'rxjs/operators';
+import { switchMap, filter, map, take } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
@@ -17,6 +17,7 @@ import { TableDef } from '../database/table';
 import { DatabaseProvider } from '../database/database';
 import { DBMethod } from '../database/decorators';
 import { catchError } from 'rxjs/operators/catchError';
+import { SessionProvider } from '../session/session';
 
 export interface AdminOrganization {
   ID: number;
@@ -113,25 +114,10 @@ export class AdminProvider extends BaseModel {
     private productProvider: ProductProvider,
     private userProvider: UserProvider,
     private actionSheetCtrl: TranslateActionSheetController,
+    private session: SessionProvider,
   ) {
     super();
     this.initialize();
-    // this.ready.then(() => this.update(true));
-  }
-
-  initialize() {
-    const p = [];
-    for (const table of Object.values(this.tables)) {
-      p.push(this.DB.initializeTable(table));
-    }
-
-    this.ready = Promise.all(p).then(changed => {
-      for (let i = 0; i < changed.length; ++i) {
-        if (changed[i] || true)
-          return this.update('skipWait');
-      }
-      return false;
-    });
 
     this.isAdmin = this.userProvider.loggedIn.pipe(
       switchMap(loggedIn => {
@@ -142,7 +128,7 @@ export class AdminProvider extends BaseModel {
       }),
     );
 
-    this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
+    //this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
 
     this.isAdmin.subscribe((admin) => {
       if (!admin) {
@@ -151,10 +137,15 @@ export class AdminProvider extends BaseModel {
     });
   }
 
-  async update(shouldUpdate: boolean | 'skipWait'): Promise<boolean> {
-    if (shouldUpdate !== 'skipWait' && await this.ready) {
+  async update(skipWait?: boolean): Promise<boolean> {
+    if (!this.session.token) {
       return false;
     }
+
+    if (!skipWait) {
+      await this.ready;
+    }
+
     try {
       let deletePermits = true;
       const p = this.API.user_organizations().then(async (orgs: Dictionary<AdminOrganization>) => {

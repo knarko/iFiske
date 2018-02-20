@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TechniqueProvider } from '../../providers/technique/technique';
-import { ViewChild } from '@angular/core';
 
 @IonicPage({
   segment: 'fishing-methods/detail/:ID',

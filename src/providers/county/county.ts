@@ -15,7 +15,7 @@ export interface County {
 
 @Injectable()
 export class CountyProvider extends BaseModel<County> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'County',
     apiMethod: 'get_counties',
     primary: 'ID',
@@ -25,7 +25,7 @@ export class CountyProvider extends BaseModel<County> {
       t: 'text',
       d: 'text',
     },
-  };
+  }];
 
   constructor(
     protected DB: DatabaseProvider,

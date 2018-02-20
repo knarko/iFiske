@@ -30,7 +30,7 @@ export class ProductProvider extends BaseModel<Product> {
     sms: {name: 'SMS', icon: 'phone-portrait'},
   };
 
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'Product',
     primary: 'ID',
     apiMethod: 'get_products',
@@ -49,7 +49,7 @@ export class ProductProvider extends BaseModel<Product> {
       so: 'int',
       hl: 'text',
     },
-  };
+  }];
 
   constructor(
     protected DB: DatabaseProvider,

@@ -7,6 +7,7 @@ import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
+import { Dictionary } from '../../types';
 
 
 export interface Fish {
@@ -27,7 +28,7 @@ export interface Fish {
 
 @Injectable()
 export class FishProvider extends BaseModel<Fish> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'Fish',
     primary: 'ID',
     members: {
@@ -45,7 +46,7 @@ export class FishProvider extends BaseModel<Fish> {
       lat: 'text',
       rec: 'text',
     },
-  };
+  }];
 
   constructor(
     protected API: ApiProvider,
@@ -56,23 +57,21 @@ export class FishProvider extends BaseModel<Fish> {
     this.initialize();
   }
 
-  async update(shouldUpdate): Promise<boolean> {
-    if (!shouldUpdate) {
-      return false;
-    }
-    let data = this.API.get_fishes();
-    if (shouldUpdate !== 'skipWait' && await this.ready) {
-      return false;
+  async update(skipWait?: boolean): Promise<boolean> {
+    if (!skipWait) {
+      await this.ready;
     }
 
-    data = await data;
-    console.log('Downloading all fish images');
+    const data: Dictionary<Fish> = await this.API.get_fishes();
+
     for (const fish of Object.values(data)) {
       fish.icon = serverLocation + fish.icon;
       fish.img = serverLocation + fish.img;
       this.imgcache.cacheFile(fish.img);
     }
-    return this.DB.populateTable(this.table, data).then(() => true);
+
+    await this.DB.populateTable(this.tables[0], data);
+    return true;
   }
 
   async search(searchString): Promise<{ item: Fish }[]> {

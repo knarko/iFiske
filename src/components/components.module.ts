@@ -13,7 +13,6 @@ import { PermitComponent } from './permit/permit';
 import { UserInformationComponent } from './user-information/user-information';
 import { AdminHeaderComponent } from './admin-header/admin-header';
 import { ChartComponent } from './chart/chart';
-import { DirectivesModule } from '../directives/directives.module';
 import { ImgcacheModule } from '../imgcache/imgcache.module';
 
 @NgModule({

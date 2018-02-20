@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-
-import { MapDataProvider } from '../map-data/map-data';
 import { Loading } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
+
 import { AreaProvider } from '../area/area';
-import { FishProvider } from '../fish/fish';
-import { UserProvider } from '../user/user';
-import { OrganizationProvider } from '../organization/organization';
-import { InformationProvider } from '../information/information';
 import { CountyProvider } from '../county/county';
+import { FishProvider } from '../fish/fish';
+import { InformationProvider } from '../information/information';
+import { MapDataProvider } from '../map-data/map-data';
+import { OrganizationProvider } from '../organization/organization';
+import { ProductProvider } from '../product/product';
 import { RuleProvider } from '../rule/rule';
+import { SettingsProvider } from '../settings/settings';
+import { TechniqueProvider } from '../technique/technique';
 import { TermsProvider } from '../terms/terms';
+import { UserProvider } from '../user/user';
+
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
-import { TranslateService } from '@ngx-translate/core';
-import { SettingsProvider } from '../settings/settings';
-import { ProductProvider } from '../product/product';
-import { Network } from '@ionic-native/network';
-import { take } from 'rxjs/operators';
-import { TechniqueProvider } from '../technique/technique';
+
+export type UpdateFn = () => boolean;
+export type UpdateStrategy = 'timed' | 'always' | UpdateFn;
 
 @Injectable()
 export class UpdateProvider {
-  updates: {update: (shouldUpdate?: boolean) => Promise<boolean>}[];
+  updates: {
+    updateStrategy: UpdateStrategy;
+    update: () => Promise<boolean>;
+  }[];
   private static readonly LAST_UPDATE = 'last_update';
 
   loading: Loading;
@@ -32,7 +36,6 @@ export class UpdateProvider {
     private toastCtrl: TranslateToastController,
     private translate: TranslateService,
     private settings: SettingsProvider,
-    private network: Network,
 
     area: AreaProvider,
     county: CountyProvider,
@@ -48,10 +51,10 @@ export class UpdateProvider {
     user: UserProvider,
   ) {
     let savedLanguage = this.settings.language;
-    this.translate.onLangChange.subscribe(()=> {
+    this.translate.onLangChange.subscribe(() => {
       if (savedLanguage !== this.settings.language) {
         savedLanguage = this.settings.language;
-        this.forcedUpdate();
+        this.update(true);
       }
     });
 
@@ -67,19 +70,19 @@ export class UpdateProvider {
       terms,
       technique,
       // Product.update,
-      // Technique.update,
       // Terms.update,
     ];
 
   }
-  timedUpdate(currentTime) {
+
+  private timedUpdate(currentTime: number) {
     var lastUpdate = Number(localStorage.getItem(UpdateProvider.LAST_UPDATE));
 
     var aDay = 1000 * 3600 * 24 * 1;
     return (currentTime - lastUpdate) > aDay;
   }
 
-  async updateFunc(forced, hideLoading) {
+  async update(forced = false, hideLoading = false) {
     // TODO: this seems to block updating sometimes :/
     // await this.network.onConnect().pipe(take(1)).toPromise();
 
@@ -88,16 +91,25 @@ export class UpdateProvider {
         content: 'Updating',
       });
     }
-    var currentTime = Date.now();
-    var shouldUpdate = (forced || this.timedUpdate(currentTime));
 
-    var promises = [];
-    for (var i = 0; i < this.updates.length; ++i) {
-      promises.push(this.updates[i].update(shouldUpdate));
-    }
+    var currentTime = Date.now();
+    const timeHasPassed = this.timedUpdate(currentTime);
+
+    var promises = this.updates.map(provider => {
+      if (
+        forced ||
+        (provider.updateStrategy === 'always') ||
+        (provider.updateStrategy === 'timed' && timeHasPassed)  ||
+        (typeof provider.updateStrategy === 'function' && provider.updateStrategy())
+      ) {
+        console.log(provider);
+        return provider.update();
+      }
+      return Promise.resolve(false);
+    });
 
     const result = Promise.all(promises).then(() => {
-      if (shouldUpdate) {
+      if (timeHasPassed) {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
     }, (error) => {
@@ -113,18 +125,10 @@ export class UpdateProvider {
       throw error;
     });
 
-    result.catch(() => {}).then(() => {
+    result.catch(() => { }).then(() => {
       this.loading.dismiss();
     });
     return result;
-  }
-
-  update(hideLoading = false) {
-    return this.updateFunc(false, hideLoading);
-  }
-
-  forcedUpdate(hideLoading = false) {
-    return this.updateFunc(true, hideLoading);
   }
 
   get lastUpdate() {

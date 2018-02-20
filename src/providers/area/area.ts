@@ -99,7 +99,7 @@ export class AreaProvider extends BaseModel<Area> {
   searchCache: any = {};
   watch: Subscription;
 
-  private readonly tables: TableDef[] = [{
+  protected readonly tables: TableDef[] = [{
     name: 'Area',
     primary: 'ID',
     members: {
@@ -127,44 +127,46 @@ export class AreaProvider extends BaseModel<Area> {
       ptab: 'text',
     },
   },
-  {
-    name: 'Area_Fish',
-    primary: 'ID',
-    members: {
-      ID: 'text',
-      aid: 'int',
-      fid: 'int',
-      amount: 'int',
-      comment: 'text',
+    {
+      name: 'Area_Fish',
+      primary: 'ID',
+      members: {
+        ID: 'text',
+        aid: 'int',
+        fid: 'int',
+        amount: 'int',
+        comment: 'text',
+      },
     },
-  },
-  {
-    name: 'Area_Photos',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      area: 'int', // Area ID
-      file: 'int', // File name
-      t: 'text', // Title
-      d: 'text', // Description
-      h: 'int', // Height in pixels
-      w: 'int', // Width in pixels
-      org: 'int', // Organisation ID
-      s: 'int', // Size in bytes
+    {
+      name: 'Area_Photos',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        area: 'int', // Area ID
+        file: 'int', // File name
+        t: 'text', // Title
+        d: 'text', // Description
+        h: 'int', // Height in pixels
+        w: 'int', // Width in pixels
+        org: 'int', // Organisation ID
+        s: 'int', // Size in bytes
+      },
     },
-  },
-  {
-    name: 'Area_Files',
-    members: {
-      ID: 'int',
-      area: 'int', // Area ID
-      t: 'text', // File headline
-      f: 'text', // Filename
-      typ: 'text', // 3 letter file type (e.g. PDF)
-      thumb: 'text', // Thumbnail
+    {
+      name: 'Area_Files',
+      members: {
+        ID: 'int',
+        area: 'int', // Area ID
+        t: 'text', // File headline
+        f: 'text', // Filename
+        typ: 'text', // 3 letter file type (e.g. PDF)
+        thumb: 'text', // Thumbnail
+      },
     },
-  },
   ];
+
+  readonly updateStrategy = 'timed';
 
   currentLocation: any;
 
@@ -175,30 +177,19 @@ export class AreaProvider extends BaseModel<Area> {
     private fishProvider: FishProvider,
   ) {
     super();
-    const p = [];
-
-    this.tables.forEach(table => p.push(DB.initializeTable(table)));
-
-    this.ready = Promise.all(p).then(results => {
-      for (let i = 0; i < results.length; ++i) {
-        if (results[i])
-          return this.update('skipWait');
-      }
-    }) as Promise<any>;
-
+    this.initialize();
   }
 
-  async update(shouldUpdate): Promise<boolean> {
-    if (!shouldUpdate) {
-      return false;
+  async update(skipWait?: boolean): Promise<boolean> {
+    if (!skipWait) {
+      await this.ready;
     }
+
     const data = Promise.all([
       this.API.get('get_areas'),
       this.API.get('get_images'),
     ]);
-    if (shouldUpdate !== 'skipWait' && await this.ready) {
-      return false;
-    }
+
     await data.then(this.insert);
     return true;
   }

@@ -24,7 +24,7 @@ export interface Organization {
 
 @Injectable()
 export class OrganizationProvider extends BaseModel<Organization> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'Organization',
     apiMethod: 'get_organizations',
     primary: 'ID',
@@ -43,7 +43,8 @@ export class OrganizationProvider extends BaseModel<Organization> {
       ml: 'int',
       logo: 'text',
     },
-  };
+  }];
+
   constructor(
     protected DB: DatabaseProvider,
     protected API: ApiProvider,

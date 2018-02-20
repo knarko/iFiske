@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as ImgCache from 'imgcache.js';
 import { BaseModel } from '../database/basemodel';
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
 import { TableDef } from '../database/table';
+import { ImgcacheService } from '../../imgcache/imgcache.service';
 
 export interface InformationArticle {
   ID: number;
@@ -15,7 +15,7 @@ export interface InformationArticle {
 
 @Injectable()
 export class InformationProvider extends BaseModel<InformationArticle> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'Information',
     primary: 'ID',
     members: {
@@ -25,30 +25,33 @@ export class InformationProvider extends BaseModel<InformationArticle> {
       img: 'text',
       icon: 'text',
     },
-  };
+  }];
+
+  readonly updateStrategy = 'always';
 
   constructor(
     protected API: ApiProvider,
     protected DB: DatabaseProvider,
+    private imgcache: ImgcacheService,
   ) {
     super();
     this.initialize();
   }
 
-  async update(shouldupdate: boolean | 'skipWait'): Promise<boolean> {
-    // Always update
-    const data = await this.API.get_content_menu();
-    if (shouldupdate !== 'skipWait') {
+  async update(skipWait?: boolean): Promise<boolean> {
+    if (!skipWait) {
       await this.ready;
     }
+
+    const data = await this.API.get_content_menu();
 
     localStorage.setItem('NEWS', data.title);
 
     for (const item of data.contents) {
-      ImgCache.cacheFile(item.icon);
+      this.imgcache.cacheFile(item.icon);
     }
 
-    await this.DB.populateTable(this.table, data.contents);
+    await this.DB.populateTable(this.tables[0], data.contents);
     return true;
   }
 

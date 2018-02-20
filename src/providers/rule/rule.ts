@@ -13,7 +13,7 @@ export interface Rule {
 }
 @Injectable()
 export class RuleProvider extends BaseModel<Rule> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name:      'Rule',
     apiMethod: 'get_rules',
     primary:   'ID',
@@ -23,7 +23,7 @@ export class RuleProvider extends BaseModel<Rule> {
       d:   'text',
       t:   'text',
     },
-  };
+  }];
 
   constructor(
     protected API: ApiProvider,

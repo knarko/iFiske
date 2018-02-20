@@ -361,7 +361,7 @@ export class ApiProvider {
   get_map_polygons(orgid?) {
     return this.api_call({
       m: 'get_map_polygons',
-      orgid: orgid,
+      orgid,
     });
   }
   user_get_favorites() {

@@ -62,7 +62,7 @@ export type Permit = UserProduct & Product & PermitRules;
 
 @Injectable()
 export class UserProvider extends BaseModel {
-  private readonly tables: Dictionary<TableDef> = {
+  protected readonly tables: Dictionary<TableDef> = {
     info: {
       name: 'User_Info',
       primary: 'ID',
@@ -123,6 +123,8 @@ export class UserProvider extends BaseModel {
 
   loggedIn: Observable<boolean>;
 
+  readonly updateStrategy = () => !!this.session.token;
+
   constructor(
     protected DB: DatabaseProvider,
     protected API: ApiProvider,
@@ -132,18 +134,8 @@ export class UserProvider extends BaseModel {
     private product: ProductProvider,
   ) {
     super();
+    this.initialize();
     this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
-    const p = [];
-    for (const table of Object.values(this.tables)) {
-      p.push(DB.initializeTable(table));
-    }
-    this.ready = Promise.all(p).then(changed => {
-      for (let i = 0; i < changed.length; ++i) {
-        if (changed[i])
-          return this.update('skipWait');
-      }
-      return false;
-    });
   }
 
 	/**
@@ -151,10 +143,8 @@ export class UserProvider extends BaseModel {
 		* @return {Promise}  Promise when done
 		*/
   clean() {
-    const p = [];
-    for (const table of Object.values(this.tables)) {
-      p.push(this.DB.cleanTable(table.name));
-    }
+    const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
+
     // TODO: Raven
     // Raven.setUserContext();
     return Promise.all(p)
@@ -165,15 +155,21 @@ export class UserProvider extends BaseModel {
       });
   }
 
-  async update(shouldUpdate): Promise<boolean> {
-    if (!this.session.token || shouldUpdate !== 'skipWait' && await this.ready) {
+  async update(skipWait?: boolean): Promise<boolean> {
+    if (!this.session.token) {
       return false;
     }
+
+    if (!skipWait) {
+      await this.ready;
+    }
+
     try {
       const p = [];
       p.push(this.API.user_get_favorites().then(favorites => {
         this.DB.populateTable(this.tables.favorite, favorites);
       }));
+
       p.push(this.API.user_info().then(data => {
         const numbers = data.numbers;
         const numArr = [];
@@ -202,11 +198,13 @@ export class UserProvider extends BaseModel {
             }),
         ]);
       }));
+
       p.push(this.API.user_products().then(products => {
         this.DB.populateTable(this.tables.product, products);
       }));
 
-      return Promise.all(p).then(() => true);
+      await Promise.all(p);
+      return true;
     } catch (err) {
       if (err && err.error_code === 7) {
         this.toastCtrl.show({

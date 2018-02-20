@@ -30,7 +30,7 @@ export interface FiskePolygon {
 @Injectable()
 export class MapDataProvider extends BaseModel {
 
-  private readonly tables: Dictionary<TableDef> = {
+  protected readonly tables: Dictionary<TableDef> = {
     poi: {
       name: 'Poi',
       primary: 'ID',
@@ -75,26 +75,15 @@ export class MapDataProvider extends BaseModel {
     protected API: ApiProvider,
   ) {
     super();
-    this.ready = Promise.all([
-      DB.initializeTable(this.tables.poi),
-      DB.initializeTable(this.tables.poiType),
-      DB.initializeTable(this.tables.polygon),
-    ]).then((results) => {
-      for (var i = 0; i < results.length; ++i) {
-        if (results[i])
-          return this.update('skipWait');
-      }
-      return false;
-    });
+    this.initialize();
   }
 
-  async update(shouldUpdate): Promise<boolean> {
-    if (!shouldUpdate) {
-      return false;
+  async update(skipWait?: boolean): Promise<boolean> {
+    console.log('helo');
+    if (!skipWait) {
+      await this.ready;
     }
-    if (shouldUpdate !== 'skipWait' && await this.ready) {
-      return false;
-    }
+
     return Promise.all([
       this.API.get_mapbox_api().then((data) => {
         return localStorage.setItem('mapbox_api', data);

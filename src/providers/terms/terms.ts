@@ -8,19 +8,22 @@ export class TermsProvider {
   private static SMS_TERMS_LOCATION = 'sms_terms';
   private static CONTACT_LOCATION = 'contact_info';
 
+  readonly updateStrategy = 'always';
+
   constructor(private API: ApiProvider) { }
 
-  async update(shouldUpdate: boolean): Promise<boolean> {
-    return Promise.all([
+  async update(): Promise<boolean> {
+    const [tos, smsTerms, contact] = await Promise.all([
       this.API.get_terms_of_service(),
       this.API.get_sms_terms(),
       this.API.get_contact_info(),
-    ]).then(([tos, smsTerms, contact]) => {
-      localStorage.setItem(TermsProvider.TOS_LOCATION, tos);
-      localStorage.setItem(TermsProvider.SMS_TERMS_LOCATION, smsTerms);
-      localStorage.setItem(TermsProvider.CONTACT_LOCATION, contact);
-      return true;
-    });
+    ]);
+
+    localStorage.setItem(TermsProvider.TOS_LOCATION, tos);
+    localStorage.setItem(TermsProvider.SMS_TERMS_LOCATION, smsTerms);
+    localStorage.setItem(TermsProvider.CONTACT_LOCATION, contact);
+
+    return true;
   }
 
   get termsOfService() {

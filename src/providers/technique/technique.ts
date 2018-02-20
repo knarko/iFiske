@@ -8,7 +8,6 @@ import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { DBMethod } from '../database/decorators';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SafeUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 export interface Technique {
   ID: number;
@@ -28,7 +27,7 @@ export interface Technique {
 
 @Injectable()
 export class TechniqueProvider extends BaseModel<Technique> {
-  protected readonly table: TableDef = {
+  protected readonly tables: TableDef[] = [{
     name: 'Technique',
     apiMethod: 'get_techniques',
     primary: 'ID',
@@ -45,7 +44,7 @@ export class TechniqueProvider extends BaseModel<Technique> {
       img3: 'text',
       youtube: 'text',
     },
-  };
+  }];
 
   constructor(
     protected API: ApiProvider,

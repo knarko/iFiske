@@ -23,7 +23,7 @@ export class AreasDetailPage {
   area: Area;
   tabs: TabItem[] = [
     { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
-    { page: 'AreasDetailPermitPage', title: 'Fishing Permits', icon: 'ifiske-permit' },
+    { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
     { page: 'AreasDetailSpeciesPage', title: 'Species', icon: 'ifiske-fish', hide: true },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];

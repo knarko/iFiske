@@ -23,12 +23,8 @@
   "Wallet Balance": "Kontobalans",
   "Sold products": "Sålda produkter",
   "Last year": "Senaste året",
-
-
   "Close": "Stäng",
-
   "Continue": "Vidare",
-
   "ui": {
     "general": {
       "back": "Tillbaka",
@@ -50,13 +46,13 @@
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
         "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
       },
-      "stats": {
-        "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen."
-      },
       "userLevel": {
         "0": "Nivå 0",
         "1": "Nivå 1",
         "2": "Nivå 2 (Full insyn)"
+      },
+      "stats": {
+        "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen."
       }
     },
     "placeholder": {
@@ -87,12 +83,12 @@
       }
     }
   },
-
   "errors": {
     "admin": {
       "noPermits": "Inga fiskekort hittades",
       "permit": {
-        "failed": "<h3 class='text-center'>Det gick inte att hitta fiskekortet med kod <strong>{{code}}</strong>.</h3><p>Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.</p><p>Om du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven.</p>"
+        "failedHeader": "Det gick inte att hitta fiskekortet med kod <strong>{{code}}</strong>.",
+        "failedBody": "Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.\n\nOm du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven."
       },
       "scanQR": {
         "invalid": "QR-koden kunde inte skannas"
@@ -141,17 +137,13 @@
     }
   },
   "Statistics": "Statistik",
-
-
   "recovery": {
     "start": "En återställningskod kommer inom kort att skickas till dig via",
     "and": " och ",
     "end": ".",
     "mail_spam_notice": "Om du har problem med att hitta ditt mejl, kolla att det inte fastnat i spamfiltret."
   },
-
   "Create Account": "Skapa konto",
-
   "About the app": "Om appen",
   "Accept": "Acceptera",
   "Activate": "Aktivera",
@@ -188,7 +180,6 @@
   "First name": "Förnamn",
   "Fishing Area": "Fiskevatten",
   "Fishing Areas": "Fiskevatten",
-  "Fishing Permits": "Fiskekort",
   "Fishing Methods": "Fiskemetoder",
   "Forgot password": "Glömt lösenord?",
   "Full name": "För- och efternamn",
@@ -278,5 +269,6 @@
   "Valid from": "Giltligt från <b>{{date}}</b>",
   "Valid until": "Giltligt t.o.m. <b>{{date}}</b>",
   "Version": "Versionsnummer",
-  "Youtube": "YouTube"
+  "Youtube": "YouTube",
+  "Verify Account": "Verifiera konto"
 }

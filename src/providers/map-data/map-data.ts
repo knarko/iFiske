@@ -79,7 +79,6 @@ export class MapDataProvider extends BaseModel {
   }
 
   async update(skipWait?: boolean): Promise<boolean> {
-    console.log('helo');
     if (!skipWait) {
       await this.ready;
     }

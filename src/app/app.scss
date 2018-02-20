@@ -388,3 +388,7 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 img:not([src]) {
   visibility: hidden;
 }
+
+.preserve-newlines {
+  white-space: pre-line;
+}

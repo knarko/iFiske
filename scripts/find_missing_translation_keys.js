@@ -26,14 +26,18 @@ const svList = makeList('', sv);
 const enList = makeList('', en);
 const deList = makeList('', de);
 
-svList.forEach(k => {
-  if (enList.indexOf(k) === -1) {
-    console.log('en missing:', k);
-  }
-});
+const enMissing = [];
+const deMissing = [];
 
 svList.forEach(k => {
+  if (enList.indexOf(k) === -1) {
+    enMissing.push(k);
+  }
   if (deList.indexOf(k) === -1) {
-    console.log('de missing:', k);
+    deMissing.push(k);
   }
 });
+console.log('\nMissing english:\n')
+enMissing.sort().forEach(k => console.log(k));
+console.log('\nMissing german:\n')
+deMissing.sort().forEach(k => console.log(k));

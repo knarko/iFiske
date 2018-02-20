@@ -48,7 +48,7 @@ export class InformationProvider extends BaseModel<InformationArticle> {
     localStorage.setItem('NEWS', data.title);
 
     for (const item of data.contents) {
-      this.imgcache.cacheFile(item.icon);
+      this.imgcache.cacheFile(item.icon).catch(() => {});
     }
 
     await this.DB.populateTable(this.tables[0], data.contents);

@@ -60,7 +60,12 @@
         <ion-avatar item-start>
           <img *ngIf="file.thumb" [icSrc]="file.thumb">
         </ion-avatar>
-        <h3>{{(file.t || file.filename) | translate}}</h3>
+
+        <h3 *ngIf="file.t || file.filename; else placeholderFilename">{{(file.t || file.filename) | translate}}</h3>
+
+        <ng-template #placeholderFilename>
+          <h3>{{'Downloadable file' | translate : (file.typ | mkObject : 'type')}}</h3>
+        </ng-template>
       </a>
     </ion-list>
   </ng-container>

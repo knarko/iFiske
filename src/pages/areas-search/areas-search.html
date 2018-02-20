@@ -19,7 +19,11 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="outer-content">
+  <h3 class="text-center" *ngIf="areas && areas.length === 0">
+    {{'No areas found' | translate}}
+  </h3>
+
   <ion-list [virtualScroll]="areas" approxItemHeight="96px" approxHeaderHeight="190px" [headerFn]="scrollHeaders" [virtualTrackBy]="trackFn">
 
     <ion-item class="fish" *virtualHeader="let fish" [navPush]="'SpeciesDetailPage'" [navParams]="fish">

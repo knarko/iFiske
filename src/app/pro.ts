@@ -1,4 +1,4 @@
-import { Injectable, Injector, ErrorHandler } from '@angular/core';
+import { Injectable, Injector, ErrorHandler, isDevMode } from '@angular/core';
 import { Pro } from '@ionic/pro';
 import { IonicErrorHandler } from 'ionic-angular';
 import { APP_VERSION, APP_ID } from './config';
@@ -24,11 +24,12 @@ export class IonicProErrorHandler implements ErrorHandler {
     if (err && err.message && err.message.indexOf('cordova_not_available') !== -1) {
       return;
     }
-    console.warn(err);
-    console.log(IonicPro);
-    IonicPro.monitoring.handleNewError(err);
-    // Remove this if you want to disable Ionic's auto exception handling
-    // in development mode.
+
+    if (!isDevMode()) {
+      // Only log to Ionic Pro when running in prod mode
+      IonicPro.monitoring.handleNewError(err);
+    }
+
     this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
   }
 }

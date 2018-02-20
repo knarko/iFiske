@@ -99,6 +99,9 @@ export class AdminProvider extends BaseModel {
 
   set orgId(orgId: number) {
     this._orgId = orgId;
+    if (orgId == undefined) {
+      return;
+    }
     this.getOrganization(orgId).then(org => {
       this.currentOrganization.next(org);
       localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
@@ -128,7 +131,7 @@ export class AdminProvider extends BaseModel {
       }),
     );
 
-    //this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
+    this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
 
     this.isAdmin.subscribe((admin) => {
       if (!admin) {

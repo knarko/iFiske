@@ -102,7 +102,6 @@ export class UpdateProvider {
         (provider.updateStrategy === 'timed' && timeHasPassed)  ||
         (typeof provider.updateStrategy === 'function' && provider.updateStrategy())
       ) {
-        console.log(provider);
         return provider.update();
       }
       return Promise.resolve(false);

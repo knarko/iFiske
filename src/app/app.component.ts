@@ -34,12 +34,11 @@ export class MyApp {
     private deploy: DeployProvider,
     private network: Network,
   ) {
-
     this.config.setTransition('md-transition', MDTransition);
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
     this.deploy.initialize().catch(err => {
-      console.warn(err);
+      // console.warn(err);
       IonicPro.monitoring.handleNewError(err);
     });
     platform.ready().then(() => {

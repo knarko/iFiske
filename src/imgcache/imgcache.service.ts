@@ -1,6 +1,7 @@
-import { Injectable, InjectionToken, Inject } from '@angular/core';
+import { Injectable, InjectionToken, Inject, isDevMode } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import * as ImgCache from 'imgcache.js';
+import { Pro } from '@ionic/pro';
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG')
 
@@ -96,7 +97,10 @@ export class ImgcacheService {
       try {
         return await this.cacheFile(src);
       } catch (err) {
-        console.warn(err);
+        if (!isDevMode()) {
+          Pro.getApp().monitoring.handleNewError(`There was probably a cors error when getting '${src}'`, err);
+        }
+
         return this.config.fallback ? src : '';
       }
     }

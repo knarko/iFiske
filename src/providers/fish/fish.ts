@@ -67,7 +67,7 @@ export class FishProvider extends BaseModel<Fish> {
     for (const fish of Object.values(data)) {
       fish.icon = serverLocation + fish.icon;
       fish.img = serverLocation + fish.img;
-      this.imgcache.cacheFile(fish.img);
+      this.imgcache.cacheFile(fish.img).catch(() => {});
     }
 
     await this.DB.populateTable(this.tables[0], data);

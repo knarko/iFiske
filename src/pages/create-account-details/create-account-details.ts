@@ -106,7 +106,7 @@ export class CreateAccountDetailsPage {
           },
         },
         email: {
-          label: 'Email adress',
+          label: 'Email',
           placeholder: 'ui.placeholder.email',
           type: 'email',
           validators: [

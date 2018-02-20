@@ -82,10 +82,6 @@ export class ApiProvider {
 
     const params = Object.keys(inputParams).reduce((p, k) => p.set(k, '' + inputParams[k]), new HttpParams());
 
-    if (options.cacheTime) {
-      console.log(params.toString(), this.cache, this.cache.get(params.toString()));
-    }
-
     if (options.cacheTime && this.cache.has(params.toString())) {
       const res = this.cache.get(params.toString());
       console.log('found cached observable', res);

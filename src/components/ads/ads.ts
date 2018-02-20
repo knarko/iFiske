@@ -12,7 +12,6 @@ export class AdsComponent {
     private adsProvider: AdsProvider,
   ) {
     this.adsProvider.getAdsForHome().subscribe(async (ads) => {
-      console.log(ads);
       this.ads = ads;
     });
   }

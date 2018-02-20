@@ -88,7 +88,9 @@ registerLocaleData(localeSv);
 
     SuperTabsModule.forRoot(),
 
-    ImgcacheModule.forRoot(),
+    ImgcacheModule.forRoot({
+      fallback: false,
+    }),
 
     TranslateModule.forRoot({
       loader: {

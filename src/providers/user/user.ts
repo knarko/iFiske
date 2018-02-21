@@ -138,13 +138,6 @@ export class UserProvider extends BaseModel {
     super();
     this.initialize();
     this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
-    this.loggedIn.subscribe(loggedIn => {
-      if (loggedIn) {
-        this.pushProvider.register();
-      } else {
-        this.pushProvider.unregister();
-      }
-    })
   }
 
 	/**
@@ -153,6 +146,7 @@ export class UserProvider extends BaseModel {
 		*/
   clean() {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
+    this.pushProvider.unregister();
 
     // TODO: Raven
     // Raven.setUserContext();
@@ -235,6 +229,7 @@ export class UserProvider extends BaseModel {
     p.then(() => {
       // TODO: Analytics
       // analytics.trackEvent('Login and Signup', 'Login');
+      this.pushProvider.register();
     }, error => {
       this.session.token = undefined;
       Promise.all([

@@ -1,8 +1,19 @@
 page-fishing-methods {
   .card {
+    background: transparent;
     position: relative;
     margin: 0;
     width: 100%;
+    min-height: 55px;
+
+    img[src=""] {
+      padding-top: 25%;
+
+      & + h2 {
+        height: 100%;
+        padding-top: 10%;
+      }
+    }
 
     h2 {
       position: absolute;

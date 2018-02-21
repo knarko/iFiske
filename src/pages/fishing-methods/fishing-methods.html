@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="background-image">
   <ion-card *ngFor="let item of items" (click)="goto(item)">
     <img [icSrc]="item.img1">
     <h2>{{item.t}}</h2>

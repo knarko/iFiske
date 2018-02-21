@@ -43,9 +43,7 @@ export class MyApp {
     });
     platform.ready().then(() => {
       this.push.initialize();
-      if (true || localStorage.getItem('language')) {
-        this.update.update().catch(e => console.warn(e));
-      }
+      this.update.update().catch(e => console.warn(e));
 
       this.setupBackButtonText();
 

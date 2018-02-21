@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ToastController, ToastOptions, Toast } from 'ionic-angular';
+import { ToastController, ToastOptions as OriginalToastOptions, Toast } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
-/*
-  Generated class for the TranslateToastControllerProvider provider.
+interface BetterToastOptions {
+  duration: number;
+}
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+export type ToastOptions = OriginalToastOptions & BetterToastOptions;
+
 @Injectable()
 export class TranslateToastController {
 

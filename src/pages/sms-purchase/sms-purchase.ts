@@ -6,6 +6,7 @@ import { Product } from '../../providers/product/product';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TermsProvider } from '../../providers/terms/terms';
 import { UserProvider } from '../../providers/user/user';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
 export const SMS_PURCHASE_NUMBER = '72456';
 
@@ -30,6 +31,7 @@ export class SmsPurchasePage {
     private terms: TermsProvider,
     private sms: SMS,
     private userProvider: UserProvider,
+    private toastCtrl: TranslateToastController,
   ) {
     this.product = this.navParams.get('product');
     this.approvedRules = localStorage.getItem('sms-approval') === 'YES';
@@ -68,7 +70,7 @@ export class SmsPurchasePage {
     try {
       name = (await this.userProvider.getInfo()).name;
     } catch (e) {
-      // No user found, maybe not logged in
+      // No user found, maybe not logged in, it's ok
     }
 
     const alert = await this.alertCtrl.show({
@@ -85,17 +87,39 @@ export class SmsPurchasePage {
         role: 'send',
       }],
     });
-    name = await new Promise<string>((resolve) => alert.onDidDismiss(({name}: {name: string}, role) => role === 'send' && name && resolve(name)));
+
+    try {
+      name = await new Promise<string>((resolve, reject) => alert.onDidDismiss(({ name }: { name: string }, role) => {
+        if (role === 'send' && name) {
+          resolve(name);
+        } else {
+          reject('errors.fullname.required');
+        }
+      }));
+    } catch (e) {
+      this.toastCtrl.show({
+        message: e,
+        duration: 4000,
+      });
+      return;
+    }
+
     const message = `FISKA ${this.product.pf} ${name}`;
+
     try {
       // TODO: analytics
       await this.sms.send(SMS_PURCHASE_NUMBER, message, { android: { intent: 'INTENT' } });
+      this.close();
+
     } catch (e) {
       this.alertCtrl.show({
         title: 'Error',
         message: e,
+        buttons: [{
+          text: 'OK',
+          role: 'cancel',
+        }],
       })
     }
-    this.close();
   }
 }

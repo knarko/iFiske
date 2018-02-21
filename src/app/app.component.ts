@@ -42,7 +42,6 @@ export class MyApp {
       IonicPro.monitoring.handleNewError(err);
     });
     platform.ready().then(() => {
-      this.push.initialize();
       this.update.update().catch(e => console.warn(e));
 
       this.setupBackButtonText();

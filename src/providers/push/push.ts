@@ -19,6 +19,7 @@ export interface PushHandler {
 
 @Injectable()
 export class PushProvider {
+  sub: any;
   token: string;
   private defaultHandler: PushHandler = (notification) => {
     this.alertCtrl.show({
@@ -102,15 +103,34 @@ export class PushProvider {
 
   }
 
-  async initialize() {
+  async register() {
+    if (this.token) {
+      this.unregister();
+    }
     // TODO: send token to ifiske servers
+    (window as any).FCMPlugin.requestPermissionOnIOS();
     this.token = await this.fcm.getToken();
+
     console.log(this.token);
+
+    // TODO: handle subscriptions to topics better, allow opt-out and so
     if (this.settings.isDeveloper) {
       this.fcm.subscribeToTopic('developer');
     }
+
     this.fcm.subscribeToTopic('marketing');
-    this.fcm.onNotification().subscribe(this.handleNotification);
+    this.sub = this.fcm.onNotification().subscribe(this.handleNotification);
+  }
+
+  unregister() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+    this.token = undefined;
+
+    this.fcm.unsubscribeFromTopic('developer');
+    this.fcm.unsubscribeFromTopic('marketing');
+
   }
 
   private handleNotification = (notification: IfiskeNotification & NotificationData) => {

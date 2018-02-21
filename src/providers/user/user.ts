@@ -12,6 +12,7 @@ import { TranslateLoadingController } from '../translate-loading-controller/tran
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { PushProvider } from '../push/push';
 
 export interface User {
   username: string;
@@ -132,10 +133,18 @@ export class UserProvider extends BaseModel {
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
     private product: ProductProvider,
+    private pushProvider: PushProvider,
   ) {
     super();
     this.initialize();
     this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
+    this.loggedIn.subscribe(loggedIn => {
+      if (loggedIn) {
+        this.pushProvider.register();
+      } else {
+        this.pushProvider.unregister();
+      }
+    })
   }
 
 	/**

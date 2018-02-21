@@ -68,7 +68,9 @@ export class ImgcacheService {
   ) {
     Object.assign(ImgCache.options, config);
 
+    console.log(this.plt);
     this.ready = this.plt.ready().then(() => {
+      console.log('device ready!');
       return new Promise<void>((resolve, reject) => ImgCache.init(resolve, reject));
     });
   }

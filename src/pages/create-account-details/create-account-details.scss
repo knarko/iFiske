@@ -1,3 +1,44 @@
 page-create-account-details {
 
+  ion-data-form {
+    overflow: hidden;
+  }
+
+  .md & ion-data-form {
+    border-top-left-radius: $list-inset-md-border-radius;
+    border-top-right-radius: $list-inset-md-border-radius;
+  }
+
+  .ios & ion-data-form {
+    border-top-left-radius: $list-inset-ios-border-radius;
+    border-top-right-radius: $list-inset-ios-border-radius;
+  }
+
+  .wp & ion-data-form {
+    border-top-left-radius: $list-inset-wp-border-radius;
+    border-top-right-radius: $list-inset-wp-border-radius;
+  }
+
+  .terms {
+    @include blurred-background;
+
+    font-size: 1.6rem;
+    margin: 0;
+    padding: $content-padding;
+    .ios & {
+      border-bottom-left-radius: $list-inset-ios-border-radius;
+      border-bottom-right-radius: $list-inset-ios-border-radius;
+    }
+
+    .md & {
+      border-bottom-left-radius: $list-inset-md-border-radius;
+      border-bottom-right-radius: $list-inset-md-border-radius;
+    }
+
+    a {
+      text-decoration: underline;
+      font-weight: bolder;
+    }
+  }
+
 }

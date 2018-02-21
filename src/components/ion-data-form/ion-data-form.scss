@@ -12,4 +12,18 @@ ion-data-form {
   ion-errors {
     margin: 8px;
   }
+
+  input::placeholder {
+    color: $primary-text-color !important;
+  }
+
+  .ion-data-form-inputs {
+    @include blurred-background;
+  }
+
+  .item-input {
+    background: transparent;
+    color: $primary-text-color;
+    margin: 0;
+  }
 }

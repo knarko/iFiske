@@ -392,3 +392,7 @@ img:not([src]) {
 .preserve-newlines {
   white-space: pre-line;
 }
+
+.item-ios.item-input>.item-inner {
+  padding-left: 8px;
+}

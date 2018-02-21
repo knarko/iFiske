@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { timer } from 'rxjs/observable/timer';
 import { switchMap } from 'rxjs/operators';
@@ -45,6 +45,7 @@ export class CreateAccountDetailsPage {
     private API: ApiProvider,
     private loadingCtrl: TranslateLoadingController,
     private createAccountProvider: CreateAccountProvider,
+    private modalCtrl: ModalController,
   ) {
     this.form = new Form({
       submit: (group: FormGroup) => {
@@ -166,5 +167,9 @@ export class CreateAccountDetailsPage {
     } finally {
       loading.dismiss();
     }
+  }
+
+  showEula() {
+    this.modalCtrl.create('EulaPage').present();
   }
 }

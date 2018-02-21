@@ -125,3 +125,13 @@
   }
 }
 
+
+@mixin blurred-background {
+  background: rgba(white, 0.5);
+  overflow: hidden;
+
+  @supports(backdrop-filter: blur(4px)) {
+    background: rgba(white, 0.25);
+    backdrop-filter: blur(4px);
+  }
+}

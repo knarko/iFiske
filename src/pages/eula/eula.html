@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{'Terms of service' | translate}}</ion-title>
+    <ion-buttons first>
+      <button ion-button (click)="close()">{{'Close' | translate}}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div [innerHtml]="terms"></div>
+</ion-content>

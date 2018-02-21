@@ -9,9 +9,9 @@
 
 <ion-content padding class="background-image">
   <ion-data-form [form]="form" [hideSubmit]="true"></ion-data-form>
-  <p>
+  <p class="terms text-center">
     {{'Registering account approves' | translate}}
-    <a (click)="showEula()">{{'Terms of subscription' | translate}}</a>
+    <a (click)="showEula()">{{'Terms of service' | translate}}</a>
   </p>
   <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid">{{'Register' | translate}}</button>
 </ion-content>

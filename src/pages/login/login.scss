@@ -30,9 +30,6 @@ page-login {
     border-radius: $list-inset-wp-border-radius;
   }
 
-  .text-input-ios {
-    margin: 11px 8px;
-  }
   .item.item .item-inner {
     border-color: transparent;
   }
@@ -40,18 +37,8 @@ page-login {
   ion-data-form {
     margin: 16px 0;
 
-    input::placeholder {
-      color: $primary-text-color!important;
-    }
     .ion-data-form-inputs {
-      background: rgba(white, 0.5);
-      overflow: hidden;
       margin-bottom: 16px;
-
-      @supports(backdrop-filter: blur(4px)) {
-        background: rgba(white, 0.25);
-        backdrop-filter: blur(4px);
-      }
 
       .ios & {
         border-radius: $list-inset-ios-border-radius;
@@ -61,11 +48,5 @@ page-login {
         border-radius: $list-inset-md-border-radius;
       }
     }
-    .item-input {
-      background: transparent;
-      color: $primary-text-color;
-      margin: 0;
-    }
   }
-
 }

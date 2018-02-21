@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TechniqueProvider } from '../../providers/technique/technique';
 
-/**
- * Generated class for the FishingMethodsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   defaultHistory: ['HomePage'],
 })

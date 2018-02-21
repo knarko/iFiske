@@ -8,14 +8,16 @@
 
 
 <ion-content class="information-page" padding-horizontal padding-bottom>
-  <ion-slides class="full-width" *ngIf="tech?.images.length > 1; else singleImage" loop>
-    <ion-slide *ngFor="let img of tech.images">
-      <img [src]="img">
-    </ion-slide>
-  </ion-slides>
-  <ng-template #singleImage>
-    <img [src]="tech?.images[0]">
-  </ng-template>
+  <ng-container *ngIf="(tech?.cachedImages | async); let images">
+    <ion-slides class="full-width" *ngIf="images.length > 1; else singleImage" loop>
+      <ion-slide *ngFor="let img of images">
+        <img [src]="img">
+      </ion-slide>
+    </ion-slides>
+    <ng-template #singleImage>
+      <img [src]="images[0]">
+    </ng-template>
+  </ng-container>
   <ion-toolbar class="full-width" padding>
     <h2>{{tech?.t}}</h2>
   </ion-toolbar>

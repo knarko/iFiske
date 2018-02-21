@@ -23,6 +23,7 @@ export interface Technique {
   youtube: string;
 
   images: string[];
+  cachedImages: Promise<string[]>;
 }
 
 @Injectable()
@@ -54,6 +55,9 @@ export class TechniqueProvider extends BaseModel<Technique> {
   ) {
     super();
     this.initialize();
+    this.ready.then(() => {
+      this.getAll();
+    });
   }
 
   protected transform(tech: Technique) {
@@ -66,29 +70,12 @@ export class TechniqueProvider extends BaseModel<Technique> {
         tech.images.push(img);
       }
     }
-  }
-
-  @DBMethod
-  async getAll() {
-    const techs = await super.getAll()
-    for (const tech of techs) {
-      tech.images = await this.getCachedImages(tech.images);
-    }
-    console.log(techs);
-    return techs;
+    tech.cachedImages = this.getCachedImages(tech.images);
   }
 
   private getCachedImages(images: string[]): Promise<string[]> {
     return Promise.all(
       images.map(img => this.imgcache.getCachedFileURL(img)),
     ).then(imgs => imgs.map(img => this.sanitizer.bypassSecurityTrustUrl(img) as string));
-  }
-
-  @DBMethod
-  async getOne(id) {
-    const tech = await super.getOne(id);
-    tech.images = await this.getCachedImages(tech.images);
-    console.log(tech.images);
-    return tech;
   }
 }

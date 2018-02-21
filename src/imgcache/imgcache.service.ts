@@ -68,9 +68,7 @@ export class ImgcacheService {
   ) {
     Object.assign(ImgCache.options, config);
 
-    console.log(this.plt);
     this.ready = this.plt.ready().then(() => {
-      console.log('device ready!');
       return new Promise<void>((resolve, reject) => ImgCache.init(resolve, reject));
     });
   }
@@ -90,21 +88,22 @@ export class ImgcacheService {
 
   async getCachedFileURL(src: string): Promise<string> {
     if (!src) {
-      return src;
+      return '';
     }
-    await this.ready;
+    try {
+      await this.ready;
 
-    const isCached = await this.isCached(src);
-    if (!isCached) {
-      try {
+      const isCached = await this.isCached(src);
+
+      if (!isCached) {
         return await this.cacheFile(src);
-      } catch (err) {
-        if (!isDevMode()) {
-          Pro.getApp().monitoring.handleNewError(`There was probably a cors error when getting '${src}'`, err);
-        }
-
-        return this.config.fallback ? src : '';
       }
+    } catch (err) {
+      if (!isDevMode()) {
+        Pro.getApp().monitoring.handleNewError(`There was probably a cors error when getting '${src}'`, err);
+      }
+
+      return this.config.fallback ? src : '';
     }
     return new Promise<string>((resolve, reject) => ImgCache.getCachedFileURL(src, (_, res) => resolve(res), reject));
   }

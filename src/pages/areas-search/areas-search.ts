@@ -16,7 +16,7 @@ import { debounce } from '../../util';
 export class AreasSearchPage {
   county?: County;
   searchTerm: string;
-  areas: Area[] = [];
+  areas: Area[];
   foundFish: Fish;
 
   @ViewChild(Content) content: Content;

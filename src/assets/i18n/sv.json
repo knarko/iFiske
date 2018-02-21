@@ -270,5 +270,6 @@
   "Valid until": "Giltligt t.o.m. <b>{{date}}</b>",
   "Version": "Versionsnummer",
   "Youtube": "YouTube",
-  "Verify Account": "Verifiera konto"
+  "Verify Account": "Verifiera konto",
+  "Searching": "Söker..."
 }

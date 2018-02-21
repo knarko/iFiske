@@ -23,6 +23,10 @@
   <h3 class="text-center" *ngIf="areas && areas.length === 0">
     {{'No areas found' | translate}}
   </h3>
+  <div padding class="text-center" *ngIf="!areas">
+    <ion-spinner></ion-spinner>
+    <div>{{'Searching' | translate}}</div>
+  </div>
 
   <ion-list [virtualScroll]="areas" approxItemHeight="96px" approxHeaderHeight="190px" [headerFn]="scrollHeaders" [virtualTrackBy]="trackFn">
 

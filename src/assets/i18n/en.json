@@ -270,5 +270,6 @@
   "Valid until": "Valid until <b>{{date}}</b>",
   "Version": "Version mumber",
   "Youtube": "YouTube",
-  "Verify Account": "Verify Account"
+  "Verify Account": "Verify Account",
+  "Searching": "Searching..."
 }

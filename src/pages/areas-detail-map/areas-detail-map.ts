@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { transition, style, animate, state, trigger } from '@angular/animations';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MapOptions } from '../../components/map/map';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { Pro } from '@ionic/pro';
 
 @IonicPage()
 @Component({
@@ -71,8 +72,9 @@ export class AreasDetailMapPage {
     ).then(() => {
       console.log('Opening navigator');
     }, error => {
-      // TODO: Raven
-      // Raven.captureException(error);
+      if (!isDevMode()) {
+        Pro.getApp().monitoring.handleNewError(error);
+      }
       if (error === 'cancelled') {
         return;
       }

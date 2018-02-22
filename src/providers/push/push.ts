@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import { NavController, App, Platform } from 'ionic-angular';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { FCM, NotificationData } from '@ionic-native/fcm';
 import { Dictionary } from '../../types';
+import { ApiProvider } from '../api/api';
 
 interface IfiskeNotification {
   action?: string;
@@ -96,6 +97,8 @@ export class PushProvider {
   constructor(
     private fcm: FCM,
     private app: App,
+    private plt: Platform,
+    private API: ApiProvider,
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
   ) {
@@ -107,11 +110,16 @@ export class PushProvider {
     if (this.token) {
       this.unregister();
     }
-    // TODO: send token to ifiske servers
-    (window as any).FCMPlugin.requestPermissionOnIOS();
+    if (this.plt.is('ios')) {
+      const fcmPlugin = (window as any).FCMPlugin;
+      fcmPlugin && fcmPlugin.requestPermissionOnIOS();
+    }
+
     this.token = await this.fcm.getToken();
 
     console.log(this.token);
+
+    this.API.user_set_pushtoken(this.token);
 
     // TODO: handle subscriptions to topics better, allow opt-out and so
     if (this.settings.isDeveloper) {

@@ -186,8 +186,8 @@ export class AreaProvider extends BaseModel<Area> {
     }
 
     const data = Promise.all([
-      this.API.get('get_areas'),
-      this.API.get('get_images'),
+      this.API.get_areas(),
+      this.API.get_images(),
     ]);
 
     await data.then(this.insert);

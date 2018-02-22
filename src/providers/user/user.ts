@@ -256,7 +256,7 @@ export class UserProvider extends BaseModel {
     promise.catch(() => {}).then(() => {
       loading.dismiss();
       this.toastCtrl.show({
-        message: 'You are logged out',
+        message: 'You have been logged out',
         duration: 4000,
       });
     });

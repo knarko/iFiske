@@ -295,6 +295,9 @@ export class AdminProvider extends BaseModel {
       }, {
         name: 'fullname',
         weight: 0.7,
+      }, {
+        name: 'code',
+        weight: 0.4,
       }],
       threshold: 0.5,
       shouldSort: false,

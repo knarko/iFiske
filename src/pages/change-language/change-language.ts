@@ -16,8 +16,7 @@ export class ChangeLanguagePage {
     private viewCtrl: ViewController,
     private settings: SettingsProvider,
     private statusBar: StatusBar,
-  ) {
-  }
+  ) { }
 
   close() {
     this.viewCtrl.dismiss();

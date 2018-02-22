@@ -27,9 +27,7 @@ export class ImgcacheDirective implements OnChanges {
   }
 
   ngOnChanges() {
-    this.imgcache.getCachedFileURL(this.src).then(cachedImage => {
-
-      Pro.getApp().monitoring.log(`trying to cache ${this.src} and got ${cachedImage} from the imgcache service`, { level: 'info' });
+    this.imgcache.getCachedFile(this.src).then(cachedImage => {
 
       if (this.isBackground) {
         const url = `url('${cachedImage}')`;

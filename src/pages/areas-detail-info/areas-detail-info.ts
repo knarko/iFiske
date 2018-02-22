@@ -67,7 +67,7 @@ export class AreasDetailInfoPage {
   private getCachedImages(images: AreaImage[]): Promise<AreaImage[]> {
     return Promise.all(
       images.map(async (img) => {
-        const cachedImg = await this.imgcache.getCachedFileURL(img.file);
+        const cachedImg = await this.imgcache.getCachedFile(img.file);
         console.log(img.file, cachedImg);
         img.file = cachedImg && this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string;
         return img;

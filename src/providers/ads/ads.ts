@@ -34,7 +34,7 @@ export class AdsProvider {
       }),
       switchMap(ads => {
         return Promise.all(ads.map(async (ad) => {
-          const img = await this.imgcache.getCachedFileURL(ad.app_imageurl)
+          const img = await this.imgcache.getCachedFile(ad.app_imageurl)
           ad.app_imageurl = this.sanitizer.bypassSecurityTrustUrl(img) as string;
           return ad;
         }));

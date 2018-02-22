@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppVersion } from '@ionic-native/app-version';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FCM } from '@ionic-native/fcm';
+import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Network } from '@ionic-native/network';
@@ -116,6 +117,7 @@ registerLocaleData(localeSv);
     AppVersion,
     BarcodeScanner,
     FCM,
+    File,
     Geolocation,
     LaunchNavigator,
     Network,

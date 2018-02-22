@@ -3,7 +3,7 @@ import { BaseModel } from '../database/basemodel';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { SessionProvider } from '../session/session';
-import { ProductProvider, Product } from '../product/product';
+import { Product } from '../product/product';
 import { TableDef } from '../database/table';
 import { Dictionary } from '../../types';
 import { DBMethod } from '../database/decorators';
@@ -133,7 +133,6 @@ export class UserProvider extends BaseModel {
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
-    private product: ProductProvider,
     private pushProvider: PushProvider,
   ) {
     super();

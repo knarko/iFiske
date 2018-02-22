@@ -6,7 +6,6 @@ import { DatabaseProvider } from '../database/database';
 import { serverLocation } from '../api/serverLocation';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
-import { DBMethod } from '../database/decorators';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export interface Technique {

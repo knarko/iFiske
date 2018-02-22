@@ -7,7 +7,6 @@ import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../providers/settings/settings';
-import { PushProvider } from '../providers/push/push';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
@@ -30,7 +29,6 @@ export class MyApp {
     private config: Config,
     private translate: TranslateService,
     private settings: SettingsProvider,
-    private push: PushProvider,
     private deploy: DeployProvider,
     private network: Network,
   ) {

@@ -5,7 +5,6 @@ import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
-import { Permit } from '../user/user';
 
 export interface Product {
   ID: number;

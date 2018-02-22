@@ -36,7 +36,7 @@ export class SettingsPage {
     },
     { title: 'Update stored data', click: () => this.updateProvider.update(true) },
     { title: 'Change language', click: () => this.modalCtrl.create('ChangeLanguagePage').present() },
-    { title: 'Log out', click: () => this.userProvider.logout(), show: this.userProvider.loggedIn },
+    { title: 'Log out', click: () => this.logout(), show: this.userProvider.loggedIn },
     { title: 'Information', isHeader: true },
     { title: 'Contact', page: 'ContactPage' },
     { title: 'Report issue', page: 'ReportIssuePage' },
@@ -59,4 +59,10 @@ export class SettingsPage {
     }
     item.toggle(item.toggleState)
   }
+
+  logout = () => {
+    this.userProvider.logout().then(() => {
+      this.navCtrl.pop();
+    });
+  };
 }

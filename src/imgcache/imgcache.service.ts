@@ -80,10 +80,15 @@ export class ImgcacheService {
     if (!isCached) {
       return new Promise<string>((resolve, reject) => ImgCache.cacheFile(src, resolve, reject));
     }
+    return this.getCachedFileURLHelper(src);
   }
 
   isCached = src => {
     return new Promise<boolean>((resolve, reject) => ImgCache.isCached(src, (_, answer) => resolve(answer)));
+  };
+
+  private getCachedFileURLHelper = src => {
+    return new Promise<string>((resolve, reject) => ImgCache.getCachedFileURL(src, (_, res) => resolve(res), reject));
   };
 
   async getCachedFileURL(src: string): Promise<string> {
@@ -100,12 +105,12 @@ export class ImgcacheService {
       }
     } catch (err) {
       if (!isDevMode()) {
-        Pro.getApp().monitoring.handleNewError(`There was probably a cors error when getting '${src}'`, err);
+        Pro.getApp().monitoring.handleNewError(`There was an error caching '${src}'`, err);
       }
 
       return this.config.fallback ? src : '';
     }
-    return new Promise<string>((resolve, reject) => ImgCache.getCachedFileURL(src, (_, res) => resolve(res), reject));
+    return this.getCachedFileURLHelper(src);
   }
 
 }

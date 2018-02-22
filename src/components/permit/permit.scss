@@ -4,6 +4,7 @@ app-permit {
   padding: $content-padding;
   text-align: center;
   position: relative;
+  overflow: hidden;
 
   .qr {
     display: block;
@@ -65,6 +66,36 @@ app-permit {
     white-space: pre-line;
     text-align: start;
   }
+
+
+  img.revoked {
+    pointer-events: none;
+    width: 85%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 11% auto;
+    z-index: 10;
+  }
+
+
+  .bg-white {
+    .md & {
+      border-radius: $list-inset-md-border-radius;
+    }
+
+    .ios & {
+      border-radius: $list-inset-ios-border-radius;
+    }
+
+    .wp & {
+      border-radius: $list-inset-wp-border-radius;
+    }
+    @include blurred-background(0.9, 0.75);
+    position: relative;
+  }
 }
 
 $black-transparent: rgba(0, 0, 0, .4);
@@ -73,22 +104,10 @@ transparent,
 transparent 10px,
 $black-transparent 10px,
 $black-transparent 20px);
-
-img.revoked {
-  pointer-events: none;
-  width: 85%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: 11% auto;
-  z-index: 10;
-}
-
 .background {
-  height: calc(100% + 60px);
-  width: calc(100% + 60px);
+  height: calc(100vh + 60px);
+  width: calc(100vh + 60px);
+  z-index: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -126,9 +145,4 @@ img.revoked {
   to {
     transform: translateY(0);
   }
-}
-
-.bg-white {
-  background: rgba(255, 255, 255, .9);
-  position: relative;
 }

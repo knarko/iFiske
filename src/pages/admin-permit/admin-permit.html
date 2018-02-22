@@ -8,7 +8,10 @@
 
 
 <ion-content>
-  <app-permit *ngIf="permit | async" [admin]="true" [permit]="permit | async" (revoke)="revoke($event)"></app-permit>
+  <ng-container *ngIf="permit | async; let p">
+    <div class="background" ion-fixed [ngClass]="'bg-' + p.validity"></div>
+    <app-permit [admin]="true" [permit]="p" (revoke)="revoke($event)"></app-permit>
+  </ng-container>
 
   <div padding *ngIf="failed" class="text-center">
     <h3 [innerHtml]="'errors.admin.permit.failedHeader' | translate : (code | mkObject:'code')"></h3>

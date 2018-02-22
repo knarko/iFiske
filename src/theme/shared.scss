@@ -126,12 +126,12 @@
 }
 
 
-@mixin blurred-background {
-  background: rgba(white, 0.5);
+@mixin blurred-background($opacity: 0.5, $blurred-opacity: $opacity / 2) {
+  background: rgba(white, $opacity);
   overflow: hidden;
 
   @supports(backdrop-filter: blur(4px)) {
-    background: rgba(white, 0.25);
+    background: rgba(white, $blurred-opacity);
     backdrop-filter: blur(4px);
   }
 }

@@ -8,6 +8,7 @@
 
 
 <ion-content>
+  <div class="background" ion-fixed *ngIf="permit" [ngClass]="'bg-' + permit?.validity"></div>
   <app-permit *ngIf="permit" [permit]="permit"></app-permit>
 </ion-content>
 <ion-footer>

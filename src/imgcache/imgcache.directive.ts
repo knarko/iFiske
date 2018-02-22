@@ -1,6 +1,7 @@
 import { Directive, Input, ElementRef, Renderer2, OnChanges } from '@angular/core';
 
 import { ImgcacheService } from './imgcache.service';
+import { Pro } from '@ionic/pro';
 
 @Directive({
   selector: '[icSrc]',
@@ -27,6 +28,9 @@ export class ImgcacheDirective implements OnChanges {
 
   ngOnChanges() {
     this.imgcache.getCachedFileURL(this.src).then(cachedImage => {
+
+      Pro.getApp().monitoring.log(`trying to cache ${this.src} and got ${cachedImage} from the imgcache service`, { level: 'info' });
+
       if (this.isBackground) {
         const url = `url('${cachedImage}')`;
         if (this.el.style.backgroundImage !== url) {

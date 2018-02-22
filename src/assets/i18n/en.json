@@ -52,6 +52,7 @@
         "2": "Level 2 (Complete access)"
       },
       "stats": {
+        "noAccess": "In order to see statistics you need at least user level 1",
         "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again."
       }
     },

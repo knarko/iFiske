@@ -135,8 +135,13 @@ export class AdminProvider extends BaseModel {
     this.isAdmin.subscribe((admin) => {
       if (!admin) {
         this.orgId = undefined;
+      } else {
+        this.getOrganizations().then(orgs => {
+          this.numberOfOrganizations = orgs.length;
+        });
       }
     });
+
   }
 
   async update(skipWait?: boolean): Promise<boolean> {
@@ -160,7 +165,6 @@ export class AdminProvider extends BaseModel {
           this.DB.populateTable(this.tables.permits, permits, deletePermits);
           deletePermits = false;
         }
-        this.numberOfOrganizations = organizations.length;
       }).then(() => true).catch(err => false);
       p.then(() => this.setDefaultOrgId());
       return p;

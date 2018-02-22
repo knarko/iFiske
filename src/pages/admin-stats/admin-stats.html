@@ -3,21 +3,25 @@
 </ion-header>
 
 <ion-content>
-  <div ion-fixed *ngIf="stats | async; let stat; else offline">
-    <div class="chart-container" *ngIf="stat.weeks; let weeks">
-      <div class="header-text">
-      <h2>{{'Sold products' | translate}}</h2>
-      <span>{{'Last year' | translate}}</span>
+  <p class="text-center" *ngIf="(organization | async)?.level === 0; else stats">
+    {{'ui.admin.stats.noAccess' | translate}}
+  </p>
+  <ng-template #stats>
+    <div ion-fixed *ngIf="stats$ | async; let stat">
+      <div class="chart-container" *ngIf="stat.weeks; let weeks">
+        <div class="header-text">
+          <h2>{{'Sold products' | translate}}</h2>
+          <span>{{'Last year' | translate}}</span>
+        </div>
+        <app-chart [data]="stat.weeks"></app-chart>
       </div>
-      <app-chart [data]="stat.weeks"></app-chart>
+      <div class="header-text">
+        <h2>{{stat.account_balance}} kr</h2>
+        <span>{{'Wallet Balance' | translate}}</span>
+      </div>
     </div>
-    <div class="header-text">
-      <h2>{{stat.account_balance}} kr</h2>
-      <span>{{'Wallet Balance' | translate}}</span>
-    </div>
-  </div>
-  <ng-template #offline>
-    <p class="text-center">
+
+    <p class="text-center" *ngIf="(stats$ | async) === undefined">
       {{'ui.admin.stats.offline' | translate}}
     </p>
   </ng-template>

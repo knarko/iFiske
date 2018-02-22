@@ -52,6 +52,7 @@
         "2": "Nivå 2 (Full insyn)"
       },
       "stats": {
+        "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre",
         "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen."
       }
     },

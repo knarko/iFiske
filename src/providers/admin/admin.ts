@@ -8,7 +8,6 @@ import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
 
 import { ApiProvider } from '../api/api';
-import { ProductProvider } from '../product/product';
 import { UserProvider } from '../user/user';
 import { TranslateActionSheetController } from '../translate-action-sheet-controller/translate-action-sheet-controller';
 import { Dictionary } from '../../types';
@@ -18,6 +17,7 @@ import { DatabaseProvider } from '../database/database';
 import { DBMethod } from '../database/decorators';
 import { catchError } from 'rxjs/operators/catchError';
 import { SessionProvider } from '../session/session';
+import { getPermitValidity } from '../../util';
 
 export interface AdminOrganization {
   ID: number;
@@ -114,7 +114,6 @@ export class AdminProvider extends BaseModel {
   constructor(
     protected API: ApiProvider,
     protected DB: DatabaseProvider,
-    private productProvider: ProductProvider,
     private userProvider: UserProvider,
     private actionSheetCtrl: TranslateActionSheetController,
     private session: SessionProvider,
@@ -157,7 +156,7 @@ export class AdminProvider extends BaseModel {
         await this.DB.populateTable(this.tables.organizations, orgs);
         for (let org of organizations) {
           const permits = await this.API.adm_products(org.ID);
-          Object.values(permits).forEach(permit => permit.org = org.ID);
+          Object.values(permits).forEach((permit: any) => permit.org = org.ID);
           this.DB.populateTable(this.tables.permits, permits, deletePermits);
           deletePermits = false;
         }
@@ -306,7 +305,10 @@ export class AdminProvider extends BaseModel {
   }
 
   transformPermit = (permit: AdminPermit) => {
-    permit.validity = this.productProvider.getValidity(permit);
+    if (!permit) {
+      return;
+    }
+    permit.validity = getPermitValidity(permit);
     return permit;
   };
 

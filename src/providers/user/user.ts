@@ -13,6 +13,7 @@ import { TranslateToastController } from '../translate-toast-controller/translat
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { PushProvider } from '../push/push';
+import { getPermitValidity } from '../../util';
 
 export interface User {
   username: string;
@@ -289,7 +290,7 @@ export class UserProvider extends BaseModel {
             if (!product) {
               return Promise.reject(`Couldn't find product with id '${id}`);
             }
-            product.validity = this.product.getValidity(product);
+            product.validity = getPermitValidity(product);
             return Promise.resolve(product);
           });
       });
@@ -320,7 +321,7 @@ export class UserProvider extends BaseModel {
     ].join(' ')).then(products => {
       products.forEach(product => {
         console.log(product);
-        product.validity = this.product.getValidity(product);
+        product.validity = getPermitValidity(product);
       });
       return products;
     });

@@ -5,6 +5,7 @@ import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
+import { Permit } from '../user/user';
 
 export interface Product {
   ID: number;
@@ -57,17 +58,6 @@ export class ProductProvider extends BaseModel<Product> {
   ) {
     super();
     this.initialize();
-  }
-
-  getValidity(product) {
-    if (product.rev === 1) {
-      return 'revoked';
-    }
-    const now = parseInt("" + Date.now() / 1000, 10);
-    if (product.fr < now) {
-      return now < product.to ? 'active' : 'expired';
-    }
-    return 'inactive';
   }
 
   transform(product: Product) {

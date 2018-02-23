@@ -5,7 +5,10 @@
     <author email="app@ifiske.se" href="https://www.ifiske.se/">iFiske</author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="cdvfile://*" />
     <allow-navigation href="http://ionic.local/*" />
+    <allow-navigation href="http://localhost:8080/*" />
+    <allow-navigation href="https://www.youtube.com/embed/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -25,7 +28,6 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <allow-navigation href="http://localhost:8080/*" />
     <config-file parent="ITSAppUsesNonExemptEncryption" platform="ios" target="*-Info.plist">
         <false />
     </config-file>

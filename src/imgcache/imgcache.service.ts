@@ -74,43 +74,21 @@ export class ImgcacheService {
     this.ready = this.plt.ready().then(() => {
       return new Promise<void>((resolve, reject) => ImgCache.init(resolve, reject));
     });
-
-    try {
-      const cacheKeys = JSON.parse(localStorage.getItem(ImgcacheService.CACHE_KEYS));
-      for (const key of cacheKeys) {
-        this.saveImageUriToCache(key);
-      }
-    } catch (err) {
-      console.warn(err);
-    }
   }
 
-  private persistCache() {
-    localStorage.setItem(ImgcacheService.CACHE_KEYS, JSON.stringify(Object.keys(this.cache)));
-  }
-
-  async cacheFile(src: string): Promise<string | void> {
+  async cacheFile(src: string): Promise<void> {
     await this.ready;
 
     const isCached = await this.isCached(src);
     if (!isCached) {
-      return new Promise<string>((resolve, reject) => ImgCache.cacheFile(src, resolve, reject)).then(() => this.saveImageUriToCache(src));
+      return new Promise<void>((resolve, reject) => ImgCache.cacheFile(src, resolve, reject));
     }
-    return this.saveImageUriToCache(src);
   }
 
-  isCached = src => {
+  isCached = async (src) => {
+    await this.ready;
     return new Promise<boolean>((resolve, reject) => ImgCache.isCached(src, (_, answer) => resolve(answer)));
   };
-
-  async saveImageUriToCache(src: string): Promise<void> {
-    if (this.cache[src]) {
-      return;
-    }
-
-    await this.ready;
-
-  }
 
   async getCachedFile(src: string): Promise<string> {
     if (!src) {
@@ -128,10 +106,15 @@ export class ImgcacheService {
 
       return new Promise<string>((resolve, reject) => {
         ImgCache.getCachedFile(src, (_, img) => {
-          img = img.toURL().replace(/(?:cdv)?file:\/\//, '');
-          console.log(img);
-          resolve(img);
-        });
+          let url = img.toURL();
+          if (this.plt.is('ios')) {
+            // Remove file protocol for wkwebview
+            // TODO: check if we are UIWebView or WKWebView
+            url = url.replace(/^(?:cdv)?file:\/\//, '');
+          }
+          this.cache[src] = url;
+          resolve(url);
+        }, reject);
       });
 
     } catch (err) {

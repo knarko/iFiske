@@ -110,27 +110,6 @@ export class ImgcacheService {
 
     await this.ready;
 
-    return new Promise<void>((resolve, reject) => {
-      // TODO: don't use base64 stuff, it will be insane in memory and slow load times (since we have to parse the image in browser)
-      ImgCache.getCachedFile(src, (_, imageFile) => {
-        imageFile.file(file => {
-          const reader = new FileReader();
-
-          reader.onloadend = (e: any) => {
-            var base64content = e.target.result;
-            if (!base64content) {
-              delete this.cache[src];
-              reject('File in cache ' + src + ' is empty');
-            } else {
-              this.cache[src] = base64content;
-              this.persistCache();
-              resolve();
-            }
-          };
-          reader.readAsDataURL(file);
-        }, reject);
-      });
-    });
   }
 
   async getCachedFile(src: string): Promise<string> {
@@ -147,9 +126,14 @@ export class ImgcacheService {
 
       await this.cacheFile(src);
 
-      const res = this.cache[src].replace('file://', '');
-      console.log(res);
-      return res;
+      return new Promise<string>((resolve, reject) => {
+        ImgCache.getCachedFile(src, (_, img) => {
+          img = img.toURL().replace(/(?:cdv)?file:\/\//, '');
+          console.log(img);
+          resolve(img);
+        });
+      });
+
     } catch (err) {
       console.warn(err);
       if (!isDevMode()) {

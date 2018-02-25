@@ -52,8 +52,8 @@
         "2": "Level 2 (Complete access)"
       },
       "stats": {
-        "noAccess": "In order to see statistics you need at least user level 1",
-        "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again."
+        "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again.",
+        "noAccess": "In order to see statistics you need at least user level 1"
       }
     },
     "placeholder": {
@@ -198,7 +198,6 @@
   "Permit has expired": "Fishing permit has expired",
   "Log in": "Log in",
   "Logging in": "Signing in...",
-  "Logging out": "Signing out...",
   "Log out": "Log out",
   "Login required for favorite": "You must be logged in to mark fishing areas as favorites",
   "Make sure you have the correct name": "Make sure that you have entered the correct name before you send your text message!",
@@ -273,5 +272,6 @@
   "Version": "Version mumber",
   "Youtube": "YouTube",
   "Verify Account": "Verify Account",
+  "Logging out": "Signing out...",
   "Searching": "Searching..."
 }

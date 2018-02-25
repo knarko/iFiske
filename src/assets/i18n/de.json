@@ -1,34 +1,34 @@
 {
-  "Downloadable file": "",
+  "Downloadable file": "Herunterladbare {{type}}",
   "_comment": "",
-  "Renew permit": "",
-  "Permit not yet valid": "",
-  "Activation code failed": "",
-  "Activation code resent": "",
-  "Account created": "",
-  "You have been logged out": "",
-  "No areas found": "",
-  "Updating": "",
-  "What is your name?": "",
+  "Renew permit": "Lizenz erneuern",
+  "Permit not yet valid": "Lizenz ist noch nicht gültig",
+  "Activation code failed": "Ein Fehler ist aufgetreten. Der Aktivierungscode konnte nicht gesendet werden.",
+  "Activation code resent": "Ein neuer Aktivierungscode wurde gesendet",
+  "Account created": "Ihr Account wurde erstellt",
+  "You have been logged out": "Sie wurden abgemeldet",
+  "No areas found": "Keine Gebiete gefunden",
+  "Updating": "Updating...",
+  "What is your name?": "Wie heißen Sie?",
   "Mark favorites": "Behalten Sie anbeißende Fische im Auge! Markieren Sie Ihre Favoriten und heimatlichen Gewässer als Favoriten mit einem Stern, der Sie zu allen neu veröffentlichen Fangprotokollen anmeldet, die uns erreichen. Wenn Sie einen Favoriten entfernen möchten, drücken und halten Sie den Namen des Gewässers.",
   "Permits": "Fischerscheinen",
-  "Loading": "",
-  "New update available": "",
-  "There is a new update available": "",
-  "Install": "",
-  "Postpone": "",
-  "My Page": "",
-  "List": "",
-  "Control panel": "",
-  "Wallet Balance": "",
-  "Sold products": "",
-  "Last year": "",
-  "Close": "",
-  "Continue": "",
+  "Loading": "Laden...",
+  "New update available": "Neues Update verfügbar",
+  "There is a new update available": "Ein neues Update ist verfügbar. Sie können es direkt installieren, es dauert nur wenige Sekunden. Sie können das Update aber auch verschieben, dann wird es beim nächsten Start der App automatisch installiert.",
+  "Install": "Installieren",
+  "Postpone": "Aufschieben",
+  "My Page": "Meine Seite",
+  "List": "Liste",
+  "Control panel": "Bedienfeld",
+  "Wallet Balance": "Kontoguthaben",
+  "Sold products": "Verkaufte Produkte",
+  "Last year": "Letztes Jahr",
+  "Close": "Schließen",
+  "Continue": "Weiter",
   "ui": {
     "general": {
-      "back": "",
-      "pull_to_refresh": "",
+      "back": "Zurück",
+      "pull_to_refresh": "Update",
       "shortAmount": ""
     },
     "map": {
@@ -36,34 +36,35 @@
       "satellite": "Satellit"
     },
     "about": {
-      "version": ""
+      "version": "Version"
     },
     "admin": {
-      "since:date": "",
-      "changeOrgButton": "",
-      "selectOrg": "",
+      "since:date": "Teil der Organisation seit {{date}}",
+      "changeOrgButton": "Organisation wechseln",
+      "selectOrg": "Organisation auswählen",
       "check": {
-        "manualInstructions": "",
-        "scanInstructions": ""
+        "manualInstructions": "Geben Sie unten einen Lizenzcode ein",
+        "scanInstructions": "Tippen Sie auf die Schaltfläche, um einen QR Code mit Ihrer Kamera zu scannen"
       },
       "userLevel": {
-        "0": "",
-        "1": "",
-        "2": ""
+        "0": "Level 0",
+        "1": "Level 1",
+        "2": "Level 2 (kompletter Zugriff)"
       },
       "stats": {
-        "offline": ""
+        "offline": "Wir speichern keine Statistiken in der App zur Offline-Nutzung. Bitte verbinden Sie sich mit dem Internet und versuchen Sie es erneut.",
+        "noAccess": ""
       }
     },
     "placeholder": {
       "email": "z. B. name@domain.de",
       "password": "",
-      "recovery_code": "",
+      "recovery_code": "123456",
       "fullname": "z. B. John Smith",
       "activationCode": "",
-      "username": "",
+      "username": "z.B. John77",
       "phone": "z. B. +46 76 123 45 67",
-      "permit": ""
+      "permit": "z.B. 12345678"
     },
     "issues": {
       "long_text": "<p>Haben Sie einen Fehler oder Problem mit der App?</p><p>Sie können gerne jegliche Fehler auf <a href=\"https: //github.com/ifiske/ifiske/issues\">GitHub</a> berichten</p><p>Sie müssen bei GitHub angemeldet sein um einen Bericht schreiben zu können - im Gegenzug erhalten Sie aber auch Feedback sobald das Problem behoben wird! Einen Account auf GitHub zu erstellen ist kostenlos.</p><p>Falls Sie GitHub nicht nutzen können, nehmen wir Berichte auch unter <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> entgegen. Stellen Sie sicher, den Fehler sorgfältig zu beschreiben und teilen Sie uns bitte mit was für ein Telefon Sie verwenden. Fehlerberichte wie “Es funktioniert nicht” sind nicht sehr nützlich.</p>"
@@ -75,41 +76,41 @@
         "revoked": "",
         "expired": "",
         "plural": {
-          "active": "",
-          "inactive": "",
-          "revoked": "",
-          "expired": ""
+          "active": "Aktive",
+          "inactive": "Inaktive",
+          "revoked": "Widerrufene",
+          "expired": "Abgelaufene"
         }
       }
     }
   },
   "errors": {
     "admin": {
-      "noPermits": "",
+      "noPermits": "Keine Lizenzen gefunden",
       "permit": {
-        "failedHeader": "",
-        "failedBody": ""
+        "failedHeader": "Keine Lizenz mit dem Code <strong>{{code}}</strong> gefunden.",
+        "failedBody": "Das kann durch Eingabe eines ungültigen Codes oder durch eine andere Organisation verursacht worden sein.\n\nWenn Sie der Meinung sind, dass Sie diese Lizenz einsehen müssten, dann überprüfen Sie bitte die Korrektheit des eingegebenen Codes."
       },
       "scanQR": {
-        "invalid": ""
+        "invalid": "Der QR Code konnte nicht gescannt werden"
       }
     },
     "area": {
       "notSelling": "Diese Organisation verkauft leider keine Fischerscheine durch iFiske"
     },
     "recovery_code": {
-      "required": "",
+      "required": "Sie müssen einen Wiederherstellungscode eingeben",
       "invalid": "Ungültiger Recovery-Code"
     },
     "activationCode": {
-      "required": "",
+      "required": "Sie müssen einen Aktivierungscode eingeben",
       "invalid": "Ungültiger Aktivierungscode",
       "invalidRequest": "Ungültiger Benutzername oder Aktivierungscode",
-      "pattern": ""
+      "pattern": "Muss genau 4 Ziffern lang sein"
     },
     "password": {
       "required": "Sie müssen ein Passwort eingeben",
-      "invalid": "",
+      "invalid": "Ungültiges Passwort",
       "pattern_mismatch": "Zwischen 6 und 16 Zeichen"
     },
     "username": {
@@ -133,21 +134,21 @@
       "required": "Sie müssen eine Telefonnummer eingeben"
     },
     "favorite": {
-      "notification_update": ""
+      "notification_update": "Ein Fehler ist aufgetreten. Ihre Benachrichtigungs-einstellungen wurden nicht geändert."
     }
   },
-  "Statistics": "",
+  "Statistics": "Statistiken",
   "recovery": {
     "start": "Ihr Recovery-Code wird Ihnen bald per",
     "and": " und ",
     "end": "zugeschickt.",
     "mail_spam_notice": "Wenn Sie die E-mail nicht finden, überprüfen Sie den Spam-Ordner"
   },
-  "Create Account": "",
+  "Create Account": "Account erstellen",
   "About the app": "Impressum",
   "Accept": "Zusage",
   "Activate": "Aktivieren",
-  "Activating": "",
+  "Activating": "Aktivieren...",
   "Activation code lost": "Falls Sie ihren Aktivierungscode verloren haben, ist es ebenso möglich einen neuen Account mit denselben Zugangsdaten wie zuvor zu erstellen.",
   "Activation code sent": "Ein Aktivierungscode wird innerhalb weniger Minuten per SMS an Ihr {{phone}} verschickt.",
   "Activation code": "Aktivierungscode",
@@ -156,7 +157,7 @@
   "Admin": "Administrator",
   "Administration": "Administration",
   "Angler record": "Angeleintragung",
-  "Are you sure?": "",
+  "Are you sure?": "Sind Sie sicher?",
   "Area added to favorites": "Die Fläche ist als Favorit markiert",
   "Area removed from favorites": "Die Fläche ist nicht mehr als Favorit markiert",
   "Cancel": "Beenden",
@@ -164,12 +165,12 @@
   "Change language": "Sprache auswählen",
   "Change user info": "Um die Nutzerinformationen zu ändern, gehen sie bitte zu www.ifiske.se - Dort können Sie Ihrem Account auch mehr Telefonnummern etc. hinzufügen.",
   "Check permit": "Überprüfen Fischerschein",
-  "Check": "",
+  "Check": "Überprüfen",
   "Code": "Code",
   "Contact Information": "Kontakt",
   "Contact": "Kontaktieren Sie uns",
-  "Could not set up push notifications": "",
-  "Counties": "",
+  "Could not set up push notifications": "Push-Benachrichtigungen konnten nicht eingerichtet werden",
+  "Counties": "Landkreise",
   "County": "Landkreis",
   "Create new account": "Neuen Account erstellen",
   "Description": "Beschreibung",
@@ -178,12 +179,12 @@
   "expired": "Abgelaufen",
   "Favorites": "Favoriten",
   "First name": "Vorname",
-  "Fishing Area": "Fischergebiet",
-  "Fishing Areas": "",
+  "Fishing Area": "Angelgebiet",
+  "Fishing Areas": "Angelgebiete",
   "Fishing Methods": "Fischermethoden",
   "Forgot password": "Passwort vergessen?",
   "Full name": "Vollständiger Name",
-  "Home": "",
+  "Home": "Zuhause",
   "I approve the text message rules": "Ich stimme den SMS Verkaufsregeln und Vorschriften zu",
   "I have a recovery code": "Ich besitze einen Recovery-Code",
   "iFiske - Easier Fishing": "iFiske - Leichter Fischen",
@@ -197,7 +198,6 @@
   "Permit has expired": "Fischerschein ist abgelaufen",
   "Log in": "Anmelden",
   "Logging in": "Anmelden...",
-  "Logging out": "Abmelden...",
   "Log out": "Abmelden",
   "Login required for favorite": "Sie müssen angemeldet sein um Fischerflöchen als Favoriten zu markieren",
   "Make sure you have the correct name": "Stellen Sie sicher den korrekten Namen eingegeben zu haben, bevor Sie ihre Textnachricht versenden!",
@@ -232,9 +232,9 @@
   "Recovery code": "Recovery-Code",
   "Recover password": "Passwort zurücksetzen",
   "Revoke": "Widerrufen",
-  "Revoking": "",
+  "Revoking": "Widerrufend",
   "revoked": "",
-  "Revoked": "",
+  "Revoked": "Widerrufen",
   "Rules": "Regeln",
   "Scan QR code": "QR Code scannen",
   "Search results": "Ergebnisse Suchen",
@@ -252,13 +252,13 @@
   "Terms of service": "Konditionen",
   "Text message format": "Das Format zum Versenden einer Textnachricht ist:",
   "Text message instructions": "Wenn Sie den Knopf drücken, öffnet sich Ihre normal SMS App mit einem vorgeschriebenen Text an 72456",
-  "This will revoke the permit": "",
-  "This will unrevoke the permit": "",
+  "This will revoke the permit": "Dadurch wird die Lizenz widerrufen",
+  "This will unrevoke the permit": "Dadurch wird der Widerruf der Lizenz aufgehoben",
   "to": "an",
   "Try again": "Erneut versuchen",
   "Unhandled API error": "Unerwarteter API Fehler, bitte später erneut versuchen",
-  "Unrevoke": "",
-  "Unrevoking": "",
+  "Unrevoke": "Nicht widerrufen",
+  "Unrevoking": "Nicht widerrufen",
   "Update stored data": "Gespeicherte Daten aktualisieren",
   "Use existing registration code": "Existierenden Code verwenden",
   "User already has recovery code": "Falls Sie bereits einen Recovery-Code besitzen, überspringen Sie diesen Schritt.",
@@ -271,6 +271,7 @@
   "Valid until": "Gültig bis <b>{{date}}</b>",
   "Version": "Version",
   "Youtube": "YouTube",
-  "Verify Account": "",
-  "Searching": ""
+  "Verify Account": "Account verifizieren",
+  "Logging out": "Abmelden...",
+  "Searching": "Suchen..."
 }

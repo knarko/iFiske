@@ -859,6 +859,26 @@
                                             </translation>
                                         </translations>
                                     </concept_node>
+                                    <concept_node>
+                                        <name>noAccess</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>sv-SE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>de-DE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
                                 </children>
                             </folder_node>
                         </children>
@@ -4500,26 +4520,66 @@
                     </translation>
                 </translations>
             </concept_node>
+            <concept_node>
+                <name>Logging out</name>
+                <definition_loaded>false</definition_loaded>
+                <description></description>
+                <default_text></default_text>
+                <translations>
+                    <translation>
+                        <language>sv-SE</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>en-US</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>de-DE</language>
+                        <approved>false</approved>
+                    </translation>
+                </translations>
+            </concept_node>
+            <concept_node>
+                <name>Searching</name>
+                <definition_loaded>false</definition_loaded>
+                <description></description>
+                <default_text></default_text>
+                <translations>
+                    <translation>
+                        <language>sv-SE</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>en-US</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>de-DE</language>
+                        <approved>false</approved>
+                    </translation>
+                </translations>
+            </concept_node>
         </children>
     </folder_node>
     <translation_files>
         <translation_file>
             <language>sv-SE</language>
             <file>src/assets/i18n/sv.json</file>
-            <file_size>11715</file_size>
-            <modification_timestamp>1519154044</modification_timestamp>
+            <file_size>12160</file_size>
+            <modification_timestamp>1519593905</modification_timestamp>
         </translation_file>
         <translation_file>
             <language>en-US</language>
             <file>src/assets/i18n/en.json</file>
-            <file_size>11293</file_size>
-            <modification_timestamp>1519154044</modification_timestamp>
+            <file_size>11712</file_size>
+            <modification_timestamp>1519593905</modification_timestamp>
         </translation_file>
         <translation_file>
             <language>de-DE</language>
             <file>src/assets/i18n/de.json</file>
-            <file_size>10338</file_size>
-            <modification_timestamp>1519154044</modification_timestamp>
+            <file_size>10681</file_size>
+            <modification_timestamp>1519593905</modification_timestamp>
         </translation_file>
     </translation_files>
     <editor_configuration>

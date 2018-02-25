@@ -52,8 +52,8 @@
         "2": "Nivå 2 (Full insyn)"
       },
       "stats": {
-        "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre",
-        "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen."
+        "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen.",
+        "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre"
       }
     },
     "placeholder": {
@@ -198,7 +198,6 @@
   "Permit has expired": "Fiskekortet har utgått",
   "Log in": "Logga in",
   "Logging in": "Loggar in...",
-  "Logging out": "Loggar ut...",
   "Log out": "Logga ut",
   "Login required for favorite": "Du måste vara inloggad för att kunna markera fiskevatten som favoriter.",
   "Make sure you have the correct name": "Se till att rätt namn står innan du skickar ditt SMS!",
@@ -273,5 +272,6 @@
   "Version": "Versionsnummer",
   "Youtube": "YouTube",
   "Verify Account": "Verifiera konto",
+  "Logging out": "Loggar ut...",
   "Searching": "Söker..."
 }

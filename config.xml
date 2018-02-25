@@ -19,7 +19,7 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
@@ -109,7 +109,7 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.2">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="For scanning QR codes" />
     </plugin>
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="ios" spec="^4.5.4" />
     <plugin name="cordova-plugin-fcm" spec="@ifiske/cordova-plugin-fcm@~4.0.0-beta.0" />
     <plugin name="cordova-plugin-sms" spec="@ifiske/cordova-plugin-sms@~1.0.1" />
     <plugin name="cordova-plugin-migrate-localstorage" spec="@ifiske/cordova-plugin-migrate-localstorage@~1.0.0" />
@@ -117,7 +117,7 @@
     <plugin name="cordova-plugin-app-name" spec="^1.0.4">
         <variable name="APP_NAME" value="iFiske Fiskekort" />
     </plugin>
-    <engine name="android" spec="~6.4.0" />
+    <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
 </widget>

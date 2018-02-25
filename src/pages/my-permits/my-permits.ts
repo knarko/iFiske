@@ -13,10 +13,10 @@ import { UserProvider } from '../../providers/user/user';
 export class MyPermitsPage {
 
   permits = [
-    {title: 'Active', permits: [], icon: 'checkmark'},
-    {title: 'Inactive', permits: [], icon: 'clock'},
-    {title: 'Expired', permits: [], icon: 'close'},
-    {title: 'Revoked', permits: [], icon: 'close'},
+    {title: 'active', permits: [], icon: 'checkmark'},
+    {title: 'inactive', permits: [], icon: 'clock'},
+    {title: 'expired', permits: [], icon: 'close'},
+    {title: 'revoked', permits: [], icon: 'close'},
   ]
 
   allPermits: any[];
@@ -47,7 +47,7 @@ export class MyPermitsPage {
     }
 
     for (const permit of permits) {
-      this.permits.find(p => p.title.toLocaleLowerCase() === permit.validity).permits.push(permit);
+      this.permits.find(p => p.title === permit.validity).permits.push(permit);
     }
     this.allPermits = permits;
   }

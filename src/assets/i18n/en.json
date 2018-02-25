@@ -71,12 +71,12 @@
     },
     "permit": {
       "validity": {
-        "active": "Active",
+        "active": "Valid",
         "inactive": "Inactive",
         "revoked": "Revoked",
         "expired": "Expired",
         "plural": {
-          "active": "Active",
+          "active": "Valid",
           "inactive": "Inactive",
           "revoked": "Revoked",
           "expired": "Expired"
@@ -153,7 +153,6 @@
   "Activation code sent": "An activation code will be sent via SMS to {{phone}} within a few minutes.",
   "Activation code": "Activation code",
   "Activation took too long": "If it takes a long time for your message to arrive, press here and we will try sending it again.",
-  "active": "Valid",
   "Admin": "Administrator",
   "Administration": "Administration",
   "Angler record": "Angling records",
@@ -176,7 +175,6 @@
   "Description": "Description",
   "Email": "Email",
   "Error": "Error",
-  "expired": "Expired",
   "Favorites": "Favourites",
   "First name": "First name",
   "Fishing Area": "Fishing area",
@@ -189,7 +187,6 @@
   "I have a recovery code": "I have a recovery code",
   "iFiske - Easier Fishing": "iFiske - Easier Fishing",
   "in": "in",
-  "inactive": "Inactive",
   "Information": "Information",
   "invalid": "Invalid",
   "Issued at": "Issued at <b>{{date}}</b>",
@@ -233,8 +230,6 @@
   "Recover password": "Recover password",
   "Revoke": "Revoke",
   "Revoking": "Revoking",
-  "revoked": "Revoked",
-  "Revoked": "Revoked",
   "Rules": "Rules",
   "Scan QR code": "Scan QR code",
   "Search results": "Search results",

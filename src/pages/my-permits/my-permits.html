@@ -23,7 +23,7 @@
   </ion-list>
   <ng-container *ngFor="let type of permits">
     <ion-item-divider *ngIf="type.permits.length">
-      <ion-icon item-start [name]="type.icon"></ion-icon>{{type.title + ' licenses' | translate}}
+      <ion-icon item-start [name]="type.icon"></ion-icon>{{'ui.permit.validity.plural.' + type.title | translate}}
     </ion-item-divider>
     <ion-item *ngFor="let permit of type.permits" [ngClass]="'license-' + permit.validity" (click)="gotoPermit(permit)">
       <h2>{{permit.ot}}</h2>

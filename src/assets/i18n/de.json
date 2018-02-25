@@ -1,6 +1,5 @@
 {
   "Downloadable file": "Herunterladbare {{type}}",
-  "_comment": "",
   "Renew permit": "Lizenz erneuern",
   "Permit not yet valid": "Lizenz ist noch nicht gültig",
   "Activation code failed": "Ein Fehler ist aufgetreten. Der Aktivierungscode konnte nicht gesendet werden.",
@@ -57,13 +56,13 @@
       }
     },
     "placeholder": {
-      "email": "z. B. name@domain.de",
-      "password": "",
+      "email": "z.B. name@domain.de",
+      "password": "••••••••",
       "recovery_code": "123456",
-      "fullname": "z. B. John Smith",
-      "activationCode": "",
+      "fullname": "z.B. John Smith",
+      "activationCode": "z.B. 1234",
       "username": "z.B. John77",
-      "phone": "z. B. +46 76 123 45 67",
+      "phone": "z.B. +46 76 123 45 67",
       "permit": "z.B. 12345678"
     },
     "issues": {
@@ -71,12 +70,12 @@
     },
     "permit": {
       "validity": {
-        "active": "",
-        "inactive": "",
-        "revoked": "",
-        "expired": "",
+        "active": "Gültig",
+        "inactive": "Inaktiv",
+        "revoked": "Widerrufen",
+        "expired": "Abgelaufen",
         "plural": {
-          "active": "Aktive",
+          "active": "Gültige",
           "inactive": "Inaktive",
           "revoked": "Widerrufene",
           "expired": "Abgelaufene"
@@ -153,7 +152,6 @@
   "Activation code sent": "Ein Aktivierungscode wird innerhalb weniger Minuten per SMS an Ihr {{phone}} verschickt.",
   "Activation code": "Aktivierungscode",
   "Activation took too long": "Falls das Empfangen Ihrer Nachricht zu lange dauert, klicken Sie hier und wir versuchen sie erneut zu senden.",
-  "active": "Gültig",
   "Admin": "Administrator",
   "Administration": "Administration",
   "Angler record": "Angeleintragung",
@@ -176,7 +174,6 @@
   "Description": "Beschreibung",
   "Email": "E-mail",
   "Error": "Fehler",
-  "expired": "Abgelaufen",
   "Favorites": "Favoriten",
   "First name": "Vorname",
   "Fishing Area": "Angelgebiet",
@@ -189,7 +186,6 @@
   "I have a recovery code": "Ich besitze einen Recovery-Code",
   "iFiske - Easier Fishing": "iFiske - Leichter Fischen",
   "in": "in",
-  "inactive": "Inaktiv",
   "Information": "Information",
   "invalid": "Ungültig",
   "Issued at": "Ausgestellt am <b>{{date}}</b>",
@@ -233,8 +229,6 @@
   "Recover password": "Passwort zurücksetzen",
   "Revoke": "Widerrufen",
   "Revoking": "Widerrufend",
-  "revoked": "",
-  "Revoked": "Widerrufen",
   "Rules": "Regeln",
   "Scan QR code": "QR Code scannen",
   "Search results": "Ergebnisse Suchen",

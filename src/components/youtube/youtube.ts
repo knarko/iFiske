@@ -47,11 +47,11 @@ export class YoutubeComponent {
       const fullScreenElement = document.fullscreenElement ||
         document.webkitFullscreenElement ||
         (document as any).mozFullscreenElement;
-      console.log(fullScreenElement);
+        console.log(fullScreenElement);
       if (fullScreenElement) {
         this.orientation.unlock();
       } else {
-        this.orientation.lock('portrait');
+        this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       }
     });
   }

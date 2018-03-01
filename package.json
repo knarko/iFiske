@@ -117,7 +117,7 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-ionic": {
-        "APP_ID": "37198a9f",
+        "APP_ID": "37d0fdf2",
         "CHANNEL_NAME": "Production",
         "UPDATE_METHOD": "none",
         "UPDATE_API": "https://api.ionicjs.com",

@@ -18,13 +18,12 @@ const mergeVersion = ({ major, minor, patch }) => {
   return `${major}.${minor}.${patch}`;
 }
 const makeVersionCode = ({ major, minor, patch }) => {
-  return Number([major, minor, patch]
-    .map(part => {
-      let s = '00' + part;
-      return s.substr(s.length - 3);
-    })
-    .join('')) + '0';
-  // TODO: make the last part of the string depend on time or smth
+  const pad = (num, len) => {
+    let s = '00000' + num;
+    return s.substr(s.length - len);
+  };
+
+  return Number(`${pad(major, 3)}${pad(minor, 3)}${pad(patch, 4)}`);
 };
 
 

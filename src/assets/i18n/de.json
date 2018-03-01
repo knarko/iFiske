@@ -189,7 +189,7 @@
   "Information": "Information",
   "invalid": "Ungültig",
   "Issued at": "Ausgestellt am <b>{{date}}</b>",
-  "Issued to": "Ausgestellt an {{Name}}",
+  "Issued to": "Ausgestellt an {{name}}",
   "Last updated": "Letztes Update",
   "Permit has expired": "Fischerschein ist abgelaufen",
   "Log in": "Anmelden",

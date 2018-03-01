@@ -17,6 +17,7 @@ export class PermitComponent {
   @Input() permit: Permit;
   @Output() revoke = new EventEmitter<boolean>();
   org?: Organization;
+  serverLocation = serverLocation;
 
   constructor(
     private organizationProvider: OrganizationProvider,

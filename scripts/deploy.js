@@ -98,7 +98,9 @@ const deploy = async () => {
   shell.sed('-i', /((?:ios-CFBundleVersion)|(?:android-versionCode))="\d*?"/g, `$1="${versionCode}"`, 'config.xml');
   shell.sed('-i', /(\<widget [^>]*? version)="\d+\.\d+\.\d+"/g, `$1="${version}"`, 'config.xml');
 
-  shell.exec('git add package.json config.xml')
+  shell.exec('npm run changelog')
+
+  shell.exec('git add package.json config.xml CHANGELOG.md')
   shell.exec(`git commit -m "chore: release v${version}"`)
   shell.exec(`git tag -a v${version} -m "release v${version}"`)
 

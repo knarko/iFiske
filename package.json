@@ -12,7 +12,8 @@
     "ionic:serve": "ionic-app-scripts serve",
     "start": "ionic serve",
     "deploy": "node scripts/deploy.js",
-    "deploy:firebase": "npm run build && firebase deploy --only hosting"
+    "deploy:firebase": "npm run build && firebase deploy --only hosting",
+    "changelog": "conventional-changelog -s -i CHANGELOG.md -p angular"
   },
   "dependencies": {
     "@angular/animations": "~5.0.0",

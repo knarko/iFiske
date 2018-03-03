@@ -1,35 +1,62 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# [iFiske - Fishing Permits](https://ifiske.se)
+This is the GitHub repo for the iFiske Android and iOS app.
+The app is developed using the [Ionic Framework](http://ionicframework.com) which builds on cordova.
 
-## How to use this template
+For more information about iFiske, visit [ifiske.se](https://ifiske.se)!
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Table of contents
+- [Quick start](#quick-start)
+  - [Building locally](#building-locally)
+  - [Deploying](#deploying)
+- [Bug reports and feature requests](#bug-reports-and-feature-requests)
+- [Contact information](#contact-us)
+- [License](#license)
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+## Quick start
+### Building locally
+Install NodeJS using your preferred method. You will also need `npm`, which usually is installed when installing node.
 
-### With the Ionic CLI:
+Make sure to use at least NodeJS v8 and npm v5. Using the most recent version is recommended.
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
+```Shell
+git clone https://github.com/ifiske/ifiske.git
+cd ifiske
+npm install
+npm start
 ```
 
-Then, to run it, cd into `myBlank` and run:
+### Deploying
+Make sure that you are logged in to [Ionic Pro](https://dashboard.ionicjs.com) and have configured the git access correctly.
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+#### Bump version
+Run `npm run deploy` in order to do a `major`, `minor` or `patch` bump.
 
-Substitute ios for android if not on a Mac.
+Usually you should bump `patch`, but if you have changed the native cordova plugins, you should bump `minor`.
 
+#### Build the code on Ionic Pro
+The code should build automatically on Ionic Pro. When the build has finished you can trigger a native build if you made any changes to the native cordova plugins.
 
+#### IMPORTANT: Set up the version information
+Make sure to set up the version information correctly in the dashboard.
 
-## How to deploy:
-1. Run `npm run deploy` in order to bump major, minor or patch
-2. Push code to Ionic Pro `git push ionic master`
-3. Wait until the code has built on Ionic, then trigger a native build if plugins have changed.
-4. If no plugins have changed, deploy to Production in Ionic Pro.
+Set minimum to the latest compatible release (usually the latest minor release).
 
-If plugins have changed, you might also need to setup max/min versions or something.
+Set Maximum and Equivalent to the version number you are deploying.
+
+#### Test your changes using Developer Mode
+Enable Developer Mode and install the latest `Master` channel deploy.
+Make sure everything seems OK.
+
+#### Deploy to Production
+If everything seems OK, deploy to the `Production` channel in the dashboard.
+
+## Bug reports and feature requests
+Create an [issue](https://github.com/ifiske/iFiske/issues/new) on this page, or [contact the developers](#contact-us) directly.
+
+## Contact us
+[Gustav Bylund](https://github.com/maistho)
+
+[Filip Marko](https://github.com/knarko)
+
+## License
+Code and documentation released under [the Apache License](LICENSE).

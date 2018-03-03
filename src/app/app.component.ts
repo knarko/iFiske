@@ -11,7 +11,6 @@ import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { IonicPro } from './pro';
-import { publishReplay } from 'rxjs/operators/publishReplay';
 
 @Component({
   templateUrl: 'app.html',
@@ -54,9 +53,7 @@ export class MyApp {
   }
 
   async setupBackButtonText() {
-    const backButtonText = this.translate.stream('ui.general.back').pipe(
-      publishReplay(1),
-    );
+    const backButtonText = this.translate.stream('ui.general.back');
 
     this.config.set('ios', 'backButtonText', await backButtonText.pipe(take(1)).toPromise());
     if (this.platform.is('ios')) {

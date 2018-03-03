@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="40000001" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40000001" version="4.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="40000002" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40000002" version="4.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>iFiske Fiskekort</name>
     <description>iFiske - Enklare Fiskekort</description>
     <author email="app@ifiske.se" href="https://www.ifiske.se/">iFiske</author>

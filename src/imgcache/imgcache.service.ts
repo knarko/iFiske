@@ -60,7 +60,6 @@ export interface ImgcacheConfig {
 
 @Injectable()
 export class ImgcacheService {
-  private static readonly CACHE_KEYS = 'IMGCACHE_CACHE_KEYS';
   ready: Promise<void>;
 
   private cache = {};

@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { isEqual } from 'lodash';
 import { TableDef } from './table';
+import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class DatabaseProvider {
   ready: Promise<void>;
   private db: SQLiteObject;
-  constructor(private sqlite: SQLite) {
-    this.ready = this.sqlite.create({
-      name: 'fiskebasen.db',
+  constructor(private sqlite: SQLite, private plt: Platform) {
+    this.ready = this.plt.ready().then(() => {
+      return this.sqlite.create({
+        name: 'fiskebasen.db',
+        location: 'default',
+      });
     }).catch(err => {
       if ((window as any).openDatabase) {
         let db = (window as any).openDatabase(

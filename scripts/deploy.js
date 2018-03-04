@@ -7,7 +7,7 @@ const fs = require('fs');
 const { promisify } = require('util');
 const writeFile = promisify(fs.writeFile);
 
-const packageJson = require('./package.json');
+const packageJson = require('../package.json');
 
 const splitVersion = (version) => {
   let [major, minor, patch] = version.split('.').map(part => Number(part));

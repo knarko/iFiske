@@ -1,3 +1,13 @@
+<a name="4.0.3"></a>
+## [4.0.3](https://gitlab.com/kada-development/ifiske/compare/v4.0.2...v4.0.3) (2018-03-04)
+
+
+### Bug Fixes
+
+* **database:** fix issue with opening db on iOS 9 ([f4e4f0f](https://gitlab.com/kada-development/ifiske/commit/f4e4f0f))
+
+
+
 <a name="4.0.2"></a>
 ## [4.0.2](https://gitlab.com/kada-development/ifiske/compare/v4.0.1...v4.0.2) (2018-03-03)
 

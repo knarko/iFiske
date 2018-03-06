@@ -75,9 +75,9 @@ export class AreasSearchPage {
             }
           });
         }
-        this.content.scrollToTop();
-      }, err => {
-        console.log(err);
+        return this.content.scrollToTop();
+      }).catch(err => {
+        console.warn(err);
       });
   }
 

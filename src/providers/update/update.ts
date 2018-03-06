@@ -42,9 +42,8 @@ export class UpdateProvider {
     fish: FishProvider,
     information: InformationProvider,
     mapData: MapDataProvider,
-    product: ProductProvider,
     organization: OrganizationProvider,
-    // Product,
+    product: ProductProvider,
     rule: RuleProvider,
     technique: TechniqueProvider,
     terms: TermsProvider,
@@ -65,12 +64,11 @@ export class UpdateProvider {
       information,
       mapData,
       organization,
+      product,
       rule,
-      user,
-      terms,
       technique,
-      // Product.update,
-      // Terms.update,
+      terms,
+      user,
     ];
 
   }

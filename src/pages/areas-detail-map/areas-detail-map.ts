@@ -6,6 +6,7 @@ import { MapDataProvider } from '../../providers/map-data/map-data';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Pro } from '@ionic/pro';
+import { Area } from '../../providers/area/area';
 
 @IonicPage()
 @Component({
@@ -30,6 +31,7 @@ export class AreasDetailMapPage {
 
   options: MapOptions = {};
 
+  private area: Area;
 
   constructor(
     public navCtrl: NavController,
@@ -39,18 +41,21 @@ export class AreasDetailMapPage {
     private alertCtrl: TranslateAlertController,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products }) => {
-      this.mapData.getPois(area.orgid)
-        .then(pois => this.options.pois = pois)
-        .catch(() => this.options.pois = [])
-        .then(() => this.options = Object.assign({}, this.options));
+      if (this.area !== area && area) {
+        this.mapData.getPois(area.orgid)
+          .then(pois => this.options.pois = pois)
+          .catch(() => this.options.pois = [])
+          .then(() => this.options = Object.assign({}, this.options));
 
-      this.mapData.getPolygons(area.orgid)
-        .then(polygons => this.options.polygons = polygons)
-        .catch(() => this.options.polygons = [])
-        .then(() => this.options = Object.assign({}, this.options));
+        this.mapData.getPolygons(area.orgid)
+          .then(polygons => this.options.polygons = polygons)
+          .catch(() => this.options.polygons = [])
+          .then(() => this.options = Object.assign({}, this.options));
 
-      this.options.area = area;
-      this.options = Object.assign({}, this.options);
+        this.options.area = area;
+        this.options = Object.assign({}, this.options);
+      }
+      this.area = area;
     });
   }
 

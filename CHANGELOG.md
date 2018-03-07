@@ -1,3 +1,16 @@
+<a name="4.0.4"></a>
+## [4.0.4](https://gitlab.com/kada-development/ifiske/compare/v4.0.3...v4.0.4) (2018-03-07)
+
+
+### Bug Fixes
+
+* **area-details-map:** Check that area exists before loading from it ([771225f](https://gitlab.com/kada-development/ifiske/commit/771225f))
+* **areas-search:** catch scrollTop error ([5feffe2](https://gitlab.com/kada-development/ifiske/commit/5feffe2))
+* **update:** add ProductProvider to updates ([91d4735](https://gitlab.com/kada-development/ifiske/commit/91d4735))
+* **update:** do not publish Timeouts to Ionic Pro Monitoring ([67e55d0](https://gitlab.com/kada-development/ifiske/commit/67e55d0))
+
+
+
 <a name="4.0.3"></a>
 ## [4.0.3](https://gitlab.com/kada-development/ifiske/compare/v4.0.2...v4.0.3) (2018-03-04)
 

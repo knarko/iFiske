@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
 import { range } from 'rxjs/observable/range';
 import { Dictionary } from '../../types';
+import { TimeoutError } from '../../errors';
 
 interface ApiResponse {
   message?: any;
@@ -122,8 +123,8 @@ export class ApiProvider {
       catchError(err => {
         if (!err) {
           throw new Error('Unknown network failure');
-        } else if (err.status === 0) {
-          throw new Error('Request timeout');
+        } else if (err.status === 0 || err.name === 'TimeoutError') {
+          throw new TimeoutError(`Request '${params.get('m')}' timed out`);
         } else if (err.message) {
           switch (err.message.error_code) {
             case 7:
@@ -137,7 +138,7 @@ export class ApiProvider {
               }
               break;
           }
-          throw err.message;
+          throw err;
         } else if (err.data) {
           throw err.data;
         }

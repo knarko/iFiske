@@ -110,15 +110,17 @@ export class UpdateProvider {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
     }, (error) => {
-      // TODO: raven
-      // Raven.captureException(error);
+
       this.toastCtrl.show({
         message: 'Network Error',
         duration: 4000,
       });
 
+      if (error.name === 'TimeoutError') {
+        // Timeouts are not that interesting, we don't want to error later for those.
+        return;
+      }
 
-      // Must rethrow error to fail later
       throw error;
     });
 

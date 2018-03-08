@@ -10,7 +10,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { IonicPro } from './pro';
+import * as Sentry from '@sentry/core';
 
 @Component({
   templateUrl: 'app.html',
@@ -36,8 +36,9 @@ export class MyApp {
     this.translate.use(this.settings.language);
     this.deploy.initialize().catch(err => {
       // console.warn(err);
-      IonicPro.monitoring.handleNewError(err);
+      Sentry.getSharedClient().captureException(err);
     });
+
     platform.ready().then(() => {
       this.update.update().catch(e => console.warn(e));
 

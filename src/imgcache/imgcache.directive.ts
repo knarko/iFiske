@@ -1,7 +1,6 @@
 import { Directive, Input, ElementRef, Renderer2, OnChanges } from '@angular/core';
 
 import { ImgcacheService } from './imgcache.service';
-import { Pro } from '@ionic/pro';
 
 @Directive({
   selector: '[icSrc]',

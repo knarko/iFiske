@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, Platform } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
+import { Pro, DeployInfo } from '@ionic-native/pro';
+import * as Sentry from '@sentry/core';
+
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { Pro, DeployInfo } from '@ionic-native/pro';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { DeployProvider } from '../../providers/deploy/deploy';
 import { APP_VERSION } from '../../app/config';
-import { Pro as IonicPro } from '@ionic/pro';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'SettingsPage'],
@@ -57,7 +58,7 @@ export class AboutPage {
           new Promise<any>((_, reject) => setTimeout(reject, 8000)),
         ]).then(info => this.proInfo = info)
           .catch(err => {
-            IonicPro.getApp().monitoring.exception(err, {});
+            Sentry.getSharedClient().captureException(err);
             console.warn(err);
           });
       } else {

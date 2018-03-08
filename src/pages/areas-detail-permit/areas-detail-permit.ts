@@ -5,7 +5,7 @@ import { Area } from '../../providers/area/area';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { PlatformProvider } from '../../providers/platform/platform';
-import { Pro } from '@ionic/pro';
+import * as Sentry from '@sentry/core';
 import { Permit } from '../../providers/user/user';
 
 @IonicPage()
@@ -30,7 +30,7 @@ export class AreasDetailPermitPage {
     });
   }
 
-  buy(product: Product, method: {name: string}) {
+  buy(product: Product, method: { name: string }) {
     console.log('buy', product, method);
 
     if (method.name === 'Web') {
@@ -45,7 +45,9 @@ export class AreasDetailPermitPage {
         product,
       }).present();
     } else {
-      Pro.getApp().monitoring.log('There was no valid method: ' + method, { level: 'error'}, product);
+      Sentry.getSharedClient().captureException(new Error(`There was no valid method: ${method} for product ${product.ID}
+        ${JSON.stringify(product.methods)}
+      `));
     }
   }
 

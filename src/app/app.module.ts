@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 
 import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
 
@@ -29,7 +29,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 // Components
 import { MyApp } from './app.component';
 
-import { IonicProErrorHandler } from './pro';
+import { MonitoringErrorHandler } from './monitoring';
 
 // Providers
 import { AdsProvider } from '../providers/ads/ads';
@@ -107,8 +107,7 @@ registerLocaleData(localeSv);
     MyApp,
   ],
   providers: [
-    IonicErrorHandler,
-    [{ provide: ErrorHandler, useClass: IonicProErrorHandler }],
+    [{ provide: ErrorHandler, useClass: MonitoringErrorHandler }],
 
     // TODO: dynamic locale
     { provide: LOCALE_ID, useValue: 'sv' },

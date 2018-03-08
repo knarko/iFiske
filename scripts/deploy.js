@@ -74,12 +74,12 @@ const deploy = async () => {
   const { sourcemaps, push } = await inquirer.prompt([{
     type: 'confirm',
     name: 'sourcemaps',
-    message: 'Do you want to upload source maps to Ionic Pro?',
+    message: 'Do you want to upload source maps?',
     default: false,
   }, {
     type: 'confirm',
     name: 'push',
-    message: 'Do you want to push to Ionic Pro immediately?',
+    message: 'Do you want to push to Ionic Pro for building immediately?',
     default: false,
   }]);
   switch (bump) {
@@ -108,6 +108,7 @@ const deploy = async () => {
 
   if (sourcemaps) {
     shell.exec(`npm run build`);
+    //TODO: add sourcemaps
     shell.exec(`ionic monitoring syncmaps --no-interactive`);
   }
 

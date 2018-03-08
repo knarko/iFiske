@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken, Inject, isDevMode } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import * as ImgCache from 'imgcache.js';
-import { Pro } from '@ionic/pro';
+import * as Sentry from '@sentry/core';
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG')
 
@@ -119,7 +119,8 @@ export class ImgcacheService {
     } catch (err) {
       console.warn(err);
       if (!isDevMode()) {
-        Pro.getApp().monitoring.handleNewError(`There was an error caching '${src}'`, err);
+        Sentry.getSharedClient().captureMessage(`There was an error caching '${src}'`);
+        Sentry.getSharedClient().captureException(err);
       }
       return this.config.fallback ? src : '';
     }

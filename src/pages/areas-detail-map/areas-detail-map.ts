@@ -5,8 +5,8 @@ import { MapOptions } from '../../components/map/map';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
-import * as Sentry from '@sentry/core';
 import { Area } from '../../providers/area/area';
+import { MonitoringClient } from '../../app/monitoring';
 
 @IonicPage()
 @Component({
@@ -78,7 +78,7 @@ export class AreasDetailMapPage {
       console.log('Opening navigator');
     }, error => {
       if (!isDevMode()) {
-        Sentry.getSharedClient().captureException(error);
+        MonitoringClient.captureException(error);
       }
       if (error === 'cancelled') {
         return;

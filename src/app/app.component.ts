@@ -10,7 +10,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import * as Sentry from '@sentry/core';
+import { MonitoringClient } from './monitoring'
 
 @Component({
   templateUrl: 'app.html',
@@ -36,7 +36,7 @@ export class MyApp {
     this.translate.use(this.settings.language);
     this.deploy.initialize().catch(err => {
       // console.warn(err);
-      Sentry.getSharedClient().captureException(err);
+      MonitoringClient.captureException(err);
     });
 
     platform.ready().then(() => {

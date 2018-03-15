@@ -5,8 +5,8 @@ import { Area } from '../../providers/area/area';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { PlatformProvider } from '../../providers/platform/platform';
-import * as Sentry from '@sentry/core';
 import { Permit } from '../../providers/user/user';
+import { MonitoringClient } from '../../app/monitoring';
 
 @IonicPage()
 @Component({
@@ -45,7 +45,7 @@ export class AreasDetailPermitPage {
         product,
       }).present();
     } else {
-      Sentry.getSharedClient().captureException(new Error(`There was no valid method: ${method} for product ${product.ID}
+      MonitoringClient.captureException(new Error(`There was no valid method: ${method} for product ${product.ID}
         ${JSON.stringify(product.methods)}
       `));
     }

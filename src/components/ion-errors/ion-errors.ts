@@ -15,12 +15,12 @@ import {
   animations: [
     trigger('errors', [
       transition(':enter', [
-        style({transform: 'scaleY(0)', opacity: 0, height: 0}),
-        animate('150ms ease-in-out', style({transform: 'scaleY(1)', opacity: 1, height: '*'})),
+        style({ 'transform': 'scaleY(0)', opacity: 0, height: 0 }),
+        animate('15000ms ease-in-out', style({ 'transform': 'scaleY(1)', opacity: 1, height: '*' })),
       ]),
       transition(':leave', [
-        style({transform: 'scaleY(1)', opacity: 1, height: '*'}),
-        animate('150ms ease-in-out', style({transform: 'scaleY(0)', opacity: 0, height: 0})),
+        style({ '-webkit-transform': 'scaleY(1)', opacity: 1, height: '*' }),
+        animate('15000ms ease-in-out', style({ 'transform': 'scaleY(0)', opacity: 0, height: 0 })),
       ]),
     ]),
   ],

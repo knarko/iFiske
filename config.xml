@@ -36,6 +36,7 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <platform name="android">
+        <preference name="loadUrlTimeoutValue" value="30000" />
         <resource-file src="resources/android/res/drawable-mdpi/ic_stat_icon.png" target="res/drawable-mdpi/fcm_push_icon.png" />
         <resource-file src="resources/android/res/drawable-hdpi/ic_stat_icon.png" target="res/drawable-hdpi/fcm_push_icon.png" />
         <resource-file src="resources/android/res/drawable-xhdpi/ic_stat_icon.png" target="res/drawable-xhdpi/fcm_push_icon.png" />
@@ -118,6 +119,6 @@
     </plugin>
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <engine name="android" spec="6.4.0" />
     <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="~6.4.0" />
 </widget>

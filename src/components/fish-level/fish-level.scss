@@ -1,3 +1,7 @@
+@mixin level($level) {
+  transform: translateX(-1 * (100% - 20 * $level));
+}
+
 fish-level {
   border: 1px solid map-get($colors, dark);
   border-radius: 10px;
@@ -50,8 +54,13 @@ fish-level {
     &-5 {
       background: map-get($colors, secondary);
     }
-  }
 
+    @for $i from 1 through 5 {
+      &-#{$i} {
+        @include level($i);
+      }
+    }
+  }
 }
 
 @keyframes level {

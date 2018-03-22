@@ -1,0 +1,69 @@
+{
+  "_from": "@ifiske/cordova-plugin-sms@~1.0.1",
+  "_id": "@ifiske/cordova-plugin-sms@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-VlGpNT5lsTtP2lA/yd204jtJ7/ubfhdjcL29B3KV0u+vJ6mtHvttbtkZR2AEZ8oSAeh0FiKWsb3hs16az3pHkw==",
+  "_location": "/@ifiske/cordova-plugin-sms",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@ifiske/cordova-plugin-sms@~1.0.1",
+    "name": "@ifiske/cordova-plugin-sms",
+    "escapedName": "@ifiske%2fcordova-plugin-sms",
+    "scope": "@ifiske",
+    "rawSpec": "~1.0.1",
+    "saveSpec": null,
+    "fetchSpec": "~1.0.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ifiske/cordova-plugin-sms/-/cordova-plugin-sms-1.0.1.tgz",
+  "_shasum": "860de244f0f6a2b00295e0a41833363c6605a2aa",
+  "_spec": "@ifiske/cordova-plugin-sms@~1.0.1",
+  "_where": "/home/maistho/prog/ifiske",
+  "author": {
+    "name": "Didier Baquier"
+  },
+  "bugs": {
+    "url": "https://github.com/cordova-sms/cordova-sms-plugin/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-sms-plugin",
+    "platforms": [
+      "android",
+      "wp8",
+      "ios",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cross-platform plugin for Cordova / PhoneGap to to easily send SMS. Available for Android, iOS and WP.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/cordova-sms/cordova-sms-plugin#readme",
+  "keywords": [
+    "cordova",
+    "phonegap",
+    "sms",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-wp8",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "name": "@ifiske/cordova-plugin-sms",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cordova-sms/cordova-sms-plugin.git"
+  },
+  "version": "1.0.1"
+}

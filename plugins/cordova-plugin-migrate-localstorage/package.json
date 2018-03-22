@@ -1,0 +1,60 @@
+{
+  "_from": "@ifiske/cordova-plugin-migrate-localstorage@~1.0.0",
+  "_id": "@ifiske/cordova-plugin-migrate-localstorage@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-eb5lmkawAK0QVHSpaZHaj6zBP9r6HOFhJC2KkDLzJng75XiH+pkkd/ntEFL6EEkk8JtBY42qHO2tObAQo3kicQ==",
+  "_location": "/@ifiske/cordova-plugin-migrate-localstorage",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@ifiske/cordova-plugin-migrate-localstorage@~1.0.0",
+    "name": "@ifiske/cordova-plugin-migrate-localstorage",
+    "escapedName": "@ifiske%2fcordova-plugin-migrate-localstorage",
+    "scope": "@ifiske",
+    "rawSpec": "~1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "~1.0.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ifiske/cordova-plugin-migrate-localstorage/-/cordova-plugin-migrate-localstorage-1.0.0.tgz",
+  "_shasum": "a9725fa47b3da119d6d623776ab8c71faeaebe1a",
+  "_spec": "@ifiske/cordova-plugin-migrate-localstorage@~1.0.0",
+  "_where": "/home/maistho/prog/ifiske",
+  "author": {
+    "name": "Martin Kleinschrodt",
+    "email": "martin@maklesoft.com"
+  },
+  "bugs": {
+    "url": "https://github.com/maklesoft/cordova-plugin-migrate-localstorage/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-migrate-localstorage",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Migrate LocalStorage data from UIWebView to WKWebView",
+  "homepage": "https://github.com/maklesoft/cordova-plugin-migrate-localstorage#readme",
+  "issue": "https://github.com/maklesoft/cordova-plugin-migrate-localstorage/issues/",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova",
+    "cordova-ios",
+    "uiwebview",
+    "wkwebview",
+    "localstorage"
+  ],
+  "license": "Apache 2.0",
+  "name": "@ifiske/cordova-plugin-migrate-localstorage",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maklesoft/cordova-plugin-migrate-localstorage.git"
+  },
+  "version": "1.0.0"
+}

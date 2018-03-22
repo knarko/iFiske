@@ -1,0 +1,66 @@
+{
+  "_from": "@ifiske/cordova-plugin-fcm@~4.0.0-beta.2",
+  "_id": "@ifiske/cordova-plugin-fcm@4.0.0-beta.2",
+  "_inBundle": false,
+  "_integrity": "sha512-NSncTCy7HIIvTY457eQ5z+kBu2VgYvySlcI/7sJ7kN8esqETJ0b94A2PT2AB4mTEC/quA+PhJZft+Afll+iLEw==",
+  "_location": "/@ifiske/cordova-plugin-fcm",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@ifiske/cordova-plugin-fcm@~4.0.0-beta.2",
+    "name": "@ifiske/cordova-plugin-fcm",
+    "escapedName": "@ifiske%2fcordova-plugin-fcm",
+    "scope": "@ifiske",
+    "rawSpec": "~4.0.0-beta.2",
+    "saveSpec": null,
+    "fetchSpec": "~4.0.0-beta.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ifiske/cordova-plugin-fcm/-/cordova-plugin-fcm-4.0.0-beta.2.tgz",
+  "_shasum": "883ddc0681db1c567010e7891718e3ed08b06db6",
+  "_spec": "@ifiske/cordova-plugin-fcm@~4.0.0-beta.2",
+  "_where": "/home/maistho/prog/ifiske",
+  "author": {
+    "name": "Christopher Palmer, Oliver Blum",
+    "email": "chrisjpalmer@optusnet.com.au, olliblum@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/ostownsville/cordova-plugin-fcm/issues"
+  },
+  "bundleDependencies": false,
+  "cordova_name": "Cordova FCM Push Plugin",
+  "deprecated": false,
+  "description": "Google Firebase Cloud Messaging Cordova Push Plugin",
+  "engines": [],
+  "englishdoc": "",
+  "homepage": "https://github.com/ostownsville/cordova-plugin-fcm#readme",
+  "issue": "",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "notifications",
+    "push",
+    "firebase",
+    "fcm",
+    "ios",
+    "android",
+    "cordova"
+  ],
+  "license": "MIT",
+  "name": "@ifiske/cordova-plugin-fcm",
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "repo": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ostownsville/cordova-plugin-fcm.git"
+  },
+  "version": "4.0.0-beta.2"
+}

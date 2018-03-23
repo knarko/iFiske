@@ -24,7 +24,9 @@ export class InformationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private info: InformationProvider,
-  ) {
+  ) { }
+
+  ionViewWillEnter() {
     this.info.getAll().then(info => {
       this.items = info;
     });

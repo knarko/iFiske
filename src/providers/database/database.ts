@@ -129,7 +129,12 @@ export class DatabaseProvider {
       (Array.isArray(data) ? data : Object.values(data)).forEach(singleData => {
         var insertData = [];
         for (var member in table.members) {
-          insertData.push(singleData[member]);
+          /*
+          * We need to remove some line separators because of a bug in cordova
+          * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
+          */
+          const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
+          insertData.push(escapedData);
         }
         var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length).fill('?').join(',')})`;
         tx.executeSql(query, insertData);

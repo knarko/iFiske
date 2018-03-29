@@ -11,11 +11,14 @@ import { SettingsProvider } from '../../providers/settings/settings';
   templateUrl: 'permit.html',
 })
 export class PermitComponent {
+  logged: boolean = false;
   qr: string;
 
   @Input() admin: boolean = false;
+  @Input() adminInfo: any;
   @Input() permit: Permit;
   @Output() revoke = new EventEmitter<boolean>();
+  @Output() logCheck = new EventEmitter<void>();
   org?: Organization;
   serverLocation = serverLocation;
 
@@ -26,7 +29,8 @@ export class PermitComponent {
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes.permit.currentValue) {
+    if (changes.permit && changes.permit.currentValue) {
+      this.logged = false;
       this.updateQR();
       try {
         this.org = await this.areaProvider.getOne(this.permit.ai)
@@ -46,5 +50,10 @@ export class PermitComponent {
     window.open(url, '_system');
     // TODO: analytics
     // analytics.trackEvent('Purchase', 'Web', id);
-  };
+  }
+
+  log() {
+    this.logged = true;
+    this.logCheck.emit();
+  }
 }

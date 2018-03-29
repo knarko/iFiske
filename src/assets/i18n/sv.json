@@ -44,7 +44,9 @@
       "selectOrg": "Välj organisation",
       "check": {
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
-        "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
+        "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort",
+        "timesChecked:timesChecked": "Fiskekortet har kontrollerats {{timesChecked}} gånger.",
+        "logCheck": "Logga kontroll"
       },
       "userLevel": {
         "0": "Nivå 0",

@@ -10,7 +10,7 @@
 <ion-content>
   <ng-container *ngIf="permit | async; let p">
     <div class="background" ion-fixed [ngClass]="'bg-' + p.validity"></div>
-    <app-permit [admin]="true" [permit]="p" (revoke)="revoke($event)"></app-permit>
+    <app-permit [admin]="true" [adminInfo]="adminInfo" [permit]="p" (revoke)="revoke($event)" (logCheck)="logCheck()"></app-permit>
   </ng-container>
 
   <div padding *ngIf="failed" class="text-center">

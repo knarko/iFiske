@@ -20,6 +20,10 @@ export class AdminPermitPage {
   permit: Observable<AdminPermit>;
   failed = false;
 
+  adminInfo = {
+    timesChecked: 2,
+  };
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -114,5 +118,13 @@ export class AdminPermitPage {
     } finally {
       loading.dismiss();
     }
+  }
+
+  logCheck() {
+    console.log('helkp');
+    this.adminProvider.logCheck(this.code);
+    this.adminInfo = Object.assign({}, this.adminInfo, {
+      timesChecked: this.adminInfo.timesChecked + 1,
+    });
   }
 }

@@ -66,6 +66,9 @@
       <ion-icon name="document"></ion-icon>
       {{'Unrevoke' | translate}}
     </button>
+
+    <p>{{ 'ui.admin.check.timesChecked:timesChecked' | translate: adminInfo }}</p>
+    <button ion-button (click)="log()" [disabled]="logged">{{'ui.admin.check.logCheck' | translate}}</button>
   </ng-container>
 
   <p *ngIf="!admin">

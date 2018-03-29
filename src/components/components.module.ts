@@ -17,6 +17,8 @@ import { TabNavbarComponent } from './tab-navbar/tab-navbar';
 import { UserInformationComponent } from './user-information/user-information';
 import { YoutubeComponent } from './youtube/youtube';
 import { HighlightComponent } from './highlight/highlight';
+import { PermitLogComponent } from './permit-log/permit-log';
+import { QrComponent } from './qr/qr';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { HighlightComponent } from './highlight/highlight';
     ChartComponent,
     TabNavbarComponent,
     HighlightComponent,
+    PermitLogComponent,
+    QrComponent,
   ],
   imports: [IonicModule, TranslateModule, PipesModule, ImgcacheModule],
   exports: [
@@ -49,6 +53,8 @@ import { HighlightComponent } from './highlight/highlight';
     ChartComponent,
     TabNavbarComponent,
     HighlightComponent,
+    PermitLogComponent,
+    QrComponent,
   ],
 })
 export class ComponentsModule {}

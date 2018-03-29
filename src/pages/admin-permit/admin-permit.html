@@ -1,20 +1,17 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{failed ? ('Check permit' | translate) : (permit | async)?.t}}</ion-title>
+    <ion-title>{{ failed ? ('Check permit' | translate) : (permit | async)?.t }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content>
-  <ng-container *ngIf="permit | async; let p">
-    <div class="background" ion-fixed [ngClass]="'bg-' + p.validity"></div>
-    <app-permit [admin]="true" [permit]="p" (revoke)="revoke($event)"></app-permit>
-  </ng-container>
+<ion-content no-bounce>
+  <app-permit *ngIf="(permit | async); let p" [admin]="true" [permit]="p" (revoke)="revoke($event)"></app-permit>
 
   <div padding *ngIf="failed" class="text-center">
-    <h3 [innerHtml]="'errors.admin.permit.failedHeader' | translate : (code | mkObject:'code')"></h3>
-    <p class="preserve-newlines" [innerHtml]="'errors.admin.permit.failedBody' | translate : (code | mkObject:'code')"></p>
+    <h3 [innerHtml]="'errors.admin.permit.failedHeader' | translate: (code | mkObject: 'code')"></h3>
+    <p
+      class="preserve-newlines"
+      [innerHtml]="'errors.admin.permit.failedBody' | translate: (code | mkObject: 'code')"
+    ></p>
   </div>
 </ion-content>

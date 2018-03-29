@@ -1,0 +1,21 @@
+.log-entry {
+  text-align: initial;
+  padding: 0.5rem;
+  &:nth-child(even) {
+    background-color: rgba(black, 0.1);
+  }
+  p {
+    margin: 0;
+  }
+  p + p {
+    margin-left: 1rem;
+  }
+
+  .date {
+    float: right;
+    color: rgba(black, 0.6);
+  }
+  .action {
+    font-size: 1.1em;
+  }
+}

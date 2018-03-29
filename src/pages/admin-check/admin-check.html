@@ -3,20 +3,29 @@
 </ion-header>
 
 <ion-content padding>
-  <p>{{'ui.admin.check.manualInstructions' | translate}}</p>
+  <p>{{ 'ui.admin.check.manualInstructions' | translate }}</p>
   <form (submit)="checkPermit()">
     <ion-item class="item-input-button">
-      <ion-input #permitCodeInput="ngModel" [(ngModel)]="permitCode" name="permitCode" type="tel" [placeholder]="'ui.placeholder.permit' | translate"
-        required minlength="1"></ion-input>
-      <button ion-button [disabled]="permitCodeInput.invalid" item-end color="secondary" type="submit">{{'Check' | translate}}</button>
+      <ion-input
+        #permitCodeInput="ngModel"
+        [(ngModel)]="permitCode"
+        name="permitCode"
+        type="tel"
+        [placeholder]="'ui.placeholder.permit' | translate"
+        required
+        minlength="1"
+      ></ion-input>
+      <button ion-button [disabled]="permitCodeInput.invalid" item-end color="secondary" type="submit">
+        {{ 'Check' | translate }}
+      </button>
     </ion-item>
   </form>
 
   <div class="spacer"></div>
-  <p>{{'ui.admin.check.scanInstructions' | translate}}</p>
+  <p>{{ 'ui.admin.check.scanInstructions' | translate }}</p>
 
   <button (click)="scanQR()" ion-button block icon-left color="secondary">
     <ion-icon name="qr-scanner"></ion-icon>
-    {{'Scan QR code' | translate}}
+    {{ 'Scan QR code' | translate }}
   </button>
 </ion-content>

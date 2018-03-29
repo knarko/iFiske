@@ -47,7 +47,12 @@ export interface TranslationDefinition {
       "selectOrg": string
       "check": {
         "manualInstructions": string
-        "scanInstructions": string,
+        "scanInstructions": string
+        "timesChecked-singular:timesChecked": string
+        "timesChecked-plural:timesChecked": string
+        "timesChecked-never": string
+        "logCheck": string
+        "sendComment": string,
       },
       "userLevel": {
         "0": string
@@ -57,6 +62,15 @@ export interface TranslationDefinition {
       "stats": {
         "offline": string
         "noAccess": string,
+      },
+      "log": {
+        "inspected": string
+        "addOne": string
+        "removeOne": string
+        "revoked": string
+        "unrevoked": string
+        "note": string
+        "unknown": string,
       },
     },
     "onboarding": {

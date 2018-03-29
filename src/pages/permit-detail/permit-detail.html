@@ -1,14 +1,10 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{'Permit' | translate}}</ion-title>
+    <ion-title>{{ 'Permit' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content>
-  <div class="background" ion-fixed *ngIf="permit" [ngClass]="'bg-' + permit?.validity"></div>
+<ion-content no-bounce>
   <app-permit *ngIf="permit" [permit]="permit"></app-permit>
 
   <div padding *ngIf="failed" class="text-center">
@@ -17,8 +13,16 @@
   </div>
 </ion-content>
 <ion-footer>
-  <button full ion-button color="secondary" (click)="openRules()" icon-left *ngIf="permit?.rule_t" class="footer-button">
+  <button
+    full
+    ion-button
+    color="secondary"
+    (click)="openRules()"
+    icon-left
+    *ngIf="permit?.rule_t"
+    class="footer-button"
+  >
     <ion-icon name="document"></ion-icon>
-    {{'Rules' | translate}}
+    {{ 'Rules' | translate }}
   </button>
 </ion-footer>

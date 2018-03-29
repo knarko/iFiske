@@ -49,6 +49,10 @@ export const en: TranslationDefinition = {
       "check": {
         "manualInstructions": "Enter a permit code below",
         "scanInstructions": "Tap the button to scan a QR code using your camera",
+        "timesChecked-singular:timesChecked": "The permit has been checked once.",
+        "timesChecked-plural:timesChecked": "The permit has been checked {{timesChecked}} times.",
+        "timesChecked-never": "The permit has never been checked.",
+        "logCheck": "Log permit check",
       },
       "userLevel": {
         "0": "Level 0",
@@ -58,6 +62,15 @@ export const en: TranslationDefinition = {
       "stats": {
         "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again.",
         "noAccess": "In order to see statistics you need at least user level 1",
+      },
+      "log": {
+        "inspected": "Inspected by",
+        "addOne": "+1 Controlled by",
+        "removeOne": "-1 Controlled by",
+        "revoked": "Revoked by",
+        "unrevoked": "Unrevoked by",
+        "note": "Added note by",
+        "unknown": "Unknown action by",
       },
     },
     "onboarding": {

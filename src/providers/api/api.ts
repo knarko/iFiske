@@ -320,8 +320,8 @@ export class ApiProvider {
   }
 
   /*
-       * Administration endpoints
-       */
+   * Administration endpoints
+   */
   user_organizations() {
     return this.api_call({ m: 'user_organizations' }, { retry: false, session: true });
   }
@@ -336,6 +336,25 @@ export class ApiProvider {
   }
   adm_get_stats(orgid) {
     return this.api_call({ m: 'adm_get_stats', orgid: orgid }, { retry: false, session: true });
+  }
+
+  /**
+   * Adds a manually written comment to the product log
+   */
+  adm_prod_log(code: string, comment: string) {
+    return this.api_call({ m: 'adm_prod_log', code, comment }, { retry: false, session: true, post: true });
+  }
+  /**
+   * Adds 1 to the check counter on the product
+   */
+  adm_add_check(code: string) {
+    return this.api_call({ m: 'adm_add_check', code }, { retry: false, session: true, post: true });
+  }
+  /**
+   * Subtracts 1 from the check counter on the product
+   */
+  adm_sub_check(code: string) {
+    return this.api_call({ m: 'adm_sub_check', code }, { retry: false, session: true, post: true });
   }
 
   admGetStats(orgid?: number | string) {

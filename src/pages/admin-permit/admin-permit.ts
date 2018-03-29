@@ -8,6 +8,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 import { Observable } from 'rxjs/Observable';
 import { TimeoutError } from '../../errors';
 import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'AdminPage'],
@@ -32,6 +33,8 @@ export class AdminPermitPage {
     private alertCtrl: TranslateAlertController,
   ) {}
 
+  subs: Subscription[] = [];
+
   ionViewWillEnter() {
     this.code = this.navParams.get('code');
     if (this.code) {
@@ -40,8 +43,12 @@ export class AdminPermitPage {
       this.failed = true;
     }
   }
+  ionViewWillLeave() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
 
   async loadPermit() {
+    console.log('loading permit', { code: this.code });
     this.permit = this.adminProvider.getPermit(this.code);
 
     let loading: Loading;
@@ -70,23 +77,25 @@ export class AdminPermitPage {
       }
     };
 
-    this.permit.subscribe(
-      () => {
-        dismissLoading();
-      },
-      (err: ApiError) => {
-        dismissLoading();
+    this.subs.push(
+      this.permit.subscribe(
+        () => {
+          dismissLoading();
+        },
+        (err: ApiError) => {
+          dismissLoading();
 
-        this.failed = true;
+          this.failed = true;
 
-        console.warn(err);
-        if (err.error_code !== IFISKE_ERRORS.INSUFFICIENT_USER_ACCESS_LEVEL) {
-          this.toastCtrl.show({
-            message: err.response,
-            duration: 6000,
-          });
-        }
-      },
+          console.warn(err);
+          if (err.error_code !== IFISKE_ERRORS.INSUFFICIENT_USER_ACCESS_LEVEL) {
+            this.toastCtrl.show({
+              message: err.response,
+              duration: 6000,
+            });
+          }
+        },
+      ),
     );
   }
 
@@ -116,7 +125,6 @@ export class AdminPermitPage {
     });
     try {
       await this.adminProvider.revokePermit(this.code, status);
-      await this.loadPermit();
     } catch (err) {
       if (err.name === TimeoutError.name) {
         this.toastCtrl.show({

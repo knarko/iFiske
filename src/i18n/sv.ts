@@ -50,6 +50,11 @@ export const sv: TranslationDefinition = {
       "check": {
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
         "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort",
+        "timesChecked-singular:timesChecked": "Fiskekortet har kontrollerats {{timesChecked}} gång.",
+        "timesChecked-plural:timesChecked": "Fiskekortet har kontrollerats {{timesChecked}} gånger.",
+        "timesChecked-never": "Fiskekortet har aldrig kontrollerats.",
+        "logCheck": "Logga kontroll",
+        "sendComment": "Lägg till kommentar",
       },
       "userLevel": {
         "0": "Nivå 0",
@@ -59,6 +64,15 @@ export const sv: TranslationDefinition = {
       "stats": {
         "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen.",
         "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre",
+      },
+      "log": {
+        "inspected": "Inspekterad av",
+        "addOne": "+1 kontroll av",
+        "removeOne": "-1 kontroll av",
+        "revoked": "Makulerad av",
+        "unrevoked": "Av-makulerad av",
+        "note": "Anteckning av",
+        "unknown": "Okänd handling av",
       },
     },
     "onboarding": {

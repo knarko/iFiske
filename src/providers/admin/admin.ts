@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { switchMap, filter, map } from 'rxjs/operators';
+import { switchMap, filter, map, tap, shareReplay } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
 
@@ -18,7 +18,11 @@ import { catchError } from 'rxjs/operators/catchError';
 import { SessionProvider } from '../session/session';
 import { getPermitValidity } from '../../util';
 
-import { AdminOrganization, AdminPermit, AdminPermitSearchResult } from './adminTypes';
+import { AdminOrganization, AdminPermit, AdminPermitSearchResult, LogEntry } from './adminTypes';
+type PermitCache = {
+  observable: Observable<AdminPermit>;
+  subject: ReplaySubject<{ permit: AdminPermit; prio: number }>;
+};
 @Injectable()
 export class AdminProvider extends BaseModel {
   private static readonly LAST_UPDATED = 'ADMIN_LAST_UPDATED';
@@ -62,7 +66,7 @@ export class AdminProvider extends BaseModel {
 
   isAdmin: Observable<boolean>;
 
-  private permits = new Map<string, ReplaySubject<AdminPermit>>();
+  private permits = new Map<string, PermitCache>();
 
   currentOrganization = new ReplaySubject<AdminOrganization | undefined>(1);
 
@@ -239,52 +243,68 @@ export class AdminProvider extends BaseModel {
     );
   }
 
-  getPermit(code: string): Observable<AdminPermit> {
-    let subject: ReplaySubject<AdminPermit>;
-    if (this.permits.has(code)) {
-      subject = this.permits.get(code);
-    } else {
-      subject = new ReplaySubject<AdminPermit>(1);
-      this.permits.set(code, subject);
-    }
-
-    let foundPermit = false;
-    const successHandler = permit => {
-      foundPermit = true;
-      this.transformPermit(permit);
-      subject.next(permit);
-    };
-
-    const errorHandler = err => {
-      if (!foundPermit) {
-        subject.error(err);
-      } else {
-        console.warn(err);
-      }
-    };
-
-    this.DB.getSingle(
+  private async getDBPermit(code: string, prio = 0) {
+    const permit = await this.DB.getSingle(
       `
       SELECT * FROM Admin_Permits
       WHERE code = ?
     `,
       [code],
-    )
-      .then(successHandler)
-      .catch(err => {
+    );
+    const { subject } = this.permits.get(code);
+    subject.next({ permit, prio });
+  }
+
+  private async getApiPermit(code: string, prio = 1) {
+    const permit = await this.API.adm_check_prod(code);
+    permit.code = '' + permit.code;
+    const { subject } = this.permits.get(code);
+    subject.next({ permit, prio });
+  }
+
+  getPermit(code: string): Observable<AdminPermit> {
+    code = '' + code;
+    let subject: ReplaySubject<{ permit: AdminPermit; prio: number }>;
+    let observable: Observable<AdminPermit>;
+    if (this.permits.has(code)) {
+      const x = this.permits.get(code);
+      subject = x.subject;
+      observable = x.observable;
+    } else {
+      subject = new ReplaySubject<{ permit: AdminPermit; prio: number }>(1);
+      observable = subject.asObservable().pipe(
+        filter(({ permit, prio }) => permit && (!foundPermit || prio >= savedPrio)),
+        tap(({ prio }) => {
+          savedPrio = prio;
+          foundPermit = true;
+        }),
+        map(({ permit }) => {
+          return this.transformPermit(permit);
+        }),
+        shareReplay(1),
+        tap(permit => console.log(permit)),
+      );
+
+      this.permits.set(code, { subject, observable });
+    }
+
+    this.getDBPermit(code).catch(err => console.warn(err));
+    this.getApiPermit(code).catch(err => {
+      if (!foundPermit) {
+        subject.error(err);
+      } else {
         console.warn(err);
-      });
+      }
+    });
 
-    this.API.adm_check_prod(code)
-      .then(successHandler, errorHandler)
-      .catch(err => {});
-
-    return subject.asObservable();
+    let foundPermit = false;
+    let savedPrio = 0;
+    return observable;
   }
 
   @DBMethod
   async getPermits(searchTerm?: string): Promise<AdminPermitSearchResult[]> {
-    const permits = await this.DB.getMultiple(
+    let permits = await this.DB.getMultiple(
       `
       SELECT * FROM Admin_Permits
       WHERE org = ?
@@ -293,7 +313,7 @@ export class AdminProvider extends BaseModel {
       [this.orgId],
     );
 
-    permits.forEach(this.transformPermit);
+    permits = permits.map(this.transformPermit);
 
     if (!searchTerm) {
       return permits;
@@ -337,17 +357,54 @@ export class AdminProvider extends BaseModel {
     });
   }
 
-  transformPermit = (permit: AdminPermit) => {
+  transformPermit = (permit: AdminPermit): AdminPermit => {
     if (!permit) {
       return;
     }
-    permit.validity = getPermitValidity(permit);
-    return permit;
+    const validity = getPermitValidity(permit);
+    const log = Array.isArray(permit.log)
+      ? permit.log.map(log => ({
+          ...log,
+          action: getLogAction(log),
+          t: log.t *= 1000,
+        }))
+      : [];
+    return { ...permit, validity, log };
   };
 
   async revokePermit(code: string, revoke = true) {
     const res = await this.API.adm_revoke_prod(code, revoke ? 1 : 0);
-    await this.update();
+    await this.getApiPermit(code);
     return res;
+  }
+
+  async addLog(code: string, comment: string) {
+    const res = await this.API.adm_prod_log(code, comment);
+    await this.getApiPermit(code);
+    return res;
+  }
+  async checkLog(code: string) {
+    const res = await this.API.adm_add_check(code);
+    await this.getApiPermit(code);
+    return res;
+  }
+}
+
+function getLogAction(log: LogEntry) {
+  switch (log.a) {
+    case '0':
+      return 'ui.admin.log.inspected';
+    case '1':
+      return 'ui.admin.log.addOne';
+    case '2':
+      return 'ui.admin.log.removeOne';
+    case '4':
+      return 'ui.admin.log.revoked';
+    case '5':
+      return 'ui.admin.log.unrevoked';
+    case '7':
+      return 'ui.admin.log.note';
+    default:
+      return 'ui.admin.log.unknown';
   }
 }

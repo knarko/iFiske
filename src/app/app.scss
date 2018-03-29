@@ -326,7 +326,7 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 
     .title-ios {
       padding-left: 1em;
-      min-height: unset !important;
+      min-height: initial !important;
       height: auto !important;
       padding-top: 0 !important;
     }

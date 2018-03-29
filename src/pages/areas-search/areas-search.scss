@@ -32,7 +32,7 @@ page-areas-search {
   .item.item-thumbnail-left {
     .fish-image {
       max-width: 112px;
-      height: unset;
+      height: initial;
       top: 50%;
       transform: translateY(-50%);
     }

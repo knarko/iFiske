@@ -35,7 +35,7 @@
   }
 
   ion-slides {
-    height: unset;
+    height: auto;
   }
 
   .full-width {
@@ -121,7 +121,7 @@
     max-width: 90%;
   }
   .alert-message {
-    max-height: unset;
+    max-height: initial;
   }
 }
 

@@ -1,3 +1,19 @@
+<a name="4.0.6"></a>
+## [4.0.6](https://gitlab.com/kada-development/ifiske/compare/v4.0.5...v4.0.6) (2018-03-29)
+
+
+### Bug Fixes
+
+* add webanimations polyfill ([b871bf1](https://gitlab.com/kada-development/ifiske/commit/b871bf1))
+* **animations:** update to angular 5.2.x ([d3f4068](https://gitlab.com/kada-development/ifiske/commit/d3f4068))
+* **css:** use initial instead of unset ([dc5cd3f](https://gitlab.com/kada-development/ifiske/commit/dc5cd3f))
+* **database:** remove unicode line separators from data before inserting into database ([9fc5c5f](https://gitlab.com/kada-development/ifiske/commit/9fc5c5f))
+* **fish-level:** move level width into css-file for autoprefixer ([fc01fce](https://gitlab.com/kada-development/ifiske/commit/fc01fce))
+* **information:** reload information data on each visit ([56c2df4](https://gitlab.com/kada-development/ifiske/commit/56c2df4))
+* **monitoring:** replace [@sentry](https://gitlab.com/sentry)/cordova with [@sentry](https://gitlab.com/sentry)/browser ([1b10f91](https://gitlab.com/kada-development/ifiske/commit/1b10f91))
+
+
+
 <a name="4.0.5"></a>
 ## [4.0.5](https://gitlab.com/kada-development/ifiske/compare/v4.0.4...v4.0.5) (2018-03-08)
 

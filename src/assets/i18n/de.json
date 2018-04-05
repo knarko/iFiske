@@ -85,6 +85,7 @@
     }
   },
   "errors": {
+    "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen.",
     "admin": {
       "noPermits": "Keine Lizenzen gefunden",
       "permit": {

@@ -86,6 +86,7 @@
     }
   },
   "errors": {
+    "unknown": "An unknown error has occurred. Please try again later.",
     "admin": {
       "noPermits": "No permits found",
       "permit": {

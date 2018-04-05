@@ -97,9 +97,16 @@ export class LoginPage {
     })
       .then(() => {
         return this.close();
-      }, (error: ApiError) => {
+      }, ({message}: {message?: ApiError}) => {
+        if (!message) {
+          this.form.group.setErrors({
+            loginFailed: true,
+          });
+          this.form.errors.loginFailed = 'errors.unknown';
+          return;
+        }
 
-        switch (error.error_code) {
+        switch (message.error_code) {
           case 2:
           case 5:
             group.controls.username.setErrors({
@@ -116,7 +123,7 @@ export class LoginPage {
             this.form.group.setErrors({
               loginFailed: true,
             });
-            this.form.errors.loginFailed = error.response;
+            this.form.errors.loginFailed = message && message.response;
             break;
         }
       }).catch(() => {}).then(() => {

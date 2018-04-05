@@ -85,6 +85,7 @@
     }
   },
   "errors": {
+    "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
     "admin": {
       "noPermits": "Inga fiskekort hittades",
       "permit": {

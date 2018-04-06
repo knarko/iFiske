@@ -14,6 +14,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { PushProvider } from '../push/push';
 import { getPermitValidity } from '../../util';
+import { MonitoringClient } from '../../app/monitoring';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 export interface User {
   username: string;
@@ -134,6 +136,7 @@ export class UserProvider extends BaseModel {
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
     private pushProvider: PushProvider,
+    private ga: GoogleAnalytics,
   ) {
     super();
     this.initialize();
@@ -148,8 +151,7 @@ export class UserProvider extends BaseModel {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
     this.pushProvider.unregister();
 
-    // TODO: Raven
-    // Raven.setUserContext();
+    MonitoringClient.setContext({ user: undefined })
     return Promise.all(p)
       .then(() => {
         console.log('Removed user info from database');
@@ -180,8 +182,11 @@ export class UserProvider extends BaseModel {
           numArr.push({ number: numbers[i] });
         }
 
-        // TODO: Raven
-        // Raven.setUserContext(data);
+        MonitoringClient.setContext({
+          user: {
+            id: data.ID,
+          },
+        });
 
         return Promise.all([
           this.DB.populateTable(this.tables.info, [data])
@@ -220,31 +225,26 @@ export class UserProvider extends BaseModel {
     }
   }
 
-  async login({username, password}) {
+  async login({ username, password }) {
     await this.clean();
 
     const p = this.API.user_login(username, password)
       .then(() => this.update(true));
 
     p.then(() => {
-      // TODO: Analytics
-      // analytics.trackEvent('Login and Signup', 'Login');
+      this.ga.trackEvent('Login and Signup', 'Login');
       this.pushProvider.register();
     }, error => {
       this.session.token = undefined;
-      Promise.all([
-        // TODO: Analytics
-        // analytics.trackEvent('Login and Signup', 'Login Failure'),
-        // analytics.trackException('Login Failure', false),
-      ]);
+      this.ga.trackEvent('Login and Signup', 'Login Failure');
+      this.ga.trackException('Login Failure', false);
       return error;
     });
     return p;
   }
 
   async logout() {
-    // TODO: Analytics
-    // analytics.trackEvent('Login and Signup', 'Logout');
+    this.ga.trackEvent('Login and Signup', 'Logout');
     const loading = await this.loadingCtrl.show({
       content: 'Logging out',
     });

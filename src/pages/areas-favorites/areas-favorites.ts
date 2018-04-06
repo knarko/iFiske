@@ -4,6 +4,7 @@ import { UserProvider, Favorite } from '../../providers/user/user';
 import { Area } from '../../providers/area/area';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { Observable } from 'rxjs/Observable';
+import { MonitoringClient } from '../../app/monitoring';
 
 @IonicPage()
 @Component({
@@ -40,18 +41,18 @@ export class AreasFavoritesPage {
 
   updateNotification(area: Favorite & Area) {
     this.userProvider.setFavoriteNotification(area.ID, area.not)
-    .then(() => {
-      this.toastCtrl.show({
-        message: `Notifications are turned ${area.not ? 'on' : 'off'}`,
-        duration: 4000,
+      .then(() => {
+        this.toastCtrl.show({
+          message: `Notifications are turned ${area.not ? 'on' : 'off'}`,
+          duration: 4000,
+        });
+      }, err => {
+        console.warn(err);
+        MonitoringClient.captureException(err);
+        this.toastCtrl.show({
+          message: 'errors.favorite.notification_update',
+          duration: 4000,
+        });
       });
-    }, err => {
-      console.warn(err);
-      // TODO: raven
-      this.toastCtrl.show({
-        message: 'errors.favorite.notification_update',
-        duration: 4000,
-      });
-    });
   }
 }

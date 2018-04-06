@@ -7,6 +7,7 @@ import { SettingsProvider } from '../../providers/settings/settings';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { Permit } from '../../providers/user/user';
 import { MonitoringClient } from '../../app/monitoring';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class AreasDetailPermitPage {
     private settings: SettingsProvider,
     private platform: PlatformProvider,
     private modalCtrl: ModalController,
+    private ga: GoogleAnalytics,
   ) {
     this.navParams.get('params').subscribe(({ area, org, products }) => {
       this.area = area;
@@ -38,8 +40,7 @@ export class AreasDetailPermitPage {
       const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${product.ID}&app=true&device=${this.platform.platform}`;
       window.open(url, '_system');
 
-      // TODO: analytics
-      // analytics.trackEvent('Purchase', 'Web', id);
+      this.ga.trackEvent('Purchase', 'Web', '' + product.ID);
     } else if (method.name === 'SMS') {
       this.modalCtrl.create('SmsPurchasePage', {
         product,

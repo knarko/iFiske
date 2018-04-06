@@ -3,6 +3,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { MonitoringClient } from '../../app/monitoring';
 
 @IonicPage()
 @Component({
@@ -47,8 +48,7 @@ export class AdminCheckPage {
     } catch (err) {
       console.error(err);
 
-      // TODO: Raven
-      // Raven.captureException(err);
+      MonitoringClient.captureException(err);
 
       switch (err.message) {
         case 'invalid':

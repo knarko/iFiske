@@ -16,6 +16,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FCM } from '@ionic-native/fcm';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic-native/pro';
@@ -118,6 +119,7 @@ registerLocaleData(localeSv);
     FCM,
     File,
     Geolocation,
+    GoogleAnalytics,
     LaunchNavigator,
     Network,
     Pro,

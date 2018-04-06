@@ -11,6 +11,7 @@ import 'drmonty-leaflet-awesome-markers';
 import { NavController } from 'ionic-angular';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { TranslateService } from '@ngx-translate/core';
+import { MonitoringClient } from '../../app/monitoring';
 declare var L: any;
 
 
@@ -66,20 +67,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
     this.map = new Map(this.mapElement.nativeElement)
       .setView([62.0, 15.0], 4);
 
-      const outdoors = new TileLayer(mapboxUrl, {
-        maxZoom: 18,
-        maptype: 'mapbox.outdoors',
-        apikey: apikey,
-      });
-      const satellite = new TileLayer(mapboxUrl, {
-        maxZoom: 16,
-        maptype: 'mapbox.satellite',
-        apikey: apikey,
-      });
+    const outdoors = new TileLayer(mapboxUrl, {
+      maxZoom: 18,
+      maptype: 'mapbox.outdoors',
+      apikey: apikey,
+    });
+    const satellite = new TileLayer(mapboxUrl, {
+      maxZoom: 16,
+      maptype: 'mapbox.satellite',
+      apikey: apikey,
+    });
 
     this.map.addLayer(outdoors);
 
-    let baseLayers = new Control.Layers({outdoors, satellite});
+    let baseLayers = new Control.Layers({ outdoors, satellite });
     this.map.addControl(baseLayers);
     this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
       this.map.removeControl(baseLayers);
@@ -100,8 +101,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       remainActive: true,
       onLocationError: (err) => {
         console.error(err);
-        // TODO: Raven
-        // Raven.captureException(err);
+        MonitoringClient.captureException(err);
       },
       onLocationOutsideMapBounds: context => {
         console.log(context);

@@ -7,6 +7,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 import { TermsProvider } from '../../providers/terms/terms';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 export const SMS_PURCHASE_NUMBER = '72456';
 
@@ -20,8 +21,8 @@ export class SmsPurchasePage {
 
   approvedRules = false;
 
-      // Show sms terms if not agreed to
-      // Display Modal with your name
+  // Show sms terms if not agreed to
+  // Display Modal with your name
 
   constructor(
     private viewCtrl: ViewController,
@@ -32,6 +33,7 @@ export class SmsPurchasePage {
     private sms: SMS,
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
+    private ga: GoogleAnalytics,
   ) {
     this.product = this.navParams.get('product');
     this.approvedRules = localStorage.getItem('sms-approval') === 'YES';
@@ -107,7 +109,7 @@ export class SmsPurchasePage {
     const message = `FISKA ${this.product.pf} ${name}`;
 
     try {
-      // TODO: analytics
+      this.ga.trackEvent('Purchase', 'SMS', '' + this.product.ID);
       await this.sms.send(SMS_PURCHASE_NUMBER, message, { android: { intent: 'INTENT' } });
       this.close();
 

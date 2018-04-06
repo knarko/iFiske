@@ -5,6 +5,7 @@ import { serverLocation } from '../../providers/api/serverLocation';
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AreaProvider } from '../../providers/area/area';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 @Component({
   selector: 'app-permit',
@@ -23,6 +24,7 @@ export class PermitComponent {
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,
     private settings: SettingsProvider,
+    private ga: GoogleAnalytics,
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -43,8 +45,7 @@ export class PermitComponent {
 
   openProductInBrowser() {
     const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${this.permit.pid}`;
+    this.ga.trackEvent('Purchase', 'Web', '' + this.permit.pid);
     window.open(url, '_system');
-    // TODO: analytics
-    // analytics.trackEvent('Purchase', 'Web', id);
   };
 }

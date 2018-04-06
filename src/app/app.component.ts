@@ -3,6 +3,7 @@ import { Platform, Config, App, ViewController, ToolbarTitle } from 'ionic-angul
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +12,7 @@ import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { MonitoringClient } from './monitoring'
+import { googleAnalyticsTrackerID, APP_VERSION } from './config';
 
 @Component({
   templateUrl: 'app.html',
@@ -30,6 +32,7 @@ export class MyApp {
     private settings: SettingsProvider,
     private deploy: DeployProvider,
     private network: Network,
+    private ga: GoogleAnalytics,
   ) {
     this.config.setTransition('md-transition', MDTransition);
     this.translate.setDefaultLang('sv');
@@ -43,6 +46,8 @@ export class MyApp {
       this.update.update().catch(e => console.warn(e));
 
       this.setupBackButtonText();
+
+      this.setupAnalytics();
 
       /* enable this code in order to show/hide the offline notification
       this.setOffline();
@@ -79,8 +84,17 @@ export class MyApp {
           subs.get(view).unsubscribe();
         }
         subs.set(view, sub);
+        this.ga.trackView(`${view.name}${(view.data && view.data.ID) ? '/' + view.data.ID : ''}`);
       });
     }
+  }
+
+  async setupAnalytics() {
+    await this.ga.startTrackerWithId(googleAnalyticsTrackerID);
+    await Promise.all([
+      this.ga.enableUncaughtExceptionReporting(true),
+      this.ga.setAppVersion(APP_VERSION),
+    ]);
   }
 
   setOffline() {

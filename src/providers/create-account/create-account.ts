@@ -6,6 +6,7 @@ import { takeUntil, map } from 'rxjs/operators';
 
 import { ApiProvider } from '../api/api';
 import { UserProvider } from '../user/user';
+import { MonitoringClient } from '../../app/monitoring';
 
 export interface UserDetails {
   username: string;
@@ -72,7 +73,7 @@ export class CreateAccountProvider {
       return JSON.parse(localStorage.getItem(CreateAccountProvider.REGISTER_DATA_KEY)) || {};
     } catch (err) {
       console.error(err);
-      // TODO: capture error on Ionic
+      MonitoringClient.captureException(err);
       return {};
     }
   }

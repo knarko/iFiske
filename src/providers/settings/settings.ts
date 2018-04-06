@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 // import { PushProvider } from '../push/push';
 
 interface Settings {
@@ -27,7 +28,7 @@ export class SettingsProvider {
 
   constructor(
     private translate: TranslateService,
-    // private pushProvider: PushProvider,
+    private ga: GoogleAnalytics,
   ) {
     this.settings = Object.assign({}, SettingsProvider.defaultSettings, this.settings);
     this.persistSettings();
@@ -63,8 +64,7 @@ export class SettingsProvider {
     this.translate.use(this.settings.language);
     document.getElementsByTagName('html').item(0).lang = lang;
 
-    // TODO: analytics
-    // analytics.trackEvent('Language', 'changed', settings.language);
+    this.ga.trackEvent('Language', 'changed', this.settings.language);
   }
 
   get push() {

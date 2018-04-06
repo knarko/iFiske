@@ -179,7 +179,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         chunkedLoading: true,
         removeOutsideVisibleBounds: true,
         spiderfyOnMaxZoom: false,
-        maxClusterRadius: 60,
+        maxClusterRadius: 50,
       });
       this.map.addLayer(this.markers);
     }

@@ -1,3 +1,18 @@
+<a name="4.1.0"></a>
+# [4.1.0](https://gitlab.com/kada-development/ifiske/compare/v4.0.6...v4.1.0) (2018-04-06)
+
+
+### Bug Fixes
+
+* **login:** show errors properly ([43df078](https://gitlab.com/kada-development/ifiske/commit/43df078))
+
+
+### Features
+
+* **analytics:** add analytics and view tracking ([cfbc358](https://gitlab.com/kada-development/ifiske/commit/cfbc358))
+
+
+
 <a name="4.0.6"></a>
 ## [4.0.6](https://gitlab.com/kada-development/ifiske/compare/v4.0.5...v4.0.6) (2018-03-29)
 

@@ -3,59 +3,49 @@
     padding: $content-padding;
   }
 }
+
 .information-page .scroll-content {
   font-size: 1.2em;
   line-height: 1.4;
-
   section,
   h2,
   h3,
   h4 {
     margin: 0;
     padding: 0;
-
   }
-
   h2,
   h3,
   h4 {
     color: map-get($colors, dark);
-
     &:not(:first-child) {
       margin: $content-padding 0 0;
     }
   }
-
   h2 {
     font-size: 1.2em;
   }
-
   h3 {
     font-size: 1.1em;
   }
-
   ion-slides {
     height: auto;
   }
-
   .full-width {
     $width: calc(100% + #{2 * $content-padding});
     margin-left: -$content-padding;
     width: $width;
     max-width: $width;
   }
-
-
   p {
     margin: 0;
   }
-
   p+p {
     margin-top: 1em;
   }
 }
 
-.content.background-image {
+.background-image {
   background: transparent !important;
   &::before {
     content: "";
@@ -68,15 +58,14 @@
     bottom: 0;
     display: block;
     background-color: white;
-    background-image: url('../assets/img/bg-login.png');
+    background-image: url('../assets/img/bg-login.jpg');
     background-size: 100%;
     background-position: bottom;
     background-repeat: no-repeat;
   }
-
 }
 
-.content.background-abstract {
+.background-abstract {
   background-image: url('../assets/img/bg-abstract.jpg');
   background-size: cover;
   background-position: bottom;
@@ -89,8 +78,8 @@
   >.scroll-content {
     background: transparent !important;
   }
-
 }
+
 .content.background-image,
 .content.background-abstract {
   $active-opacity: 0.95;
@@ -98,15 +87,12 @@
   .button:not([color]) {
     background-color: rgba(color($colors, primary), $active-opacity);
   }
-
   .button[color="secondary"] {
     background-color: rgba(color($colors, secondary), $active-opacity);
   }
-
   button[disabled],
   [ion-button][disabled] {
     opacity: 1;
-
     &.button:not([color]) {
       background-color: rgba(color($colors, primary), $disabled-opacity);
     }

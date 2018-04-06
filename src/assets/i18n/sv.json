@@ -56,6 +56,26 @@
         "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre"
       }
     },
+    "onboarding": {
+      "welcome": {
+        "title": "Välkommen!",
+        "subtitle": "iFiske är Sveriges största portal för fiskekort"
+      },
+      "explore": {
+        "title": "Utforska!",
+        "content": "<ul><li>Hitta nya spännande fiskevatten</li><li>Planera din nästa fiskeresa</li><li>Utforska kartan, fiskarter, regler och mycket mer</li></ul>"
+      },
+      "secure": {
+        "title": "Säkert!",
+        "subtitle": "Köp ditt fiskekort online och få det direkt i appen. Vi har hundratusentals nöjda kunder och är certifierade för Trygg eHandel"
+      },
+      "notify": {
+        "title": "Håll koll!",
+        "subtitle": "Spara dina favoritställen och få nya fångstrapporter direkt till din mejlbox"
+      },
+      "skip": "Hoppa över",
+      "continue": "Kom igång"
+    },
     "placeholder": {
       "email": "ex. fnamn@doman.se",
       "password": "••••••••",

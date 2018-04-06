@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
-// import { PushProvider } from '../push/push';
 
 interface Settings {
   push: boolean;
   language: string;
   isDeveloper?: boolean;
   channel: string;
+  firstLaunch: boolean;
 }
 
 export interface Language {
@@ -23,6 +22,7 @@ export class SettingsProvider {
     push: true,
     language: 'sv',
     channel: 'Production',
+    firstLaunch: true,
   }
   private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
 
@@ -39,7 +39,7 @@ export class SettingsProvider {
     localStorage.setItem(SettingsProvider.STORAGE_LOCATION, JSON.stringify(this.settings));
   }
 
-  availableLanguages: {[short: string]: Language} = {
+  availableLanguages: { [short: string]: Language } = {
     sv: {
       short: 'sv',
       long: 'Svenska',
@@ -91,6 +91,14 @@ export class SettingsProvider {
   }
   set channel(channel: string) {
     this.settings.channel = channel;
+    this.persistSettings();
+  }
+
+  get firstLaunch() {
+    return this.settings.firstLaunch;
+  }
+  set firstLaunch(firstLaunch: boolean) {
+    this.settings.firstLaunch = firstLaunch;
     this.persistSettings();
   }
 }

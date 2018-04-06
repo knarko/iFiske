@@ -1,0 +1,53 @@
+<ion-content>
+  <ion-slides ion-fixed #extras class="extras">
+    <ion-slide padding class="notify">
+      <div class="slider-content">
+        <p>Här ska det också vara en bild eller nåt</p>
+      </div>
+    </ion-slide>
+    <ion-slide padding class="secure">
+      <div class="slider-content">
+        <img src="assets/img/permit.png">
+      </div>
+    </ion-slide>
+    <ion-slide padding class="explore">
+      <div class="slider-content">
+        <img src="assets/img/map.png">
+      </div>
+    </ion-slide>
+    <ion-slide padding class="intro">
+      <div class="slider-content">
+        <img src="assets/img/logo.png">
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <ion-slides ion-fixed pager #slides class="info">
+    <div class="waves">
+      <div class="wave wave_1"></div>
+      <div class="wave wave_2"></div>
+      <div class="wave wave_3"></div>
+      <div class="wave wave_4"></div>
+      <div class="wave wave_5"></div>
+    </div>
+    <ion-slide class="intro" padding>
+      <h2>{{'ui.onboarding.welcome.title' | translate}}</h2>
+      <p>{{'ui.onboarding.welcome.subtitle' | translate}}</p>
+    </ion-slide>
+    <ion-slide padding class="explore">
+      <h2>{{'ui.onboarding.explore.title' | translate}}</h2>
+      <div [innerHtml]="'ui.onboarding.explore.content' | translate"></div>
+    </ion-slide>
+    <ion-slide padding class="secure">
+      <h2>{{'ui.onboarding.secure.title' | translate}}</h2>
+      <p>{{'ui.onboarding.secure.subtitle' | translate}}</p>
+    </ion-slide>
+    <ion-slide padding class="notify">
+      <h2>{{'ui.onboarding.notify.title' | translate}}</h2>
+      <p>{{'ui.onboarding.notify.subtitle' | translate}}</p>
+      <button ion-button block color="secondary" (click)="skip()">{{'ui.onboarding.continue' | translate}}</button>
+    </ion-slide>
+  </ion-slides>
+  <button ion-button ion-fixed clear (click)="skip()" [ngClass]="hideSkip ? 'hide-button': ''">
+    {{skipMsg | translate}}
+  </button>
+</ion-content>

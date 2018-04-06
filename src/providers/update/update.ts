@@ -125,7 +125,7 @@ export class UpdateProvider {
     });
 
     result.catch(() => { }).then(() => {
-      this.loading.dismiss();
+      this.loading && this.loading.dismiss();
     });
     return result;
   }

@@ -158,4 +158,4 @@ registerLocaleData(localeSv);
     UserProvider,
   ],
 })
-export class AppModule {}
+export class AppModule { }

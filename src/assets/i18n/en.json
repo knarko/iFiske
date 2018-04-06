@@ -57,6 +57,26 @@
         "noAccess": "In order to see statistics you need at least user level 1"
       }
     },
+    "onboarding": {
+      "welcome": {
+        "title": "Welcome!",
+        "subtitle": "Welcome to iFiske. We're swedens Largest portal for fishing permits"
+      },
+      "explore": {
+        "title": "Explore!",
+        "content": "<ul><li>Find new exciting fishing areas</li><li>Plan your next fishing trip</li><li>explore maps, fish species, rules and much more</li></ul>"
+      },
+      "secure": {
+        "title": "Secure!",
+        "subtitle": "Safely buy your fishing permit online and get it delivered to this app. We're trusted by hundreds of thousands of customers and certified as Trygg eHandel"
+      },
+      "notify": {
+        "title": "Stay informed!",
+        "subtitle": "Save your favorite spots and get new catch reports for free directly to your mailbox"
+      },
+      "skip": "Hoppa över",
+      "continue": "Kom igång"
+    },
     "placeholder": {
       "email": "e.g. name@domain.com",
       "password": "••••••••",

@@ -34,6 +34,9 @@ export class MyApp {
     private network: Network,
     private ga: GoogleAnalytics,
   ) {
+    if (this.settings.firstLaunch) {
+      this.rootPage = 'OnboardingPage';
+    }
     this.config.setTransition('md-transition', MDTransition);
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
@@ -43,7 +46,8 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
-      this.update.update().catch(e => console.warn(e));
+      // TODO: hide loading spinner on first launch
+      this.update.update(false, this.settings.firstLaunch).catch(e => console.warn(e));
 
       this.setupBackButtonText();
 
@@ -108,16 +112,16 @@ export class MyApp {
   }
 
   getPreviousViewTitle(view: ViewController) {
-      const previousView = view.getNav().getPrevious(view);
-      if (!previousView) {
-        return '';
-      }
-      const previousNavbar = previousView.getNavbar() as any;
-      if (!previousNavbar) {
-        return '';
-      }
-      const titleText = (previousNavbar as ToolbarTitle).getTitleText() || '';
-      return titleText.trim();
+    const previousView = view.getNav().getPrevious(view);
+    if (!previousView) {
+      return '';
+    }
+    const previousNavbar = previousView.getNavbar() as any;
+    if (!previousNavbar) {
+      return '';
+    }
+    const titleText = (previousNavbar as ToolbarTitle).getTitleText() || '';
+    return titleText.trim();
   }
 
   ionViewDidEnter() {

@@ -2,17 +2,17 @@
   <ion-slides ion-fixed #extras class="extras">
     <ion-slide padding class="notify">
       <div class="slider-content">
-        <p>Här ska det också vara en bild eller nåt</p>
+        <img src="assets/onboarding/favorites.png">
       </div>
     </ion-slide>
     <ion-slide padding class="secure">
       <div class="slider-content">
-        <img src="assets/img/permit.png">
+        <img src="assets/onboarding/permit.png">
       </div>
     </ion-slide>
     <ion-slide padding class="explore">
       <div class="slider-content">
-        <img src="assets/img/map.png">
+        <img src="assets/onboarding/map.png">
       </div>
     </ion-slide>
     <ion-slide padding class="intro">
@@ -48,6 +48,6 @@
     </ion-slide>
   </ion-slides>
   <button ion-button ion-fixed clear (click)="skip()" [ngClass]="hideSkip ? 'hide-button': ''">
-    {{skipMsg | translate}}
+    {{'ui.onboarding.skip' | translate}}
   </button>
 </ion-content>

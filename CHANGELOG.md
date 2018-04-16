@@ -1,3 +1,19 @@
+<a name="4.1.1"></a>
+## [4.1.1](https://gitlab.com/kada-development/ifiske/compare/v4.1.0...v4.1.1) (2018-04-16)
+
+
+### Bug Fixes
+
+* **map:** reduce max cluster size ([7ff81b5](https://gitlab.com/kada-development/ifiske/commit/7ff81b5))
+* **onboarding:** Fix some rendering issues on iOS, change images ([7d8bbe1](https://gitlab.com/kada-development/ifiske/commit/7d8bbe1))
+
+
+### Features
+
+* **onboarding:** add onboarding page ([fe783f6](https://gitlab.com/kada-development/ifiske/commit/fe783f6))
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://gitlab.com/kada-development/ifiske/compare/v4.0.6...v4.1.0) (2018-04-06)
 

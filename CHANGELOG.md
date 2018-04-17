@@ -1,3 +1,14 @@
+<a name="4.1.3"></a>
+## [4.1.3](https://gitlab.com/kada-development/ifiske/compare/v4.1.2...v4.1.3) (2018-04-17)
+
+
+### Bug Fixes
+
+* **onboarding:** add button for going to the next slide ([013338a](https://gitlab.com/kada-development/ifiske/commit/013338a))
+* **onboarding:** show updating spinner if we are still updating when closing onboarding ([f3eccf5](https://gitlab.com/kada-development/ifiske/commit/f3eccf5))
+
+
+
 <a name="4.1.2"></a>
 ## [4.1.2](https://gitlab.com/kada-development/ifiske/compare/v4.1.1...v4.1.2) (2018-04-17)
 

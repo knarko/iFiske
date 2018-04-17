@@ -28,6 +28,10 @@ export class OnboardingPage {
     });
   }
 
+  next() {
+    this.slides.slideNext();
+  }
+
   skip() {
     this.settings.firstLaunch = false;
     this.navCtrl.setRoot('HomePage', undefined, {

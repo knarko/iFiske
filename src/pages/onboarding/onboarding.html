@@ -47,7 +47,12 @@
       <button ion-button block color="secondary" (click)="skip()">{{'ui.onboarding.continue' | translate}}</button>
     </ion-slide>
   </ion-slides>
-  <button ion-button ion-fixed clear (click)="skip()" [ngClass]="hideSkip ? 'hide-button': ''">
+  <button ion-button ion-fixed clear (click)="skip()" class="left" [ngClass]="hideSkip ? 'hide-button': ''">
     {{'ui.onboarding.skip' | translate}}
+  </button>
+
+  <button ion-button ion-fixed icon-right clear (click)="next()" class="right" [ngClass]="hideSkip ? 'hide-button': ''">
+    {{'ui.onboarding.next' | translate}}
+    <ion-icon name="arrow-forward"></ion-icon>
   </button>
 </ion-content>

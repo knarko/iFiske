@@ -17,11 +17,19 @@ page-onboarding {
   }
   button[ion-fixed] {
     bottom: 0;
-    left: 0;
     margin: 4px;
     color: white;
     transition: opacity .3s linear;
     opacity: 1;
+
+    &.right {
+      right: 0;
+    }
+
+    &.left {
+      left: 0;
+    }
+
     &.hide-button {
       opacity: 0;
     }

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Slides } from 'ionic-angular';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { UpdateProvider } from '../../providers/update/update';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class OnboardingPage {
   constructor(
     private navCtrl: NavController,
     private settings: SettingsProvider,
+    private update: UpdateProvider,
   ) {
   }
 
@@ -33,6 +35,10 @@ export class OnboardingPage {
   }
 
   skip() {
+    if (this.update.updating) {
+      this.update.showLoading();
+    }
+
     this.settings.firstLaunch = false;
     this.navCtrl.setRoot('HomePage', undefined, {
       animate: true,

@@ -23,6 +23,7 @@ export type UpdateStrategy = 'timed' | 'always' | UpdateFn;
 
 @Injectable()
 export class UpdateProvider {
+  updating?: Promise<any>;
   updates: {
     updateStrategy: UpdateStrategy;
     update: () => Promise<boolean>;
@@ -80,14 +81,35 @@ export class UpdateProvider {
     return (currentTime - lastUpdate) > aDay;
   }
 
-  async update(forced = false, hideLoading = false) {
+  async showLoading(force?: boolean) {
+    const loading = await this.loadingCtrl.create({
+      content: 'Updating',
+    });
+
+    if (force || this.updating) {
+      this.loading = loading;
+      loading.present()
+    }
+  }
+
+  hideLoading() {
+    if (this.loading) {
+      this.loading.dismiss();
+      this.loading = undefined;
+    }
+  }
+
+
+  update(forced = false, hideLoading = false) {
+    if (this.updating) {
+      return this.updating;
+    }
+
     // TODO: this seems to block updating sometimes :/
     // await this.network.onConnect().pipe(take(1)).toPromise();
 
     if (!hideLoading) {
-      this.loading = await this.loadingCtrl.show({
-        content: 'Updating',
-      });
+      this.showLoading(true);
     }
 
     var currentTime = Date.now();
@@ -105,12 +127,11 @@ export class UpdateProvider {
       return Promise.resolve(false);
     });
 
-    const result = Promise.all(promises).then(() => {
+    this.updating = Promise.all(promises).then(() => {
       if (timeHasPassed) {
         localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
       }
     }, (error) => {
-
       this.toastCtrl.show({
         message: 'Network Error',
         duration: 4000,
@@ -124,10 +145,11 @@ export class UpdateProvider {
       throw error;
     });
 
-    result.catch(() => { }).then(() => {
-      this.loading && this.loading.dismiss();
+    this.updating.catch(() => { }).then(() => {
+      this.updating = undefined;
+      this.hideLoading();
     });
-    return result;
+    return this.updating;
   }
 
   get lastUpdate() {

@@ -1,3 +1,13 @@
+<a name="4.1.2"></a>
+## [4.1.2](https://gitlab.com/kada-development/ifiske/compare/v4.1.1...v4.1.2) (2018-04-17)
+
+
+### Bug Fixes
+
+* **ios:** Fix NSCameraDescription missing ([6c5d480](https://gitlab.com/kada-development/ifiske/commit/6c5d480))
+
+
+
 <a name="4.1.1"></a>
 ## [4.1.1](https://gitlab.com/kada-development/ifiske/compare/v4.1.0...v4.1.1) (2018-04-16)
 

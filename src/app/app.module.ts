@@ -7,7 +7,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 
 import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Ionic Native
@@ -69,6 +69,7 @@ import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
 
 import { ImgcacheModule } from '../imgcache/imgcache.module';
+import { LogMissingTranslationHandler } from './missing-translation-handler';
 
 registerLocaleData(localeSv);
 
@@ -101,6 +102,7 @@ registerLocaleData(localeSv);
         deps: [HttpClient],
       },
       useDefaultLang: false,
+      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: LogMissingTranslationHandler },
     }),
   ],
   bootstrap: [IonicApp],

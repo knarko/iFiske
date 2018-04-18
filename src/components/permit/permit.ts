@@ -31,8 +31,10 @@ export class PermitComponent {
     if (changes.permit.currentValue) {
       this.updateQR();
       try {
-        this.org = await this.areaProvider.getOne(this.permit.ai)
-          .then((area) => this.organizationProvider.getOne(area.orgid));
+        if (this.permit.ai != undefined) {
+          this.org = await this.areaProvider.getOne(this.permit.ai)
+            .then((area) => this.organizationProvider.getOne(area.orgid));
+        }
       } catch (e) {
         // Don't do anything
       }

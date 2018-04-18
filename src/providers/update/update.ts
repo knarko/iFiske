@@ -128,9 +128,7 @@ export class UpdateProvider {
     });
 
     this.updating = Promise.all(promises).then(() => {
-      if (timeHasPassed) {
-        localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
-      }
+      localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
     }, (error) => {
       this.toastCtrl.show({
         message: 'Network Error',

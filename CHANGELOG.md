@@ -1,3 +1,20 @@
+<a name="4.1.4"></a>
+## [4.1.4](https://gitlab.com/kada-development/ifiske/compare/v4.1.3...v4.1.4) (2018-04-18)
+
+
+### Bug Fixes
+
+* **onboarding:** make waves 100vh to fix issue on huge screens ([1946643](https://gitlab.com/kada-development/ifiske/commit/1946643))
+* **permit:** don't show error searching for undefined area ([eb8fb5f](https://gitlab.com/kada-development/ifiske/commit/eb8fb5f))
+
+
+### Features
+
+* **admin:** add pull-to-refresh and updating of admin data when revoking permits ([28d4648](https://gitlab.com/kada-development/ifiske/commit/28d4648))
+* **translations:** log missing translations to sentry ([b90636c](https://gitlab.com/kada-development/ifiske/commit/b90636c))
+
+
+
 <a name="4.1.3"></a>
 ## [4.1.3](https://gitlab.com/kada-development/ifiske/compare/v4.1.2...v4.1.3) (2018-04-17)
 

@@ -10,12 +10,18 @@
 </ion-header>
 
 <ion-content class="outer-content">
-  <ion-list *ngIf="(permits | async)?.length === 0">
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      [pullingText]="'ui.general.pull_to_refresh' | translate"
+      [refreshingText]="'Updating' | translate"
+    ></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="permits?.length === 0">
     <ion-item>
       {{'errors.admin.noPermits' | translate}}
     </ion-item>
   </ion-list>
-  <ion-list [virtualScroll]="permits | async" [headerFn]="isNewValidity" approxItemHeight="88px" approxHeaderHeight="50px" [virtualTrackBy]="permitTrackFn">
+  <ion-list #virtualScroll [virtualScroll]="permits" [headerFn]="isNewValidity" approxItemHeight="88px" approxHeaderHeight="50px" [virtualTrackBy]="permitTrackFn">
     <ion-list-header *virtualHeader="let header" [ngClass]="header.class">
       <ion-icon item-start [name]="header.icon"></ion-icon>
       <span>{{header.title | translate}}: {{header.count}} {{'ui.general.shortAmount' | translate}}</span>

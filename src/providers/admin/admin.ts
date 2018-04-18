@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { switchMap, filter, map } from 'rxjs/operators';
+import { switchMap, filter, map, take } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
@@ -159,12 +159,14 @@ export class AdminProvider extends BaseModel {
         const organizations = Object.values(orgs);
         organizations.forEach(org => org.ID = (org as any).orgid);
         await this.DB.populateTable(this.tables.organizations, orgs);
+        const pops: Promise<any>[] = [];
         for (let org of organizations) {
           const permits = await this.API.adm_products(org.ID);
           Object.values(permits).forEach((permit: any) => permit.org = org.ID);
-          this.DB.populateTable(this.tables.permits, permits, deletePermits);
+          pops.push(this.DB.populateTable(this.tables.permits, permits, deletePermits));
           deletePermits = false;
         }
+        await Promise.all(pops);
       }).then(() => true).catch(err => false);
       p.then(() => this.setDefaultOrgId());
       return p;
@@ -319,8 +321,10 @@ export class AdminProvider extends BaseModel {
     return permit;
   };
 
-  revokePermit(code: string, revoke = true) {
-    return this.API.adm_revoke_prod(code, revoke ? 1 : 0);
+  async revokePermit(code: string, revoke = true) {
+    const res = await this.API.adm_revoke_prod(code, revoke ? 1 : 0);
+    await this.update();
+    return res;
   }
 
 }

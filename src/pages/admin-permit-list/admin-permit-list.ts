@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, VirtualScroll } from 'ionic-angular';
 import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap, map, distinctUntilChanged } from 'rxjs/operators';
+import { switchMap, map, distinctUntilChanged, share, shareReplay, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -27,12 +27,14 @@ export class AdminPermitListPage {
   currentOrganization: Observable<AdminOrganization>;
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
-  permits: Observable<AdminPermit[]>;
+  permits$: Observable<AdminPermit[]>;
+  permits: AdminPermit[];
   scrollSubject: Subject<void>;
 
   private sub: Subscription;
 
   @ViewChild(Content) content: Content;
+  @ViewChild('virtualScroll', {read: VirtualScroll}) virtualScroll: VirtualScroll;
 
   constructor(
     private navCtrl: NavController,
@@ -41,7 +43,7 @@ export class AdminPermitListPage {
     private keyboard: Keyboard,
   ) {
     this.searchSubject = new ReplaySubject<string>(1);
-    this.permits = this.searchSubject.pipe(
+    this.permits$ = this.searchSubject.pipe(
       distinctUntilChanged(),
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
       map(permits => {
@@ -52,15 +54,28 @@ export class AdminPermitListPage {
                  a.fullname.localeCompare(b.fullname, 'sv');
         });
       }),
+      shareReplay(1),
     );
     this.scrollSubject = new Subject();
-    this.scrollSub = this.permits.subscribe(() => {
+    this.scrollSub = this.permits$.subscribe((permits) => {
+      this.permits = permits;
+      this.updateVirtualScroll();
+
       if (!this.scrollSubject.observers.length) {
         this.shouldScrollToTop = true;
       }
       this.scrollSubject.next();
     });
   }
+
+  updateVirtualScroll = debounce(() => {
+    setTimeout(() => {
+      if (this.virtualScroll) {
+        this.virtualScroll.readUpdate(true);
+        this.virtualScroll.writeUpdate(true);
+      }
+    }, 50);
+  }, 100);
 
   ionViewWillUnload() {
     this.searchSubject.complete();
@@ -101,6 +116,10 @@ export class AdminPermitListPage {
   }
 
   ionViewWillEnter() {
+    if (this.virtualScroll) {
+      this.virtualScroll.readUpdate(true);
+      this.virtualScroll.writeUpdate(true);
+    }
     this.sub = this.scrollSubject.subscribe(() => {
       try {
         this.content.scrollToTop();
@@ -133,6 +152,15 @@ export class AdminPermitListPage {
       const searchTerm = ($event.srcElement as HTMLInputElement).value;
       this.searchImmediate(searchTerm);
       this.keyboard.close();
+    }
+  }
+
+  async refresh(refresher: Refresher) {
+    try {
+      await this.adminProvider.update();
+      await this.permits$.pipe(take(1)).toPromise();
+    } finally {
+      refresher.complete();
     }
   }
 }

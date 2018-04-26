@@ -1,23 +1,37 @@
 #! /usr/bin/env node
-// @ts-check
+ // @ts-check
 
 const shell = require('shelljs');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { promisify } = require('util');
+const {
+  promisify
+} = require('util');
 const writeFile = promisify(fs.writeFile);
 
 const packageJson = require('../package.json');
 
 const splitVersion = (version) => {
   let [major, minor, patch] = version.split('.').map(part => Number(part));
-  return { major, minor, patch };
+  return {
+    major,
+    minor,
+    patch
+  };
 }
 
-const mergeVersion = ({ major, minor, patch }) => {
+const mergeVersion = ({
+  major,
+  minor,
+  patch
+}) => {
   return `${major}.${minor}.${patch}`;
 }
-const makeVersionCode = ({ major, minor, patch }) => {
+const makeVersionCode = ({
+  major,
+  minor,
+  patch
+}) => {
   const pad = (num, len) => {
     let s = '00000' + num;
     return s.substr(s.length - len);
@@ -37,13 +51,17 @@ const deploy = async () => {
     process.exit(2);
   }
 
-  let { version } = packageJson;
+  let {
+    version
+  } = packageJson;
 
   let versions = splitVersion(version);
 
   console.log(`You are on v${version}`);
 
-  const { bump } = await inquirer.prompt([{
+  const {
+    bump
+  } = await inquirer.prompt([{
     type: 'list',
     name: 'bump',
     message: 'What type of release is this?',
@@ -55,7 +73,11 @@ const deploy = async () => {
 
 
   if (bump === 'custom') {
-    const { next, sourcemaps, push } = await inquirer.prompt([{
+    const {
+      next,
+      sourcemaps,
+      push
+    } = await inquirer.prompt([{
       type: 'input',
       name: 'next',
       message: 'What is the new version number?',
@@ -71,6 +93,7 @@ const deploy = async () => {
     versions[bump]++;
   }
 
+  /*
   const { sourcemaps, push } = await inquirer.prompt([{
     type: 'confirm',
     name: 'sourcemaps',
@@ -82,6 +105,7 @@ const deploy = async () => {
     message: 'Do you want to push to Ionic Pro for building immediately?',
     default: false,
   }]);
+  */
   switch (bump) {
     case 'major':
       versions.minor = 0;
@@ -106,6 +130,7 @@ const deploy = async () => {
 
   console.log(`Tagged a release as v${version}`);
 
+  /*
   if (sourcemaps) {
     shell.exec(`npm run build`);
     //TODO: add sourcemaps
@@ -117,8 +142,9 @@ const deploy = async () => {
   } else {
     console.log(`Now all you need to do is\n$ git push ionic master`);
   }
+  */
+  console.log(`Now you should 'git push --follow-tags'`);
 };
 
 
 deploy();
-

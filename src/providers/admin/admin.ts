@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { switchMap, filter, map, take } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
 import { FuseOptions } from 'fuse.js';
@@ -274,7 +274,7 @@ export class AdminProvider extends BaseModel {
   }
 
   @DBMethod
-  async getPermits(searchTerm?: string): Promise<(AdminPermit & {score?: number})[]> {
+  async getPermits(searchTerm?: string): Promise<(AdminPermit & { score?: number })[]> {
     const permits = await this.DB.getMultiple(`
       SELECT * FROM Admin_Permits
       WHERE org = ?

@@ -4,16 +4,16 @@ import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/a
 import { Permit } from '../../providers/user/user';
 import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap, map, distinctUntilChanged, share, shareReplay, take } from 'rxjs/operators';
+import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
 const headers = {
-  active:   { title: 'ui.permit.validity.plural.active',   icon: 'ifiske-permit', class: 'header-active' },
+  active: { title: 'ui.permit.validity.plural.active', icon: 'ifiske-permit', class: 'header-active' },
   inactive: { title: 'ui.permit.validity.plural.inactive', icon: 'time' },
-  expired:  { title: 'ui.permit.validity.plural.expired',  icon: 'close-circle' },
-  revoked:  { title: 'ui.permit.validity.plural.revoked',  icon: 'close-circle' },
+  expired: { title: 'ui.permit.validity.plural.expired', icon: 'close-circle' },
+  revoked: { title: 'ui.permit.validity.plural.revoked', icon: 'close-circle' },
 }
 
 @IonicPage()
@@ -34,7 +34,7 @@ export class AdminPermitListPage {
   private sub: Subscription;
 
   @ViewChild(Content) content: Content;
-  @ViewChild('virtualScroll', {read: VirtualScroll}) virtualScroll: VirtualScroll;
+  @ViewChild('virtualScroll', { read: VirtualScroll }) virtualScroll: VirtualScroll;
 
   constructor(
     private navCtrl: NavController,
@@ -49,9 +49,9 @@ export class AdminPermitListPage {
       map(permits => {
         return permits.sort((a, b) => {
           return a.validity.localeCompare(b.validity) ||
-                 a.score - b.score ||
-                 // TODO: get locale from settings?
-                 a.fullname.localeCompare(b.fullname, 'sv');
+            a.score - b.score ||
+            // TODO: get locale from settings?
+            a.fullname.localeCompare(b.fullname, 'sv');
         });
       }),
       shareReplay(1),
@@ -83,8 +83,8 @@ export class AdminPermitListPage {
     this.scrollSub.unsubscribe();
   }
 
-  isNewValidity (record: AdminPermit, recordIndex: number, records: AdminPermit[]) {
-    if (records[recordIndex - 1] && records[recordIndex -1].validity === record.validity) {
+  isNewValidity(record: AdminPermit, recordIndex: number, records: AdminPermit[]) {
+    if (records[recordIndex - 1] && records[recordIndex - 1].validity === record.validity) {
       return null;
     } else {
       headers[record.validity].count = records.filter(val => val.validity === record.validity).length;

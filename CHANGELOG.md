@@ -1,3 +1,13 @@
+<a name="4.1.6"></a>
+## [4.1.6](https://gitlab.com/kada-development/ifiske/compare/v4.1.5...v4.1.6) (2018-04-26)
+
+
+### Bug Fixes
+
+* **ios:** add NSLocationAlwaysUsageDescription ([6719221](https://gitlab.com/kada-development/ifiske/commit/6719221))
+
+
+
 <a name="4.1.5"></a>
 ## [4.1.5](https://gitlab.com/kada-development/ifiske/compare/v4.1.4...v4.1.5) (2018-04-26)
 

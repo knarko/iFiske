@@ -1,3 +1,14 @@
+<a name="4.1.5"></a>
+## [4.1.5](https://gitlab.com/kada-development/ifiske/compare/v4.1.4...v4.1.5) (2018-04-26)
+
+
+### Bug Fixes
+
+* **deploy:** don't use a popup to update except for developers ([9cb7d6b](https://gitlab.com/kada-development/ifiske/commit/9cb7d6b))
+* **update:** always save the LAST_UPDATE time if update succeeds ([d3612e5](https://gitlab.com/kada-development/ifiske/commit/d3612e5))
+
+
+
 <a name="4.1.4"></a>
 ## [4.1.4](https://gitlab.com/kada-development/ifiske/compare/v4.1.3...v4.1.4) (2018-04-18)
 

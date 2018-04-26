@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="40010005" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40010005" version="4.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="40010005" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40010005" version="4.1.5"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>iFiske Fiskekort</name>
     <description>iFiske - Enklare Fiskekort</description>
     <author email="app@ifiske.se" href="https://www.ifiske.se/">iFiske</author>
@@ -62,7 +64,10 @@
         <resource-file src="GoogleService-Info.plist" target="Resources/GoogleService-Info.plist" />
         <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-          <string>To scan QR codes</string>
+            <string>För att skanna QR-koder</string>
+        </edit-config>
+        <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+            <string>För att hitta fiskevatten nära dig</string>
         </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />

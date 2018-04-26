@@ -5,6 +5,9 @@ import { MonitoringClient } from '../app/monitoring'
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG')
 
+
+declare var Ionic: any;
+
 export interface ImgcacheConfig {
   /**
    * Whether to call the log method
@@ -105,14 +108,10 @@ export class ImgcacheService {
 
       return new Promise<string>((resolve, reject) => {
         ImgCache.getCachedFile(src, (_, img) => {
-          let url = img.toURL();
-          if (this.plt.is('ios')) {
-            // Remove file protocol for wkwebview
-            // TODO: check if we are UIWebView or WKWebView
-            url = url.replace(/^(?:cdv)?file:\/\//, '');
-          }
-          this.cache[src] = url;
-          resolve(url);
+          const url = img.toURL();
+          const normalizedUrl = (window as any).Ionic && Ionic.normalizeURL && Ionic.normalizeURL(url) || url;
+          this.cache[src] = normalizedUrl;
+          resolve(normalizedUrl);
         }, reject);
       });
 

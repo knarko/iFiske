@@ -111,6 +111,16 @@
   }
 }
 
+.alert-terms {
+  .alert-message {
+    text-align: left;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    br {
+      line-height: 2;
+    }
+  }
+}
 
 @mixin blurred-background($opacity: 0.5, $blurred-opacity: $opacity / 2) {
   background: rgba(white, $opacity);

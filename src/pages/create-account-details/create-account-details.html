@@ -9,9 +9,9 @@
 
 <ion-content padding class="background-image">
   <ion-data-form [form]="form" [hideSubmit]="true"></ion-data-form>
-  <p class="terms text-center">
-    {{'Registering account approves' | translate}}
-    <a (click)="showEula()">{{'Terms of service' | translate}}</a>
-  </p>
-  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid">{{'Register' | translate}}</button>
+  <ion-item no-lines class="terms">
+    <ion-label>{{'I accept the terms of service' | translate}}</ion-label>
+    <ion-checkbox [(ngModel)]="acceptedTos" (ionChange)="persistApproval()"></ion-checkbox>
+  </ion-item>
+  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid || !acceptedTos">{{'Register' | translate}}</button>
 </ion-content>

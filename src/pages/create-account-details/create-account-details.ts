@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { timer } from 'rxjs/observable/timer';
 import { switchMap } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { ApiProvider } from '../../providers/api/api';
 import { Form } from '../../components/ion-data-form/form';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { UserDetails, CreateAccountProvider } from '../../providers/create-account/create-account';
+import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { TermsProvider } from '../../providers/terms/terms';
 
 
 @IonicPage({
@@ -18,6 +20,7 @@ import { UserDetails, CreateAccountProvider } from '../../providers/create-accou
   templateUrl: 'create-account-details.html',
 })
 export class CreateAccountDetailsPage {
+  acceptedTos: boolean;
   form: Form;
 
   validateUsername: AsyncValidatorFn = (c: AbstractControl) => {
@@ -45,7 +48,8 @@ export class CreateAccountDetailsPage {
     private API: ApiProvider,
     private loadingCtrl: TranslateLoadingController,
     private createAccountProvider: CreateAccountProvider,
-    private modalCtrl: ModalController,
+    private alertCtrl: TranslateAlertController,
+    private termsProvider: TermsProvider,
   ) {
     this.form = new Form({
       submit: (group: FormGroup) => {
@@ -148,7 +152,7 @@ export class CreateAccountDetailsPage {
     try {
       await this.createAccountProvider.register(userDetails);
       this.form.group.reset();
-      return this.navCtrl.push('CreateAccountVerifyPage', {username: userDetails.username});
+      return this.navCtrl.push('CreateAccountVerifyPage', { username: userDetails.username });
     } catch (err) {
       this.form.group.setErrors({ register: true });
       const { email, username, phone } = this.form.group.controls;
@@ -169,7 +173,25 @@ export class CreateAccountDetailsPage {
     }
   }
 
-  showEula() {
-    this.modalCtrl.create('EulaPage').present();
+  async persistApproval() {
+    if (this.acceptedTos) {
+      const alert = await this.alertCtrl.show({
+        cssClass: 'alert-large alert-terms',
+        message: this.termsProvider.termsOfService,
+        title: 'Terms of service',
+        buttons: [{
+          text: 'Cancel',
+        }, {
+          text: 'Accept',
+          role: 'accept',
+        }],
+      });
+      const role = await new Promise((resolve) => {
+        alert.onDidDismiss((_, role) => resolve(role));
+      });
+      if (role !== 'accept') {
+        this.acceptedTos = false;
+      }
+    }
   }
 }

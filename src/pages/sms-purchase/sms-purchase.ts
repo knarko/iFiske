@@ -47,7 +47,7 @@ export class SmsPurchasePage {
     console.log(this);
     if (this.approvedRules) {
       const alert = await this.alertCtrl.show({
-        cssClass: 'alert-large sms-rules',
+        cssClass: 'alert-large alert-terms',
         message: this.terms.smsTerms,
         title: 'SMS Rules',
         buttons: [{

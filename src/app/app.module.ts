@@ -8,7 +8,6 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
 
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
@@ -60,16 +59,13 @@ import { DeployProvider } from '../providers/deploy/deploy';
 import { CreateAccountProvider } from '../providers/create-account/create-account';
 import { AdminProvider } from '../providers/admin/admin';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
 // Import locale
 import localeSv from '@angular/common/locales/sv';
 import { registerLocaleData } from '@angular/common';
 
 import { ImgcacheModule } from '../imgcache/imgcache.module';
 import { LogMissingTranslationHandler } from './missing-translation-handler';
+import { TranslateBundleLoader } from './translation-loader';
 
 registerLocaleData(localeSv);
 
@@ -98,8 +94,7 @@ registerLocaleData(localeSv);
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        useClass: TranslateBundleLoader,
       },
       useDefaultLang: false,
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: LogMissingTranslationHandler },

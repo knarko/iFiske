@@ -1,3 +1,14 @@
+<a name="4.1.7"></a>
+## [4.1.7](https://gitlab.com/kada-development/ifiske/compare/v4.1.6...v4.1.7) (2018-04-26)
+
+
+### Bug Fixes
+
+* **register:** add explicit TOS approval ([249fdb1](https://gitlab.com/kada-development/ifiske/commit/249fdb1))
+* **translations:** bundle translations directly for better performance and less bugs ([7c1af53](https://gitlab.com/kada-development/ifiske/commit/7c1af53))
+
+
+
 <a name="4.1.6"></a>
 ## [4.1.6](https://gitlab.com/kada-development/ifiske/compare/v4.1.5...v4.1.6) (2018-04-26)
 

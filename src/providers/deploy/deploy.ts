@@ -114,28 +114,31 @@ export class DeployProvider {
         timeout(30 * 1000),
       ).toPromise();
 
-      const alert = await this.alertCtrl.show({
-        title: 'New update available',
-        message: 'There is a new update available',
-        buttons: [{
-          text: 'Install',
-          role: 'install',
-        }, {
-          text: 'Postpone',
-          role: 'cancel',
-        }],
-      });
-
-      return new Promise((resolve) => {
-        alert.onDidDismiss((_, role) => {
-          if (role === 'install') {
-            this.pro.deploy().redirect();
-            resolve(true)
-          } else {
-            resolve(false)
-          }
+      if (this.settings.isDeveloper) {
+        const alert = await this.alertCtrl.show({
+          title: 'New update available',
+          message: 'There is a new update available',
+          buttons: [{
+            text: 'Install',
+            role: 'install',
+          }, {
+            text: 'Postpone',
+            role: 'cancel',
+          }],
         });
-      });
+
+        return new Promise((resolve) => {
+          alert.onDidDismiss((_, role) => {
+            if (role === 'install') {
+              this.pro.deploy().redirect();
+              resolve(true)
+            } else {
+              resolve(false)
+            }
+          });
+        });
+      }
+      return false;
     } finally {
       this.checking = false;
     }

@@ -107,6 +107,11 @@ export class PushProvider {
   }
 
   async register() {
+    if (this.plt.is('android')) {
+      // TODO: re-add android FCM plugin
+      return;
+    }
+
     if (this.token) {
       this.unregister();
     }

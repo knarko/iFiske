@@ -116,10 +116,13 @@ export class ImgcacheService {
       });
 
     } catch (err) {
-      console.warn(err);
+      console.warn(`Could not cache ${src}`, err);
       if (!isDevMode()) {
-        MonitoringClient.captureMessage(`There was an error caching '${src}'`);
-        MonitoringClient.captureException(err);
+        if (err) {
+          MonitoringClient.captureException(err);
+        } else {
+          MonitoringClient.captureMessage(`There was an error caching '${src}'`);
+        }
       }
       return this.config.fallback ? src : '';
     }

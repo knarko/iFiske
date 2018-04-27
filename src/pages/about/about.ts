@@ -58,8 +58,10 @@ export class AboutPage {
           new Promise<any>((_, reject) => setTimeout(reject, 8000)),
         ]).then(info => this.proInfo = info)
           .catch(err => {
-            MonitoringClient.captureException(err);
             console.warn(err);
+            if (err) {
+              MonitoringClient.captureException(err);
+            }
           });
       } else {
         this.buildId = 'abc123';

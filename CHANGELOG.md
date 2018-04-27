@@ -1,3 +1,15 @@
+<a name="4.1.9"></a>
+## [4.1.9](https://gitlab.com/kada-development/ifiske/compare/v4.1.8...v4.1.9) (2018-04-27)
+
+
+### Bug Fixes
+
+* **AboutPage:** don't log undefined errors ([8877e84](https://gitlab.com/kada-development/ifiske/commit/8877e84))
+* **api:** don't retry requests with retry: false ([f852189](https://gitlab.com/kada-development/ifiske/commit/f852189))
+* **imgcache:** Improve error logging ([821a411](https://gitlab.com/kada-development/ifiske/commit/821a411))
+
+
+
 <a name="4.1.8"></a>
 ## [4.1.8](https://gitlab.com/kada-development/ifiske/compare/v4.1.7...v4.1.8) (2018-04-26)
 

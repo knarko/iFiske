@@ -151,7 +151,7 @@ export class UserProvider extends BaseModel {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
     this.pushProvider.unregister();
 
-    MonitoringClient.setContext({ user: undefined })
+    MonitoringClient.setUserContext(undefined);
     return Promise.all(p)
       .then(() => {
         console.log('Removed user info from database');
@@ -182,10 +182,8 @@ export class UserProvider extends BaseModel {
           numArr.push({ number: numbers[i] });
         }
 
-        MonitoringClient.setContext({
-          user: {
-            id: data.ID,
-          },
+        MonitoringClient.setUserContext({
+          id: data.ID,
         });
 
         return Promise.all([

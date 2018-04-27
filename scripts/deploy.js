@@ -93,19 +93,13 @@ const deploy = async () => {
     versions[bump]++;
   }
 
-  /*
   const { sourcemaps, push } = await inquirer.prompt([{
     type: 'confirm',
     name: 'sourcemaps',
     message: 'Do you want to upload source maps?',
-    default: false,
-  }, {
-    type: 'confirm',
-    name: 'push',
-    message: 'Do you want to push to Ionic Pro for building immediately?',
-    default: false,
+    default: true,
   }]);
-  */
+
   switch (bump) {
     case 'major':
       versions.minor = 0;
@@ -130,19 +124,12 @@ const deploy = async () => {
 
   console.log(`Tagged a release as v${version}`);
 
-  /*
   if (sourcemaps) {
-    shell.exec(`npm run build`);
-    //TODO: add sourcemaps
-    shell.exec(`ionic monitoring syncmaps --no-interactive`);
+    shell.exec(`npm run build`)
+    shell.exec(`sentry-cli releases new ${version}`);
+    shell.exec(`sentry-cli releases files ${version} upload-sourcemaps --url-prefix / www/build`);
   }
 
-  if (push) {
-    shell.exec(`git push ionic master`);
-  } else {
-    console.log(`Now all you need to do is\n$ git push ionic master`);
-  }
-  */
   console.log(`Now you should 'git push --follow-tags'`);
 };
 

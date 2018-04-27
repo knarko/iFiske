@@ -49,7 +49,7 @@ export class ApiProvider {
   }
 
   private static readonly BASE_URL = serverLocation + '/api/v2/api.php';
-  private readonly maxRetries = 1;
+  private readonly maxRetries = 2;
 
   private cache = new Map<string, CachedResult>();
 
@@ -111,7 +111,7 @@ export class ApiProvider {
         zip(
           range(1, this.maxRetries + 1),
           (err, i) => {
-            if (i > this.maxRetries) {
+            if (!options.retry || i > this.maxRetries) {
               throw err;
             }
             console.log('delaying API retry by ' + i * 2 + ' second(s).')

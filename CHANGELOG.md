@@ -1,3 +1,13 @@
+<a name="4.1.11"></a>
+## [4.1.11](https://gitlab.com/kada-development/ifiske/compare/v4.1.10...v4.1.11) (2018-04-30)
+
+
+### Bug Fixes
+
+* disable use of `isDevMode` since it breaks production builds in some cases ([fd20b62](https://gitlab.com/kada-development/ifiske/commit/fd20b62))
+
+
+
 <a name="4.1.10"></a>
 ## [4.1.10](https://gitlab.com/kada-development/ifiske/compare/v4.1.9...v4.1.10) (2018-04-30)
 

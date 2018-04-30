@@ -195,7 +195,7 @@ export class AdminProvider extends BaseModel {
       title: 'ui.admin.selectOrg',
       cssClass: 'admin-pick-organization',
       buttons,
-    });
+    }, {buttons: false});
   }
 
 

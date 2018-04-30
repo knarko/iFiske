@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, VirtualScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher } from 'ionic-angular';
 import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -31,19 +31,19 @@ const headers: Dictionary<Header> = {
   templateUrl: 'admin-permit-list.html',
 })
 export class AdminPermitListPage {
+  pristinePermits: AdminPermit[];
   scrollSub: Subscription;
   shouldScrollToTop: boolean;
   currentOrganization: Observable<AdminOrganization>;
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
   permits$: Observable<AdminPermit[]>;
-  permits: AdminPermit[];
+  permits: Array<AdminPermit|Header>;
   scrollSubject: Subject<void>;
 
   private sub: Subscription;
 
   @ViewChild(Content) content: Content;
-  @ViewChild('virtualScroll', { read: VirtualScroll }) virtualScroll: VirtualScroll;
 
   constructor(
     private navCtrl: NavController,
@@ -67,9 +67,8 @@ export class AdminPermitListPage {
     );
     this.scrollSubject = new Subject();
     this.scrollSub = this.permits$.subscribe((permits) => {
-      this.permits = permits;
-      this.updateVirtualScroll();
-
+      this.pristinePermits = permits;
+      this.updatePermits();
       if (!this.scrollSubject.observers.length) {
         this.shouldScrollToTop = true;
       }
@@ -77,19 +76,26 @@ export class AdminPermitListPage {
     });
   }
 
-  updateVirtualScroll = debounce(() => {
-    setTimeout(() => {
-      if (this.virtualScroll) {
-        this.virtualScroll.readUpdate(true);
-        this.virtualScroll.writeUpdate(true);
-      }
-    }, 50);
-  }, 100);
-
   ionViewWillUnload() {
     this.searchSubject.complete();
     this.scrollSubject.complete();
     this.scrollSub.unsubscribe();
+  }
+
+  private updatePermits() {
+      const newPermits = [];
+      let folding = false;
+      this.pristinePermits.forEach((permit, index) => {
+        const header = this.isNewValidity(permit, index, this.pristinePermits);
+        if (header) {
+          folding = header.isFolded;
+          newPermits.push(header);
+        }
+        if (!folding) {
+          newPermits.push(permit);
+        }
+      });
+      this.permits = newPermits;
   }
 
   isNewValidity(record: AdminPermit, recordIndex: number, records: AdminPermit[]) {
@@ -99,7 +105,13 @@ export class AdminPermitListPage {
       headers[record.validity].count = records.filter(val => val.validity === record.validity).length;
       return headers[record.validity];
     }
-  };
+  }
+
+
+  foldHeader(header: Header) {
+    header.isFolded = !header.isFolded;
+    this.updatePermits();
+  }
 
   permitTrackFn(index: number, item: AdminPermit) {
     return item.ID;
@@ -125,10 +137,6 @@ export class AdminPermitListPage {
   }
 
   ionViewWillEnter() {
-    if (this.virtualScroll) {
-      this.virtualScroll.readUpdate(true);
-      this.virtualScroll.writeUpdate(true);
-    }
     this.sub = this.scrollSubject.subscribe(() => {
       try {
         this.content.scrollToTop();

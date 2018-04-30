@@ -21,17 +21,20 @@
       {{'errors.admin.noPermits' | translate}}
     </ion-item>
   </ion-list>
-  <ion-list #virtualScroll [virtualScroll]="permits" [headerFn]="isNewValidity" approxItemHeight="88px" approxHeaderHeight="50px" [virtualTrackBy]="permitTrackFn">
-    <ion-list-header *virtualHeader="let header" [ngClass]="header.class">
-      <ion-icon item-start [name]="header.icon"></ion-icon>
-      <span>{{header.title | translate}}: {{header.count}} {{'ui.general.shortAmount' | translate}}</span>
+  <ion-list>
+    <ng-container *ngFor="let item of permits">
+    <ion-list-header *ngIf="item.title" [ngClass]="item.class" (click)="foldHeader(item)">
+      <ion-icon item-start [name]="item.icon"></ion-icon>
+      <span>{{item.title | translate}}: {{item.count}} {{'ui.general.shortAmount' | translate}}</span>
+      <ion-icon item-end [name]="item.isFolded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
     </ion-list-header>
-    <ion-item *virtualItem="let permit" (click)="goto(permit)">
-      <h2>{{permit.fullname}}</h2>
-      <p>{{permit.t}}</p>
-      <p>{{permit.tel}}</p>
-      <p item-end class="code">{{permit.code}}</p>
+    <ion-item *ngIf="!item.title" (click)="goto(item)">
+      <h2>{{item.fullname}}</h2>
+      <p>{{item.t}}</p>
+      <p>{{item.tel}}</p>
+      <p item-end class="code">{{item.code}}</p>
     </ion-item>
+    </ng-container>
   </ion-list>
 
 </ion-content>

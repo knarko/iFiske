@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { TableDef } from './table';
 import { Platform } from 'ionic-angular';
 

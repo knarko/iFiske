@@ -2,14 +2,23 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, VirtualScroll } from 'ionic-angular';
 import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
-import { debounce } from '../../util';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
+import { Dictionary } from '../../types';
+import debounce from 'lodash/debounce';
 
-const headers = {
+interface Header {
+  title: string;
+  icon?: string;
+  class?: string;
+  count?: number;
+  isFolded?: boolean;
+}
+
+const headers: Dictionary<Header> = {
   active: { title: 'ui.permit.validity.plural.active', icon: 'ifiske-permit', class: 'header-active' },
   inactive: { title: 'ui.permit.validity.plural.inactive', icon: 'time' },
   expired: { title: 'ui.permit.validity.plural.expired', icon: 'close-circle' },

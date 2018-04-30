@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Keyboard, Content } from 'ionic-an
 import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
-import { debounce } from '../../util';
+import debounce from 'lodash/debounce';
 
 @IonicPage({
   segment: 'area-search/:ID',

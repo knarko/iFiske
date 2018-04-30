@@ -1,3 +1,13 @@
+<a name="4.1.13"></a>
+## [4.1.13](https://gitlab.com/kada-development/ifiske/compare/v4.1.12...v4.1.13) (2018-04-30)
+
+
+### Bug Fixes
+
+* **admin:** improve folding performance ([6bfa646](https://gitlab.com/kada-development/ifiske/commit/6bfa646))
+
+
+
 <a name="4.1.12"></a>
 ## [4.1.12](https://gitlab.com/kada-development/ifiske/compare/v4.1.11...v4.1.12) (2018-04-30)
 

@@ -4,4 +4,41 @@ page-admin-permit-list {
     font-size: 0.9em;
     font-weight: bold;
   }
+  .search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .refresh-button {
+    box-shadow: none;
+  }
+
+  @mixin permit-header($color-name) {
+    $color: color($colors, $color-name);
+    border-color: rgba($color, 0.5);
+    background: rgba($color, 0.5);
+  }
+
+  .list-header {
+    margin: 0 !important;
+    color: rgba(black, 0.87);
+    border-bottom: 0.5px solid;
+    border-top: 0.5px solid;
+
+    &-md>.item-inner>.input-wrapper::after {
+      display: none;
+    }
+
+    &-active {
+      @include permit-header(secondary);
+    }
+    &-inactive {
+      @include permit-header(gold);
+    }
+    &-expired,
+    &-revoked {
+      @include permit-header(danger);
+    }
+  }
 }

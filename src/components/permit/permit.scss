@@ -70,14 +70,16 @@ app-permit {
 
   img.revoked {
     pointer-events: none;
-    width: 85%;
+    max-width: 85%;
+    max-height: 85%;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    margin: 11% auto;
+    margin: 20px auto;
     z-index: 10;
+    opacity: 0.8;
   }
 
 

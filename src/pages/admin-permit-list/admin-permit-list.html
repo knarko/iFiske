@@ -2,9 +2,10 @@
   <admin-header (back)="back()"></admin-header>
 
   <ion-toolbar no-border-top color="primary">
-    <form action="">
+    <form action="" class="search-form">
       <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
         [placeholder]="'Search' | translate"></ion-searchbar>
+      <button ion-button icon-only class="refresh-button" (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
     </form>
   </ion-toolbar>
 </ion-header>
@@ -23,17 +24,19 @@
   </ion-list>
   <ion-list>
     <ng-container *ngFor="let item of permits">
-    <ion-list-header *ngIf="item.title" [ngClass]="item.class" (click)="foldHeader(item)">
-      <ion-icon item-start [name]="item.icon"></ion-icon>
-      <span>{{item.title | translate}}: {{item.count}} {{'ui.general.shortAmount' | translate}}</span>
-      <ion-icon item-end [name]="item.isFolded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
-    </ion-list-header>
-    <ion-item *ngIf="!item.title" (click)="goto(item)">
-      <h2>{{item.fullname}}</h2>
-      <p>{{item.t}}</p>
-      <p>{{item.tel}}</p>
-      <p item-end class="code">{{item.code}}</p>
-    </ion-item>
+      <ion-list-header (click)="fold(item)" [ngClass]="'list-header-' + item.key">
+        <ion-icon item-start [name]="item.icon"></ion-icon>
+        <span>{{item.title | translate}}: {{item.permits.length}} {{'ui.general.shortAmount' | translate}}</span>
+        <ion-icon item-end [name]="item.folded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
+      </ion-list-header>
+      <ng-container *ngIf="!item.folded">
+      <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
+        <h2>{{permit.fullname}}</h2>
+        <p>{{permit.t}}</p>
+        <p>{{permit.tel}}</p>
+        <p item-end class="code">{{permit.code}}</p>
+      </ion-item>
+      </ng-container>
     </ng-container>
   </ion-list>
 

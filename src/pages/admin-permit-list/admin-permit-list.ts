@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, Loading } from 'ionic-angular';
 import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -9,20 +9,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Dictionary } from '../../types';
 import debounce from 'lodash/debounce';
+import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 
-interface Header {
+export interface DisplayPermit {
+  key: string;
   title: string;
-  icon?: string;
-  class?: string;
-  count?: number;
-  isFolded?: boolean;
-}
-
-const headers: Dictionary<Header> = {
-  active: { title: 'ui.permit.validity.plural.active', icon: 'ifiske-permit', class: 'header-active' },
-  inactive: { title: 'ui.permit.validity.plural.inactive', icon: 'time' },
-  expired: { title: 'ui.permit.validity.plural.expired', icon: 'close-circle' },
-  revoked: { title: 'ui.permit.validity.plural.revoked', icon: 'close-circle' },
+  permits: AdminPermit[];
+  icon: string;
+  folded?: boolean;
 }
 
 @IonicPage()
@@ -38,8 +32,14 @@ export class AdminPermitListPage {
   searchSubject: ReplaySubject<string>;
   searchTerm: string;
   permits$: Observable<AdminPermit[]>;
-  permits: Array<AdminPermit|Header>;
   scrollSubject: Subject<void>;
+
+  permits: DisplayPermit[] = [
+    { key: 'active', title: 'ui.permit.validity.plural.active', permits: [], icon: 'ifiske-permit', folded: false },
+    { key: 'inactive', title: 'ui.permit.validity.plural.inactive', permits: [], icon: 'time', folded: true },
+    { key: 'expired', title: 'ui.permit.validity.plural.expired', permits: [], icon: 'close-circle', folded: true },
+    { key: 'revoked', title: 'ui.permit.validity.plural.revoked', permits: [], icon: 'close-circle', folded: true },
+  ];
 
   private sub: Subscription;
 
@@ -50,6 +50,7 @@ export class AdminPermitListPage {
     private adminProvider: AdminProvider,
     private navParams: NavParams,
     private keyboard: Keyboard,
+    private loadingCtrl: TranslateLoadingController,
   ) {
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits$ = this.searchSubject.pipe(
@@ -83,34 +84,17 @@ export class AdminPermitListPage {
   }
 
   private updatePermits() {
-      const newPermits = [];
-      let folding = false;
-      this.pristinePermits.forEach((permit, index) => {
-        const header = this.isNewValidity(permit, index, this.pristinePermits);
-        if (header) {
-          folding = header.isFolded;
-          newPermits.push(header);
-        }
-        if (!folding) {
-          newPermits.push(permit);
-        }
-      });
-      this.permits = newPermits;
+    this.permits.forEach((p) => {
+      p.permits = [];
+    });
+
+    this.pristinePermits.forEach((permit) => {
+      this.permits.find(item => item.key === permit.validity).permits.push(permit);
+    });
   }
 
-  isNewValidity(record: AdminPermit, recordIndex: number, records: AdminPermit[]) {
-    if (records[recordIndex - 1] && records[recordIndex - 1].validity === record.validity) {
-      return null;
-    } else {
-      headers[record.validity].count = records.filter(val => val.validity === record.validity).length;
-      return headers[record.validity];
-    }
-  }
-
-
-  foldHeader(header: Header) {
-    header.isFolded = !header.isFolded;
-    this.updatePermits();
+  fold(displayPermit: DisplayPermit) {
+    displayPermit.folded = !displayPermit.folded;
   }
 
   permitTrackFn(index: number, item: AdminPermit) {
@@ -172,12 +156,20 @@ export class AdminPermitListPage {
     }
   }
 
-  async refresh(refresher: Refresher) {
+  async refresh(refresher?: Refresher) {
+    let loading: Promise<Loading>;
     try {
+      if (!refresher) {
+        loading = this.loadingCtrl.show({ content: 'Updating' });
+      }
       await this.adminProvider.update();
       await this.permits$.pipe(take(1)).toPromise();
     } finally {
-      refresher.complete();
+      if (refresher) {
+        refresher.complete();
+      } else {
+        (await loading).dismiss();
+      }
     }
   }
 }

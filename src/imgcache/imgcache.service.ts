@@ -1,7 +1,8 @@
-import { Injectable, InjectionToken, Inject, isDevMode } from '@angular/core';
+import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import * as ImgCache from 'imgcache.js';
 import { MonitoringClient } from '../app/monitoring'
+import { isProdMode } from '../app/config';
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG')
 
@@ -117,7 +118,7 @@ export class ImgcacheService {
 
     } catch (err) {
       console.warn(`Could not cache ${src}`, err);
-      if (!isDevMode()) {
+      if (isProdMode()) {
         if (err) {
           MonitoringClient.captureException(err);
         } else {

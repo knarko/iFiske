@@ -111,6 +111,7 @@
     "prompt": "^1.0.0",
     "sass-lint": "^1.12.1",
     "shelljs": "^0.8.0",
+    "superstatic": "^5.0.1",
     "typescript": "2.4.2"
   },
   "config": {

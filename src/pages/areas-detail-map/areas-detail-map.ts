@@ -1,4 +1,4 @@
-import { Component, isDevMode } from '@angular/core';
+import { Component } from '@angular/core';
 import { transition, style, animate, state, trigger } from '@angular/animations';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MapOptions } from '../../components/map/map';
@@ -7,6 +7,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Area } from '../../providers/area/area';
 import { MonitoringClient } from '../../app/monitoring';
+import { isProdMode } from '../../app/config';
 
 @IonicPage()
 @Component({
@@ -77,7 +78,7 @@ export class AreasDetailMapPage {
     ).then(() => {
       console.log('Opening navigator');
     }, error => {
-      if (!isDevMode()) {
+      if (isProdMode()) {
         MonitoringClient.captureException(error);
       }
       if (error === 'cancelled') {

@@ -1,3 +1,14 @@
+<a name="4.1.12"></a>
+## [4.1.12](https://gitlab.com/kada-development/ifiske/compare/v4.1.11...v4.1.12) (2018-04-30)
+
+
+### Bug Fixes
+
+* **admin:** don't log errors for not translating org names ([06378c3](https://gitlab.com/kada-development/ifiske/commit/06378c3))
+* **admin:** use non-virtual list for permits ([54873ae](https://gitlab.com/kada-development/ifiske/commit/54873ae))
+
+
+
 <a name="4.1.11"></a>
 ## [4.1.11](https://gitlab.com/kada-development/ifiske/compare/v4.1.10...v4.1.11) (2018-04-30)
 

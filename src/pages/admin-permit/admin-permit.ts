@@ -5,6 +5,7 @@ import { AdminProvider, AdminPermit } from '../../providers/admin/admin';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Observable } from 'rxjs/Observable';
+import { TimeoutError } from '../../errors';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'AdminPage'],
@@ -111,6 +112,13 @@ export class AdminPermitPage {
     try {
       await this.adminProvider.revokePermit(this.code, status);
       await this.loadPermit()
+    } catch (err) {
+      if (err.name === TimeoutError.name) {
+        this.toastCtrl.show({
+          message: 'Network Error',
+          duration: 4000,
+        });
+      }
     } finally {
       loading.dismiss();
     }

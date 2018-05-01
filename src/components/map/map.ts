@@ -9,10 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { MonitoringClient } from '../../app/monitoring';
 
 import * as mapboxgl from 'mapbox-gl';
-import { GeoJSON, Feature, Point } from 'geojson'
+import { GeoJSON, Feature, Point, Polygon } from 'geojson'
 import { NavController } from 'ionic-angular';
 import { colors } from '../../app/config';
-import { latLng } from 'leaflet';
 
 export interface MapOptions {
   areas?: Area[];
@@ -64,7 +63,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   ) { }
 
   ngAfterViewInit() {
-    mapboxgl.accessToken = localStorage.getItem('mapbox_api');
+    (mapboxgl.accessToken as any) = localStorage.getItem('mapbox_api');
 
     this.map = new mapboxgl.Map({
       attributionControl: false,
@@ -259,8 +258,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
           });
       const popup = new mapboxgl.Popup({anchor: 'bottom', offset: 25}).setHTML(`<h4>${poi.t}</h4><p>${poi.d}`);
       popup.on('open', () => {
-        const mapHeight = this.map.getCanvasContainer().getBoundingClientRect().height;
-        console.log(mapHeight);
+        const mapHeight = this.map.getCanvas().getBoundingClientRect().height;
         this.map.panTo(marker.getLngLat(), { offset: [0, (mapHeight / 2) - 35]});
       });
       marker.setPopup(popup);
@@ -270,15 +268,44 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
 
-  /*
-  createPolygons(polys: FiskePolygon[]) {
-    console.log(polys);
-    if (this.polygons) {
-      this.polygons.clearLayers();
-    } else {
-      this.polygons = new LayerGroup();
-      this.map.addLayer(this.polygons);
+  createPolygons(polygons: FiskePolygon[]) {
+    console.log(polygons);
+    const data: GeoJSON.FeatureCollection<Polygon> = {
+      type: 'FeatureCollection',
+      features: polygons.map(poly => {
+        const coordinates = JSON.parse(`[${poly.poly}]`).map(coord => [coord[1], coord[0]]);
+        return {
+          type: 'Feature' as 'Feature',
+          geometry: {
+            type: 'Polygon' as 'Polygon',
+            coordinates: [coordinates],
+          },
+          properties: {
+            color: poly.c,
+            title: poly.t,
+          },
+        };
+      }),
+    };
+    console.log(data);
+    if (this.map.getLayer('polygons')) {
+      return;
     }
+    this.map.addLayer({
+      id: 'polygons',
+      type: 'fill',
+      source: {
+        type: 'geojson',
+        data,
+      },
+      layout: {},
+      paint: {
+        'fill-color': ['get', 'color'],
+        'fill-outline-color': 'black',
+        'fill-opacity': 0.5,
+      },
+    });
+    /*
 
     for (var i = 0; i < polys.length; ++i) {
       var poly = polys[i];
@@ -289,8 +316,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
         fillColor: poly.c,
       }));
     }
+    */
   }
-  */
 
   createArea(area: Area) {
     const marker = this.createMarker({class: 'marker-area', lngLat: [1,1]});
@@ -324,11 +351,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
     if (this.options.pois) {
       this.createPois(this.options.pois);
     }
-    /*
     if (this.options.polygons) {
       this.createPolygons(this.options.polygons);
     }
-    */
     if (this.options.area) {
       this.createArea(this.options.area);
     }

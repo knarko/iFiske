@@ -94,5 +94,9 @@ map>.map {
 
 .mapboxgl-popup {
   max-width: 90vw;
-  max-height: 80vh;
+  z-index: 150;
+  &-content {
+  max-height: calc(80vh - 100px);
+  overflow: scroll;
+  }
 }

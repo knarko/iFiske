@@ -1,8 +1,4 @@
-@import 'leaflet/dist/leaflet';
-@import 'leaflet.locatecontrol/dist/L.Control.Locate';
-@import 'leaflet.markercluster/dist/MarkerCluster';
-@import './markercluster';
-@import 'drmonty-leaflet-awesome-markers/css/leaflet.awesome-markers';
+@import 'mapbox-gl/dist/mapbox-gl';
 
 map,
 map>.map {
@@ -78,4 +74,25 @@ map>.map {
       }
     }
   }
+}
+
+.map-controls {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  z-index: 100;
+}
+
+
+.marker-poi {
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+  height: (37px - 16px) + 37px; // Make sure that the arrow is correctly positioned
+  width: 32px;
+}
+
+.mapboxgl-popup {
+  max-width: 90vw;
+  max-height: 80vh;
 }

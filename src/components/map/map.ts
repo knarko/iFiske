@@ -1,19 +1,18 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
-import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
-import * as LocateControl from 'leaflet.locatecontrol';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { Area } from '../../providers/area/area';
 import { POI, FiskePolygon } from '../../providers/map-data/map-data';
 
-import 'leaflet.markercluster';
-import 'drmonty-leaflet-awesome-markers';
-import { NavController } from 'ionic-angular';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { TranslateService } from '@ngx-translate/core';
 import { MonitoringClient } from '../../app/monitoring';
-declare var L: any;
 
+import * as mapboxgl from 'mapbox-gl';
+import { GeoJSON, Feature, Point } from 'geojson'
+import { NavController } from 'ionic-angular';
+import { colors } from '../../app/config';
+import { latLng } from 'leaflet';
 
 export interface MapOptions {
   areas?: Area[];
@@ -22,7 +21,6 @@ export interface MapOptions {
   polygons?: FiskePolygon[];
   area?: Area;
 }
-
 
 /**
  * Generated class for the MapComponent component.
@@ -35,88 +33,56 @@ export interface MapOptions {
   templateUrl: 'map.html',
 })
 export class MapComponent implements AfterViewInit, OnChanges {
-  poiMarkers: LayerGroup;
-  areaMarker: LayerGroup;
-  polygons: LayerGroup;
-  map: Map;
-  markers: any;
   icons: any;
-  lc: any;
-
-  shouldRefresh = false;
-
-  text: string;
-  @ViewChild('map') mapElement: ElementRef;
-
   @Output('popupOpen') popupOpen = new EventEmitter();
   @Output('popupClose') popupClose = new EventEmitter();
 
   @Input() options: MapOptions;
+
+  @ViewChild('map') mapElement: ElementRef;
+  private mapStyles = function* mapStyles() {
+    const styles = [
+      'mapbox://styles/mapbox/outdoors-v10',
+      'mapbox://styles/mapbox/satellite-streets-v10',
+    ];
+    let i = 0;
+    while (true) {
+      yield styles[i];
+      i = (i + 1) % styles.length;
+    }
+  }();
+  private map: mapboxgl.Map;
+  private lc: mapboxgl.GeolocateControl;
+  private shouldRefresh: boolean;
+  private pois: mapboxgl.Marker[] = [];
+
   constructor(
     private mapData: MapDataProvider,
     private navCtrl: NavController,
     private platform: PlatformProvider,
     private translate: TranslateService,
-  ) {
-  }
+  ) { }
 
   ngAfterViewInit() {
-    var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
-    var apikey = localStorage.getItem('mapbox_api');
+    mapboxgl.accessToken = localStorage.getItem('mapbox_api');
 
-    this.map = new Map(this.mapElement.nativeElement)
-      .setView([62.0, 15.0], 4);
-
-    const outdoors = new TileLayer(mapboxUrl, {
-      maxZoom: 18,
-      maptype: 'mapbox.outdoors',
-      apikey: apikey,
-    });
-    const satellite = new TileLayer(mapboxUrl, {
-      maxZoom: 16,
-      maptype: 'mapbox.satellite',
-      apikey: apikey,
+    this.map = new mapboxgl.Map({
+      attributionControl: false,
+      container: this.mapElement.nativeElement,
+      style: this.mapStyles.next().value,
+      center: [15.0, 62.0],
+      zoom: 3,
     });
 
-    this.map.addLayer(outdoors);
-
-    let baseLayers = new Control.Layers({ outdoors, satellite });
-    this.map.addControl(baseLayers);
-    this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
-      this.map.removeControl(baseLayers);
-      const newControlLayers = {};
-      newControlLayers[stuff['ui.map.outdoors']] = outdoors;
-      newControlLayers[stuff['ui.map.satellite']] = satellite;
-      baseLayers = new Control.Layers(newControlLayers)
-      this.map.addControl(baseLayers);
-      console.log(stuff);
-    });
-
-
-    this.lc = new LocateControl({
-      follow: false,
-      position: 'bottomright',
-      keepCurrentZoomLevel: false,
-      stopFollowingOnDrag: true,
-      remainActive: true,
-      onLocationError: (err) => {
-        console.error(err);
-        MonitoringClient.captureException(err);
+    this.lc = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
       },
-      onLocationOutsideMapBounds: context => {
-        console.log(context);
-      },
-      locateOptions: {
-        watch: true, // Watch is broken in chrome
-        maxZoom: 14,
-      },
-      icon: 'locate-icon icon ion-md-locate',
-      iconLoading: 'icon locate-icon ion-md-refresh spin',
-
+      trackUserLocation: true,
+      showUserLocation: true,
     });
 
-    this.lc.addTo(this.map);
-
+    this.map.addControl(this.lc, 'bottom-right');
 
     this.map.on('popupopen', e => {
       this.map.getContainer().classList.add('popup-open');
@@ -127,114 +93,184 @@ export class MapComponent implements AfterViewInit, OnChanges {
       this.popupClose.emit(e);
     });
 
+    this.map.on('load', this.initializeMap);
+  }
+
+  private initializeMap = () => {
+    console.log('map loaded');
+    this.addAreasToMap();
     if (this.shouldRefresh) {
       this.refresh()
       this.shouldRefresh = false;
     }
   }
 
-  createAreaPopup(area) {
-    const popup = new Popup({
-      closeButton: false,
-      maxWidth: window.innerWidth - 50,
-    });
-
-    const div = document.createElement('div');
-    div.appendChild(document.createTextNode(area.t));
-    div.addEventListener('click', () => {
-      this.navCtrl.push('AreasDetailPage', area);
-    });
-
-    popup.setContent(div);
-
-    return popup;
+  swapMapStyle() {
+    this.shouldRefresh = true;
+    this.map.setStyle(this.mapStyles.next().value);
+    this.map.once('styledata', () => {
+      console.log('updated style');
+      this.addAreasToMap();
+      this.refresh();
+    })
   }
 
-  createIcons() {
-    if (this.icons) {
-      return Promise.resolve(this.icons);
-    }
-    return this.mapData.getPoiTypes()
-      .then(poiTypes => {
-        this.icons = {};
-        for (var i = 0; i < poiTypes.length; ++i) {
-          var type = poiTypes[i];
-          this.icons[type.ID] = new Icon({
-            iconUrl: serverLocation + type.icon,
-            iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
-            popupAnchor: [0, -35],
-          });
-        }
-        return this.icons;
-      });
+  private addAreasToMap() {
+    console.log(this.map);
+    this.map.addSource('areas', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [],
+      },
+      cluster: true,
+      clusterMaxZoom: 9,
+      clusterRadius: 30,
+    });
+    this.map.addLayer({
+      id: 'areas-cluster',
+      type: 'circle',
+      source: 'areas',
+      filter: ["has", "point_count"],
+      paint: {
+        // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+        // with three steps to implement three types of circles:
+        //   * Blue, 20px circles when point count is less than 100
+        //   * Yellow, 30px circles when point count is between 100 and 750
+        //   * Pink, 40px circles when point count is greater than or equal to 750
+        "circle-color": [
+          "step",
+          ["get", "point_count"],
+          colors.primary,
+          100,
+          colors.secondary,
+          750,
+          colors.gold,
+        ],
+        "circle-radius": [
+          "step",
+          ["get", "point_count"],
+          20,
+          100,
+          30,
+          750,
+          30,
+        ],
+      },
+    });
+    this.map.addLayer({
+      id: 'areas-count',
+      type: 'symbol',
+      source: 'areas',
+      filter: ["has", "point_count"],
+      layout: {
+        'text-field': '{point_count_abbreviated}',
+      },
+      paint: {
+        'text-color': '#FFFFFF',
+      },
+    });
+    this.map.on('click', 'areas-cluster', e => {
+      this.map.flyTo({ center: e.lngLat, zoom: this.map.getZoom() + 1 })
+    });
+    this.map.on('click', 'areas', e => {
+      const cluster = this.map.queryRenderedFeatures(e.point, { layers: ['areas'] }) as any;
+      if (cluster[0] && cluster[0].properties && !cluster[0].properties.cluster) {
+        console.log(cluster[0].properties);
+        this.map.flyTo({ center: cluster[0].geometry.coordinates, zoom: cluster[0].properties.zoom });
+      }
+    });
+
+    this.map.addLayer({
+      id: 'areas',
+      type: "circle",
+      source: "areas",
+      filter: ["!has", "point_count"],
+      paint: {
+        "circle-color": colors.primary,
+        "circle-radius": 8,
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#fff",
+      },
+    });
+  }
+
+  async createIcons() {
+    const poiTypes = await this.mapData.getPoiTypes();
+    this.icons = poiTypes.reduce((acc, type, index, arr) => {
+      acc[type.ID] =`${serverLocation}${type.icon}`;
+      return acc;
+    }, {});
   }
 
   createMarkers(areas: Area[]) {
-    if (this.markers) {
-      this.markers.clearLayers();
-    } else {
-      this.markers = new L.MarkerClusterGroup({
-        showCoverageOnHover: false,
-        disableClusteringAtZoom: 9,
-        chunkedLoading: true,
-        removeOutsideVisibleBounds: true,
-        spiderfyOnMaxZoom: false,
-        maxClusterRadius: 50,
-      });
-      this.map.addLayer(this.markers);
+    const data: GeoJSON.FeatureCollection<Point> = {
+      type: 'FeatureCollection',
+      features: areas.map(area => {
+        return {
+          type: 'Feature' as 'Feature',
+          geometry: {
+            type: 'Point' as 'Point',
+            coordinates: [area.lng, area.lat],
+          },
+          properties: {
+            title: area.t,
+            id: area.ID,
+            zoom: Number(area.zoom) || 8, // Some areas have zoom set to 0, which is super-ugly
+          },
+        };
+      }),
+    };
+
+    const source = this.map.getSource('areas') as mapboxgl.GeoJSONSource;
+    if (source) {
+      source.setData(data);
     }
 
-    var newMarkers = [];
-    for (var i = 0; i < areas.length; ++i) {
-      var a = areas[i];
-      var marker = new Marker({
-        // layer:           'areas',
-        lat: a.lat,
-        lng: a.lng,
-      }, {
-          title: a.t,
-
-          icon: L.AwesomeMarkers.icon({
-            icon: a.favorite ? 'star' : '',
-            // eslint-disable-next-line no-nested-ternary
-            markerColor: a.wsc ? (a.favorite ? 'orange' : 'darkblue') : 'lightgray',
-            prefix: `ion-${this.platform.cssClass}`,
-            extraClasses: 'ion-icon',
-          }),
-        });
-      marker.bindPopup(this.createAreaPopup(a));
-      newMarkers.push(marker);
-    }
-    this.markers.addLayers(newMarkers);
+    // TODO: re-add different colors
+    /*
+    icon: a.favorite ? 'star' : '',
+    // eslint-disable-next-line no-nested-ternary
+    markerColor: a.wsc ? (a.favorite ? 'orange' : 'darkblue') : 'lightgray',
+    prefix: `ion-${this.platform.cssClass}`,
+    extraClasses: 'ion-icon',
+    */
   }
 
-  createPois(pois: POI[]) {
-    if (this.poiMarkers) {
-      this.poiMarkers.clearLayers();
-    } else {
-      this.poiMarkers = new LayerGroup();
-      this.map.addLayer(this.poiMarkers);
+  private createMarker(opts: {image?: string, class?: string, lngLat: number[]}) {
+    const el = document.createElement('div');
+    el.className = opts.class;
+    if (opts.image) {
+      el.style.backgroundImage = `url('${opts.image}')`;
     }
-    this.createIcons().then(icons => {
-      for (var i = 0; i < pois.length; ++i) {
-        var poi = pois[i];
+    const marker = new mapboxgl.Marker(el);
+    marker.setLngLat(opts.lngLat);
+    return marker;
+  }
 
-        var marker = new Marker({
-          lat: poi.la,
-          lng: poi.lo,
-        }, {
-            icon: icons[poi.type],
-            title: poi.t,
+  async createPois(pois: POI[]) {
+    await this.createIcons();
+    this.pois.forEach(poi => poi.remove());
+    this.pois = pois.map(poi => {
+          const marker = this.createMarker({
+            image: this.icons[poi.type],
+            class: 'marker-poi',
+            lngLat: [poi.lo, poi.la],
           });
-        marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
-          maxWidth: window.innerWidth - 50,
-        });
-        this.poiMarkers.addLayer(marker);
-      }
-    });
+      const popup = new mapboxgl.Popup({anchor: 'bottom', offset: 25}).setHTML(`<h4>${poi.t}</h4><p>${poi.d}`);
+      popup.on('open', () => {
+        const mapHeight = this.map.getCanvasContainer().getBoundingClientRect().height;
+        console.log(mapHeight);
+        this.map.panTo(marker.getLngLat(), { offset: [0, (mapHeight / 2) - 35]});
+      });
+      marker.setPopup(popup);
+      marker.addTo(this.map);
+      return marker;
+    })
   }
 
 
+  /*
   createPolygons(polys: FiskePolygon[]) {
     console.log(polys);
     if (this.polygons) {
@@ -254,57 +290,45 @@ export class MapComponent implements AfterViewInit, OnChanges {
       }));
     }
   }
+  */
 
-  createArea(area) {
-    console.log(this);
-    if (this.areaMarker) {
-      this.areaMarker.clearLayers();
-    } else {
-      this.areaMarker = new LayerGroup();
-      this.map.addLayer(this.areaMarker);
-    }
-    var marker = new Marker({
-      lat: area.lat,
-      lng: area.lng,
-    });
-    marker.bindPopup(area.t);
-    this.areaMarker.addLayer(marker);
-
-    console.log(this.map, area);
-    setTimeout(() => {
-      this.map.setView({
-        lat: area.lat,
-        lng: area.lng,
-      }, Number(area.zoom) ? Number(area.zoom) : 9);
-    });
+  createArea(area: Area) {
+    const marker = this.createMarker({class: 'marker-area', lngLat: [1,1]});
+    marker.setPopup(new mapboxgl.Popup().setText(area.t));
+    marker.addTo(this.map);
+    this.map.flyTo({center: [area.lng, area.lat], animate: false, zoom: Number(area.zoom) || 9});
   }
 
   ngOnChanges(data) {
-    if (!this.map) {
+    if (!this.map || !this.map.loaded) {
       this.shouldRefresh = true;
       return;
     }
     this.refresh();
   }
+
   refresh() {
     console.log(this.options);
     if (!this.options) {
       return;
     }
-    if (this.options.centerOnMe && !this.lc._active) {
-      setTimeout(() => {
-        this.lc.start();
-      }, 0);
+
+    if (this.options.centerOnMe) {
+      // TODO: this zooms in too much
+      // (this.lc as any).trigger();
     }
+
     if (this.options.areas) {
       this.createMarkers(this.options.areas);
     }
     if (this.options.pois) {
       this.createPois(this.options.pois);
     }
+    /*
     if (this.options.polygons) {
       this.createPolygons(this.options.polygons);
     }
+    */
     if (this.options.area) {
       this.createArea(this.options.area);
     }

@@ -1,3 +1,14 @@
+<a name="4.1.14"></a>
+## [4.1.14](https://gitlab.com/kada-development/ifiske/compare/v4.1.13...v4.1.14) (2018-05-01)
+
+
+### Bug Fixes
+
+* **admin:** fix loading permits when offline ([e69a1df](https://gitlab.com/kada-development/ifiske/commit/e69a1df))
+* **admin:** show error if network fails when revoking permit ([24b6803](https://gitlab.com/kada-development/ifiske/commit/24b6803))
+
+
+
 <a name="4.1.13"></a>
 ## [4.1.13](https://gitlab.com/kada-development/ifiske/compare/v4.1.12...v4.1.13) (2018-04-30)
 

@@ -27,6 +27,12 @@ export interface FiskePolygon {
   poly: string;
 }
 
+export interface PoiType {
+  ID: number;
+  t: string;
+  icon: string;
+}
+
 @Injectable()
 export class MapDataProvider extends BaseModel {
   protected readonly tables: Dictionary<TableDef> = {
@@ -94,7 +100,7 @@ export class MapDataProvider extends BaseModel {
   }
 
   @DBMethod
-  async getPoiTypes(): Promise<any> {
+  async getPoiTypes(): Promise<PoiType[]> {
     return this.DB.getMultiple(`SELECT * FROM Poi_Type`);
   }
 

@@ -16,3 +16,12 @@ export function isProdMode() {
   }
   return false;
 }
+
+export const colors = {
+  primary: "#003852",
+  secondary: "#669600",
+  danger: "#ff580a",
+  light: "#e4e4e4",
+  dark: "#222",
+  gold: "#edce07",
+}

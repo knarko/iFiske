@@ -254,21 +254,33 @@ export class AdminProvider extends BaseModel {
       this.permits.set(code, subject);
     }
 
+    let foundPermit = false;
     const successHandler = permit => {
+      foundPermit = true;
       this.transformPermit(permit);
       subject.next(permit);
     };
 
     const errorHandler = err => {
-      subject.error(err);
+      if (!foundPermit) {
+        subject.error(err);
+      } else {
+        console.warn(err);
+      }
     }
 
     this.DB.getSingle(`
       SELECT * FROM Admin_Permits
       WHERE code = ?
-    `, [code]).then(successHandler, errorHandler);
-
-    this.API.adm_check_prod(code).then(successHandler, errorHandler);
+    `, [code])
+      .then(successHandler)
+      .catch(err => {
+        console.warn(err);
+      })
+      .then(() => {
+        return this.API.adm_check_prod(code).then(successHandler);
+      })
+      .catch(errorHandler);
 
     return subject.asObservable();
   }

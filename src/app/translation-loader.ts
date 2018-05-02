@@ -5,6 +5,7 @@ import { _throw } from 'rxjs/observable/throw';
 import * as sv from '../assets/i18n/sv.json';
 import * as de from '../assets/i18n/de.json';
 import * as en from '../assets/i18n/en.json';
+import { MonitoringClient } from './monitoring';
 
 
 export class TranslateBundleLoader implements TranslateLoader {
@@ -18,7 +19,8 @@ export class TranslateBundleLoader implements TranslateLoader {
     if (this.languages[lang]) {
       return of(this.languages[lang]);
     }
-    return _throw(`No translations found for ${lang}`);
+    MonitoringClient.captureException(`Invalid language ${lang}!`);
+    return of(this.languages.sv);
   }
 
 }

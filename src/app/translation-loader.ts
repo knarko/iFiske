@@ -7,20 +7,26 @@ import * as de from '../assets/i18n/de.json';
 import * as en from '../assets/i18n/en.json';
 import { MonitoringClient } from './monitoring';
 
-
 export class TranslateBundleLoader implements TranslateLoader {
   private languages = {
+    se: sv,
     sv,
-    de,
     en,
+    de,
   }
 
   getTranslation(lang: string): any {
-    if (this.languages[lang]) {
+    if (lang != undefined && this.languages[lang]) {
       return of(this.languages[lang]);
     }
-    MonitoringClient.captureException(`Invalid language ${lang}!`);
-    return of(this.languages.sv);
+
+    MonitoringClient.captureException(new Error(`Invalid language '${lang}'`));
+
+    // Try to return the best existing language
+    if (typeof lang !== 'string' || lang.match(/^s[ev]/i)) {
+      return of(this.languages.sv);
+    }
+    return of(this.languages.en);
   }
 
 }

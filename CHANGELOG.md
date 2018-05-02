@@ -1,3 +1,13 @@
+<a name="4.1.15"></a>
+## [4.1.15](https://gitlab.com/kada-development/ifiske/compare/v4.1.14...v4.1.15) (2018-05-02)
+
+
+### Bug Fixes
+
+* **translations:** fix hugely breaking bug in language parsing and return ([643bf63](https://gitlab.com/kada-development/ifiske/commit/643bf63))
+
+
+
 <a name="4.1.14"></a>
 ## [4.1.14](https://gitlab.com/kada-development/ifiske/compare/v4.1.13...v4.1.14) (2018-05-01)
 

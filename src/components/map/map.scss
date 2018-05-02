@@ -100,3 +100,22 @@ map>.map {
   overflow: scroll;
   }
 }
+
+.map-pin {
+  border-radius: 50%;
+  border: 8px solid currentColor;
+  width: 24px;
+  height: 24px;
+}
+
+.map-pin::after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  bottom: -30px;
+  left: -6px;
+  border: 10px solid transparent;
+  border-top: 17px solid;
+  border-top-color: inherit;
+}

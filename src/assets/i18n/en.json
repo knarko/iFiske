@@ -104,6 +104,10 @@
           "expired": "Expired"
         }
       }
+    },
+    "developer": {
+      "betaOptIn": "Install beta versions",
+      "checkForUpdates": "Check for updates"
     }
   },
   "errors": {

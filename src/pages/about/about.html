@@ -18,15 +18,12 @@
       <h2>{{'ui.about.version' | translate}}</h2>
       <p>{{version}} ({{codeVersion}})</p>
     </button>
-    <button ion-item detail-none *ngIf="settings?.isDeveloper" (click)="selectDeployChannel()">
-      <h2>{{'Deploy channel' | translate}}</h2>
-      <p>
-        {{proInfo?.channel ||settings?.channel}}
-        <span *ngIf="proInfo?.deploy_uuid !== 'NO_DEPLOY_LABEL'">({{proInfo?.deploy_uuid}})</span>
-      </p>
-    </button>
+    <ion-item *ngIf="settings?.isDeveloper">
+      <ion-label>{{'ui.developer.betaOptIn' | translate}}</ion-label>
+      <ion-toggle [(ngModel)]="useBetaChannel" (ionChange)="selectDeployChannel()"></ion-toggle>
+    </ion-item>
     <ion-item *ngIf="proInfo && settings?.isDeveloper" (click)="checkForUpdates()">
-      {{'Check for updates' | translate}}
+      {{'ui.deveoper.checkForUpdates' | translate}}
     </ion-item>
     <ion-item>
       <h2>{{'Last updated' | translate}}</h2>

@@ -103,6 +103,10 @@
           "expired": "Utgångna"
         }
       }
+    },
+    "developer": {
+      "betaOptIn": "Installera beta-versioner",
+      "checkForUpdates": "Leta efter uppdateringar"
     }
   },
   "errors": {

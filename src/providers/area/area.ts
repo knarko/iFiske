@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
+import { SettingsProvider } from '../settings/settings';
 
 export interface AreaImage {
   h: number;
@@ -175,6 +176,7 @@ export class AreaProvider extends BaseModel<Area> {
     protected API: ApiProvider,
     private geo: Geolocation,
     private fishProvider: FishProvider,
+    private settings: SettingsProvider,
   ) {
     super();
     this.initialize();
@@ -413,6 +415,9 @@ export class AreaProvider extends BaseModel<Area> {
           distance: 10,
           maxPatternLength: 16,
         };
+        if (this.settings.isDeveloper) {
+          options.keys.push({ name: 'ID', weight: 0.2 }, { name: 'orgid', weight: 0.2 });
+        }
         // Populate Fuse search index
         return new Fuse(data, options);
       })

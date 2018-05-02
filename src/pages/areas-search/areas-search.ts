@@ -4,6 +4,7 @@ import { AreaProvider, Area } from '../../providers/area/area';
 import { FishProvider, Fish } from '../../providers/fish/fish';
 import { County } from '../../providers/county/county';
 import debounce from 'lodash/debounce';
+import { SettingsProvider } from '../../providers/settings/settings';
 
 @IonicPage({
   segment: 'area-search/:ID',
@@ -27,6 +28,7 @@ export class AreasSearchPage {
     private area: AreaProvider,
     private fish: FishProvider,
     private keyboard: Keyboard,
+    public settings: SettingsProvider,
   ) { }
 
   ionViewDidLoad() {

@@ -28,6 +28,8 @@ export class AboutPage {
 
   developerClicked = 0;
 
+  useBetaChannel: boolean = this.settings.channel === 'Master';
+
   constructor(
     private appVersion: AppVersion,
     private platform: Platform,
@@ -75,29 +77,13 @@ export class AboutPage {
     if (!this.settings.isDeveloper) {
       return;
     }
-    const alert = await this.alertCtrl.show({
-      title: 'Select Build Channel',
-      message: 'Master is for developers only',
-      buttons: [
-        {
-          text: 'Master',
-          role: 'Master',
-        },
-        {
-          text: 'Production',
-          role: 'Production',
-        },
-      ],
-    });
-    alert.onDidDismiss(async (_data, role) => {
-      if (role === 'Production' || role === 'Master') {
-        await this.deploy.setChannel(role);
-      }
-      this.pro.deploy().info()
-        .then(info => this.proInfo = info)
-        .catch(err => console.warn(err));
-    });
+    this.settings.channel = this.useBetaChannel ? 'Master' : 'Production';
+    await this.deploy.setChannel(this.settings.channel);
+    this.pro.deploy().info()
+      .then(info => this.proInfo = info)
+      .catch(err => console.warn(err));
   }
+
   async activateDeveloperMode() {
     if (this.settings.isDeveloper) {
       return;

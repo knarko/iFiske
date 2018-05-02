@@ -7,7 +7,6 @@ import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/op
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { Dictionary } from '../../types';
 import debounce from 'lodash/debounce';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 

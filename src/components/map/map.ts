@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input } from '@angular/core';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { Area } from '../../providers/area/area';
@@ -6,12 +6,12 @@ import { POI, FiskePolygon } from '../../providers/map-data/map-data';
 
 import { PlatformProvider } from '../../providers/platform/platform';
 import { TranslateService } from '@ngx-translate/core';
-import { MonitoringClient } from '../../app/monitoring';
 
 import * as mapboxgl from 'mapbox-gl';
-import { GeoJSON, Feature, Point, Polygon } from 'geojson'
+import { Point, Polygon } from 'geojson'
 import { NavController } from 'ionic-angular';
 import { colors } from '../../app/config';
+import { Dictionary } from '../../types';
 
 /**
  * Generated class for the MapComponent component.
@@ -28,14 +28,11 @@ export class MapComponent implements AfterViewInit {
   @Output('popupOpen') popupOpen = new EventEmitter();
   @Output('popupClose') popupClose = new EventEmitter();
 
-  @Input() set areas(areas: Area[]) {
-    this.queue(() => this.updateAreas(areas || undefined));
-  };
-
   @Input() set centerOnMe(centerOnMe: boolean) {}
-  @Input() set pois(value: POI[]) {}
-  @Input() set polygons(value: FiskePolygon[]) {}
-  @Input() set area(value: Area) {}
+  @Input() set areas(areas: Area[]) { this.queue(() => this.updateAreas(areas)) }
+  @Input() set pois(pois: POI[]) { this.queue(() => this.createPois(pois))}
+  @Input() set polygons(polygons: FiskePolygon[]) { this.queue(() => this.createPolygons(polygons))}
+  @Input() set area(area: Area) { this.queue(() => this.createArea(area))}
 
   @ViewChild('map') mapElement: ElementRef;
 
@@ -67,15 +64,11 @@ export class MapComponent implements AfterViewInit {
 
   private map: mapboxgl.Map;
   private lc: mapboxgl.GeolocateControl;
-  private shouldRefresh: boolean;
-  private poiMarkers: mapboxgl.Marker[];
-  icons: any;
+  private poiMarkers: mapboxgl.Marker[] = [];
+  private poiIcons: Dictionary<string>;
 
   constructor(
     private mapData: MapDataProvider,
-    private navCtrl: NavController,
-    private platform: PlatformProvider,
-    private translate: TranslateService,
   ) { }
 
   ngAfterViewInit() {
@@ -146,16 +139,17 @@ export class MapComponent implements AfterViewInit {
     this.runQueue();
   }
 
-  swapMapStyle() {
-    this.shouldRefresh = true;
+  swapMapStyle = () => {
     this.map.setStyle(this.mapStyles.next().value);
     this.map.once('styledata', () => {
       console.log('updated style');
     })
   }
 
-  private updateAreas(areas: Area[] = []) {
-    console.log(areas);
+  private updateAreas(areas: Area[]) {
+    if (!areas) {
+      areas = [];
+    }
     const sourceName = 'areas';
     let source: mapboxgl.GeoJSONSource = this.map.getSource(sourceName) as any;
 
@@ -173,6 +167,7 @@ export class MapComponent implements AfterViewInit {
 
       source = this.map.getSource(sourceName) as any;
 
+      if (!this.map.getLayer('areas-cluster')) {
       this.map.addLayer({
         id: 'areas-cluster',
         type: 'circle',
@@ -193,20 +188,23 @@ export class MapComponent implements AfterViewInit {
           ],
         },
       });
+      }
 
-      this.map.addLayer({
-        id: 'areas-count',
-        type: 'symbol',
-        source: 'areas',
-        filter: ["has", "point_count"],
-        layout: {
-          'text-field': '{point_count_abbreviated}',
-          'text-allow-overlap': true,
-        },
-        paint: {
-          'text-color': '#FFFFFF',
-        },
-      });
+      if (!this.map.getLayer('areas-count')) {
+        this.map.addLayer({
+          id: 'areas-count',
+          type: 'symbol',
+          source: 'areas',
+          filter: ["has", "point_count"],
+          layout: {
+            'text-field': '{point_count_abbreviated}',
+            'text-allow-overlap': true,
+          },
+          paint: {
+            'text-color': '#FFFFFF',
+          },
+        });
+      }
 
       this.map.on('click', 'areas-cluster', e => {
         this.map.flyTo({ center: e.lngLat, zoom: this.map.getZoom() + 1 })
@@ -217,11 +215,16 @@ export class MapComponent implements AfterViewInit {
         if (cluster[0] && cluster[0].properties && !cluster[0].properties.cluster) {
           console.log(cluster[0].properties);
           const mapHeight = this.map.getCanvas().getBoundingClientRect().height;
-          this.map.flyTo({
-            center: cluster[0].geometry.coordinates,
-            zoom: cluster[0].properties.zoom,
-            offset: [0, (mapHeight / -4)],
-          });
+
+          const offset = [0, (mapHeight / -4)];
+
+          const center = cluster[0].geometry.coordinates;
+          const zoom = cluster[0].properties.zoom;
+          if (this.map.getZoom() === zoom) {
+            this.map.panTo(center, {offset});
+          } else {
+            this.map.flyTo({center, offset, zoom});
+          }
         }
       });
 
@@ -264,9 +267,9 @@ export class MapComponent implements AfterViewInit {
     source.setData(data);
   }
 
-  async createIcons() {
+  async createPoiIcons() {
     const poiTypes = await this.mapData.getPoiTypes();
-    this.icons = poiTypes.reduce((acc, type, index, arr) => {
+    this.poiIcons = poiTypes.reduce((acc, type, index, arr) => {
       acc[type.ID] =`${serverLocation}${type.icon}`;
       return acc;
     }, {});
@@ -285,11 +288,14 @@ export class MapComponent implements AfterViewInit {
   }
 
   async createPois(pois: POI[]) {
-    await this.createIcons();
+    if (!pois) {
+      pois = [];
+    }
+    await this.createPoiIcons();
     this.poiMarkers.forEach(poi => poi.remove());
     this.poiMarkers = pois.map(poi => {
           const marker = this.createMarker({
-            image: this.icons[poi.type],
+            image: this.poiIcons[poi.type],
             class: 'marker-poi',
             lngLat: [poi.lo, poi.la],
           });
@@ -306,7 +312,9 @@ export class MapComponent implements AfterViewInit {
 
 
   createPolygons(polygons: FiskePolygon[]) {
-    console.log(polygons);
+    if (!polygons) {
+      polygons = [];
+    }
     const data: GeoJSON.FeatureCollection<Polygon> = {
       type: 'FeatureCollection',
       features: polygons.map(poly => {
@@ -324,33 +332,44 @@ export class MapComponent implements AfterViewInit {
         };
       }),
     };
-    console.log(data);
-    if (this.map.getLayer('polygons')) {
-      return;
-    }
-    this.map.addLayer({
-      id: 'polygons',
-      type: 'fill',
-      source: {
+    let source = this.map.getSource('polygons') as mapboxgl.GeoJSONSource;
+    if (source) {
+      source.setData(data);
+    } else {
+      this.map.addSource('polygons', {
         type: 'geojson',
         data,
-      },
-      layout: {},
-      paint: {
-        'fill-color': ['get', 'color'],
-        'fill-outline-color': 'black',
-        'fill-opacity': 0.5,
-      },
-    });
+      });
+    }
+
+    if (!this.map.getLayer('polygons')) {
+      this.map.addLayer({
+        id: 'polygons',
+        type: 'fill',
+        source: {
+          type: 'geojson',
+          data,
+        },
+        layout: {},
+        paint: {
+          'fill-color': ['get', 'color'],
+          'fill-outline-color': 'black',
+          'fill-opacity': 0.5,
+        },
+      });
+    }
   }
 
-  createArea(area: Area) {
+  createArea(area?: Area) {
+    if (!area) {
+      return;
+    }
     this.map.flyTo({center: [area.lng, area.lat], animate: false, zoom: Number(area.zoom) || 9});
     const marker = this.createMarker({class: 'map-pin', lngLat: [area.lng, area.lat]});
     const popup = new mapboxgl.Popup();
     popup.setText(area.t);
     popup.on('open', () => {
-      this.map.flyTo({center: [area.lng, area.lat], animate: false, zoom: Number(area.zoom) || 9});
+      this.map.panTo([area.lng, area.lat]);
     });
     marker.setPopup(popup);
     marker.addTo(this.map);

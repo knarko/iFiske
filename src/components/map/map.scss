@@ -103,7 +103,7 @@ map>.map {
 
 .map-pin {
   border-radius: 50%;
-  border: 8px solid currentColor;
+  border: 8px solid color($colors, primary);
   width: 24px;
   height: 24px;
 }

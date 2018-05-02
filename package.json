@@ -81,7 +81,7 @@
     "ionic-page-transitions": "^1.0.0",
     "ionicons": "3.0.0",
     "lodash": "^4.17.4",
-    "mapbox-gl": "^0.45.0-beta.1",
+    "mapbox-gl": "0.44.2",
     "moment": "^2.21.0",
     "ngx-pipes": "^2.1.2",
     "phonegap-plugin-barcodescanner": "^7.1.1",

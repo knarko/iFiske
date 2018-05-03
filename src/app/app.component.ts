@@ -13,6 +13,7 @@ import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { MonitoringClient } from './monitoring'
 import { googleAnalyticsTrackerID, APP_VERSION } from './config';
+import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 
 @Component({
   templateUrl: 'app.html',
@@ -33,6 +34,7 @@ export class MyApp {
     private deploy: DeployProvider,
     private network: Network,
     private ga: GoogleAnalytics,
+    private userTracking: UserTrackingProvider,
   ) {
     if (this.settings.firstLaunch) {
       this.rootPage = 'OnboardingPage';
@@ -45,9 +47,14 @@ export class MyApp {
       MonitoringClient.captureException(err);
     });
 
+
     platform.ready().then(() => {
       // TODO: hide loading spinner on first launch
-      this.update.update(false, this.settings.firstLaunch).catch(e => console.warn(e));
+      this.update.update(false, this.settings.firstLaunch)
+        .catch(e => console.warn(e))
+        .then(() => {
+          this.userTracking.track('appOpened');
+        });
 
       this.setupBackButtonText();
 

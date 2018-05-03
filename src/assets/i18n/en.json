@@ -108,6 +108,12 @@
     "developer": {
       "betaOptIn": "Install beta versions",
       "checkForUpdates": "Check for updates"
+    },
+    "reviews": {
+      "title": "Do you enjoy the app?",
+      "message": "Your feedback helps us make fishing easier. Please leave a review!",
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "errors": {

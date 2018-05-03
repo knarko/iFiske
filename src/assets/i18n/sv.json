@@ -107,6 +107,12 @@
     "developer": {
       "betaOptIn": "Installera beta-versioner",
       "checkForUpdates": "Leta efter uppdateringar"
+    },
+    "reviews": {
+      "title": "Tycker du om appen?",
+      "message": "Din feedback hjälper oss att göra fisket enklare. Lämna gärna en recension!",
+      "yes": "Ja",
+      "no": "Nej"
     }
   },
   "errors": {

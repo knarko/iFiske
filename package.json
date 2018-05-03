@@ -36,6 +36,7 @@
     "@ionic-native/geolocation": "^4.5.3",
     "@ionic-native/google-analytics": "^4.6.0",
     "@ionic-native/launch-navigator": "^4.5.3",
+    "@ionic-native/launch-review": "^4.7.0",
     "@ionic-native/network": "^4.5.3",
     "@ionic-native/pro": "^4.5.3",
     "@ionic-native/screen-orientation": "^4.5.3",
@@ -52,6 +53,7 @@
     "chart.js": "^2.7.2",
     "cordova-android": "6.4.0",
     "cordova-ios": "~4.5.4",
+    "cordova-launch-review": "^3.1.1",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^1.7.1",
     "cordova-plugin-app-name": "^1.0.4",
@@ -157,7 +159,8 @@
       },
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-google-analytics": {}
+      "cordova-plugin-google-analytics": {},
+      "cordova-launch-review": {}
     },
     "platforms": [
       "android",

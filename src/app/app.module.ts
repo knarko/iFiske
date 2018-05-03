@@ -17,6 +17,7 @@ import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { LaunchReview } from '@ionic-native/launch-review';
 import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic-native/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -66,6 +67,7 @@ import { registerLocaleData } from '@angular/common';
 import { ImgcacheModule } from '../imgcache/imgcache.module';
 import { LogMissingTranslationHandler } from './missing-translation-handler';
 import { TranslateBundleLoader } from './translation-loader';
+import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 
 registerLocaleData(localeSv);
 
@@ -118,6 +120,7 @@ registerLocaleData(localeSv);
     Geolocation,
     GoogleAnalytics,
     LaunchNavigator,
+    LaunchReview,
     Network,
     Pro,
     ScreenOrientation,
@@ -153,6 +156,7 @@ registerLocaleData(localeSv);
     TranslateToastController,
     UpdateProvider,
     UserProvider,
+    UserTrackingProvider,
   ],
 })
 export class AppModule { }

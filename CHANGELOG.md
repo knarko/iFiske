@@ -1,3 +1,13 @@
+<a name="4.2.0"></a>
+# [4.2.0](https://gitlab.com/kada-development/ifiske/compare/v4.1.16...v4.2.0) (2018-05-03)
+
+
+### Features
+
+* **tracking:** add user tracking ([b39871c](https://gitlab.com/kada-development/ifiske/commit/b39871c))
+
+
+
 <a name="4.1.16"></a>
 ## [4.1.16](https://gitlab.com/kada-development/ifiske/compare/v4.1.15...v4.1.16) (2018-05-03)
 

@@ -155,23 +155,28 @@ export class AdminProvider extends BaseModel {
 
     try {
       let deletePermits = true;
-      const p = this.API.user_organizations().then(async (orgs: Dictionary<AdminOrganization>) => {
-        const organizations = Object.values(orgs);
-        organizations.forEach(org => org.ID = (org as any).orgid);
-        await this.DB.populateTable(this.tables.organizations, orgs);
-        const pops: Promise<any>[] = [];
-        for (let org of organizations) {
-          const permits = await this.API.adm_products(org.ID);
-          Object.values(permits).forEach((permit: any) => permit.org = org.ID);
-          pops.push(this.DB.populateTable(this.tables.permits, permits, deletePermits));
-          deletePermits = false;
+      const orgs: Dictionary<AdminOrganization> = await this.API.user_organizations();
+      const organizations = Object.values(orgs);
+      organizations.forEach(org => org.ID = (org as any).orgid);
+      await this.DB.populateTable(this.tables.organizations, orgs);
+      await Promise.all(organizations.map(async (org) => {
+        let permits;
+        try {
+          permits = await this.API.adm_products(org.ID);
+        } catch (err) {
+          console.warn(err);
+          return;
         }
-        await Promise.all(pops);
-      }).then(() => true).catch(err => false);
-      p.then(() => this.setDefaultOrgId());
-      return p;
+        Object.values(permits).forEach((permit: any) => permit.org = org.ID);
+        const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
+        deletePermits = false;
+        return populated;
+      }));
+      this.setDefaultOrgId();
+      return true;
     } catch (err) {
       console.warn(err);
+      return false;
     }
   }
 
@@ -276,11 +281,9 @@ export class AdminProvider extends BaseModel {
       .then(successHandler)
       .catch(err => {
         console.warn(err);
-      })
-      .then(() => {
-        return this.API.adm_check_prod(code).then(successHandler);
-      })
-      .catch(errorHandler);
+      });
+
+      this.API.adm_check_prod(code).then(successHandler, errorHandler).catch(err => {});
 
     return subject.asObservable();
   }

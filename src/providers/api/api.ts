@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { serverLocation } from './serverLocation';
 
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/do';
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
 import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay } from 'rxjs/operators';

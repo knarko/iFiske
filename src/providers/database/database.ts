@@ -110,7 +110,10 @@ export class DatabaseProvider {
    */
   getSingle(sql: string, args?: any[]) {
     return this.getMultiple(sql, args).then(result => {
-      return result && result[0];
+      if (!result || !result.length) {
+        throw new Error(`Could not find any objects for '${sql}'`);
+      }
+      return result[0];
     });
   }
 

@@ -1,3 +1,21 @@
+<a name="4.1.16"></a>
+## [4.1.16](https://gitlab.com/kada-development/ifiske/compare/v4.1.15...v4.1.16) (2018-05-03)
+
+
+### Bug Fixes
+
+* **admin:** fix blank screen when trying to load permit that doesn't exist ([e394d63](https://gitlab.com/kada-development/ifiske/commit/e394d63))
+* **admin:** show error to user if network fails to load permits ([d1e3243](https://gitlab.com/kada-development/ifiske/commit/d1e3243))
+* **login:** improve error messages on bad networks ([90d0d12](https://gitlab.com/kada-development/ifiske/commit/90d0d12))
+* **translations:** resolve invalid languages in a better way ([bb2afdf](https://gitlab.com/kada-development/ifiske/commit/bb2afdf))
+
+
+### Features
+
+* **developer:** Add more developer tools ([d5c42a2](https://gitlab.com/kada-development/ifiske/commit/d5c42a2))
+
+
+
 <a name="4.1.15"></a>
 ## [4.1.15](https://gitlab.com/kada-development/ifiske/compare/v4.1.14...v4.1.15) (2018-05-02)
 

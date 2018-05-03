@@ -12,6 +12,7 @@ import { Form } from './form';
 export class IonDataFormComponent {
   @Input() form: Form;
   @Input() hideSubmit = false;
+  @Input() disableSubmit: boolean;
 
   constructor() { }
 

@@ -170,7 +170,7 @@ export class AdminPermitListPage {
     } catch (error) {
       if (error.name === TimeoutError.name) {
         this.toastCtrl.show({
-          message: 'Network Error',
+          message: 'errors.network',
           duration: 4000,
         });
       } else {

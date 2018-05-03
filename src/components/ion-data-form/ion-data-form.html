@@ -22,7 +22,7 @@
     </ng-container>
     <ion-errors [control]="form.group" [errors]="form.errors"></ion-errors>
   </div>
-  <button ion-button block icon-right *ngIf="!hideSubmit" type="submit" name="action" [disabled]="!form.group?.valid">{{form.submitMessage | translate}}
+  <button ion-button block icon-right *ngIf="!hideSubmit" type="submit" name="action" [disabled]="disableSubmit != undefined ? disableSubmit : !form.group?.valid">{{form.submitMessage | translate}}
     <ion-icon name="send"></ion-icon>
   </button>
 </form>

@@ -131,7 +131,7 @@ export class UpdateProvider {
       localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
     }, (error) => {
       this.toastCtrl.show({
-        message: 'Network Error',
+        message: 'errors.network',
         duration: 4000,
       });
 

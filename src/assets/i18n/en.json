@@ -122,6 +122,7 @@
         "invalid": "The QR code could not be scanned"
       }
     },
+    "network": "There was an error with the network, please make sure you are connected and try again",
     "area": {
       "notSelling": "This organization does not sell permits through iFiske"
     },
@@ -229,7 +230,6 @@
   "More in control panel": "More functionality is available in the control panel at www.ifiske.se",
   "My Fishing Permits": "My fishing permits",
   "Name": "Name",
-  "Network Error": "There was an error with the network, please make sure you are connected and try again. {{error}}",
   "New account": "New account",
   "New password": "New password",
   "Next": "Next",

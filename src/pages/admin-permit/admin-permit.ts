@@ -115,7 +115,7 @@ export class AdminPermitPage {
     } catch (err) {
       if (err.name === TimeoutError.name) {
         this.toastCtrl.show({
-          message: 'Network Error',
+          message: 'errors.network',
           duration: 4000,
         });
       }

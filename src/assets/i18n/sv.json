@@ -111,6 +111,7 @@
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
+    "network": "Det uppstod ett nätverksfel. Se till att du är ansluten till internet eller försök igen senare.",
     "admin": {
       "noPermits": "Inga fiskekort hittades",
       "permit": {
@@ -228,7 +229,6 @@
   "More in control panel": "Mer funktionalitet finns i kontrollpanelen på www.ifiske.se",
   "My Fishing Permits": "Mina fiskekort",
   "Name": "Namn",
-  "Network Error": "Det uppstod ett nätverksfel, försök igen senare.",
   "New account": "Nytt konto",
   "New password": "Nytt lösenord",
   "Next": "Nästa",

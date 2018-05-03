@@ -6,6 +6,7 @@ import { ApiError } from '../../providers/api/api';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { StatusBar } from '@ionic-native/status-bar';
+import { TimeoutError } from '../../errors';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,11 @@ export class LoginPage {
         this.login(group);
       },
       submitMessage: 'Log in',
-      errors: {},
+      errors: {
+        network: 'errors.network',
+        unknown: 'errors.unknown',
+        custom: '',
+      },
       controls: {
         username: {
           placeholder: 'Username',
@@ -85,7 +90,9 @@ export class LoginPage {
         control.markAsDirty();
         control.markAsTouched();
       }
-      return;
+      if (!group.controls.username.valid || !group.controls.password.valid) {
+        return;
+      }
     }
     const loading = await this.loadingCtrl.show({
       content: 'Logging in',
@@ -97,13 +104,20 @@ export class LoginPage {
     })
       .then(() => {
         return this.close();
-      }, ({message}: {message?: ApiError}) => {
-        if (!message) {
-          this.form.group.setErrors({
-            loginFailed: true,
+      }, (error: Error) => {
+        console.log(this.form);
+        if (error.name === TimeoutError.name) {
+          return this.form.group.setErrors({
+            network: true,
           });
-          this.form.errors.loginFailed = 'errors.unknown';
-          return;
+        }
+
+        const { message } = error as any as {message?: ApiError};
+
+        if (typeof message !== 'object') {
+          return this.form.group.setErrors({
+            unknown: true,
+          });
         }
 
         switch (message.error_code) {
@@ -121,9 +135,9 @@ export class LoginPage {
             break;
           default:
             this.form.group.setErrors({
-              loginFailed: true,
+              custom: true,
             });
-            this.form.errors.loginFailed = message && message.response;
+            this.form.errors.custom = message && message.response;
             break;
         }
       }).catch(() => {}).then(() => {

@@ -10,6 +10,9 @@ import { Subject } from 'rxjs/Subject';
 import { Dictionary } from '../../types';
 import debounce from 'lodash/debounce';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
+import { MonitoringClient } from '../../app/monitoring';
+import { TimeoutError } from '../../errors';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
 export interface DisplayPermit {
   key: string;
@@ -51,6 +54,7 @@ export class AdminPermitListPage {
     private navParams: NavParams,
     private keyboard: Keyboard,
     private loadingCtrl: TranslateLoadingController,
+    private toastCtrl: TranslateToastController,
   ) {
     this.searchSubject = new ReplaySubject<string>(1);
     this.permits$ = this.searchSubject.pipe(
@@ -60,7 +64,6 @@ export class AdminPermitListPage {
         return permits.sort((a, b) => {
           return a.validity.localeCompare(b.validity) ||
             a.score - b.score ||
-            // TODO: get locale from settings?
             a.fullname.localeCompare(b.fullname, 'sv');
         });
       }),
@@ -164,6 +167,15 @@ export class AdminPermitListPage {
       }
       await this.adminProvider.update();
       await this.permits$.pipe(take(1)).toPromise();
+    } catch (error) {
+      if (error.name === TimeoutError.name) {
+        this.toastCtrl.show({
+          message: 'Network Error',
+          duration: 4000,
+        });
+      } else {
+        MonitoringClient.captureException(error);
+      }
     } finally {
       if (refresher) {
         refresher.complete();

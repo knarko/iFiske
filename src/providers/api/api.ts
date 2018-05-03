@@ -168,6 +168,7 @@ export class ApiProvider {
     return this.getObservable(params, options).toPromise();
   }
 
+  //TODO: UNUSED
   get_municipalities() {
     return this.api_call({ m: 'get_municipalities' });
   }
@@ -285,6 +286,7 @@ export class ApiProvider {
   get_techniques() {
     return this.api_call({ m: 'get_techniques' });
   }
+  // UNUSED
   get_baits() {
     return this.api_call({ m: 'get_baits' });
   }
@@ -294,6 +296,7 @@ export class ApiProvider {
       orgid: orgid,
     });
   }
+  // UNUSED
   get_org_modified(orgid) {
     return this.api_call({
       m: 'get_org_modified',
@@ -313,6 +316,7 @@ export class ApiProvider {
       areaid,
     });
   }
+  // UNUSED
   get_areas_modified(areaid) {
     return this.api_call({
       m: 'get_areas_modified',
@@ -331,6 +335,7 @@ export class ApiProvider {
       ruleid: ruleid,
     });
   }
+  // UNUSED
   get_photos(orgid, areaid) {
     return this.api_call({
       m: 'get_photos',
@@ -377,6 +382,7 @@ export class ApiProvider {
   get_contact_info() {
     return this.api_call({ m: 'get_contact_info' });
   }
+  // UNUSED
   get_enginepolicies() {
     return this.api_call({ m: 'get_enginepolicies' });
   }
@@ -390,9 +396,5 @@ export class ApiProvider {
     return this.api_call({ m: 'get_content_menu' });
   }
 
-  get_ads_main = () => this.api_call({ m: 'get_ads_main' });
-
   getAdsMain = () => this.getObservable({m: 'get_ads_main' }, { cacheTime: 60000 });
-
-
 }

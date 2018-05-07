@@ -1,3 +1,15 @@
+<a name="4.2.1"></a>
+## [4.2.1](https://gitlab.com/kada-development/ifiske/compare/v4.2.0...v4.2.1) (2018-05-07)
+
+
+### Bug Fixes
+
+* **admin:** show network error toast if refresh fails ([a956011](https://gitlab.com/kada-development/ifiske/commit/a956011))
+* **logout:** allow logging out when offline or if network fails ([d0ccbc0](https://gitlab.com/kada-development/ifiske/commit/d0ccbc0))
+* **my-permits:** add refresh button and always refresh when entering the page ([6c46cdd](https://gitlab.com/kada-development/ifiske/commit/6c46cdd))
+
+
+
 <a name="4.2.0"></a>
 # [4.2.0](https://gitlab.com/kada-development/ifiske/compare/v4.1.16...v4.2.0) (2018-05-03)
 

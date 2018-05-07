@@ -158,25 +158,25 @@ export class AdminProvider extends BaseModel {
       const orgs: Dictionary<AdminOrganization> = await this.API.user_organizations();
       const organizations = Object.values(orgs);
       organizations.forEach(org => org.ID = (org as any).orgid);
+
       await this.DB.populateTable(this.tables.organizations, orgs);
-      await Promise.all(organizations.map(async (org) => {
-        let permits;
-        try {
-          permits = await this.API.adm_products(org.ID);
-        } catch (err) {
-          console.warn(err);
-          return;
-        }
+
+      const orgPermits = await Promise.all(organizations.map(async (org) => this.API.adm_products(org.ID)));
+
+      await organizations.map((org, i) => {
+        const permits = orgPermits[i];
         Object.values(permits).forEach((permit: any) => permit.org = org.ID);
         const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
         deletePermits = false;
         return populated;
-      }));
+      });
       this.setDefaultOrgId();
       return true;
     } catch (err) {
       console.warn(err);
       return false;
+    } finally {
+      this.setDefaultOrgId();
     }
   }
 

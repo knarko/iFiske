@@ -164,9 +164,14 @@ export class AdminPermitListPage {
       if (!refresher) {
         loading = this.loadingCtrl.show({ content: 'Updating' });
       }
-      await this.adminProvider.update();
+      const updated = await this.adminProvider.update();
+      if (!updated) {
+        throw new TimeoutError(`Could not update admin`);
+      }
+      // Wait for this before removing the spinner
       await this.permits$.pipe(take(1)).toPromise();
     } catch (error) {
+      console.warn(error);
       if (error.name === TimeoutError.name) {
         this.toastCtrl.show({
           message: 'errors.network',

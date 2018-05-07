@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher, Loading } from 'ionic-angular';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
+import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
+import { MonitoringClient } from '../../app/monitoring';
+import { TimeoutError } from '../../errors';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
 @IonicPage({
   defaultHistory: ['HomePage'],
@@ -25,18 +29,38 @@ export class MyPermitsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
+    private loadingCtrl: TranslateLoadingController,
+    private toastCtrl: TranslateToastController,
   ) { }
 
   ionViewWillEnter() {
     this.update();
+    this.refresh();
   }
 
-  async refresh(refresher: Refresher) {
+  async refresh(refresher?: Refresher) {
+    let loading: Promise<Loading>;
     try {
+      if (!refresher) {
+        loading = this.loadingCtrl.show({ content: 'Updating' });
+      }
       await this.userProvider.update(true);
       await this.update();
+    } catch (error) {
+      if (error.name === TimeoutError.name) {
+        this.toastCtrl.show({
+          message: 'errors.network',
+          duration: 4000,
+        });
+      } else {
+        MonitoringClient.captureException(error);
+      }
     } finally {
-      refresher.complete();
+      if (refresher) {
+        refresher.complete();
+      } else {
+        (await loading).dismiss();
+      }
     }
   }
 

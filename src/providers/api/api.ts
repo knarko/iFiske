@@ -237,6 +237,8 @@ export class ApiProvider {
   }
   user_logout() {
     return this.api_call({ m: 'user_logout' }, { retry: false, session: true })
+      // It doesn't matter if this fails or not, we still want to clean up the user on this phone
+      .catch(err => console.warn(err))
       .then(() => {
         this.sessionData.token = undefined;
       });

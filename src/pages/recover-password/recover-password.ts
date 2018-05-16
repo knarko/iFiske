@@ -10,17 +10,14 @@ import { ApiProvider } from '../../providers/api/api';
 export class RecoverPasswordPage {
   username: string;
 
-  constructor(
-    private navCtrl: NavController,
-    private API: ApiProvider,
-  ) { }
+  constructor(private navCtrl: NavController, private API: ApiProvider) {}
 
   async next(username: string) {
     let methods;
 
     if (username) {
       try {
-        methods = await this.API.user_lost_password(username)
+        methods = await this.API.user_lost_password(username);
       } catch (err) {
         console.warn(err);
         return;

@@ -11,7 +11,6 @@ import { UserDetails, CreateAccountProvider } from '../../providers/create-accou
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TermsProvider } from '../../providers/terms/terms';
 
-
 @IonicPage({
   defaultHistory: ['HomePage', 'CreateAccountPage'],
 })
@@ -65,14 +64,8 @@ export class CreateAccountDetailsPage {
           label: 'Username',
           placeholder: 'ui.placeholder.username',
           type: 'text',
-          validators: [
-            Validators.required,
-            Validators.minLength(5),
-            Validators.maxLength(25),
-          ],
-          asyncValidators: [
-            this.validateUsername,
-          ],
+          validators: [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+          asyncValidators: [this.validateUsername],
           errors: {
             required: 'errors.username.required',
             taken: 'errors.username.taken',
@@ -84,11 +77,7 @@ export class CreateAccountDetailsPage {
           label: 'Password',
           placeholder: 'ui.placeholder.password',
           type: 'password',
-          validators: [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(16),
-          ],
+          validators: [Validators.required, Validators.minLength(6), Validators.maxLength(16)],
           errors: {
             required: 'errors.password.required',
             minlength: 'errors.password.pattern_mismatch',
@@ -99,11 +88,7 @@ export class CreateAccountDetailsPage {
           label: 'Full name',
           placeholder: 'ui.placeholder.fullname',
           type: 'text',
-          validators: [
-            Validators.required,
-            Validators.minLength(5),
-            Validators.maxLength(50),
-          ],
+          validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
           errors: {
             required: 'errors.fullname.required',
             minlength: 'errors.fullname.pattern_mismatch',
@@ -114,13 +99,8 @@ export class CreateAccountDetailsPage {
           label: 'Email',
           placeholder: 'ui.placeholder.email',
           type: 'email',
-          validators: [
-            Validators.required,
-            Validators.email,
-          ],
-          asyncValidators: [
-            this.validateEmail,
-          ],
+          validators: [Validators.required, Validators.email],
+          asyncValidators: [this.validateEmail],
           errors: {
             required: 'errors.email.required',
             email: 'errors.email.invalid',
@@ -131,10 +111,7 @@ export class CreateAccountDetailsPage {
           label: 'Phone number',
           placeholder: 'ui.placeholder.phone',
           type: 'tel',
-          validators: [
-            Validators.required,
-            Validators.pattern(/^\+?[\d\-\s\(\)]{5,25}$/),
-          ],
+          validators: [Validators.required, Validators.pattern(/^\+?[\d\-\s\(\)]{5,25}$/)],
           errors: {
             required: 'errors.phone.required',
             invalid: 'errors.phone.invalid',
@@ -165,7 +142,7 @@ export class CreateAccountDetailsPage {
           email.updateValueAndValidity();
           break;
         case 10:
-          phone.setErrors({ invalid: true })
+          phone.setErrors({ invalid: true });
           break;
       }
     } finally {
@@ -179,14 +156,17 @@ export class CreateAccountDetailsPage {
         cssClass: 'alert-large alert-terms',
         message: this.termsProvider.termsOfService,
         title: 'Terms of service',
-        buttons: [{
-          text: 'Cancel',
-        }, {
-          text: 'Accept',
-          role: 'accept',
-        }],
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Accept',
+            role: 'accept',
+          },
+        ],
       });
-      const role = await new Promise((resolve) => {
+      const role = await new Promise(resolve => {
         alert.onDidDismiss((_, role) => resolve(role));
       });
       if (role !== 'accept') {

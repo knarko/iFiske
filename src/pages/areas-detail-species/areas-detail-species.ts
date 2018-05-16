@@ -12,9 +12,7 @@ export class AreasDetailSpeciesPage {
 
   private navCtrl: NavController;
 
-  constructor(
-    private navParams: NavParams,
-  ) {
+  constructor(private navParams: NavParams) {
     this.navParams.get('params').subscribe(({ species, rootNavCtrl }) => {
       this.navCtrl = rootNavCtrl;
       this.items = species;

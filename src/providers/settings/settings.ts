@@ -23,13 +23,10 @@ export class SettingsProvider {
     language: 'sv',
     channel: 'Production',
     firstLaunch: true,
-  }
+  };
   private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
 
-  constructor(
-    private translate: TranslateService,
-    private ga: GoogleAnalytics,
-  ) {
+  constructor(private translate: TranslateService, private ga: GoogleAnalytics) {
     this.settings = Object.assign({}, SettingsProvider.defaultSettings, this.settings);
     this.persistSettings();
     console.log(this.settings);

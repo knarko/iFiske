@@ -8,12 +8,9 @@ import { AdsProvider } from '../../providers/ads/ads';
 export class AdsComponent {
   ads: any[];
 
-  constructor(
-    private adsProvider: AdsProvider,
-  ) {
-    this.adsProvider.getAdsForHome().subscribe(async (ads) => {
+  constructor(private adsProvider: AdsProvider) {
+    this.adsProvider.getAdsForHome().subscribe(async ads => {
       this.ads = ads;
     });
   }
-
 }

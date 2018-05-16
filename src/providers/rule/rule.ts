@@ -13,22 +13,21 @@ export interface Rule {
 }
 @Injectable()
 export class RuleProvider extends BaseModel<Rule> {
-  protected readonly tables: TableDef[] = [{
-    name:      'Rule',
-    apiMethod: 'get_rules',
-    primary:   'ID',
-    members:   {
-      ID:  'int',
-      ver: 'int',
-      d:   'text',
-      t:   'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Rule',
+      apiMethod: 'get_rules',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        ver: 'int',
+        d: 'text',
+        t: 'text',
+      },
     },
-  }];
+  ];
 
-  constructor(
-    protected API: ApiProvider,
-    protected DB: DatabaseProvider,
-  ) {
+  constructor(protected API: ApiProvider, protected DB: DatabaseProvider) {
     super();
     this.initialize();
   }

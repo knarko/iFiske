@@ -16,7 +16,7 @@ export class UserTrackingProvider {
     private launchReview: LaunchReview,
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
-  ) { }
+  ) {}
 
   private persist() {
     localStorage.setItem(UserTrackingProvider.STORAGE_LOCATION, JSON.stringify(this.data));
@@ -61,19 +61,22 @@ export class UserTrackingProvider {
       title: 'ui.reviews.title',
       message: 'ui.reviews.message',
       enableBackdropDismiss: false,
-      buttons: [{
-        text: 'ui.reviews.no',
-        role: 'cancel',
-      }, {
-        text: 'ui.reviews.yes',
-        handler: () => {
-          if (this.launchReview.isRatingSupported()) {
-            this.launchReview.rating().catch(err => console.warn(err));
-          } else {
-            this.launchReview.launch().catch(err => console.warn(err));
-          }
+      buttons: [
+        {
+          text: 'ui.reviews.no',
+          role: 'cancel',
         },
-      }],
+        {
+          text: 'ui.reviews.yes',
+          handler: () => {
+            if (this.launchReview.isRatingSupported()) {
+              this.launchReview.rating().catch(err => console.warn(err));
+            } else {
+              this.launchReview.launch().catch(err => console.warn(err));
+            }
+          },
+        },
+      ],
     });
     this.track('askedForReview');
   }

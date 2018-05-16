@@ -37,7 +37,6 @@ export class UpdateProvider {
     private toastCtrl: TranslateToastController,
     private translate: TranslateService,
     private settings: SettingsProvider,
-
     area: AreaProvider,
     county: CountyProvider,
     fish: FishProvider,
@@ -58,27 +57,14 @@ export class UpdateProvider {
       }
     });
 
-    this.updates = [
-      area,
-      county,
-      fish,
-      information,
-      mapData,
-      organization,
-      product,
-      rule,
-      technique,
-      terms,
-      user,
-    ];
-
+    this.updates = [area, county, fish, information, mapData, organization, product, rule, technique, terms, user];
   }
 
   private timedUpdate(currentTime: number) {
     var lastUpdate = Number(localStorage.getItem(UpdateProvider.LAST_UPDATE));
 
     var aDay = 1000 * 3600 * 24 * 1;
-    return (currentTime - lastUpdate) > aDay;
+    return currentTime - lastUpdate > aDay;
   }
 
   async showLoading(force?: boolean) {
@@ -88,7 +74,7 @@ export class UpdateProvider {
 
     if (force || this.updating) {
       this.loading = loading;
-      loading.present()
+      loading.present();
     }
   }
 
@@ -98,7 +84,6 @@ export class UpdateProvider {
       this.loading = undefined;
     }
   }
-
 
   update(forced = false, hideLoading = false) {
     if (this.updating) {
@@ -118,8 +103,8 @@ export class UpdateProvider {
     var promises = this.updates.map(provider => {
       if (
         forced ||
-        (provider.updateStrategy === 'always') ||
-        (provider.updateStrategy === 'timed' && timeHasPassed)  ||
+        provider.updateStrategy === 'always' ||
+        (provider.updateStrategy === 'timed' && timeHasPassed) ||
         (typeof provider.updateStrategy === 'function' && provider.updateStrategy())
       ) {
         return provider.update();
@@ -127,23 +112,26 @@ export class UpdateProvider {
       return Promise.resolve(false);
     });
 
-    this.updating = Promise.all(promises).then(() => {
-      localStorage.setItem(UpdateProvider.LAST_UPDATE, "" + currentTime);
-    }, (error) => {
-      this.toastCtrl.show({
-        message: 'errors.network',
-        duration: 4000,
-      });
+    this.updating = Promise.all(promises).then(
+      () => {
+        localStorage.setItem(UpdateProvider.LAST_UPDATE, '' + currentTime);
+      },
+      error => {
+        this.toastCtrl.show({
+          message: 'errors.network',
+          duration: 4000,
+        });
 
-      if (error.name === 'TimeoutError') {
-        // Timeouts are not that interesting, we don't want to error later for those.
-        return;
-      }
+        if (error.name === 'TimeoutError') {
+          // Timeouts are not that interesting, we don't want to error later for those.
+          return;
+        }
 
-      throw error;
-    });
+        throw error;
+      },
+    );
 
-    this.updating.catch(() => { }).then(() => {
+    this.updating.catch(() => {}).then(() => {
       this.updating = undefined;
       this.hideLoading();
     });

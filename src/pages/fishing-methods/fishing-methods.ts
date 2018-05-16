@@ -10,16 +10,13 @@ import { TechniqueProvider } from '../../providers/technique/technique';
   templateUrl: 'fishing-methods.html',
 })
 export class FishingMethodsPage {
-
   items: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private tech: TechniqueProvider) {
-    this.tech.getAll().then(tech => this.items = tech);
+    this.tech.getAll().then(tech => (this.items = tech));
   }
 
   goto(item) {
     this.navCtrl.push('FishingMethodsDetailPage', item);
   }
-
-
 }

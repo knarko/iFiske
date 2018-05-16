@@ -14,9 +14,7 @@ export class AdminStatsPage {
   stats$: Observable<any>;
   serverLocation = serverLocation;
 
-  constructor(
-    private adminProvider: AdminProvider,
-  ) {
+  constructor(private adminProvider: AdminProvider) {
     this.stats$ = this.adminProvider.stats();
     this.stats$.subscribe(console.log, console.warn, console.error);
     this.organization = this.adminProvider.currentOrganization;

@@ -40,7 +40,7 @@ export class AboutPage {
     private toastCtrl: TranslateToastController,
     private loadingCtrl: TranslateLoadingController,
     private deploy: DeployProvider,
-  ) { }
+  ) {}
 
   ionViewWillEnter() {
     this.developerClicked = 0;
@@ -48,17 +48,17 @@ export class AboutPage {
     this.lastUpdated = this.update.lastUpdate;
     this.platform.ready().then(() => {
       if ((window as any).cordova) {
-        this.appVersion.getVersionNumber()
-          .then(version => this.version = version)
-          .catch(() => { });
-        this.appVersion.getVersionCode()
-          .then(buildId => this.buildId = buildId)
-          .catch(() => { });
-          console.log(this.pro);
-        Promise.race([
-          this.pro.deploy().info(),
-          new Promise<any>((_, reject) => setTimeout(reject, 8000)),
-        ]).then(info => this.proInfo = info)
+        this.appVersion
+          .getVersionNumber()
+          .then(version => (this.version = version))
+          .catch(() => {});
+        this.appVersion
+          .getVersionCode()
+          .then(buildId => (this.buildId = buildId))
+          .catch(() => {});
+        console.log(this.pro);
+        Promise.race([this.pro.deploy().info(), new Promise<any>((_, reject) => setTimeout(reject, 8000))])
+          .then(info => (this.proInfo = info))
           .catch(err => {
             console.warn(err);
             if (err) {
@@ -72,15 +72,16 @@ export class AboutPage {
     });
   }
 
-
   async selectDeployChannel() {
     if (!this.settings.isDeveloper) {
       return;
     }
     this.settings.channel = this.useBetaChannel ? 'Master' : 'Production';
     await this.deploy.setChannel(this.settings.channel);
-    this.pro.deploy().info()
-      .then(info => this.proInfo = info)
+    this.pro
+      .deploy()
+      .info()
+      .then(info => (this.proInfo = info))
       .catch(err => console.warn(err));
   }
 
@@ -103,29 +104,35 @@ export class AboutPage {
   async checkForUpdates() {
     const loading = await this.loadingCtrl.show({ content: 'Checking for updates' });
     try {
-      const updated = await this.deploy.checkForUpdates()
+      const updated = await this.deploy.checkForUpdates();
       if (updated) {
         this.alertCtrl.show({
           message: 'Updated!',
-          buttons: [{
-            text: 'OK',
-          }],
+          buttons: [
+            {
+              text: 'OK',
+            },
+          ],
         });
       } else {
         this.alertCtrl.show({
           message: 'No updates available',
-          buttons: [{
-            text: 'OK',
-          }],
+          buttons: [
+            {
+              text: 'OK',
+            },
+          ],
         });
       }
     } catch (e) {
       console.error(e);
       this.alertCtrl.show({
         message: 'No updates available',
-        buttons: [{
-          text: 'OK',
-        }],
+        buttons: [
+          {
+            text: 'OK',
+          },
+        ],
       });
     } finally {
       loading.dismiss();

@@ -1,4 +1,4 @@
-import { TranslateLoader } from '@ngx-translate/core'
+import { TranslateLoader } from '@ngx-translate/core';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 
@@ -13,7 +13,7 @@ export class TranslateBundleLoader implements TranslateLoader {
     sv,
     en,
     de,
-  }
+  };
 
   getTranslation(lang: string): any {
     if (lang != undefined && this.languages[lang]) {
@@ -28,5 +28,4 @@ export class TranslateBundleLoader implements TranslateLoader {
     }
     return of(this.languages.en);
   }
-
 }

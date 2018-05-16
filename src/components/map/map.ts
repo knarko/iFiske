@@ -14,7 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MonitoringClient } from '../../app/monitoring';
 declare var L: any;
 
-
 export interface MapOptions {
   areas?: Area[];
   centerOnMe?: boolean;
@@ -22,7 +21,6 @@ export interface MapOptions {
   polygons?: FiskePolygon[];
   area?: Area;
 }
-
 
 /**
  * Generated class for the MapComponent component.
@@ -57,15 +55,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private navCtrl: NavController,
     private platform: PlatformProvider,
     private translate: TranslateService,
-  ) {
-  }
+  ) {}
 
   ngAfterViewInit() {
     var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
     var apikey = localStorage.getItem('mapbox_api');
 
-    this.map = new Map(this.mapElement.nativeElement)
-      .setView([62.0, 15.0], 4);
+    this.map = new Map(this.mapElement.nativeElement).setView([62.0, 15.0], 4);
 
     const outdoors = new TileLayer(mapboxUrl, {
       maxZoom: 18,
@@ -87,11 +83,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
       const newControlLayers = {};
       newControlLayers[stuff['ui.map.outdoors']] = outdoors;
       newControlLayers[stuff['ui.map.satellite']] = satellite;
-      baseLayers = new Control.Layers(newControlLayers)
+      baseLayers = new Control.Layers(newControlLayers);
       this.map.addControl(baseLayers);
       console.log(stuff);
     });
-
 
     this.lc = new LocateControl({
       follow: false,
@@ -99,7 +94,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       keepCurrentZoomLevel: false,
       stopFollowingOnDrag: true,
       remainActive: true,
-      onLocationError: (err) => {
+      onLocationError: err => {
         console.error(err);
         MonitoringClient.captureException(err);
       },
@@ -112,11 +107,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
       },
       icon: 'locate-icon icon ion-md-locate',
       iconLoading: 'icon locate-icon ion-md-refresh spin',
-
     });
 
     this.lc.addTo(this.map);
-
 
     this.map.on('popupopen', e => {
       this.map.getContainer().classList.add('popup-open');
@@ -128,7 +121,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     });
 
     if (this.shouldRefresh) {
-      this.refresh()
+      this.refresh();
       this.shouldRefresh = false;
     }
   }
@@ -154,19 +147,18 @@ export class MapComponent implements AfterViewInit, OnChanges {
     if (this.icons) {
       return Promise.resolve(this.icons);
     }
-    return this.mapData.getPoiTypes()
-      .then(poiTypes => {
-        this.icons = {};
-        for (var i = 0; i < poiTypes.length; ++i) {
-          var type = poiTypes[i];
-          this.icons[type.ID] = new Icon({
-            iconUrl: serverLocation + type.icon,
-            iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
-            popupAnchor: [0, -35],
-          });
-        }
-        return this.icons;
-      });
+    return this.mapData.getPoiTypes().then(poiTypes => {
+      this.icons = {};
+      for (var i = 0; i < poiTypes.length; ++i) {
+        var type = poiTypes[i];
+        this.icons[type.ID] = new Icon({
+          iconUrl: serverLocation + type.icon,
+          iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
+          popupAnchor: [0, -35],
+        });
+      }
+      return this.icons;
+    });
   }
 
   createMarkers(areas: Area[]) {
@@ -187,11 +179,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
     var newMarkers = [];
     for (var i = 0; i < areas.length; ++i) {
       var a = areas[i];
-      var marker = new Marker({
-        // layer:           'areas',
-        lat: a.lat,
-        lng: a.lng,
-      }, {
+      var marker = new Marker(
+        {
+          // layer:           'areas',
+          lat: a.lat,
+          lng: a.lng,
+        },
+        {
           title: a.t,
 
           icon: L.AwesomeMarkers.icon({
@@ -201,7 +195,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
             prefix: `ion-${this.platform.cssClass}`,
             extraClasses: 'ion-icon',
           }),
-        });
+        },
+      );
       marker.bindPopup(this.createAreaPopup(a));
       newMarkers.push(marker);
     }
@@ -219,13 +214,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
       for (var i = 0; i < pois.length; ++i) {
         var poi = pois[i];
 
-        var marker = new Marker({
-          lat: poi.la,
-          lng: poi.lo,
-        }, {
+        var marker = new Marker(
+          {
+            lat: poi.la,
+            lng: poi.lo,
+          },
+          {
             icon: icons[poi.type],
             title: poi.t,
-          });
+          },
+        );
         marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
           maxWidth: window.innerWidth - 50,
         });
@@ -233,7 +231,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
       }
     });
   }
-
 
   createPolygons(polys: FiskePolygon[]) {
     console.log(polys);
@@ -246,12 +243,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     for (var i = 0; i < polys.length; ++i) {
       var poly = polys[i];
-      this.polygons.addLayer(new Polygon(JSON.parse('[' + poly.poly + ']'), {
-        color: poly.c,
-        weight: 2,
-        opacity: 0.5,
-        fillColor: poly.c,
-      }));
+      this.polygons.addLayer(
+        new Polygon(JSON.parse('[' + poly.poly + ']'), {
+          color: poly.c,
+          weight: 2,
+          opacity: 0.5,
+          fillColor: poly.c,
+        }),
+      );
     }
   }
 
@@ -272,10 +271,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     console.log(this.map, area);
     setTimeout(() => {
-      this.map.setView({
-        lat: area.lat,
-        lng: area.lng,
-      }, Number(area.zoom) ? Number(area.zoom) : 9);
+      this.map.setView(
+        {
+          lat: area.lat,
+          lng: area.lng,
+        },
+        Number(area.zoom) ? Number(area.zoom) : 9,
+      );
     });
   }
 
@@ -309,5 +311,4 @@ export class MapComponent implements AfterViewInit, OnChanges {
       this.createArea(this.options.area);
     }
   }
-
 }

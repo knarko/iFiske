@@ -12,11 +12,7 @@ export class ChangeLanguagePage {
   currentLanguage: string;
   languages: Language[];
 
-  constructor(
-    private viewCtrl: ViewController,
-    private settings: SettingsProvider,
-    private statusBar: StatusBar,
-  ) { }
+  constructor(private viewCtrl: ViewController, private settings: SettingsProvider, private statusBar: StatusBar) {}
 
   close() {
     this.viewCtrl.dismiss();
@@ -42,5 +38,4 @@ export class ChangeLanguagePage {
     this.languages = Object.values(this.settings.availableLanguages);
     this.currentLanguage = this.settings.language;
   }
-
 }

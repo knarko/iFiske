@@ -33,7 +33,6 @@ export class AreasDetailPage {
 
   @ViewChild(Content) content: Content;
 
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,27 +40,29 @@ export class AreasDetailPage {
     private organizationProvider: OrganizationProvider,
     private productProvider: ProductProvider,
   ) {
-    this.areaProvider.getOne(this.navParams.get('ID'))
-      .then(info => {
-        this.area = info
-        console.log(info);
-        this.updateParams();
-        this.getOrg();
-      });
+    this.areaProvider.getOne(this.navParams.get('ID')).then(info => {
+      this.area = info;
+      console.log(info);
+      this.updateParams();
+      this.getOrg();
+    });
 
-    this.productProvider.getByArea(this.navParams.get('ID'))
+    this.productProvider
+      .getByArea(this.navParams.get('ID'))
       .then(products => {
         this.products = products;
         this.updateParams();
-      }).catch(e => console.warn(e));
+      })
+      .catch(e => console.warn(e));
 
-    this.areaProvider.getFishes(this.navParams.get('ID'))
+    this.areaProvider
+      .getFishes(this.navParams.get('ID'))
       .then(species => {
         this.species = species;
         //this.tabs[2].hide = false;
         this.updateParams();
-      }).catch(e => console.warn(e));
-
+      })
+      .catch(e => console.warn(e));
   }
 
   ngAfterViewInit() {
@@ -69,13 +70,11 @@ export class AreasDetailPage {
     this.updateParams();
   }
 
-
   private getOrg() {
-    this.organizationProvider.getOne(this.area.orgid)
-      .then(org => {
-        this.org = org;
-        this.updateParams();
-      });
+    this.organizationProvider.getOne(this.area.orgid).then(org => {
+      this.org = org;
+      this.updateParams();
+    });
   }
 
   private updateParams() {
@@ -89,6 +88,4 @@ export class AreasDetailPage {
     });
     this.content.resize();
   }
-
-
 }

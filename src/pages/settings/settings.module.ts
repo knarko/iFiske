@@ -4,12 +4,7 @@ import { SettingsPage } from './settings';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    SettingsPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(SettingsPage),
-    TranslateModule,
-  ],
+  declarations: [SettingsPage],
+  imports: [IonicPageModule.forChild(SettingsPage), TranslateModule],
 })
 export class SettingsPageModule {}

@@ -11,7 +11,7 @@ interface Link {
   title: string;
   icon: string;
   uri?: string;
-  show?: Observable<boolean>
+  show?: Observable<boolean>;
 }
 
 @IonicPage({
@@ -22,7 +22,6 @@ interface Link {
   templateUrl: 'home.html',
 })
 export class HomePage {
-
   searchTerm: string;
   profileColor: Observable<string>;
   showAdmin = this.adminProvider.isAdmin;
@@ -42,7 +41,7 @@ export class HomePage {
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private adminProvider: AdminProvider,
-  ) { }
+  ) {}
 
   async gotoProfile() {
     const loggedIn = await this.userProvider.loggedIn.pipe(take(1)).toPromise();
@@ -57,5 +56,3 @@ export class HomePage {
     this.navCtrl.push('AreasSearchPage', { searchTerm: this.searchTerm });
   }
 }
-
-

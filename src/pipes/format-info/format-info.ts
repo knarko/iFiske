@@ -11,21 +11,12 @@ import { LinkyPipe } from '../linky/linky';
 export class FormatInfoPipe implements PipeTransform {
   linky: (value: string, options?: any) => string;
   stripTags: (text: string, ...allowedTags: any[]) => string;
-  private allowedTags = [
-    'p',
-    'a',
-    'br',
-    ...(Array(6).map((_, i) => `h${i+1}`)),
-    'strong',
-    'em',
-    'i',
-    'b',
-  ];
+  private allowedTags = ['p', 'a', 'br', ...Array(6).map((_, i) => `h${i + 1}`), 'strong', 'em', 'i', 'b'];
 
   private transforms = [
     value => this.stripTags(value, ...this.allowedTags),
-    value => value.replace(/<p>(?:\s|&nbsp;)*<\/p>/ig, ''),
-    value => value.replace(/(?:<br\s*\/?>(?:\s|&nbsp;)*<br\s*\/?>)+/ig, '<br>'),
+    value => value.replace(/<p>(?:\s|&nbsp;)*<\/p>/gi, ''),
+    value => value.replace(/(?:<br\s*\/?>(?:\s|&nbsp;)*<br\s*\/?>)+/gi, '<br>'),
     value => this.linky(value),
   ];
 

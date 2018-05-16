@@ -50,14 +50,17 @@ export class SmsPurchasePage {
         cssClass: 'alert-large alert-terms',
         message: this.terms.smsTerms,
         title: 'SMS Rules',
-        buttons: [{
-          text: 'Cancel',
-        }, {
-          text: 'Accept',
-          role: 'accept',
-        }],
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Accept',
+            role: 'accept',
+          },
+        ],
       });
-      const role = await new Promise((resolve) => {
+      const role = await new Promise(resolve => {
         alert.onDidDismiss((_, role) => resolve(role));
       });
       if (role !== 'accept') {
@@ -68,7 +71,7 @@ export class SmsPurchasePage {
   }
 
   async sendSms() {
-    let name = "";
+    let name = '';
     try {
       name = (await this.userProvider.getInfo()).name;
     } catch (e) {
@@ -84,20 +87,24 @@ export class SmsPurchasePage {
           value: name,
         },
       ],
-      buttons: [{
-        text: 'Send',
-        role: 'send',
-      }],
+      buttons: [
+        {
+          text: 'Send',
+          role: 'send',
+        },
+      ],
     });
 
     try {
-      name = await new Promise<string>((resolve, reject) => alert.onDidDismiss(({ name }: { name: string }, role) => {
-        if (role === 'send' && name) {
-          resolve(name);
-        } else {
-          reject('errors.fullname.required');
-        }
-      }));
+      name = await new Promise<string>((resolve, reject) =>
+        alert.onDidDismiss(({ name }: { name: string }, role) => {
+          if (role === 'send' && name) {
+            resolve(name);
+          } else {
+            reject('errors.fullname.required');
+          }
+        }),
+      );
     } catch (e) {
       this.toastCtrl.show({
         message: e,
@@ -112,16 +119,17 @@ export class SmsPurchasePage {
       this.ga.trackEvent('Purchase', 'SMS', '' + this.product.ID);
       await this.sms.send(SMS_PURCHASE_NUMBER, message, { android: { intent: 'INTENT' } });
       this.close();
-
     } catch (e) {
       this.alertCtrl.show({
         title: 'Error',
         message: e,
-        buttons: [{
-          text: 'OK',
-          role: 'cancel',
-        }],
-      })
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+          },
+        ],
+      });
     }
   }
 }

@@ -15,13 +15,12 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
   templateUrl: 'my-permits.html',
 })
 export class MyPermitsPage {
-
   permits = [
-    {title: 'active', permits: [], icon: 'checkmark'},
-    {title: 'inactive', permits: [], icon: 'clock'},
-    {title: 'expired', permits: [], icon: 'close'},
-    {title: 'revoked', permits: [], icon: 'close'},
-  ]
+    { title: 'active', permits: [], icon: 'checkmark' },
+    { title: 'inactive', permits: [], icon: 'clock' },
+    { title: 'expired', permits: [], icon: 'close' },
+    { title: 'revoked', permits: [], icon: 'close' },
+  ];
 
   allPermits: any[];
 
@@ -31,7 +30,7 @@ export class MyPermitsPage {
     private userProvider: UserProvider,
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
-  ) { }
+  ) {}
 
   ionViewWillEnter() {
     this.update();
@@ -74,7 +73,7 @@ export class MyPermitsPage {
       this.permits.find(p => p.title === permit.validity).permits.push(permit);
     }
     this.allPermits = permits;
-  }
+  };
 
   gotoPermit(permit: Product) {
     this.navCtrl.push('PermitDetailPage', permit);

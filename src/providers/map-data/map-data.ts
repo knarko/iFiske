@@ -29,7 +29,6 @@ export interface FiskePolygon {
 
 @Injectable()
 export class MapDataProvider extends BaseModel {
-
   protected readonly tables: Dictionary<TableDef> = {
     poi: {
       name: 'Poi',
@@ -43,7 +42,6 @@ export class MapDataProvider extends BaseModel {
         d: 'text',
         la: 'real',
         lo: 'real',
-
       },
     },
     poiType: {
@@ -70,10 +68,7 @@ export class MapDataProvider extends BaseModel {
     },
   };
 
-  constructor(
-    protected DB: DatabaseProvider,
-    protected API: ApiProvider,
-  ) {
+  constructor(protected DB: DatabaseProvider, protected API: ApiProvider) {
     super();
     this.initialize();
   }
@@ -84,14 +79,13 @@ export class MapDataProvider extends BaseModel {
     }
 
     return Promise.all([
-      this.API.get_mapbox_api().then((data) => {
+      this.API.get_mapbox_api().then(data => {
         return localStorage.setItem('mapbox_api', data);
       }),
       this.API.get_map_pois().then(this.DB.insertHelper(this.tables.poi)),
       this.API.get_map_poi_types().then(this.DB.insertHelper(this.tables.poiType)),
       this.API.get_map_polygons().then(this.DB.insertHelper(this.tables.polygon)),
-    ])
-      .then(() => true);
+    ]).then(() => true);
   }
 
   @DBMethod

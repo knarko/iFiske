@@ -21,18 +21,18 @@ export class MapPage {
 
   mapOptions: any;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private area: AreaProvider) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private area: AreaProvider) {}
 
   ionViewWillEnter() {
     this.areas = this.area.getAll();
   }
 
   ionViewDidEnter() {
-    this.areas.then(areas => {
-      this.mapOptions = { areas };
-    }, err => console.warn(err));
+    this.areas.then(
+      areas => {
+        this.mapOptions = { areas };
+      },
+      err => console.warn(err),
+    );
   }
-
 }

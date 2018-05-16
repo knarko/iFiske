@@ -9,46 +9,50 @@ export class DatabaseProvider {
   ready: Promise<void>;
   private db: SQLiteObject;
   constructor(private sqlite: SQLite, private plt: Platform) {
-    this.ready = this.plt.ready().then(() => {
-      return this.sqlite.create({
-        name: 'fiskebasen.db',
-        location: 'default',
-      });
-    }).catch(err => {
-      if ((window as any).openDatabase) {
-        let db = (window as any).openDatabase(
-          'fiskebasen.db',
-          '',
-          'fiskebasen',
-          10 * 1024 * 1024,
-        );
-        // tslint:disable-next-line:only-arrow-functions
-        db.executeSql = function executeSql(statement, params) {
-          return new Promise((resolve, reject) => {
-            db.transaction(tx => {
-              tx.executeSql(statement, params, (itx, res) => {
-                resolve(res);
-              }, (itx, err) => {
-                reject(err);
+    this.ready = this.plt
+      .ready()
+      .then(() => {
+        return this.sqlite.create({
+          name: 'fiskebasen.db',
+          location: 'default',
+        });
+      })
+      .catch(err => {
+        if ((window as any).openDatabase) {
+          let db = (window as any).openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
+          // tslint:disable-next-line:only-arrow-functions
+          db.executeSql = function executeSql(statement, params) {
+            return new Promise((resolve, reject) => {
+              db.transaction(tx => {
+                tx.executeSql(
+                  statement,
+                  params,
+                  (itx, res) => {
+                    resolve(res);
+                  },
+                  (itx, err) => {
+                    reject(err);
+                  },
+                );
               });
             });
-          });
-        };
-        const trans: Function = db.transaction;
-        // tslint:disable-next-line:only-arrow-functions
-        db.transaction = function transaction(tx) {
-          return new Promise((resolve, reject) => {
-            trans.apply(db, [tx, reject, resolve]);
-          });
+          };
+          const trans: Function = db.transaction;
+          // tslint:disable-next-line:only-arrow-functions
+          db.transaction = function transaction(tx) {
+            return new Promise((resolve, reject) => {
+              trans.apply(db, [tx, reject, resolve]);
+            });
+          };
+          return Promise.resolve(db);
+        } else {
+          return Promise.reject(err);
         }
-        return Promise.resolve(db);
-      } else {
-        return Promise.reject(err);
-      }
-    }).then(db => {
-      this.db = db;
-      return db;
-    });
+      })
+      .then(db => {
+        this.db = db;
+        return db;
+      });
   }
 
   /**
@@ -86,20 +90,19 @@ export class DatabaseProvider {
    * @return {Promise<array>}      Promise of an array with the selected rows
    */
   getMultiple(sql: string, args?): Promise<any[]> {
-    return this.db.executeSql(sql, args)
-      .then(result => {
-        if (result.rows.length) {
-          return Promise.resolve(this.createObject(result));
-        } else {
-          console.warn(
-            `Could not find any objects for sql:
+    return this.db.executeSql(sql, args).then(result => {
+      if (result.rows.length) {
+        return Promise.resolve(this.createObject(result));
+      } else {
+        console.warn(
+          `Could not find any objects for sql:
             ${sql}
             With arguments:`,
-            args,
-          );
-          return Promise.resolve([]);
-        }
-      });
+          args,
+        );
+        return Promise.resolve([]);
+      }
+    });
   }
 
   /**
@@ -139,7 +142,9 @@ export class DatabaseProvider {
           const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
           insertData.push(escapedData);
         }
-        var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length).fill('?').join(',')})`;
+        var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length)
+          .fill('?')
+          .join(',')})`;
         tx.executeSql(query, insertData);
       });
     });
@@ -160,8 +165,7 @@ export class DatabaseProvider {
             */
       var tableMembers = [];
       for (var member in table.members) {
-        if (table.members.hasOwnProperty(member))
-          tableMembers.push('"' + member + '" ' + table.members[member]);
+        if (table.members.hasOwnProperty(member)) tableMembers.push('"' + member + '" ' + table.members[member]);
       }
 
       var query = `
@@ -171,28 +175,26 @@ export class DatabaseProvider {
         );`;
 
       /* Remake the table if the schema has changed */
-      return this.runSql('SELECT sql from sqlite_master where name is "' + table.name + '"')
-        .then((result) => {
-          if (!result.rows.length) {
-            // There is no table, make it
+      return this.runSql('SELECT sql from sqlite_master where name is "' + table.name + '"').then(result => {
+        if (!result.rows.length) {
+          // There is no table, make it
+          return this.runSql(query);
+        }
+        var re = /"(\w+)"\s*(\w+)/g;
+        var regexResult;
+        var oldTable = {};
+        while ((regexResult = re.exec(result.rows.item(0).sql))) {
+          oldTable[regexResult[1]] = regexResult[2];
+        }
+        const matched = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
+        const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
+        if (!isEqual(table.members, oldTable) || table.primary !== primaryKey) {
+          console.log(table.name + ' needs to update since the schema has changed.');
+          return this.clean(table.name).then(() => {
             return this.runSql(query);
-          }
-          var re = /"(\w+)"\s*(\w+)/g;
-          var regexResult;
-          var oldTable = {};
-          while ((regexResult = re.exec(result.rows.item(0).sql))) {
-            oldTable[regexResult[1]] = regexResult[2];
-          }
-          const matched = result.rows.item(0).sql
-            .match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
-          const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
-          if (!isEqual(table.members, oldTable) || table.primary !== primaryKey) {
-            console.log(table.name + ' needs to update since the schema has changed.');
-            return this.clean(table.name).then(() => {
-              return this.runSql(query);
-            });
-          }
-        });
+          });
+        }
+      });
     });
   }
 
@@ -201,6 +203,4 @@ export class DatabaseProvider {
       tx.executeSql('DELETE FROM ' + table + ';');
     });
   }
-
-
 }

@@ -22,8 +22,7 @@ export class PermitDetailPage {
     public navParams: NavParams,
     private userProvider: UserProvider,
     private modalCtrl: ModalController,
-  ) {
-  }
+  ) {}
 
   async ionViewWillEnter() {
     this.permit = this.navParams.data;
@@ -33,7 +32,7 @@ export class PermitDetailPage {
       // Ingen titel, det saknas data) {
       if (this.permit.ID) {
         // Det finns ett ID, hämta data från DB
-        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'))
+        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'));
       } else {
         // Vi kan inte hämta data på något bra sätt, visa fel
       }
@@ -42,11 +41,12 @@ export class PermitDetailPage {
   }
 
   openRules() {
-    this.modalCtrl.create('PermitRulesPage', {
-      t: this.permit.rule_t,
-      d: this.permit.rule_d,
-      ver: this.permit.rule_ver,
-    }).present();
+    this.modalCtrl
+      .create('PermitRulesPage', {
+        t: this.permit.rule_t,
+        d: this.permit.rule_d,
+        ver: this.permit.rule_ver,
+      })
+      .present();
   }
-
 }

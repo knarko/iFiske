@@ -61,15 +61,15 @@ export class AdminPermitListPage {
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
       map(permits => {
         return permits.sort((a, b) => {
-          return a.validity.localeCompare(b.validity) ||
-            a.score - b.score ||
-            a.fullname.localeCompare(b.fullname, 'sv');
+          return (
+            a.validity.localeCompare(b.validity) || a.score - b.score || a.fullname.localeCompare(b.fullname, 'sv')
+          );
         });
       }),
       shareReplay(1),
     );
     this.scrollSubject = new Subject();
-    this.scrollSub = this.permits$.subscribe((permits) => {
+    this.scrollSub = this.permits$.subscribe(permits => {
       this.pristinePermits = permits;
       this.updatePermits();
       if (!this.scrollSubject.observers.length) {
@@ -86,11 +86,11 @@ export class AdminPermitListPage {
   }
 
   private updatePermits() {
-    this.permits.forEach((p) => {
+    this.permits.forEach(p => {
       p.permits = [];
     });
 
-    this.pristinePermits.forEach((permit) => {
+    this.pristinePermits.forEach(permit => {
       this.permits.find(item => item.key === permit.validity).permits.push(permit);
     });
   }
@@ -147,10 +147,11 @@ export class AdminPermitListPage {
     this.searchSubject.next(searchTerm);
   }
 
-  search = debounce(this.searchImmediate, 500)
+  search = debounce(this.searchImmediate, 500);
 
   keypress($event: KeyboardEvent) {
-    if ($event.keyCode === 13) { // if enter-key
+    if ($event.keyCode === 13) {
+      // if enter-key
       $event.preventDefault();
       const searchTerm = ($event.srcElement as HTMLInputElement).value;
       this.searchImmediate(searchTerm);

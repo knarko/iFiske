@@ -5,13 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
-  declarations: [
-    AdminCheckPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AdminCheckPage),
-    TranslateModule,
-    ComponentsModule,
-  ],
+  declarations: [AdminCheckPage],
+  imports: [IonicPageModule.forChild(AdminCheckPage), TranslateModule, ComponentsModule],
 })
 export class AdminCheckPageModule {}

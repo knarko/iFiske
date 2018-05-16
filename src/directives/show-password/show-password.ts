@@ -10,9 +10,7 @@ import { Directive } from '@angular/core';
   selector: '[show-password]', // Attribute selector
 })
 export class ShowPasswordDirective {
-
   constructor() {
     console.log('Hello ShowPasswordDirective Directive');
   }
-
 }

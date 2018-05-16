@@ -12,10 +12,7 @@ export class AreasCountiesPage {
 
   items: County[];
 
-  constructor(
-    public navParams: NavParams,
-    private county: CountyProvider,
-  ) {
+  constructor(public navParams: NavParams, private county: CountyProvider) {
     this.navCtrl = this.navParams.get('rootNavCtrl');
   }
 

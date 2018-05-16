@@ -5,13 +5,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    AreasDetailPermitPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AreasDetailPermitPage),
-    TranslateModule.forChild(),
-    PipesModule,
-  ],
+  declarations: [AreasDetailPermitPage],
+  imports: [IonicPageModule.forChild(AreasDetailPermitPage), TranslateModule.forChild(), PipesModule],
 })
 export class AreasDetailPermitPageModule {}

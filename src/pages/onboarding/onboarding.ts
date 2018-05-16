@@ -13,12 +13,7 @@ export class OnboardingPage {
   @ViewChild('slides') slides: Slides;
   @ViewChild('extras') extras: Slides;
 
-  constructor(
-    private navCtrl: NavController,
-    private settings: SettingsProvider,
-    private update: UpdateProvider,
-  ) {
-  }
+  constructor(private navCtrl: NavController, private settings: SettingsProvider, private update: UpdateProvider) {}
 
   ionViewDidLoad() {
     this.extras.direction = 'vertical';

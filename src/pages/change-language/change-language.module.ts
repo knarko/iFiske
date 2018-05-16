@@ -4,12 +4,7 @@ import { ChangeLanguagePage } from './change-language';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    ChangeLanguagePage,
-  ],
-  imports: [
-    IonicPageModule.forChild(ChangeLanguagePage),
-    TranslateModule,
-  ],
+  declarations: [ChangeLanguagePage],
+  imports: [IonicPageModule.forChild(ChangeLanguagePage), TranslateModule],
 })
 export class ChangeLanguagePageModule {}

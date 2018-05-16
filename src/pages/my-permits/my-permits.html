@@ -3,7 +3,9 @@
   <ion-navbar color="primary">
     <ion-title>{{'My Fishing Permits' | translate}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+      <button ion-button icon-only (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -12,10 +14,7 @@
 
 <ion-content class="background-image">
   <ion-refresher (ionRefresh)="refresh($event)">
-    <ion-refresher-content
-      [pullingText]="'ui.general.pull_to_refresh' | translate"
-      [refreshingText]="'Updating' | translate"
-    ></ion-refresher-content>
+    <ion-refresher-content [pullingText]="'ui.general.pull_to_refresh' | translate" [refreshingText]="'Updating' | translate"></ion-refresher-content>
 
   </ion-refresher>
   <ion-list>

@@ -9,4 +9,4 @@ import { IonicPage } from 'ionic-angular';
   selector: 'page-create-account',
   templateUrl: 'create-account.html',
 })
-export class CreateAccountPage { }
+export class CreateAccountPage {}

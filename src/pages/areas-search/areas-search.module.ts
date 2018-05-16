@@ -7,9 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
-  declarations: [
-    AreasSearchPage,
-  ],
+  declarations: [AreasSearchPage],
   imports: [
     IonicPageModule.forChild(AreasSearchPage),
     TranslateModule.forChild(),

@@ -25,15 +25,16 @@ export class PermitComponent {
     private areaProvider: AreaProvider,
     private settings: SettingsProvider,
     private ga: GoogleAnalytics,
-  ) { }
+  ) {}
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.permit.currentValue) {
       this.updateQR();
       try {
         if (this.permit.ai != undefined) {
-          this.org = await this.areaProvider.getOne(this.permit.ai)
-            .then((area) => this.organizationProvider.getOne(area.orgid));
+          this.org = await this.areaProvider
+            .getOne(this.permit.ai)
+            .then(area => this.organizationProvider.getOne(area.orgid));
         }
       } catch (e) {
         // Don't do anything
@@ -49,5 +50,5 @@ export class PermitComponent {
     const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${this.permit.pid}`;
     this.ga.trackEvent('Purchase', 'Web', '' + this.permit.pid);
     window.open(url, '_system');
-  };
+  }
 }

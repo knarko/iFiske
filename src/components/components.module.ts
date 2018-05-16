@@ -16,7 +16,7 @@ import { ChartComponent } from './chart/chart';
 import { ImgcacheModule } from '../imgcache/imgcache.module';
 
 @NgModule({
-	declarations: [
+  declarations: [
     MapComponent,
     AdsComponent,
     YoutubeComponent,
@@ -29,13 +29,8 @@ import { ImgcacheModule } from '../imgcache/imgcache.module';
     AdminHeaderComponent,
     ChartComponent,
   ],
-	imports: [
-    IonicModule,
-    TranslateModule,
-    PipesModule,
-    ImgcacheModule,
-  ],
-	exports: [
+  imports: [IonicModule, TranslateModule, PipesModule, ImgcacheModule],
+  exports: [
     MapComponent,
     AdsComponent,
     YoutubeComponent,

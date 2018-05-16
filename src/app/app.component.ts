@@ -11,7 +11,7 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { MonitoringClient } from './monitoring'
+import { MonitoringClient } from './monitoring';
 import { googleAnalyticsTrackerID, APP_VERSION } from './config';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 
@@ -47,10 +47,10 @@ export class MyApp {
       MonitoringClient.captureException(err);
     });
 
-
     platform.ready().then(() => {
       // TODO: hide loading spinner on first launch
-      this.update.update(false, this.settings.firstLaunch)
+      this.update
+        .update(false, this.settings.firstLaunch)
         .catch(e => console.warn(e))
         .then(() => {
           this.userTracking.track('appOpened');
@@ -78,7 +78,7 @@ export class MyApp {
 
       this.app.viewWillLeave.subscribe(view => {
         if (subs.has(view)) {
-          subs.get(view).unsubscribe()
+          subs.get(view).unsubscribe();
           subs.delete(view);
         }
       });
@@ -95,17 +95,14 @@ export class MyApp {
           subs.get(view).unsubscribe();
         }
         subs.set(view, sub);
-        this.ga.trackView(`${view.name}${(view.data && view.data.ID) ? '/' + view.data.ID : ''}`);
+        this.ga.trackView(`${view.name}${view.data && view.data.ID ? '/' + view.data.ID : ''}`);
       });
     }
   }
 
   async setupAnalytics() {
     await this.ga.startTrackerWithId(googleAnalyticsTrackerID);
-    await Promise.all([
-      this.ga.enableUncaughtExceptionReporting(true),
-      this.ga.setAppVersion(APP_VERSION),
-    ]);
+    await Promise.all([this.ga.enableUncaughtExceptionReporting(true), this.ga.setAppVersion(APP_VERSION)]);
   }
 
   setOffline() {
@@ -138,4 +135,3 @@ export class MyApp {
     });
   }
 }
-

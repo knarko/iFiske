@@ -21,40 +21,39 @@ export interface Product {
   so: number;
   hl: string;
 
-  methods: {name: string}[];
+  methods: { name: string }[];
 }
 @Injectable()
 export class ProductProvider extends BaseModel<Product> {
   private static readonly methods = {
-    web: {name: 'Web', icon: 'globe'},
-    sms: {name: 'SMS', icon: 'phone-portrait'},
+    web: { name: 'Web', icon: 'globe' },
+    sms: { name: 'SMS', icon: 'phone-portrait' },
   };
 
-  protected readonly tables: TableDef[] = [{
-    name: 'Product',
-    primary: 'ID',
-    apiMethod: 'get_products',
-    members: {
-      ID: 'int',
-      t: 'text',
-      t2: 'text',
-      no: 'text',
-      im: 'text',
-      pf: 'text',
-      ai: 'int',
-      ri: 'int',
-      ch: 'int',
-      price: 'int',
-      mod: 'int',
-      so: 'int',
-      hl: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Product',
+      primary: 'ID',
+      apiMethod: 'get_products',
+      members: {
+        ID: 'int',
+        t: 'text',
+        t2: 'text',
+        no: 'text',
+        im: 'text',
+        pf: 'text',
+        ai: 'int',
+        ri: 'int',
+        ch: 'int',
+        price: 'int',
+        mod: 'int',
+        so: 'int',
+        hl: 'text',
+      },
     },
-  }];
+  ];
 
-  constructor(
-    protected DB: DatabaseProvider,
-    protected API: ApiProvider,
-  ) {
+  constructor(protected DB: DatabaseProvider, protected API: ApiProvider) {
     super();
     this.initialize();
   }
@@ -73,35 +72,38 @@ export class ProductProvider extends BaseModel<Product> {
   }
 
   /**
-      * Gets information about a product
-      * @method getOne
-      * @param {Integer} productID Product ID
-      * @return {object} Object with a single product
-      */
+   * Gets information about a product
+   * @method getOne
+   * @param {Integer} productID Product ID
+   * @return {object} Object with a single product
+   */
   @DBMethod
   async getOne(productID): Promise<Product> {
-    return this.DB.getSingle([
-      'SELECT DISTINCT Product.*,',
-      'Rule.t as rule_t,',
-      'Rule.ver as rule_ver,',
-      'Rule.d as rule_d',
-      'FROM Product',
-      'JOIN Rule ON Rule.ID = Product.ri',
-      'WHERE ID = ?',
-      'ORDER BY so',
-    ].join(' '),
-      [productID]).then(this.transform);
+    return this.DB.getSingle(
+      [
+        'SELECT DISTINCT Product.*,',
+        'Rule.t as rule_t,',
+        'Rule.ver as rule_ver,',
+        'Rule.d as rule_d',
+        'FROM Product',
+        'JOIN Rule ON Rule.ID = Product.ri',
+        'WHERE ID = ?',
+        'ORDER BY so',
+      ].join(' '),
+      [productID],
+    ).then(this.transform);
   }
 
   /**
-      * Gets all products from an area
-      * @method getByArea
-      * @param {Integer} areaID area ID
-      * @return {array} Array of Products
-      */
+   * Gets all products from an area
+   * @method getByArea
+   * @param {Integer} areaID area ID
+   * @return {array} Array of Products
+   */
   @DBMethod
   async getByArea(areaID): Promise<Product[]> {
-      return this.DB.getMultiple([
+    return this.DB.getMultiple(
+      [
         'SELECT DISTINCT Product.*,',
         'Rule.t as rule_t,',
         'Rule.ver as rule_ver,',
@@ -111,6 +113,7 @@ export class ProductProvider extends BaseModel<Product> {
         'WHERE ai = ?',
         'ORDER BY so',
       ].join(' '),
-        [areaID]).then(products => products.map(this.transform))
+      [areaID],
+    ).then(products => products.map(this.transform));
   }
 }

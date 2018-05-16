@@ -10,7 +10,7 @@ export class TermsProvider {
 
   readonly updateStrategy = 'always';
 
-  constructor(private API: ApiProvider) { }
+  constructor(private API: ApiProvider) {}
 
   async update(): Promise<boolean> {
     const [tos, smsTerms, contact] = await Promise.all([
@@ -37,5 +37,4 @@ export class TermsProvider {
   get contactInfo() {
     return localStorage.getItem(TermsProvider.CONTACT_LOCATION);
   }
-
 }

@@ -40,19 +40,21 @@ export class AreasFavoritesPage {
   }
 
   updateNotification(area: Favorite & Area) {
-    this.userProvider.setFavoriteNotification(area.ID, area.not)
-      .then(() => {
+    this.userProvider.setFavoriteNotification(area.ID, area.not).then(
+      () => {
         this.toastCtrl.show({
           message: `Notifications are turned ${area.not ? 'on' : 'off'}`,
           duration: 4000,
         });
-      }, err => {
+      },
+      err => {
         console.warn(err);
         MonitoringClient.captureException(err);
         this.toastCtrl.show({
           message: 'errors.favorite.notification_update',
           duration: 4000,
         });
-      });
+      },
+    );
   }
 }

@@ -15,25 +15,23 @@ export interface InformationArticle {
 
 @Injectable()
 export class InformationProvider extends BaseModel<InformationArticle> {
-  protected readonly tables: TableDef[] = [{
-    name: 'Information',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      t: 'text',
-      text: 'text',
-      img: 'text',
-      icon: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Information',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        t: 'text',
+        text: 'text',
+        img: 'text',
+        icon: 'text',
+      },
     },
-  }];
+  ];
 
   readonly updateStrategy = 'always';
 
-  constructor(
-    protected API: ApiProvider,
-    protected DB: DatabaseProvider,
-    private imgcache: ImgcacheService,
-  ) {
+  constructor(protected API: ApiProvider, protected DB: DatabaseProvider, private imgcache: ImgcacheService) {
     super();
     this.initialize();
   }

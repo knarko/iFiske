@@ -5,13 +5,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    FishingMethodsDetailPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(FishingMethodsDetailPage),
-    TranslateModule.forChild(),
-    ComponentsModule,
-  ],
+  declarations: [FishingMethodsDetailPage],
+  imports: [IonicPageModule.forChild(FishingMethodsDetailPage), TranslateModule.forChild(), ComponentsModule],
 })
 export class FishingMethodsDetailPageModule {}

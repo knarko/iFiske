@@ -6,14 +6,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
-  declarations: [
-    AdminPermitPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AdminPermitPage),
-    TranslateModule,
-    ComponentsModule,
-    PipesModule,
-  ],
+  declarations: [AdminPermitPage],
+  imports: [IonicPageModule.forChild(AdminPermitPage), TranslateModule, ComponentsModule, PipesModule],
 })
 export class AdminPermitPageModule {}

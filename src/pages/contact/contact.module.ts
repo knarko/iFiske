@@ -4,12 +4,7 @@ import { ContactPage } from './contact';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    ContactPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(ContactPage),
-    TranslateModule,
-  ],
+  declarations: [ContactPage],
+  imports: [IonicPageModule.forChild(ContactPage), TranslateModule],
 })
 export class ContactPageModule {}

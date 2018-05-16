@@ -4,12 +4,7 @@ import { TermsPage } from './terms';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    TermsPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(TermsPage),
-    TranslateModule,
-  ],
+  declarations: [TermsPage],
+  imports: [IonicPageModule.forChild(TermsPage), TranslateModule],
 })
 export class TermsPageModule {}

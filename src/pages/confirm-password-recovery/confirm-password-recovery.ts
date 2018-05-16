@@ -22,7 +22,7 @@ export class ConfirmPasswordRecoveryPage {
   codeSentVia: {
     mailed: boolean;
     texted: boolean;
-    methods:string[];
+    methods: string[];
   };
 
   form: Form;
@@ -45,9 +45,7 @@ export class ConfirmPasswordRecoveryPage {
           label: 'Username or email',
           placeholder: 'ui.placeholder.email',
           type: 'text',
-          validators: [
-            Validators.required,
-          ],
+          validators: [Validators.required],
           errors: {
             required: 'errors.username.required',
             invalid: 'User does not exist',
@@ -57,9 +55,7 @@ export class ConfirmPasswordRecoveryPage {
           label: 'Recovery code',
           placeholder: 'ui.placeholder.recovery_code',
           type: 'text',
-          validators: [
-            Validators.required,
-          ],
+          validators: [Validators.required],
           errors: {
             required: 'errors.recovery_code.required',
             invalid: 'errors.recovery_code.invalid',
@@ -69,9 +65,7 @@ export class ConfirmPasswordRecoveryPage {
           label: 'New password',
           placeholder: 'ui.placeholder.password',
           type: 'password',
-          validators: [
-            Validators.required,
-          ],
+          validators: [Validators.required],
           errors: {
             required: 'errors.password.required',
             invalid: 'errors.password.invalid',
@@ -88,11 +82,8 @@ export class ConfirmPasswordRecoveryPage {
       this.codeSentVia = {
         mailed: !!methods.mailed,
         texted: !!methods.texted,
-        methods: [
-          methods.mailed ? 'Email' : '',
-          methods.texted ? 'SMS' : '',
-        ].filter(x => !!x),
-      }
+        methods: [methods.mailed ? 'Email' : '', methods.texted ? 'SMS' : ''].filter(x => !!x),
+      };
     } else {
       this.codeSentVia = undefined;
     }
@@ -100,47 +91,54 @@ export class ConfirmPasswordRecoveryPage {
 
   async resetPassword(group: FormGroup) {
     const loading = await this.loadingCtrl.show({
-      content: 'Resetting password',
+      content: 'Changing password',
     });
-    this.userProvider.resetPassword({
-      username: group.controls.username.value,
-      code: group.controls.code.value,
-      password: group.controls.password.value,
-    }).then(async () => {
-      this.toastCtrl.show({
-        message: 'Password changed',
-        duration: 4000,
+    this.userProvider
+      .resetPassword({
+        username: group.controls.username.value,
+        code: group.controls.code.value,
+        password: group.controls.password.value,
+      })
+      .then(
+        async () => {
+          this.toastCtrl.show({
+            message: 'Password changed',
+            duration: 4000,
+          });
+          this.navCtrl.popToRoot();
+          this.navCtrl.first().dismiss();
+        },
+        async error => {
+          switch (error.error_code) {
+            case 5:
+              // invalid username
+              this.form.controls.username.control.setErrors({
+                invalid: true,
+              });
+              break;
+            case 13:
+              this.form.controls.password.control.setErrors({
+                minLength: true,
+              });
+              break;
+            case 16:
+              this.form.controls.code.control.setErrors({
+                invalid: true,
+              });
+              break;
+            default:
+              console.warn('Unhandled error code from api', error);
+              this.toastCtrl.show({
+                message: 'Unhandled API error',
+                duration: 6000,
+              });
+              break;
+          }
+        },
+      )
+      .catch(() => {})
+      .then(() => {
+        loading.dismiss();
       });
-      this.navCtrl.popToRoot();
-      this.navCtrl.first().dismiss();
-    }, async (error) => {
-      switch (error.error_code) {
-      case 5:
-        // invalid username
-        this.form.controls.username.control.setErrors({
-          invalid: true,
-        });
-        break;
-      case 13:
-        this.form.controls.password.control.setErrors({
-          minLength: true,
-        });
-        break;
-      case 16:
-        this.form.controls.code.control.setErrors({
-          invalid: true,
-        });
-        break;
-      default:
-        console.warn('Unhandled error code from api', error);
-        this.toastCtrl.show({
-          message: 'Unhandled API error',
-          duration: 6000,
-        })
-        break;
-      }
-    }).catch(() => {}).then(() => {
-      loading.dismiss();
-    })
   }
 }

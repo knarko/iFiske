@@ -28,7 +28,7 @@ export class DeployProvider {
     private settings: SettingsProvider,
     private platform: Platform,
     private network: Network,
-  ) { }
+  ) {}
 
   async hasDeploy() {
     if (!this.pro.deploy()) {
@@ -93,9 +93,12 @@ export class DeployProvider {
         case Connection.CELL_3G:
         case Connection.UNKNOWN:
         case Connection.NONE:
-          this.network.onchange().pipe(take(1)).subscribe(() => {
-            this.checkForUpdates();
-          });
+          this.network
+            .onchange()
+            .pipe(take(1))
+            .subscribe(() => {
+              this.checkForUpdates();
+            });
           return false;
 
         case Connection.WIFI:
@@ -104,36 +107,43 @@ export class DeployProvider {
           break;
       }
 
-      await this.pro.deploy().download().pipe(
-        tap(status => console.log('Download status:', status)),
-        filter(status => status === 'true' || status === 'done'),
-        switchMap(() => this.pro.deploy().extract()),
-        tap(status => console.log('Extract status:', status)),
-        filter(status => status === 'true' || status === 'done'),
-        take(1),
-        timeout(30 * 1000),
-      ).toPromise();
+      await this.pro
+        .deploy()
+        .download()
+        .pipe(
+          tap(status => console.log('Download status:', status)),
+          filter(status => status === 'true' || status === 'done'),
+          switchMap(() => this.pro.deploy().extract()),
+          tap(status => console.log('Extract status:', status)),
+          filter(status => status === 'true' || status === 'done'),
+          take(1),
+          timeout(30 * 1000),
+        )
+        .toPromise();
 
       if (this.settings.isDeveloper) {
         const alert = await this.alertCtrl.show({
           title: 'New update available',
           message: 'There is a new update available',
-          buttons: [{
-            text: 'Install',
-            role: 'install',
-          }, {
-            text: 'Postpone',
-            role: 'cancel',
-          }],
+          buttons: [
+            {
+              text: 'Install',
+              role: 'install',
+            },
+            {
+              text: 'Postpone',
+              role: 'cancel',
+            },
+          ],
         });
 
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           alert.onDidDismiss((_, role) => {
             if (role === 'install') {
               this.pro.deploy().redirect();
-              resolve(true)
+              resolve(true);
             } else {
-              resolve(false)
+              resolve(false);
             }
           });
         });

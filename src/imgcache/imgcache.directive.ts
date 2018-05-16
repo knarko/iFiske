@@ -8,26 +8,18 @@ import { ImgcacheService } from './imgcache.service';
 export class ImgcacheDirective implements OnChanges {
   private el: HTMLElement;
 
-  @Input('icSrc')
-  src: string;
+  @Input('icSrc') src: string;
 
-  @Input('fallback')
-  fallback: string;
+  @Input('fallback') fallback: string;
 
-  @Input('icBackground')
-  isBackground: boolean = false;
+  @Input('icBackground') isBackground: boolean = false;
 
-  constructor(
-    el: ElementRef,
-    private renderer: Renderer2,
-    private imgcache: ImgcacheService,
-  ) {
+  constructor(el: ElementRef, private renderer: Renderer2, private imgcache: ImgcacheService) {
     this.el = el.nativeElement;
   }
 
   ngOnChanges() {
     this.imgcache.getCachedFile(this.src).then(cachedImage => {
-
       if (this.isBackground) {
         const url = `url('${cachedImage}')`;
         if (this.el.style.backgroundImage !== url) {
@@ -50,5 +42,4 @@ export class ImgcacheDirective implements OnChanges {
       }
     });
   }
-
 }

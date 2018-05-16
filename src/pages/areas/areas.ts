@@ -22,8 +22,7 @@ export class AreasPage {
   ];
   selectedTab: TabItem = this.tabs[0];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   tabSelect(ev: any) {
     this.selectedTab = this.tabs[ev.index];

@@ -11,12 +11,12 @@ export class AdminHeaderComponent {
   @ViewChild(Navbar) private _navbar: Navbar;
   @Output() back = new EventEmitter<void>();
 
-  constructor(public admin: AdminProvider, private navCtrl: NavController) { }
+  constructor(public admin: AdminProvider, private navCtrl: NavController) {}
 
   ngAfterViewInit() {
     this._navbar.backButtonClick = () => {
       this.navCtrl.parent.viewCtrl.dismiss();
       this.back.emit();
-    }
+    };
   }
 }

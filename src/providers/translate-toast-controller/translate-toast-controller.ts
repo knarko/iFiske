@@ -10,9 +10,7 @@ export type ToastOptions = OriginalToastOptions & BetterToastOptions;
 
 @Injectable()
 export class TranslateToastController {
-
-  constructor(private translate: TranslateService, private toastCtrl: ToastController) {
-  }
+  constructor(private translate: TranslateService, private toastCtrl: ToastController) {}
 
   async create(opts?: ToastOptions): Promise<Toast> {
     const toTranslate = ['message', 'closeButtonText'];
@@ -31,7 +29,4 @@ export class TranslateToastController {
     await toast.present();
     return toast;
   }
-
-
-
 }

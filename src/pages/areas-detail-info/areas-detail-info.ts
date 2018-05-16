@@ -30,7 +30,8 @@ export class AreasDetailInfoPage {
   private tabsCtrl: SuperTabs;
   private navCtrl: NavController;
 
-  @ViewChild('slides') set slidesSetter(slides: Slides) {
+  @ViewChild('slides')
+  set slidesSetter(slides: Slides) {
     if (!this.slides && slides) {
       this.slides = slides;
       this.initSlides();
@@ -46,16 +47,14 @@ export class AreasDetailInfoPage {
     private sanitizer: DomSanitizer,
     private imgcache: ImgcacheService,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl}) => {
+    this.navParams.get('params').subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {
-        area.images
-          .then(images => this.getCachedImages(images))
-          .then(images => {
-            console.log(images);
-            this.images = images;
-          });
+        area.images.then(images => this.getCachedImages(images)).then(images => {
+          console.log(images);
+          this.images = images;
+        });
       }
-      this.navCtrl = rootNavCtrl
+      this.navCtrl = rootNavCtrl;
       this.tabsCtrl = tabsCtrl;
       this.species = species;
       this.org = org;
@@ -66,15 +65,15 @@ export class AreasDetailInfoPage {
 
   private getCachedImages(images: AreaImage[]): Promise<AreaImage[]> {
     return Promise.all(
-      images.map(async (img) => {
+      images.map(async img => {
         const cachedImg = await this.imgcache.getCachedFile(img.file);
         console.log(img.file, cachedImg);
-        img.file = cachedImg && this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string;
+        img.file = cachedImg && (this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string);
         return img;
       }),
     ).then(imgs => {
       console.log(imgs);
-      return imgs.filter(img => !!img.file)
+      return imgs.filter(img => !!img.file);
     });
   }
 
@@ -106,7 +105,7 @@ export class AreasDetailInfoPage {
         if (role === 'close') {
           this.modalCtrl.create(LoginPage).present();
         }
-      })
+      });
     }
   }
 
@@ -119,8 +118,7 @@ export class AreasDetailInfoPage {
   }
 
   imageLoaded(i: number) {
-    if (i === 0)
-      this.slides.update();
+    if (i === 0) this.slides.update();
   }
 
   initSlides() {

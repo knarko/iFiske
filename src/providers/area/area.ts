@@ -92,7 +92,6 @@ export interface AreaFile {
    * Not stored in Database
    */
   filename: string;
-
 }
 
 @Injectable()
@@ -100,34 +99,35 @@ export class AreaProvider extends BaseModel<Area> {
   searchCache: any = {};
   watch: Subscription;
 
-  protected readonly tables: TableDef[] = [{
-    name: 'Area',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      orgid: 'int',
-      t: 'text',
-      kw: 'text',
-      note: 'text',
-      c1: 'int',
-      c2: 'int',
-      c3: 'int',
-      m1: 'int',
-      m2: 'int',
-      m3: 'int',
-      lat: 'real',
-      lng: 'real',
-      zoom: 'text',
-      pnt: 'int',
-      car: 'int',
-      eng: 'int',
-      hcp: 'int',
-      wsc: 'int',
-      mod: 'int',
-      d: 'text',
-      ptab: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Area',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        orgid: 'int',
+        t: 'text',
+        kw: 'text',
+        note: 'text',
+        c1: 'int',
+        c2: 'int',
+        c3: 'int',
+        m1: 'int',
+        m2: 'int',
+        m3: 'int',
+        lat: 'real',
+        lng: 'real',
+        zoom: 'text',
+        pnt: 'int',
+        car: 'int',
+        eng: 'int',
+        hcp: 'int',
+        wsc: 'int',
+        mod: 'int',
+        d: 'text',
+        ptab: 'text',
+      },
     },
-  },
     {
       name: 'Area_Fish',
       primary: 'ID',
@@ -187,10 +187,7 @@ export class AreaProvider extends BaseModel<Area> {
       await this.ready;
     }
 
-    const data = Promise.all([
-      this.API.get_areas(),
-      this.API.get_images(),
-    ]);
+    const data = Promise.all([this.API.get_areas(), this.API.get_images()]);
 
     await data.then(this.insert);
     return true;
@@ -223,7 +220,7 @@ export class AreaProvider extends BaseModel<Area> {
       this.DB.populateTable(this.tables[2], images),
       this.DB.populateTable(this.tables[3], filesArr),
     ]);
-  }
+  };
 
   transform(area: Area, single: boolean = false) {
     area.photo = area.photo ? serverLocation + area.photo : area.photo;
@@ -240,7 +237,8 @@ export class AreaProvider extends BaseModel<Area> {
    */
   @DBMethod
   async getOne(id: number): Promise<Area> {
-    const res = await this.DB.getSingle(`
+    const res = await this.DB.getSingle(
+      `
       SELECT
         Area.*,
         Organization.t AS org,
@@ -249,7 +247,9 @@ export class AreaProvider extends BaseModel<Area> {
       LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
       LEFT JOIN Organization ON Area.orgid = Organization.ID
       WHERE Area.ID = ?
-    `, Array.isArray(id) ? id : [id]);
+    `,
+      Array.isArray(id) ? id : [id],
+    );
     this.transform(res, true);
     return res;
   }
@@ -276,7 +276,8 @@ export class AreaProvider extends BaseModel<Area> {
       `;
     }
 
-    const res = await this.DB.getMultiple(`
+    const res = await this.DB.getMultiple(
+      `
       SELECT
         Area.*,
         Organization.t AS org,
@@ -307,44 +308,51 @@ export class AreaProvider extends BaseModel<Area> {
       ) AS Area_Photos ON Area.ID = Area_Photos.area
       ${countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
       GROUP BY Area.ID
-    `, countyId ? [countyId, countyId, countyId] : []);
+    `,
+      countyId ? [countyId, countyId, countyId] : [],
+    );
     res.forEach(a => this.transform(a));
     return res;
   }
 
   @DBMethod
   async getPhotos(areaId): Promise<AreaImage[]> {
-    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId])
-    .then(images => {
+    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId]).then(
+      images => {
         for (let i = 0; i < images.length; ++i) {
           images[i].ratio = images[i].h / images[i].w * 100 + '%';
           images[i].file = serverLocation + images[i].file;
         }
         return images;
-      });
+      },
+    );
   }
 
   @DBMethod
   async getFiles(areaId): Promise<AreaFile[]> {
-    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId])
-      .then((files: AreaFile[]) => {
+    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId]).then(
+      (files: AreaFile[]) => {
         files.forEach(file => {
-          file.thumb = serverLocation + file.thumb
+          file.thumb = serverLocation + file.thumb;
           file.url = serverLocation + file.f;
           file.filename = file.f.split('/').slice(-1)[0];
         });
         return files;
-      });
+      },
+    );
   }
 
   @DBMethod
   async getFishes(aid): Promise<Fish[]> {
-    return this.DB.getMultiple(`
+    return this.DB.getMultiple(
+      `
       SELECT * FROM Area_Fish
       JOIN Fish ON Area_Fish.fid = Fish.ID
       WHERE Area_Fish.aid = ?
       ORDER BY Area_Fish.amount DESC
-    `, [aid]);
+    `,
+      [aid],
+    );
   }
 
   /**
@@ -367,48 +375,62 @@ export class AreaProvider extends BaseModel<Area> {
     }
     this.startWatch();
     const result = this.getAll(countyId)
-      .then(data => data.map(d => {
-        for (let i = 1; i < 6; ++i) {
-          d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(' ');
-        }
-        return d;
-      }))
-      .then((data) => {
+      .then(data =>
+        data.map(d => {
+          for (let i = 1; i < 6; ++i) {
+            d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(' ');
+          }
+          return d;
+        }),
+      )
+      .then(data => {
         const options = {
-          keys: [{
-            name: 't',
-            weight: 0.9,
-          }, {
-            name: 'd',
-            weight: 0.4,
-          }, {
-            name: 'note',
-            weight: 0.4,
-          }, {
-            name: 'kw',
-            weight: 0.5,
-          }, {
-            name: 'org',
-            weight: 0.7,
-          }, {
-            name: 'org_d',
-            weight: 0.4,
-          }, {
-            name: 'fish_1',
-            weight: 0.2,
-          }, {
-            name: 'fish_2',
-            weight: 0.3,
-          }, {
-            name: 'fish_3',
-            weight: 0.5,
-          }, {
-            name: 'fish_4',
-            weight: 0.7,
-          }, {
-            name: 'fish_5',
-            weight: 0.9,
-          }],
+          keys: [
+            {
+              name: 't',
+              weight: 0.9,
+            },
+            {
+              name: 'd',
+              weight: 0.4,
+            },
+            {
+              name: 'note',
+              weight: 0.4,
+            },
+            {
+              name: 'kw',
+              weight: 0.5,
+            },
+            {
+              name: 'org',
+              weight: 0.7,
+            },
+            {
+              name: 'org_d',
+              weight: 0.4,
+            },
+            {
+              name: 'fish_1',
+              weight: 0.2,
+            },
+            {
+              name: 'fish_2',
+              weight: 0.3,
+            },
+            {
+              name: 'fish_3',
+              weight: 0.5,
+            },
+            {
+              name: 'fish_4',
+              weight: 0.7,
+            },
+            {
+              name: 'fish_5',
+              weight: 0.9,
+            },
+          ],
           includeScore: true,
           shouldSort: false,
           threshold: 0.5,
@@ -433,7 +455,8 @@ export class AreaProvider extends BaseModel<Area> {
         });
       })
       .then(res => {
-        return this.fishProvider.search(searchstring)
+        return this.fishProvider
+          .search(searchstring)
           .then(fishes => {
             return fishes.length ? fishes[0].item.t : undefined;
           })
@@ -441,7 +464,12 @@ export class AreaProvider extends BaseModel<Area> {
             if (this.currentLocation || foundFish) {
               res.forEach(r => {
                 if (this.currentLocation) {
-                  const distance = this.calculateDistance(r.item.lat, r.item.lng, this.currentLocation.lat, this.currentLocation.lng);
+                  const distance = this.calculateDistance(
+                    r.item.lat,
+                    r.item.lng,
+                    this.currentLocation.lat,
+                    this.currentLocation.lng,
+                  );
                   r.item.distance = distance;
                   r.score += this.mapDistance(distance);
                 }
@@ -458,19 +486,19 @@ export class AreaProvider extends BaseModel<Area> {
             }
             return res;
           });
-      }).then(res => {
-        return res.sort((a, b) => {
-          const res = a.score - b.score;
-          if (res)
-            return res;
-          if (a.item.org > b.item.org) {
-            return 1;
-          }
-          else if (a.item.org < b.item.org) {
-            return -1;
-          }
-          return 0;
-        })
+      })
+      .then(res => {
+        return res
+          .sort((a, b) => {
+            const res = a.score - b.score;
+            if (res) return res;
+            if (a.item.org > b.item.org) {
+              return 1;
+            } else if (a.item.org < b.item.org) {
+              return -1;
+            }
+            return 0;
+          })
           .map(r => r.item);
       });
     result.catch(() => {}).then(() => {
@@ -486,20 +514,21 @@ export class AreaProvider extends BaseModel<Area> {
     if (this.watch) {
       return;
     }
-    this.watch = this.geo.watchPosition({
-      timeout: 10000,
-      enableHighAccuracy: false,
-    })
-    .filter(geo => !!geo.coords)
-    .subscribe(position => {
-      if (!this.currentLocation) {
-        this.searchCache = {};
-      }
-      this.currentLocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-    });
+    this.watch = this.geo
+      .watchPosition({
+        timeout: 10000,
+        enableHighAccuracy: false,
+      })
+      .filter(geo => !!geo.coords)
+      .subscribe(position => {
+        if (!this.currentLocation) {
+          this.searchCache = {};
+        }
+        this.currentLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+      });
   }
 
   private mapDistance(val) {
@@ -514,9 +543,7 @@ export class AreaProvider extends BaseModel<Area> {
     const Δφ = (lat2 - lat1) * (Math.PI / 180);
     const Δλ = (lon2 - lon1) * (Math.PI / 180);
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) *
-      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;

@@ -8,11 +8,11 @@ export class TranslateLoadingController {
 
   private queue: Loading[] = [];
 
-  constructor(private loadingCtrl: LoadingController, private translate: TranslateService) { }
+  constructor(private loadingCtrl: LoadingController, private translate: TranslateService) {}
 
-  async create(opts?: LoadingOptions): Promise<Loading>{
+  async create(opts?: LoadingOptions): Promise<Loading> {
     if (opts && opts.content) {
-      opts.content = await this.translate.get(opts.content).toPromise()
+      opts.content = await this.translate.get(opts.content).toPromise();
     }
     return this.loadingCtrl.create(opts);
   }
@@ -43,8 +43,8 @@ export class TranslateLoadingController {
       const origDismiss = loading.dismiss.bind(loading);
       loading.dismiss = (data, role, options) => {
         dismissed();
-        return origDismiss(data, role, options)
-      }
+        return origDismiss(data, role, options);
+      };
       this.queue.push(loading);
     } else {
       this.showing = true;
@@ -53,5 +53,4 @@ export class TranslateLoadingController {
 
     return loading;
   }
-
 }

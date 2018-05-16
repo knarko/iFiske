@@ -3,8 +3,7 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class PlatformProvider {
-
-  constructor(private _platform: Platform) { }
+  constructor(private _platform: Platform) {}
 
   get platform(): string {
     if (this._platform.is('ios')) {
@@ -27,5 +26,4 @@ export class PlatformProvider {
     }
     return 'unknown';
   }
-
 }

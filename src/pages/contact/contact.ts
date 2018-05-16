@@ -19,8 +19,7 @@ import { TermsProvider } from '../../providers/terms/terms';
 export class ContactPage {
   contactInfo: string;
 
-  constructor(private terms: TermsProvider) {
-  }
+  constructor(private terms: TermsProvider) {}
 
   ionViewWillEnter() {
     this.contactInfo = this.terms.contactInfo;

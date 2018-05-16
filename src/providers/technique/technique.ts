@@ -27,24 +27,26 @@ export interface Technique {
 
 @Injectable()
 export class TechniqueProvider extends BaseModel<Technique> {
-  protected readonly tables: TableDef[] = [{
-    name: 'Technique',
-    apiMethod: 'get_techniques',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      t: 'text',
-      d: 'text',
-      so: 'int',
-      de: 'text',
-      da: 'text',
-      icon: 'text',
-      img1: 'text',
-      img2: 'text',
-      img3: 'text',
-      youtube: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Technique',
+      apiMethod: 'get_techniques',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        t: 'text',
+        d: 'text',
+        so: 'int',
+        de: 'text',
+        da: 'text',
+        icon: 'text',
+        img1: 'text',
+        img2: 'text',
+        img3: 'text',
+        youtube: 'text',
+      },
     },
-  }];
+  ];
 
   constructor(
     protected API: ApiProvider,
@@ -73,8 +75,8 @@ export class TechniqueProvider extends BaseModel<Technique> {
   }
 
   private getCachedImages(images: string[]): Promise<string[]> {
-    return Promise.all(
-      images.map(img => this.imgcache.getCachedFile(img)),
-    ).then(imgs => imgs.map(img => this.sanitizer.bypassSecurityTrustUrl(img) as string));
+    return Promise.all(images.map(img => this.imgcache.getCachedFile(img))).then(imgs =>
+      imgs.map(img => this.sanitizer.bypassSecurityTrustUrl(img) as string),
+    );
   }
 }

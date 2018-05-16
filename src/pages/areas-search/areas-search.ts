@@ -29,7 +29,7 @@ export class AreasSearchPage {
     private fish: FishProvider,
     private keyboard: Keyboard,
     public settings: SettingsProvider,
-  ) { }
+  ) {}
 
   ionViewDidLoad() {
     this.county = this.navParams.get('county');
@@ -63,7 +63,8 @@ export class AreasSearchPage {
     } else {
       this.foundFish = undefined;
     }
-    return this.area.search(searchTerm, this.county && this.county.ID)
+    return this.area
+      .search(searchTerm, this.county && this.county.ID)
       .then(data => {
         this.areas = data.slice();
         if (this.foundFish) {
@@ -78,7 +79,8 @@ export class AreasSearchPage {
           });
         }
         return this.content.scrollToTop();
-      }).catch(err => {
+      })
+      .catch(err => {
         console.warn(err);
       });
   }
@@ -86,7 +88,8 @@ export class AreasSearchPage {
   search = debounce(this.searchImmediate, 500);
 
   keypress($event) {
-    if ($event.keyCode === 13) { // if enter-key
+    if ($event.keyCode === 13) {
+      // if enter-key
       $event.preventDefault();
       const searchTerm = $event.srcElement.value;
       this.searchImmediate(searchTerm);
@@ -97,5 +100,4 @@ export class AreasSearchPage {
   goto(area: Area) {
     this.navCtrl.push('AreasDetailPage', area);
   }
-
 }

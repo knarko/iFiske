@@ -1,11 +1,10 @@
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import * as ImgCache from 'imgcache.js';
-import { MonitoringClient } from '../app/monitoring'
+import { MonitoringClient } from '../app/monitoring';
 import { isProdMode } from '../app/config';
 
-export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG')
-
+export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG');
 
 declare var Ionic: any;
 
@@ -68,10 +67,7 @@ export class ImgcacheService {
 
   private cache = {};
 
-  constructor(
-    private plt: Platform,
-    @Inject(IMGCACHE_CONFIG) private config: ImgcacheConfig = {},
-  ) {
+  constructor(private plt: Platform, @Inject(IMGCACHE_CONFIG) private config: ImgcacheConfig = {}) {
     Object.assign(ImgCache.options, config);
 
     this.ready = this.plt.ready().then(() => {
@@ -88,7 +84,7 @@ export class ImgcacheService {
     }
   }
 
-  isCached = async (src) => {
+  isCached = async src => {
     await this.ready;
     return new Promise<boolean>((resolve, reject) => ImgCache.isCached(src, (_, answer) => resolve(answer)));
   };
@@ -108,14 +104,17 @@ export class ImgcacheService {
       await this.cacheFile(src);
 
       return new Promise<string>((resolve, reject) => {
-        ImgCache.getCachedFile(src, (_, img) => {
-          const url = img.toURL();
-          const normalizedUrl = (window as any).Ionic && Ionic.normalizeURL && Ionic.normalizeURL(url) || url;
-          this.cache[src] = normalizedUrl;
-          resolve(normalizedUrl);
-        }, reject);
+        ImgCache.getCachedFile(
+          src,
+          (_, img) => {
+            const url = img.toURL();
+            const normalizedUrl = ((window as any).Ionic && Ionic.normalizeURL && Ionic.normalizeURL(url)) || url;
+            this.cache[src] = normalizedUrl;
+            resolve(normalizedUrl);
+          },
+          reject,
+        );
       });
-
     } catch (err) {
       console.warn(`Could not cache ${src}`, err);
       if (isProdMode()) {

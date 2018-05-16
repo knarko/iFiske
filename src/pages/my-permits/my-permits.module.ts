@@ -4,12 +4,7 @@ import { MyPermitsPage } from './my-permits';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    MyPermitsPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(MyPermitsPage),
-    TranslateModule,
-  ],
+  declarations: [MyPermitsPage],
+  imports: [IonicPageModule.forChild(MyPermitsPage), TranslateModule],
 })
 export class MyPermitsPageModule {}

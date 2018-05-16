@@ -143,21 +143,23 @@ export class UserProvider extends BaseModel {
     this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
   }
 
-	/**
-		* Cleans all the user data from database
-		* @return {Promise}  Promise when done
-		*/
+  /**
+   * Cleans all the user data from database
+   * @return {Promise}  Promise when done
+   */
   clean() {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
     this.pushProvider.unregister();
 
     MonitoringClient.setUserContext(undefined);
-    return Promise.all(p)
-      .then(() => {
+    return Promise.all(p).then(
+      () => {
         console.log('Removed user info from database');
-      }, err => {
+      },
+      err => {
         console.log('Could not remove user data from database!', err);
-      });
+      },
+    );
   }
 
   async update(skipWait?: boolean): Promise<boolean> {
@@ -171,43 +173,53 @@ export class UserProvider extends BaseModel {
 
     try {
       const p = [];
-      p.push(this.API.user_get_favorites().then(favorites => {
-        this.DB.populateTable(this.tables.favorite, favorites);
-      }));
+      p.push(
+        this.API.user_get_favorites().then(favorites => {
+          this.DB.populateTable(this.tables.favorite, favorites);
+        }),
+      );
 
-      p.push(this.API.user_info().then(data => {
-        const numbers = data.numbers;
-        const numArr = [];
-        for (let i = 0; i < numbers.length; ++i) {
-          numArr.push({ number: numbers[i] });
-        }
+      p.push(
+        this.API.user_info().then(data => {
+          const numbers = data.numbers;
+          const numArr = [];
+          for (let i = 0; i < numbers.length; ++i) {
+            numArr.push({ number: numbers[i] });
+          }
 
-        MonitoringClient.setUserContext({
-          id: data.ID,
-        });
+          MonitoringClient.setUserContext({
+            id: data.ID,
+          });
 
-        return Promise.all([
-          this.DB.populateTable(this.tables.info, [data])
-            .then(() => {
-              return 'User_Info';
-            }, err => {
-              console.log(data);
-              console.log(err);
-              return Promise.reject(err);
-            }),
-          this.DB.populateTable(this.tables.number, numArr)
-            .then(() => {
-              return 'User_Numbers';
-            }, err => {
-              console.log(err);
-              return Promise.reject(err);
-            }),
-        ]);
-      }));
+          return Promise.all([
+            this.DB.populateTable(this.tables.info, [data]).then(
+              () => {
+                return 'User_Info';
+              },
+              err => {
+                console.log(data);
+                console.log(err);
+                return Promise.reject(err);
+              },
+            ),
+            this.DB.populateTable(this.tables.number, numArr).then(
+              () => {
+                return 'User_Numbers';
+              },
+              err => {
+                console.log(err);
+                return Promise.reject(err);
+              },
+            ),
+          ]);
+        }),
+      );
 
-      p.push(this.API.user_products().then(products => {
-        this.DB.populateTable(this.tables.product, products);
-      }));
+      p.push(
+        this.API.user_products().then(products => {
+          this.DB.populateTable(this.tables.product, products);
+        }),
+      );
 
       await Promise.all(p);
       return true;
@@ -216,7 +228,7 @@ export class UserProvider extends BaseModel {
         this.toastCtrl.show({
           message: 'You have been logged out',
           duration: 4000,
-        })
+        });
         this.logout();
       }
       throw err;
@@ -226,18 +238,20 @@ export class UserProvider extends BaseModel {
   async login({ username, password }) {
     await this.clean();
 
-    const p = this.API.user_login(username, password)
-      .then(() => this.update(true));
+    const p = this.API.user_login(username, password).then(() => this.update(true));
 
-    p.then(() => {
-      this.ga.trackEvent('Login and Signup', 'Login');
-      this.pushProvider.register();
-    }, error => {
-      this.session.token = undefined;
-      this.ga.trackEvent('Login and Signup', 'Login Failure');
-      this.ga.trackException('Login Failure', false);
-      return error;
-    });
+    p.then(
+      () => {
+        this.ga.trackEvent('Login and Signup', 'Login');
+        this.pushProvider.register();
+      },
+      error => {
+        this.session.token = undefined;
+        this.ga.trackEvent('Login and Signup', 'Login Failure');
+        this.ga.trackException('Login Failure', false);
+        return error;
+      },
+    );
     return p;
   }
 
@@ -247,10 +261,7 @@ export class UserProvider extends BaseModel {
       content: 'Logging out',
     });
 
-    const promise = Promise.all([
-      this.clean(),
-      this.API.user_logout(),
-    ]);
+    const promise = Promise.all([this.clean(), this.API.user_logout()]);
     promise.catch(() => {}).then(() => {
       loading.dismiss();
       this.toastCtrl.show({
@@ -272,9 +283,10 @@ export class UserProvider extends BaseModel {
   }
 
   getProduct(id) {
-    const getter = (id) => {
+    const getter = id => {
       return this.ready.then(() => {
-        return this.DB.getSingle(`
+        return this.DB.getSingle(
+          `
 								SELECT User_Product.*, Product.ai,
 								Rule.t as rule_t,
 								Rule.ver as rule_ver,
@@ -283,15 +295,17 @@ export class UserProvider extends BaseModel {
 								LEFT JOIN Product ON Product.ID = User_Product.pid
 								LEFT JOIN Rule ON Rule.ID = Product.ri
 								WHERE User_Product.ID = ?
-							`, [id]).then((product: Permit) => {
-            if (!product) {
-              return Promise.reject(`Couldn't find product with id '${id}`);
-            }
-            product.validity = getPermitValidity(product);
-            return Promise.resolve(product);
-          });
+							`,
+          [id],
+        ).then((product: Permit) => {
+          if (!product) {
+            return Promise.reject(`Couldn't find product with id '${id}`);
+          }
+          product.validity = getPermitValidity(product);
+          return Promise.resolve(product);
+        });
       });
-    }
+    };
 
     return getter(id).catch(err => {
       console.warn(err);
@@ -307,15 +321,17 @@ export class UserProvider extends BaseModel {
 
   @DBMethod
   async getProducts(): Promise<Permit[]> {
-    return this.DB.getMultiple([
-      'SELECT User_Product.*,',
-      'Rule.t as rule_t,',
-      'Rule.ver as rule_ver,',
-      'Rule.d as rule_d',
-      'FROM User_Product',
-      'LEFT JOIN Product ON Product.ID = User_Product.pid',
-      'LEFT JOIN Rule ON Rule.ID = Product.ri',
-    ].join(' ')).then(products => {
+    return this.DB.getMultiple(
+      [
+        'SELECT User_Product.*,',
+        'Rule.t as rule_t,',
+        'Rule.ver as rule_ver,',
+        'Rule.d as rule_d',
+        'FROM User_Product',
+        'LEFT JOIN Product ON Product.ID = User_Product.pid',
+        'LEFT JOIN Rule ON Rule.ID = Product.ri',
+      ].join(' '),
+    ).then(products => {
       products.forEach(product => {
         console.log(product);
         product.validity = getPermitValidity(product);
@@ -326,36 +342,23 @@ export class UserProvider extends BaseModel {
 
   @DBMethod
   async getFavorites(): Promise<(Favorite & Area)[]> {
-    return this.DB.getMultiple([
-      'SELECT *',
-      'FROM User_Favorite',
-      'JOIN Area ON User_Favorite.a = Area.ID',
-    ].join(' '));
+    return this.DB.getMultiple(['SELECT *', 'FROM User_Favorite', 'JOIN Area ON User_Favorite.a = Area.ID'].join(' '));
   }
 
   @DBMethod
   async removeFavorite(id) {
-    return this.DB.runSql([
-      'DELETE FROM User_Favorite',
-      'WHERE a = ?',
-    ].join(' '), [id]);
+    return this.DB.runSql(['DELETE FROM User_Favorite', 'WHERE a = ?'].join(' '), [id]);
   }
 
   @DBMethod
   async addFavorite(id) {
-    return this.DB.runSql([
-      'INSERT INTO User_Favorite',
-      '(a, "not") VALUES (?, 0)',
-    ].join(' '), [id]);
+    return this.DB.runSql(['INSERT INTO User_Favorite', '(a, "not") VALUES (?, 0)'].join(' '), [id]);
   }
 
   @DBMethod
   async setFavoriteNotification(id, not) {
     await this.API.user_set_favorite_notification(id, not);
-    return this.DB.runSql([
-      'UPDATE User_Favorite',
-      'SET "not" = ? WHERE a = ?',
-    ].join(' '), [not, id]);
+    return this.DB.runSql(['UPDATE User_Favorite', 'SET "not" = ? WHERE a = ?'].join(' '), [not, id]);
   }
 
   async toggleFavorite(area: Area) {
@@ -370,12 +373,12 @@ export class UserProvider extends BaseModel {
     return area.favorite;
   }
 
-  async resetPassword({username, code, password}) {
+  async resetPassword({ username, code, password }) {
     await this.API.user_reset_password({
       username,
       password,
       code,
     });
-    return this.login({username, password});
+    return this.login({ username, password });
   }
 }

@@ -22,10 +22,7 @@ export class YoutubeComponent {
   @Input() url: string;
   @ViewChild('player') player: ElementRef;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private orientation: ScreenOrientation,
-  ) {
+  constructor(private sanitizer: DomSanitizer, private orientation: ScreenOrientation) {
     this.fullscreen = Observable.merge(
       Observable.fromEvent(document, 'fullscreenchange'),
       Observable.fromEvent(document, 'webkitfullscreenchange'),
@@ -34,20 +31,22 @@ export class YoutubeComponent {
   }
 
   private sendMessage(func) {
-    return this.player.nativeElement.contentWindow.postMessage(JSON.stringify({
-      event: 'command',
-      func: func,
-      args: '',
-    }), '*');
+    return this.player.nativeElement.contentWindow.postMessage(
+      JSON.stringify({
+        event: 'command',
+        func: func,
+        args: '',
+      }),
+      '*',
+    );
   }
 
   start() {
     this.sub = this.fullscreen.subscribe(e => {
       console.log('Changing fullscreen mode', e);
-      const fullScreenElement = document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        (document as any).mozFullscreenElement;
-        console.log(fullScreenElement);
+      const fullScreenElement =
+        document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
+      console.log(fullScreenElement);
       if (fullScreenElement) {
         this.orientation.unlock();
       } else {

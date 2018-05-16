@@ -10,11 +10,10 @@ import { UserProvider, User } from '../../providers/user/user';
 export class ProfilePage {
   user: User;
 
-  constructor(private userProvider: UserProvider, private viewCtrl: ViewController) {
-  }
+  constructor(private userProvider: UserProvider, private viewCtrl: ViewController) {}
 
   async ionViewWillEnter() {
-    this.user = await this.userProvider.getInfo()
+    this.user = await this.userProvider.getInfo();
   }
 
   close() {

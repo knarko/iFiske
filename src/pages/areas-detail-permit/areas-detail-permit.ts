@@ -37,26 +37,34 @@ export class AreasDetailPermitPage {
 
     if (method.name === 'Web') {
       // TODO: pass user session to server
-      const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${product.ID}&app=true&device=${this.platform.platform}`;
+      const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${
+        product.ID
+      }&app=true&device=${this.platform.platform}`;
       window.open(url, '_system');
 
       this.ga.trackEvent('Purchase', 'Web', '' + product.ID);
     } else if (method.name === 'SMS') {
-      this.modalCtrl.create('SmsPurchasePage', {
-        product,
-      }).present();
+      this.modalCtrl
+        .create('SmsPurchasePage', {
+          product,
+        })
+        .present();
     } else {
-      MonitoringClient.captureException(new Error(`There was no valid method: ${method} for product ${product.ID}
+      MonitoringClient.captureException(
+        new Error(`There was no valid method: ${method} for product ${product.ID}
         ${JSON.stringify(product.methods)}
-      `));
+      `),
+      );
     }
   }
 
   openRules(permit: Permit) {
-    this.modalCtrl.create('PermitRulesPage', {
-      t: permit.rule_t,
-      d: permit.rule_d,
-      ver: permit.rule_ver,
-    }).present();
+    this.modalCtrl
+      .create('PermitRulesPage', {
+        t: permit.rule_t,
+        d: permit.rule_d,
+        ver: permit.rule_ver,
+      })
+      .present();
   }
 }

@@ -4,12 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminPage } from './admin';
 
 @NgModule({
-  declarations: [
-    AdminPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AdminPage),
-    TranslateModule,
-  ],
+  declarations: [AdminPage],
+  imports: [IonicPageModule.forChild(AdminPage), TranslateModule],
 })
 export class AdminPageModule {}

@@ -29,13 +29,13 @@ export class CreateAccountProvider {
   }
 
   async register(userDetails: UserDetails) {
-    const res = await this.API.user_register(userDetails)
+    const res = await this.API.user_register(userDetails);
     console.log(res);
     localStorage.setItem(CreateAccountProvider.REGISTER_DATA_KEY, JSON.stringify(userDetails));
     this.timerSubject.next(this.createTimer());
   }
 
-  async activate({username, activationCode}: {username?: string, activationCode: string}) {
+  async activate({ username, activationCode }: { username?: string; activationCode: string }) {
     const userDetails = this.getSavedUserDetails();
 
     if (!username) {
@@ -43,7 +43,7 @@ export class CreateAccountProvider {
     }
 
     if (!username) {
-        throw new Error('No username');
+      throw new Error('No username');
     }
 
     await this.API.user_confirm(username, activationCode);
@@ -82,9 +82,6 @@ export class CreateAccountProvider {
     const timerEnd = 3 * 60 * 1000; // 3 minutes
     const stop = timer(timerEnd - 1000);
     const timerStart = Date.now();
-    return timer(0, 1000).pipe(
-      map(() => timerEnd - (Date.now() - timerStart)),
-      takeUntil(stop),
-    );
+    return timer(0, 1000).pipe(map(() => timerEnd - (Date.now() - timerStart)), takeUntil(stop));
   }
 }

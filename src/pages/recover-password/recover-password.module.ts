@@ -4,12 +4,7 @@ import { RecoverPasswordPage } from './recover-password';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    RecoverPasswordPage,
-  ],
-  imports: [
-     IonicPageModule.forChild(RecoverPasswordPage),
-     TranslateModule,
-  ],
+  declarations: [RecoverPasswordPage],
+  imports: [IonicPageModule.forChild(RecoverPasswordPage), TranslateModule],
 })
 export class RecoverPasswordPageModule {}

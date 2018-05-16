@@ -10,10 +10,11 @@ export class LinkyPipe implements PipeTransform {
   constructor() {
     this.linker = new Autolinker({
       truncate: {
-        length: 32, location: 'middle',
+        length: 32,
+        location: 'middle',
       },
       replaceFn: (match: any) => {
-        var tag = match.buildTag();  // returns an Autolinker.HtmlTag instance
+        var tag = match.buildTag(); // returns an Autolinker.HtmlTag instance
         tag.setAttr('target', '_system');
         return tag;
       },
@@ -25,6 +26,5 @@ export class LinkyPipe implements PipeTransform {
       return value;
     }
     return this.linker.link(value);
-  }
-
+  };
 }

@@ -1,12 +1,5 @@
 import { ReflectiveInjector } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ValidatorFn,
-  AsyncValidatorFn,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { Dictionary } from '../../types';
 
 export interface FormControl {
@@ -20,7 +13,7 @@ export interface FormControl {
     [error: string]: string;
   };
   control?: AbstractControl;
-};
+}
 
 export interface FormOptions {
   submit: (group: FormGroup) => void;
@@ -34,7 +27,7 @@ export interface FormOptions {
 export class Form {
   private submitHandler: (FormGroup) => void;
   readonly submitMessage: string;
-  controls: {[id: string]: FormControl};
+  controls: { [id: string]: FormControl };
 
   allowSubmit: (group: FormGroup) => boolean;
 

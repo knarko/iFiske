@@ -19,11 +19,9 @@ import { TermsProvider } from '../../providers/terms/terms';
 export class TermsPage {
   terms: string;
 
-  constructor(private termsProvider: TermsProvider) {
-  }
+  constructor(private termsProvider: TermsProvider) {}
 
   ionViewWillEnter() {
     this.terms = this.termsProvider.termsOfService;
   }
-
 }

@@ -15,12 +15,7 @@ interface Ad {
 
 @Injectable()
 export class AdsProvider {
-
-  constructor(
-    public API: ApiProvider,
-    private imgcache: ImgcacheService,
-    private sanitizer: DomSanitizer,
-  ) { }
+  constructor(public API: ApiProvider, private imgcache: ImgcacheService, private sanitizer: DomSanitizer) {}
 
   getAdsForHome(): Observable<any[]> {
     return this.API.getAdsMain().pipe(
@@ -33,11 +28,13 @@ export class AdsProvider {
         });
       }),
       switchMap(ads => {
-        return Promise.all(ads.map(async (ad) => {
-          const img = await this.imgcache.getCachedFile(ad.app_imageurl)
-          ad.app_imageurl = this.sanitizer.bypassSecurityTrustUrl(img) as string;
-          return ad;
-        }));
+        return Promise.all(
+          ads.map(async ad => {
+            const img = await this.imgcache.getCachedFile(ad.app_imageurl);
+            ad.app_imageurl = this.sanitizer.bypassSecurityTrustUrl(img) as string;
+            return ad;
+          }),
+        );
       }),
       catchError(() => of([])),
     );

@@ -7,23 +7,8 @@ import { KeysPipe } from './keys/keys';
 import { MkObjectPipe } from './mk-object/mk-object';
 
 @NgModule({
-	declarations: [
-    DistancePipe,
-    FormatInfoPipe,
-    LinkyPipe,
-    KeysPipe,
-    MkObjectPipe,
-  ],
-  imports: [
-    NgStringPipesModule,
-  ],
-	exports: [
-    NgStringPipesModule,
-    DistancePipe,
-    FormatInfoPipe,
-    LinkyPipe,
-    KeysPipe,
-    MkObjectPipe,
-  ],
+  declarations: [DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe],
+  imports: [NgStringPipesModule],
+  exports: [NgStringPipesModule, DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe],
 })
 export class PipesModule {}

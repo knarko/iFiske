@@ -4,12 +4,7 @@ import { SmsPurchasePage } from './sms-purchase';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    SmsPurchasePage,
-  ],
-  imports: [
-    IonicPageModule.forChild(SmsPurchasePage),
-    TranslateModule,
-  ],
+  declarations: [SmsPurchasePage],
+  imports: [IonicPageModule.forChild(SmsPurchasePage), TranslateModule],
 })
 export class SmsPurchasePageModule {}

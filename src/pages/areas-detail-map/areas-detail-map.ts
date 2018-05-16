@@ -43,15 +43,17 @@ export class AreasDetailMapPage {
   ) {
     this.navParams.get('params').subscribe(({ area, org, products }) => {
       if (this.area !== area && area) {
-        this.mapData.getPois(area.orgid)
-          .then(pois => this.options.pois = pois)
-          .catch(() => this.options.pois = [])
-          .then(() => this.options = Object.assign({}, this.options));
+        this.mapData
+          .getPois(area.orgid)
+          .then(pois => (this.options.pois = pois))
+          .catch(() => (this.options.pois = []))
+          .then(() => (this.options = Object.assign({}, this.options)));
 
-        this.mapData.getPolygons(area.orgid)
-          .then(polygons => this.options.polygons = polygons)
-          .catch(() => this.options.polygons = [])
-          .then(() => this.options = Object.assign({}, this.options));
+        this.mapData
+          .getPolygons(area.orgid)
+          .then(polygons => (this.options.polygons = polygons))
+          .catch(() => (this.options.polygons = []))
+          .then(() => (this.options = Object.assign({}, this.options)));
 
         this.options.area = area;
         this.options = Object.assign({}, this.options);
@@ -72,22 +74,24 @@ export class AreasDetailMapPage {
   }
 
   navigate() {
-    this.navigator.navigate(
-      [this.navigateTo.lat, this.navigateTo.lng],
-      { destinationName: this.navigateTo.title },
-    ).then(() => {
-      console.log('Opening navigator');
-    }, error => {
-      if (isProdMode()) {
-        MonitoringClient.captureException(error);
-      }
-      if (error === 'cancelled') {
-        return;
-      }
-      this.alertCtrl.show({
-        title: 'Error',
-        message: error,
-      });
-    });
+    this.navigator
+      .navigate([this.navigateTo.lat, this.navigateTo.lng], { destinationName: this.navigateTo.title })
+      .then(
+        () => {
+          console.log('Opening navigator');
+        },
+        error => {
+          if (isProdMode()) {
+            MonitoringClient.captureException(error);
+          }
+          if (error === 'cancelled') {
+            return;
+          }
+          this.alertCtrl.show({
+            title: 'Error',
+            message: error,
+          });
+        },
+      );
   }
 }

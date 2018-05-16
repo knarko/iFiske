@@ -26,7 +26,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
 import { StatusBar } from '@ionic-native/status-bar';
 
-
 // Components
 import { MyApp } from './app.component';
 
@@ -72,9 +71,7 @@ import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 registerLocaleData(localeSv);
 
 @NgModule({
-  declarations: [
-    MyApp,
-  ],
+  declarations: [MyApp],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -103,9 +100,7 @@ registerLocaleData(localeSv);
     }),
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-  ],
+  entryComponents: [MyApp],
   providers: [
     [{ provide: ErrorHandler, useClass: MonitoringErrorHandler }],
 
@@ -159,4 +154,4 @@ registerLocaleData(localeSv);
     UserTrackingProvider,
   ],
 })
-export class AppModule { }
+export class AppModule {}

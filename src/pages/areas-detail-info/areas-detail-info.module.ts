@@ -7,9 +7,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
-  declarations: [
-    AreasDetailInfoPage,
-  ],
+  declarations: [AreasDetailInfoPage],
   imports: [
     IonicPageModule.forChild(AreasDetailInfoPage),
     TranslateModule.forChild(),

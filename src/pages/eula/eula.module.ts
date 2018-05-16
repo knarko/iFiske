@@ -4,12 +4,7 @@ import { EulaPage } from './eula';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    EulaPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(EulaPage),
-    TranslateModule,
-  ],
+  declarations: [EulaPage],
+  imports: [IonicPageModule.forChild(EulaPage), TranslateModule],
 })
 export class EulaPageModule {}

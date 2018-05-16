@@ -31,11 +31,7 @@ export class CreateAccountVerifyPage {
   ) {
     this.createAccountProvider.timer.subscribe(timer => {
       this.timer = timer;
-      this.timerCompleted = timer.pipe(
-        last(),
-        tap(console.log),
-        map(() => true),
-      );
+      this.timerCompleted = timer.pipe(last(), tap(console.log), map(() => true));
       this.timerCompleted.subscribe(console.log, console.warn, console.error);
     });
 
@@ -50,7 +46,7 @@ export class CreateAccountVerifyPage {
   }
 
   createForm(username = false) {
-    this.userDetails = this.createAccountProvider.getSavedUserDetails()
+    this.userDetails = this.createAccountProvider.getSavedUserDetails();
 
     const formOptions: FormOptions = {
       submit: async (group: FormGroup) => {
@@ -66,10 +62,7 @@ export class CreateAccountVerifyPage {
           label: 'Activation code',
           placeholder: 'ui.placeholder.activationCode',
           type: 'tel',
-          validators: [
-            Validators.required,
-            Validators.pattern(/^\d{4}$/),
-          ],
+          validators: [Validators.required, Validators.pattern(/^\d{4}$/)],
           errors: {
             required: 'errors.activationCode.required',
             pattern: 'errors.activationCode.pattern',
@@ -82,15 +75,13 @@ export class CreateAccountVerifyPage {
         username: {
           label: 'Username',
           placeholder: 'ui.placeholder.username',
-          validators: [
-            Validators.required,
-          ],
+          validators: [Validators.required],
           errors: {
             required: 'errors.username.required',
           },
         },
         activationCode: formOptions.controls.activationCode,
-      }
+      };
     }
 
     this.form = new Form(formOptions);
@@ -100,7 +91,7 @@ export class CreateAccountVerifyPage {
     }
   }
 
-  async activate(userDetails: { username?: string, activationCode: string }) {
+  async activate(userDetails: { username?: string; activationCode: string }) {
     const loading = await this.loadingCtrl.show({ content: 'Activating' });
     try {
       const didLogIn = await this.createAccountProvider.activate(userDetails);
@@ -138,17 +129,19 @@ export class CreateAccountVerifyPage {
   }
 
   retry() {
-    return this.createAccountProvider.retry()
+    return this.createAccountProvider
+      .retry()
       .then(() => {
         this.toastCtrl.show({
           message: 'Activation code resent',
           duration: 4000,
         });
-      }).catch(() => {
+      })
+      .catch(() => {
         this.toastCtrl.show({
           message: 'Activation code failed',
           duration: 6000,
         });
-      })
+      });
   }
 }

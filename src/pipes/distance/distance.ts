@@ -24,5 +24,5 @@ export class DistancePipe implements PipeTransform {
     }
 
     return Math.round(distance) + 'm';
-  };
+  }
 }

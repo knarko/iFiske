@@ -36,15 +36,13 @@ export interface CachedResult {
   cacheTime: number;
 }
 
-
 @Injectable()
 export class ApiProvider {
-
   private static readonly DefaultOptions = {
     retry: true,
     cacheTime: 0,
     session: false,
-  }
+  };
 
   private static readonly BASE_URL = serverLocation + '/api/v2/api.php';
   private readonly maxRetries = 2;
@@ -69,7 +67,7 @@ export class ApiProvider {
   }
 
   private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
-    options = Object.assign({}, ApiProvider.DefaultOptions, options)
+    options = Object.assign({}, ApiProvider.DefaultOptions, options);
 
     inputParams = Object.assign({}, inputParams, {
       lang: this.settings.language,
@@ -80,7 +78,10 @@ export class ApiProvider {
       inputParams.s = this.sessionData.token;
     }
 
-    const params = Object.keys(inputParams).reduce((p, k) => inputParams[k] ? p.set(k, '' + inputParams[k]) : p, new HttpParams());
+    const params = Object.keys(inputParams).reduce(
+      (p, k) => (inputParams[k] ? p.set(k, '' + inputParams[k]) : p),
+      new HttpParams(),
+    );
 
     if (options.cacheTime && this.cache.has(params.toString())) {
       const res = this.cache.get(params.toString());
@@ -105,19 +106,18 @@ export class ApiProvider {
         }
         throw response;
       }),
-      retryWhen(attempts => attempts.pipe(
-        zip(
-          range(1, this.maxRetries + 1),
-          (err, i) => {
+      retryWhen(attempts =>
+        attempts.pipe(
+          zip(range(1, this.maxRetries + 1), (err, i) => {
             if (!options.retry || i > this.maxRetries) {
               throw err;
             }
-            console.log('delaying API retry by ' + i * 2 + ' second(s).')
-            return timer(i * 2000)
-          },
+            console.log('delaying API retry by ' + i * 2 + ' second(s).');
+            return timer(i * 2000);
+          }),
+          switchAll(),
         ),
-        switchAll(),
-      )),
+      ),
       catchError(err => {
         if (!err) {
           throw new Error('Unknown network failure');
@@ -146,9 +146,7 @@ export class ApiProvider {
 
     if (options.cacheTime) {
       this.cache.set(params.toString(), {
-        result: result$.pipe(
-          shareReplay(1),
-        ),
+        result: result$.pipe(shareReplay(1)),
         cacheTime: options.cacheTime,
         removeAt: Date.now() + options.cacheTime,
       });
@@ -157,11 +155,11 @@ export class ApiProvider {
     return result$;
   }
   /**
-     * internal function for making a call to the ifiske API
-     * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
-     * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
-     * @return {promise}        $http promise
-     */
+   * internal function for making a call to the ifiske API
+   * @param  {object} params parameters for the api call. Should always contain 'm', which is the api "method" to request.
+   * @param  {number} retries The amount of retries for this request. Should not be sent by a user.
+   * @return {promise}        $http promise
+   */
   private api_call(params, options?: ApiOptions): Promise<any> {
     return this.getObservable(params, options).toPromise();
   }
@@ -189,69 +187,84 @@ export class ApiProvider {
     return this.api_call(Object.assign({ m: 'user_register' }, userDetails), { retry: false, post: true });
   }
   user_confirm(username, pin) {
-    return this.api_call({
-      m: 'user_confirm',
-      username: username,
-      pin: pin,
-    }, { retry: false, post: true });
+    return this.api_call(
+      {
+        m: 'user_confirm',
+        username: username,
+        pin: pin,
+      },
+      { retry: false, post: true },
+    );
   }
   user_info() {
     return this.api_call({ m: 'user_info' }, { session: true, cacheTime: 60000 });
   }
   user_lost_password(user) {
-    return this.api_call({
-      m: 'user_lost_password',
-      user_identification: user,
-    }, { retry: false, post: true });
+    return this.api_call(
+      {
+        m: 'user_lost_password',
+        user_identification: user,
+      },
+      { retry: false, post: true },
+    );
   }
-  user_reset_password({
-    username,
-    password,
-    code,
-  }) {
-    return this.api_call({
-      m: 'user_reset_password',
-      user_identification: username,
-      password,
-      code,
-    }, { retry: false, post: true });
+  user_reset_password({ username, password, code }) {
+    return this.api_call(
+      {
+        m: 'user_reset_password',
+        user_identification: username,
+        password,
+        code,
+      },
+      { retry: false, post: true },
+    );
   }
   user_change_password(old_password, new_password) {
-    return this.api_call({
-      m: 'user_change_password',
-      old_password: old_password,
-      new_password: new_password,
-    }, { retry: false, session: true});
+    return this.api_call(
+      {
+        m: 'user_change_password',
+        old_password: old_password,
+        new_password: new_password,
+      },
+      { retry: false, session: true },
+    );
   }
   user_login(username, password) {
-    return this.api_call({
-      m: 'user_login',
-      username: username,
-      password: password,
-    }, { retry: false, post: true })
-      .then((data) => {
-        this.sessionData.token = data;
-        // needed for chaining of promises
-        return data;
-      });
+    return this.api_call(
+      {
+        m: 'user_login',
+        username: username,
+        password: password,
+      },
+      { retry: false, post: true },
+    ).then(data => {
+      this.sessionData.token = data;
+      // needed for chaining of promises
+      return data;
+    });
   }
   user_logout() {
-    return this.api_call({ m: 'user_logout' }, { retry: false, session: true })
-      // It doesn't matter if this fails or not, we still want to clean up the user on this phone
-      .catch(err => console.warn(err))
-      .then(() => {
-        this.sessionData.token = undefined;
-      });
+    return (
+      this.api_call({ m: 'user_logout' }, { retry: false, session: true })
+        // It doesn't matter if this fails or not, we still want to clean up the user on this phone
+        .catch(err => console.warn(err))
+        .then(() => {
+          this.sessionData.token = undefined;
+        })
+    );
   }
   user_products() {
-    return this.api_call({ m: 'user_products' }, {retry: false, session: true});
+    return this.api_call({ m: 'user_products' }, { retry: false, session: true });
   }
   user_set_pushtoken(token: string) {
-    return this.api_call({
-      m: 'user_set_pushtoken',
-      token: token,
-      type: 2, // 2 is for FCM
-    }, {retry: false, session: true});
+    return this.api_call(
+      {
+        m: 'user_set_pushtoken',
+        token: token,
+        type: 2, // 2 is for FCM
+      },
+      { retry: false, session: true },
+    );
   }
 
   /*
@@ -274,10 +287,13 @@ export class ApiProvider {
   }
 
   admGetStats(orgid?: number | string) {
-    return this.getObservable({ m: 'adm_get_stats', orgid }, {
-      session: true,
-      cacheTime: 30 * 1000,
-    })
+    return this.getObservable(
+      { m: 'adm_get_stats', orgid },
+      {
+        session: true,
+        cacheTime: 30 * 1000,
+      },
+    );
   }
 
   get_fishes() {
@@ -367,11 +383,14 @@ export class ApiProvider {
   }
   user_set_favorite_notification(area, flag) {
     flag = flag ? 1 : 0;
-    return this.api_call({
-      m: 'user_set_favorite_notification',
-      areaid: area,
-      flag: flag,
-    }, { retry: false, session: true });
+    return this.api_call(
+      {
+        m: 'user_set_favorite_notification',
+        areaid: area,
+        flag: flag,
+      },
+      { retry: false, session: true },
+    );
   }
   user_remove_favorite(area) {
     return this.api_call({ m: 'user_remove_favorite', areaid: area }, { retry: false, session: true });
@@ -394,7 +413,7 @@ export class ApiProvider {
   }
   get_content_menu = () => {
     return this.api_call({ m: 'get_content_menu' });
-  }
+  };
 
-  getAdsMain = () => this.getObservable({m: 'get_ads_main' }, { cacheTime: 60000 });
+  getAdsMain = () => this.getObservable({ m: 'get_ads_main' }, { cacheTime: 60000 });
 }

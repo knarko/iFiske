@@ -9,7 +9,6 @@ import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { Dictionary } from '../../types';
 
-
 export interface Fish {
   ID: number;
   t: string;
@@ -28,31 +27,29 @@ export interface Fish {
 
 @Injectable()
 export class FishProvider extends BaseModel<Fish> {
-  protected readonly tables: TableDef[] = [{
-    name: 'Fish',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      t: 'text',
-      d: 'text',
-      mod: 'int',
-      so: 'int',
-      max: 'int',
-      icon: 'text',
-      img: 'text',
-      in: 'text',
-      geo: 'text',
-      size: 'text',
-      lat: 'text',
-      rec: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Fish',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        t: 'text',
+        d: 'text',
+        mod: 'int',
+        so: 'int',
+        max: 'int',
+        icon: 'text',
+        img: 'text',
+        in: 'text',
+        geo: 'text',
+        size: 'text',
+        lat: 'text',
+        rec: 'text',
+      },
     },
-  }];
+  ];
 
-  constructor(
-    protected API: ApiProvider,
-    protected DB: DatabaseProvider,
-    private imgcache: ImgcacheService,
-  ) {
+  constructor(protected API: ApiProvider, protected DB: DatabaseProvider, private imgcache: ImgcacheService) {
     super();
     this.initialize();
   }
@@ -81,10 +78,12 @@ export class FishProvider extends BaseModel<Fish> {
     }
     const data = await this.getAll();
     const options = {
-      keys: [{
-        name: 't',
-        weight: 0.6,
-      }],
+      keys: [
+        {
+          name: 't',
+          weight: 0.6,
+        },
+      ],
       includeScore: true,
       shouldSort: true,
       threshold: 0.01,
@@ -94,9 +93,8 @@ export class FishProvider extends BaseModel<Fish> {
     const fuse = new Fuse(data, options);
     if (performance && performance.now) {
       const t1 = performance.now();
-      console.log('Searching took:', (t1 - t0), 'ms');
+      console.log('Searching took:', t1 - t0, 'ms');
     }
     return fuse.search(searchString) as { item: Fish }[];
   }
-
 }

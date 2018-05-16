@@ -1,8 +1,7 @@
-import { MissingTranslationHandler, MissingTranslationHandlerParams } from "@ngx-translate/core";
-import { MonitoringClient } from "./monitoring";
+import { MissingTranslationHandler, MissingTranslationHandlerParams } from '@ngx-translate/core';
+import { MonitoringClient } from './monitoring';
 
 export class MissingTranslationError extends Error {
-
   constructor(key: string) {
     super();
     this.message = `Translation missing for '${key}'`;

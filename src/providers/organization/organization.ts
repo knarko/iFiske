@@ -24,31 +24,30 @@ export interface Organization {
 
 @Injectable()
 export class OrganizationProvider extends BaseModel<Organization> {
-  protected readonly tables: TableDef[] = [{
-    name: 'Organization',
-    apiMethod: 'get_organizations',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      t: 'text',
-      d: 'text',
-      cp: 'text',
-      url: 'text',
-      co: 'int',
-      mod: 'int',
-      vat: 'int',
-      dp: 'int',
-      fva: 'int',
-      org: 'int',
-      ml: 'int',
-      logo: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'Organization',
+      apiMethod: 'get_organizations',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        t: 'text',
+        d: 'text',
+        cp: 'text',
+        url: 'text',
+        co: 'int',
+        mod: 'int',
+        vat: 'int',
+        dp: 'int',
+        fva: 'int',
+        org: 'int',
+        ml: 'int',
+        logo: 'text',
+      },
     },
-  }];
+  ];
 
-  constructor(
-    protected DB: DatabaseProvider,
-    protected API: ApiProvider,
-  ) {
+  constructor(protected DB: DatabaseProvider, protected API: ApiProvider) {
     super();
     this.initialize();
   }

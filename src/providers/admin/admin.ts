@@ -79,7 +79,7 @@ export class AdminProvider extends BaseModel {
       },
       primary: 'ID',
     },
-  }
+  };
 
   ready: Promise<boolean>;
 
@@ -102,13 +102,16 @@ export class AdminProvider extends BaseModel {
     if (orgId == undefined) {
       return;
     }
-    this.getOrganization(orgId).then(org => {
-      this.currentOrganization.next(org);
-      localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
-    }, err => {
-      this._orgId = undefined;
-      this.currentOrganization.next(undefined);
-    });
+    this.getOrganization(orgId).then(
+      org => {
+        this.currentOrganization.next(org);
+        localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
+      },
+      err => {
+        this._orgId = undefined;
+        this.currentOrganization.next(undefined);
+      },
+    );
   }
 
   constructor(
@@ -132,7 +135,7 @@ export class AdminProvider extends BaseModel {
 
     this.userProvider.loggedIn.subscribe(loggedIn => this.update(true));
 
-    this.isAdmin.subscribe((admin) => {
+    this.isAdmin.subscribe(admin => {
       if (!admin) {
         this.orgId = undefined;
       } else {
@@ -141,7 +144,6 @@ export class AdminProvider extends BaseModel {
         });
       }
     });
-
   }
 
   async update(skipWait?: boolean): Promise<boolean> {
@@ -157,15 +159,15 @@ export class AdminProvider extends BaseModel {
       let deletePermits = true;
       const orgs: Dictionary<AdminOrganization> = await this.API.user_organizations();
       const organizations = Object.values(orgs);
-      organizations.forEach(org => org.ID = (org as any).orgid);
+      organizations.forEach(org => (org.ID = (org as any).orgid));
 
       await this.DB.populateTable(this.tables.organizations, orgs);
 
-      const orgPermits = await Promise.all(organizations.map(async (org) => this.API.adm_products(org.ID)));
+      const orgPermits = await Promise.all(organizations.map(async org => this.API.adm_products(org.ID)));
 
       await organizations.map((org, i) => {
         const permits = orgPermits[i];
-        Object.values(permits).forEach((permit: any) => permit.org = org.ID);
+        Object.values(permits).forEach((permit: any) => (permit.org = org.ID));
         const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
         deletePermits = false;
         return populated;
@@ -182,11 +184,11 @@ export class AdminProvider extends BaseModel {
 
   pickOrganization = async () => {
     const buttons = [];
-    const organizations = await this.getOrganizations()
+    const organizations = await this.getOrganizations();
     for (const org of organizations) {
       buttons.push({
         text: org.ot,
-        handler: () => this.orgId = org.ID,
+        handler: () => (this.orgId = org.ID),
         cssClass: this.orgId === org.ID ? 'current' : undefined,
       });
     }
@@ -196,13 +198,15 @@ export class AdminProvider extends BaseModel {
       role: 'cancel',
     });
 
-    this.actionSheetCtrl.show({
-      title: 'ui.admin.selectOrg',
-      cssClass: 'admin-pick-organization',
-      buttons,
-    }, {buttons: false});
-  }
-
+    this.actionSheetCtrl.show(
+      {
+        title: 'ui.admin.selectOrg',
+        cssClass: 'admin-pick-organization',
+        buttons,
+      },
+      { buttons: false },
+    );
+  };
 
   private async setDefaultOrgId() {
     const organizations = await this.getOrganizations();
@@ -220,10 +224,7 @@ export class AdminProvider extends BaseModel {
     return this.currentOrganization.pipe(
       filter(org => !!org),
       switchMap(org => {
-        return this.API.admGetStats(org.ID).pipe(
-          map(stats => stats[org.ID]),
-          catchError(() => of(undefined)),
-        );
+        return this.API.admGetStats(org.ID).pipe(map(stats => stats[org.ID]), catchError(() => of(undefined)));
       }),
     );
   }
@@ -236,7 +237,7 @@ export class AdminProvider extends BaseModel {
   @DBMethod
   async getOrganizations(): Promise<AdminOrganization[]> {
     if (await !this.userProvider.loggedIn.toPromise()) {
-      return Promise.reject('Not logged in')
+      return Promise.reject('Not logged in');
     }
 
     return this.DB.getMultiple(`SELECT * FROM Admin_Organizations`);
@@ -272,29 +273,37 @@ export class AdminProvider extends BaseModel {
       } else {
         console.warn(err);
       }
-    }
+    };
 
-    this.DB.getSingle(`
+    this.DB.getSingle(
+      `
       SELECT * FROM Admin_Permits
       WHERE code = ?
-    `, [code])
+    `,
+      [code],
+    )
       .then(successHandler)
       .catch(err => {
         console.warn(err);
       });
 
-      this.API.adm_check_prod(code).then(successHandler, errorHandler).catch(err => {});
+    this.API.adm_check_prod(code)
+      .then(successHandler, errorHandler)
+      .catch(err => {});
 
     return subject.asObservable();
   }
 
   @DBMethod
   async getPermits(searchTerm?: string): Promise<(AdminPermit & { score?: number })[]> {
-    const permits = await this.DB.getMultiple(`
+    const permits = await this.DB.getMultiple(
+      `
       SELECT * FROM Admin_Permits
       WHERE org = ?
       ORDER BY fullname
-    `, [this.orgId]);
+    `,
+      [this.orgId],
+    );
 
     permits.forEach(this.transformPermit);
 
@@ -303,19 +312,24 @@ export class AdminProvider extends BaseModel {
     }
 
     const options: FuseOptions = {
-      keys: [{
-        name: 'tel',
-        weight: 0.7,
-      }, {
-        name: 't',
-        weight: 0.6,
-      }, {
-        name: 'fullname',
-        weight: 0.7,
-      }, {
-        name: 'code',
-        weight: 0.4,
-      }],
+      keys: [
+        {
+          name: 'tel',
+          weight: 0.7,
+        },
+        {
+          name: 't',
+          weight: 0.6,
+        },
+        {
+          name: 'fullname',
+          weight: 0.7,
+        },
+        {
+          name: 'code',
+          weight: 0.4,
+        },
+      ],
       threshold: 0.5,
       shouldSort: false,
       includeScore: true,
@@ -341,5 +355,4 @@ export class AdminProvider extends BaseModel {
     await this.update();
     return res;
   }
-
 }

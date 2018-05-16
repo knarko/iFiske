@@ -5,13 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
-  declarations: [
-    SpeciesDetailPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(SpeciesDetailPage),
-    TranslateModule.forChild(),
-    ImgcacheModule,
-  ],
+  declarations: [SpeciesDetailPage],
+  imports: [IonicPageModule.forChild(SpeciesDetailPage), TranslateModule.forChild(), ImgcacheModule],
 })
 export class SpeciesDetailPageModule {}

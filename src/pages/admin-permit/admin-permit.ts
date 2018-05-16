@@ -28,7 +28,7 @@ export class AdminPermitPage {
     private adminProvider: AdminProvider,
     private toastCtrl: TranslateToastController,
     private alertCtrl: TranslateAlertController,
-  ) { }
+  ) {}
 
   ionViewWillEnter() {
     this.code = this.navParams.get('code');
@@ -68,21 +68,24 @@ export class AdminPermitPage {
       }
     };
 
-    this.permit.subscribe(() => {
-      dismissLoading();
-    }, err => {
-      dismissLoading();
+    this.permit.subscribe(
+      () => {
+        dismissLoading();
+      },
+      err => {
+        dismissLoading();
 
-      this.failed = true;
+        this.failed = true;
 
-      console.warn(err);
-      if (err.error_code !== 17) {
-        this.toastCtrl.show({
-          message: err.response,
-          duration: 6000,
-        });
-      }
-    });
+        console.warn(err);
+        if (err.error_code !== 17) {
+          this.toastCtrl.show({
+            message: err.response,
+            duration: 6000,
+          });
+        }
+      },
+    );
   }
 
   async revoke(status: boolean) {
@@ -99,19 +102,19 @@ export class AdminPermitPage {
         },
       ],
     });
-      const role = await new Promise((resolve) => {
-        alert.onDidDismiss((_, role) => resolve(role));
-      });
-      if (role !== 'confirm') {
-        return;
-      }
+    const role = await new Promise(resolve => {
+      alert.onDidDismiss((_, role) => resolve(role));
+    });
+    if (role !== 'confirm') {
+      return;
+    }
 
     const loading = await this.loadingCtrl.show({
       content: status ? 'Revoking' : 'Unrevoking',
     });
     try {
       await this.adminProvider.revokePermit(this.code, status);
-      await this.loadPermit()
+      await this.loadPermit();
     } catch (err) {
       if (err.name === TimeoutError.name) {
         this.toastCtrl.show({

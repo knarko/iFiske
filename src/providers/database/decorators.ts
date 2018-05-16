@@ -3,6 +3,6 @@ export function DBMethod(target, pkey, descriptor) {
   descriptor.value = async function(...args) {
     await this.ready;
     return old.apply(this, args);
-  }
+  };
   return descriptor;
 }

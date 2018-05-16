@@ -42,7 +42,7 @@ export class SettingsPage {
     { title: 'Report issue', page: 'ReportIssuePage' },
     { title: 'Terms of service', page: 'TermsPage' },
     { title: 'About the app', page: 'AboutPage' },
-  ]
+  ];
 
   constructor(
     public navCtrl: NavController,
@@ -51,13 +51,13 @@ export class SettingsPage {
     private modalCtrl: ModalController,
     private settingsProvider: SettingsProvider,
     private userProvider: UserProvider,
-  ) { }
+  ) {}
 
   toggleItem(item: SettingsItem, shouldToggle = false) {
     if (shouldToggle) {
       item.toggleState = !item.toggleState;
     }
-    item.toggle(item.toggleState)
+    item.toggle(item.toggleState);
   }
 
   logout = () => {

@@ -9,7 +9,6 @@ const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
-
 export class MDTransition extends PageTransition {
   init() {
     super.init();
@@ -21,19 +20,18 @@ export class MDTransition extends PageTransition {
     //opts.duration = 2000;
 
     // what direction is the transition going
-    const backDirection = (opts.direction === 'back');
+    const backDirection = opts.direction === 'back';
 
     if (enteringView) {
       if (backDirection) {
         this.duration(isPresent(opts.duration) ? opts.duration : 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
       } else {
         this.duration(isPresent(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
-        this.enteringPage
-          .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
-          if (leavingView) {
-        const leavingPage = new Animation(this.plt, leavingView.pageRef());
-        this.add(leavingPage.fromTo('scale', '1', '0.9', true));
-          }
+        this.enteringPage.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+        if (leavingView) {
+          const leavingPage = new Animation(this.plt, leavingView.pageRef());
+          this.add(leavingPage.fromTo('scale', '1', '0.9', true));
+        }
       }
 
       if (enteringView.hasNavbar()) {
@@ -60,7 +58,5 @@ export class MDTransition extends PageTransition {
       const leavingPage = new Animation(plt, leavingView.pageRef());
       this.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
     }
-
   }
-
 }

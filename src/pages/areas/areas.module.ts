@@ -5,13 +5,7 @@ import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    AreasPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AreasPage),
-    TranslateModule.forChild(),
-    SuperTabsModule,
-  ],
+  declarations: [AreasPage],
+  imports: [IonicPageModule.forChild(AreasPage), TranslateModule.forChild(), SuperTabsModule],
 })
 export class AreasPageModule {}

@@ -4,12 +4,7 @@ import { AreasCountiesPage } from './areas-counties';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [
-    AreasCountiesPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AreasCountiesPage),
-    TranslateModule.forChild(),
-  ],
+  declarations: [AreasCountiesPage],
+  imports: [IonicPageModule.forChild(AreasCountiesPage), TranslateModule.forChild()],
 })
 export class AreasCountiesPageModule {}

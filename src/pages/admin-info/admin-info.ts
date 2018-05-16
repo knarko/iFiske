@@ -4,7 +4,6 @@ import { UserProvider, User } from '../../providers/user/user';
 import { AdminProvider } from '../../providers/admin/admin';
 import { serverLocation } from '../../providers/api/serverLocation';
 
-
 @IonicPage({
   segment: 'admin-info',
 })
@@ -17,13 +16,9 @@ export class AdminInfoPage {
 
   serverLocation = serverLocation;
 
-  constructor(
-    public admin: AdminProvider,
-    private userProvider: UserProvider,
-  ) { }
+  constructor(public admin: AdminProvider, private userProvider: UserProvider) {}
 
   ionViewWillEnter() {
     this.user = this.userProvider.getInfo().catch(() => undefined);
   }
-
 }

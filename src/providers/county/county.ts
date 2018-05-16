@@ -15,22 +15,21 @@ export interface County {
 
 @Injectable()
 export class CountyProvider extends BaseModel<County> {
-  protected readonly tables: TableDef[] = [{
-    name: 'County',
-    apiMethod: 'get_counties',
-    primary: 'ID',
-    members: {
-      ID: 'int',
-      s: 'text',
-      t: 'text',
-      d: 'text',
+  protected readonly tables: TableDef[] = [
+    {
+      name: 'County',
+      apiMethod: 'get_counties',
+      primary: 'ID',
+      members: {
+        ID: 'int',
+        s: 'text',
+        t: 'text',
+        d: 'text',
+      },
     },
-  }];
+  ];
 
-  constructor(
-    protected DB: DatabaseProvider,
-    protected API: ApiProvider,
-  ) {
+  constructor(protected DB: DatabaseProvider, protected API: ApiProvider) {
     super();
     this.initialize();
   }
@@ -45,5 +44,4 @@ export class CountyProvider extends BaseModel<County> {
       ORDER BY County.t
     `);
   }
-
 }

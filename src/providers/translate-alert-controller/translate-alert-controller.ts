@@ -5,7 +5,7 @@ import { AlertOptions, AlertButton } from 'ionic-angular/components/alert/alert-
 
 @Injectable()
 export class TranslateAlertController {
-  constructor(private translate: TranslateService, private alertCtrl: AlertController) { }
+  constructor(private translate: TranslateService, private alertCtrl: AlertController) {}
 
   async create(opts?: AlertOptions): Promise<Alert> {
     const toTranslate = ['message', 'title', 'subTitle'];
@@ -33,7 +33,7 @@ export class TranslateAlertController {
         }
       }
     }
-    return this.alertCtrl.create(opts)
+    return this.alertCtrl.create(opts);
   }
 
   async show(opts?: AlertOptions): Promise<Alert> {
@@ -41,5 +41,4 @@ export class TranslateAlertController {
     await alert.present();
     return alert;
   }
-
 }

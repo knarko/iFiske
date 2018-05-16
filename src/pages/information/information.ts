@@ -20,11 +20,7 @@ export class InformationPage {
   title: string;
   items: any[];
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private info: InformationProvider,
-  ) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private info: InformationProvider) {}
 
   ionViewWillEnter() {
     this.info.getAll().then(info => {

@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MkObjectPipe implements PipeTransform {
   transform(value: any, key: string) {
-    return {[key]: value}
+    return { [key]: value };
   }
 }

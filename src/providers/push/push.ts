@@ -22,7 +22,7 @@ export interface PushHandler {
 export class PushProvider {
   sub: any;
   token: string;
-  private defaultHandler: PushHandler = (notification) => {
+  private defaultHandler: PushHandler = notification => {
     this.alertCtrl.show({
       message: notification.message,
     });
@@ -34,11 +34,13 @@ export class PushProvider {
       * Payload should contain:
       * code: fishing permit code
       */
-    NEW: [(notification) => {
-      if (notification.code) {
-        this.navCtrl.push('PermitDetailPage', { ID: notification.code });
-      }
-    }],
+    NEW: [
+      notification => {
+        if (notification.code) {
+          this.navCtrl.push('PermitDetailPage', { ID: notification.code });
+        }
+      },
+    ],
 
     /*
       * We got a request to make a fishing report
@@ -46,50 +48,56 @@ export class PushProvider {
       * orgid: organisation id,
       * code: fishing permit code,
       */
-    REP_REQ: [(notification) => {
-      if (notification.orgid && notification.code) {
-        this.alertCtrl.show({
-          title: 'Do you want to create a catch report?',
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-            },
-            {
-              text: 'OK',
-              handler: () => {
-                window.open(`${serverLocation}/r/${notification.code}?lang=${this.settings.language}`, '_system');
+    REP_REQ: [
+      notification => {
+        if (notification.orgid && notification.code) {
+          this.alertCtrl.show({
+            title: 'Do you want to create a catch report?',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
               },
-            },
-          ],
-        });
-      }
-    }],
+              {
+                text: 'OK',
+                handler: () => {
+                  window.open(`${serverLocation}/r/${notification.code}?lang=${this.settings.language}`, '_system');
+                },
+              },
+            ],
+          });
+        }
+      },
+    ],
 
     /*
       * Someone made a report on a area we favorited
       * Payload should contain:
       * RepId: ID of the new report
       */
-    NEW_FAV: [(notification) => {
-      if (notification.repid) {
-        // this.navCtrl.push('app.report', {id: notification.repid});
-      }
-    }],
+    NEW_FAV: [
+      notification => {
+        if (notification.repid) {
+          // this.navCtrl.push('app.report', {id: notification.repid});
+        }
+      },
+    ],
 
     /*
       * Display a message
       * Payload should contain:
       * message: a string that we should Display
       */
-    NOTE: [(notification) => {
-      if (notification.message) {
-        this.alertCtrl.show({
-          title: notification.title,
-          message: notification.message,
-        });
-      }
-    }],
+    NOTE: [
+      notification => {
+        if (notification.message) {
+          this.alertCtrl.show({
+            title: notification.title,
+            message: notification.message,
+          });
+        }
+      },
+    ],
   };
 
   private navCtrl: NavController;
@@ -102,8 +110,8 @@ export class PushProvider {
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
   ) {
+    // TODO: remove deprecation warning
     this.navCtrl = this.app.getRootNav();
-
   }
 
   async register() {
@@ -138,20 +146,19 @@ export class PushProvider {
 
     this.fcm.unsubscribeFromTopic('developer');
     this.fcm.unsubscribeFromTopic('marketing');
-
   }
 
   private handleNotification = (notification: IfiskeNotification & NotificationData) => {
     console.log('New push notification:', notification);
 
     if (notification.action && notification.action in this.pushHandlers) {
-      for(const handler of this.pushHandlers[notification.action]) {
+      for (const handler of this.pushHandlers[notification.action]) {
         setTimeout(() => handler(notification), 0);
       }
     } else {
       this.defaultHandler(notification);
     }
-  }
+  };
 
   registerHandler(name: string, handler: PushHandler) {
     if (!this.pushHandlers[name]) {

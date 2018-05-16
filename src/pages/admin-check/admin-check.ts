@@ -18,7 +18,7 @@ export class AdminCheckPage {
     private navCtrl: NavController,
     private barcodeScanner: BarcodeScanner,
     private toastCtrl: TranslateToastController,
-  ) { }
+  ) {}
 
   checkPermit() {
     this.navCtrl.push('AdminPermitPage', { code: this.permitCode });
@@ -44,7 +44,7 @@ export class AdminCheckPage {
       }
       const code = searchParams.get('e');
       console.log('Scanned: ', code);
-      this.navCtrl.push('AdminPermitPage', { code })
+      this.navCtrl.push('AdminPermitPage', { code });
     } catch (err) {
       console.error(err);
 
@@ -60,5 +60,4 @@ export class AdminCheckPage {
       }
     }
   }
-
 }

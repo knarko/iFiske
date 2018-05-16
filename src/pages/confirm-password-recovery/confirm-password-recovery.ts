@@ -73,7 +73,7 @@ export class ConfirmPasswordRecoveryPage {
             Validators.required,
           ],
           errors: {
-            required:' errors.password.required',
+            required: 'errors.password.required',
             invalid: 'errors.password.invalid',
           },
         },

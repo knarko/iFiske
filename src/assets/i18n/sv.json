@@ -135,6 +135,9 @@
       "required": "Du måste ange en återställnigskod",
       "invalid": "Ogiltig återställningskod"
     },
+    "register": {
+      "failed": "Registeringen misslyckades"
+    },
     "activationCode": {
       "required": "Du måste ange en aktiveringskod",
       "invalid": "Ogiltig aktiveringskod",
@@ -216,6 +219,7 @@
   "Forgot password": "Glömt lösenord?",
   "Full name": "För- och efternamn",
   "Home": "Hem",
+  "I accept the terms of service": "Jag godkänner användarvillkoren",
   "I approve the text message rules": "Jag godkänner SMS-reglerna",
   "I have a recovery code": "Jag har en återställningskod",
   "iFiske - Easier Fishing": "iFiske - Enklare Fiskekort",
@@ -248,6 +252,7 @@
   "Open control panel": "Öppna kontrollpanelen",
   "Open Source Licenses": "Öppen mjukvara",
   "Password changed": "Ditt lösenord har ändrats och du har loggats in",
+  "Changing password": "Byter lösenord...",
   "Password": "Lösenord",
   "PDF": "PDF",
   "Phone number": "Mobilnummer",
@@ -256,6 +261,7 @@
   "Purchase permit": "Köp fiskekort",
   "Push notifications": "Push-notifikationer",
   "Register": "Registrera",
+  "Registering": "Registrerar...",
   "Registering account approves": "Genom att registrera ett konto godkänner du iFiskes",
   "Report issue": "Rapportera Bugg",
   "Recovery code": "Återställningskod",
@@ -266,6 +272,7 @@
   "Scan QR code": "Skanna QR-kod",
   "Search results": "Sökresultat",
   "Search": "Sök",
+  "Send": "Skicka",
   "Send SMS": "Skicka SMS",
   "Settings": "Inställningar",
   "Size and growth": "Storlek och tillväxt",

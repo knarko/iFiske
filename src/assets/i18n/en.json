@@ -136,6 +136,9 @@
       "required": "You must enter a recovery code",
       "invalid": "Invalid recovery code"
     },
+    "register": {
+      "failed": "Registration failed"
+    },
     "activationCode": {
       "required": "You must enter an activation code",
       "invalid": "Invalid activation code",
@@ -217,6 +220,7 @@
   "Forgot password": "Forgotten password?",
   "Full name": "Full name",
   "Home": "Home",
+  "I accept the terms of service": "I accept the terms of service",
   "I approve the text message rules": "I agree to the SMS rules",
   "I have a recovery code": "I have a recovery code",
   "iFiske - Easier Fishing": "iFiske - Easier Fishing",
@@ -249,6 +253,7 @@
   "Open control panel": "Open Control Panel",
   "Open Source Licenses": "Open Source Licenses",
   "Password changed": "Your password has been changed",
+  "Changing password": "Changing password...",
   "Password": "Password",
   "PDF": "PDF",
   "Phone number": "Phone number",
@@ -257,6 +262,7 @@
   "Purchase permit": "Buy fishing permit",
   "Push notifications": "Push notifications",
   "Register": "Register",
+  "Registering": "Registering...",
   "Registering account approves": "By registering an account, you agree to our",
   "Report issue": "Report issue",
   "Recovery code": "Recovery code",
@@ -267,6 +273,7 @@
   "Scan QR code": "Scan QR code",
   "Search results": "Search results",
   "Search": "Search",
+  "Send": "Send",
   "Send SMS": "Send SMS",
   "Settings": "Settings",
   "Size and growth": "Size and growth",

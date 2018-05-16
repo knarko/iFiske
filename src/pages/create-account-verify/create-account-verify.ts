@@ -63,7 +63,7 @@ export class CreateAccountVerifyPage {
       },
       controls: {
         activationCode: {
-          label: 'Activation Code',
+          label: 'Activation code',
           placeholder: 'ui.placeholder.activationCode',
           type: 'tel',
           validators: [

@@ -23,7 +23,7 @@
       <ion-toggle [(ngModel)]="useBetaChannel" (ionChange)="selectDeployChannel()"></ion-toggle>
     </ion-item>
     <ion-item *ngIf="proInfo && settings?.isDeveloper" (click)="checkForUpdates()">
-      {{'ui.deveoper.checkForUpdates' | translate}}
+      {{'ui.developer.checkForUpdates' | translate}}
     </ion-item>
     <ion-item>
       <h2>{{'Last updated' | translate}}</h2>

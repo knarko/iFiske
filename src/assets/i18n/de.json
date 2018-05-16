@@ -85,7 +85,8 @@
     }
   },
   "errors": {
-    "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen.",
+    "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
+    "network": "Es gab einen Netzwerkfehler, bitte später noch einmal versuchen",
     "admin": {
       "noPermits": "Keine Lizenzen gefunden",
       "permit": {
@@ -203,7 +204,6 @@
   "More in control panel": "Mehr Funktionalität ist im Kontrollfenster auf www.ifiske.se erhältlich",
   "My Fishing Permits": "Mein Fischerschein",
   "Name": "Name",
-  "Network Error": "Es gab einen Netzwerkfehler, bitte später noch einmal versuchen. {{error}}",
   "New account": "Neuer Account",
   "New password": "Neues Passwort",
   "Next": "Nächste",
@@ -235,6 +235,7 @@
   "Scan QR code": "QR Code scannen",
   "Search results": "Ergebnisse Suchen",
   "Search": "Suche",
+  "Send": "Schicken",
   "Send SMS": "SMS schicken",
   "Settings": "Einstellungen",
   "Size and growth": "Größe und Wachstum",

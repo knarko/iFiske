@@ -1,3 +1,13 @@
+<a name="4.2.2"></a>
+## [4.2.2](https://gitlab.com/kada-development/ifiske/compare/v4.2.1...v4.2.2) (2018-05-16)
+
+
+### Bug Fixes
+
+* **translations:** fix a bunch of missing translations found in sentry ([e6766b0](https://gitlab.com/kada-development/ifiske/commit/e6766b0))
+
+
+
 <a name="4.2.1"></a>
 ## [4.2.1](https://gitlab.com/kada-development/ifiske/compare/v4.2.0...v4.2.1) (2018-05-07)
 

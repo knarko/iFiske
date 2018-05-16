@@ -1,3 +1,13 @@
+<a name="4.2.3"></a>
+## [4.2.3](https://gitlab.com/kada-development/ifiske/compare/v4.2.2...v4.2.3) (2018-05-16)
+
+
+### Bug Fixes
+
+* **translations:** add translation for 'Files' ([a5664be](https://gitlab.com/kada-development/ifiske/commit/a5664be))
+
+
+
 <a name="4.2.2"></a>
 ## [4.2.2](https://gitlab.com/kada-development/ifiske/compare/v4.2.1...v4.2.2) (2018-05-16)
 

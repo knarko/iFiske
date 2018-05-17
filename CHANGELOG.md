@@ -1,3 +1,13 @@
+<a name="4.3.0"></a>
+# [4.3.0](https://gitlab.com/kada-development/ifiske/compare/v4.2.3...v4.3.0) (2018-05-17)
+
+
+### Features
+
+* **push:** add OneSignal integration ([b377f9c](https://gitlab.com/kada-development/ifiske/commit/b377f9c))
+
+
+
 <a name="4.2.3"></a>
 ## [4.2.3](https://gitlab.com/kada-development/ifiske/compare/v4.2.2...v4.2.3) (2018-05-16)
 

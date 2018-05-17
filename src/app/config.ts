@@ -5,6 +5,11 @@ export const APP_VERSION = version;
 
 export const googleAnalyticsTrackerID = 'UA-7371664-4';
 
+export const oneSignalConfig = {
+  appId: '645795a2-2cb2-4269-b934-7b687a3ae439',
+  googleProjectNumber: '196216212249',
+};
+
 export function isProdMode() {
   if (window && (window as any).IonicDevServerConfig == undefined) {
     return true;

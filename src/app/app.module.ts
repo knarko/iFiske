@@ -12,13 +12,13 @@ import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ng
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { FCM } from '@ionic-native/fcm';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { LaunchReview } from '@ionic-native/launch-review';
 import { Network } from '@ionic-native/network';
+import { OneSignal } from '@ionic-native/onesignal';
 import { Pro } from '@ionic-native/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SMS } from '@ionic-native/sms';
@@ -110,13 +110,13 @@ registerLocaleData(localeSv);
     // Ionic native
     AppVersion,
     BarcodeScanner,
-    FCM,
     File,
     Geolocation,
     GoogleAnalytics,
     LaunchNavigator,
     LaunchReview,
     Network,
+    OneSignal,
     Pro,
     ScreenOrientation,
     SMS,

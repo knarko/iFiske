@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
-import { NavController, App, Platform } from 'ionic-angular';
+import { App, Platform } from 'ionic-angular';
 import { SettingsProvider } from '../settings/settings';
 import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
-import { FCM, NotificationData } from '@ionic-native/fcm';
-import { Dictionary } from '../../types';
+import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
+import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal';
+import { oneSignalConfig } from '../../app/config';
 
 interface IfiskeNotification {
   action?: string;
   message?: string;
   code?: string;
   orgid?: number;
+  repid?: number;
 }
 
 export interface PushHandler {
-  (notification: IfiskeNotification & NotificationData): Promise<void> | void;
+  (notification: Overwrite<OSNotificationPayload, { additionalData: IfiskeNotification }>): Promise<void> | void;
 }
 
 @Injectable()
 export class PushProvider {
-  sub: any;
+  private static readonly TAGS = ['marketing', 'developer', 'user_id'];
+
   token: string;
   private defaultHandler: PushHandler = notification => {
     this.alertCtrl.show({
-      message: notification.message,
+      message: notification.additionalData.message,
     });
   };
 
@@ -36,8 +39,12 @@ export class PushProvider {
       */
     NEW: [
       notification => {
-        if (notification.code) {
-          this.navCtrl.push('PermitDetailPage', { ID: notification.code });
+        if (notification.additionalData.code) {
+          const navCtrl = this.app.getRootNavs()[0];
+          if (!navCtrl) {
+            return;
+          }
+          navCtrl.push('PermitDetailPage', { ID: notification.additionalData.code });
         }
       },
     ],
@@ -50,7 +57,7 @@ export class PushProvider {
       */
     REP_REQ: [
       notification => {
-        if (notification.orgid && notification.code) {
+        if (notification.additionalData.orgid && notification.additionalData.code) {
           this.alertCtrl.show({
             title: 'Do you want to create a catch report?',
             buttons: [
@@ -61,7 +68,10 @@ export class PushProvider {
               {
                 text: 'OK',
                 handler: () => {
-                  window.open(`${serverLocation}/r/${notification.code}?lang=${this.settings.language}`, '_system');
+                  window.open(
+                    `${serverLocation}/r/${notification.additionalData.code}?lang=${this.settings.language}`,
+                    '_system',
+                  );
                 },
               },
             ],
@@ -77,7 +87,7 @@ export class PushProvider {
       */
     NEW_FAV: [
       notification => {
-        if (notification.repid) {
+        if (notification.additionalData.repid) {
           // this.navCtrl.push('app.report', {id: notification.repid});
         }
       },
@@ -90,73 +100,97 @@ export class PushProvider {
       */
     NOTE: [
       notification => {
-        if (notification.message) {
+        if (notification.additionalData.message) {
           this.alertCtrl.show({
             title: notification.title,
-            message: notification.message,
+            message: notification.additionalData.message,
           });
         }
       },
     ],
   };
 
-  private navCtrl: NavController;
-
   constructor(
-    private fcm: FCM,
     private app: App,
-    private plt: Platform,
     private API: ApiProvider,
     private alertCtrl: TranslateAlertController,
     private settings: SettingsProvider,
+    private oneSignal: OneSignal,
+    private plt: Platform,
   ) {
-    // TODO: remove deprecation warning
-    this.navCtrl = this.app.getRootNav();
+    this.plt.ready().then(() => {
+      // TODO: remove deprecation warning
+      this.oneSignal.startInit(oneSignalConfig.appId, oneSignalConfig.googleProjectNumber);
+
+      this.oneSignal.iOSSettings({
+        kOSSettingsKeyAutoPrompt: false,
+        kOSSettingsKeyInAppLaunchURL: false,
+      });
+
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+      this.oneSignal.handleNotificationReceived().subscribe(this.onReceived);
+      this.oneSignal.handleNotificationOpened().subscribe(this.onOpened);
+
+      this.oneSignal.endInit();
+    });
   }
 
   async register() {
     if (this.token) {
       this.unregister();
     }
-    if (this.plt.is('ios')) {
-      const fcmPlugin = (window as any).FCMPlugin;
-      fcmPlugin && fcmPlugin.requestPermissionOnIOS();
+
+    const { permissionStatus } = await this.oneSignal.getPermissionSubscriptionState();
+    if (!permissionStatus.hasPrompted || permissionStatus.status === 0) {
+      const accepted = await this.oneSignal.promptForPushNotificationsWithUserResponse();
+      if (!accepted) {
+        return;
+      }
     }
 
-    this.token = await this.fcm.getToken();
+    const { pushToken } = await this.oneSignal.getIds();
 
-    console.log(this.token);
+    this.token = pushToken;
 
     this.API.user_set_pushtoken(this.token);
 
-    // TODO: handle subscriptions to topics better, allow opt-out and so
-    if (this.settings.isDeveloper) {
-      this.fcm.subscribeToTopic('developer');
-    }
+    // TODO: handle subscriptions to topics better, allow opt-out and such
+    const tags: any = {};
+    // TODO: add an email/user id tag
 
-    this.fcm.subscribeToTopic('marketing');
-    this.sub = this.fcm.onNotification().subscribe(this.handleNotification);
+    if (this.settings.isDeveloper) {
+      tags.developer = true;
+    }
+    tags.marketing = true;
+
+    this.oneSignal.sendTags(tags);
   }
 
   unregister() {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
     this.token = undefined;
-
-    this.fcm.unsubscribeFromTopic('developer');
-    this.fcm.unsubscribeFromTopic('marketing');
+    this.oneSignal.deleteTags(PushProvider.TAGS);
   }
 
-  private handleNotification = (notification: IfiskeNotification & NotificationData) => {
-    console.log('New push notification:', notification);
+  private onReceived = () => {};
 
-    if (notification.action && notification.action in this.pushHandlers) {
-      for (const handler of this.pushHandlers[notification.action]) {
-        setTimeout(() => handler(notification), 0);
+  private onOpened = ({ notification }: OSNotificationOpenedResult) => {
+    const payload = notification.payload;
+
+    console.log(notification, payload);
+
+    if (!payload || !payload.additionalData) {
+      return;
+    }
+
+    const { action } = payload.additionalData;
+
+    if (action && action in this.pushHandlers) {
+      for (const handler of this.pushHandlers[action]) {
+        setTimeout(() => handler(payload as any), 0);
       }
     } else {
-      this.defaultHandler(notification);
+      this.defaultHandler(payload as any);
     }
   };
 

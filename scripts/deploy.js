@@ -93,7 +93,10 @@ const deploy = async () => {
     versions[bump]++;
   }
 
-  const { sourcemaps, push } = await inquirer.prompt([{
+  const {
+    sourcemaps,
+    push
+  } = await inquirer.prompt([{
     type: 'confirm',
     name: 'sourcemaps',
     message: 'Do you want to upload source maps?',

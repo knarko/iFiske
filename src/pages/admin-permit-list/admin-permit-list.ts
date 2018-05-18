@@ -62,7 +62,9 @@ export class AdminPermitListPage {
       map(permits => {
         return permits.sort((a, b) => {
           return (
-            a.validity.localeCompare(b.validity) || a.score - b.score || a.fullname.localeCompare(b.fullname, 'sv')
+            a.score - b.score || // Best matching search terms
+            b.at - a.at || // Most recently issued
+            a.fullname.localeCompare(b.fullname, 'sv')
           );
         });
       }),

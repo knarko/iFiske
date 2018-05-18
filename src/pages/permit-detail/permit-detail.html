@@ -10,6 +10,11 @@
 <ion-content>
   <div class="background" ion-fixed *ngIf="permit" [ngClass]="'bg-' + permit?.validity"></div>
   <app-permit *ngIf="permit" [permit]="permit"></app-permit>
+
+  <div padding *ngIf="failed" class="text-center">
+    <h3 [innerHtml]="'errors.permit.failedHeader' | translate"></h3>
+    <p class="preserve-newlines" [innerHtml]="'errors.permit.failedBody' | translate"></p>
+  </div>
 </ion-content>
 <ion-footer>
   <button full ion-button color="secondary" (click)="openRules()" icon-left *ngIf="permit?.rule_t" class="footer-button">

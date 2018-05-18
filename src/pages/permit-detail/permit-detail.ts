@@ -16,6 +16,7 @@ export class PermitDetailPage {
   serverLocation = serverLocation;
 
   permit: Permit;
+  failed = false;
 
   constructor(
     public navCtrl: NavController,
@@ -25,17 +26,19 @@ export class PermitDetailPage {
   ) {}
 
   async ionViewWillEnter() {
-    this.permit = this.navParams.data;
-    if (!this.permit) {
-      // Ingen indata alls, det här kommer garanterat inte att fungera
-    } else if (!this.permit.t) {
-      // Ingen titel, det saknas data) {
-      if (this.permit.ID) {
+    if (this.navParams.get('t')) {
+      this.permit = this.navParams.data;
+    }
+    if (this.permit && this.permit.ID != undefined) {
+      try {
         // Det finns ett ID, hämta data från DB
-        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'));
-      } else {
-        // Vi kan inte hämta data på något bra sätt, visa fel
+        this.permit = await this.userProvider.getProduct(this.permit.ID);
+      } catch (err) {
+        console.warn(err);
       }
+    }
+    if (!this.permit || !this.permit.t) {
+      this.failed = true;
     }
     console.log(this.permit);
   }

@@ -2,7 +2,7 @@ image: node:9
 
 deploy:
   only:
-    - tags
+    #- tags
   before_script:
     ##
     ## Install ssh-agent if not already installed, it is required by Docker.
@@ -49,7 +49,7 @@ deploy:
     - npm install
 
   script:
-    - npm run build
+    #- npm run build
 
     - node scripts/sentry.js
 

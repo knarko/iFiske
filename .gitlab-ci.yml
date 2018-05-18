@@ -51,8 +51,7 @@ deploy:
   script:
     - npm run build
 
-    - npx sentry-cli releases new `echo $CI_COMMIT_TAG | cut -c 2-`
-    - npx sentry-cli releases files `echo $CI_COMMIT_TAG | cut -c 2-` upload-sourcemaps --url-prefix / www/build
+    - node scripts/sentry.js
 
     - git clone git@git.ionicjs.com:maistho/ifiske-app.git ionic-pro --origin=ionic
 

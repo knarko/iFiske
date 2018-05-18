@@ -7,6 +7,7 @@ import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
 import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal';
 import { oneSignalConfig } from '../../app/config';
+import { User } from '../user/user';
 
 interface IfiskeNotification {
   action?: string;
@@ -22,7 +23,7 @@ export interface PushHandler {
 
 @Injectable()
 export class PushProvider {
-  private static readonly TAGS = ['marketing', 'developer', 'user_id'];
+  private static readonly TAGS = ['marketing', 'developer', 'user_id', 'username', 'email'];
 
   token: string;
   private defaultHandler: PushHandler = notification => {
@@ -157,7 +158,6 @@ export class PushProvider {
 
     // TODO: handle subscriptions to topics better, allow opt-out and such
     const tags: any = {};
-    // TODO: add an email/user id tag
 
     if (this.settings.isDeveloper) {
       tags.developer = true;
@@ -170,6 +170,14 @@ export class PushProvider {
   unregister() {
     this.token = undefined;
     this.oneSignal.deleteTags(PushProvider.TAGS);
+  }
+
+  setUserDetails(user: User) {
+    this.oneSignal.sendTags({
+      email: user.email,
+      username: user.username,
+      user_id: user.ID,
+    });
   }
 
   private onReceived = () => {};

@@ -18,6 +18,7 @@ import { MonitoringClient } from '../../app/monitoring';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 export interface User {
+  ID: number;
   username: string;
   loggedin: string;
   IP1: string;
@@ -172,24 +173,22 @@ export class UserProvider extends BaseModel {
     }
 
     try {
-      const p = [];
-      p.push(
+      await Promise.all([
         this.API.user_get_favorites().then(favorites => {
           this.DB.populateTable(this.tables.favorite, favorites);
         }),
-      );
-
-      p.push(
-        this.API.user_info().then(data => {
-          const numbers = data.numbers;
+        this.API.user_info().then((data: User) => {
+          const numbers = (data as any).numbers;
           const numArr = [];
           for (let i = 0; i < numbers.length; ++i) {
             numArr.push({ number: numbers[i] });
           }
 
           MonitoringClient.setUserContext({
-            id: data.ID,
+            id: '' + data.ID,
           });
+
+          this.pushProvider.setUserDetails(data);
 
           return Promise.all([
             this.DB.populateTable(this.tables.info, [data]).then(
@@ -213,15 +212,11 @@ export class UserProvider extends BaseModel {
             ),
           ]);
         }),
-      );
-
-      p.push(
         this.API.user_products().then(products => {
           this.DB.populateTable(this.tables.product, products);
         }),
-      );
+      ]);
 
-      await Promise.all(p);
       return true;
     } catch (err) {
       if (err && err.error_code === 7) {

@@ -1,3 +1,19 @@
+<a name="4.3.0"></a>
+# [4.3.0](https://gitlab.com/kada-development/ifiske/compare/v4.2.3...v4.3.0) (2018-05-18)
+
+
+### Bug Fixes
+
+* **admin:** Sort permits by most recently issued ([516f0e3](https://gitlab.com/kada-development/ifiske/commit/516f0e3))
+
+
+### Features
+
+* **push:** add OneSignal integration ([b377f9c](https://gitlab.com/kada-development/ifiske/commit/b377f9c))
+* **push:** add user details to onesignal tags ([84f29ec](https://gitlab.com/kada-development/ifiske/commit/84f29ec))
+
+
+
 <a name="4.2.3"></a>
 ## [4.2.3](https://gitlab.com/kada-development/ifiske/compare/v4.2.2...v4.2.3) (2018-05-16)
 

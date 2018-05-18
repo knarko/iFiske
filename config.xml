@@ -60,8 +60,6 @@
         <hook src="hooks/update_pods.sh" type="before_platform_add" />
         <hook src="hooks/run_pods.sh" type="after_platform_add" />
 
-        <resource-file src="GoogleService-Info.plist" target="Resources/GoogleService-Info.plist" />
-        <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
             <string>För att skanna QR-koder</string>
         </edit-config>

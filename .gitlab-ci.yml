@@ -50,6 +50,7 @@ deploy:
 
   script:
     #- npm run build
+    - mkdir -p www/build
 
     - node scripts/sentry.js
 

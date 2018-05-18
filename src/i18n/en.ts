@@ -2,7 +2,6 @@ import { TranslationDefinition } from "./TranslationDefinition";
 
 export const en: TranslationDefinition = {
   "Downloadable file": "Downloadable {{type}}",
-  "_comment": "// TODO: fix instructions",
   "Renew permit": "Renew permit",
   "Permit not yet valid": "Permit is not valid yet",
   "Activation code failed": "There was an error, the activation code could not be sent.",

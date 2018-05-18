@@ -1,6 +1,6 @@
 import { TranslationDefinition } from "./TranslationDefinition";
 
-export const de: TranslationDefinition = {
+export const de: TranslationDefinition | any = {
   "Downloadable file": "Herunterladbare {{type}}",
   "Renew permit": "Lizenz erneuern",
   "Permit not yet valid": "Lizenz ist noch nicht gültig",
@@ -31,14 +31,14 @@ export const de: TranslationDefinition = {
     "general": {
       "back": "Zurück",
       "pull_to_refresh": "Update",
-      "shortAmount": ""
+      "shortAmount": "",
     },
     "map": {
       "outdoors": "Karte",
-      "satellite": "Satellit"
+      "satellite": "Satellit",
     },
     "about": {
-      "version": "Version"
+      "version": "Version",
     },
     "admin": {
       "since:date": "Teil der Organisation seit {{date}}",
@@ -46,17 +46,17 @@ export const de: TranslationDefinition = {
       "selectOrg": "Organisation auswählen",
       "check": {
         "manualInstructions": "Geben Sie unten einen Lizenzcode ein",
-        "scanInstructions": "Tippen Sie auf die Schaltfläche, um einen QR Code mit Ihrer Kamera zu scannen"
+        "scanInstructions": "Tippen Sie auf die Schaltfläche, um einen QR Code mit Ihrer Kamera zu scannen",
       },
       "userLevel": {
         "0": "Level 0",
         "1": "Level 1",
-        "2": "Level 2 (kompletter Zugriff)"
+        "2": "Level 2 (kompletter Zugriff)",
       },
       "stats": {
         "offline": "Wir speichern keine Statistiken in der App zur Offline-Nutzung. Bitte verbinden Sie sich mit dem Internet und versuchen Sie es erneut.",
-        "noAccess": ""
-      }
+        "noAccess": "",
+      },
     },
     "placeholder": {
       "email": "z.B. name@domain.de",
@@ -66,10 +66,10 @@ export const de: TranslationDefinition = {
       "activationCode": "z.B. 1234",
       "username": "z.B. John77",
       "phone": "z.B. +46 76 123 45 67",
-      "permit": "z.B. 12345678"
+      "permit": "z.B. 12345678",
     },
     "issues": {
-      "long_text": "<p>Haben Sie einen Fehler oder Problem mit der App?</p><p>Sie können gerne jegliche Fehler auf <a href=\"https: //github.com/ifiske/ifiske/issues\">GitHub</a> berichten</p><p>Sie müssen bei GitHub angemeldet sein um einen Bericht schreiben zu können - im Gegenzug erhalten Sie aber auch Feedback sobald das Problem behoben wird! Einen Account auf GitHub zu erstellen ist kostenlos.</p><p>Falls Sie GitHub nicht nutzen können, nehmen wir Berichte auch unter <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> entgegen. Stellen Sie sicher, den Fehler sorgfältig zu beschreiben und teilen Sie uns bitte mit was für ein Telefon Sie verwenden. Fehlerberichte wie “Es funktioniert nicht” sind nicht sehr nützlich.</p>"
+      "long_text": "<p>Haben Sie einen Fehler oder Problem mit der App?</p><p>Sie können gerne jegliche Fehler auf <a href=\"https: //github.com/ifiske/ifiske/issues\">GitHub</a> berichten</p><p>Sie müssen bei GitHub angemeldet sein um einen Bericht schreiben zu können - im Gegenzug erhalten Sie aber auch Feedback sobald das Problem behoben wird! Einen Account auf GitHub zu erstellen ist kostenlos.</p><p>Falls Sie GitHub nicht nutzen können, nehmen wir Berichte auch unter <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> entgegen. Stellen Sie sicher, den Fehler sorgfältig zu beschreiben und teilen Sie uns bitte mit was für ein Telefon Sie verwenden. Fehlerberichte wie “Es funktioniert nicht” sind nicht sehr nützlich.</p>",
     },
     "permit": {
       "validity": {
@@ -81,10 +81,10 @@ export const de: TranslationDefinition = {
           "active": "Gültige",
           "inactive": "Inaktive",
           "revoked": "Widerrufene",
-          "expired": "Abgelaufene"
-        }
-      }
-    }
+          "expired": "Abgelaufene",
+        },
+      },
+    },
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
@@ -93,10 +93,10 @@ export const de: TranslationDefinition = {
       "noPermits": "Keine Lizenzen gefunden",
       "permit": {
         "failedHeader": "Keine Lizenz mit dem Code <strong>{{code}}</strong> gefunden.",
-        "failedBody": "Das kann durch Eingabe eines ungültigen Codes oder durch eine andere Organisation verursacht worden sein.\n\nWenn Sie der Meinung sind, dass Sie diese Lizenz einsehen müssten, dann überprüfen Sie bitte die Korrektheit des eingegebenen Codes."
+        "failedBody": "Das kann durch Eingabe eines ungültigen Codes oder durch eine andere Organisation verursacht worden sein.\n\nWenn Sie der Meinung sind, dass Sie diese Lizenz einsehen müssten, dann überprüfen Sie bitte die Korrektheit des eingegebenen Codes.",
       },
       "scanQR": {
-        "invalid": "Der QR Code konnte nicht gescannt werden"
+        "invalid": "Der QR Code konnte nicht gescannt werden",
       },
     },
     "area": {

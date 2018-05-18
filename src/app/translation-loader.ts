@@ -2,9 +2,9 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
 
-import * as sv from '../assets/i18n/sv.json';
-import * as de from '../assets/i18n/de.json';
-import * as en from '../assets/i18n/en.json';
+import { sv } from '../i18n/sv';
+import { de } from '../i18n/de';
+import { en } from '../i18n/en';
 import { MonitoringClient } from './monitoring';
 
 export class TranslateBundleLoader implements TranslateLoader {

@@ -1,4 +1,6 @@
-{
+import { TranslationDefinition } from "./TranslationDefinition";
+
+export const sv: TranslationDefinition = {
   "Downloadable file": "Nedladdningsbar {{type}}",
   "Renew permit": "Förnya fiskekort",
   "Permit not yet valid": "Fiskekortet har inte börjat gälla än",
@@ -29,14 +31,14 @@
     "general": {
       "back": "Tillbaka",
       "pull_to_refresh": "Uppdatera",
-      "shortAmount": "st"
+      "shortAmount": "st",
     },
     "map": {
       "outdoors": "Karta",
-      "satellite": "Satellit"
+      "satellite": "Satellit",
     },
     "about": {
-      "version": "Versionsnummer"
+      "version": "Versionsnummer",
     },
     "admin": {
       "since:date": "Kopplad till organisationen sedan {{date}}",
@@ -44,38 +46,38 @@
       "selectOrg": "Välj organisation",
       "check": {
         "manualInstructions": "Skriv in en fiskekortskod i rutan nedanför",
-        "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort"
+        "scanInstructions": "Tryck på knappen för att skanna en QR-kod på ett fiskekort",
       },
       "userLevel": {
         "0": "Nivå 0",
         "1": "Nivå 1",
-        "2": "Nivå 2 (Full insyn)"
+        "2": "Nivå 2 (Full insyn)",
       },
       "stats": {
         "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen.",
-        "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre"
-      }
+        "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre",
+      },
     },
     "onboarding": {
       "welcome": {
         "title": "Välkommen!",
-        "subtitle": "iFiske är Sveriges största portal för fiskekort"
+        "subtitle": "iFiske är Sveriges största portal för fiskekort",
       },
       "explore": {
         "title": "Utforska!",
-        "content": "<ul><li>Hitta nya spännande fiskevatten</li><li>Planera din nästa fiskeresa</li><li>Utforska kartan, fiskarter, regler och mycket mer</li></ul>"
+        "content": "<ul><li>Hitta nya spännande fiskevatten</li><li>Planera din nästa fiskeresa</li><li>Utforska kartan, fiskarter, regler och mycket mer</li></ul>",
       },
       "secure": {
         "title": "Säkert!",
-        "subtitle": "Köp ditt fiskekort online och få det direkt i appen. Vi har hundratusentals nöjda kunder och är certifierade för Trygg eHandel"
+        "subtitle": "Köp ditt fiskekort online och få det direkt i appen. Vi har hundratusentals nöjda kunder och är certifierade för Trygg eHandel",
       },
       "notify": {
         "title": "Håll koll!",
-        "subtitle": "Spara dina favoritställen och få nya fångstrapporter direkt till din mejlbox"
+        "subtitle": "Spara dina favoritställen och få nya fångstrapporter direkt till din mejlbox",
       },
       "skip": "Hoppa över",
       "next": "Nästa",
-      "continue": "Kom igång"
+      "continue": "Kom igång",
     },
     "placeholder": {
       "email": "ex. fnamn@doman.se",
@@ -85,10 +87,10 @@
       "activationCode": "ex. 1234",
       "username": "ex. Svenne77",
       "phone": "ex. 070 123 45 67",
-      "permit": "ex. 12345678"
+      "permit": "ex. 12345678",
     },
     "issues": {
-      "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>"
+      "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>",
     },
     "permit": {
       "validity": {
@@ -100,85 +102,89 @@
           "active": "Giltliga",
           "inactive": "Inaktiva",
           "revoked": "Makulerade",
-          "expired": "Utgångna"
-        }
-      }
+          "expired": "Utgångna",
+        },
+      },
     },
     "developer": {
       "betaOptIn": "Installera beta-versioner",
-      "checkForUpdates": "Leta efter uppdateringar"
+      "checkForUpdates": "Leta efter uppdateringar",
     },
     "reviews": {
       "title": "Tycker du om appen?",
       "message": "Din feedback hjälper oss att göra fisket enklare. Lämna gärna en recension!",
       "yes": "Ja",
-      "no": "Nej"
-    }
+      "no": "Nej",
+    },
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
     "network": "Det uppstod ett nätverksfel. Se till att du är ansluten till internet eller försök igen senare.",
+    "permit": {
+      "failedHeader": "Det gick inte att hitta ditt fiskekort",
+      "failedBody": "Det här beror antagligen på att du inte har en nätverksuppkoppling. Kontrollera att du är ansluten till nätverket och försök igen.",
+    },
     "admin": {
       "noPermits": "Inga fiskekort hittades",
       "permit": {
         "failedHeader": "Det gick inte att hitta fiskekortet med kod <strong>{{code}}</strong>.",
-        "failedBody": "Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.\n\nOm du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven."
+        "failedBody": "Det kan bero på att fiskekortet inte finns, eller på att det är utfärdat av en annan organisation.\n\nOm du får det här felet men tror att du borde kunna visa fiskekortet, dubbelkolla att koden är korrekt inskriven.",
       },
       "scanQR": {
-        "invalid": "QR-koden kunde inte skannas"
-      }
+        "invalid": "QR-koden kunde inte skannas",
+      },
     },
     "area": {
-      "notSelling": "Den här fiskevårdsorganisationen säljer tyvärr inte fiskekort genom iFiske"
+      "notSelling": "Den här fiskevårdsorganisationen säljer tyvärr inte fiskekort genom iFiske",
     },
     "recovery_code": {
       "required": "Du måste ange en återställnigskod",
-      "invalid": "Ogiltig återställningskod"
+      "invalid": "Ogiltig återställningskod",
     },
     "register": {
-      "failed": "Registeringen misslyckades"
+      "failed": "Registeringen misslyckades",
     },
     "activationCode": {
       "required": "Du måste ange en aktiveringskod",
       "invalid": "Ogiltig aktiveringskod",
       "invalidRequest": "Ogiltigt användarnamn eller aktiveringskod",
-      "pattern": "Exakt 4 siffror"
+      "pattern": "Exakt 4 siffror",
     },
     "password": {
       "required": "Du måste ange ett lösenord",
       "invalid": "Ogiltligt lösenord",
-      "pattern_mismatch": "Mellan 6 och 16 tecken"
+      "pattern_mismatch": "Mellan 6 och 16 tecken",
     },
     "username": {
       "required": "Du måste ange ett användarnamn",
       "invalid": "Ogiltigt användarnamn",
       "pattern_mismatch": "Mellan 5 och 25 tecken",
-      "taken": "Användarnamnet är upptaget"
+      "taken": "Användarnamnet är upptaget",
     },
     "fullname": {
       "required": "Du måste ange för- och efternamn",
-      "pattern_mismatch": "Mellan 5 och 50 tecken"
+      "pattern_mismatch": "Mellan 5 och 50 tecken",
     },
     "email": {
       "required": "Du måste ange en e-postadress",
       "taken": "E-postadressen är redan registrerad",
-      "invalid": "Ogiltlig e-postadress"
+      "invalid": "Ogiltlig e-postadress",
     },
     "phone": {
       "invalid": "Ogiltigt mobilnummer",
       "pattern": "Mellan 5 och 25 siffror",
-      "required": "Du måste ange ett mobilnummer"
+      "required": "Du måste ange ett mobilnummer",
     },
     "favorite": {
-      "notification_update": "Ett fel uppstod. Notifikationsstatusen har inte ändrats."
-    }
+      "notification_update": "Ett fel uppstod. Notifikationsstatusen har inte ändrats.",
+    },
   },
   "Statistics": "Statistik",
   "recovery": {
     "start": "En återställningskod kommer inom kort att skickas till dig via",
     "and": " och ",
     "end": ".",
-    "mail_spam_notice": "Om du har problem med att hitta ditt mejl, kolla att det inte fastnat i spamfiltret."
+    "mail_spam_notice": "Om du har problem med att hitta ditt mejl, kolla att det inte fastnat i spamfiltret.",
   },
   "Create Account": "Skapa konto",
   "About the app": "Om appen",
@@ -308,5 +314,5 @@
   "Youtube": "YouTube",
   "Verify Account": "Verifiera konto",
   "Logging out": "Loggar ut...",
-  "Searching": "Söker..."
+  "Searching": "Söker...",
 }

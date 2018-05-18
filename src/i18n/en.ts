@@ -1,4 +1,6 @@
-{
+import { TranslationDefinition } from "./TranslationDefinition";
+
+export const en: TranslationDefinition = {
   "Downloadable file": "Downloadable {{type}}",
   "_comment": "// TODO: fix instructions",
   "Renew permit": "Renew permit",
@@ -30,14 +32,14 @@
     "general": {
       "back": "Back",
       "pull_to_refresh": "Update",
-      "shortAmount": ""
+      "shortAmount": "",
     },
     "map": {
       "outdoors": "Map",
-      "satellite": "Satellite"
+      "satellite": "Satellite",
     },
     "about": {
-      "version": "Version"
+      "version": "Version",
     },
     "admin": {
       "since:date": "Part of the organization since {{date}}",
@@ -45,38 +47,38 @@
       "selectOrg": "Select organization",
       "check": {
         "manualInstructions": "Enter a permit code below",
-        "scanInstructions": "Tap the button to scan a QR code using your camera"
+        "scanInstructions": "Tap the button to scan a QR code using your camera",
       },
       "userLevel": {
         "0": "Level 0",
         "1": "Level 1",
-        "2": "Level 2 (Complete access)"
+        "2": "Level 2 (Complete access)",
       },
       "stats": {
         "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again.",
-        "noAccess": "In order to see statistics you need at least user level 1"
-      }
+        "noAccess": "In order to see statistics you need at least user level 1",
+      },
     },
     "onboarding": {
       "welcome": {
         "title": "Welcome!",
-        "subtitle": "Welcome to iFiske. We're swedens Largest portal for fishing permits"
+        "subtitle": "Welcome to iFiske. We're swedens Largest portal for fishing permits",
       },
       "explore": {
         "title": "Explore!",
-        "content": "<ul><li>Find new exciting fishing areas</li><li>Plan your next fishing trip</li><li>explore maps, fish species, rules and much more</li></ul>"
+        "content": "<ul><li>Find new exciting fishing areas</li><li>Plan your next fishing trip</li><li>explore maps, fish species, rules and much more</li></ul>",
       },
       "secure": {
         "title": "Secure!",
-        "subtitle": "Safely buy your fishing permit online and get it delivered to this app. We're trusted by hundreds of thousands of customers and certified as Trygg eHandel"
+        "subtitle": "Safely buy your fishing permit online and get it delivered to this app. We're trusted by hundreds of thousands of customers and certified as Trygg eHandel",
       },
       "notify": {
         "title": "Stay informed!",
-        "subtitle": "Save your favorite spots and get new catch reports for free directly to your mailbox"
+        "subtitle": "Save your favorite spots and get new catch reports for free directly to your mailbox",
       },
       "skip": "Skip",
       "next": "Next",
-      "continue": "Get started"
+      "continue": "Get started",
     },
     "placeholder": {
       "email": "e.g. name@domain.com",
@@ -86,10 +88,10 @@
       "activationCode": "e.g. 1234",
       "username": "e.g. John77",
       "phone": "e.g. +46 70 123 45 67",
-      "permit": "e.g. 12345678"
+      "permit": "e.g. 12345678",
     },
     "issues": {
-      "long_text": "<p>Have you found a bug or a problem with the app?</p><p>We encourage you to report any bugs on <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>You must be logged in at GitHub to write a report - but in return you will also get feedback as soon as the issue is handled! Making an account on GitHub is free.</p><p>If you are unable use GitHub, we also receive bug reports on <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a>. Make sure to describe the error carefully and also tell us what phone you are using. Bug Reports such as “It doesn't work” aren't very useful for us.</p>"
+      "long_text": "<p>Have you found a bug or a problem with the app?</p><p>We encourage you to report any bugs on <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>You must be logged in at GitHub to write a report - but in return you will also get feedback as soon as the issue is handled! Making an account on GitHub is free.</p><p>If you are unable use GitHub, we also receive bug reports on <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a>. Make sure to describe the error carefully and also tell us what phone you are using. Bug Reports such as “It doesn't work” aren't very useful for us.</p>",
     },
     "permit": {
       "validity": {
@@ -101,85 +103,89 @@
           "active": "Valid",
           "inactive": "Inactive",
           "revoked": "Revoked",
-          "expired": "Expired"
-        }
-      }
+          "expired": "Expired",
+        },
+      },
     },
     "developer": {
       "betaOptIn": "Install beta versions",
-      "checkForUpdates": "Check for updates"
+      "checkForUpdates": "Check for updates",
     },
     "reviews": {
       "title": "Do you enjoy the app?",
       "message": "Your feedback helps us make fishing easier. Please leave a review!",
       "yes": "Yes",
-      "no": "No"
-    }
+      "no": "No",
+    },
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",
+    "permit": {
+      "failedHeader": "Could not find your permit",
+      "failedBody": "This is probably caused by a faulty internet connection. Please check your network and try again.",
+    },
     "admin": {
       "noPermits": "No permits found",
       "permit": {
         "failedHeader": "Could not find permit with code <strong>{{code}}</strong>.",
-        "failedBody": "This could be caused by entering an invalid code, or when the permit is from a different organization.\n\nIf you think that you should be able to view this permit, please check that the code is entered correctly."
+        "failedBody": "This could be caused by entering an invalid code, or when the permit is from a different organization.\n\nIf you think that you should be able to view this permit, please check that the code is entered correctly.",
       },
       "scanQR": {
-        "invalid": "The QR code could not be scanned"
-      }
+        "invalid": "The QR code could not be scanned",
+      },
     },
     "network": "There was an error with the network, please make sure you are connected and try again",
     "area": {
-      "notSelling": "This organization does not sell permits through iFiske"
+      "notSelling": "This organization does not sell permits through iFiske",
     },
     "recovery_code": {
       "required": "You must enter a recovery code",
-      "invalid": "Invalid recovery code"
+      "invalid": "Invalid recovery code",
     },
     "register": {
-      "failed": "Registration failed"
+      "failed": "Registration failed",
     },
     "activationCode": {
       "required": "You must enter an activation code",
       "invalid": "Invalid activation code",
       "invalidRequest": "Invalid username or activation code",
-      "pattern": "Must be exactly 4 digits"
+      "pattern": "Must be exactly 4 digits",
     },
     "password": {
       "required": "You must enter a password",
       "invalid": "Invalid password",
-      "pattern_mismatch": "Between 6 and 16 characters"
+      "pattern_mismatch": "Between 6 and 16 characters",
     },
     "username": {
       "required": "You must enter a username",
       "invalid": "Invalid username",
       "pattern_mismatch": "Must be between 5 and 25 characters",
-      "taken": "Username is already taken"
+      "taken": "Username is already taken",
     },
     "fullname": {
       "required": "You must enter first and last name",
-      "pattern_mismatch": "Must be between 5 and 50 characters"
+      "pattern_mismatch": "Must be between 5 and 50 characters",
     },
     "email": {
       "required": "You must enter an email",
       "taken": "The email is already registered",
-      "invalid": "Invalid email"
+      "invalid": "Invalid email",
     },
     "phone": {
       "invalid": "Invalid phone number",
       "pattern": "Must be between 5 and 25 digits",
-      "required": "You must enter a phone number"
+      "required": "You must enter a phone number",
     },
     "favorite": {
-      "notification_update": "There was an error. You notification settings have not been changed."
-    }
+      "notification_update": "There was an error. You notification settings have not been changed.",
+    },
   },
   "Statistics": "Statistics",
   "recovery": {
     "start": "A recovery code will soon be sent to you via",
     "and": " and ",
     "end": ".",
-    "mail_spam_notice": "If you cannot find your email, try looking in the spam folder."
+    "mail_spam_notice": "If you cannot find your email, try looking in the spam folder.",
   },
   "Create Account": "Create account",
   "About the app": "About",
@@ -309,5 +315,5 @@
   "Youtube": "YouTube",
   "Verify Account": "Verify Account",
   "Logging out": "Signing out...",
-  "Searching": "Searching..."
+  "Searching": "Searching...",
 }

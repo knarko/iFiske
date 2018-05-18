@@ -1,4 +1,6 @@
-{
+import { TranslationDefinition } from "./TranslationDefinition";
+
+export const de: TranslationDefinition = {
   "Downloadable file": "Herunterladbare {{type}}",
   "Renew permit": "Lizenz erneuern",
   "Permit not yet valid": "Lizenz ist noch nicht gültig",
@@ -95,56 +97,56 @@
       },
       "scanQR": {
         "invalid": "Der QR Code konnte nicht gescannt werden"
-      }
+      },
     },
     "area": {
-      "notSelling": "Diese Organisation verkauft leider keine Fischerscheine durch iFiske"
+      "notSelling": "Diese Organisation verkauft leider keine Fischerscheine durch iFiske",
     },
     "recovery_code": {
       "required": "Sie müssen einen Wiederherstellungscode eingeben",
-      "invalid": "Ungültiger Recovery-Code"
+      "invalid": "Ungültiger Recovery-Code",
     },
     "activationCode": {
       "required": "Sie müssen einen Aktivierungscode eingeben",
       "invalid": "Ungültiger Aktivierungscode",
       "invalidRequest": "Ungültiger Benutzername oder Aktivierungscode",
-      "pattern": "Muss genau 4 Ziffern lang sein"
+      "pattern": "Muss genau 4 Ziffern lang sein",
     },
     "password": {
       "required": "Sie müssen ein Passwort eingeben",
       "invalid": "Ungültiges Passwort",
-      "pattern_mismatch": "Zwischen 6 und 16 Zeichen"
+      "pattern_mismatch": "Zwischen 6 und 16 Zeichen",
     },
     "username": {
       "required": "Sie müssen einen Benutzernamen auswählen",
       "invalid": "Ungültiger Benutzername",
       "pattern_mismatch": "Zwischen 5 und 25 Zeichen",
-      "taken": "Der Benutzername ist bereits vergeben"
+      "taken": "Der Benutzername ist bereits vergeben",
     },
     "fullname": {
       "required": "Sie müssen einen Namen eingeben",
-      "pattern_mismatch": "Zwischen 5 und 50 Zeichen"
+      "pattern_mismatch": "Zwischen 5 und 50 Zeichen",
     },
     "email": {
       "required": "Sie müssen eine E-mail Adresse angeben",
       "taken": "Die E-mail Adresse ist bereits registriert",
-      "invalid": "Ungültige E-mail Adresse"
+      "invalid": "Ungültige E-mail Adresse",
     },
     "phone": {
       "invalid": "Ungültige Telefonnummer",
       "pattern": "Zwischen 5 und 25 Stellen",
-      "required": "Sie müssen eine Telefonnummer eingeben"
+      "required": "Sie müssen eine Telefonnummer eingeben",
     },
     "favorite": {
-      "notification_update": "Ein Fehler ist aufgetreten. Ihre Benachrichtigungs-einstellungen wurden nicht geändert."
-    }
+      "notification_update": "Ein Fehler ist aufgetreten. Ihre Benachrichtigungs-einstellungen wurden nicht geändert.",
+    },
   },
   "Statistics": "Statistiken",
   "recovery": {
     "start": "Ihr Recovery-Code wird Ihnen bald per",
     "and": " und ",
     "end": "zugeschickt.",
-    "mail_spam_notice": "Wenn Sie die E-mail nicht finden, überprüfen Sie den Spam-Ordner"
+    "mail_spam_notice": "Wenn Sie die E-mail nicht finden, überprüfen Sie den Spam-Ordner",
   },
   "Create Account": "Account erstellen",
   "About the app": "Impressum",
@@ -270,5 +272,5 @@
   "Youtube": "YouTube",
   "Verify Account": "Account verifizieren",
   "Logging out": "Abmelden...",
-  "Searching": "Suchen..."
+  "Searching": "Suchen...",
 }

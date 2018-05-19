@@ -29,10 +29,10 @@ export class PermitDetailPage {
     if (this.navParams.get('t')) {
       this.permit = this.navParams.data;
     }
-    if (this.permit && this.permit.ID != undefined) {
+    if (this.navParams.get('ID') != undefined) {
       try {
         // Det finns ett ID, hämta data från DB
-        this.permit = await this.userProvider.getProduct(this.permit.ID);
+        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'));
       } catch (err) {
         console.warn(err);
       }

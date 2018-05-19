@@ -1,3 +1,13 @@
+<a name="4.3.4"></a>
+## [4.3.4](https://gitlab.com/kada-development/ifiske/compare/v4.3.3...v4.3.4) (2018-05-19)
+
+
+### Bug Fixes
+
+* **permit-detail:** Load permits when activating from push notifications ([0b90494](https://gitlab.com/kada-development/ifiske/commit/0b90494))
+
+
+
 <a name="4.3.3"></a>
 ## [4.3.3](https://gitlab.com/kada-development/ifiske/compare/v4.3.2...v4.3.3) (2018-05-19)
 

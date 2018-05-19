@@ -1,3 +1,18 @@
+<a name="4.3.2"></a>
+## [4.3.2](https://gitlab.com/kada-development/ifiske/compare/v4.3.1...v4.3.2) (2018-05-19)
+
+
+### Bug Fixes
+
+* **permit-detail:** improve error message if permit cannot be found ([8e80353](https://gitlab.com/kada-development/ifiske/commit/8e80353))
+* **push:** add hooks for copying icons and updating pods ([5e1b0af](https://gitlab.com/kada-development/ifiske/commit/5e1b0af))
+* **push:** fix hook folder name ([4bc4dfa](https://gitlab.com/kada-development/ifiske/commit/4bc4dfa))
+* **push:** fix hook repository name ([004d43c](https://gitlab.com/kada-development/ifiske/commit/004d43c))
+* **push:** remove unused files from config copy ([892f19a](https://gitlab.com/kada-development/ifiske/commit/892f19a))
+* **translations:** fix type errors ([1b70362](https://gitlab.com/kada-development/ifiske/commit/1b70362))
+
+
+
 <a name="4.3.1"></a>
 ## [4.3.1](https://gitlab.com/kada-development/ifiske/compare/v4.2.3...v4.3.1) (2018-05-18)
 

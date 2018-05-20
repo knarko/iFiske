@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { IonicApp, IonicModule } from 'ionic-angular';
 
-import { SuperTabsModule } from '@ifiske/ionic2-super-tabs';
-
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 
 // Ionic Native
@@ -83,8 +81,6 @@ registerLocaleData(localeSv);
         statusbarPadding: true,
       },
     }),
-
-    SuperTabsModule.forRoot(),
 
     ImgcacheModule.forRoot({
       fallback: true,

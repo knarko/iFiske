@@ -8,6 +8,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 import { Area } from '../../providers/area/area';
 import { MonitoringClient } from '../../app/monitoring';
 import { isProdMode } from '../../app/config';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -32,16 +33,18 @@ export class AreasDetailMapPage {
 
   options: MapOptions = {};
 
-  private area: Area;
+  area: Area;
 
   constructor(
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     public navParams: NavParams,
     private mapData: MapDataProvider,
     private navigator: LaunchNavigator,
     private alertCtrl: TranslateAlertController,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products }) => {
+    const params: Observable<any> =
+      this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
+    params.subscribe(({ area, org, products }) => {
       if (this.area !== area && area) {
         this.mapData
           .getPois(area.orgid)

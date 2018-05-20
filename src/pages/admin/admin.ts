@@ -16,14 +16,7 @@ export class AdminPage {
     { uri: 'AdminInfoPage', title: 'Information', icon: 'information-circle' },
   ];
 
-  tabParams: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.tabParams = {
-      navCtrl: this.navCtrl,
-    };
-    console.log('in admin.ts', this.tabParams);
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');

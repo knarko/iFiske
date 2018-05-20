@@ -8,13 +8,9 @@ import { CountyProvider, County } from '../../providers/county/county';
   templateUrl: 'areas-counties.html',
 })
 export class AreasCountiesPage {
-  navCtrl: NavController;
-
   items: County[];
 
-  constructor(public navParams: NavParams, private county: CountyProvider) {
-    this.navCtrl = this.navParams.get('rootNavCtrl');
-  }
+  constructor(private navCtrl: NavController, private county: CountyProvider) {}
 
   async ionViewWillEnter() {
     this.items = await this.county.getAll();

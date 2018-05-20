@@ -1,14 +1,3 @@
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>{{selectedTab?.title | translate}}</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content no-bounce class="transparent">
-  <super-tabs tabsPlacement="bottom" toolbarBackground="dark" toolbarColor="light" (tabSelect)="tabSelect($event)">
-    <super-tab *ngFor="let tab of tabs" [root]="tab.page" [icon]="tab.icon" [title]="tab.title | translate"></super-tab>
-  </super-tabs>
-</ion-content>
+<ion-tabs tabsPlacement="bottom" toolbarBackground="dark" toolbarColor="light">
+  <ion-tab *ngFor="let tab of tabs" [root]="tab.page" [tabIcon]="tab.icon" [tabTitle]="tab.title | translate" tabsHideOnSubPages></ion-tab>
+</ion-tabs>

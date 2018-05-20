@@ -12,20 +12,16 @@ import { MonitoringClient } from '../../app/monitoring';
   templateUrl: 'areas-favorites.html',
 })
 export class AreasFavoritesPage {
-  private navCtrl: NavController;
   favorites: (Favorite & Area)[];
   static title = 'Favorites';
   static icon = 'star';
-  loggedIn: Observable<boolean>;
+  loggedIn = this.userProvider.loggedIn;
 
   constructor(
-    public navParams: NavParams,
+    private navCtrl: NavController,
     private userProvider: UserProvider,
     private toastCtrl: TranslateToastController,
-  ) {
-    this.navCtrl = this.navParams.get('rootNavCtrl');
-    this.loggedIn = this.userProvider.loggedIn;
-  }
+  ) {}
 
   async ionViewWillEnter() {
     try {

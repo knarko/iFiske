@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Tabs } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { ProductProvider, Product } from '../../providers/product/product';
-import { SuperTabs } from '@ifiske/ionic2-super-tabs';
 import { Fish } from '../../providers/fish/fish';
 
 @IonicPage({
@@ -24,14 +23,11 @@ export class AreasDetailPage {
   tabs: TabItem[] = [
     { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
     { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
-    { page: 'AreasDetailSpeciesPage', title: 'Species', icon: 'ifiske-fish', hide: true },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];
   tabParams = new ReplaySubject<any>(1);
 
-  @ViewChild(SuperTabs) superTabsCtrl: SuperTabs;
-
-  @ViewChild(Content) content: Content;
+  @ViewChild(Tabs) tabsCtrl: Tabs;
 
   constructor(
     public navCtrl: NavController,
@@ -59,14 +55,12 @@ export class AreasDetailPage {
       .getFishes(this.navParams.get('ID'))
       .then(species => {
         this.species = species;
-        //this.tabs[2].hide = false;
         this.updateParams();
       })
       .catch(e => console.warn(e));
   }
 
   ngAfterViewInit() {
-    this.superTabsCtrl.enableTabSwipe(this.tabs[3].page, false);
     this.updateParams();
   }
 
@@ -82,10 +76,9 @@ export class AreasDetailPage {
       area: this.area,
       org: this.org,
       products: this.products,
-      tabsCtrl: this.superTabsCtrl,
+      tabsCtrl: this.tabsCtrl,
       rootNavCtrl: this.navCtrl,
       species: this.species,
     });
-    this.content.resize();
   }
 }

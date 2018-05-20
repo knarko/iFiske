@@ -1,3 +1,7 @@
+<ion-header>
+  <tab-navbar [largeTitle]="true">{{area?.t}}</tab-navbar>
+</ion-header>
+
 <ion-content class="information-page background-abstract">
   <ion-slides #slides *ngIf="images?.length > 1" autoplay="10000" loop>
     <ion-slide *ngFor="let img of images; let i = index">

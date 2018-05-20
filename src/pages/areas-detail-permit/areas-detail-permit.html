@@ -1,3 +1,7 @@
+<ion-header>
+  <tab-navbar [largeTitle]="true">{{area?.t}}</tab-navbar>
+</ion-header>
+
 <ion-content class="background-abstract">
   <section class="note" *ngIf="area?.note">
     <h2>{{'Information' | translate}}</h2>

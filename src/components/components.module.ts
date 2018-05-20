@@ -14,6 +14,7 @@ import { UserInformationComponent } from './user-information/user-information';
 import { AdminHeaderComponent } from './admin-header/admin-header';
 import { ChartComponent } from './chart/chart';
 import { ImgcacheModule } from '../imgcache/imgcache.module';
+import { TabNavbarComponent } from './tab-navbar/tab-navbar';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ImgcacheModule } from '../imgcache/imgcache.module';
     UserInformationComponent,
     AdminHeaderComponent,
     ChartComponent,
+    TabNavbarComponent,
   ],
   imports: [IonicModule, TranslateModule, PipesModule, ImgcacheModule],
   exports: [
@@ -42,6 +44,7 @@ import { ImgcacheModule } from '../imgcache/imgcache.module';
     UserInformationComponent,
     AdminHeaderComponent,
     ChartComponent,
+    TabNavbarComponent,
   ],
 })
 export class ComponentsModule {}

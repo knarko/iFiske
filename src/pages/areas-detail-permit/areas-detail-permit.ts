@@ -8,6 +8,7 @@ import { PlatformProvider } from '../../providers/platform/platform';
 import { Permit } from '../../providers/user/user';
 import { MonitoringClient } from '../../app/monitoring';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -19,14 +20,17 @@ export class AreasDetailPermitPage {
   products: Product[];
 
   constructor(
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     public navParams: NavParams,
     private settings: SettingsProvider,
     private platform: PlatformProvider,
     private modalCtrl: ModalController,
     private ga: GoogleAnalytics,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products }) => {
+    const params: Observable<any> =
+      this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
+
+    params.subscribe(({ area, org, products }) => {
       this.area = area;
       this.products = products;
     });

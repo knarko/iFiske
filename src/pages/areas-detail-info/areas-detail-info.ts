@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController, Tabs, Content } from 'ionic-angular';
 import { Area, AreaImage } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
-import { SuperTabs } from '@ifiske/ionic2-super-tabs';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { SessionProvider } from '../../providers/session/session';
@@ -11,6 +10,7 @@ import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -27,7 +27,7 @@ export class AreasDetailInfoPage {
 
   private slides: Slides;
 
-  private tabsCtrl: SuperTabs;
+  private tabsCtrl: Tabs;
   private navCtrl: NavController;
 
   @ViewChild('slides')
@@ -38,7 +38,10 @@ export class AreasDetailInfoPage {
     }
   }
 
+  @ViewChild(Content) contentRef: Content;
+
   constructor(
+    private _navCtrl: NavController,
     public navParams: NavParams,
     private sessionData: SessionProvider,
     private userProvider: UserProvider,
@@ -47,7 +50,10 @@ export class AreasDetailInfoPage {
     private sanitizer: DomSanitizer,
     private imgcache: ImgcacheService,
   ) {
-    this.navParams.get('params').subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
+    const params: Observable<any> =
+      this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+
+    params.subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {
         area.images.then(images => this.getCachedImages(images)).then(images => {
           console.log(images);
@@ -60,6 +66,9 @@ export class AreasDetailInfoPage {
       this.org = org;
       this.products = products;
       this.area = area;
+      if (this.contentRef) {
+        this.contentRef.resize();
+      }
     });
   }
 
@@ -110,7 +119,7 @@ export class AreasDetailInfoPage {
   }
 
   gotoPermits() {
-    this.tabsCtrl.slideTo('AreasDetailPermitPage');
+    this.tabsCtrl.select(1);
   }
 
   gotoSpecies(fish: Fish) {
@@ -118,7 +127,7 @@ export class AreasDetailInfoPage {
   }
 
   imageLoaded(i: number) {
-    if (i === 0) this.slides.update();
+    this.slides.update();
   }
 
   initSlides() {

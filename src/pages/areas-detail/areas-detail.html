@@ -1,18 +1,6 @@
-<ion-header>
-
-  <ion-navbar color="primary" class="large-title">
-    <ion-title>{{area?.t}}</ion-title>
-    <ion-buttons ></ion-buttons>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content no-bounce class="transparent">
-  <super-tabs tabsPlacement="bottom" id="areas-detail">
-    <ng-container *ngFor="let tab of tabs; index as i">
-    <super-tab *ngIf="!tab.hide" [root]="tab.page" [title]="tab.title | translate" [icon]="tab.icon" [rootParams]="{params:tabParams}" [id]="tab.page" [index]="i"></super-tab>
-    </ng-container>
-  </super-tabs>
-
-</ion-content>
+<ion-tabs tabsPlacement="bottom" id="areas-detail">
+  <ng-container *ngFor="let tab of tabs; index as i">
+    <ion-tab *ngIf="!tab.hide" [root]="tab.page" [tabTitle]="tab.title | translate" [tabIcon]="tab.icon" [rootParams]="{params:tabParams}"
+      [tabsHideOnSubPages]="true" [tabUrlPath]="tab.page"></ion-tab>
+  </ng-container>
+</ion-tabs>

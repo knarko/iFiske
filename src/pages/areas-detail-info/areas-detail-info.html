@@ -6,7 +6,7 @@
   <ion-slides #slides *ngIf="images?.length > 1" autoplay="10000" loop>
     <ion-slide *ngFor="let img of images; let i = index">
       <div class="slider-image">
-        <img [src]="img.file" (load)="imageLoaded(i)">
+        <img [src]="img.file$ | async" (load)="imageLoaded(i)" [ngStyle]="{'height.vw': 100 * img.h / img.w, 'width.vw': 100}">
         <p *ngIf="img.t || img.d" class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
       </div>
     </ion-slide>

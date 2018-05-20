@@ -12,12 +12,15 @@ import 'rxjs/add/operator/filter';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
 import { SettingsProvider } from '../settings/settings';
+import { Observable } from 'rxjs/Observable';
 
 export interface AreaImage {
   h: number;
   w: number;
   file: string;
   ratio: string;
+
+  file$?: Promise<string> | Observable<string>;
 }
 
 export interface Area {

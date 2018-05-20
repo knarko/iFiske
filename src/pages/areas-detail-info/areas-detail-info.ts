@@ -11,6 +11,7 @@ import { Fish } from '../../providers/fish/fish';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @IonicPage()
 @Component({
@@ -72,17 +73,18 @@ export class AreasDetailInfoPage {
     });
   }
 
-  private getCachedImages(images: AreaImage[]): Promise<AreaImage[]> {
-    return Promise.all(
-      images.map(async img => {
-        const cachedImg = await this.imgcache.getCachedFile(img.file);
+  private getCachedImages(images: AreaImage[]): AreaImage[] {
+    return images.map(img => {
+      const subject = new ReplaySubject<string>(1);
+      subject.next('/assets/img/placeholder.jpg');
+      this.imgcache.getCachedFile(img.file).then(cachedImg => {
         console.log(img.file, cachedImg);
-        img.file = cachedImg && (this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string);
-        return img;
-      }),
-    ).then(imgs => {
-      console.log(imgs);
-      return imgs.filter(img => !!img.file);
+        if (cachedImg) {
+          subject.next(this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string);
+        }
+      });
+      img.file$ = subject.asObservable();
+      return img;
     });
   }
 

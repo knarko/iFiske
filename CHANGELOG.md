@@ -1,3 +1,13 @@
+<a name="4.3.6"></a>
+## [4.3.6](https://gitlab.com/kada-development/ifiske/compare/v4.3.5...v4.3.6) (2018-05-21)
+
+
+### Bug Fixes
+
+* **sms-purchase:** Show the entire SMS text in the example ([2dd7089](https://gitlab.com/kada-development/ifiske/commit/2dd7089))
+
+
+
 <a name="4.3.5"></a>
 ## [4.3.5](https://gitlab.com/kada-development/ifiske/compare/v4.3.4...v4.3.5) (2018-05-19)
 

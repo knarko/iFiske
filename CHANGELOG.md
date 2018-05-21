@@ -1,3 +1,13 @@
+<a name="4.3.8"></a>
+## [4.3.8](https://gitlab.com/kada-development/ifiske/compare/v4.3.7...v4.3.8) (2018-05-21)
+
+
+### Bug Fixes
+
+* **push:** reset user details when toggling active push subscription ([8895440](https://gitlab.com/kada-development/ifiske/commit/8895440))
+
+
+
 <a name="4.3.7"></a>
 ## [4.3.7](https://gitlab.com/kada-development/ifiske/compare/v4.3.6...v4.3.7) (2018-05-21)
 

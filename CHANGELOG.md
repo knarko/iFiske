@@ -1,3 +1,14 @@
+<a name="4.3.7"></a>
+## [4.3.7](https://gitlab.com/kada-development/ifiske/compare/v4.3.6...v4.3.7) (2018-05-21)
+
+
+### Bug Fixes
+
+* **push:** allow users to opt out in settings ([3e3b6e5](https://gitlab.com/kada-development/ifiske/commit/3e3b6e5))
+* **push:** Remove alert when getting new notification ([9560fe1](https://gitlab.com/kada-development/ifiske/commit/9560fe1))
+
+
+
 <a name="4.3.6"></a>
 ## [4.3.6](https://gitlab.com/kada-development/ifiske/compare/v4.3.5...v4.3.6) (2018-05-21)
 

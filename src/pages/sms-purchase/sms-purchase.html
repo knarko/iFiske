@@ -11,19 +11,19 @@
 
 
 <ion-content padding>
-    <p>{{'Text message instructions' | translate}}</p>
-    <p>{{'Text message format' | translate}}</p>
-    <ion-list inset border>
-      <ion-item>
-        FISKA {{product.pf}} {{'First name' | translate}} {{'Surname' | translate}}
-      </ion-item>
-    </ion-list>
-    <p>{{'Make sure you have the correct name' | translate}}</p>
-
-    <ion-item no-lines>
-      <ion-label>{{'I approve the text message rules' | translate}}</ion-label>
-      <ion-checkbox [(ngModel)]="approvedRules" (ionChange)="persistApproval()"></ion-checkbox>
+  <p>{{'Text message instructions' | translate}}</p>
+  <p>{{'Text message format' | translate}}</p>
+  <ion-list inset border class="sms-info-list">
+    <ion-item>
+      FISKA {{product.pf}} {{'First name' | translate}} {{'Surname' | translate}}
     </ion-item>
-    <button ion-button block color="secondary" [disabled]="!approvedRules" (click)="sendSms()">{{'Send SMS' | translate}}</button>
+  </ion-list>
+  <p>{{'Make sure you have the correct name' | translate}}</p>
+
+  <ion-item no-lines>
+    <ion-label>{{'I approve the text message rules' | translate}}</ion-label>
+    <ion-checkbox [(ngModel)]="approvedRules" (ionChange)="persistApproval()"></ion-checkbox>
+  </ion-item>
+  <button ion-button block color="secondary" [disabled]="!approvedRules" (click)="sendSms()">{{'Send SMS' | translate}}</button>
 
 </ion-content>

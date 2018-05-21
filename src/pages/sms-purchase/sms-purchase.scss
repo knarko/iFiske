@@ -1,1 +1,11 @@
-page-sms-purchase {}
+page-sms-purchase {
+  .sms-info-list {
+    margin: 0 !important;
+    .label {
+      text-align: center;
+    }
+    .item {
+      padding: 0;
+    }
+  }
+}

@@ -128,7 +128,7 @@ export class PushProvider {
         kOSSettingsKeyInAppLaunchURL: false,
       });
 
-      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
 
       this.oneSignal.handleNotificationReceived().subscribe(this.onReceived);
       this.oneSignal.handleNotificationOpened().subscribe(this.onOpened);
@@ -154,6 +154,7 @@ export class PushProvider {
 
     this.token = pushToken;
 
+    // TODO: remove? It's not needed with the current implementation
     this.API.user_set_pushtoken(this.token);
 
     // TODO: handle subscriptions to topics better, allow opt-out and such
@@ -174,9 +175,9 @@ export class PushProvider {
 
   setUserDetails(user: User) {
     this.oneSignal.sendTags({
-      email: user.email,
+      // email: user.email,
       username: user.username,
-      user_id: user.ID,
+      // user_id: user.ID,
     });
   }
 

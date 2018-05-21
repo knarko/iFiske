@@ -1,3 +1,13 @@
+<a name="4.3.9"></a>
+## [4.3.9](https://gitlab.com/kada-development/ifiske/compare/v4.3.8...v4.3.9) (2018-05-21)
+
+
+### Performance Improvements
+
+* **onboarding:** tinify images ([c4fd6b9](https://gitlab.com/kada-development/ifiske/commit/c4fd6b9))
+
+
+
 <a name="4.3.8"></a>
 ## [4.3.8](https://gitlab.com/kada-development/ifiske/compare/v4.3.7...v4.3.8) (2018-05-21)
 

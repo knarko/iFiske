@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 interface Settings {
   push: boolean;
@@ -26,6 +27,8 @@ export class SettingsProvider {
   };
   private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
 
+  settingsChanged = new ReplaySubject<Settings>(1);
+
   constructor(private translate: TranslateService, private ga: GoogleAnalytics) {
     this.settings = Object.assign({}, SettingsProvider.defaultSettings, this.settings);
     this.persistSettings();
@@ -34,6 +37,7 @@ export class SettingsProvider {
 
   private persistSettings() {
     localStorage.setItem(SettingsProvider.STORAGE_LOCATION, JSON.stringify(this.settings));
+    this.settingsChanged.next(this.settings);
   }
 
   availableLanguages: { [short: string]: Language } = {
@@ -70,7 +74,6 @@ export class SettingsProvider {
 
   set push(push: boolean) {
     this.settings.push = push;
-    // this.pushProvider.reset();
     this.persistSettings();
   }
 

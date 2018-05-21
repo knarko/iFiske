@@ -133,6 +133,10 @@ export class PushProvider {
       this.oneSignal.handleNotificationOpened().subscribe(this.onOpened);
 
       this.oneSignal.endInit();
+
+      this.settings.settingsChanged.subscribe(settings => {
+        this.oneSignal.setSubscription(settings.push);
+      });
     });
   }
 

@@ -120,7 +120,6 @@ export class PushProvider {
     private plt: Platform,
   ) {
     this.plt.ready().then(() => {
-      // TODO: remove deprecation warning
       this.oneSignal.startInit(oneSignalConfig.appId, oneSignalConfig.googleProjectNumber);
 
       this.oneSignal.iOSSettings({

@@ -43,12 +43,10 @@ export class MyApp {
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
     this.deploy.initialize().catch(err => {
-      // console.warn(err);
       MonitoringClient.captureException(err);
     });
 
     platform.ready().then(() => {
-      // TODO: hide loading spinner on first launch
       this.update
         .update(false, this.settings.firstLaunch)
         .catch(e => console.warn(e))

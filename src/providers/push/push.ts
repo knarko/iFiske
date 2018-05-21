@@ -23,6 +23,7 @@ export interface PushHandler {
 
 @Injectable()
 export class PushProvider {
+  private user: User;
   private static readonly TAGS = ['marketing', 'developer', 'user_id', 'username', 'email'];
 
   token: string;
@@ -166,6 +167,11 @@ export class PushProvider {
     if (this.settings.isDeveloper) {
       tags.developer = true;
     }
+
+    if (this.user) {
+      tags.username = this.user.username;
+    }
+
     tags.marketing = true;
 
     this.oneSignal.sendTags(tags);
@@ -173,10 +179,12 @@ export class PushProvider {
 
   unregister() {
     this.token = undefined;
+    this.user = undefined;
     this.oneSignal.deleteTags(PushProvider.TAGS);
   }
 
   setUserDetails(user: User) {
+    this.user = user;
     this.oneSignal.sendTags({
       // email: user.email,
       username: user.username,

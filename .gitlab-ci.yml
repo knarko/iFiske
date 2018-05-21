@@ -62,8 +62,9 @@ deploy:
 
     - cd ionic-pro
 
-    - echo *.map >> .gitignore
+    - echo *.map > .gitignore
 
+    - git rm -r --cached .
     - git add .
     - git commit -am "build $CI_COMMIT_TAG"
     - git push -f ionic master

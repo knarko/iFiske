@@ -1,3 +1,13 @@
+<a name="4.3.11"></a>
+## [4.3.11](https://gitlab.com/kada-development/ifiske/compare/v4.3.10...v4.3.11) (2018-05-30)
+
+
+### Bug Fixes
+
+* **api:** Encode pluses correctly when posting data to the server ([24241b0](https://gitlab.com/kada-development/ifiske/commit/24241b0)), closes [angular/angular#11058](https://gitlab.com/angular/angular/issues/11058)
+
+
+
 <a name="4.3.10"></a>
 ## [4.3.10](https://gitlab.com/kada-development/ifiske/compare/v4.3.9...v4.3.10) (2018-05-21)
 

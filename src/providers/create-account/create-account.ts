@@ -29,6 +29,7 @@ export class CreateAccountProvider {
   }
 
   async register(userDetails: UserDetails) {
+    userDetails.phone = userDetails.phone.replace(/^\+/, '00');
     const res = await this.API.user_register(userDetails);
     console.log(res);
     localStorage.setItem(CreateAccountProvider.REGISTER_DATA_KEY, JSON.stringify(userDetails));

@@ -11,6 +11,7 @@ import { timer } from 'rxjs/observable/timer';
 import { range } from 'rxjs/observable/range';
 import { Dictionary } from '../../types';
 import { TimeoutError } from '../../errors';
+import { CustomQueryEncoder } from './QueryEncoder';
 
 interface ApiResponse {
   message?: any;
@@ -66,7 +67,7 @@ export class ApiProvider {
     }, 10 * 1000);
   }
 
-  private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
+  private getObservable(inputParams: Dictionary<string>, options?: ApiOptions): Observable<any> {
     options = Object.assign({}, ApiProvider.DefaultOptions, options);
 
     inputParams = Object.assign({}, inputParams, {
@@ -78,10 +79,10 @@ export class ApiProvider {
       inputParams.s = this.sessionData.token;
     }
 
-    const params = Object.keys(inputParams).reduce(
-      (p, k) => (inputParams[k] ? p.set(k, '' + inputParams[k]) : p),
-      new HttpParams(),
-    );
+    const params = new HttpParams({
+      encoder: new CustomQueryEncoder(),
+      fromObject: inputParams,
+    });
 
     if (options.cacheTime && this.cache.has(params.toString())) {
       const res = this.cache.get(params.toString());

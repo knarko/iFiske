@@ -67,7 +67,7 @@ export class ApiProvider {
     }, 10 * 1000);
   }
 
-  private getObservable(inputParams: Dictionary<string>, options?: ApiOptions): Observable<any> {
+  private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
     options = Object.assign({}, ApiProvider.DefaultOptions, options);
 
     inputParams = Object.assign({}, inputParams, {
@@ -79,9 +79,13 @@ export class ApiProvider {
       inputParams.s = this.sessionData.token;
     }
 
+    Object.keys(inputParams).forEach(key => {
+      inputParams[key] = '' + inputParams[key];
+    });
+
     const params = new HttpParams({
       encoder: new CustomQueryEncoder(),
-      fromObject: inputParams,
+      fromObject: inputParams as Dictionary<string>,
     });
 
     if (options.cacheTime && this.cache.has(params.toString())) {

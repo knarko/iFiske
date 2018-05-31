@@ -5,7 +5,9 @@
     <form action="" class="search-form">
       <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
         [placeholder]="'Search' | translate"></ion-searchbar>
-      <button ion-button icon-only class="refresh-button" (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+      <button ion-button icon-only class="refresh-button" (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
     </form>
   </ion-toolbar>
 </ion-header>
@@ -30,14 +32,21 @@
         <ion-icon item-end [name]="item.folded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
       </ion-list-header>
       <ng-container *ngIf="!item.folded">
-      <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
-        <h2>{{permit.fullname}}</h2>
-        <p>{{permit.t}}</p>
-        <p>{{permit.tel}}</p>
-        <p item-end class="code">{{permit.code}}</p>
-      </ion-item>
+        <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
+          <h2>{{permit.fullname}}</h2>
+          <p>{{permit.t}}</p>
+          <p>{{permit.tel}}</p>
+          <p item-end class="code">{{permit.code}}</p>
+        </ion-item>
       </ng-container>
     </ng-container>
   </ion-list>
+  <div class="text-center">
+    <p>
+      <b>{{'Last updated' | translate}}</b>
+    </p>
+    <p>{{adminProvider.lastUpdated | date:'medium'}}</p>
+  </div>
+
 
 </ion-content>

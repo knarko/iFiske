@@ -49,7 +49,7 @@ export class AdminPermitListPage {
 
   constructor(
     private navCtrl: NavController,
-    private adminProvider: AdminProvider,
+    public adminProvider: AdminProvider,
     private navParams: NavParams,
     private keyboard: Keyboard,
     private loadingCtrl: TranslateLoadingController,

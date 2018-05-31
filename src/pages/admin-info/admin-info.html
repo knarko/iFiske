@@ -17,6 +17,11 @@
     </button>
   </div>
 
+  <ion-item class="text-center">
+    <h2>{{'Last updated' | translate}}</h2>
+    <p>{{admin.lastUpdated | date:'medium'}}</p>
+  </ion-item>
+
   <ion-list *ngIf="user | async; let u;">
     <user-information [user]="u"></user-information>
   </ion-list>

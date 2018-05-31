@@ -47,7 +47,9 @@ export interface AdminPermit {
 
 @Injectable()
 export class AdminProvider extends BaseModel {
+  private static readonly LAST_UPDATED = 'ADMIN_LAST_UPDATED';
   private static readonly CURRENT_ORGANIZATION = 'ADMIN_CURRENT_ORGANIZATION';
+
   protected readonly tables: Dictionary<TableDef> = {
     organizations: {
       name: 'Admin_Organizations',
@@ -93,6 +95,8 @@ export class AdminProvider extends BaseModel {
 
   private _orgId: number;
 
+  lastUpdated?: number = JSON.parse(localStorage.getItem(AdminProvider.LAST_UPDATED));
+
   get orgId() {
     return this._orgId;
   }
@@ -113,6 +117,7 @@ export class AdminProvider extends BaseModel {
       },
     );
   }
+
 
   constructor(
     protected API: ApiProvider,
@@ -146,6 +151,11 @@ export class AdminProvider extends BaseModel {
     });
   }
 
+  setLastUpdated() {
+    this.lastUpdated = Date.now();
+    localStorage.setItem(AdminProvider.LAST_UPDATED, JSON.stringify(this.lastUpdated));
+  }
+
   async update(skipWait?: boolean): Promise<boolean> {
     if (!this.session.token) {
       return false;
@@ -173,6 +183,7 @@ export class AdminProvider extends BaseModel {
         return populated;
       });
       this.setDefaultOrgId();
+      this.setLastUpdated();
       return true;
     } catch (err) {
       console.warn(err);

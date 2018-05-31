@@ -1,3 +1,18 @@
+<a name="4.3.12"></a>
+## [4.3.12](https://gitlab.com/kada-development/ifiske/compare/v4.3.11...v4.3.12) (2018-05-31)
+
+
+### Bug Fixes
+
+* **api:** Convert all params to strings ([418b1fd](https://gitlab.com/kada-development/ifiske/commit/418b1fd))
+
+
+### Features
+
+* **admin:** Add last updated information ([6615086](https://gitlab.com/kada-development/ifiske/commit/6615086))
+
+
+
 <a name="4.3.11"></a>
 ## [4.3.11](https://gitlab.com/kada-development/ifiske/compare/v4.3.10...v4.3.11) (2018-05-30)
 

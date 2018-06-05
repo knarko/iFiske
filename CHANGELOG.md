@@ -1,3 +1,13 @@
+<a name="4.3.13"></a>
+## [4.3.13](https://gitlab.com/kada-development/ifiske/compare/v4.3.12...v4.3.13) (2018-06-05)
+
+
+### Features
+
+* **permit:** show info field if it is available ([19bd34e](https://gitlab.com/kada-development/ifiske/commit/19bd34e))
+
+
+
 <a name="4.3.12"></a>
 ## [4.3.12](https://gitlab.com/kada-development/ifiske/compare/v4.3.11...v4.3.12) (2018-05-31)
 

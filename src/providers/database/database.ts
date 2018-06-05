@@ -139,8 +139,12 @@ export class DatabaseProvider {
           * We need to remove some line separators because of a bug in cordova
           * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
           */
-          const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
-          insertData.push(escapedData);
+          if (singleData[member] != undefined) {
+            const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
+            insertData.push(escapedData);
+          } else {
+            insertData.push(null);
+          }
         }
         var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length)
           .fill('?')
@@ -160,7 +164,7 @@ export class DatabaseProvider {
     return this.ready.then(() => {
       /*
             * Builds a string with "" around all names, so that
-            * it can be used to create an SQL Table witout having
+            * it can be used to create an SQL Table without having
             * to worry about using reserved keywords.
             */
       var tableMembers = [];

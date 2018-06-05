@@ -56,6 +56,7 @@ export interface UserProduct {
   fint: string;
   rev: number;
 
+  info?: string;
   validity?: string;
 }
 interface PermitRules {
@@ -122,6 +123,7 @@ export class UserProvider extends BaseModel {
         qr: 'text',
         fine: 'text',
         rev: 'int',
+        info: 'text',
       },
     },
   };

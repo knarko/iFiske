@@ -41,6 +41,7 @@ export interface AdminPermit {
   t: string;
   tel: string;
   to: number;
+  info?: string;
 
   validity?: string;
 }
@@ -78,6 +79,7 @@ export class AdminProvider extends BaseModel {
         t: 'text',
         tel: 'text',
         to: 'int',
+        info: 'text',
       },
       primary: 'ID',
     },
@@ -117,7 +119,6 @@ export class AdminProvider extends BaseModel {
       },
     );
   }
-
 
   constructor(
     protected API: ApiProvider,

@@ -49,6 +49,7 @@
   <p *ngIf="permit.subt">{{permit.subt}}</p>
 
   <p [translate]="'Issued to'" [translateParams]="permit.fullname | mkObject:'name'"></p>
+  <p *ngIf="permit.info">{{permit.info}}</p>
   <ng-container *ngIf="admin">
     <p>{{'Phone number' | translate}}: {{permit.tel}}</p>
     <p [innerHTML]="'Issued at' | translate: (permit.at * 1000 | date:'short' | mkObject:'date')"></p>

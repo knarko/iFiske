@@ -1,3 +1,13 @@
+<a name="4.3.14"></a>
+## [4.3.14](https://gitlab.com/kada-development/ifiske/compare/v4.3.13...v4.3.14) (2018-06-06)
+
+
+### Bug Fixes
+
+* **area-permit:** only show 'Buy' if there is only one way to buy ([6f944aa](https://gitlab.com/kada-development/ifiske/commit/6f944aa))
+
+
+
 <a name="4.3.13"></a>
 ## [4.3.13](https://gitlab.com/kada-development/ifiske/compare/v4.3.12...v4.3.13) (2018-06-05)
 

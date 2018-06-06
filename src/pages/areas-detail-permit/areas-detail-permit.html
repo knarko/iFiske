@@ -29,7 +29,7 @@
         <button ion-button icon-left color="secondary" class="rules-button" (click)="openRules(product)">{{'Rules' | translate}}</button>
         <button ion-button icon-left color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
           <ion-icon [name]="type.icon"></ion-icon>
-          {{type.name | translate}}
+          {{(product.methods.length === 1 ? 'Purchase' : type.name) | translate}}
         </button>
       </section>
     </ion-card-content>

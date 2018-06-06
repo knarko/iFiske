@@ -265,6 +265,7 @@ export const sv: TranslationDefinition = {
   "Phone number": "Mobilnummer",
   "Prevalence": "Utbredning",
   "Profile": "Profil",
+  "Purchase": "Köp",
   "Purchase permit": "Köp fiskekort",
   "Push notifications": "Push-notifikationer",
   "Register": "Registrera",

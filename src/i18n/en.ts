@@ -265,6 +265,7 @@ export const en: TranslationDefinition = {
   "Phone number": "Phone number",
   "Prevalence": "Prevalence",
   "Profile": "Profile",
+  "Purchase": "Buy",
   "Purchase permit": "Buy fishing permit",
   "Push notifications": "Push notifications",
   "Register": "Register",

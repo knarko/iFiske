@@ -263,6 +263,7 @@ export interface TranslationDefinition {
   "Phone number": string
   "Prevalence": string
   "Profile": string
+  "Purchase": string
   "Purchase permit": string
   "Push notifications": string
   "Register": string

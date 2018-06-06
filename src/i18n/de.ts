@@ -224,6 +224,7 @@ export const de: TranslationDefinition | any = {
   "Phone number": "Telefonnummer",
   "Prevalence": "Häufigkeit",
   "Profile": "Profil",
+  "Purchase": "Kaufen",
   "Purchase permit": "Fischerschein kaufen",
   "Push notifications": "Push-Benachrichtigungen",
   "Register": "Registrieren",

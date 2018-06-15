@@ -1,3 +1,13 @@
+<a name="4.3.15"></a>
+## [4.3.15](https://gitlab.com/kada-development/ifiske/compare/v4.3.14...v4.3.15) (2018-06-15)
+
+
+### Bug Fixes
+
+* **admin:** refresh permits on enter view ([4c9d7e7](https://gitlab.com/kada-development/ifiske/commit/4c9d7e7))
+
+
+
 <a name="4.3.14"></a>
 ## [4.3.14](https://gitlab.com/kada-development/ifiske/compare/v4.3.13...v4.3.14) (2018-06-06)
 

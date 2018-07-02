@@ -1,3 +1,13 @@
+<a name="4.3.16"></a>
+## [4.3.16](https://gitlab.com/kada-development/ifiske/compare/v4.3.15...v4.3.16) (2018-07-02)
+
+
+### Bug Fixes
+
+* **map:** don't change zoom levels when following location after the initial zoom change ([2d8cf47](https://gitlab.com/kada-development/ifiske/commit/2d8cf47))
+
+
+
 <a name="4.3.15"></a>
 ## [4.3.15](https://gitlab.com/kada-development/ifiske/compare/v4.3.14...v4.3.15) (2018-06-15)
 

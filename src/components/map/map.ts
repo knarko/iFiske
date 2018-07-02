@@ -111,6 +111,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     this.lc.addTo(this.map);
 
+    const locateControlTrigger = () => {
+      console.log('location found');
+      L.DomEvent.off(this.map, 'locationfound', locateControlTrigger);
+
+      setTimeout(() => {
+        this.lc.options.keepCurrentZoomLevel = this.lc._active;
+      }, 3000);
+
+      L.DomEvent.on(this.lc._link, 'click', () => {
+        console.log('clicked');
+        this.lc.options.keepCurrentZoomLevel = this.lc._active;
+      });
+    };
+    L.DomEvent.on(this.map, 'locationfound', locateControlTrigger);
+
     this.map.on('popupopen', e => {
       this.map.getContainer().classList.add('popup-open');
       this.popupOpen.emit(e);

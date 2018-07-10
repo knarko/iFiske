@@ -36,16 +36,21 @@ export class AreasDetailPage {
     private areaProvider: AreaProvider,
     private organizationProvider: OrganizationProvider,
     private productProvider: ProductProvider,
-  ) {
-    this.areaProvider.getOne(this.navParams.get('ID')).then(info => {
-      this.area = info;
-      console.log(info);
-      this.updateParams();
-      this.getOrg();
-    });
+  ) {}
+  ionViewWillEnter() {
+    const ID = this.navParams.get('ID');
+    this.areaProvider
+      .getOne(ID)
+      .then(info => {
+        this.area = info;
+        console.log(info);
+        this.updateParams();
+        this.getOrg();
+      })
+      .catch(e => console.error(e));
 
     this.productProvider
-      .getByArea(this.navParams.get('ID'))
+      .getByArea(ID)
       .then(products => {
         this.products = products;
         this.updateParams();
@@ -53,7 +58,7 @@ export class AreasDetailPage {
       .catch(e => console.warn(e));
 
     this.areaProvider
-      .getFishes(this.navParams.get('ID'))
+      .getFishes(ID)
       .then(species => {
         this.species = species;
         this.updateParams();

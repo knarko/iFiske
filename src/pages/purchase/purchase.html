@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{product?.t}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="loading" [ngClass]="{'loaded': loaded}" ion-fixed>
+    <ion-spinner></ion-spinner>
+    <div>{{'Loading' | translate}}</div>
+  </div>
+  <iframe class="frame" [src]="frameSource" #frame></iframe>
+
+</ion-content>

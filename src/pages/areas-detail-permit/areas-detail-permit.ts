@@ -17,6 +17,7 @@ import { GoogleAnalytics } from '../../providers/google-analytics/google-analyti
 export class AreasDetailPermitPage {
   area: Area;
   products: Product[];
+  rootNavCtrl: NavController;
 
   constructor(
     private navCtrl: NavController,
@@ -28,9 +29,10 @@ export class AreasDetailPermitPage {
     const params: Observable<any> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
 
-    params.subscribe(({ area, org, products }) => {
+    params.subscribe(({ area, org, products, rootNavCtrl }) => {
       this.area = area;
       this.products = products;
+      this.rootNavCtrl = rootNavCtrl;
     });
   }
 
@@ -38,8 +40,7 @@ export class AreasDetailPermitPage {
     console.log('buy', product, method);
 
     if (method.name === 'Web') {
-      this.ga.trackEvent('Purchase', 'Web', '' + product.ID);
-      this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });
+      this.rootNavCtrl.push('PurchasePage', { ...product });
     } else if (method.name === 'SMS') {
       this.modalCtrl
         .create('SmsPurchasePage', {

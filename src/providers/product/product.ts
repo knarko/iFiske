@@ -87,7 +87,7 @@ export class ProductProvider extends BaseModel<Product> {
         'Rule.d as rule_d',
         'FROM Product',
         'JOIN Rule ON Rule.ID = Product.ri',
-        'WHERE ID = ?',
+        'WHERE Product.ID = ?',
         'ORDER BY so',
       ].join(' '),
       [productID],

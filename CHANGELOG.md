@@ -1,3 +1,18 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://gitlab.com/kada-development/ifiske/compare/v4.3.16...v4.4.0) (2018-07-10)
+
+
+### Bug Fixes
+
+* changes related to updating ([7d002b2](https://gitlab.com/kada-development/ifiske/commit/7d002b2))
+
+
+### Features
+
+* **area:** add sharing button ([7a89bfa](https://gitlab.com/kada-development/ifiske/commit/7a89bfa))
+
+
+
 <a name="4.3.16"></a>
 ## [4.3.16](https://gitlab.com/kada-development/ifiske/compare/v4.3.15...v4.3.16) (2018-07-02)
 

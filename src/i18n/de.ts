@@ -85,6 +85,7 @@ export const de: TranslationDefinition | any = {
         },
       },
     },
+    "share:area": "Angeln in {{area}}!",
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",

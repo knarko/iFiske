@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController, Tabs, Content } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Observable';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { TranslateService } from '@ngx-translate/core';
+
 import { Area, AreaImage } from '../../providers/area/area';
 import { Organization } from '../../providers/organization/organization';
 import { Product } from '../../providers/product/product';
@@ -8,9 +13,7 @@ import { SessionProvider } from '../../providers/session/session';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
-import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -49,6 +52,8 @@ export class AreasDetailInfoPage {
     private modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
     private imgcache: ImgcacheService,
+    private socialSharing: SocialSharing,
+    private translate: TranslateService,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
@@ -143,4 +148,9 @@ export class AreasDetailInfoPage {
     });
     */
   }
+
+  share = async () => {
+    const message = await this.translate.get('ui.share:area', { area: this.area.t }).toPromise();
+    this.socialSharing.share(message, this.area.org, undefined, `https://www.ifiske.se/o/${this.area.orgid}`);
+  };
 }

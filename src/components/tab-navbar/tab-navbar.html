@@ -2,4 +2,9 @@
   <ion-title>
     <ng-content></ng-content>
   </ion-title>
+  <ion-buttons end *ngIf="button">
+    <button ion-button icon-only (click)="button.click()">
+      <ion-icon [name]="button.icon"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>

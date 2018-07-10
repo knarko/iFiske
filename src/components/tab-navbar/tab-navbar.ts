@@ -9,6 +9,7 @@ export class TabNavbarComponent {
   @ViewChild(Navbar) private _navbar: Navbar;
   @Output() back = new EventEmitter<void>();
   @Input() largeTitle: boolean = false;
+  @Input() button: { click: () => void; icon: string };
 
   constructor(private navCtrl: NavController) {}
 

@@ -1,5 +1,7 @@
 <ion-header>
-  <tab-navbar [largeTitle]="true">{{area?.t}}</tab-navbar>
+  <tab-navbar [largeTitle]="true" [button]="{icon: 'share', click: share}">
+    {{area?.t}}
+  </tab-navbar>
 </ion-header>
 
 <ion-content class="information-page background-abstract">

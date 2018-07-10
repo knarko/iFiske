@@ -116,6 +116,7 @@ export const sv: TranslationDefinition = {
       "yes": "Ja",
       "no": "Nej",
     },
+    "share:area": "Fiske i {{area}}!",
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",

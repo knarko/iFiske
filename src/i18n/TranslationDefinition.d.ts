@@ -114,6 +114,7 @@ export interface TranslationDefinition {
       "yes": string
       "no": string
     }
+    "share:area": string
   },
   "errors": {
     "unknown": string

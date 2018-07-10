@@ -116,6 +116,7 @@ export const en: TranslationDefinition = {
       "yes": "Yes",
       "no": "No",
     },
+    "share:area": "Let's go fishing in {{area}}!",
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",

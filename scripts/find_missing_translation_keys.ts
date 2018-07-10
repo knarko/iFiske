@@ -2,12 +2,13 @@
 
 const shell = require('shelljs');
 
-const sv = require('../src/assets/i18n/sv.json');
-const en = require('../src/assets/i18n/en.json');
-const de = require('../src/assets/i18n/de.json');
+import { sv } from '../src/i18n/sv';
+import { en } from '../src/i18n/en';
+import { de } from '../src/i18n/de';
 
-
-console.log('This script finds all the missing translation keys in english and german, by comparing to the keys in swedish, which is the main language.')
+console.log(
+  'This script finds all the missing translation keys in english and german, by comparing to the keys in swedish, which is the main language.',
+);
 
 function makeList(prefix, obj) {
   const list = [];
@@ -50,14 +51,13 @@ svList.forEach(k => {
     deMissing.push(k);
   }
 });
-console.log('\nMissing english:\n')
+console.log('\nMissing english:\n');
 enMissing.sort().forEach(k => console.log(k));
 
-console.log('\nMissing german:\n')
+console.log('\nMissing german:\n');
 deMissing.sort().forEach(k => console.log(k));
 
-console.log('\nEnglish texts for translating into german:\n')
+console.log('\nEnglish texts for translating into german:\n');
 deMissing.forEach(k => {
   console.log(`${k}:\n${enFlat[k]}\n`);
 });
-

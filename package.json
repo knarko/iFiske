@@ -14,7 +14,8 @@
     "start": "ionic serve",
     "deploy": "node scripts/deploy.js",
     "deploy:firebase": "npm run build && firebase deploy --only hosting",
-    "changelog": "conventional-changelog -s -i CHANGELOG.md -p angular"
+    "changelog": "conventional-changelog -s -i CHANGELOG.md -p angular",
+    "i18n:missing": "ts-node -O '{\"module\": \"commonjs\"}' scripts/find_missing_translation_keys.ts"
   },
   "dependencies": {
     "@angular/animations": "~5.2.0",
@@ -112,6 +113,7 @@
     "sass-lint": "^1.12.1",
     "shelljs": "^0.8.0",
     "superstatic": "^5.0.1",
+    "ts-node": "^7.0.0",
     "typescript": "2.4.2"
   },
   "config": {

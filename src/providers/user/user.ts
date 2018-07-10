@@ -154,7 +154,9 @@ export class UserProvider extends BaseModel {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
     this.pushProvider.unregister();
 
-    MonitoringClient.setUserContext(undefined);
+    MonitoringClient.configureScope(scope => {
+      scope.clear();
+    });
     return Promise.all(p).then(
       () => {
         console.log('Removed user info from database');
@@ -186,8 +188,10 @@ export class UserProvider extends BaseModel {
             numArr.push({ number: numbers[i] });
           }
 
-          MonitoringClient.setUserContext({
-            id: '' + data.ID,
+          MonitoringClient.configureScope(scope => {
+            scope.setUser({
+              id: '' + data.ID,
+            });
           });
 
           this.pushProvider.setUserDetails(data);

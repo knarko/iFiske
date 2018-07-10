@@ -54,7 +54,7 @@ export class AboutPage {
           .catch(() => {});
         this.appVersion
           .getVersionCode()
-          .then(buildId => (this.buildId = buildId))
+          .then(buildId => (this.buildId = `${buildId}`))
           .catch(() => {});
         console.log(this.pro);
         Promise.race([this.pro.deploy().info(), new Promise<any>((_, reject) => setTimeout(reject, 8000))])

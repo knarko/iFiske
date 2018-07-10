@@ -1,9 +1,10 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { merge } from 'rxjs/observable/merge';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 /**
  * Generated class for the YoutubeComponent component.
@@ -23,10 +24,10 @@ export class YoutubeComponent {
   @ViewChild('player') player: ElementRef;
 
   constructor(private sanitizer: DomSanitizer, private orientation: ScreenOrientation) {
-    this.fullscreen = Observable.merge(
-      Observable.fromEvent(document, 'fullscreenchange'),
-      Observable.fromEvent(document, 'webkitfullscreenchange'),
-      Observable.fromEvent(document, 'mozfullscreenchange'),
+    this.fullscreen = merge(
+      fromEvent(document, 'fullscreenchange'),
+      fromEvent(document, 'webkitfullscreenchange'),
+      fromEvent(document, 'mozfullscreenchange'),
     );
   }
 

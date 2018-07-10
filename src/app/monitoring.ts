@@ -4,7 +4,7 @@ import * as SentryClient from '@sentry/browser';
 import { APP_VERSION, isProdMode } from './config';
 
 SentryClient.init({
-  dsn: 'https://65d073d56d014385a2aca1276216cb91:0ce3e03a6ee04538937fde70b90b0b81@sentry.io/300552',
+  dsn: 'https://65d073d56d014385a2aca1276216cb91@sentry.io/300552',
   release: APP_VERSION,
   beforeSend: (event: SentryClient.SentryEvent & { culprit?: string }) => {
     if (event.culprit) {

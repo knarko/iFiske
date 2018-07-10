@@ -127,7 +127,8 @@ export class DatabaseProvider {
    * @return {SQL_results}  Returns SQL results
    */
   populateTable(table: TableDef, data, shouldDelete = true) {
-    return this.db.transaction(tx => {
+    // TODO: remove any
+    return this.db.transaction((tx: any) => {
       if (shouldDelete) {
         tx.executeSql('DELETE FROM ' + table.name + ';');
       }
@@ -203,7 +204,8 @@ export class DatabaseProvider {
   }
 
   cleanTable(table: string) {
-    return this.db.transaction(tx => {
+    // TODO: remove any
+    return this.db.transaction((tx: any) => {
       tx.executeSql('DELETE FROM ' + table + ';');
     });
   }

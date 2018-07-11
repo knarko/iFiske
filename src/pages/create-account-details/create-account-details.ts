@@ -128,7 +128,6 @@ export class CreateAccountDetailsPage {
     });
     try {
       await this.createAccountProvider.register(userDetails);
-      this.form.group.reset();
       return this.navCtrl.push('CreateAccountVerifyPage', { username: userDetails.username });
     } catch (err) {
       this.form.group.setErrors({ register: true });

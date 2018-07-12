@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,7 +16,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
   selector: 'youtube',
   templateUrl: 'youtube.html',
 })
-export class YoutubeComponent {
+export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
   ytUrl: SafeResourceUrl;
   sub: Subscription;
   fullscreen: Observable<{}>;
@@ -42,23 +42,22 @@ export class YoutubeComponent {
     );
   }
 
-  start() {
+  ngOnInit() {
     this.sub = this.fullscreen.subscribe(e => {
-      console.log('Changing fullscreen mode', e);
       const fullScreenElement =
         document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
-      console.log(fullScreenElement);
+      console.log('Changing fullscreen mode', e, fullScreenElement);
       if (fullScreenElement) {
-        this.orientation.unlock();
+        this.orientation.lock(this.orientation.ORIENTATIONS.LANDSCAPE);
       } else {
         this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY);
       }
     });
   }
 
-  stop() {
+  ngOnDestroy() {
     this.sub.unsubscribe();
-    this.orientation.lock('portrait');
+    this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     this.sendMessage('pauseVideo');
   }
 

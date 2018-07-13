@@ -103,7 +103,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       },
       locateOptions: {
         watch: true, // Watch is broken in chrome
-        maxZoom: 14,
+        maxZoom: 11,
       },
       icon: 'locate-icon icon ion-md-locate',
       iconLoading: 'icon locate-icon ion-md-refresh spin',

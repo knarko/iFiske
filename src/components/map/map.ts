@@ -107,7 +107,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         maxZoom: 11,
       },
       icon: 'locate-icon icon ion-md-locate',
-      iconLoading: 'icon locate-icon ion-md-refresh spin',
+      iconLoading: 'loader',
     });
 
     this.lc.addTo(this.map);

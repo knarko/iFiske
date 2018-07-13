@@ -4,8 +4,15 @@
 @import './markercluster';
 @import 'drmonty-leaflet-awesome-markers/css/leaflet.awesome-markers';
 
-map,
-map>.map {
+map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.ifiske-map {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -32,20 +39,60 @@ map>.map {
     speak: none;
   }
 
-  .spin {
-    animation: 1s linear spin infinite;
+  .leaflet-control-locate .leaflet-bar-part {
+    padding: 0;
   }
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
+  .loader {
+    $size: 3px;
+    margin: calc(calc(100% - #{$size}) / 2) 0;
+    display: inline-block;
+    color: black;
+    font-size: $size;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    text-indent: -9999em;
+    animation: load4 1.3s infinite linear;
+    transform: translateZ(0);
+  }
+  @keyframes load4 {
+    // Taken from https://projects.lukehaas.me/css-loaders/
+    0%,
+    100% {
+      box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em,
+        -3em 0 0 -1em, -2em -2em 0 0;
     }
-
-    to {
-      transform: rotate(360deg);
+    12.5% {
+      box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em,
+        -2em -2em 0 -1em;
+    }
+    25% {
+      box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em,
+        -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    37.5% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em,
+        -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    50% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0,
+        -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    62.5% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0,
+        -2em -2em 0 -1em;
+    }
+    75% {
+      box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0,
+        -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+    87.5% {
+      box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0,
+        -2em -2em 0 0.2em;
     }
   }
-
   .leaflet-container a.leaflet-popup-close-button {
     $size: 24px;
     $padding: 8px;
@@ -61,7 +108,7 @@ map>.map {
   }
 
   .leaflet-control-container .leaflet-top {
-    transition: opacity .3s;
+    transition: opacity 0.3s;
   }
 
   .leaflet-popup-content div {

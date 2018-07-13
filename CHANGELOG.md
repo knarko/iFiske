@@ -1,3 +1,14 @@
+<a name="4.4.4"></a>
+## [4.4.4](https://gitlab.com/kada-development/ifiske/compare/v4.4.3...v4.4.4) (2018-07-13)
+
+
+### Bug Fixes
+
+* **map:** disable swipe to go back in order to improve map experience ([d9d9e2a](https://gitlab.com/kada-development/ifiske/commit/d9d9e2a))
+* **map:** don't zoom as far in when zooming on a user ([d5ed590](https://gitlab.com/kada-development/ifiske/commit/d5ed590))
+
+
+
 <a name="4.4.3"></a>
 ## [4.4.3](https://gitlab.com/kada-development/ifiske/compare/v4.4.2...v4.4.3) (2018-07-13)
 

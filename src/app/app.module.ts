@@ -78,6 +78,7 @@ registerLocaleData(localeSv);
 
     IonicModule.forRoot(MyApp, {
       preloadModules: true,
+      swipeBackEnabled: false,
       ios: {
         statusbarPadding: true,
       },

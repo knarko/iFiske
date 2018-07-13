@@ -1,3 +1,20 @@
+<a name="4.4.3"></a>
+## [4.4.3](https://gitlab.com/kada-development/ifiske/compare/v4.4.2...v4.4.3) (2018-07-13)
+
+
+### Bug Fixes
+
+* **create-account:** Don't clear the form when leaving the view forwards ([015d8db](https://gitlab.com/kada-development/ifiske/commit/015d8db))
+* **data-form:** allow empty placeholders ([774a667](https://gitlab.com/kada-development/ifiske/commit/774a667))
+* **youtube:** set video to landscape if it is in fullscreen ([8a475ba](https://gitlab.com/kada-development/ifiske/commit/8a475ba))
+
+
+### Features
+
+* **profile:** add modal for changing username ([a5a498b](https://gitlab.com/kada-development/ifiske/commit/a5a498b))
+
+
+
 <a name="4.4.2"></a>
 ## [4.4.2](https://gitlab.com/kada-development/ifiske/compare/v4.4.1...v4.4.2) (2018-07-11)
 

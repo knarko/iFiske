@@ -1,3 +1,15 @@
+<a name="4.4.5"></a>
+## [4.4.5](https://gitlab.com/kada-development/ifiske/compare/v4.4.4...v4.4.5) (2018-07-13)
+
+
+### Bug Fixes
+
+* **map:** center on user when map is opened ([bfb20a3](https://gitlab.com/kada-development/ifiske/commit/bfb20a3))
+* **map:** make locate spinner stop wobbling ([490fde7](https://gitlab.com/kada-development/ifiske/commit/490fde7))
+* **translations:** add missing translations for password changing ([3b60db8](https://gitlab.com/kada-development/ifiske/commit/3b60db8))
+
+
+
 <a name="4.4.4"></a>
 ## [4.4.4](https://gitlab.com/kada-development/ifiske/compare/v4.4.3...v4.4.4) (2018-07-13)
 

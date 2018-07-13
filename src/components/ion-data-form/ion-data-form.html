@@ -9,6 +9,7 @@
         </ion-item>
 
         <ion-item *ngSwitchCase="'password'" [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
+          <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
           <ion-input [clearOnEdit]="false" [placeholder]="(item.placeholder | translate) || ''" [type]="item.showPassword ? 'text' : 'password'"
             [formControl]="item.control" autocomplete="off" [required]="item.required"></ion-input>
           <button type="button" ion-button icon-only item-right clear (click)="togglePassword(item)">
@@ -17,12 +18,14 @@
         </ion-item>
 
         <ion-item *ngSwitchCase="'select'" [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
+          <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
           <ion-select [placeholder]="(item.placeholder | translate) || ''" [formControl]="item.control" [required]="item.required">
             <ion-option *ngFor="let option of item.options" [value]="option">{{option}}</ion-option>
           </ion-select>
         </ion-item>
 
         <ion-item *ngSwitchDefault [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
+          <ion-label *ngIf="item.label" floating>{{item.label | translate}}</ion-label>
           <ion-input [placeholder]="(item.placeholder | translate) || ''" [type]="item.type" [formControl]="item.control" [required]="item.required"></ion-input>
         </ion-item>
       </ng-container>

@@ -36,7 +36,7 @@ export class ChangePasswordPage {
           },
         );
       },
-      submitMessage: 'Change password',
+      submitMessage: 'Change Password',
       controls: {
         oldPassword: {
           label: 'Password',

@@ -1,3 +1,16 @@
+<a name="4.4.7"></a>
+## [4.4.7](https://gitlab.com/kada-development/ifiske/compare/v4.4.6...v4.4.7) (2018-07-13)
+
+
+### Bug Fixes
+
+* **change-password:** allow going back from change-password without actually changing the password ([9bdd4d2](https://gitlab.com/kada-development/ifiske/commit/9bdd4d2))
+* **data-form:** add labels to all types of inputs ([3010ff9](https://gitlab.com/kada-development/ifiske/commit/3010ff9))
+* **MissingTranslationHandler:** add language fallbacks ([b628a13](https://gitlab.com/kada-development/ifiske/commit/b628a13))
+* **translations:** fix some missing translations for changing password ([a3d9d31](https://gitlab.com/kada-development/ifiske/commit/a3d9d31))
+
+
+
 <a name="4.4.6"></a>
 ## [4.4.6](https://gitlab.com/kada-development/ifiske/compare/v4.4.5...v4.4.6) (2018-07-13)
 

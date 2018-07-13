@@ -82,8 +82,6 @@ export const en: TranslationDefinition = {
     "placeholder": {
       "email": "e.g. name@domain.com",
       "password": "••••••••",
-      "old_password": "Old Password",
-      "new_password": "New Password",
       "recovery_code": "123456",
       "fullname": "e.g. John Smith",
       "activationCode": "e.g. 1234",
@@ -119,6 +117,9 @@ export const en: TranslationDefinition = {
       "no": "No",
     },
     "share:area": "Let's go fishing in {{area}}!",
+    "changePassword": {
+      "completed": "Password changed!",
+    },
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",
@@ -319,4 +320,6 @@ export const en: TranslationDefinition = {
   "Verify Account": "Verify Account",
   "Logging out": "Signing out...",
   "Searching": "Searching...",
+  "Change Password": "Change Password",
+  "New Password": "New Password",
 }

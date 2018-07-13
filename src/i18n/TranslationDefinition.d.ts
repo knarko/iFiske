@@ -29,14 +29,14 @@ export interface TranslationDefinition {
     "general": {
       "back": string
       "pull_to_refresh": string
-      "shortAmount": string
+      "shortAmount": string,
     },
     "map": {
       "outdoors": string
-      "satellite": string
+      "satellite": string,
     },
     "about": {
-      "version": string
+      "version": string,
     },
     "admin": {
       "since:date": string
@@ -44,39 +44,39 @@ export interface TranslationDefinition {
       "selectOrg": string
       "check": {
         "manualInstructions": string
-        "scanInstructions": string
+        "scanInstructions": string,
       },
       "userLevel": {
         "0": string
         "1": string
-        "2": string
+        "2": string,
       },
       "stats": {
         "offline": string
-        "noAccess": string
-      }
+        "noAccess": string,
+      },
     },
     "onboarding": {
       "welcome": {
         "title": string
-        "subtitle": string
+        "subtitle": string,
       },
       "explore": {
         "title": string
-        "content": string
+        "content": string,
       },
       "secure": {
         "title": string
-        "subtitle": string
+        "subtitle": string,
       },
       "notify": {
         "title": string
-        "subtitle": string
+        "subtitle": string,
       },
       "skip": string
       "next": string
-      "continue": string
-    },
+      "continue": string,
+    }
     "placeholder": {
       "email": string
       "password": string
@@ -85,11 +85,11 @@ export interface TranslationDefinition {
       "activationCode": string
       "username": string
       "phone": string
-      "permit": string
-    },
+      "permit": string,
+    }
     "issues": {
-      "long_text": string
-    },
+      "long_text": string,
+    }
     "permit": {
       "validity": {
         "active": string
@@ -100,90 +100,93 @@ export interface TranslationDefinition {
           "active": string
           "inactive": string
           "revoked": string
-          "expired": string
-        }
-      }
-    },
+          "expired": string,
+        },
+      },
+    }
     "developer": {
       "betaOptIn": string
-      "checkForUpdates": string
-    },
+      "checkForUpdates": string,
+    }
     "reviews": {
       "title": string
       "message": string
       "yes": string
-      "no": string
+      "no": string,
     }
     "share:area": string
-  },
+    "changePassword": {
+      "completed": string,
+    },
+  }
   "errors": {
     "unknown": string
     "permit": {
       "failedHeader": string
-      "failedBody": string
+      "failedBody": string,
     },
     "admin": {
       "noPermits": string
       "permit": {
         "failedHeader": string
-        "failedBody": string
+        "failedBody": string,
       },
       "scanQR": {
-        "invalid": string
-      }
+        "invalid": string,
+      },
     },
     "network": string
     "area": {
-      "notSelling": string
+      "notSelling": string,
     },
     "recovery_code": {
       "required": string
-      "invalid": string
+      "invalid": string,
     },
     "register": {
-      "failed": string
+      "failed": string,
     },
     "activationCode": {
       "required": string
       "invalid": string
       "invalidRequest": string
-      "pattern": string
+      "pattern": string,
     },
     "password": {
       "required": string
       "invalid": string
-      "pattern_mismatch": string
+      "pattern_mismatch": string,
     },
     "username": {
       "required": string
       "invalid": string
       "pattern_mismatch": string
-      "taken": string
+      "taken": string,
     },
     "fullname": {
       "required": string
-      "pattern_mismatch": string
+      "pattern_mismatch": string,
     },
     "email": {
       "required": string
       "taken": string
-      "invalid": string
+      "invalid": string,
     },
     "phone": {
       "invalid": string
       "pattern": string
-      "required": string
+      "required": string,
     },
     "favorite": {
-      "notification_update": string
-    }
+      "notification_update": string,
+    },
   },
   "Statistics": string
   "recovery": {
     "start": string
     "and": string
     "end": string
-    "mail_spam_notice": string
+    "mail_spam_notice": string,
   },
   "Create Account": string
   "About the app": string
@@ -315,4 +318,6 @@ export interface TranslationDefinition {
   "Verify Account": string
   "Logging out": string
   "Searching": string
+  "Change Password": string
+  "New Password": string
 }

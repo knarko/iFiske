@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { UserProvider, Favorite } from '../../providers/user/user';
 import { Area } from '../../providers/area/area';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { Observable } from 'rxjs/Observable';
 import { MonitoringClient } from '../../app/monitoring';
 
 @IonicPage()

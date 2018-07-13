@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, NavController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { CountyProvider, County } from '../../providers/county/county';
 
 @IonicPage()

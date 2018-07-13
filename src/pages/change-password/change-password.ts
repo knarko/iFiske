@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
 import { validators } from '../../util';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';

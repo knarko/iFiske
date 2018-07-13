@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController } from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
 import { FormGroup } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
@@ -14,8 +14,6 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
 export class ChangePasswordPage {
   form: Form;
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     private userProvider: UserProvider,
     private viewCtrl: ViewController,
     private toastCtrl: TranslateToastController,

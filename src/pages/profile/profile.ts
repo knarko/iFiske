@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, ViewController, NavController } from 'ionic-angular';
 import { UserProvider, User } from '../../providers/user/user';
 
 @IonicPage()
@@ -10,11 +10,7 @@ import { UserProvider, User } from '../../providers/user/user';
 export class ProfilePage {
   user: User;
 
-  constructor(
-    private userProvider: UserProvider,
-    private viewCtrl: ViewController,
-    private modalCtrl: ModalController,
-  ) {}
+  constructor(private userProvider: UserProvider, private viewCtrl: ViewController, private navCtrl: NavController) {}
 
   async ionViewWillEnter() {
     this.user = await this.userProvider.getInfo();
@@ -25,8 +21,7 @@ export class ProfilePage {
   }
 
   async changePassword() {
-    const modal = this.modalCtrl.create('ChangePasswordPage');
-    modal.present();
+    this.navCtrl.push('ChangePasswordPage');
   }
 
   async logout() {

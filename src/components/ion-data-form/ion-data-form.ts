@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Form } from './form';
+import { Form, FormControl } from './form';
 
 @Component({
   selector: 'ion-data-form',
@@ -16,5 +16,9 @@ export class IonDataFormComponent {
   submit() {
     this.form.submit();
     return false;
+  }
+
+  togglePassword(item: FormControl) {
+    item.showPassword = !item.showPassword;
   }
 }

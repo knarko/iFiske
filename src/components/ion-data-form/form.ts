@@ -6,6 +6,7 @@ export interface FormControl {
   label?: string;
   placeholder?: string;
   type?: 'password' | 'text' | 'number' | 'email' | 'textarea' | 'tel';
+  showPassword?: boolean;
   required?: boolean;
   validators?: ValidatorFn[];
   asyncValidators?: AsyncValidatorFn[];

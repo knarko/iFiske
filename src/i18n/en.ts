@@ -82,6 +82,8 @@ export const en: TranslationDefinition = {
     "placeholder": {
       "email": "e.g. name@domain.com",
       "password": "••••••••",
+      "old_password": "Old Password",
+      "new_password": "New Password",
       "recovery_code": "123456",
       "fullname": "e.g. John Smith",
       "activationCode": "e.g. 1234",

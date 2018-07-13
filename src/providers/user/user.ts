@@ -273,6 +273,10 @@ export class UserProvider extends BaseModel {
     return promise;
   }
 
+  async changePassword({ oldPassword, newPassword }) {
+    return this.API.user_change_password(oldPassword, newPassword);
+  }
+
   @DBMethod
   async getInfo(): Promise<User> {
     return this.DB.getSingle(`SELECT * FROM User_Info`);

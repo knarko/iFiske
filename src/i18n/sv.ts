@@ -117,6 +117,9 @@ export const sv: TranslationDefinition = {
       "no": "Nej",
     },
     "share:area": "Fiske i {{area}}!",
+    "changePassword": {
+      "completed": "Lösenord ändrat!",
+    },
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
@@ -317,4 +320,6 @@ export const sv: TranslationDefinition = {
   "Verify Account": "Verifiera konto",
   "Logging out": "Loggar ut...",
   "Searching": "Söker...",
+  "Change Password": "Byt lösenord",
+  "New Password": "Nytt lösenord",
 }

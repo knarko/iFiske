@@ -1,3 +1,13 @@
+<a name="4.4.6"></a>
+## [4.4.6](https://gitlab.com/kada-development/ifiske/compare/v4.4.5...v4.4.6) (2018-07-13)
+
+
+### Bug Fixes
+
+* **data-form:** show toggle password visibility button ([3e1cc80](https://gitlab.com/kada-development/ifiske/commit/3e1cc80))
+
+
+
 <a name="4.4.5"></a>
 ## [4.4.5](https://gitlab.com/kada-development/ifiske/compare/v4.4.4...v4.4.5) (2018-07-13)
 

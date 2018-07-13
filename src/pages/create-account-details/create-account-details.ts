@@ -10,6 +10,7 @@ import { TranslateLoadingController } from '../../providers/translate-loading-co
 import { UserDetails, CreateAccountProvider } from '../../providers/create-account/create-account';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TermsProvider } from '../../providers/terms/terms';
+import { validators } from '../../util';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'CreateAccountPage'],
@@ -64,7 +65,7 @@ export class CreateAccountDetailsPage {
           label: 'Username',
           placeholder: 'ui.placeholder.username',
           type: 'text',
-          validators: [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+          validators: validators.username,
           asyncValidators: [this.validateUsername],
           errors: {
             required: 'errors.username.required',
@@ -77,7 +78,7 @@ export class CreateAccountDetailsPage {
           label: 'Password',
           placeholder: 'ui.placeholder.password',
           type: 'password',
-          validators: [Validators.required, Validators.minLength(6), Validators.maxLength(16)],
+          validators: validators.password,
           errors: {
             required: 'errors.password.required',
             minlength: 'errors.password.pattern_mismatch',
@@ -88,7 +89,7 @@ export class CreateAccountDetailsPage {
           label: 'Full name',
           placeholder: 'ui.placeholder.fullname',
           type: 'text',
-          validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
+          validators: validators.fullname,
           errors: {
             required: 'errors.fullname.required',
             minlength: 'errors.fullname.pattern_mismatch',
@@ -111,7 +112,7 @@ export class CreateAccountDetailsPage {
           label: 'Phone number',
           placeholder: 'ui.placeholder.phone',
           type: 'tel',
-          validators: [Validators.required, Validators.pattern(/^\+?[\d\-\s\(\)]{5,25}$/)],
+          validators: validators.phone,
           errors: {
             required: 'errors.phone.required',
             invalid: 'errors.phone.invalid',

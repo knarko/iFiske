@@ -8,6 +8,7 @@ import { TranslateLoadingController } from '../../providers/translate-loading-co
 import { CreateAccountProvider, UserDetails } from '../../providers/create-account/create-account';
 import { Observable } from 'rxjs/Observable';
 import { map, last, tap } from 'rxjs/operators';
+import { validators } from '../../util';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'CreateAccountPage'],
@@ -31,7 +32,11 @@ export class CreateAccountVerifyPage {
   ) {
     this.createAccountProvider.timer.subscribe(timer => {
       this.timer = timer;
-      this.timerCompleted = timer.pipe(last(), tap(console.log), map(() => true));
+      this.timerCompleted = timer.pipe(
+        last(),
+        tap(console.log),
+        map(() => true),
+      );
       this.timerCompleted.subscribe(console.log, console.warn, console.error);
     });
 
@@ -62,7 +67,7 @@ export class CreateAccountVerifyPage {
           label: 'Activation code',
           placeholder: 'ui.placeholder.activationCode',
           type: 'tel',
-          validators: [Validators.required, Validators.pattern(/^\d{4}$/)],
+          validators: validators.activationCode,
           errors: {
             required: 'errors.activationCode.required',
             pattern: 'errors.activationCode.pattern',

@@ -50,6 +50,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   @Output('popupClose') popupClose = new EventEmitter();
 
   @Input() options: MapOptions;
+  centered: boolean;
   constructor(
     private mapData: MapDataProvider,
     private navCtrl: NavController,
@@ -304,14 +305,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
     this.refresh();
   }
   refresh() {
-    console.log(this.options);
+    console.log('MapOptions:', this.options);
     if (!this.options) {
       return;
     }
-    if (this.options.centerOnMe && !this.lc._active) {
-      setTimeout(() => {
-        this.lc.start();
-      }, 0);
+    if (this.options.centerOnMe && this.map && !this.centered) {
+      this.map.locate({ setView: true, maxZoom: 11 });
+      this.centered = true;
     }
     if (this.options.areas) {
       this.createMarkers(this.options.areas);

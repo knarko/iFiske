@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AreaProvider, Area } from '../../providers/area/area';
+import { MapOptions } from '../../components/map/map';
 
 /**
  * Generated class for the MapPage page.
@@ -19,7 +20,9 @@ import { AreaProvider, Area } from '../../providers/area/area';
 export class MapPage {
   areas: Promise<Area[]>;
 
-  mapOptions: any;
+  mapOptions: MapOptions = {
+    centerOnMe: true,
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private area: AreaProvider) {}
 
@@ -28,11 +31,8 @@ export class MapPage {
   }
 
   ionViewDidEnter() {
-    this.areas.then(
-      areas => {
-        this.mapOptions = { areas };
-      },
-      err => console.warn(err),
-    );
+    this.areas.then(areas => {
+      this.mapOptions = { ...this.mapOptions, areas };
+    });
   }
 }

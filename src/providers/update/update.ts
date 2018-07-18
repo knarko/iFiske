@@ -17,6 +17,9 @@ import { UserProvider } from '../user/user';
 
 import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
+import { resolveOrRejectAllPromises } from '../../util';
+import { Dictionary } from '../../types';
+import { MonitoringClient } from '../../app/monitoring';
 
 export type UpdateFn = () => boolean;
 export type UpdateStrategy = 'timed' | 'always' | UpdateFn;
@@ -24,13 +27,32 @@ export type UpdateStrategy = 'timed' | 'always' | UpdateFn;
 @Injectable()
 export class UpdateProvider {
   updating?: Promise<any>;
-  updates: {
+  updates: Dictionary<{
     updateStrategy: UpdateStrategy;
     update: () => Promise<boolean>;
-  }[];
+  }>;
   private static readonly LAST_UPDATE = 'last_update';
+  private static readonly UPDATE_ERRORS = 'UPDATE_ERRORS';
 
   loading: Loading;
+  get errors() {
+    try {
+      return JSON.parse(localStorage.getItem(UpdateProvider.UPDATE_ERRORS)) || [];
+    } catch (err) {
+      // Do nothing
+    }
+    return [];
+  }
+
+  set errors(errors: string[]) {
+    if (!errors) {
+      localStorage.removeItem(UpdateProvider.UPDATE_ERRORS);
+    } else if (!Array.isArray(errors)) {
+      console.warn(`${errors} is not an array!`);
+    } else {
+      localStorage.setItem(UpdateProvider.UPDATE_ERRORS, JSON.stringify(errors));
+    }
+  }
 
   constructor(
     private loadingCtrl: TranslateLoadingController,
@@ -57,7 +79,7 @@ export class UpdateProvider {
       }
     });
 
-    this.updates = [area, county, fish, information, mapData, organization, product, rule, technique, terms, user];
+    this.updates = { area, county, fish, information, mapData, organization, product, rule, technique, terms, user };
   }
 
   private timedUpdate(currentTime: number) {
@@ -100,38 +122,44 @@ export class UpdateProvider {
     var currentTime = Date.now();
     const timeHasPassed = this.timedUpdate(currentTime);
 
-    var promises = this.updates.map(provider => {
+    const errors = this.errors;
+    var promises = Object.entries(this.updates).map(([providerKey, provider]) => {
       if (
         forced ||
+        errors.indexOf(providerKey) !== -1 ||
         provider.updateStrategy === 'always' ||
         (provider.updateStrategy === 'timed' && timeHasPassed) ||
         (typeof provider.updateStrategy === 'function' && provider.updateStrategy())
       ) {
-        return provider.update();
+        return provider.update().catch(error => {
+          if (error.name !== 'TimeoutError') {
+            MonitoringClient.captureException(error);
+          }
+          return Promise.reject(providerKey);
+        });
       }
       return Promise.resolve(false);
     });
 
-    this.updating = Promise.all(promises).then(
+    this.updating = resolveOrRejectAllPromises(promises).then(
       () => {
-        localStorage.setItem(UpdateProvider.LAST_UPDATE, '' + currentTime);
+        this.errors = undefined;
       },
-      error => {
+      (errors: any[]) => {
+        this.errors = errors;
+        this.updateLater(5 * 60 * 1000); // Try to update again in 5 minutes
+
         this.toastCtrl.show({
           message: 'errors.network',
           duration: 4000,
         });
 
-        if (error.name === 'TimeoutError') {
-          // Timeouts are not that interesting, we don't want to error later for those.
-          return;
-        }
-
-        throw error;
+        throw new Error(`Update failed in ${errors.join(', ')}`);
       },
     );
 
     this.updating.catch(() => {}).then(() => {
+      localStorage.setItem(UpdateProvider.LAST_UPDATE, '' + currentTime);
       this.updating = undefined;
       this.hideLoading();
     });
@@ -140,5 +168,16 @@ export class UpdateProvider {
 
   get lastUpdate() {
     return localStorage.getItem(UpdateProvider.LAST_UPDATE);
+  }
+
+  updateLaterTimeout: NodeJS.Timer;
+
+  updateLater(when: number) {
+    clearTimeout(this.updateLaterTimeout);
+    this.updateLaterTimeout = setTimeout(() => {
+      if (this.errors.length) {
+        this.update(false, true);
+      }
+    }, when);
   }
 }

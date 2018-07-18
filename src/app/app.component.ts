@@ -43,7 +43,7 @@ export class MyApp {
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
     this.deploy.initialize().catch(err => {
-      MonitoringClient.captureException(err);
+      console.warn(err);
     });
 
     platform.ready().then(() => {

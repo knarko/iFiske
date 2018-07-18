@@ -20,3 +20,26 @@ export const validators = {
   username: [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
   activationCode: [Validators.required, Validators.pattern(/^\d{4}$/)],
 };
+
+export const resolveOrRejectAllPromises = async (promises: Promise<any>[]) => {
+  const results = [];
+  const errors = [];
+
+  await Promise.all(
+    promises.map(promise => {
+      return promise.then(
+        result => {
+          results.push(result);
+        },
+        error => {
+          errors.push(error);
+        },
+      );
+    }),
+  );
+
+  if (errors.length) {
+    return Promise.reject(errors);
+  }
+  return results;
+};

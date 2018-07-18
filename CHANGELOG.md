@@ -1,3 +1,13 @@
+<a name="4.4.8"></a>
+## [4.4.8](https://gitlab.com/kada-development/ifiske/compare/v4.4.7...v4.4.8) (2018-07-18)
+
+
+### Bug Fixes
+
+* **update:** retry update errors later if they have failed, also always retry update errors on the next update ([e5c560b](https://gitlab.com/kada-development/ifiske/commit/e5c560b))
+
+
+
 <a name="4.4.7"></a>
 ## [4.4.7](https://gitlab.com/kada-development/ifiske/compare/v4.4.6...v4.4.7) (2018-07-13)
 

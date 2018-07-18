@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="40040007" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40040007" version="4.4.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="40040007" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40040007" version="4.4.7"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>iFiske</name>
     <description>iFiske - Enklare Fiskekort</description>
     <author email="app@ifiske.se" href="https://www.ifiske.se/">iFiske</author>
@@ -119,5 +121,5 @@
         <variable name="WARN_DEBUG" value="false" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
-    <engine name="android" spec="~7.1.0" />
+    <engine name="android" spec="7.1.1" />
 </widget>

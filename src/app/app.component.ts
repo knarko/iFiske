@@ -93,12 +93,14 @@ export class MyApp {
           subs.get(view).unsubscribe();
         }
         subs.set(view, sub);
-        this.ga.trackView(`${view.name}${view.data && view.data.ID ? '/' + view.data.ID : ''}`);
       });
     }
   }
 
   async setupAnalytics() {
+    this.app.viewWillEnter.subscribe((view: ViewController) => {
+      this.ga.trackView(`${view.name}${view.data && view.data.ID ? '/' + view.data.ID : ''}`);
+    });
     await this.ga.startTrackerWithId(googleAnalyticsTrackerID);
     await Promise.all([this.ga.enableUncaughtExceptionReporting(true), this.ga.setAppVersion(APP_VERSION)]);
   }

@@ -1,0 +1,11 @@
+[highlight] {
+  display: flex;
+  flex-direction: row;
+  & > span {
+    white-space: pre;
+  }
+  .match {
+    font-weight: bolder;
+    color: black;
+  }
+}

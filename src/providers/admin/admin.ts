@@ -46,6 +46,15 @@ export interface AdminPermit {
   validity?: string;
 }
 
+interface SearchMatch {
+  arrayIndex: number;
+  indices: Array<[number, number]>;
+  key: string;
+  value: string;
+}
+
+export type AdminPermitSearchResult = AdminPermit & { score?: number; matches?: SearchMatch[] };
+
 @Injectable()
 export class AdminProvider extends BaseModel {
   private static readonly LAST_UPDATED = 'ADMIN_LAST_UPDATED';
@@ -236,7 +245,10 @@ export class AdminProvider extends BaseModel {
     return this.currentOrganization.pipe(
       filter(org => !!org),
       switchMap(org => {
-        return this.API.admGetStats(org.ID).pipe(map(stats => stats[org.ID]), catchError(() => of(undefined)));
+        return this.API.admGetStats(org.ID).pipe(
+          map(stats => stats[org.ID]),
+          catchError(() => of(undefined)),
+        );
       }),
     );
   }
@@ -307,7 +319,7 @@ export class AdminProvider extends BaseModel {
   }
 
   @DBMethod
-  async getPermits(searchTerm?: string): Promise<(AdminPermit & { score?: number })[]> {
+  async getPermits(searchTerm?: string): Promise<AdminPermitSearchResult[]> {
     const permits = await this.DB.getMultiple(
       `
       SELECT * FROM Admin_Permits
@@ -342,15 +354,22 @@ export class AdminProvider extends BaseModel {
           weight: 0.4,
         },
       ],
-      threshold: 0.5,
+      threshold: 0.3,
       shouldSort: false,
       includeScore: true,
+      includeMatches: true,
     };
+
+    if (searchTerm.match(/^\s*\+?[\d\-\s\(\)]{3,}\s*$/)) {
+      options.location = 0;
+      options.threshold = 0.1;
+      options.distance = 30;
+    }
 
     const fuse = new Fuse(permits, options);
 
-    return fuse.search(searchTerm).map(({ item, score }) => {
-      return { ...item, score };
+    return fuse.search(searchTerm).map(({ item, score, matches }) => {
+      return { ...item, score, matches };
     });
   }
 

@@ -14,10 +14,7 @@
 
 <ion-content class="outer-content">
   <ion-refresher (ionRefresh)="refresh($event)">
-    <ion-refresher-content
-      [pullingText]="'ui.general.pull_to_refresh' | translate"
-      [refreshingText]="'Updating' | translate"
-    ></ion-refresher-content>
+    <ion-refresher-content [pullingText]="'ui.general.pull_to_refresh' | translate" [refreshingText]="'Updating' | translate"></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="permits?.length === 0">
     <ion-item>
@@ -32,12 +29,26 @@
         <ion-icon item-end [name]="item.folded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
       </ion-list-header>
       <ng-container *ngIf="!item.folded">
-        <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
-          <h2>{{permit.fullname}}</h2>
-          <p>{{permit.t}}</p>
-          <p>{{permit.tel}}</p>
-          <p item-end class="code">{{permit.code}}</p>
-        </ion-item>
+        <ng-container *ngIf="!hasResults; else highlightResults">
+          <!-- This is to achieve better performance without the search highlighting -->
+          <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
+            <h2>{{permit.fullname}}</h2>
+            <p>{{permit.t}}</p>
+            <p>{{permit.tel}}</p>
+            <p item-end class="code">{{permit.code}}</p>
+          </ion-item>
+        </ng-container>
+
+        <ng-template #highlightResults>
+          <ion-item *ngFor="let permit of item.permits" (click)="goto(permit)">
+            <h2 highlight="fullname" [permit]="permit"></h2>
+            <p highlight="t" [permit]="permit"></p>
+            <p highlight="tel" [permit]="permit"></p>
+            <p item-end class="code">
+              <span highlight="code" [permit]="permit"></span>
+            </p>
+          </ion-item>
+        </ng-template>
       </ng-container>
     </ng-container>
   </ion-list>

@@ -16,6 +16,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { TabNavbarComponent } from './tab-navbar/tab-navbar';
 import { UserInformationComponent } from './user-information/user-information';
 import { YoutubeComponent } from './youtube/youtube';
+import { HighlightComponent } from './highlight/highlight';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { YoutubeComponent } from './youtube/youtube';
     AdminHeaderComponent,
     ChartComponent,
     TabNavbarComponent,
+    HighlightComponent,
   ],
   imports: [IonicModule, TranslateModule, PipesModule, ImgcacheModule],
   exports: [
@@ -46,6 +48,7 @@ import { YoutubeComponent } from './youtube/youtube';
     AdminHeaderComponent,
     ChartComponent,
     TabNavbarComponent,
+    HighlightComponent,
   ],
 })
 export class ComponentsModule {}

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, Loading } from 'ionic-angular';
-import { AdminProvider, AdminOrganization, AdminPermit } from '../../providers/admin/admin';
+import { AdminProvider, AdminOrganization, AdminPermit, AdminPermitSearchResult } from '../../providers/admin/admin';
 import { Permit } from '../../providers/user/user';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
 export interface DisplayPermit {
   key: string;
   title: string;
-  permits: AdminPermit[];
+  permits: AdminPermitSearchResult[];
   icon: string;
   folded?: boolean;
 }
@@ -27,7 +27,7 @@ export interface DisplayPermit {
   templateUrl: 'admin-permit-list.html',
 })
 export class AdminPermitListPage {
-  pristinePermits: AdminPermit[];
+  pristinePermits: AdminPermitSearchResult[];
   scrollSub: Subscription;
   shouldScrollToTop: boolean;
   currentOrganization: Observable<AdminOrganization>;
@@ -35,6 +35,7 @@ export class AdminPermitListPage {
   searchTerm: string;
   permits$: Observable<AdminPermit[]>;
   scrollSubject: Subject<void>;
+  hasResults: boolean;
 
   permits: DisplayPermit[] = [
     { key: 'active', title: 'ui.permit.validity.plural.active', permits: [], icon: 'ifiske-permit', folded: false },
@@ -45,7 +46,8 @@ export class AdminPermitListPage {
 
   private sub: Subscription;
 
-  @ViewChild(Content) content: Content;
+  @ViewChild(Content)
+  content: Content;
 
   constructor(
     private navCtrl: NavController,
@@ -92,6 +94,7 @@ export class AdminPermitListPage {
       p.permits = [];
     });
 
+    this.hasResults = this.pristinePermits.some(permit => !!permit.matches);
     this.pristinePermits.forEach(permit => {
       this.permits.find(item => item.key === permit.validity).permits.push(permit);
     });

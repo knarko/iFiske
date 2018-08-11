@@ -1,3 +1,13 @@
+<a name="4.5.0"></a>
+# [4.5.0](https://gitlab.com/kada-development/ifiske/compare/v4.4.8...v4.5.0) (2018-08-11)
+
+
+### Features
+
+* **admin:** Highlight search results ([347ac7c](https://gitlab.com/kada-development/ifiske/commit/347ac7c))
+
+
+
 <a name="4.4.8"></a>
 ## [4.4.8](https://gitlab.com/kada-development/ifiske/compare/v4.4.7...v4.4.8) (2018-07-18)
 

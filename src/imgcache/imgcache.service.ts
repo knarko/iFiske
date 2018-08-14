@@ -3,6 +3,7 @@ import { Platform } from 'ionic-angular';
 import * as ImgCache from 'imgcache.js';
 import { MonitoringClient } from '../app/monitoring';
 import { isProdMode } from '../app/config';
+import get from 'lodash/get';
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG');
 
@@ -108,7 +109,8 @@ export class ImgcacheService {
           src,
           (_, img) => {
             const url = img.toURL();
-            const normalizedUrl = ((window as any).Ionic && Ionic.normalizeURL && Ionic.normalizeURL(url)) || url;
+            const ionicConvertFileSrc = get(window, 'Ionic.WebView.convertFileSrc');
+            const normalizedUrl = (ionicConvertFileSrc && ionicConvertFileSrc(url)) || url;
             this.cache[src] = normalizedUrl;
             resolve(normalizedUrl);
           },

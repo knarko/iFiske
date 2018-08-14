@@ -100,10 +100,10 @@
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^2.0.3" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="^7.1.1" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0" />
     <plugin name="cordova-plugin-sms" spec="@ifiske/cordova-plugin-sms@~1.0.1" />
     <plugin name="cordova-plugin-migrate-localstorage" spec="@ifiske/cordova-plugin-migrate-localstorage@~1.0.0" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
@@ -112,7 +112,7 @@
     <plugin name="cordova-plugin-google-analytics" spec="^1.8.3" />
     <plugin name="cordova-launch-review" spec="^3.1.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.4.0" />
-    <plugin name="cordova-plugin-ionic" spec="^4.1.7">
+    <plugin name="cordova-plugin-ionic" spec="^5.0.5">
         <variable name="APP_ID" value="37d0fdf2" />
         <variable name="CHANNEL_NAME" value="Production" />
         <variable name="UPDATE_METHOD" value="none" />

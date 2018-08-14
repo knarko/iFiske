@@ -1,3 +1,13 @@
+<a name="4.5.1"></a>
+## [4.5.1](https://gitlab.com/kada-development/ifiske/compare/v4.5.0...v4.5.1) (2018-08-14)
+
+
+### Bug Fixes
+
+* **Pro:** update native plugins ([e5148a5](https://gitlab.com/kada-development/ifiske/commit/e5148a5))
+
+
+
 <a name="4.5.0"></a>
 # [4.5.0](https://gitlab.com/kada-development/ifiske/compare/v4.4.8...v4.5.0) (2018-08-11)
 

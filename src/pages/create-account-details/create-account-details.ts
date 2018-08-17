@@ -4,7 +4,7 @@ import { FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angul
 import { timer } from 'rxjs/observable/timer';
 import { switchMap } from 'rxjs/operators';
 
-import { ApiProvider } from '../../providers/api/api';
+import { ApiProvider, IFISKE_ERRORS } from '../../providers/api/api';
 import { Form } from '../../components/ion-data-form/form';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { UserDetails, CreateAccountProvider } from '../../providers/create-account/create-account';
@@ -134,14 +134,14 @@ export class CreateAccountDetailsPage {
       this.form.group.setErrors({ register: true });
       const { email, username, phone } = this.form.group.controls;
       switch (err.error_code) {
-        case 8:
+        case IFISKE_ERRORS.USER_CREATION_INVALID_EMAIL:
           email.setErrors({ invalid: true });
           break;
-        case 9:
+        case IFISKE_ERRORS.USER_CREATION_USERNAME_OR_EMAIL_EXISTS:
           username.updateValueAndValidity();
           email.updateValueAndValidity();
           break;
-        case 10:
+        case IFISKE_ERRORS.USER_CREATION_INVALID_PHONE:
           phone.setErrors({ invalid: true });
           break;
       }

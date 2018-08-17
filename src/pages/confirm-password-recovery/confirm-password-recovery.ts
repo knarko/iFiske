@@ -5,6 +5,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { Form } from '../../components/ion-data-form/form';
+import { IFISKE_ERRORS } from '../../providers/api/api';
+import { validators } from '../../util';
 
 /**
  * Generated class for the ConfirmPasswordRecoveryPage page.
@@ -65,10 +67,12 @@ export class ConfirmPasswordRecoveryPage {
           label: 'New password',
           placeholder: 'ui.placeholder.password',
           type: 'password',
-          validators: [Validators.required],
+          validators: validators.password,
           errors: {
             required: 'errors.password.required',
             invalid: 'errors.password.invalid',
+            minlength: 'errors.password.pattern_mismatch',
+            maxlength: 'errors.password.pattern_mismatch',
           },
         },
       },
@@ -110,18 +114,17 @@ export class ConfirmPasswordRecoveryPage {
         },
         async error => {
           switch (error.error_code) {
-            case 5:
-              // invalid username
+            case IFISKE_ERRORS.NO_SUCH_USER:
               this.form.controls.username.control.setErrors({
                 invalid: true,
               });
               break;
-            case 13:
+            case IFISKE_ERRORS.USER_CREATION_USERNAME_LENGTH:
               this.form.controls.password.control.setErrors({
                 minLength: true,
               });
               break;
-            case 16:
+            case IFISKE_ERRORS.PASSWORD_CHANGE_INVALID_RESET_CODE:
               this.form.controls.code.control.setErrors({
                 invalid: true,
               });

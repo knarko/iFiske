@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { UserProvider } from '../../providers/user/user';
 import { validators } from '../../util';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { IFISKE_ERRORS } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -26,9 +27,9 @@ export class ChangePasswordPage {
             this.toastCtrl.show({ duration: 4000, message: 'ui.changePassword.completed' });
           },
           err => {
-            const errorCode = err.message && err.message.error_code;
+            const errorCode = err && err.error_code;
             switch (errorCode) {
-              case 4:
+              case IFISKE_ERRORS.USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT:
                 this.form.group.controls.oldPassword.setErrors({ invalid: true });
                 break;
               default:

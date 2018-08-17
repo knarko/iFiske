@@ -6,6 +6,7 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Observable } from 'rxjs/Observable';
 import { TimeoutError } from '../../errors';
+import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'AdminPage'],
@@ -72,13 +73,13 @@ export class AdminPermitPage {
       () => {
         dismissLoading();
       },
-      err => {
+      (err: ApiError) => {
         dismissLoading();
 
         this.failed = true;
 
         console.warn(err);
-        if (err.error_code !== 17) {
+        if (err.error_code !== IFISKE_ERRORS.INSUFFICIENT_USER_ACCESS_LEVEL) {
           this.toastCtrl.show({
             message: err.response,
             duration: 6000,

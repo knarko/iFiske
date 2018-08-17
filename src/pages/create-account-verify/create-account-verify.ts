@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Validators, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Form, FormOptions } from '../../components/ion-data-form/form';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
@@ -80,7 +80,7 @@ export class CreateAccountVerifyPage {
         username: {
           label: 'Username',
           placeholder: 'ui.placeholder.username',
-          validators: [Validators.required],
+          validators: validators.username,
           errors: {
             required: 'errors.username.required',
           },

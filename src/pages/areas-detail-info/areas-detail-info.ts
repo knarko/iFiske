@@ -14,6 +14,7 @@ import { TranslateToastController } from '../../providers/translate-toast-contro
 import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
+import { IFISKE_ERRORS } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -41,7 +42,8 @@ export class AreasDetailInfoPage {
     }
   }
 
-  @ViewChild(Content) contentRef: Content;
+  @ViewChild(Content)
+  contentRef: Content;
 
   constructor(
     private _navCtrl: NavController,
@@ -97,7 +99,7 @@ export class AreasDetailInfoPage {
         await this.userProvider.toggleFavorite(this.area);
       } catch (e) {
         console.log(e);
-        if (e && e.error_code === 19) {
+        if (e && e.error_code === IFISKE_ERRORS.NO_SUCH_AREA_EXISTS) {
           return;
         } else {
           throw e;

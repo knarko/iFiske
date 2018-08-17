@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseModel } from '../database/basemodel';
 import { DatabaseProvider } from '../database/database';
-import { ApiProvider } from '../api/api';
+import { ApiProvider, IFISKE_ERRORS } from '../api/api';
 import { SessionProvider } from '../session/session';
 import { Product } from '../product/product';
 import { TableDef } from '../database/table';
@@ -225,7 +225,7 @@ export class UserProvider extends BaseModel {
 
       return true;
     } catch (err) {
-      if (err && err.error_code === 7) {
+      if (err && err.error_code === IFISKE_ERRORS.AUTHENTICATION_FAILURE) {
         this.toastCtrl.show({
           message: 'You have been logged out',
           duration: 4000,

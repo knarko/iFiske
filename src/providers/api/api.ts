@@ -37,6 +37,31 @@ export interface CachedResult {
   cacheTime: number;
 }
 
+export enum IFISKE_ERRORS {
+  MISSING_API_KEY,
+  INTERNAL_DATABASE_ERROR,
+  TOO_SHORT_OR_EMPTY_USERNAME,
+  TOO_SHORT_OR_EMPTY_PASSWORD,
+  USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT,
+  NO_SUCH_USER,
+  UNKNOWN_ERROR,
+  AUTHENTICATION_FAILURE,
+  USER_CREATION_INVALID_EMAIL,
+  USER_CREATION_USERNAME_OR_EMAIL_EXISTS,
+  USER_CREATION_INVALID_PHONE,
+  USER_CREATION_FULLNAME_LENGTH,
+  USER_CREATION_USERNAME_LENGTH,
+  TOO_SHORT_OR_LONG_PASSWORD,
+  USER_CONFIRM_INVALID_PIN,
+  USER_CONFIRM_NO_SUCH_USERNAME_PIN_COMBO,
+  PASSWORD_CHANGE_INVALID_RESET_CODE,
+  INSUFFICIENT_USER_ACCESS_LEVEL,
+  USER_ACCOUNT_NOT_ACTIVATED,
+  NO_SUCH_AREA_EXISTS,
+  NO_SUCH_SUBSCRIPTION,
+  INVALID_PUSHTOKEN_TYPE,
+}
+
 @Injectable()
 export class ApiProvider {
   private static readonly DefaultOptions = {
@@ -130,8 +155,7 @@ export class ApiProvider {
           throw new TimeoutError(`Request '${params.get('m')}' timed out`);
         } else if (err.message) {
           switch (err.message.error_code) {
-            case 7:
-              // Authentication error
+            case IFISKE_ERRORS.AUTHENTICATION_FAILURE:
               if (this.sessionData.token) {
                 this.sessionData.token = undefined;
                 this.toastCtrl.show({
@@ -141,7 +165,7 @@ export class ApiProvider {
               }
               break;
           }
-          throw err;
+          throw err.message as ApiError;
         } else if (err.data) {
           throw err.data;
         }

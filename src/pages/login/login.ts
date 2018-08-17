@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ApiError } from '../../providers/api/api';
+import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -106,31 +106,31 @@ export class LoginPage {
         () => {
           return this.close();
         },
-        (error: Error) => {
+        (error: Error | ApiError) => {
           console.log(this.form);
-          if (error.name === TimeoutError.name) {
+          if ((error as Error).name === TimeoutError.name) {
             return this.form.group.setErrors({
               network: true,
             });
           }
 
-          const { message } = (error as any) as { message?: ApiError };
+          const errorCode = error && (error as ApiError).error_code;
 
-          if (typeof message !== 'object') {
+          if (errorCode == undefined) {
             return this.form.group.setErrors({
               unknown: true,
             });
           }
 
-          switch (message.error_code) {
-            case 2:
-            case 5:
+          switch (errorCode) {
+            case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_USERNAME:
+            case IFISKE_ERRORS.NO_SUCH_USER:
               group.controls.username.setErrors({
                 invalid: true,
               });
               break;
-            case 3:
-            case 4:
+            case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_PASSWORD:
+            case IFISKE_ERRORS.USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT:
               group.controls.password.setErrors({
                 invalid: true,
               });
@@ -139,7 +139,7 @@ export class LoginPage {
               this.form.group.setErrors({
                 custom: true,
               });
-              this.form.errors.custom = message && message.response;
+              this.form.errors.custom = error && (error as ApiError).response;
               break;
           }
         },

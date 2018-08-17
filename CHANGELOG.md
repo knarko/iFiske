@@ -1,3 +1,14 @@
+<a name="4.5.2"></a>
+## [4.5.2](https://gitlab.com/kada-development/ifiske/compare/v4.5.1...v4.5.2) (2018-08-17)
+
+
+### Bug Fixes
+
+* **Api:** Improve error handling ([0326736](https://gitlab.com/kada-development/ifiske/commit/0326736))
+* **build:** remove migrate-localStorage plugin, it doesn't work with the latest ionic webview on android anyway ([1afb98f](https://gitlab.com/kada-development/ifiske/commit/1afb98f))
+
+
+
 <a name="4.5.1"></a>
 ## [4.5.1](https://gitlab.com/kada-development/ifiske/compare/v4.5.0...v4.5.1) (2018-08-14)
 

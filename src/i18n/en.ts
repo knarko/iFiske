@@ -207,6 +207,7 @@ export const en: TranslationDefinition = {
   "Area removed from favorites": "The area is no longer marked as favorite",
   "Cancel": "Cancel",
   "Catch report": "Catch Report",
+  "Language": "Language",
   "Change language": "Change language",
   "Change user info": "To change your user information, please go to www.ifiske.se - There you can also add more phone numbers to your account, etc.",
   "Check permit": "Check Permit Code",

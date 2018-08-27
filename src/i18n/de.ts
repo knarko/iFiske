@@ -166,6 +166,7 @@ export const de: TranslationDefinition | any = {
   "Area removed from favorites": "Die Fläche ist nicht mehr als Favorit markiert",
   "Cancel": "Beenden",
   "Catch report": "Fangprotokoll",
+  "Language": "Sprache",
   "Change language": "Sprache auswählen",
   "Change user info": "Um die Nutzerinformationen zu ändern, gehen sie bitte zu www.ifiske.se - Dort können Sie Ihrem Account auch mehr Telefonnummern etc. hinzufügen.",
   "Check permit": "Überprüfen Fischerschein",

@@ -11,7 +11,6 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { MonitoringClient } from './monitoring';
 import { googleAnalyticsTrackerID, APP_VERSION } from './config';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 

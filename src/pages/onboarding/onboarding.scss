@@ -19,7 +19,7 @@ page-onboarding {
     bottom: 0;
     margin: 4px;
     color: white;
-    transition: opacity .3s linear;
+    transition: opacity 0.3s linear;
     opacity: 1;
 
     &.right {
@@ -85,6 +85,29 @@ page-onboarding {
   ul {
     text-align: left;
     padding-left: 20px;
+  }
+  .fixed-content {
+    margin-top: 0 !important;
+  }
+  .header {
+    z-index: 1000;
+  }
+  .language {
+    text-transform: none;
+    background: rgba(white, 0.8);
+    .button-inner {
+      justify-content: space-between;
+    }
+    .desc {
+      margin-right: 0.5em;
+    }
+    img {
+      height: 100%;
+    }
+    .flag {
+      height: 100%;
+      min-height: 0;
+    }
   }
 }
 
@@ -157,7 +180,7 @@ $background: url('../assets/onboarding/wave_large.png');
     animation-delay: random(3000) * -1ms;
     top: $i * 15px;
     z-index: $i;
-    opacity: $i * .2;
+    opacity: $i * 0.2;
     // background-size: 1000px / ($i / $i) 2000px;
     background-image: $background;
     image-rendering: -webkit-optimize-contrast;
@@ -177,9 +200,8 @@ $background: url('../assets/onboarding/wave_large.png');
   }
 }
 
-@include wave-keyframes('wave_1', .61rem);
-@include wave-keyframes('wave_2', .77rem);
-@include wave-keyframes('wave_3', .96rem);
+@include wave-keyframes('wave_1', 0.61rem);
+@include wave-keyframes('wave_2', 0.77rem);
+@include wave-keyframes('wave_3', 0.96rem);
 @include wave-keyframes('wave_4', 1.2rem);
 @include wave-keyframes('wave_5', 1.5rem);
-

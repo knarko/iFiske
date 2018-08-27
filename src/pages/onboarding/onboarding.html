@@ -1,3 +1,19 @@
+<ion-header transparent>
+
+  <ion-navbar transparent>
+    <ion-buttons end>
+      <button ion-button (click)="changeLanguage()" class="language">
+        <span class="desc">{{'Language' | translate}}</span>
+        <ng-container *ngIf="language | async; let lang">
+          <div class="flag">
+            <img [src]="'assets/img/flags/' + lang.short + '.png'">
+          </div>
+        </ng-container>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
 <ion-content>
   <ion-slides ion-fixed #extras class="extras">
     <ion-slide padding class="notify">
@@ -33,14 +49,17 @@
       <h2>{{'ui.onboarding.welcome.title' | translate}}</h2>
       <p>{{'ui.onboarding.welcome.subtitle' | translate}}</p>
     </ion-slide>
+
     <ion-slide padding class="explore">
       <h2>{{'ui.onboarding.explore.title' | translate}}</h2>
       <div [innerHtml]="'ui.onboarding.explore.content' | translate"></div>
     </ion-slide>
+
     <ion-slide padding class="secure">
       <h2>{{'ui.onboarding.secure.title' | translate}}</h2>
       <p>{{'ui.onboarding.secure.subtitle' | translate}}</p>
     </ion-slide>
+
     <ion-slide padding class="notify">
       <h2>{{'ui.onboarding.notify.title' | translate}}</h2>
       <p>{{'ui.onboarding.notify.subtitle' | translate}}</p>

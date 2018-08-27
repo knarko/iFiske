@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Dictionary } from '../../types';
 
 interface Settings {
   push: boolean;
@@ -54,7 +55,7 @@ export class SettingsProvider {
     this.settingsChanged.next(this.settings);
   }
 
-  availableLanguages: { [short: string]: Language } = {
+  availableLanguages: Dictionary<Language> = {
     sv: {
       short: 'sv',
       long: 'Svenska',

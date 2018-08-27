@@ -1,4 +1,5 @@
 export interface TranslationDefinition {
+  "Language": string
   "Downloadable file": string
   "Renew permit": string
   "Permit not yet valid": string

@@ -19,18 +19,32 @@ export interface Language {
 @Injectable()
 export class SettingsProvider {
   private static STORAGE_LOCATION = 'settings';
-  private static defaultSettings = {
-    push: true,
-    language: 'sv',
-    channel: 'Production',
-    firstLaunch: true,
-  };
+  private get defaultSettings() {
+    return {
+      push: true,
+      language: this.defaultLanguage,
+      channel: 'Production',
+      firstLaunch: true,
+    };
+  }
+  get defaultLanguage() {
+    for (const lang of navigator.languages) {
+      if (this.availableLanguages[lang]) {
+        return lang;
+      }
+    }
+    if (typeof navigator.language !== 'string' || navigator.language.match(/^s[ev]/i)) {
+      return 'sv';
+    }
+    return 'en';
+  }
   private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
 
   settingsChanged = new ReplaySubject<Settings>(1);
 
   constructor(private translate: TranslateService, private ga: GoogleAnalytics) {
-    this.settings = Object.assign({}, SettingsProvider.defaultSettings, this.settings);
+    this.settings = Object.assign({}, this.defaultSettings, this.settings);
+    this.language = this.settings.language;
     this.persistSettings();
     console.log(this.settings);
   }

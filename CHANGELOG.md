@@ -1,3 +1,13 @@
+<a name="4.5.3"></a>
+## [4.5.3](https://gitlab.com/kada-development/ifiske/compare/v4.5.2...v4.5.3) (2018-08-27)
+
+
+### Bug Fixes
+
+* **settings:** set default language to the language of users device ([689fc63](https://gitlab.com/kada-development/ifiske/commit/689fc63))
+
+
+
 <a name="4.5.2"></a>
 ## [4.5.2](https://gitlab.com/kada-development/ifiske/compare/v4.5.1...v4.5.2) (2018-08-17)
 

@@ -1,3 +1,13 @@
+<a name="4.5.4"></a>
+## [4.5.4](https://gitlab.com/kada-development/ifiske/compare/v4.5.3...v4.5.4) (2018-08-27)
+
+
+### Bug Fixes
+
+* **onboarding:** allow language change during onboarding ([4c9e4f3](https://gitlab.com/kada-development/ifiske/commit/4c9e4f3))
+
+
+
 <a name="4.5.3"></a>
 ## [4.5.3](https://gitlab.com/kada-development/ifiske/compare/v4.5.2...v4.5.3) (2018-08-27)
 

@@ -1,3 +1,13 @@
+<a name="4.5.5"></a>
+## [4.5.5](https://gitlab.com/kada-development/ifiske/compare/v4.5.4...v4.5.5) (2018-08-28)
+
+
+### Bug Fixes
+
+* **onboarding:** fix some typos in the english texts ([897ce0e](https://gitlab.com/kada-development/ifiske/commit/897ce0e))
+
+
+
 <a name="4.5.4"></a>
 ## [4.5.4](https://gitlab.com/kada-development/ifiske/compare/v4.5.3...v4.5.4) (2018-08-27)
 

@@ -117,7 +117,7 @@
         <variable name="WARN_DEBUG" value="false" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
-    <plugin name="cordova-plugin-migrate-localstorage" spec="@ifiske/cordova-plugin-migrate-localstorage@~2.0.0" />
+    <plugin name="cordova-plugin-migrate-localstorage" spec="@ifiske/cordova-plugin-migrate-localstorage@~2.0.1" />
     <engine name="android" spec="7.1.1" />
     <engine name="ios" spec="~4.5.4" />
 </widget>

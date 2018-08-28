@@ -61,11 +61,11 @@ export const en: TranslationDefinition = {
     "onboarding": {
       "welcome": {
         "title": "Welcome!",
-        "subtitle": "Welcome to iFiske. We're swedens Largest portal for fishing permits",
+        "subtitle": "Welcome to iFiske. We're swedens largest portal for fishing permits",
       },
       "explore": {
         "title": "Explore!",
-        "content": "<ul><li>Find new exciting fishing areas</li><li>Plan your next fishing trip</li><li>explore maps, fish species, rules and much more</li></ul>",
+        "content": "<ul><li>Find new exciting fishing areas</li><li>Plan your next fishing trip</li><li>Explore maps, fish species, rules and much more</li></ul>",
       },
       "secure": {
         "title": "Secure!",

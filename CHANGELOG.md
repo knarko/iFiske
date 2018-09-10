@@ -1,3 +1,13 @@
+<a name="4.6.1"></a>
+## [4.6.1](https://gitlab.com/kada-development/ifiske/compare/v4.6.0...v4.6.1) (2018-09-10)
+
+
+### Bug Fixes
+
+* **area-search:** increase fuzzy search max distance ([6ca38a6](https://gitlab.com/kada-development/ifiske/commit/6ca38a6))
+
+
+
 <a name="4.6.0"></a>
 # [4.6.0](https://gitlab.com/kada-development/ifiske/compare/v4.5.6...v4.6.0) (2018-08-28)
 

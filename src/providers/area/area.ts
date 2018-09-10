@@ -434,7 +434,7 @@ export class AreaProvider extends BaseModel<Area> {
           includeScore: true,
           shouldSort: false,
           threshold: 0.5,
-          distance: 10,
+          distance: 1000,
           maxPatternLength: 16,
         };
         if (this.settings.isDeveloper) {

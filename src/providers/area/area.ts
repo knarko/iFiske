@@ -320,7 +320,7 @@ export class AreaProvider extends BaseModel<Area> {
     return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId]).then(
       images => {
         for (let i = 0; i < images.length; ++i) {
-          images[i].ratio = images[i].h / images[i].w * 100 + '%';
+          images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
           images[i].file = serverLocation + images[i].file;
         }
         return images;

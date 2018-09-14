@@ -1,3 +1,13 @@
+<a name="4.6.2"></a>
+## [4.6.2](https://gitlab.com/kada-development/ifiske/compare/v4.6.1...v4.6.2) (2018-09-14)
+
+
+### Features
+
+* **deepLinks:** add provider for opening links to ifiske.se ([bf43877](https://gitlab.com/kada-development/ifiske/commit/bf43877))
+
+
+
 <a name="4.6.1"></a>
 ## [4.6.1](https://gitlab.com/kada-development/ifiske/compare/v4.6.0...v4.6.1) (2018-09-10)
 

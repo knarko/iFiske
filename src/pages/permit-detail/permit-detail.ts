@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserProvider, Permit } from '../../providers/user/user';
+import { UserProvider } from '../../providers/user/user';
+import { Permit } from '../../providers/user/userTypes';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 

@@ -66,6 +66,7 @@ import { ImgcacheModule } from '../imgcache/imgcache.module';
 import { LogMissingTranslationHandler } from './missing-translation-handler';
 import { TranslateBundleLoader } from './translation-loader';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
+import { DeepLinksProvider } from '../providers/deep-links/deep-links';
 
 registerLocaleData(localeSv);
 
@@ -151,6 +152,7 @@ registerLocaleData(localeSv);
     UpdateProvider,
     UserProvider,
     UserTrackingProvider,
+    DeepLinksProvider,
   ],
 })
 export class AppModule {}

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation';
+import * as Fuse from 'fuse.js';
+import { Subscription } from 'rxjs/Subscription';
+import { filter } from 'rxjs/operators';
+
+import { BaseModel } from '../database/basemodel';
+import { FishProvider, Fish } from '../fish/fish';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
-import { Geolocation } from '@ionic-native/geolocation';
-import { FishProvider, Fish } from '../fish/fish';
-import * as Fuse from 'fuse.js';
-import { BaseModel } from '../database/basemodel';
 import { serverLocation } from '../api/serverLocation';
-import { Subscription } from 'rxjs/Subscription';
-
-import 'rxjs/add/operator/filter';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
 import { SettingsProvider } from '../settings/settings';
@@ -519,7 +519,7 @@ export class AreaProvider extends BaseModel<Area> {
         timeout: 10000,
         enableHighAccuracy: false,
       })
-      .filter(geo => !!geo.coords)
+      .pipe(filter(geo => !!geo.coords))
       .subscribe(position => {
         if (!this.currentLocation) {
           this.searchCache = {};

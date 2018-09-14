@@ -3,7 +3,7 @@ import { ApiProvider } from '../api/api';
 import { TableDef } from './table';
 import { DBMethod } from './decorators';
 import { Dictionary } from '../../types';
-import { UpdateStrategy } from '../update/update';
+import { UpdateStrategy } from '../update/updateTypes';
 
 export class BaseModel<T = {}> {
   protected API: ApiProvider;

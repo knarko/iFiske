@@ -28,7 +28,7 @@
 
   <p padding>
     {{'More in control panel' | translate}}
-    <a ion-button block [href]="serverLocation + '/index.php/kontrollpanelen'" rel="noopener noreferrer" target="_system">{{'Open control panel' | translate}}</a>
+    <button ion-button block (click)="openControlPanel()">{{'Open control panel' | translate}}</button>
   </p>
 
 </ion-content>

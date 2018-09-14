@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, Loading } from 'ionic-angular';
-import { AdminProvider, AdminOrganization, AdminPermit, AdminPermitSearchResult } from '../../providers/admin/admin';
-import { Permit } from '../../providers/user/user';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import debounce from 'lodash/debounce';
+
+import { AdminProvider } from '../../providers/admin/admin';
+import { AdminOrganization, AdminPermit, AdminPermitSearchResult } from '../../providers/admin/adminTypes';
+import { Permit } from '../../providers/user/userTypes';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { MonitoringClient } from '../../app/monitoring';
 import { TimeoutError } from '../../errors';

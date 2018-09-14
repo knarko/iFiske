@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AdminPermitSearchResult } from '../../providers/admin/admin';
+import { AdminPermitSearchResult } from '../../providers/admin/adminTypes';
 
 @Component({
   selector: '[highlight]',

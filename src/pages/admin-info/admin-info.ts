@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { UserProvider, User } from '../../providers/user/user';
+import { UserProvider } from '../../providers/user/user';
+import { User } from '../../providers/user/userTypes';
 import { AdminProvider } from '../../providers/admin/admin';
-import { serverLocation } from '../../providers/api/serverLocation';
+import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 
 @IonicPage({
   segment: 'admin-info',
@@ -14,11 +15,12 @@ import { serverLocation } from '../../providers/api/serverLocation';
 export class AdminInfoPage {
   user: Promise<User>;
 
-  serverLocation = serverLocation;
-
-  constructor(public admin: AdminProvider, private userProvider: UserProvider) {}
+  constructor(public admin: AdminProvider, private userProvider: UserProvider, private deepLinks: DeepLinksProvider) {}
 
   ionViewWillEnter() {
     this.user = this.userProvider.getInfo().catch(() => undefined);
+  }
+  openControlPanel() {
+    this.deepLinks.open(DeepLinks.controlPanel, { orgId: '' + this.admin.orgId }, { bringSession: true });
   }
 }

@@ -445,4 +445,6 @@ export class ApiProvider {
   };
 
   getAdsMain = () => this.getObservable({ m: 'get_ads_main' }, { cacheTime: 60000 });
+
+  getSessionToken = () => this.getObservable({ m: 'user_get_session_token' }, { session: true, retry: false });
 }

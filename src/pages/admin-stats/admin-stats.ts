@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { serverLocation } from '../../providers/api/serverLocation';
-import { AdminProvider, AdminOrganization } from '../../providers/admin/admin';
 import { Observable } from 'rxjs/Observable';
+
+import { serverLocation } from '../../providers/api/serverLocation';
+import { AdminProvider } from '../../providers/admin/admin';
+import { AdminOrganization } from '../../providers/admin/adminTypes';
 
 @IonicPage()
 @Component({

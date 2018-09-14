@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
-import { AdminProvider, AdminPermit } from '../../providers/admin/admin';
+import { AdminProvider } from '../../providers/admin/admin';
+import { AdminPermit } from '../../providers/admin/adminTypes';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Observable } from 'rxjs/Observable';

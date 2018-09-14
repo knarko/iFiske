@@ -34,15 +34,16 @@
           <feColorMatrix type="matrix" values="0 0 0 0 .6, 0 0 0 0 .6, 0 0 0 0 0.6, -1 -1 -1 1 0" />
         </filter>
       </defs>
-      <image [attr.xlink:href]="qr" width="100%" height="100%" [attr.filter]="'url(#filter-' + (permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red') + ')'"
-      />
+      <image [attr.xlink:href]="qr" width="100%" height="100%" [attr.filter]="'url(#filter-' + (permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red') + ')'" />
     </svg>
   </div>
 
   <h1 [ngClass]="'license-' + permit.validity">{{permit.code}}</h1>
 
   <h3 *ngIf="permit.validity === 'expired'">{{'Permit has expired' | translate}}</h3>
-  <button ion-button color="secondary" *ngIf="!admin && permit.validity === 'expired'" (click)="openProductInBrowser()">{{'Renew permit' | translate}}</button>
+  <button ion-button color="secondary" *ngIf="!admin && permit.validity === 'expired'" (click)="openProductInBrowser()">
+    {{'Renew permit' | translate}}
+  </button>
 
   <h3 *ngIf="permit.validity === 'inactive'">{{'Permit not yet valid' | translate}}</h3>
 
@@ -70,9 +71,10 @@
   </ng-container>
 
   <p *ngIf="!admin">
-    <a ion-button icon-start *ngIf="permit.code" [href]="serverLocation + '/r/' + permit.code + '?lang=' + language" target="_system">
+    <button ion-button icon-start *ngIf="permit.code" (click)="openCatchReport()">
       <ion-icon name="ifiske-fish"></ion-icon>
-      {{'Catch report' | translate}}</a>
+      {{'Catch report' | translate}}
+    </button>
     <a ion-button color="dark" icon-start *ngIf="permit.pdf" [href]="serverLocation + permit.pdf" target="_system">
       <ion-icon name="document"></ion-icon>
       {{'PDF' | translate}}

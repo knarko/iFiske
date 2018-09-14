@@ -1,11 +1,12 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Permit } from '../../providers/user/user';
+import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
+import { Permit } from '../../providers/user/userTypes';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { serverLocation } from '../../providers/api/serverLocation';
-import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { AreaProvider } from '../../providers/area/area';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 
 @Component({
   selector: 'app-permit',
@@ -14,17 +15,20 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 export class PermitComponent {
   qr: string;
 
-  @Input() admin: boolean = false;
-  @Input() permit: Permit;
-  @Output() revoke = new EventEmitter<boolean>();
+  @Input()
+  admin: boolean = false;
+  @Input()
+  permit: Permit;
+  @Output()
+  revoke = new EventEmitter<boolean>();
   org?: Organization;
   serverLocation = serverLocation;
 
   constructor(
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,
-    private settings: SettingsProvider,
     private ga: GoogleAnalytics,
+    private deepLinks: DeepLinksProvider,
   ) {}
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -47,8 +51,13 @@ export class PermitComponent {
   }
 
   openProductInBrowser() {
-    const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${this.permit.pid}`;
+    console.log('Opening product!', this.permit.pid);
     this.ga.trackEvent('Purchase', 'Web', '' + this.permit.pid);
-    window.open(url, '_system');
+
+    this.deepLinks.open(DeepLinks.buy, { productId: '' + this.permit.pid }, { bringSession: true });
+  }
+
+  openCatchReport() {
+    this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
   }
 }

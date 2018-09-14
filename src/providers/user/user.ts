@@ -1,70 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BaseModel } from '../database/basemodel';
-import { DatabaseProvider } from '../database/database';
-import { ApiProvider, IFISKE_ERRORS } from '../api/api';
-import { SessionProvider } from '../session/session';
-import { Product } from '../product/product';
-import { TableDef } from '../database/table';
-import { Dictionary } from '../../types';
-import { DBMethod } from '../database/decorators';
-import { Area } from '../area/area';
-import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
-import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
-import { map } from 'rxjs/operators';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Observable } from 'rxjs/Observable';
-import { PushProvider } from '../push/push';
+import { of } from 'rxjs/observable/of';
+import { map, switchMap, catchError } from 'rxjs/operators';
+
+import { Dictionary } from '../../types';
 import { getPermitValidity } from '../../util';
 import { MonitoringClient } from '../../app/monitoring';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
-export interface User {
-  ID: number;
-  username: string;
-  loggedin: string;
-  IP1: string;
-  IP2: string;
-  name: string;
-  email: string;
-  created: string;
-  mypage: string;
-  profile: string;
-}
+import { ApiProvider, IFISKE_ERRORS } from '../api/api';
+import { Area } from '../area/area';
+import { BaseModel } from '../database/basemodel';
+import { DatabaseProvider } from '../database/database';
+import { DBMethod } from '../database/decorators';
+import { SessionProvider } from '../session/session';
+import { TableDef } from '../database/table';
+import { TranslateLoadingController } from '../translate-loading-controller/translate-loading-controller';
+import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
-export interface Favorite {
-  ID: number;
-  a: number;
-  add: number;
-  not: number;
-  cnt: number;
-}
-
-export interface UserProduct {
-  ID: number;
-  at: number;
-  code: number;
-  fr: number;
-  fullname: string;
-  ot: string;
-  ref1: number;
-  ref2: number;
-  t: string;
-  subt: string;
-  to: number;
-  pid: number;
-  pdf: string;
-  qr: string;
-  fint: string;
-  rev: number;
-
-  info?: string;
-  validity?: string;
-}
-interface PermitRules {
-  rule_ver: number;
-  rule_d: string;
-  rule_t: string;
-}
-export type Permit = UserProduct & Product & PermitRules;
+import { User, Favorite, Permit } from './userTypes';
 
 @Injectable()
 export class UserProvider extends BaseModel {
@@ -129,6 +83,7 @@ export class UserProvider extends BaseModel {
   };
 
   loggedIn: Observable<boolean>;
+  sessionTransferToken: Observable<string | undefined>;
 
   readonly updateStrategy = () => !!this.session.token;
 
@@ -138,12 +93,23 @@ export class UserProvider extends BaseModel {
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
-    private pushProvider: PushProvider,
     private ga: GoogleAnalytics,
   ) {
     super();
     this.initialize();
     this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
+    this.sessionTransferToken = this.loggedIn.pipe(
+      switchMap(loggedIn => {
+        if (loggedIn) {
+          return this.API.getSessionToken().pipe(map(res => res.token));
+        }
+        return of(undefined);
+      }),
+      catchError(err => {
+        console.log(err);
+        return of(undefined);
+      }),
+    );
   }
 
   /**
@@ -152,7 +118,6 @@ export class UserProvider extends BaseModel {
    */
   clean() {
     const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
-    this.pushProvider.unregister();
 
     MonitoringClient.configureScope(scope => {
       scope.clear();
@@ -193,8 +158,6 @@ export class UserProvider extends BaseModel {
               id: '' + data.ID,
             });
           });
-
-          this.pushProvider.setUserDetails(data);
 
           return Promise.all([
             this.DB.populateTable(this.tables.info, [data]).then(
@@ -244,7 +207,6 @@ export class UserProvider extends BaseModel {
     p.then(
       () => {
         this.ga.trackEvent('Login and Signup', 'Login');
-        this.pushProvider.register();
       },
       error => {
         this.session.token = undefined;

@@ -7,8 +7,6 @@ import get from 'lodash/get';
 
 export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG');
 
-declare var Ionic: any;
-
 export interface ImgcacheConfig {
   /**
    * Whether to call the log method

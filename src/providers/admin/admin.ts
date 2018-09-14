@@ -19,42 +19,7 @@ import { catchError } from 'rxjs/operators/catchError';
 import { SessionProvider } from '../session/session';
 import { getPermitValidity } from '../../util';
 
-export interface AdminOrganization {
-  ID: number;
-  at: number;
-  ot: string;
-  level: number;
-}
-
-export interface AdminPermit {
-  ID: number;
-  at: number;
-  code: number;
-  fr: number;
-  fullname: string;
-  pdf: string;
-  ref1: number;
-  ref2: number;
-  rev: number;
-  suborgid: number;
-  subt: string;
-  t: string;
-  tel: string;
-  to: number;
-  info?: string;
-
-  validity?: string;
-}
-
-interface SearchMatch {
-  arrayIndex: number;
-  indices: Array<[number, number]>;
-  key: string;
-  value: string;
-}
-
-export type AdminPermitSearchResult = AdminPermit & { score?: number; matches?: SearchMatch[] };
-
+import { AdminOrganization, AdminPermit, AdminPermitSearchResult } from './adminTypes';
 @Injectable()
 export class AdminProvider extends BaseModel {
   private static readonly LAST_UPDATED = 'ADMIN_LAST_UPDATED';

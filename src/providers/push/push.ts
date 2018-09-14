@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { App, Platform } from 'ionic-angular';
 import { SettingsProvider } from '../settings/settings';
-import { serverLocation } from '../api/serverLocation';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
 import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal';
 import { oneSignalConfig } from '../../app/config';
-import { User } from '../user/user';
+import { UserProvider } from '../../providers/user/user';
+import { User } from '../../providers/user/userTypes';
+import { DeepLinks, DeepLinksProvider } from '../deep-links/deep-links';
 
 interface IfiskeNotification {
   action?: string;
@@ -70,9 +71,10 @@ export class PushProvider {
               {
                 text: 'OK',
                 handler: () => {
-                  window.open(
-                    `${serverLocation}/r/${notification.additionalData.code}?lang=${this.settings.language}`,
-                    '_system',
+                  this.deepLinks.open(
+                    DeepLinks.catchReport,
+                    { code: notification.additionalData.code },
+                    { bringSession: true },
                   );
                 },
               },
@@ -119,6 +121,8 @@ export class PushProvider {
     private settings: SettingsProvider,
     private oneSignal: OneSignal,
     private plt: Platform,
+    private deepLinks: DeepLinksProvider,
+    private userProvider: UserProvider,
   ) {
     this.plt.ready().then(() => {
       this.oneSignal.startInit(oneSignalConfig.appId, oneSignalConfig.googleProjectNumber);
@@ -138,6 +142,16 @@ export class PushProvider {
       this.settings.settingsChanged.subscribe(settings => {
         this.oneSignal.setSubscription(settings.push);
       });
+    });
+    this.userProvider.loggedIn.subscribe(loggedIn => {
+      if (loggedIn) {
+        this.register();
+        this.userProvider.getInfo().then(data => {
+          this.setUserDetails(data);
+        });
+      } else {
+        this.unregister();
+      }
     });
   }
 

@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { Product } from '../../providers/product/product';
-import { Area } from '../../providers/area/area';
-import { serverLocation } from '../../providers/api/serverLocation';
-import { SettingsProvider } from '../../providers/settings/settings';
-import { PlatformProvider } from '../../providers/platform/platform';
-import { Permit } from '../../providers/user/user';
-import { MonitoringClient } from '../../app/monitoring';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Observable } from 'rxjs/Observable';
+
+import { Product } from '../../providers/product/product';
+import { Area } from '../../providers/area/area';
+import { Permit } from '../../providers/user/userTypes';
+import { MonitoringClient } from '../../app/monitoring';
+import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 
 @IonicPage()
 @Component({
@@ -22,10 +21,9 @@ export class AreasDetailPermitPage {
   constructor(
     private navCtrl: NavController,
     public navParams: NavParams,
-    private settings: SettingsProvider,
-    private platform: PlatformProvider,
     private modalCtrl: ModalController,
     private ga: GoogleAnalytics,
+    private deepLinks: DeepLinksProvider,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
@@ -40,13 +38,8 @@ export class AreasDetailPermitPage {
     console.log('buy', product, method);
 
     if (method.name === 'Web') {
-      // TODO: pass user session to server
-      const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${
-        product.ID
-      }&app=true&device=${this.platform.platform}`;
-      window.open(url, '_system');
-
       this.ga.trackEvent('Purchase', 'Web', '' + product.ID);
+      this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });
     } else if (method.name === 'SMS') {
       this.modalCtrl
         .create('SmsPurchasePage', {

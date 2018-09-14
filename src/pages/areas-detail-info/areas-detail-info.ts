@@ -15,6 +15,7 @@ import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { IFISKE_ERRORS } from '../../providers/api/api';
+import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 
 @IonicPage()
 @Component({
@@ -56,6 +57,7 @@ export class AreasDetailInfoPage {
     private imgcache: ImgcacheService,
     private socialSharing: SocialSharing,
     private translate: TranslateService,
+    private deepLinks: DeepLinksProvider,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
@@ -153,6 +155,11 @@ export class AreasDetailInfoPage {
 
   share = async () => {
     const message = await this.translate.get('ui.share:area', { area: this.area.t }).toPromise();
-    this.socialSharing.share(message, this.area.org, undefined, `https://www.ifiske.se/o/${this.area.orgid}`);
+    this.socialSharing.share(
+      message,
+      this.area.org,
+      undefined,
+      this.deepLinks.getUrl(DeepLinks.organization, { orgId: '' + this.area.orgid }, { bringMetadata: false }),
+    );
   };
 }

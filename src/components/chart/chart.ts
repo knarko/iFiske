@@ -1,7 +1,6 @@
-import { Component, ViewChild, ElementRef, Input, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
-import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 export interface ChartOptions {
   accumulate?: boolean;
@@ -17,9 +16,11 @@ export class ChartComponent implements AfterViewInit, OnChanges {
   ctx: CanvasRenderingContext2D;
   chart: Chart;
 
-  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('canvas')
+  canvas: ElementRef;
 
-  @Input() data: any;
+  @Input()
+  data: any;
   @Input()
   options: ChartOptions = {
     type: 'line',

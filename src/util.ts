@@ -1,6 +1,7 @@
-import { Permit } from './providers/user/user';
-import { AdminPermit } from './providers/admin/admin';
 import { Validators } from '@angular/forms';
+
+import { Permit } from './providers/user/userTypes';
+import { AdminPermit } from './providers/admin/adminTypes';
 
 export function getPermitValidity(product: Permit | AdminPermit) {
   if (product.rev === 1) {

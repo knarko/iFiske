@@ -21,8 +21,7 @@ import { resolveOrRejectAllPromises } from '../../util';
 import { Dictionary } from '../../types';
 import { MonitoringClient } from '../../app/monitoring';
 
-export type UpdateFn = () => boolean;
-export type UpdateStrategy = 'timed' | 'always' | UpdateFn;
+import { UpdateStrategy } from './updateTypes';
 
 @Injectable()
 export class UpdateProvider {

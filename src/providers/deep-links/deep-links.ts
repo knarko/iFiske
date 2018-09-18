@@ -14,8 +14,7 @@ export enum DeepLinks {
   catchReport,
   controlPanel,
   organization,
-  profile,
-  myPage,
+  userProfile,
 }
 
 interface DeepLinkOptions {
@@ -80,10 +79,8 @@ export class DeepLinksProvider {
         if (params.productId == undefined) {
           throw new Error('You need to add the ID of the permit.');
         }
-        query = query.append('i', params.productId);
-        query = query.append('p', '5');
 
-        url = `${serverLocation}/mobile/index.php`;
+        url = `${serverLocation}/buy/${params.productId}`;
         break;
 
       case DeepLinks.catchReport:
@@ -97,7 +94,7 @@ export class DeepLinksProvider {
         if (params.orgId != undefined) {
           query = query.append('org', params.orgId);
         }
-        url = `${serverLocation}/index.php/kontrollpanelen`;
+        url = `${serverLocation}/kontrollpanel`;
         break;
 
       case DeepLinks.organization:
@@ -107,11 +104,8 @@ export class DeepLinksProvider {
         url = `${serverLocation}/o/${params.orgId}`;
         break;
 
-      case DeepLinks.myPage:
-      case DeepLinks.profile:
-        // myPage swedish example: https://www.ifiske.se/index.php/mina-sidor
-        // profile swedish example: https://www.ifiske.se/index.php/anvaendarprofil
-        url = `${params.baseUrl}`;
+      case DeepLinks.userProfile:
+        url = `${serverLocation}/user-profile`;
         break;
 
       default:

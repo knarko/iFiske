@@ -10,6 +10,7 @@ import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-li
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  numbers: string[];
   user: User;
 
   constructor(
@@ -19,8 +20,9 @@ export class ProfilePage {
     private deepLinks: DeepLinksProvider,
   ) {}
 
-  async ionViewWillEnter() {
-    this.user = await this.userProvider.getInfo();
+  ionViewWillEnter() {
+    this.userProvider.getInfo().then(user => (this.user = user));
+    this.userProvider.getNumbers().then(numbers => (this.numbers = numbers));
   }
 
   close() {
@@ -37,9 +39,6 @@ export class ProfilePage {
   }
 
   openProfilePage() {
-    this.deepLinks.open(DeepLinks.profile, { baseUrl: this.user.profile }, { bringSession: true });
-  }
-  openMyPage() {
-    this.deepLinks.open(DeepLinks.myPage, { baseUrl: this.user.mypage }, { bringSession: true });
+    this.deepLinks.open(DeepLinks.userProfile, {}, { bringSession: true });
   }
 }

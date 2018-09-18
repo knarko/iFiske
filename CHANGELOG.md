@@ -1,3 +1,13 @@
+<a name="4.6.3"></a>
+## [4.6.3](https://gitlab.com/kada-development/ifiske/compare/v4.6.2...v4.6.3) (2018-09-18)
+
+
+### Bug Fixes
+
+* **deepLinks:** update links according to new specification ([393d8d3](https://gitlab.com/kada-development/ifiske/commit/393d8d3))
+
+
+
 <a name="4.6.2"></a>
 ## [4.6.2](https://gitlab.com/kada-development/ifiske/compare/v4.6.1...v4.6.2) (2018-09-14)
 

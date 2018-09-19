@@ -33,6 +33,7 @@ const addQuery = (query: HttpParams) => {
 export class DeepLinksProvider {
   sub: Subscription;
   private token: string;
+  timeout: NodeJS.Timer;
   constructor(
     private userProvider: UserProvider,
     private settings: SettingsProvider,
@@ -49,6 +50,10 @@ export class DeepLinksProvider {
       console.log('Saving token:', token);
       this.token = token;
     });
+    if (this.timeout != undefined) {
+      clearTimeout(this.timeout);
+    }
+    this.timeout = setTimeout(() => this.getToken(), 50 * 60 * 1000);
   }
   open(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {
     const url = this.getUrl(link, params, options);
@@ -70,7 +75,10 @@ export class DeepLinksProvider {
     if (bringSession && this.token) {
       query = query.append('token', this.token);
       this.token = undefined;
-      setTimeout(() => this.getToken(), 5000);
+      if (this.timeout != undefined) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => this.getToken(), 10_000);
     }
 
     let url: string;

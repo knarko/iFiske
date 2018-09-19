@@ -1,3 +1,13 @@
+<a name="4.6.4"></a>
+## [4.6.4](https://gitlab.com/kada-development/ifiske/compare/v4.6.3...v4.6.4) (2018-09-19)
+
+
+### Bug Fixes
+
+* **deepLinks:** remove noopener because it breaks in cordova ([194f57a](https://gitlab.com/kada-development/ifiske/commit/194f57a))
+
+
+
 <a name="4.6.3"></a>
 ## [4.6.3](https://gitlab.com/kada-development/ifiske/compare/v4.6.2...v4.6.3) (2018-09-18)
 

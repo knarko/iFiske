@@ -52,7 +52,7 @@ export class DeepLinksProvider {
   }
   open(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {
     const url = this.getUrl(link, params, options);
-    window.open(url, '_system', 'noopener');
+    window.open(url, '_system');
   }
 
   getUrl(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {

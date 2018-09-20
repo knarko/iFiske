@@ -78,7 +78,7 @@ export class DeepLinksProvider {
       if (this.timeout != undefined) {
         clearTimeout(this.timeout);
       }
-      this.timeout = setTimeout(() => this.getToken(), 10_000);
+      this.timeout = setTimeout(() => this.getToken(), 10000);
     }
 
     let url: string;

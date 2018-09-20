@@ -1,3 +1,13 @@
+<a name="4.6.5"></a>
+## [4.6.5](https://gitlab.com/kada-development/ifiske/compare/v4.6.4...v4.6.5) (2018-09-20)
+
+
+### Bug Fixes
+
+* **deepLinks:** add refresh capability so that token will not expire ([ac677be](https://gitlab.com/kada-development/ifiske/commit/ac677be))
+
+
+
 <a name="4.6.4"></a>
 ## [4.6.4](https://gitlab.com/kada-development/ifiske/compare/v4.6.3...v4.6.4) (2018-09-19)
 

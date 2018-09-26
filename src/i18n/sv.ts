@@ -89,6 +89,9 @@ export const sv: TranslationDefinition = {
       "username": "ex. Svenne77",
       "phone": "ex. 070 123 45 67",
       "permit": "ex. 12345678",
+      "zip": "ex. 123 45",
+      "adr": "ex. Fiskegatan 55",
+      "town": "ex. Fiskebyn",
     },
     "issues": {
       "long_text": "<p>Har du hittat en bugg eller problem med appen?</p><p>Vi ser gärna att du rapporterar in buggar på <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>Du måste ha ett användarkonto och logga in på GitHub för att skriva in en rapport - men då kommer du också få feedback när din rapport behandlas! Att göra ett konto på GitHub är gratis.</p><p>Om du ej kan använda GitHub kan vi ta emot felrapporter på <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> - Se till att beskriva felet noga och ange också vilken telefontyp du kör på. Felrapporter av typen \"det funkar inte\" kan vi tyvärr inte göra så mycket med.</p><p>Tack så mycket!</p>",
@@ -120,6 +123,11 @@ export const sv: TranslationDefinition = {
     "share:area": "Fiske i {{area}}!",
     "changePassword": {
       "completed": "Lösenord ändrat!",
+    },
+    "deliveryAddress": {
+      "zip": "Postnummer",
+      "adr": "Gatuadress",
+      "town": "Ort",
     },
   },
   "errors": {
@@ -220,6 +228,7 @@ export const sv: TranslationDefinition = {
   "County": "Län",
   "Create new account": "Skapa nytt konto",
   "Description": "Beskrivning",
+  "Delivery Address": "Adress",
   "Email": "E-postadress",
   "Error": "Ett fel uppstod",
   "Favorites": "Favoriter",

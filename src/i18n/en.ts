@@ -88,6 +88,9 @@ export const en: TranslationDefinition = {
       "username": "e.g. John77",
       "phone": "e.g. +46 70 123 45 67",
       "permit": "e.g. 12345678",
+      "zip": "e.g. 123 45",
+      "adr": "e.g. Fishing Blvd. 55",
+      "town": "e.g. Fishville",
     },
     "issues": {
       "long_text": "<p>Have you found a bug or a problem with the app?</p><p>We encourage you to report any bugs on <a href=\"https://github.com/ifiske/ifiske/issues\">GitHub</a></p><p>You must be logged in at GitHub to write a report - but in return you will also get feedback as soon as the issue is handled! Making an account on GitHub is free.</p><p>If you are unable use GitHub, we also receive bug reports on <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a>. Make sure to describe the error carefully and also tell us what phone you are using. Bug Reports such as “It doesn't work” aren't very useful for us.</p>",
@@ -119,6 +122,11 @@ export const en: TranslationDefinition = {
     "share:area": "Let's go fishing in {{area}}!",
     "changePassword": {
       "completed": "Password changed!",
+    },
+    "deliveryAddress": {
+      "zip": "Zip Code",
+      "adr": "Street Address",
+      "town": "City",
     },
   },
   "errors": {
@@ -220,6 +228,7 @@ export const en: TranslationDefinition = {
   "County": "County",
   "Create new account": "Create new account",
   "Description": "Description",
+  "Delivery Address": "Delivery Address",
   "Email": "Email",
   "Error": "Error",
   "Favorites": "Favourites",

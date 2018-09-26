@@ -12,6 +12,9 @@ import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-li
 export class ProfilePage {
   numbers: string[];
   user: User;
+  deliveryAddress = {};
+
+  addressHasChanged = false;
 
   constructor(
     private userProvider: UserProvider,
@@ -40,5 +43,22 @@ export class ProfilePage {
 
   openProfilePage() {
     this.deepLinks.open(DeepLinks.userProfile, {}, { bringSession: true });
+  }
+
+  addressChanged(key, val) {
+    console.log(key, val);
+    if (this.user[key] === val) {
+      delete this.deliveryAddress[key];
+    } else {
+      this.deliveryAddress[key] = val;
+    }
+    this.addressHasChanged = !!Object.keys(this.deliveryAddress).length;
+  }
+
+  async saveAddress() {
+    this.addressHasChanged = false;
+    const { town, adr, zip } = this.user;
+    const update = Object.assign({ town, adr, zip }, this.deliveryAddress);
+    await this.userProvider.setDeliveryAddress(update);
   }
 }

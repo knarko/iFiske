@@ -146,7 +146,7 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 
 .item-md,
 .item-ios {
-  &.item-input.ng-dirty:not(.input-has-focus):not(.item-input-has-focus) {
+  &.item-input.ng-dirty:not(.input-has-focus):not(.item-input-has-focus):not(.novalidate) {
     &.ng-invalid.item-md .item-inner {
       box-shadow: inset 0 -1px 0 0 $text-input-highlight-color-invalid;
     }
@@ -160,6 +160,15 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
     &.ng-valid .item-inner {
       border-bottom-color: $text-input-highlight-color-valid;
     }
+  }
+}
+.item-input.novalidate:not(.input-has-focus):not(.item-input-has-focus) {
+  &.item-ios .item-inner {
+    border-bottom-color: #c8c7cc !important;
+  }
+  &.item-md .item-inner {
+    border-bottom-color: #dedede !important;
+    box-shadow: none !important;
   }
 }
 

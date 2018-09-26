@@ -1,3 +1,18 @@
 page-profile {
-
+  .item-md.item-input,
+  .item-ios.item-input {
+    padding-left: 16px !important;
+    .label-ios[stacked] {
+      margin-bottom: 0;
+    }
+  }
+  .item-input .label-md {
+    color: inherit;
+    h2 {
+      margin: 0;
+    }
+  }
+  .item-ios.item-input > .item-inner {
+    padding-left: 0;
+  }
 }

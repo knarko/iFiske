@@ -22,9 +22,22 @@
 
     <user-information *ngIf="user" [user]="user"></user-information>
 
+    <ng-container *ngIf="user">
+      <ion-list-header>
+        {{'Delivery Address' | translate}}
+        <button ion-button outline item-end *ngIf="addressHasChanged" (click)="saveAddress()">{{'Save' | translate}}</button>
+      </ion-list-header>
+      <ion-item *ngFor="let key of ['adr', 'zip', 'town']" class="novalidate">
+        <ion-label stacked>
+          <h2>{{'ui.deliveryAddress.' + key | translate}}</h2>
+        </ion-label>
+        <ion-input [ngModel]="user[key]" (ngModelChange)="addressChanged(key, $event)" [placeholder]="'ui.placeholder.' + key | translate"
+          novalidate></ion-input>
+      </ion-item>
+    </ng-container>
+
     <ng-container *ngIf="numbers?.length">
       <ion-list-header>
-        <ion-icon name="telephone"></ion-icon>
         {{'User phone numbers' | translate}}
       </ion-list-header>
       <ion-item *ngFor="let number of numbers">

@@ -67,6 +67,9 @@ export const de: TranslationDefinition | any = {
       "username": "z.B. John77",
       "phone": "z.B. +46 76 123 45 67",
       "permit": "z.B. 12345678",
+      "zip": "z.B. 123 45",
+      "adr": "z.B. Angelnstraße 55",
+      "town": "e.g. Angelndorf",
     },
     "issues": {
       "long_text": "<p>Haben Sie einen Fehler oder Problem mit der App?</p><p>Sie können gerne jegliche Fehler auf <a href=\"https: //github.com/ifiske/ifiske/issues\">GitHub</a> berichten</p><p>Sie müssen bei GitHub angemeldet sein um einen Bericht schreiben zu können - im Gegenzug erhalten Sie aber auch Feedback sobald das Problem behoben wird! Einen Account auf GitHub zu erstellen ist kostenlos.</p><p>Falls Sie GitHub nicht nutzen können, nehmen wir Berichte auch unter <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> entgegen. Stellen Sie sicher, den Fehler sorgfältig zu beschreiben und teilen Sie uns bitte mit was für ein Telefon Sie verwenden. Fehlerberichte wie “Es funktioniert nicht” sind nicht sehr nützlich.</p>",
@@ -86,6 +89,11 @@ export const de: TranslationDefinition | any = {
       },
     },
     "share:area": "Angeln in {{area}}!",
+    "deliveryAddress": {
+      "zip": "Postleitzahl",
+      "adr": "Straße und Hausnummer",
+      "town": "Stadt",
+    },
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
@@ -179,6 +187,7 @@ export const de: TranslationDefinition | any = {
   "County": "Landkreis",
   "Create new account": "Neuen Account erstellen",
   "Description": "Beschreibung",
+  "Delivery Address": "Adressen",
   "Email": "E-mail",
   "Error": "Fehler",
   "Favorites": "Favoriten",

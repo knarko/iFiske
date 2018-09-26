@@ -295,6 +295,18 @@ export class ApiProvider {
       { retry: false, session: true },
     );
   }
+  /**
+   * Get the delivery address, consisting of a street address, zip code and town name. If the user hasn’t set any, empty strings are returned.
+   */
+  user_get_del_adr() {
+    return this.api_call({ m: 'user_get_del_adr' }, { session: true });
+  }
+  /**
+   * Sets the users default delivery address
+   */
+  user_set_del_adr({ adr = '', town = '', zip = '' }) {
+    return this.api_call({ m: 'user_set_del_adr', adr, town, zip }, { session: true, post: true, retry: false });
+  }
 
   /*
        * Administration endpoints

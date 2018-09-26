@@ -11,6 +11,9 @@ export interface User {
   created: string;
   mypage: string;
   profile: string;
+  adr?: string;
+  town?: string;
+  zip?: string;
 }
 
 export interface Favorite {

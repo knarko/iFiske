@@ -86,7 +86,10 @@ export interface TranslationDefinition {
       "activationCode": string
       "username": string
       "phone": string
-      "permit": string,
+      "permit": string
+      "zip": string
+      "adr": string
+      "town": string,
     }
     "issues": {
       "long_text": string,
@@ -118,6 +121,11 @@ export interface TranslationDefinition {
     "share:area": string
     "changePassword": {
       "completed": string,
+    }
+    "deliveryAddress": {
+      "zip": string
+      "adr": string
+      "town": string,
     },
   }
   "errors": {
@@ -218,6 +226,7 @@ export interface TranslationDefinition {
   "County": string
   "Create new account": string
   "Description": string
+  "Delivery Address": string
   "Email": string
   "Error": string
   "Favorites": string

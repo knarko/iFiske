@@ -37,6 +37,9 @@ export class UserProvider extends BaseModel {
         created: 'text',
         mypage: 'text',
         profile: 'text',
+        adr: 'text',
+        town: 'text',
+        zip: 'text',
       },
     },
     number: {
@@ -146,41 +149,45 @@ export class UserProvider extends BaseModel {
         this.API.user_get_favorites().then(favorites => {
           this.DB.populateTable(this.tables.favorite, favorites);
         }),
-        this.API.user_info().then((data: User) => {
-          const numbers = (data as any).numbers;
-          const numArr = [];
-          for (let i = 0; i < numbers.length; ++i) {
-            numArr.push({ number: numbers[i] });
-          }
+        Promise.all([this.API.user_info(), this.API.user_get_del_adr()]).then(
+          ([data, deliveryAddress]: [User, Partial<User>]) => {
+            const numbers = (data as any).numbers;
+            const numArr = [];
+            for (let i = 0; i < numbers.length; ++i) {
+              numArr.push({ number: numbers[i] });
+            }
 
-          MonitoringClient.configureScope(scope => {
-            scope.setUser({
-              id: '' + data.ID,
+            MonitoringClient.configureScope(scope => {
+              scope.setUser({
+                id: '' + data.ID,
+              });
             });
-          });
 
-          return Promise.all([
-            this.DB.populateTable(this.tables.info, [data]).then(
-              () => {
-                return 'User_Info';
-              },
-              err => {
-                console.log(data);
-                console.log(err);
-                return Promise.reject(err);
-              },
-            ),
-            this.DB.populateTable(this.tables.number, numArr).then(
-              () => {
-                return 'User_Numbers';
-              },
-              err => {
-                console.log(err);
-                return Promise.reject(err);
-              },
-            ),
-          ]);
-        }),
+            Object.assign(data, deliveryAddress);
+
+            return Promise.all([
+              this.DB.populateTable(this.tables.info, [data]).then(
+                () => {
+                  return 'User_Info';
+                },
+                err => {
+                  console.log(data);
+                  console.log(err);
+                  return Promise.reject(err);
+                },
+              ),
+              this.DB.populateTable(this.tables.number, numArr).then(
+                () => {
+                  return 'User_Numbers';
+                },
+                err => {
+                  console.log(err);
+                  return Promise.reject(err);
+                },
+              ),
+            ]);
+          },
+        ),
         this.API.user_products().then(products => {
           this.DB.populateTable(this.tables.product, products);
         }),
@@ -347,5 +354,10 @@ export class UserProvider extends BaseModel {
       code,
     });
     return this.login({ username, password });
+  }
+
+  async setDeliveryAddress(opts: { zip?: string; town?: string; adr?: string }) {
+    await this.API.user_set_del_adr(opts);
+    await this.update();
   }
 }

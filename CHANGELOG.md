@@ -1,3 +1,8 @@
+<a name="4.6.8"></a>
+## [4.6.8](https://gitlab.com/kada-development/ifiske/compare/v4.6.7...v4.6.8) (2018-09-26)
+
+
+
 <a name="4.6.7"></a>
 ## [4.6.7](https://gitlab.com/kada-development/ifiske/compare/v4.6.6...v4.6.7) (2018-09-25)
 

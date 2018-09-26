@@ -1,3 +1,13 @@
+<a name="4.6.9"></a>
+## [4.6.9](https://gitlab.com/kada-development/ifiske/compare/v4.6.8...v4.6.9) (2018-09-26)
+
+
+### Features
+
+* **profile:** Allow editing/saving the user address ([cf0091f](https://gitlab.com/kada-development/ifiske/commit/cf0091f))
+
+
+
 <a name="4.6.8"></a>
 ## [4.6.8](https://gitlab.com/kada-development/ifiske/compare/v4.6.7...v4.6.8) (2018-09-26)
 

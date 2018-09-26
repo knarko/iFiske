@@ -23,7 +23,7 @@ $offline-padding: 4px;
 $offline-font-size: 12px;
 $offline-size: $offline-padding + $offline-font-size;
 
-.offline .ion-page>ion-header .toolbar:first-child {
+.offline .ion-page > ion-header .toolbar:first-child {
   padding-top: $offline-size;
 
   .md & .toolbar-content .title {
@@ -35,11 +35,11 @@ $offline-size: $offline-padding + $offline-font-size;
     height: 44px + $offline-size;
     min-height: 44px + $offline-size;
 
-  ion-title {
-    padding-top: $offline-size;
-    height: 44px + $offline-size;
-    min-height: 44px + $offline-size;
-  }
+    ion-title {
+      padding-top: $offline-size;
+      height: 44px + $offline-size;
+      min-height: 44px + $offline-size;
+    }
   }
   .ios &.statusbar-padding {
     padding-top: calc(20px + 4px + #{$offline-size});
@@ -84,7 +84,6 @@ $offline-size: $offline-padding + $offline-font-size;
   }
 }
 
-
 .right {
   float: right !important;
   margin-left: auto !important;
@@ -110,18 +109,17 @@ $offline-size: $offline-padding + $offline-font-size;
   text-align: center;
 }
 
-
 super-tabs-container {
   height: calc(100% - 54px) !important;
 }
 
-super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
+super-tabs-toolbar > ion-toolbar.toolbar .tab-buttons-container .tab-buttons super-tab-button {
   &.title-and-icon {
     height: 54px !important;
   }
 
   .title {
-    font-size: .9em;
+    font-size: 0.9em;
     text-transform: capitalize;
   }
 
@@ -134,7 +132,6 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 .list-md {
   margin: -1px 0;
 }
-
 
 .card-header .icon {
   vertical-align: middle;
@@ -172,7 +169,6 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   }
 }
 
-
 .item-label-floating {
   .input-md,
   .input-ios {
@@ -185,9 +181,9 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 }
 
 // Removes the padding-left for inputs
-:not([inset])>.item-checkbox,
-:not([inset])>.item-ios.item-input,
-:not([inset])>.item-md.item-input {
+:not([inset]) > .item-checkbox,
+:not([inset]) > .item-ios.item-input,
+:not([inset]) > .item-md.item-input {
   padding-left: 0;
 }
 
@@ -196,8 +192,8 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 }
 
 .item:not(.virtal-position) {
-  &+.list-header-md,
-  &+.list-header-ios {
+  & + .list-header-md,
+  & + .list-header-ios {
     margin-top: -1px;
   }
 }
@@ -217,8 +213,8 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   border-top: none;
   text-transform: uppercase;
 
-  &>.item-inner>.input-wrapper {
-    &>.label {
+  & > .item-inner > .input-wrapper {
+    & > .label {
       flex: 0 0 auto;
     }
     &::after {
@@ -230,7 +226,7 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   }
 }
 
-.virtual-scroll.list-ios>.item-block:first-child {
+.virtual-scroll.list-ios > .item-block:first-child {
   border-top: none;
 }
 
@@ -249,7 +245,7 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
 
 .ion-icon {
   display: inline-block;
-  font-family: "Ionicons";
+  font-family: 'Ionicons';
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-style: normal;
@@ -260,7 +256,6 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   text-transform: none;
   speak: none;
 }
-
 
 .ios .statusbar-padding:first-child {
   &.toolbar-ios {
@@ -301,7 +296,6 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   }
 }
 
-
 .back-button-ios {
   max-width: 86px;
   .button-inner {
@@ -309,18 +303,15 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   }
 }
 
-
 .back-button-text-ios {
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
 }
 
-
 .force-back-button .back-button {
   display: inline-block;
 }
-
 
 .admin-pick-organization .current {
   color: map-get($colors, secondary);
@@ -383,16 +374,14 @@ super-tabs-toolbar>ion-toolbar.toolbar .tab-buttons-container .tab-buttons super
   }
 }
 
-
 .subtitle {
   margin-bottom: 0;
 
-  &+span {
+  & + span {
     display: block;
     margin-bottom: 1rem;
   }
 }
-
 
 img:not([src]) {
   visibility: hidden;
@@ -402,6 +391,6 @@ img:not([src]) {
   white-space: pre-line;
 }
 
-.item-ios.item-input>.item-inner {
+.item-ios.item-input > .item-inner {
   padding-left: 8px;
 }

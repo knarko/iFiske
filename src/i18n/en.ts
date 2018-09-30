@@ -228,7 +228,7 @@ export const en: TranslationDefinition = {
   "County": "County",
   "Create new account": "Create new account",
   "Description": "Description",
-  "Delivery Address": "Delivery Address",
+  "Delivery Address": "Address",
   "Email": "Email",
   "Error": "Error",
   "Favorites": "Favourites",

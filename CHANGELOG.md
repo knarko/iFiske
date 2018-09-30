@@ -1,3 +1,13 @@
+<a name="4.7.0"></a>
+# [4.7.0](https://gitlab.com/kada-development/ifiske/compare/v4.6.9...v4.7.0) (2018-09-30)
+
+
+### Bug Fixes
+
+* **translations:** rename Delivery Address to Address ([dfa8160](https://gitlab.com/kada-development/ifiske/commit/dfa8160))
+
+
+
 <a name="4.6.9"></a>
 ## [4.6.9](https://gitlab.com/kada-development/ifiske/compare/v4.6.8...v4.6.9) (2018-09-26)
 

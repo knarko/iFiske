@@ -1,3 +1,13 @@
+<a name="4.7.1"></a>
+## [4.7.1](https://gitlab.com/kada-development/ifiske/compare/v4.7.0...v4.7.1) (2018-10-03)
+
+
+### Bug Fixes
+
+* **ios:** add NSLocationWhenUseUsageDescription ([6f43e65](https://gitlab.com/kada-development/ifiske/commit/6f43e65))
+
+
+
 <a name="4.7.0"></a>
 # [4.7.0](https://gitlab.com/kada-development/ifiske/compare/v4.6.9...v4.7.0) (2018-09-30)
 

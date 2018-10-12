@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { serverLocation } from './serverLocation';
 
 import { SettingsProvider } from '../settings/settings';
@@ -106,10 +106,6 @@ export class ApiProvider {
       key: 'ox07xh8aaypwvq7a',
     });
 
-    if (options.session) {
-      inputParams.s = this.sessionData.token;
-    }
-
     Object.keys(inputParams).forEach(key => {
       inputParams[key] = '' + inputParams[key];
     });
@@ -118,6 +114,14 @@ export class ApiProvider {
       encoder: new CustomQueryEncoder(),
       fromObject: inputParams as Dictionary<string>,
     });
+
+    const headersObject: Dictionary<string> = {
+      Accept: 'application/json',
+    };
+    if (options.session) {
+      headersObject['Authorization'] = `Bearer ${this.sessionData.token}`;
+    }
+    const headers = new HttpHeaders(headersObject);
 
     if (options.cacheTime && this.cache.has(params.toString())) {
       const res = this.cache.get(params.toString());
@@ -129,10 +133,10 @@ export class ApiProvider {
     }
 
     let httpResult;
-    if (options.session || options.post) {
-      httpResult = this.http.post(ApiProvider.BASE_URL, params);
+    if (options.post) {
+      httpResult = this.http.post(ApiProvider.BASE_URL, params, { headers });
     } else {
-      httpResult = this.http.get(ApiProvider.BASE_URL, { params });
+      httpResult = this.http.get(ApiProvider.BASE_URL, { params, headers });
     }
     const result$ = httpResult.pipe(
       timeout(10000),
@@ -261,7 +265,7 @@ export class ApiProvider {
         old_password: old_password,
         new_password: new_password,
       },
-      { retry: false, session: true },
+      { retry: false, session: true, post: true },
     );
   }
   user_login(username, password) {
@@ -280,7 +284,7 @@ export class ApiProvider {
   }
   user_logout() {
     return (
-      this.api_call({ m: 'user_logout' }, { retry: false, session: true })
+      this.api_call({ m: 'user_logout' }, { retry: false, session: true, post: true })
         // It doesn't matter if this fails or not, we still want to clean up the user on this phone
         .catch(err => console.warn(err))
         .then(() => {
@@ -298,7 +302,7 @@ export class ApiProvider {
         token: token,
         type: 2, // 2 is for FCM
       },
-      { retry: false, session: true },
+      { retry: false, session: true, post: true },
     );
   }
   /**
@@ -324,7 +328,7 @@ export class ApiProvider {
     return this.api_call({ m: 'adm_products', orgid: orgid }, { retry: false, session: true });
   }
   adm_revoke_prod(code, flag) {
-    return this.api_call({ m: 'adm_revoke_prod', code: code, flag: flag }, { retry: false, session: true });
+    return this.api_call({ m: 'adm_revoke_prod', code: code, flag: flag }, { retry: false, session: true, post: true });
   }
   adm_check_prod(code) {
     return this.api_call({ m: 'adm_check_prod', code: code }, { retry: false, session: true });
@@ -426,7 +430,10 @@ export class ApiProvider {
   }
   user_add_favorite(area) {
     // Flag 0 means to not get notifications on catch reports
-    return this.api_call({ m: 'user_add_favorite', areaid: area, flag: 0 }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'user_add_favorite', areaid: area, flag: 0 },
+      { retry: false, session: true, post: true },
+    );
   }
   user_set_favorite_notification(area, flag) {
     flag = flag ? 1 : 0;
@@ -436,11 +443,11 @@ export class ApiProvider {
         areaid: area,
         flag: flag,
       },
-      { retry: false, session: true },
+      { retry: false, session: true, post: true },
     );
   }
   user_remove_favorite(area) {
-    return this.api_call({ m: 'user_remove_favorite', areaid: area }, { retry: false, session: true });
+    return this.api_call({ m: 'user_remove_favorite', areaid: area }, { retry: false, session: true, post: true });
   }
   get_terms_of_service() {
     return this.api_call({ m: 'get_terms_of_service' });

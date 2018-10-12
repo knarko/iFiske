@@ -115,7 +115,7 @@ page-onboarding {
 /* Copied (but modified) from https://codepen.io/nckprsn/pen/GgxWrb */
 
 .waves {
-  width: calc(100% + 200vw);
+  width: 600%; // 100% * number of slides+2
   left: -100vw;
   height: 20vh;
   bottom: 35vh;

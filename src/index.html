@@ -30,11 +30,9 @@
       /*/
 
       // Remove all service workers
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        for (let registration of registrations) {
-          registration.unregister();
-        }
-      }).catch(err => console.warn('Error removing service workers:', err));
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        registrations.forEach(function (registration) { registration.unregister() });
+      }).catch(function (err) { console.warn('Error removing service workers:', err) });
 
       //*/
     }

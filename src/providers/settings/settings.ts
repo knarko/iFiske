@@ -29,7 +29,8 @@ export class SettingsProvider {
     };
   }
   get defaultLanguage() {
-    for (const lang of navigator.languages) {
+    const languages = navigator.languages || [navigator.language];
+    for (const lang of languages) {
       if (this.availableLanguages[lang]) {
         return lang;
       }

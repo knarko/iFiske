@@ -26,18 +26,22 @@ export class CreateAccountDetailsPage {
   validateUsername: AsyncValidatorFn = (c: AbstractControl) => {
     return timer(500).pipe(
       switchMap(() => {
-        return this.API.user_exists(c.value).then(res => {
-          return res ? { taken: true } : null;
-        });
+        return this.API.user_exists(c.value)
+          .then(res => {
+            return res ? { taken: true } : null;
+          })
+          .catch(() => ({ network: true }));
       }),
     );
   };
   validateEmail: AsyncValidatorFn = (c: AbstractControl) => {
     return timer(500).pipe(
       switchMap(() => {
-        return this.API.user_exists(undefined, c.value).then(res => {
-          return res ? { taken: true } : null;
-        });
+        return this.API.user_exists(undefined, c.value)
+          .then(res => {
+            return res ? { taken: true } : null;
+          })
+          .catch(() => ({ network: true }));
       }),
     );
   };
@@ -72,6 +76,7 @@ export class CreateAccountDetailsPage {
             taken: 'errors.username.taken',
             minlength: 'errors.username.pattern_mismatch',
             maxlength: 'errors.username.pattern_mismatch',
+            network: 'errors.network',
           },
         },
         password: {
@@ -106,6 +111,7 @@ export class CreateAccountDetailsPage {
             required: 'errors.email.required',
             email: 'errors.email.invalid',
             taken: 'errors.email.taken',
+            network: 'errors.network',
           },
         },
         phone: {

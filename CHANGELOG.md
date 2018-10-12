@@ -1,3 +1,13 @@
+<a name="4.7.2"></a>
+## [4.7.2](https://gitlab.com/kada-development/ifiske/compare/v4.7.1...v4.7.2) (2018-10-12)
+
+
+### Bug Fixes
+
+* **create-account:** add network error message to user_exists check ([befe8ca](https://gitlab.com/kada-development/ifiske/commit/befe8ca))
+
+
+
 <a name="4.7.1"></a>
 ## [4.7.1](https://gitlab.com/kada-development/ifiske/compare/v4.7.0...v4.7.1) (2018-10-03)
 

@@ -1,3 +1,13 @@
+<a name="4.7.3"></a>
+## [4.7.3](https://gitlab.com/kada-development/ifiske/compare/v4.7.2...v4.7.3) (2018-10-12)
+
+
+### Bug Fixes
+
+* multiple fixes for older androids ([1e3ec66](https://gitlab.com/kada-development/ifiske/commit/1e3ec66))
+
+
+
 <a name="4.7.2"></a>
 ## [4.7.2](https://gitlab.com/kada-development/ifiske/compare/v4.7.1...v4.7.2) (2018-10-12)
 

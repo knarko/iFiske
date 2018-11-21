@@ -44,12 +44,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
   shouldRefresh = false;
 
   text: string;
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('map')
+  mapElement: ElementRef;
 
-  @Output('popupOpen') popupOpen = new EventEmitter();
-  @Output('popupClose') popupClose = new EventEmitter();
+  @Output('popupOpen')
+  popupOpen = new EventEmitter();
+  @Output('popupClose')
+  popupClose = new EventEmitter();
 
-  @Input() options: MapOptions;
+  @Input()
+  options: MapOptions;
   centered: boolean;
   constructor(
     private mapData: MapDataProvider,
@@ -59,20 +63,22 @@ export class MapComponent implements AfterViewInit, OnChanges {
   ) {}
 
   ngAfterViewInit() {
-    var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{maptype}/{z}/{x}/{y}@2x.png?access_token={apikey}';
-    var apikey = localStorage.getItem('mapbox_api');
+    const IFISKE_MAP = 'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
+    const MAPBOX_MAP = 'https://api.tiles.mapbox.com/v4/mapbox.satellite';
+    const tilesUrl = `{maptype}/{z}/{x}/{y}.png{apikey}`;
+    const apikey = localStorage.getItem('mapbox_api');
 
     this.map = new Map(this.mapElement.nativeElement).setView([62.0, 15.0], 4);
 
-    const outdoors = new TileLayer(mapboxUrl, {
+    const outdoors = new TileLayer(tilesUrl, {
       maxZoom: 18,
-      maptype: 'mapbox.outdoors',
-      apikey: apikey,
+      maptype: IFISKE_MAP,
+      apikey: '',
     });
-    const satellite = new TileLayer(mapboxUrl, {
+    const satellite = new TileLayer(tilesUrl, {
       maxZoom: 16,
-      maptype: 'mapbox.satellite',
-      apikey: apikey,
+      maptype: MAPBOX_MAP,
+      apikey: `?access_token=${apikey}`,
     });
 
     this.map.addLayer(outdoors);

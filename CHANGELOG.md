@@ -1,3 +1,13 @@
+<a name="4.7.5"></a>
+## [4.7.5](https://gitlab.com/kada-development/ifiske/compare/v4.7.4...v4.7.5) (2018-11-21)
+
+
+### Features
+
+* **maps:** use map tiles from maps.ifiske.se ([3d30310](https://gitlab.com/kada-development/ifiske/commit/3d30310))
+
+
+
 <a name="4.7.4"></a>
 ## [4.7.4](https://gitlab.com/kada-development/ifiske/compare/v4.7.3...v4.7.4) (2018-10-18)
 

@@ -1,6 +1,7 @@
 import { TranslationDefinition } from "./TranslationDefinition";
 
 export const sv: TranslationDefinition = {
+  "Save": "Spara",
   "Language": "Språk",
   "Downloadable file": "Nedladdningsbar {{type}}",
   "Renew permit": "Förnya fiskekort",

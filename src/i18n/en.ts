@@ -1,6 +1,7 @@
 import { TranslationDefinition } from "./TranslationDefinition";
 
 export const en: TranslationDefinition = {
+  "Save": "Save",
   "Downloadable file": "Downloadable {{type}}",
   "Renew permit": "Renew permit",
   "Permit not yet valid": "Permit is not valid yet",

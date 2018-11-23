@@ -37,9 +37,12 @@ app-permit {
   }
 
   .logo {
-    float: right;
-    width: 60px;
     display: block;
+    margin: 0 auto;
+    width: 240px;
+    min-width: 120px;
+    max-width: 40%;
+    border-radius: 1rem;
   }
 
   .license-active {

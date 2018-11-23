@@ -82,9 +82,9 @@ export class MapDataProvider extends BaseModel {
       this.API.get_mapbox_api().then(data => {
         return localStorage.setItem('mapbox_api', data);
       }),
-      this.API.get_map_pois().then(this.DB.insertHelper(this.tables.poi)),
-      this.API.get_map_poi_types().then(this.DB.insertHelper(this.tables.poiType)),
-      this.API.get_map_polygons().then(this.DB.insertHelper(this.tables.polygon)),
+      this.API.get_map_pois().then(data => this.DB.populateTable(this.tables.poi, data)),
+      this.API.get_map_poi_types().then(data => this.DB.populateTable(this.tables.poiType, data)),
+      this.API.get_map_polygons().then(data => this.DB.populateTable(this.tables.polygon, data)),
     ]).then(() => true);
   }
 

@@ -3,6 +3,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import isEqual from 'lodash/isEqual';
 import { TableDef } from './table';
 import { Platform } from 'ionic-angular';
+import { DBMethod } from './decorators';
 
 @Injectable()
 export class DatabaseProvider {
@@ -61,7 +62,8 @@ export class DatabaseProvider {
    * @param  {array} params parameters to insert into '?' of sql
    * @return {SQL_result}     SQL result
    */
-  runSql(sql: string, params?) {
+  @DBMethod
+  async runSql(sql: string, params?) {
     let a = this.db.executeSql(sql, params);
     return a;
   }
@@ -79,7 +81,8 @@ export class DatabaseProvider {
     return retval;
   }
 
-  clean(table) {
+  @DBMethod
+  async clean(table) {
     return this.runSql('DROP TABLE IF EXISTS ' + table + ';');
   }
 
@@ -87,9 +90,10 @@ export class DatabaseProvider {
    * Runs a query, returning the selected rows as an array
    * @param  {string} sql  SQL command to execute
    * @param  {array} args Array containing arguments to be inserted with '?'
-   * @return {Promise<array>}      Promise of an array with the selected rows
+   * @return {Promise<array>} Promise of an array with the selected rows
    */
-  getMultiple(sql: string, args?): Promise<any[]> {
+  @DBMethod
+  async getMultiple(sql: string, args?): Promise<any[]> {
     return this.db.executeSql(sql, args).then(result => {
       if (result.rows.length) {
         return Promise.resolve(this.createObject(result));
@@ -109,9 +113,10 @@ export class DatabaseProvider {
    * Runs a query, returning a single selected row
    * @param  {string} sql  SQL command to execute
    * @param  {Array} args Array containing arguments to be inserted wit '?'
-   * @return {Promise<Row>}      Promise of a row from the table
+   * @return {Promise<Row>} Promise of a row from the table
    */
-  getSingle(sql: string, args?: any[]) {
+  @DBMethod
+  async getSingle(sql: string, args?: any[]) {
     return this.getMultiple(sql, args).then(result => {
       if (!result || !result.length) {
         throw new Error(`Could not find any objects for '${sql}'`);
@@ -126,9 +131,9 @@ export class DatabaseProvider {
    * @param  {Enumerable} data  Object or Array with data to insert, should be contain objects with the same keys as the table columns
    * @return {SQL_results}  Returns SQL results
    */
-  populateTable(table: TableDef, data, shouldDelete = true) {
-    // TODO: remove any
-    return this.db.transaction((tx: any) => {
+  @DBMethod
+  async populateTable(table: TableDef, data, shouldDelete = true) {
+    return this.db.transaction(tx => {
       if (shouldDelete) {
         tx.executeSql('DELETE FROM ' + table.name + ';');
       }
@@ -155,57 +160,50 @@ export class DatabaseProvider {
     });
   }
 
-  insertHelper(table) {
-    return data => {
-      return this.populateTable(table, data);
-    };
-  }
+  @DBMethod
+  async initializeTable(table: TableDef) {
+    /*
+     * Builds a string with "" around all names, so that
+     * it can be used to create an SQL Table without having
+     * to worry about using reserved keywords.
+     */
+    var tableMembers = [];
+    for (var member in table.members) {
+      if (table.members.hasOwnProperty(member)) tableMembers.push('"' + member + '" ' + table.members[member]);
+    }
 
-  initializeTable(table: TableDef) {
-    return this.ready.then(() => {
-      /*
-            * Builds a string with "" around all names, so that
-            * it can be used to create an SQL Table without having
-            * to worry about using reserved keywords.
-            */
-      var tableMembers = [];
-      for (var member in table.members) {
-        if (table.members.hasOwnProperty(member)) tableMembers.push('"' + member + '" ' + table.members[member]);
-      }
-
-      var query = `
+    var query = `
         CREATE TABLE IF NOT EXISTS ${table.name} (
           ${tableMembers.join(', ')}
           ${table.primary ? `, PRIMARY KEY(${table.primary})` : ''}
         );`;
 
-      /* Remake the table if the schema has changed */
-      return this.runSql('SELECT sql from sqlite_master where name is "' + table.name + '"').then(result => {
-        if (!result.rows.length) {
-          // There is no table, make it
+    /* Remake the table if the schema has changed */
+    return this.runSql('SELECT sql from sqlite_master where name is "' + table.name + '"').then(result => {
+      if (!result.rows.length) {
+        // There is no table, make it
+        return this.runSql(query);
+      }
+      var re = /"(\w+)"\s*(\w+)/g;
+      var regexResult;
+      var oldTable = {};
+      while ((regexResult = re.exec(result.rows.item(0).sql))) {
+        oldTable[regexResult[1]] = regexResult[2];
+      }
+      const matched = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
+      const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
+      if (!isEqual(table.members, oldTable) || table.primary !== primaryKey) {
+        console.log(table.name + ' needs to update since the schema has changed.');
+        return this.clean(table.name).then(() => {
           return this.runSql(query);
-        }
-        var re = /"(\w+)"\s*(\w+)/g;
-        var regexResult;
-        var oldTable = {};
-        while ((regexResult = re.exec(result.rows.item(0).sql))) {
-          oldTable[regexResult[1]] = regexResult[2];
-        }
-        const matched = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
-        const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
-        if (!isEqual(table.members, oldTable) || table.primary !== primaryKey) {
-          console.log(table.name + ' needs to update since the schema has changed.');
-          return this.clean(table.name).then(() => {
-            return this.runSql(query);
-          });
-        }
-      });
+        });
+      }
     });
   }
 
-  cleanTable(table: string) {
-    // TODO: remove any
-    return this.db.transaction((tx: any) => {
+  @DBMethod
+  async cleanTable(table: string) {
+    return this.db.transaction(tx => {
       tx.executeSql('DELETE FROM ' + table + ';');
     });
   }

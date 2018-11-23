@@ -95,6 +95,12 @@ export class ApiProvider {
   private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
     options = Object.assign({}, ApiProvider.DefaultOptions, options);
 
+    Object.keys(options).forEach(key => {
+      if (options[key] == undefined) {
+        delete options[key];
+      }
+    });
+
     inputParams = Object.assign({}, inputParams, {
       lang: this.settings.language,
       key: 'ox07xh8aaypwvq7a',

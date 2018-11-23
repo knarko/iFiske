@@ -1,6 +1,7 @@
 import { TranslationDefinition } from "./TranslationDefinition";
 
 export const de: TranslationDefinition | any = {
+  "You are now a developer": "You are now a developer",
   "Save": "Speichern",
   "Downloadable file": "Herunterladbare {{type}}",
   "Renew permit": "Lizenz erneuern",
@@ -29,6 +30,10 @@ export const de: TranslationDefinition | any = {
   "Close": "Schließen",
   "Continue": "Weiter",
   "ui": {
+    "developer": {
+      "betaOptIn": "Install beta versions",
+      "checkForUpdates": "Check for updates",
+    },
     "general": {
       "back": "Zurück",
       "pull_to_refresh": "Update",

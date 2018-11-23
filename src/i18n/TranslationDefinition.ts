@@ -1,4 +1,5 @@
 export interface TranslationDefinition {
+  "You are now a developer": string
   "Save": string
   "Language": string
   "Downloadable file": string

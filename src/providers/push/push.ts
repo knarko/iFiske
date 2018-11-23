@@ -29,9 +29,12 @@ export class PushProvider {
 
   token: string;
   private defaultHandler: PushHandler = notification => {
-    this.alertCtrl.show({
-      message: notification.additionalData.message,
-    });
+    this.alertCtrl.show(
+      {
+        message: notification.additionalData.message,
+      },
+      [],
+    );
   };
 
   private pushHandlers: Dictionary<PushHandler[]> = {
@@ -105,10 +108,13 @@ export class PushProvider {
     NOTE: [
       notification => {
         if (notification.additionalData.message) {
-          this.alertCtrl.show({
-            title: notification.title,
-            message: notification.additionalData.message,
-          });
+          this.alertCtrl.show(
+            {
+              title: notification.title,
+              message: notification.additionalData.message,
+            },
+            [],
+          );
         }
       },
     ],

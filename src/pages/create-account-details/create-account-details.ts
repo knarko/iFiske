@@ -158,20 +158,23 @@ export class CreateAccountDetailsPage {
 
   async persistApproval() {
     if (this.acceptedTos) {
-      const alert = await this.alertCtrl.show({
-        cssClass: 'alert-large alert-terms',
-        message: this.termsProvider.termsOfService,
-        title: 'Terms of service',
-        buttons: [
-          {
-            text: 'Cancel',
-          },
-          {
-            text: 'Accept',
-            role: 'accept',
-          },
-        ],
-      });
+      const alert = await this.alertCtrl.show(
+        {
+          cssClass: 'alert-large alert-terms',
+          message: this.termsProvider.termsOfService,
+          title: 'Terms of service',
+          buttons: [
+            {
+              text: 'Cancel',
+            },
+            {
+              text: 'Accept',
+              role: 'accept',
+            },
+          ],
+        },
+        ['title'],
+      );
       const role = await new Promise(resolve => {
         alert.onDidDismiss((_, role) => resolve(role));
       });

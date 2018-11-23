@@ -46,20 +46,23 @@ export class SmsPurchasePage {
   async persistApproval() {
     console.log(this);
     if (this.approvedRules) {
-      const alert = await this.alertCtrl.show({
-        cssClass: 'alert-large alert-terms',
-        message: this.terms.smsTerms,
-        title: 'SMS Rules',
-        buttons: [
-          {
-            text: 'Cancel',
-          },
-          {
-            text: 'Accept',
-            role: 'accept',
-          },
-        ],
-      });
+      const alert = await this.alertCtrl.show(
+        {
+          cssClass: 'alert-large alert-terms',
+          message: this.terms.smsTerms,
+          title: 'SMS Rules',
+          buttons: [
+            {
+              text: 'Cancel',
+            },
+            {
+              text: 'Accept',
+              role: 'accept',
+            },
+          ],
+        },
+        ['title'],
+      );
       const role = await new Promise(resolve => {
         alert.onDidDismiss((_, role) => resolve(role));
       });
@@ -120,16 +123,19 @@ export class SmsPurchasePage {
       await this.sms.send(SMS_PURCHASE_NUMBER, message, { android: { intent: 'INTENT' } });
       this.close();
     } catch (e) {
-      this.alertCtrl.show({
-        title: 'Error',
-        message: e,
-        buttons: [
-          {
-            text: 'OK',
-            role: 'cancel',
-          },
-        ],
-      });
+      this.alertCtrl.show(
+        {
+          title: 'Error',
+          message: e,
+          buttons: [
+            {
+              text: 'OK',
+              role: 'cancel',
+            },
+          ],
+        },
+        ['title'],
+      );
     }
   }
 }

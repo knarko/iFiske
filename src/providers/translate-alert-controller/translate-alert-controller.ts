@@ -7,8 +7,7 @@ import { AlertOptions, AlertButton } from 'ionic-angular/components/alert/alert-
 export class TranslateAlertController {
   constructor(private translate: TranslateService, private alertCtrl: AlertController) {}
 
-  async create(opts?: AlertOptions): Promise<Alert> {
-    const toTranslate = ['message', 'title', 'subTitle'];
+  async create(opts?: AlertOptions, toTranslate = ['message', 'title', 'subTitle']): Promise<Alert> {
     if (opts) {
       for (const key of toTranslate) {
         if (opts[key]) {
@@ -36,8 +35,8 @@ export class TranslateAlertController {
     return this.alertCtrl.create(opts);
   }
 
-  async show(opts?: AlertOptions): Promise<Alert> {
-    const alert = await this.create(opts);
+  async show(opts?: AlertOptions, toTranslate?: string[]): Promise<Alert> {
+    const alert = await this.create(opts, toTranslate);
     await alert.present();
     return alert;
   }

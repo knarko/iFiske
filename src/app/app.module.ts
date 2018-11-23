@@ -12,7 +12,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { LaunchReview } from '@ionic-native/launch-review';
 import { Network } from '@ionic-native/network';
@@ -67,6 +67,7 @@ import { LogMissingTranslationHandler } from './missing-translation-handler';
 import { TranslateBundleLoader } from './translation-loader';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 import { DeepLinksProvider } from '../providers/deep-links/deep-links';
+import { GoogleAnalytics } from '../providers/google-analytics/google-analytics';
 
 registerLocaleData(localeSv);
 
@@ -111,7 +112,7 @@ registerLocaleData(localeSv);
     BarcodeScanner,
     File,
     Geolocation,
-    GoogleAnalytics,
+    GoogleAnalyticsPlugin,
     LaunchNavigator,
     LaunchReview,
     Network,
@@ -153,6 +154,7 @@ registerLocaleData(localeSv);
     UserProvider,
     UserTrackingProvider,
     DeepLinksProvider,
+    GoogleAnalytics,
   ],
 })
 export class AppModule {}

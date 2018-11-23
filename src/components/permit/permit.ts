@@ -1,12 +1,12 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
 import { Permit } from '../../providers/user/userTypes';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 
 @Component({
   selector: 'app-permit',

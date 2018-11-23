@@ -3,7 +3,6 @@ import { Platform, Config, App, ViewController, ToolbarTitle } from 'ionic-angul
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,8 +10,8 @@ import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
-import { googleAnalyticsTrackerID, APP_VERSION } from './config';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
+import { GoogleAnalytics } from '../providers/google-analytics/google-analytics';
 
 @Component({
   templateUrl: 'app.html',
@@ -96,12 +95,10 @@ export class MyApp {
     }
   }
 
-  async setupAnalytics() {
+  setupAnalytics() {
     this.app.viewWillEnter.subscribe((view: ViewController) => {
       this.ga.trackView(`${view.name}${view.data && view.data.ID ? '/' + view.data.ID : ''}`);
     });
-    await this.ga.startTrackerWithId(googleAnalyticsTrackerID);
-    await Promise.all([this.ga.enableUncaughtExceptionReporting(true), this.ga.setAppVersion(APP_VERSION)]);
   }
 
   setOffline() {

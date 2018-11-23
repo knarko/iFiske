@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, switchMap, catchError } from 'rxjs/operators';
@@ -19,6 +18,7 @@ import { TranslateLoadingController } from '../translate-loading-controller/tran
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
 import { User, Favorite, Permit } from './userTypes';
+import { GoogleAnalytics } from '../google-analytics/google-analytics';
 
 @Injectable()
 export class UserProvider extends BaseModel {

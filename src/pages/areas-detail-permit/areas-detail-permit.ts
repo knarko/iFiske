@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from '../../providers/product/product';
@@ -8,6 +7,7 @@ import { Area } from '../../providers/area/area';
 import { Permit } from '../../providers/user/userTypes';
 import { MonitoringClient } from '../../app/monitoring';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 
 @IonicPage()
 @Component({

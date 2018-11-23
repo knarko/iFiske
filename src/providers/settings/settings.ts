@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Dictionary } from '../../types';
+import { GoogleAnalytics } from '../google-analytics/google-analytics';
 
 interface Settings {
   push: boolean;

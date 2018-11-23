@@ -7,7 +7,7 @@ import { TranslateAlertController } from '../../providers/translate-alert-contro
 import { TermsProvider } from '../../providers/terms/terms';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 
 export const SMS_PURCHASE_NUMBER = '72456';
 

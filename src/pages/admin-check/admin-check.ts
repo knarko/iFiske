@@ -32,7 +32,7 @@ export class AdminCheckPage {
         formats: 'QR_CODE',
       });
       if (res.cancelled) {
-        throw new Error('Cancelled');
+        return;
       }
       if (res.format !== 'QR_CODE') {
         throw new Error('invalid');

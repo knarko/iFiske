@@ -1,3 +1,21 @@
+<a name="4.7.6"></a>
+## [4.7.6](https://gitlab.com/kada-development/ifiske/compare/v4.7.5...v4.7.6) (2018-11-23)
+
+
+### Bug Fixes
+
+* **admin:** don't throw error if QR scan is cancelled ([354735b](https://gitlab.com/kada-development/ifiske/commit/354735b))
+* **AlertCtrl:** don't translate strings that are already translated ([36fafb4](https://gitlab.com/kada-development/ifiske/commit/36fafb4))
+* **analytics:** wait for tracker to start before using ([f2a56da](https://gitlab.com/kada-development/ifiske/commit/f2a56da))
+* **api:** don't send undefined values to server ([836da4d](https://gitlab.com/kada-development/ifiske/commit/836da4d))
+* **build:** rename userTypes.d.ts -> userTypes.ts ([2d663ad](https://gitlab.com/kada-development/ifiske/commit/2d663ad))
+* **db:** wait for db to be ready before doing any operations on the database ([26f8b42](https://gitlab.com/kada-development/ifiske/commit/26f8b42))
+* **permit:** show logotype in a better way ([748f302](https://gitlab.com/kada-development/ifiske/commit/748f302))
+* **translations:** add missing translation 'Save' ([3fe0e62](https://gitlab.com/kada-development/ifiske/commit/3fe0e62))
+* **translations:** add missing translation for developer account activation ([471031c](https://gitlab.com/kada-development/ifiske/commit/471031c))
+
+
+
 <a name="4.7.5"></a>
 ## [4.7.5](https://gitlab.com/kada-development/ifiske/compare/v4.7.4...v4.7.5) (2018-11-21)
 

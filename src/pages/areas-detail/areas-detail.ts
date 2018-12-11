@@ -6,6 +6,7 @@ import { Area, AreaProvider } from '../../providers/area/area';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';
 import { ProductProvider, Product } from '../../providers/product/product';
 import { Fish } from '../../providers/fish/fish';
+import { AreaDetailParams } from './areas-detail-params';
 
 @IonicPage({
   segment: 'area-detail/:ID',
@@ -25,9 +26,9 @@ export class AreasDetailPage {
     { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];
-  tabParams = new ReplaySubject<any>(1);
-
-  @ViewChild(Tabs) tabsCtrl: Tabs;
+  tabParams = new ReplaySubject<AreaDetailParams>(1);
+  @ViewChild(Tabs)
+  tabsCtrl: Tabs;
 
   constructor(
     public navCtrl: NavController,

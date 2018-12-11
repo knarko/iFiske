@@ -47,6 +47,7 @@ export interface Area {
   mod: number;
   d: string;
   ptab: string;
+  layers: string[];
 
   // Not in db
   photo: string;
@@ -165,6 +166,13 @@ export class AreaProvider extends BaseModel<Area> {
         thumb: 'text', // Thumbnail
       },
     },
+    {
+      name: 'Area_Layers',
+      members: {
+        area: 'int', // Area ID
+        layer: 'text', // URL for layer kml or json
+      },
+    },
   ];
 
   readonly updateStrategy = 'timed';
@@ -196,6 +204,7 @@ export class AreaProvider extends BaseModel<Area> {
   insert = ([areas, images]: [any, any]) => {
     const fishArr = [];
     const filesArr = [];
+    const layersArr = [];
     for (const key in areas) {
       const fishes = areas[key].fish;
       for (const fishKey in fishes) {
@@ -207,18 +216,21 @@ export class AreaProvider extends BaseModel<Area> {
           comment: fishes[fishKey][1],
         });
       }
-      // eslint-disable-next-line no-loop-func
-      const files = areas[key].files.map(file => {
-        file.area = key;
-        return file;
+
+      areas[key].files.forEach(file => {
+        filesArr.push({ ...file, area: key });
       });
-      filesArr.push(...files);
+
+      areas[key].layers.forEach(layer => {
+        layersArr.push({ area: key, layer });
+      });
     }
     return Promise.all([
       this.DB.populateTable(this.tables[0], areas),
       this.DB.populateTable(this.tables[1], fishArr),
       this.DB.populateTable(this.tables[2], images),
       this.DB.populateTable(this.tables[3], filesArr),
+      this.DB.populateTable(this.tables[4], layersArr),
     ]);
   };
 
@@ -353,6 +365,18 @@ export class AreaProvider extends BaseModel<Area> {
     `,
       [aid],
     );
+  }
+
+  @DBMethod
+  async getLayers(aid: number): Promise<string[]> {
+    const layers = await this.DB.getMultiple(
+      `
+      SELECT layer from Area_Layers
+      WHERE Area_Layers.area = ?
+      `,
+      [aid],
+    );
+    return layers.map(({ layer }) => layer);
   }
 
   /**

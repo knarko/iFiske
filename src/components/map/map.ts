@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
 import * as LocateControl from 'leaflet.locatecontrol';
+import * as omnivore from '@mapbox/leaflet-omnivore';
+console.log(omnivore);
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { Area } from '../../providers/area/area';
@@ -20,6 +22,7 @@ export interface MapOptions {
   pois?: POI[];
   polygons?: FiskePolygon[];
   area?: Area;
+  layers?: string[];
 }
 
 /**
@@ -36,6 +39,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   poiMarkers: LayerGroup;
   areaMarker: LayerGroup;
   polygons: LayerGroup;
+  areaLayers: LayerGroup;
   map: Map;
   markers: any;
   icons: any;
@@ -303,6 +307,22 @@ export class MapComponent implements AfterViewInit, OnChanges {
     });
   }
 
+  createLayers(layers: string[]) {
+    if (this.areaLayers) {
+      this.areaLayers.clearLayers();
+    } else {
+      this.areaLayers = new LayerGroup();
+      this.map.addLayer(this.areaLayers);
+    }
+    layers.forEach(layer => {
+      if (layer.match(/\.kml$/)) {
+        omnivore.kml(layer).addTo(this.areaLayers);
+      } else if (layer.match(/\.(geo)?json$/)) {
+        omnivore.geojson(layer).addTo(this.areaLayers);
+      }
+    });
+  }
+
   ngOnChanges(data) {
     if (!this.map) {
       this.shouldRefresh = true;
@@ -330,6 +350,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
     if (this.options.area) {
       this.createArea(this.options.area);
+    }
+    if (this.options.layers) {
+      this.createLayers(this.options.layers);
     }
   }
 }

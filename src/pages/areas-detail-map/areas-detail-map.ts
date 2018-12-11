@@ -5,10 +5,11 @@ import { MapOptions } from '../../components/map/map';
 import { MapDataProvider } from '../../providers/map-data/map-data';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
-import { Area } from '../../providers/area/area';
+import { Area, AreaProvider } from '../../providers/area/area';
 import { MonitoringClient } from '../../app/monitoring';
 import { isProdMode } from '../../app/config';
 import { Observable } from 'rxjs/Observable';
+import { AreaDetailParams } from '../areas-detail/areas-detail-params';
 
 @IonicPage()
 @Component({
@@ -41,8 +42,9 @@ export class AreasDetailMapPage {
     private mapData: MapDataProvider,
     private navigator: LaunchNavigator,
     private alertCtrl: TranslateAlertController,
+    private areaProvider: AreaProvider,
   ) {
-    const params: Observable<any> =
+    const params: Observable<AreaDetailParams> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
     params.subscribe(({ area, org, products }) => {
       if (this.area !== area && area) {
@@ -56,6 +58,12 @@ export class AreasDetailMapPage {
           .getPolygons(area.orgid)
           .then(polygons => (this.options.polygons = polygons))
           .catch(() => (this.options.polygons = []))
+          .then(() => (this.options = Object.assign({}, this.options)));
+
+        this.areaProvider
+          .getLayers(area.ID)
+          .then(layers => (this.options.layers = layers))
+          .catch(() => (this.options.layers = []))
           .then(() => (this.options = Object.assign({}, this.options)));
 
         this.options.area = area;

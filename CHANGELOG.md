@@ -1,3 +1,13 @@
+<a name="4.8.0"></a>
+# [4.8.0](https://gitlab.com/kada-development/ifiske/compare/v4.7.6...v4.8.0) (2018-12-12)
+
+
+### Bug Fixes
+
+* **API:** send session token in header instead of as POST ([dab05da](https://gitlab.com/kada-development/ifiske/commit/dab05da))
+
+
+
 <a name="4.7.6"></a>
 ## [4.7.6](https://gitlab.com/kada-development/ifiske/compare/v4.7.5...v4.7.6) (2018-11-23)
 

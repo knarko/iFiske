@@ -1,3 +1,13 @@
+<a name="4.8.1"></a>
+## [4.8.1](https://gitlab.com/kada-development/ifiske/compare/v4.8.0...v4.8.1) (2018-12-17)
+
+
+### Bug Fixes
+
+* **icons:** update icons with new design ([8a9181c](https://gitlab.com/kada-development/ifiske/commit/8a9181c))
+
+
+
 <a name="4.8.0"></a>
 # [4.8.0](https://gitlab.com/kada-development/ifiske/compare/v4.7.6...v4.8.0) (2018-12-12)
 

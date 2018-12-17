@@ -1,20 +1,15 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      <span class="hidden">{{'Home' | translate}}</span>
-      <img class="header-logo" src="assets/img/logo_plain.svg">
+      <span class="hidden">{{ 'Home' | translate }}</span> <img class="header-logo" src="assets/img/logo.png" />
     </ion-title>
 
     <ion-buttons first>
-      <button ion-button icon-only (click)="gotoProfile()">
-        <ion-icon name="person"></ion-icon>
-      </button>
+      <button ion-button icon-only (click)="gotoProfile()"><ion-icon name="person"></ion-icon></button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button ion-button icon-only [navPush]="'SettingsPage'">
-        <ion-icon name="settings"></ion-icon>
-      </button>
+      <button ion-button icon-only [navPush]="'SettingsPage'"><ion-icon name="settings"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -32,7 +27,8 @@
   <ion-list inset border>
     <ng-container *ngFor="let link of links">
       <button ion-item *ngIf="!link.show || (link.show | async)" [navPush]="link.uri">
-        <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{link.title | translate}}</button>
+        <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{ link.title | translate }}
+      </button>
     </ng-container>
   </ion-list>
   <ads></ads>

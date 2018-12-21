@@ -5,6 +5,28 @@ export interface AdminOrganization {
   level: number;
 }
 
+export interface Log {
+  /**
+   * Action taken
+   *
+   * - 0: Product was inspected (looked at)
+   * - 1: Controller added +1 controls to the count
+   * - 2: Controller removed one control
+   * - 4: Controller cancelled the product
+   * - 5: Controller un-cancelled the product
+   * - 7: Controller added a written note
+   */
+  a: string;
+  /** Comments - for example if the user wrote a note */
+  c: string;
+  /** User identification */
+  u: string;
+  /** Timestamp */
+  t: number;
+
+  action?: string;
+}
+
 export interface AdminPermit {
   ID: number;
   at: number;
@@ -21,6 +43,8 @@ export interface AdminPermit {
   tel: string;
   to: number;
   info?: string;
+
+  log?: Log[];
 
   validity?: string;
 }

@@ -19,7 +19,7 @@ import { catchError } from 'rxjs/operators/catchError';
 import { SessionProvider } from '../session/session';
 import { getPermitValidity } from '../../util';
 
-import { AdminOrganization, AdminPermit, AdminPermitSearchResult } from './adminTypes';
+import { AdminOrganization, AdminPermit, AdminPermitSearchResult, Log } from './adminTypes';
 @Injectable()
 export class AdminProvider extends BaseModel {
   private static readonly LAST_UPDATED = 'ADMIN_LAST_UPDATED';
@@ -250,7 +250,13 @@ export class AdminProvider extends BaseModel {
     }
 
     let foundPermit = false;
-    const successHandler = permit => {
+    let savedPrio = 0;
+    const successHandler = (permit: AdminPermit, prio: number = 0) => {
+      console.log(permit);
+      if (foundPermit && prio < savedPrio) {
+        return;
+      }
+      savedPrio = prio;
       foundPermit = true;
       this.transformPermit(permit);
       subject.next(permit);
@@ -277,7 +283,9 @@ export class AdminProvider extends BaseModel {
       });
 
     this.API.adm_check_prod(code)
-      .then(successHandler, errorHandler)
+      .then(permit => {
+        successHandler(permit, 1);
+      }, errorHandler)
       .catch(err => {});
 
     return subject.asObservable();
@@ -343,6 +351,12 @@ export class AdminProvider extends BaseModel {
       return;
     }
     permit.validity = getPermitValidity(permit);
+    if (Array.isArray(permit.log)) {
+      permit.log.forEach(log => {
+        log.action = getLogAction(log);
+        log.t *= 1000;
+      });
+    }
     return permit;
   };
 
@@ -350,5 +364,24 @@ export class AdminProvider extends BaseModel {
     const res = await this.API.adm_revoke_prod(code, revoke ? 1 : 0);
     await this.update();
     return res;
+  }
+}
+
+function getLogAction(log: Log) {
+  switch (log.a) {
+    case '0':
+      return 'ui.admin.log.inspected';
+    case '1':
+      return 'ui.admin.log.addOne';
+    case '2':
+      return 'ui.admin.log.removeOne';
+    case '4':
+      return 'ui.admin.log.revoked';
+    case '5':
+      return 'ui.admin.log.unrevoked';
+    case '7':
+      return 'ui.admin.log.note';
+    default:
+      return 'ui.admin.log.unknown';
   }
 }

@@ -7,10 +7,12 @@ import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
+import { flip } from '../../animations/flip';
 
 @Component({
   selector: 'app-permit',
   templateUrl: 'permit.html',
+  animations: [flip('showFront'), flip('showBack', false)],
 })
 export class PermitComponent {
   qr: string;
@@ -24,6 +26,7 @@ export class PermitComponent {
   org?: Organization;
   serverLocation = serverLocation;
 
+  show = 'first';
   constructor(
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,
@@ -59,5 +62,9 @@ export class PermitComponent {
 
   openCatchReport() {
     this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
+  }
+
+  flip() {
+    this.show = this.show === 'first' ? 'second' : 'first';
   }
 }

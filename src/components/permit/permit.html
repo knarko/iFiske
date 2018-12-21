@@ -1,93 +1,120 @@
-<h2 *ngIf="permit === null">{{ 'The permit does not exist' | translate }}</h2>
-<div *ngIf="permit" class="bg-white" padding>
-  <img *ngIf="permit.rev" src="assets/img/makulerad.png" class="revoked" />
+<div class="permit-wrapper">
+  <div class="background" [ngClass]="'bg-' + permit.validity"></div>
+  <h2 *ngIf="permit === null">{{ 'The permit does not exist' | translate }}</h2>
+  <div *ngIf="permit" class="flip">
+    <div class="bg-white" [@showFront]="show" padding>
+      <button class="corner" (click)="flip()"><ion-icon name="refresh"></ion-icon></button>
+      <div class="scroll">
+        <img *ngIf="permit.rev" src="assets/img/makulerad.png" class="revoked" />
 
-  <h2>{{ permit.ot }}</h2>
-  <img *ngIf="org?.logo" class="logo permit" [icSrc]="org.logo" />
-  <h3>{{ permit.t }}</h3>
+        <h2>{{ permit.ot }}</h2>
+        <img *ngIf="org?.logo" class="logo permit" [icSrc]="org.logo" />
+        <h3>{{ permit.t }}</h3>
 
-  <div *ngIf="permit.qr" class="qr">
-    <svg>
-      <defs>
-        <filter id="filter-green">
-          <feComponentTransfer>
-            <feFuncR type="discrete" tableValues="0 1" />
-            <feFuncG type="discrete" tableValues="0 1" />
-            <feFuncB type="discrete" tableValues="0 1" />
-          </feComponentTransfer>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.4, 0 0 0 0 0.59, 0 0 0 0 0, -1 -1 -1 1 0" />
-        </filter>
-        <filter id="filter-red">
-          <feComponentTransfer>
-            <feFuncR type="discrete" tableValues="0 1" />
-            <feFuncG type="discrete" tableValues="0 1" />
-            <feFuncB type="discrete" tableValues="0 1" />
-          </feComponentTransfer>
-          <feColorMatrix type="matrix" values="0 0 0 0 1, 0 0 0 0 0.345, 0 0 0 0 0.039, -1 -1 -1 1 0" />
-        </filter>
-        <filter id="filter-gray">
-          <feComponentTransfer>
-            <feFuncR type="discrete" tableValues="0 1" />
-            <feFuncG type="discrete" tableValues="0 1" />
-            <feFuncB type="discrete" tableValues="0 1" />
-          </feComponentTransfer>
-          <feColorMatrix type="matrix" values="0 0 0 0 .6, 0 0 0 0 .6, 0 0 0 0 0.6, -1 -1 -1 1 0" />
-        </filter>
-      </defs>
-      <image
-        [attr.xlink:href]="qr"
-        width="100%"
-        height="100%"
-        [attr.filter]="
-          'url(#filter-' +
-          (permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red') +
-          ')'
-        "
-      />
-    </svg>
+        <div *ngIf="permit.qr" class="qr">
+          <svg>
+            <defs>
+              <filter id="filter-green">
+                <feComponentTransfer>
+                  <feFuncR type="discrete" tableValues="0 1" />
+                  <feFuncG type="discrete" tableValues="0 1" />
+                  <feFuncB type="discrete" tableValues="0 1" />
+                </feComponentTransfer>
+                <feColorMatrix type="matrix" values="0 0 0 0 0.4, 0 0 0 0 0.59, 0 0 0 0 0, -1 -1 -1 1 0" />
+              </filter>
+              <filter id="filter-red">
+                <feComponentTransfer>
+                  <feFuncR type="discrete" tableValues="0 1" />
+                  <feFuncG type="discrete" tableValues="0 1" />
+                  <feFuncB type="discrete" tableValues="0 1" />
+                </feComponentTransfer>
+                <feColorMatrix type="matrix" values="0 0 0 0 1, 0 0 0 0 0.345, 0 0 0 0 0.039, -1 -1 -1 1 0" />
+              </filter>
+              <filter id="filter-gray">
+                <feComponentTransfer>
+                  <feFuncR type="discrete" tableValues="0 1" />
+                  <feFuncG type="discrete" tableValues="0 1" />
+                  <feFuncB type="discrete" tableValues="0 1" />
+                </feComponentTransfer>
+                <feColorMatrix type="matrix" values="0 0 0 0 .6, 0 0 0 0 .6, 0 0 0 0 0.6, -1 -1 -1 1 0" />
+              </filter>
+            </defs>
+            <image
+              [attr.xlink:href]="qr"
+              width="100%"
+              height="100%"
+              [attr.filter]="
+                'url(#filter-' +
+                (permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red') +
+                ')'
+              "
+            />
+          </svg>
+        </div>
+
+        <h1 [ngClass]="'license-' + permit.validity">{{ permit.code }}</h1>
+
+        <p *ngIf="permit.subt">{{ permit.subt }}</p>
+
+        <ng-container [ngSwitch]="permit.validity">
+          <ng-container *ngSwitchCase="'expired'">
+            <h3>{{ 'Permit has expired' | translate }}</h3>
+            <button ion-button color="secondary" *ngIf="!admin" (click)="openProductInBrowser()">
+              {{ 'Renew permit' | translate }}
+            </button>
+          </ng-container>
+
+          <h3 *ngSwitchCase="'inactive'">{{ 'Permit not yet valid' | translate }}</h3>
+        </ng-container>
+
+        <p [translate]="'Issued to'" [translateParams]="permit.fullname | mkObject: 'name'"></p>
+
+        <p *ngIf="permit.info">{{ permit.info }}</p>
+
+        <ng-container *ngIf="admin">
+          <p>{{ 'Phone number' | translate }}: {{ permit.tel }}</p>
+          <p [innerHTML]="'Issued at' | translate: (permit.at * 1000 | date: 'short' | mkObject: 'date')"></p>
+        </ng-container>
+
+        <p [innerHTML]="'Valid from' | translate: (permit.fr * 1000 | date: 'short' | mkObject: 'date')"></p>
+        <p [innerHTML]="'Valid until' | translate: (permit.to * 1000 | date: 'short' | mkObject: 'date')"></p>
+
+        <p *ngIf="!admin">
+          <button ion-button icon-start *ngIf="permit.code" (click)="openCatchReport()">
+            <ion-icon name="ifiske-fish"></ion-icon>
+            {{ 'Catch report' | translate }}
+          </button>
+          <a
+            ion-button
+            color="dark"
+            icon-start
+            *ngIf="permit.pdf"
+            [href]="serverLocation + permit.pdf"
+            target="_system"
+          >
+            <ion-icon name="document"></ion-icon>
+            {{ 'PDF' | translate }}
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-white" [@showBack]="show" padding>
+      <button class="corner" (click)="flip()"><ion-icon name="refresh"></ion-icon></button>
+      <div class="scroll">
+        <p *ngIf="permit.fine" class="fineprint">{{ permit.fine }}</p>
+        <ng-container *ngIf="admin">
+          <button *ngIf="!permit.rev" (click)="revoke.emit(true)" ion-button icon-left color="danger">
+            <ion-icon name="document"></ion-icon>
+            {{ 'Revoke' | translate }}
+          </button>
+          <button *ngIf="permit.rev" (click)="revoke.emit(false)" ion-button icon-left color="secondary">
+            <ion-icon name="document"></ion-icon>
+            {{ 'Unrevoke' | translate }}
+          </button>
+          <app-permit-log *ngIf="permit.log" [log]="permit.log"></app-permit-log>
+        </ng-container>
+      </div>
+    </div>
   </div>
-
-  <h1 [ngClass]="'license-' + permit.validity">{{ permit.code }}</h1>
-
-  <h3 *ngIf="permit.validity === 'expired'">{{ 'Permit has expired' | translate }}</h3>
-  <button ion-button color="secondary" *ngIf="!admin && permit.validity === 'expired'" (click)="openProductInBrowser()">
-    {{ 'Renew permit' | translate }}
-  </button>
-
-  <h3 *ngIf="permit.validity === 'inactive'">{{ 'Permit not yet valid' | translate }}</h3>
-
-  <p *ngIf="permit.subt">{{ permit.subt }}</p>
-
-  <p [translate]="'Issued to'" [translateParams]="permit.fullname | mkObject: 'name'"></p>
-  <p *ngIf="permit.info">{{ permit.info }}</p>
-  <ng-container *ngIf="admin">
-    <p>{{ 'Phone number' | translate }}: {{ permit.tel }}</p>
-    <p [innerHTML]="'Issued at' | translate: (permit.at * 1000 | date: 'short' | mkObject: 'date')"></p>
-  </ng-container>
-
-  <p [innerHTML]="'Valid from' | translate: (permit.fr * 1000 | date: 'short' | mkObject: 'date')"></p>
-  <p [innerHTML]="'Valid until' | translate: (permit.to * 1000 | date: 'short' | mkObject: 'date')"></p>
-
-  <ng-container *ngIf="admin">
-    <button *ngIf="!permit.rev" (click)="revoke.emit(true)" ion-button icon-left color="danger">
-      <ion-icon name="document"></ion-icon>
-      {{ 'Revoke' | translate }}
-    </button>
-    <button *ngIf="permit.rev" (click)="revoke.emit(false)" ion-button icon-left color="secondary">
-      <ion-icon name="document"></ion-icon>
-      {{ 'Unrevoke' | translate }}
-    </button>
-  </ng-container>
-
-  <p *ngIf="!admin">
-    <button ion-button icon-start *ngIf="permit.code" (click)="openCatchReport()">
-      <ion-icon name="ifiske-fish"></ion-icon>
-      {{ 'Catch report' | translate }}
-    </button>
-    <a ion-button color="dark" icon-start *ngIf="permit.pdf" [href]="serverLocation + permit.pdf" target="_system">
-      <ion-icon name="document"></ion-icon>
-      {{ 'PDF' | translate }}
-    </a>
-  </p>
-  <p *ngIf="permit.fine" class="fineprint">{{ permit.fine }}</p>
 </div>

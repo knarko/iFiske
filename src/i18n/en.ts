@@ -59,6 +59,15 @@ export const en: TranslationDefinition = {
         "offline": "We do not save statistics in the app for offline use. Please connect to the internet and try again.",
         "noAccess": "In order to see statistics you need at least user level 1",
       },
+      "log": {
+        "inspected": "Inspected",
+        "addOne": "+1 Controlled",
+        "removeOne": "-1 Controlled",
+        "revoked": "Revoked",
+        "unrevoked": "Unrevoked",
+        "note": "Added note",
+        "unknown": "Unknown Action",
+      },
     },
     "onboarding": {
       "welcome": {

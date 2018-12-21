@@ -1,0 +1,12 @@
+.log-entry {
+  text-align: initial;
+  margin-bottom: 1rem;
+
+  .date {
+    float: right;
+    color: rgba(black, 0.6);
+  }
+  .action {
+    font-size: 1.1em;
+  }
+}

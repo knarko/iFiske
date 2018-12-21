@@ -1,0 +1,7 @@
+<div class="log-entry" *ngFor="let l of log">
+  <span class="date">{{ l.t | date: 'short' }}</span>
+  <p>
+    <span class="action">{{ l.action | translate }}</span> <span *ngIf="l.u" class="user">{{ l.u }}</span>
+  </p>
+  <p class="comment" *ngIf="l.c">{{ l.c }}</p>
+</div>

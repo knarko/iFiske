@@ -60,6 +60,15 @@ export const sv: TranslationDefinition = {
         "offline": "Vi sparar inte statistik i appen när du är offline. Anslut till internet och försök igen.",
         "noAccess": "För att se statistik behöver du ha användarnivå 1 eller högre",
       },
+      "log": {
+        "inspected": "Inspekterad",
+        "addOne": "+1 kontroll",
+        "removeOne": "-1 kontroll",
+        "revoked": "Makulerad",
+        "unrevoked": "Av-makulerad",
+        "note": "Anteckning",
+        "unknown": "Okänd handling",
+      },
     },
     "onboarding": {
       "welcome": {

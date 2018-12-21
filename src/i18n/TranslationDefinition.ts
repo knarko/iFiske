@@ -58,6 +58,15 @@ export interface TranslationDefinition {
         "offline": string
         "noAccess": string,
       },
+      "log": {
+        "inspected": string
+        "addOne": string
+        "removeOne": string
+        "revoked": string
+        "unrevoked": string
+        "note": string
+        "unknown": string,
+      },
     },
     "onboarding": {
       "welcome": {

@@ -1,3 +1,13 @@
+<a name="4.8.2"></a>
+## [4.8.2](https://gitlab.com/kada-development/ifiske/compare/v4.8.1...v4.8.2) (2019-01-22)
+
+
+### Bug Fixes
+
+* **splash:** hide splash screen quicker ([e1687b7](https://gitlab.com/kada-development/ifiske/commit/e1687b7))
+
+
+
 <a name="4.8.1"></a>
 ## [4.8.1](https://gitlab.com/kada-development/ifiske/compare/v4.8.0...v4.8.1) (2018-12-17)
 

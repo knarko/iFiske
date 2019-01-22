@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform, Config, App, ViewController, ToolbarTitle } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Config, App, ViewController, ToolbarTitle, NavController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -44,14 +44,13 @@ export class MyApp {
       console.warn(err);
     });
 
+    this.update
+      .update(false, this.settings.firstLaunch)
+      .catch(e => console.warn(e))
+      .then(() => {
+        this.userTracking.track('appOpened');
+      });
     platform.ready().then(() => {
-      this.update
-        .update(false, this.settings.firstLaunch)
-        .catch(e => console.warn(e))
-        .then(() => {
-          this.userTracking.track('appOpened');
-        });
-
       this.setupBackButtonText();
 
       this.setupAnalytics();
@@ -124,8 +123,31 @@ export class MyApp {
     return titleText.trim();
   }
 
-  ionViewDidEnter() {
+  @ViewChild('myNav')
+  nav: NavController;
+
+  ngAfterViewInit(): void {
+    console.log('ngAfterViewInit');
+
+    const timeout = setTimeout(() => {
+      console.log('8s fallback timeout');
+      this.statusBar.styleBlackTranslucent();
+      this.splashScreen.hide();
+    }, 8000);
+
+    const sub = this.nav.viewDidLoad.pipe(take(1)).subscribe(() => {
+      console.log('nav.viewDidLoad');
+      clearTimeout(timeout);
+      this.statusBar.styleBlackTranslucent();
+      this.splashScreen.hide();
+    });
+
     this.platform.ready().then(() => {
+      console.log('ngAfterViewInit: plt ready');
+      clearTimeout(timeout);
+      if (sub) {
+        sub.unsubscribe();
+      }
       this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
     });

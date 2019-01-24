@@ -78,6 +78,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       maxZoom: 18,
       maptype: IFISKE_MAP,
       apikey: '',
+      detectRetina: true,
     });
     const satellite = new TileLayer(tilesUrl, {
       maxZoom: 16,

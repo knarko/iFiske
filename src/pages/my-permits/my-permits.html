@@ -1,35 +1,29 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{'My Fishing Permits' | translate}}</ion-title>
+    <ion-title>{{ 'My Fishing Permits' | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="refresh()">
-        <ion-icon name="refresh"></ion-icon>
-      </button>
+      <button ion-button icon-only (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content class="background-image">
+<ion-content>
   <ion-refresher (ionRefresh)="refresh($event)">
-    <ion-refresher-content [pullingText]="'ui.general.pull_to_refresh' | translate" [refreshingText]="'Updating' | translate"></ion-refresher-content>
-
+    <ion-refresher-content
+      [pullingText]="'ui.general.pull_to_refresh' | translate"
+      [refreshingText]="'Updating' | translate"
+    ></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngIf="!allPermits || allPermits.length < 1">
-      <p translate>No permits</p>
-    </ion-item>
-
+    <ion-item *ngIf="!allPermits || allPermits.length < 1"> <p translate>No permits</p> </ion-item>
   </ion-list>
   <ng-container *ngFor="let type of permits">
     <ion-item-divider *ngIf="type.permits.length">
-      <ion-icon item-start [name]="type.icon"></ion-icon>{{'ui.permit.validity.plural.' + type.title | translate}}
+      <ion-icon item-start [name]="type.icon"></ion-icon>{{ 'ui.permit.validity.plural.' + type.title | translate }}
     </ion-item-divider>
     <ion-item *ngFor="let permit of type.permits" [ngClass]="'license-' + permit.validity" (click)="gotoPermit(permit)">
-      <h2>{{permit.ot}}</h2>
-      <p>{{permit.t}}</p>
+      <h2>{{ permit.ot }}</h2>
+      <p>{{ permit.t }}</p>
     </ion-item>
   </ng-container>
 </ion-content>

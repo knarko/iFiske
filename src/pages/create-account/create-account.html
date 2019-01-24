@@ -1,14 +1,11 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{'Create Account' | translate}}</ion-title>
+    <ion-title>{{ 'Create Account' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content class="background-image" padding>
-  <a ion-button block [navPush]="'CreateAccountDetailsPage'">{{'New account' | translate}}</a>
-  <a ion-button block [navPush]="'CreateAccountVerifyPage'">{{'Use existing registration code' | translate}}</a>
-  <p class="text-center">{{'Activation code lost' | translate}}</p>
+<ion-content padding>
+  <a ion-button block [navPush]="'CreateAccountDetailsPage'">{{ 'New account' | translate }}</a>
+  <a ion-button block [navPush]="'CreateAccountVerifyPage'">{{ 'Use existing registration code' | translate }}</a>
+  <p class="text-center">{{ 'Activation code lost' | translate }}</p>
 </ion-content>

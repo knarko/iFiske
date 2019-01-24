@@ -57,10 +57,9 @@
     right: 0;
     bottom: 0;
     display: block;
-    background-color: white;
-    background-image: url('../assets/img/bg-login.jpg');
+    background-image: url('../assets/img/bg-new.jpg'), linear-gradient(to bottom, #0a5085 50%, #000000 50%);
     background-size: 100%;
-    background-position: bottom;
+    background-position: center;
     background-repeat: no-repeat;
   }
 }

@@ -1,40 +1,28 @@
 <ion-header transparent>
-
   <ion-navbar transparent>
     <ion-buttons end>
       <button ion-button (click)="changeLanguage()" class="language">
-        <span class="desc">{{'Language' | translate}}</span>
-        <ng-container *ngIf="language | async; let lang">
-          <div class="flag">
-            <img [src]="'assets/img/flags/' + lang.short + '.png'">
-          </div>
+        <span class="desc">{{ 'Language' | translate }}</span>
+        <ng-container *ngIf="(language | async); let lang">
+          <div class="flag"><img [src]="'assets/img/flags/' + lang.short + '.png'" /></div>
         </ng-container>
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 <ion-content>
   <ion-slides ion-fixed #extras class="extras">
     <ion-slide padding class="notify">
-      <div class="slider-content">
-        <img src="assets/onboarding/favorites.png">
-      </div>
+      <div class="slider-content"><img src="assets/onboarding/favorites.png" /></div>
     </ion-slide>
     <ion-slide padding class="secure">
-      <div class="slider-content">
-        <img src="assets/onboarding/permit.png">
-      </div>
+      <div class="slider-content"><img src="assets/onboarding/permit.png" /></div>
     </ion-slide>
     <ion-slide padding class="explore">
-      <div class="slider-content">
-        <img src="assets/onboarding/map.png">
-      </div>
+      <div class="slider-content"><img src="assets/onboarding/map.png" /></div>
     </ion-slide>
     <ion-slide padding class="intro">
-      <div class="slider-content">
-        <img src="assets/img/logo.png">
-      </div>
+      <div class="slider-content"><img src="assets/img/logo-blue.png" /></div>
     </ion-slide>
   </ion-slides>
   <ion-slides ion-fixed pager #slides class="info">
@@ -46,32 +34,40 @@
       <div class="wave wave_5"></div>
     </div>
     <ion-slide class="intro" padding>
-      <h2>{{'ui.onboarding.welcome.title' | translate}}</h2>
-      <p>{{'ui.onboarding.welcome.subtitle' | translate}}</p>
+      <h2>{{ 'ui.onboarding.welcome.title' | translate }}</h2>
+      <p>{{ 'ui.onboarding.welcome.subtitle' | translate }}</p>
     </ion-slide>
 
     <ion-slide padding class="explore">
-      <h2>{{'ui.onboarding.explore.title' | translate}}</h2>
+      <h2>{{ 'ui.onboarding.explore.title' | translate }}</h2>
       <div [innerHtml]="'ui.onboarding.explore.content' | translate"></div>
     </ion-slide>
 
     <ion-slide padding class="secure">
-      <h2>{{'ui.onboarding.secure.title' | translate}}</h2>
-      <p>{{'ui.onboarding.secure.subtitle' | translate}}</p>
+      <h2>{{ 'ui.onboarding.secure.title' | translate }}</h2>
+      <p>{{ 'ui.onboarding.secure.subtitle' | translate }}</p>
     </ion-slide>
 
     <ion-slide padding class="notify">
-      <h2>{{'ui.onboarding.notify.title' | translate}}</h2>
-      <p>{{'ui.onboarding.notify.subtitle' | translate}}</p>
-      <button ion-button block color="secondary" (click)="skip()">{{'ui.onboarding.continue' | translate}}</button>
+      <h2>{{ 'ui.onboarding.notify.title' | translate }}</h2>
+      <p>{{ 'ui.onboarding.notify.subtitle' | translate }}</p>
+      <button ion-button block color="secondary" (click)="skip()">{{ 'ui.onboarding.continue' | translate }}</button>
     </ion-slide>
   </ion-slides>
-  <button ion-button ion-fixed clear (click)="skip()" class="left" [ngClass]="hideSkip ? 'hide-button': ''">
-    {{'ui.onboarding.skip' | translate}}
+  <button ion-button ion-fixed clear (click)="skip()" class="left" [ngClass]="hideSkip ? 'hide-button' : ''">
+    {{ 'ui.onboarding.skip' | translate }}
   </button>
 
-  <button ion-button ion-fixed icon-right clear (click)="next()" class="right" [ngClass]="hideSkip ? 'hide-button': ''">
-    {{'ui.onboarding.next' | translate}}
+  <button
+    ion-button
+    ion-fixed
+    icon-right
+    clear
+    (click)="next()"
+    class="right"
+    [ngClass]="hideSkip ? 'hide-button' : ''"
+  >
+    {{ 'ui.onboarding.next' | translate }}
     <ion-icon name="arrow-forward"></ion-icon>
   </button>
 </ion-content>

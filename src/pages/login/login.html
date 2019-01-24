@@ -1,20 +1,21 @@
 <ion-header transparent>
-
   <ion-navbar transparent>
     <ion-buttons first>
-      <button ion-button (click)="close()">{{'Close' | translate}}</button>
+      <button ion-button color="light" (click)="close()">{{ 'Close' | translate }}</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content class="background-image" padding no-bounce>
   <div class="centered-content">
-    <img src="assets/img/logo.png" width="100%">
-    <ion-data-form [form]="form" [disableSubmit]="!form.group?.controls.username.valid || !form.group?.controls.password.valid" ></ion-data-form>
-    <button ion-button block color="secondary" (click)="createAccount()">{{'Create new account' | translate}}</button>
+    <img src="assets/img/logo-vit-skuggad.png" width="100%" />
+    <ion-data-form
+      [form]="form"
+      [disableSubmit]="!form.group?.controls.username.valid || !form.group?.controls.password.valid"
+    ></ion-data-form>
+    <button ion-button block color="secondary" (click)="createAccount()">{{ 'Create new account' | translate }}</button>
   </div>
 </ion-content>
 <ion-footer no-border padding-horizontal>
-  <button ion-button (click)="forgotPassword()" block>{{'Forgot password' | translate}}</button>
+  <button ion-button (click)="forgotPassword()" block>{{ 'Forgot password' | translate }}</button>
 </ion-footer>

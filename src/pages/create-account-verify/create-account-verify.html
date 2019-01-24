@@ -1,24 +1,19 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{'Verify Account' | translate}}</ion-title>
+    <ion-title>{{ 'Verify Account' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding class="background-image">
-  <p *ngIf="user" class="text-center">
-    {{'Activation code sent' | translate: user}}
-  </p>
+<ion-content padding>
+  <p *ngIf="user" class="text-center">{{ 'Activation code sent' | translate: user }}</p>
   <ion-data-form [form]="form"></ion-data-form>
   <div class="register-retry" *ngIf="userDetails">
-    <p>{{'Activation took too long' | translate}}</p>
+    <p>{{ 'Activation took too long' | translate }}</p>
     <button ion-button block (click)="retry()" [disabled]="!(timerCompleted | async)" color="secondary">
-      <span>{{'Try again' | translate}}
-        <span *ngIf="!(timerCompleted | async)"> {{'in' | translate}} {{timer | async | date:'mm:ss'}}</span>
+      <span
+        >{{ 'Try again' | translate }}
+        <span *ngIf="!(timerCompleted | async)"> {{ 'in' | translate }} {{ timer | async | date: 'mm:ss' }}</span>
       </span>
     </button>
   </div>
-
 </ion-content>

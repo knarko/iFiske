@@ -1,17 +1,16 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{'Create Account' | translate}}</ion-title>
+    <ion-title>{{ 'Create Account' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding class="background-image">
+<ion-content padding>
   <ion-data-form [form]="form" [hideSubmit]="true"></ion-data-form>
   <ion-item no-lines class="terms">
-    <ion-label>{{'I accept the terms of service' | translate}}</ion-label>
+    <ion-label>{{ 'I accept the terms of service' | translate }}</ion-label>
     <ion-checkbox [(ngModel)]="acceptedTos" (ionChange)="persistApproval()"></ion-checkbox>
   </ion-item>
-  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid || !acceptedTos">{{'Register' | translate}}</button>
+  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid || !acceptedTos">
+    {{ 'Register' | translate }}
+  </button>
 </ion-content>

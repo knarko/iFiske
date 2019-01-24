@@ -90,6 +90,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     let baseLayers = new Control.Layers({ outdoors, satellite });
     this.map.addControl(baseLayers);
+    this.map.addControl(new L.control.scale());
     this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
       this.map.removeControl(baseLayers);
       const newControlLayers = {};

@@ -11,7 +11,7 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "start": "ionic serve --no-open",
+    "start": "node --max-old-space-size=4096 $(which ionic) serve --no-open",
     "deploy": "node scripts/deploy.js",
     "deploy:firebase": "npm run build && firebase deploy --only hosting",
     "changelog": "conventional-changelog -s -i CHANGELOG.md -p angular",

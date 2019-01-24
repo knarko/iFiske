@@ -1,3 +1,15 @@
+<a name="4.8.3"></a>
+## [4.8.3](https://gitlab.com/kada-development/ifiske/compare/v4.8.2...v4.8.3) (2019-01-24)
+
+
+### Bug Fixes
+
+* **maps:** add scale control ([7eed92d](https://gitlab.com/kada-development/ifiske/commit/7eed92d))
+* **maps:** fix blurry maps on HiDPI displays ([5c24a0c](https://gitlab.com/kada-development/ifiske/commit/5c24a0c))
+* replace background image and logos with new design ([a4622c2](https://gitlab.com/kada-development/ifiske/commit/a4622c2))
+
+
+
 <a name="4.8.2"></a>
 ## [4.8.2](https://gitlab.com/kada-development/ifiske/compare/v4.8.1...v4.8.2) (2019-01-22)
 

@@ -26,7 +26,12 @@
   </form>
   <ion-list inset border>
     <ng-container *ngFor="let link of links">
-      <button ion-item *ngIf="!link.show || (link.show | async)" [navPush]="link.uri">
+      <button
+        ion-item
+        *ngIf="!link.show || (link.show | async)"
+        [navPush]="link.uri"
+        (click)="link.action && link.action($event)"
+      >
         <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{ link.title | translate }}
       </button>
     </ng-container>

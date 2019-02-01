@@ -11,6 +11,7 @@ interface Link {
   title: string;
   icon: string;
   uri?: string;
+  action?: () => void;
   show?: Observable<boolean>;
 }
 
@@ -30,7 +31,17 @@ export class HomePage {
     { title: 'Control panel', icon: 'unlock', uri: 'AdminPage', show: this.showAdmin },
     { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
     { title: 'Map', icon: 'map', uri: 'MapPage' },
-    { title: 'My Fishing Permits', icon: 'ifiske-permit', uri: 'MyPermitsPage', show: this.userProvider.loggedIn },
+    {
+      title: 'My Fishing Permits',
+      icon: 'ifiske-permit',
+      action: async () => {
+        if (await this.userProvider.loggedIn.pipe(take(1)).toPromise()) {
+          this.navCtrl.push('MyPermitsPage');
+        } else {
+          this.modalCtrl.create('LoginPage').present();
+        }
+      },
+    },
     { title: 'Information', icon: 'information-circle', uri: 'InformationPage' },
   ];
 

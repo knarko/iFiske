@@ -1,7 +1,20 @@
 page-information {
-
   img {
     object-fit: contain;
   }
-
+  .grid {
+    padding: 0;
+  }
+  .my-col {
+    &:nth-child(2n + 1) {
+      border-right: 1px solid $toolbar-border-color;
+    }
+    text-align: center;
+    ion-icon {
+      font-size: 3em;
+      width: 1em;
+      margin: 0 auto;
+      display: block;
+    }
+  }
 }

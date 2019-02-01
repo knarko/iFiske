@@ -123,6 +123,7 @@ export class ApiProvider {
     }
     const headers = new HttpHeaders(headersObject);
 
+    // TODO: take session in account when caching results
     if (options.cacheTime && this.cache.has(params.toString())) {
       const res = this.cache.get(params.toString());
       console.log('found cached observable', res);
@@ -236,7 +237,7 @@ export class ApiProvider {
     );
   }
   user_info() {
-    return this.api_call({ m: 'user_info' }, { session: true, cacheTime: 60000 });
+    return this.api_call({ m: 'user_info' }, { session: true });
   }
   user_lost_password(user) {
     return this.api_call(
@@ -342,7 +343,7 @@ export class ApiProvider {
       { m: 'adm_get_stats', orgid },
       {
         session: true,
-        cacheTime: 30 * 1000,
+        //cacheTime: 30 * 1000
       },
     );
   }

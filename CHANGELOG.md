@@ -1,3 +1,15 @@
+<a name="4.8.5"></a>
+## [4.8.5](https://gitlab.com/kada-development/ifiske/compare/v4.8.4...v4.8.5) (2019-02-01)
+
+
+### Bug Fixes
+
+* update splash screen ([c6f4e5c](https://gitlab.com/kada-development/ifiske/commit/c6f4e5c))
+* **api:** disable caching for requests with session ([aabfc70](https://gitlab.com/kada-development/ifiske/commit/aabfc70))
+* **home:** always show my-permits ([e0fc1d9](https://gitlab.com/kada-development/ifiske/commit/e0fc1d9))
+
+
+
 <a name="4.8.4"></a>
 ## [4.8.4](https://gitlab.com/kada-development/ifiske/compare/v4.8.3...v4.8.4) (2019-02-01)
 

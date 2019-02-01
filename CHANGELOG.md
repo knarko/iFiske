@@ -1,3 +1,13 @@
+<a name="4.8.4"></a>
+## [4.8.4](https://gitlab.com/kada-development/ifiske/compare/v4.8.3...v4.8.4) (2019-02-01)
+
+
+### Bug Fixes
+
+* move species/fishingmethods into informationPage ([60ef929](https://gitlab.com/kada-development/ifiske/commit/60ef929))
+
+
+
 <a name="4.8.3"></a>
 ## [4.8.3](https://gitlab.com/kada-development/ifiske/compare/v4.8.2...v4.8.3) (2019-01-24)
 

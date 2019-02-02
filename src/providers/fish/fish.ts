@@ -8,7 +8,7 @@ import { BaseModel } from '../database/basemodel';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { Dictionary } from '../../types';
-import * as striptags from 'striptags';
+import { generateSnippet } from '../../util';
 
 export interface Fish {
   ID: number;
@@ -48,6 +48,7 @@ export class FishProvider extends BaseModel<Fish> {
         size: 'text',
         lat: 'text',
         rec: 'text',
+        snippet: 'text',
       },
     },
   ];
@@ -67,7 +68,7 @@ export class FishProvider extends BaseModel<Fish> {
     for (const fish of Object.values(data)) {
       fish.icon = serverLocation + fish.icon;
       fish.img = serverLocation + fish.img;
-      fish.snippet = striptags(fish.d.substr(0, 500)).substr(0, 100);
+      fish.snippet = generateSnippet(fish.d);
       this.imgcache.cacheFile(fish.img).catch(() => {});
     }
 

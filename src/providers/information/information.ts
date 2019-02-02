@@ -6,6 +6,7 @@ import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { LinkyPipe } from '../../pipes/linky/linky';
 import striptags from 'striptags';
+import { generateSnippet } from '../../util';
 
 export interface InformationArticle {
   ID: number;
@@ -27,6 +28,7 @@ export class InformationProvider extends BaseModel<InformationArticle> {
         text: 'text',
         img: 'text',
         icon: 'text',
+        snippet: 'text',
       },
     },
   ];
@@ -50,7 +52,7 @@ export class InformationProvider extends BaseModel<InformationArticle> {
     const linky = new LinkyPipe();
     for (const item of data.contents) {
       item.text = linky.transform(striptags(item.text, ['p', 'h2', 'h3', 'a']));
-      item.snippet = striptags(item.text.substr(0, 500)).substr(0, 100);
+      item.snippet = generateSnippet(item.text);
 
       this.imgcache.cacheFile(item.icon).catch(() => {});
     }

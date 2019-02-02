@@ -2,6 +2,7 @@ import { Validators } from '@angular/forms';
 
 import { Permit } from './providers/user/userTypes';
 import { AdminPermit } from './providers/admin/adminTypes';
+import striptags from 'striptags';
 
 export function getPermitValidity(product: Permit | AdminPermit) {
   if (product.rev === 1) {
@@ -44,3 +45,7 @@ export const resolveOrRejectAllPromises = async (promises: Promise<any>[]) => {
   }
   return results;
 };
+
+export function generateSnippet(text: string): string {
+  return striptags(text.substr(0, 600)).substr(0, 250);
+}

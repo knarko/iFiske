@@ -5,16 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{item?.t}}</ion-title>
+    <ion-title>{{ item?.t }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding class="information-page">
-  <h1>{{item?.t}}</h1>
-  <img [icSrc]="item?.img">
-  <section *ngIf="item" [innerHtml]="item?.text | stripTags : 'p' : 'h2' : 'h3' : 'a' | linky"></section>
+  <h1>{{ item?.t }}</h1>
+  <img [icSrc]="item?.img" />
+  <section *ngIf="item" [innerHtml]="item?.text"></section>
 </ion-content>

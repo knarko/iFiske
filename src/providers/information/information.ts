@@ -4,6 +4,8 @@ import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
+import { LinkyPipe } from '../../pipes/linky/linky';
+import striptags from 'striptags';
 
 export interface InformationArticle {
   ID: number;
@@ -45,7 +47,11 @@ export class InformationProvider extends BaseModel<InformationArticle> {
 
     localStorage.setItem('NEWS', data.title);
 
+    const linky = new LinkyPipe();
     for (const item of data.contents) {
+      item.text = linky.transform(striptags(item.text, ['p', 'h2', 'h3', 'a']));
+      item.snippet = striptags(item.text.substr(0, 500)).substr(0, 100);
+
       this.imgcache.cacheFile(item.icon).catch(() => {});
     }
 

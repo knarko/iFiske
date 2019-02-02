@@ -94,6 +94,7 @@
     "phonegap-plugin-barcodescanner": "^8.0.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.12",
+    "striptags": "^3.1.1",
     "sw-toolbox": "3.6.0",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2",
     "web-animations-js": "^2.3.1",

@@ -29,7 +29,7 @@
         <img [icSrc]="item.img" />
       </ion-thumbnail>
       <h2>{{ item.t }}</h2>
-      <p [innerText]="item.text | stripTags"></p>
+      <p>{{ item.snippet }}</p>
     </ion-item>
   </ion-list>
 </ion-content>

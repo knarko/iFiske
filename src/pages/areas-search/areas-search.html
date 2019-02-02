@@ -5,49 +5,58 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{county?.t || 'Search results' | translate}}</ion-title>
+    <ion-title>{{ county?.t || 'Search results' | translate }}</ion-title>
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
     <form action="">
-    <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" [placeholder]="'Search' | translate"></ion-searchbar>
+      <ion-searchbar
+        animated
+        (ionInput)="search($event)"
+        (keypress)="keypress($event)"
+        [(ngModel)]="searchTerm"
+        [ngModelOptions]="{ standalone: true }"
+        [placeholder]="'Search' | translate"
+      ></ion-searchbar>
     </form>
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content class="outer-content">
   <h3 class="text-center" *ngIf="areas && areas.length === 0">
-    {{'No areas found' | translate}}
+    {{ 'No areas found' | translate }}
   </h3>
   <div padding class="text-center" *ngIf="!areas">
     <ion-spinner></ion-spinner>
-    <div>{{'Searching' | translate}}</div>
+    <div>{{ 'Searching' | translate }}</div>
   </div>
 
-  <ion-list [virtualScroll]="areas" approxItemHeight="96px" approxHeaderHeight="190px" [headerFn]="scrollHeaders" [virtualTrackBy]="trackFn">
-
+  <ion-list
+    [virtualScroll]="areas"
+    approxItemHeight="96px"
+    approxHeaderHeight="190px"
+    [headerFn]="scrollHeaders"
+    [virtualTrackBy]="trackFn"
+  >
     <ion-item class="fish" *virtualHeader="let fish" [navPush]="'SpeciesDetailPage'" [navParams]="fish">
-      <img class="fish-image" [icSrc]="fish.img">
-      <h2>{{fish.t}}</h2>
-      <p [innerHTML]="fish.d | stripTags"></p>
+      <img class="fish-image" [icSrc]="fish.img" />
+      <h2>{{ fish.t }}</h2>
+      <p>{{ fish.snippet }}</p>
     </ion-item>
 
     <ion-item *virtualItem="let area" (click)="goto(area)">
       <ion-thumbnail item-start *ngIf="area.photo">
-        <img [icSrc]="area.photo">
+        <img [icSrc]="area.photo" />
       </ion-thumbnail>
 
-      <h2>{{area.org}}</h2>
-      <span class="right distance-indicator" *ngIf="area.distance | distance">
-        <fa-icon name="map-marker"></fa-icon> {{area.distance | distance}}</span>
+      <h2>{{ area.org }}</h2>
+      <span class="right distance-indicator" *ngIf="(area.distance | distance)">
+        <fa-icon name="map-marker"></fa-icon> {{ area.distance | distance }}</span
+      >
       <p [innerText]="area.t" *ngIf="area.org !== area.t" class="wrap"></p>
-      <p *ngIf="settings.isDeveloper" class="developer-info">ID: {{area.ID}} orgID: {{area.orgid}}</p>
+      <p *ngIf="settings.isDeveloper" class="developer-info">ID: {{ area.ID }} orgID: {{ area.orgid }}</p>
       <fish-level [level]="area.level" icon="true" *ngIf="foundFish"></fish-level>
     </ion-item>
-
   </ion-list>
 </ion-content>

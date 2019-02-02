@@ -1,3 +1,14 @@
+<a name="4.8.6"></a>
+## [4.8.6](https://gitlab.com/kada-development/ifiske/compare/v4.8.5...v4.8.6) (2019-02-02)
+
+
+### Bug Fixes
+
+* calculate snippets ahead of time using safe striptags function ([7b6b5d3](https://gitlab.com/kada-development/ifiske/commit/7b6b5d3))
+* update splash screens ([505de02](https://gitlab.com/kada-development/ifiske/commit/505de02))
+
+
+
 <a name="4.8.5"></a>
 ## [4.8.5](https://gitlab.com/kada-development/ifiske/compare/v4.8.4...v4.8.5) (2019-02-01)
 

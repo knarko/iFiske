@@ -26,7 +26,6 @@
     "@angular/forms": "~5.2.0",
     "@angular/platform-browser": "~5.2.0",
     "@angular/platform-browser-dynamic": "~5.2.0",
-    "@ifiske/cordova-plugin-migrate-localstorage": "^2.0.1",
     "@ifiske/cordova-plugin-sms": "^1.0.1",
     "@ionic-native/app-version": "^4.15.0",
     "@ionic-native/barcode-scanner": "^4.15.0",

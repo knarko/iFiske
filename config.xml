@@ -8,8 +8,8 @@
     <content src="index.html" />
     <access origin="*" />
     <access origin="cdvfile://*" />
-    <allow-navigation href="http://ionic.local/*" />
-    <allow-navigation href="http://localhost:30861/*" />
+    <allow-navigation href="http://localhost:8100/*" />
+    <allow-navigation href="http://localhost/*" />
     <allow-navigation href="ionic://localhost" />
     <allow-navigation href="https://www.youtube.com/embed/*" />
     <allow-intent href="http://*/*" />
@@ -34,14 +34,6 @@
     <config-file parent="ITSAppUsesNonExemptEncryption" platform="ios" target="*-Info.plist">
         <false />
     </config-file>
-    <feature name="CDVWKWebViewEngine">
-        <param name="ios-package" value="CDVWKWebViewEngine" />
-    </feature>
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
-
-    <!-- Preferences for ionic-webview -->
-    <preference name="WKPort" value="30861" />
-    <preference name="WKInternalConnectionsOnly" value="true" />
 
     <platform name="android">
         <hook src="hooks/copy_android_notification_icons.js" type="after_prepare" />

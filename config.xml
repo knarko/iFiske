@@ -33,14 +33,6 @@
     <config-file parent="ITSAppUsesNonExemptEncryption" platform="ios" target="*-Info.plist">
         <false />
     </config-file>
-    <feature name="CDVWKWebViewEngine">
-        <param name="ios-package" value="CDVWKWebViewEngine" />
-    </feature>
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
-
-    <!-- Preferences for ionic-webview -->
-    <preference name="WKPort" value="30861" />
-    <preference name="WKInternalConnectionsOnly" value="true" />
 
     <platform name="android">
         <hook src="hooks/copy_android_notification_icons.js" type="after_prepare" />
@@ -109,7 +101,7 @@
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^2.0.3" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0" />
@@ -129,7 +121,6 @@
         <variable name="WARN_DEBUG" value="false" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
-    <plugin name="cordova-plugin-migrate-localstorage" spec="@ifiske/cordova-plugin-migrate-localstorage@~2.0.1" />
     <engine name="android" spec="7.1.1" />
     <engine name="ios" spec="~4.5.4" />
 </widget>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, Platform } from 'ionic-angular';
-import { AppVersion } from '@ionic-native/app-version';
-import { Pro, DeployInfo } from '@ionic-native/pro';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Pro, DeployInfo } from '@ionic-native/pro/ngx';
 
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';

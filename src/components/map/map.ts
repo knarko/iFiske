@@ -1,4 +1,14 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+  NgZone,
+} from '@angular/core';
 import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
 import * as LocateControl from 'leaflet.locatecontrol';
 import * as omnivore from '@mapbox/leaflet-omnivore';
@@ -64,94 +74,97 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private navCtrl: NavController,
     private platform: PlatformProvider,
     private translate: TranslateService,
+    private ngZone: NgZone,
   ) {}
 
   ngAfterViewInit() {
-    const IFISKE_MAP = 'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
-    const MAPBOX_MAP = 'https://api.tiles.mapbox.com/v4/mapbox.satellite';
-    const tilesUrl = `{maptype}/{z}/{x}/{y}.png{apikey}`;
-    const apikey = localStorage.getItem('mapbox_api');
+    this.ngZone.runOutsideAngular(() => {
+      const IFISKE_MAP = 'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
+      const MAPBOX_MAP = 'https://api.tiles.mapbox.com/v4/mapbox.satellite';
+      const tilesUrl = `{maptype}/{z}/{x}/{y}.png{apikey}`;
+      const apikey = localStorage.getItem('mapbox_api');
 
-    this.map = new Map(this.mapElement.nativeElement).setView([62.0, 15.0], 4);
+      this.map = new Map(this.mapElement.nativeElement).setView([62.0, 15.0], 4);
 
-    const outdoors = new TileLayer(tilesUrl, {
-      maxZoom: 18,
-      maptype: IFISKE_MAP,
-      apikey: '',
-      detectRetina: true,
-    });
-    const satellite = new TileLayer(tilesUrl, {
-      maxZoom: 16,
-      maptype: MAPBOX_MAP,
-      apikey: `?access_token=${apikey}`,
-    });
+      const outdoors = new TileLayer(tilesUrl, {
+        maxZoom: 18,
+        maptype: IFISKE_MAP,
+        apikey: '',
+        detectRetina: true,
+      } as any);
+      const satellite = new TileLayer(tilesUrl, {
+        maxZoom: 16,
+        maptype: MAPBOX_MAP,
+        apikey: `?access_token=${apikey}`,
+      } as any);
 
-    this.map.addLayer(outdoors);
+      this.map.addLayer(outdoors);
 
-    let baseLayers = new Control.Layers({ outdoors, satellite });
-    this.map.addControl(baseLayers);
-    this.map.addControl(new L.control.scale());
-    this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
-      this.map.removeControl(baseLayers);
-      const newControlLayers = {};
-      newControlLayers[stuff['ui.map.outdoors']] = outdoors;
-      newControlLayers[stuff['ui.map.satellite']] = satellite;
-      baseLayers = new Control.Layers(newControlLayers);
+      let baseLayers = new Control.Layers({ outdoors, satellite });
       this.map.addControl(baseLayers);
-      console.log(stuff);
-    });
-
-    this.lc = new LocateControl({
-      follow: false,
-      position: 'bottomright',
-      keepCurrentZoomLevel: false,
-      stopFollowingOnDrag: true,
-      remainActive: true,
-      onLocationError: err => {
-        console.error(err);
-        MonitoringClient.captureException(err);
-      },
-      onLocationOutsideMapBounds: context => {
-        console.log(context);
-      },
-      locateOptions: {
-        watch: true, // Watch is broken in chrome
-        maxZoom: 11,
-      },
-      icon: 'locate-icon icon ion-md-locate',
-      iconLoading: 'loader',
-    });
-
-    this.lc.addTo(this.map);
-
-    const locateControlTrigger = () => {
-      console.log('location found');
-      L.DomEvent.off(this.map, 'locationfound', locateControlTrigger);
-
-      setTimeout(() => {
-        this.lc.options.keepCurrentZoomLevel = this.lc._active;
-      }, 3000);
-
-      L.DomEvent.on(this.lc._link, 'click', () => {
-        console.log('clicked');
-        this.lc.options.keepCurrentZoomLevel = this.lc._active;
+      this.map.addControl(new L.control.scale());
+      this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
+        this.map.removeControl(baseLayers);
+        const newControlLayers = {};
+        newControlLayers[stuff['ui.map.outdoors']] = outdoors;
+        newControlLayers[stuff['ui.map.satellite']] = satellite;
+        baseLayers = new Control.Layers(newControlLayers);
+        this.map.addControl(baseLayers);
+        console.log(stuff);
       });
-    };
-    L.DomEvent.on(this.map, 'locationfound', locateControlTrigger);
 
-    this.map.on('popupopen', e => {
-      this.map.getContainer().classList.add('popup-open');
-      this.popupOpen.emit(e);
-    });
-    this.map.on('popupclose', e => {
-      this.map.getContainer().classList.remove('popup-open');
-      this.popupClose.emit(e);
-    });
+      this.lc = new LocateControl({
+        follow: false,
+        position: 'bottomright',
+        keepCurrentZoomLevel: false,
+        stopFollowingOnDrag: true,
+        remainActive: true,
+        onLocationError: err => {
+          console.error(err);
+          MonitoringClient.captureException(err);
+        },
+        onLocationOutsideMapBounds: context => {
+          console.log(context);
+        },
+        locateOptions: {
+          watch: true, // Watch is broken in chrome
+          maxZoom: 11,
+        },
+        icon: 'locate-icon icon ion-md-locate',
+        iconLoading: 'loader',
+      });
 
-    if (this.shouldRefresh) {
-      this.refresh();
-      this.shouldRefresh = false;
-    }
+      this.lc.addTo(this.map);
+
+      const locateControlTrigger = () => {
+        console.log('location found');
+        L.DomEvent.off(this.map, 'locationfound', locateControlTrigger);
+
+        setTimeout(() => {
+          this.lc.options.keepCurrentZoomLevel = this.lc._active;
+        }, 3000);
+
+        L.DomEvent.on(this.lc._link, 'click', () => {
+          console.log('clicked');
+          this.lc.options.keepCurrentZoomLevel = this.lc._active;
+        });
+      };
+      L.DomEvent.on(this.map, 'locationfound', locateControlTrigger);
+
+      this.map.on('popupopen', e => {
+        this.map.getContainer().classList.add('popup-open');
+        this.popupOpen.emit(e);
+      });
+      this.map.on('popupclose', e => {
+        this.map.getContainer().classList.remove('popup-open');
+        this.popupClose.emit(e);
+      });
+
+      if (this.shouldRefresh) {
+        this.refresh();
+        this.shouldRefresh = false;
+      }
+    });
   }
 
   createAreaPopup(area) {
@@ -191,7 +204,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   createMarkers(areas: Area[]) {
     if (this.markers) {
-      this.markers.clearLayers();
+      //this.markers.clearLayers();
     } else {
       this.markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
@@ -233,7 +246,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   createPois(pois: POI[]) {
     if (this.poiMarkers) {
-      this.poiMarkers.clearLayers();
+      //this.poiMarkers.clearLayers();
     } else {
       this.poiMarkers = new LayerGroup();
       this.map.addLayer(this.poiMarkers);
@@ -263,7 +276,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
   createPolygons(polys: FiskePolygon[]) {
     console.log(polys);
     if (this.polygons) {
-      this.polygons.clearLayers();
+      console.log(this.map, this.polygons);
+      //this.polygons.clearLayers();
     } else {
       this.polygons = new LayerGroup();
       this.map.addLayer(this.polygons);
@@ -298,7 +312,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     this.areaMarker.addLayer(marker);
 
     console.log(this.map, area);
-    setTimeout(() => {
+    this.map.whenReady(() => {
       this.map.setView(
         {
           lat: area.lat,
@@ -311,7 +325,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   createLayers(layers: string[]) {
     if (this.areaLayers) {
-      this.areaLayers.clearLayers();
+      //this.areaLayers.clearLayers();
     } else {
       this.areaLayers = new LayerGroup();
       this.map.addLayer(this.areaLayers);
@@ -337,24 +351,26 @@ export class MapComponent implements AfterViewInit, OnChanges {
     if (!this.options) {
       return;
     }
-    if (this.options.centerOnMe && this.map && !this.centered) {
-      this.map.locate({ setView: true, maxZoom: 11 });
-      this.centered = true;
-    }
-    if (this.options.areas) {
-      this.createMarkers(this.options.areas);
-    }
-    if (this.options.pois) {
-      this.createPois(this.options.pois);
-    }
-    if (this.options.polygons) {
-      this.createPolygons(this.options.polygons);
-    }
-    if (this.options.area) {
-      this.createArea(this.options.area);
-    }
-    if (this.options.layers) {
-      this.createLayers(this.options.layers);
-    }
+    this.ngZone.runOutsideAngular(() => {
+      if (this.options.centerOnMe && this.map && !this.centered) {
+        this.map.locate({ setView: true, maxZoom: 11 });
+        this.centered = true;
+      }
+      if (this.options.areas) {
+        this.createMarkers(this.options.areas);
+      }
+      if (this.options.pois) {
+        this.createPois(this.options.pois);
+      }
+      if (this.options.polygons) {
+        this.createPolygons(this.options.polygons);
+      }
+      if (this.options.area) {
+        this.createArea(this.options.area);
+      }
+      if (this.options.layers) {
+        this.createLayers(this.options.layers);
+      }
+    });
   }
 }

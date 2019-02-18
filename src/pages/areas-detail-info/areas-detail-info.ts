@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, ModalController, Tabs, Content } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { SocialSharing } from '@ionic-native/social-sharing';
+import { Observable } from 'rxjs';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Area, AreaImage } from '../../providers/area/area';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { serverLocation } from '../api/serverLocation';
 import { CustomQueryEncoder } from '../api/QueryEncoder';

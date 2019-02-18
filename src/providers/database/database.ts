@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import isEqual from 'lodash/isEqual';
 import { TableDef } from './table';
 import { Platform } from 'ionic-angular';
@@ -13,14 +13,18 @@ export class DatabaseProvider {
     this.ready = this.plt
       .ready()
       .then(() => {
-        return this.sqlite.create({
+        const db = this.sqlite.create({
           name: 'fiskebasen.db',
           location: 'default',
         });
+        if (!db) {
+          throw new Error('No database could be opened!');
+        }
+        return db;
       })
-      .catch(err => {
+      .catch(error => {
         if ((window as any).openDatabase) {
-          let db = (window as any).openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
+          const db = (window as any).openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
           // tslint:disable-next-line:only-arrow-functions
           db.executeSql = function executeSql(statement, params) {
             return new Promise((resolve, reject) => {
@@ -45,9 +49,9 @@ export class DatabaseProvider {
               trans.apply(db, [tx, reject, resolve]);
             });
           };
-          return Promise.resolve(db);
+          return db;
         } else {
-          return Promise.reject(err);
+          throw error;
         }
       })
       .then(db => {

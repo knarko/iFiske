@@ -5,7 +5,7 @@ import { AdminProvider } from '../../providers/admin/admin';
 import { AdminPermit } from '../../providers/admin/adminTypes';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { TimeoutError } from '../../errors';
 import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
 

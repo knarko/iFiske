@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { merge } from 'rxjs/observable/merge';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { merge } from 'rxjs';
+import { fromEvent } from 'rxjs';
 
 /**
  * Generated class for the YoutubeComponent component.
@@ -45,7 +45,9 @@ export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.sub = this.fullscreen.subscribe(e => {
       const fullScreenElement =
-        document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
+        (document as any).fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).mozFullscreenElement;
       console.log('Changing fullscreen mode', e, fullScreenElement);
       if (fullScreenElement) {
         this.orientation.lock(this.orientation.ORIENTATIONS.LANDSCAPE);

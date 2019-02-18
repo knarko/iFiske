@@ -6,7 +6,7 @@ import { Form, FormOptions } from '../../components/ion-data-form/form';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { CreateAccountProvider, UserDetails } from '../../providers/create-account/create-account';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, last, tap } from 'rxjs/operators';
 import { validators } from '../../util';
 

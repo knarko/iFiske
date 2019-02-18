@@ -95,7 +95,7 @@ export class FishProvider extends BaseModel<Fish> {
       distance: 10,
       maxPatternLength: 16,
     };
-    const fuse = new Fuse(data, options);
+    const fuse = new Fuse(data as any, options);
     if (performance && performance.now) {
       const t1 = performance.now();
       console.log('Searching took:', t1 - t0, 'ms');

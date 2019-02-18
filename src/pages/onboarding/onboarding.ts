@@ -3,7 +3,7 @@ import { IonicPage, NavController, Slides, ModalController } from 'ionic-angular
 import { SettingsProvider, Language } from '../../providers/settings/settings';
 import { UpdateProvider } from '../../providers/update/update';
 import { map, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @IonicPage()
 @Component({

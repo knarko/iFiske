@@ -4,7 +4,7 @@ import { SettingsProvider } from '../settings/settings';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
-import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal';
+import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { oneSignalConfig } from '../../app/config';
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../providers/user/userTypes';

@@ -3,12 +3,12 @@ import { transition, style, animate, state, trigger } from '@angular/animations'
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MapOptions } from '../../components/map/map';
 import { MapDataProvider } from '../../providers/map-data/map-data';
-import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { Area, AreaProvider } from '../../providers/area/area';
 import { MonitoringClient } from '../../app/monitoring';
 import { isProdMode } from '../../app/config';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AreaDetailParams } from '../areas-detail/areas-detail-params';
 
 @IonicPage()

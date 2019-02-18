@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { switchMap, filter, map } from 'rxjs/operators';
 
-import * as Fuse from 'fuse.js';
-import { FuseOptions } from 'fuse.js';
+import Fuse from 'fuse.js';
 
 import { ApiProvider } from '../api/api';
 import { UserProvider } from '../user/user';
@@ -15,7 +14,7 @@ import { BaseModel } from '../database/basemodel';
 import { TableDef } from '../database/table';
 import { DatabaseProvider } from '../database/database';
 import { DBMethod } from '../database/decorators';
-import { catchError } from 'rxjs/operators/catchError';
+import { catchError } from 'rxjs/operators';
 import { SessionProvider } from '../session/session';
 import { getPermitValidity } from '../../util';
 
@@ -300,7 +299,7 @@ export class AdminProvider extends BaseModel {
       return permits;
     }
 
-    const options: FuseOptions = {
+    const options: any = {
       keys: [
         {
           name: 'tel',
@@ -333,7 +332,7 @@ export class AdminProvider extends BaseModel {
 
     const fuse = new Fuse(permits, options);
 
-    return fuse.search(searchTerm).map(({ item, score, matches }) => {
+    fuse.search(searchTerm).map(({ item, score, matches }) => {
       return { ...item, score, matches };
     });
   }

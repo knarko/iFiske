@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Config, App, ViewController, ToolbarTitle, NavController } from 'ionic-angular';
-import { Network } from '@ionic-native/network';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Network } from '@ionic-native/network/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { UpdateProvider } from '../providers/update/update';
 import { MDTransition } from 'ionic-page-transitions';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsProvider } from '../providers/settings/settings';
 import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 import { GoogleAnalytics } from '../providers/google-analytics/google-analytics';
 

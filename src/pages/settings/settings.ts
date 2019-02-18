@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 interface SettingsItem {
   title: string;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { SMS } from '@ionic-native/sms';
+import { SMS } from '@ionic-native/sms/ngx';
 
 import { Product } from '../../providers/product/product';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';

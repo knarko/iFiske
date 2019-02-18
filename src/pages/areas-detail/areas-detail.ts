@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Tabs } from 'ionic-angular';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ReplaySubject } from 'rxjs';
 import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
 import { OrganizationProvider, Organization } from '../../providers/organization/organization';

@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as Autolinker from 'autolinker';
+import Autolinker from 'autolinker';
 
 @Pipe({
   name: 'linky',
 })
 export class LinkyPipe implements PipeTransform {
-  linker: any;
+  linker: __Autolinker.Autolinker;
 
   constructor() {
     this.linker = new Autolinker({

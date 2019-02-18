@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LaunchReview } from '@ionic-native/launch-review';
+import { LaunchReview } from '@ionic-native/launch-review/ngx';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { SettingsProvider } from '../settings/settings';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { timer } from 'rxjs/observable/timer';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { timer } from 'rxjs';
+import { Observable } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
 import { ApiProvider } from '../api/api';
@@ -83,6 +83,9 @@ export class CreateAccountProvider {
     const timerEnd = 3 * 60 * 1000; // 3 minutes
     const stop = timer(timerEnd - 1000);
     const timerStart = Date.now();
-    return timer(0, 1000).pipe(map(() => timerEnd - (Date.now() - timerStart)), takeUntil(stop));
+    return timer(0, 1000).pipe(
+      map(() => timerEnd - (Date.now() - timerStart)),
+      takeUntil(stop),
+    );
   }
 }

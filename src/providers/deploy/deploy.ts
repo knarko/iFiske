@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Network } from '@ionic-native/network';
-import { Pro } from '@ionic-native/pro';
+import { Network } from '@ionic-native/network/ngx';
+import { Pro } from '@ionic-native/pro/ngx';
 import { filter, tap, switchMap, take, timeout } from 'rxjs/operators';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { APP_ID } from '../../app/config';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
-import { timer } from 'rxjs/observable/timer';
+import { timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { ApiProvider, IFISKE_ERRORS } from '../../providers/api/api';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics';
+import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics/ngx';
 
 import { googleAnalyticsTrackerID, APP_VERSION } from '../../app/config';
 

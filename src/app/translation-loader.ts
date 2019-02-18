@@ -1,6 +1,5 @@
 import { TranslateLoader } from '@ngx-translate/core';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import { of } from 'rxjs';
 
 import { sv } from '../i18n/sv';
 import { de } from '../i18n/de';

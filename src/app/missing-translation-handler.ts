@@ -1,7 +1,7 @@
 import { MissingTranslationHandler, MissingTranslationHandlerParams } from '@ngx-translate/core';
 import { MonitoringClient } from './monitoring';
 import { take, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 
 export class MissingTranslationError extends Error {
   constructor(key: string) {

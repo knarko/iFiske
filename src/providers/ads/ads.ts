@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ApiProvider } from '../api/api';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 

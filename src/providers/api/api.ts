@@ -6,9 +6,9 @@ import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
 import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay } from 'rxjs/operators';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
-import { Observable } from 'rxjs/Observable';
-import { timer } from 'rxjs/observable/timer';
-import { range } from 'rxjs/observable/range';
+import { Observable } from 'rxjs';
+import { timer } from 'rxjs';
+import { range } from 'rxjs';
 import { Dictionary } from '../../types';
 import { TimeoutError } from '../../errors';
 import { CustomQueryEncoder } from './QueryEncoder';
@@ -320,8 +320,8 @@ export class ApiProvider {
   }
 
   /*
-       * Administration endpoints
-       */
+   * Administration endpoints
+   */
   user_organizations() {
     return this.api_call({ m: 'user_organizations' }, { retry: false, session: true });
   }

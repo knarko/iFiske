@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { serverLocation } from '../../providers/api/serverLocation';
 import { AdminProvider } from '../../providers/admin/admin';

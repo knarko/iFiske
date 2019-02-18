@@ -8,22 +8,22 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 
 // Ionic Native
-import { AppVersion } from '@ionic-native/app-version';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { File } from '@ionic-native/file';
-import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics';
-import { LaunchNavigator } from '@ionic-native/launch-navigator';
-import { LaunchReview } from '@ionic-native/launch-review';
-import { Network } from '@ionic-native/network';
-import { OneSignal } from '@ionic-native/onesignal';
-import { Pro } from '@ionic-native/pro';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { SMS } from '@ionic-native/sms';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { SQLite } from '@ionic-native/sqlite';
-import { StatusBar } from '@ionic-native/status-bar';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { LaunchReview } from '@ionic-native/launch-review/ngx';
+import { Network } from '@ionic-native/network/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Pro } from '@ionic-native/pro/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 // Components
 import { MyApp } from './app.component';

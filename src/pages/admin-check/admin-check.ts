@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { MonitoringClient } from '../../app/monitoring';

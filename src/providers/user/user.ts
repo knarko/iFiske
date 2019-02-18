@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import { Dictionary } from '../../types';
@@ -232,13 +232,15 @@ export class UserProvider extends BaseModel {
     });
 
     const promise = Promise.all([this.clean(), this.API.user_logout()]);
-    promise.catch(() => {}).then(() => {
-      loading.dismiss();
-      this.toastCtrl.show({
-        message: 'You have been logged out',
-        duration: 4000,
+    promise
+      .catch(() => {})
+      .then(() => {
+        loading.dismiss();
+        this.toastCtrl.show({
+          message: 'You have been logged out',
+          duration: 4000,
+        });
       });
-    });
     return promise;
   }
 

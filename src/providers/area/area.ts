@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import * as Fuse from 'fuse.js';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { BaseModel } from '../database/basemodel';
@@ -462,7 +462,7 @@ export class AreaProvider extends BaseModel<Area> {
           maxPatternLength: 16,
         };
         if (this.settings.isDeveloper) {
-          options.keys.push({ name: 'ID', weight: 0.2 }, { name: 'orgid', weight: 0.2 });
+          options.keys.push({ name: 'ID', weight: 0.2 } as any, { name: 'orgid', weight: 0.2 } as any);
         }
         // Populate Fuse search index
         return new Fuse(data, options);
@@ -525,12 +525,14 @@ export class AreaProvider extends BaseModel<Area> {
           })
           .map(r => r.item);
       });
-    result.catch(() => {}).then(() => {
-      if (performance && performance.now) {
-        const t1 = performance.now();
-        console.log('Searching took:', t1 - t0, 'ms');
-      }
-    });
+    result
+      .catch(() => {})
+      .then(() => {
+        if (performance && performance.now) {
+          const t1 = performance.now();
+          console.log('Searching took:', t1 - t0, 'ms');
+        }
+      });
     this.searchCache[searchstring + countyId] = result;
     return result;
   }

@@ -79,12 +79,12 @@ export class MapComponent implements AfterViewInit, OnChanges {
       maptype: IFISKE_MAP,
       apikey: '',
       detectRetina: true,
-    });
+    } as any);
     const satellite = new TileLayer(tilesUrl, {
       maxZoom: 16,
       maptype: MAPBOX_MAP,
       apikey: `?access_token=${apikey}`,
-    });
+    } as any);
 
     this.map.addLayer(outdoors);
 

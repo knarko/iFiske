@@ -5,7 +5,6 @@ import { of } from 'rxjs/observable/of';
 import { switchMap, filter, map } from 'rxjs/operators';
 
 import * as Fuse from 'fuse.js';
-import { FuseOptions } from 'fuse.js';
 
 import { ApiProvider } from '../api/api';
 import { UserProvider } from '../user/user';
@@ -300,7 +299,7 @@ export class AdminProvider extends BaseModel {
       return permits;
     }
 
-    const options: FuseOptions = {
+    const options: any = {
       keys: [
         {
           name: 'tel',

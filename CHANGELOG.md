@@ -1,3 +1,25 @@
+<a name="4.9.0"></a>
+# [4.9.0](https://gitlab.com/kada-development/ifiske/compare/v4.8.6...v4.9.0) (2019-02-19)
+
+
+### Bug Fixes
+
+* **ios:** update ionic-webview to v4 ([a11eb88](https://gitlab.com/kada-development/ifiske/commit/a11eb88))
+* **types:** Override some bad types from autolinker and fuse.js. ([0a6f620](https://gitlab.com/kada-development/ifiske/commit/0a6f620))
+
+
+### BREAKING CHANGES
+
+* **ios:** Removes the localStorage migration plugin. Everyone is
+going to have to log in again. It sucks, but what can you do, the plugin
+is too much work to rewrite for this.
+* **ios:** drop support for iOS < 11
+* **ios:** The app is now served from ifiske://localhost in order
+to migitage some security issues with the previous model. This will
+require changes to the CORS settings in the API.
+
+
+
 <a name="4.8.6"></a>
 ## [4.8.6](https://gitlab.com/kada-development/ifiske/compare/v4.8.5...v4.8.6) (2019-02-02)
 

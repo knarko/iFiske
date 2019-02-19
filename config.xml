@@ -8,8 +8,7 @@
     <content src="index.html" />
     <access origin="*" />
     <access origin="cdvfile://*" />
-    <allow-navigation href="http://localhost/*" />
-    <allow-navigation href="ionic://localhost/*" />
+    <allow-navigation href="ifiske://localhost/*" />
     <allow-navigation href="https://www.youtube.com/embed/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

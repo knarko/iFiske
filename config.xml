@@ -34,6 +34,9 @@
         <false />
     </config-file>
 
+    <preference name="Scheme" value="ifiske" />
+    <preference name="iosScheme" value="ifiske" />
+
     <platform name="android">
         <hook src="hooks/copy_android_notification_icons.js" type="after_prepare" />
         <allow-intent href="market:*" />

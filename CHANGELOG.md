@@ -1,3 +1,12 @@
+## [4.9.3](https://gitlab.com/kada-development/ifiske/compare/v4.9.2...v4.9.3) (2019-03-06)
+
+
+### Bug Fixes
+
+* **permit:** replace flip animation function with static declaration ([ea31416](https://gitlab.com/kada-development/ifiske/commit/ea31416))
+
+
+
 ## [4.9.2](https://gitlab.com/kada-development/ifiske/compare/v4.9.1...v4.9.2) (2019-03-06)
 
 

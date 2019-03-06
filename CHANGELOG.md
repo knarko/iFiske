@@ -1,3 +1,12 @@
+## [4.9.1](https://gitlab.com/kada-development/ifiske/compare/v4.9.0...v4.9.1) (2019-03-06)
+
+
+### Features
+
+* **permit:** add permit backside with admin log ([82abe2b](https://gitlab.com/kada-development/ifiske/commit/82abe2b))
+
+
+
 <a name="4.9.0"></a>
 # [4.9.0](https://gitlab.com/kada-development/ifiske/compare/v4.8.6...v4.9.0) (2019-02-19)
 

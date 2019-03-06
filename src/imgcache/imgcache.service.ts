@@ -107,7 +107,7 @@ export class ImgcacheService {
           src,
           (_, img) => {
             const url = img.toURL();
-            const ionicConvertFileSrc = get(window, 'Ionic.WebView.convertFileSrc');
+            const ionicConvertFileSrc: any = get(window, 'Ionic.WebView.convertFileSrc');
             const normalizedUrl = (ionicConvertFileSrc && ionicConvertFileSrc(url)) || url;
             this.cache[src] = normalizedUrl;
             resolve(normalizedUrl);

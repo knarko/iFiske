@@ -53,6 +53,7 @@ export const en: TranslationDefinition = {
         "timesChecked-plural:timesChecked": "The permit has been checked {{timesChecked}} times.",
         "timesChecked-never": "The permit has never been checked.",
         "logCheck": "Log permit check",
+        "sendComment": "Add comment",
       },
       "userLevel": {
         "0": "Level 0",

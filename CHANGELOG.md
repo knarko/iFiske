@@ -1,3 +1,12 @@
+## [4.9.2](https://gitlab.com/kada-development/ifiske/compare/v4.9.1...v4.9.2) (2019-03-06)
+
+
+### Bug Fixes
+
+* **translations:** add missing en translation ([cad328c](https://gitlab.com/kada-development/ifiske/commit/cad328c))
+
+
+
 ## [4.9.1](https://gitlab.com/kada-development/ifiske/compare/v4.9.0...v4.9.1) (2019-03-06)
 
 

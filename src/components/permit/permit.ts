@@ -8,14 +8,14 @@ import { AreaProvider } from '../../providers/area/area';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { flip } from '../../animations/flip';
+import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
 
 type NotPermitted<T> = { [P in keyof T]?: undefined };
 @Component({
   selector: 'app-permit',
   templateUrl: 'permit.html',
-  animations: [flip('showFront'), flip('showBack', false)],
+  animations: [flipFront, flipBack],
 })
 export class PermitComponent {
   logged: boolean = false;

@@ -18,7 +18,7 @@ import { TranslateLoadingController } from '../translate-loading-controller/tran
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 
 import { User, Favorite, Permit } from './userTypes';
-import { GoogleAnalytics } from '../google-analytics/google-analytics';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @Injectable()
 export class UserProvider extends BaseModel {
@@ -96,7 +96,7 @@ export class UserProvider extends BaseModel {
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
     private session: SessionProvider,
-    private ga: GoogleAnalytics,
+    private analytics: FirebaseAnalytics,
   ) {
     super();
     this.initialize();
@@ -212,13 +212,12 @@ export class UserProvider extends BaseModel {
     const p = this.API.user_login(username, password).then(() => this.update(true));
 
     p.then(
-      () => {
-        this.ga.trackEvent('Login and Signup', 'Login');
+      u => {
+        // TODO: set userId?
+        this.analytics.logEvent('user_login', {});
       },
       error => {
         this.session.token = undefined;
-        this.ga.trackEvent('Login and Signup', 'Login Failure');
-        this.ga.trackException('Login Failure', false);
         return error;
       },
     );
@@ -226,19 +225,22 @@ export class UserProvider extends BaseModel {
   }
 
   async logout() {
-    this.ga.trackEvent('Login and Signup', 'Logout');
+    // TODO: remove userId?
+    this.analytics.logEvent('user_logout', {});
     const loading = await this.loadingCtrl.show({
       content: 'Logging out',
     });
 
     const promise = Promise.all([this.clean(), this.API.user_logout()]);
-    promise.catch(() => {}).then(() => {
-      loading.dismiss();
-      this.toastCtrl.show({
-        message: 'You have been logged out',
-        duration: 4000,
+    promise
+      .catch(() => {})
+      .then(() => {
+        loading.dismiss();
+        this.toastCtrl.show({
+          message: 'You have been logged out',
+          duration: 4000,
+        });
       });
-    });
     return promise;
   }
 

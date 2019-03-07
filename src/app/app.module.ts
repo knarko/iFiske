@@ -12,7 +12,6 @@ import { AppVersion } from '@ionic-native/app-version';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { File } from '@ionic-native/file';
 import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleAnalytics as GoogleAnalyticsPlugin } from '@ionic-native/google-analytics';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { LaunchReview } from '@ionic-native/launch-review';
 import { Network } from '@ionic-native/network';
@@ -24,6 +23,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
 import { StatusBar } from '@ionic-native/status-bar';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 // Components
 import { MyApp } from './app.component';
@@ -67,7 +67,6 @@ import { LogMissingTranslationHandler } from './missing-translation-handler';
 import { TranslateBundleLoader } from './translation-loader';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 import { DeepLinksProvider } from '../providers/deep-links/deep-links';
-import { GoogleAnalytics } from '../providers/google-analytics/google-analytics';
 
 registerLocaleData(localeSv);
 
@@ -111,8 +110,8 @@ registerLocaleData(localeSv);
     AppVersion,
     BarcodeScanner,
     File,
+    FirebaseAnalytics,
     Geolocation,
-    GoogleAnalyticsPlugin,
     LaunchNavigator,
     LaunchReview,
     Network,
@@ -154,7 +153,6 @@ registerLocaleData(localeSv);
     UserProvider,
     UserTrackingProvider,
     DeepLinksProvider,
-    GoogleAnalytics,
   ],
 })
 export class AppModule {}

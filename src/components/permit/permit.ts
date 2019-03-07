@@ -6,12 +6,12 @@ import { OrganizationProvider, Organization } from '../../providers/organization
 import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
-import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
 
 type NotPermitted<T> = { [P in keyof T]?: undefined };
+
 @Component({
   selector: 'app-permit',
   templateUrl: 'permit.html',
@@ -34,7 +34,6 @@ export class PermitComponent {
   constructor(
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,
-    private ga: GoogleAnalytics,
     private deepLinks: DeepLinksProvider,
     private settings: SettingsProvider,
   ) {}
@@ -56,7 +55,6 @@ export class PermitComponent {
 
   openProductInBrowser() {
     console.log('Opening product!', this.permit.pid);
-    this.ga.trackEvent('Purchase', 'Web', '' + this.permit.pid);
 
     this.deepLinks.open(DeepLinks.buy, { productId: '' + this.permit.pid }, { bringSession: true });
   }

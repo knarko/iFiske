@@ -8,6 +8,7 @@ import { UserProvider } from '../user/user';
 import { SettingsProvider } from '../settings/settings';
 import { Dictionary } from '../../types';
 import { PlatformProvider } from '../platform/platform';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 export enum DeepLinks {
   buy,
@@ -38,6 +39,7 @@ export class DeepLinksProvider {
     private userProvider: UserProvider,
     private settings: SettingsProvider,
     private platform: PlatformProvider,
+    private analytics: FirebaseAnalytics,
   ) {
     this.getToken();
   }
@@ -57,6 +59,9 @@ export class DeepLinksProvider {
   }
   open(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {
     const url = this.getUrl(link, params, options);
+    if (link === DeepLinks.buy) {
+      this.analytics.logEvent('open_web_store', params);
+    }
     window.open(url, '_system');
   }
 

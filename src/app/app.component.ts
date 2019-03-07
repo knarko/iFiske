@@ -11,7 +11,7 @@ import { DeployProvider, Connection } from '../providers/deploy/deploy';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
-import { GoogleAnalytics } from '../providers/google-analytics/google-analytics';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @Component({
   templateUrl: 'app.html',
@@ -31,7 +31,7 @@ export class MyApp {
     private settings: SettingsProvider,
     private deploy: DeployProvider,
     private network: Network,
-    private ga: GoogleAnalytics,
+    private analytics: FirebaseAnalytics,
     private userTracking: UserTrackingProvider,
   ) {
     if (this.settings.firstLaunch) {
@@ -96,7 +96,8 @@ export class MyApp {
 
   setupAnalytics() {
     this.app.viewWillEnter.subscribe((view: ViewController) => {
-      this.ga.trackView(`${view.name}${view.data && view.data.ID ? '/' + view.data.ID : ''}`);
+      // TODO: find a good way to log more info about the page. For example logging what area is looked at.
+      this.analytics.setCurrentScreen(view.name);
     });
   }
 

@@ -7,7 +7,6 @@ import { Area } from '../../providers/area/area';
 import { Permit } from '../../providers/user/userTypes';
 import { MonitoringClient } from '../../app/monitoring';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
-import { GoogleAnalytics } from '../../providers/google-analytics/google-analytics';
 
 @IonicPage()
 @Component({
@@ -22,7 +21,6 @@ export class AreasDetailPermitPage {
     private navCtrl: NavController,
     public navParams: NavParams,
     private modalCtrl: ModalController,
-    private ga: GoogleAnalytics,
     private deepLinks: DeepLinksProvider,
   ) {
     const params: Observable<any> =
@@ -38,7 +36,6 @@ export class AreasDetailPermitPage {
     console.log('buy', product, method);
 
     if (method.name === 'Web') {
-      this.ga.trackEvent('Purchase', 'Web', '' + product.ID);
       this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });
     } else if (method.name === 'SMS') {
       this.modalCtrl

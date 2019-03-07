@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Dictionary } from '../../types';
-import { GoogleAnalytics } from '../google-analytics/google-analytics';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 interface Settings {
   push: boolean;
@@ -44,7 +44,7 @@ export class SettingsProvider {
 
   settingsChanged = new ReplaySubject<Settings>(1);
 
-  constructor(private translate: TranslateService, private ga: GoogleAnalytics) {
+  constructor(private translate: TranslateService, private analytics: FirebaseAnalytics) {
     this.settings = Object.assign({}, this.defaultSettings, this.settings);
     this.language = this.settings.language;
     this.persistSettings();
@@ -81,7 +81,7 @@ export class SettingsProvider {
     this.translate.use(this.settings.language);
     document.getElementsByTagName('html').item(0).lang = lang;
 
-    this.ga.trackEvent('Language', 'changed', this.settings.language);
+    this.analytics.logEvent('language_change', { language: this.settings.language });
   }
 
   get push() {

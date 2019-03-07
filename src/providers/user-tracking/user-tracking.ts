@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LaunchReview } from '@ionic-native/launch-review';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
-import { SettingsProvider } from '../settings/settings';
 
 export interface TrackingData {
   appOpened?: number;
@@ -11,12 +10,14 @@ export interface TrackingData {
 export class UserTrackingProvider {
   private static readonly STORAGE_LOCATION = 'user_tracking';
 
-  private data: TrackingData = JSON.parse(localStorage.getItem(UserTrackingProvider.STORAGE_LOCATION)) || {};
-  constructor(
-    private launchReview: LaunchReview,
-    private alertCtrl: TranslateAlertController,
-    private settings: SettingsProvider,
-  ) {}
+  private data: TrackingData = this.getTrackingData();
+  getTrackingData() {
+    try {
+      return JSON.parse(localStorage.getItem(UserTrackingProvider.STORAGE_LOCATION)) || {};
+    } catch (err) {}
+    return {};
+  }
+  constructor(private launchReview: LaunchReview, private alertCtrl: TranslateAlertController) {}
 
   private persist() {
     localStorage.setItem(UserTrackingProvider.STORAGE_LOCATION, JSON.stringify(this.data));
@@ -54,9 +55,6 @@ export class UserTrackingProvider {
   }
 
   private async askForReview() {
-    if (this.settings.language === 'de') {
-      return;
-    }
     this.alertCtrl.show({
       title: 'ui.reviews.title',
       message: 'ui.reviews.message',

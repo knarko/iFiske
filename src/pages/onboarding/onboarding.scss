@@ -71,6 +71,12 @@ page-onboarding {
       flex-direction: column;
     }
 
+    .intro {
+      img {
+        width: 90%;
+        max-width: 800px;
+      }
+    }
     .explore,
     .secure,
     .notify {

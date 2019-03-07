@@ -1,6 +1,13 @@
-<ion-tabs tabsPlacement="bottom" id="areas-detail">
+<ion-tabs color="primary" tabsPlacement="bottom" id="areas-detail">
   <ng-container *ngFor="let tab of tabs; index as i">
-    <ion-tab *ngIf="!tab.hide" [root]="tab.page" [tabTitle]="tab.title | translate" [tabIcon]="tab.icon" [rootParams]="{params:tabParams}"
-      [tabsHideOnSubPages]="true" [tabUrlPath]="tab.page"></ion-tab>
+    <ion-tab
+      *ngIf="!tab.hide"
+      [root]="tab.page"
+      [tabTitle]="tab.title | translate"
+      [tabIcon]="tab.icon"
+      [rootParams]="{ params: tabParams }"
+      [tabsHideOnSubPages]="true"
+      [tabUrlPath]="tab.page"
+    ></ion-tab>
   </ng-container>
 </ion-tabs>

@@ -1,3 +1,10 @@
-<ion-tabs tabsPlacement="bottom">
-  <ion-tab *ngFor="let tab of tabs" [root]="tab.uri" [tabTitle]="tab.title | translate" [tabIcon]="tab.icon" [tabsHideOnSubPages]="true" [tabUrlPath]="tab.uri"></ion-tab>
+<ion-tabs color="primary" tabsPlacement="bottom">
+  <ion-tab
+    *ngFor="let tab of tabs"
+    [root]="tab.uri"
+    [tabTitle]="tab.title | translate"
+    [tabIcon]="tab.icon"
+    [tabsHideOnSubPages]="true"
+    [tabUrlPath]="tab.uri"
+  ></ion-tab>
 </ion-tabs>

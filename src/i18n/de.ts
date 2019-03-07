@@ -61,7 +61,7 @@ export const de: TranslationDefinition | any = {
       },
       "stats": {
         "offline": "Wir speichern keine Statistiken in der App zur Offline-Nutzung. Bitte verbinden Sie sich mit dem Internet und versuchen Sie es erneut.",
-        "noAccess": "",
+        "noAccess": "Um Statistiken zu sehen, benötigen Sie mindestens Benutzerebene 1",
       },
     },
     "placeholder": {
@@ -94,11 +94,41 @@ export const de: TranslationDefinition | any = {
         },
       },
     },
-    "share:area": "Angeln in {{area}}!",
+    "share:area": "Lasst uns in {{area}} Fischen gehen!",
     "deliveryAddress": {
       "zip": "Postleitzahl",
       "adr": "Straße und Hausnummer",
       "town": "Stadt",
+    },
+    "changePassword": {
+      "completed": "Das Passwort wurde geändert!",
+    },
+    "onboarding": {
+      "continue": "Lass uns anfangen",
+      "next": "Nächster",
+      "skip": "Uberspringen",
+      "welcome" : {
+        "title": "Herzlich willkommen!",
+        "subtitle": "Willkommen bei iFiske. Wir sind Schwedens größtes Portal für Angelkarten",
+      },
+      "explore": {
+        "title": "Erkunden!",
+        "content":"<ul><li>Finden Sie neue aufregende Gewässer</li><li>Planen Sie Ihren nächsten Angelausflug</li><li>Entdecken Sie Karten, Fischarten, Regeln und vieles mehr</li></ul>",
+      },
+      "secure": {
+        "title": "Sicher!",
+        "subtitle": "Kaufen Sie Ihren Angelkarten sicher online und lassen Sie ihn an diese App liefern. Hunderttausende Kunden vertrauen uns und sind als schwedischer \"Trygg eHandel\" zertifiziert.",
+      },
+      "notify": {
+        "title": "Bleib informiert!",
+        "subtitle": "Speichern Sie Ihre Lieblingsgewässer und erhalten Sie kostenlos neue Fangberichte direkt in Ihre Mailbox",
+      },
+    },
+    "reviews": {
+      "title": "Findest du die App gut?",
+      "message": "Ihr Feedback hilft uns dabei, das Angeln zu erleichtern. Bitte hinterlassen Sie eine Bewertung!",
+      "yes": "Ja",
+      "no": "Nein",
     },
   },
   "errors": {
@@ -154,6 +184,13 @@ export const de: TranslationDefinition | any = {
     },
     "favorite": {
       "notification_update": "Ein Fehler ist aufgetreten. Ihre Benachrichtigungs-einstellungen wurden nicht geändert.",
+    },
+    "permit": {
+      "failedBody": "Der Fehler wird wahrscheinlich durch eine fehlerhafte Internetverbindung verursacht. Bitte überprüfen Sie Ihr Netzwerk und versuchen Sie es erneut.",
+      "failedHeader": "Ihre Angelkarte konnte nicht gefunden werden",
+    },
+    "register": {
+      "failed": "Registrierung fehlgeschlagen!",
     },
   },
   "Statistics": "Statistiken",
@@ -291,4 +328,11 @@ export const de: TranslationDefinition | any = {
   "Verify Account": "Account verifizieren",
   "Logging out": "Abmelden...",
   "Searching": "Suchen...",
+
+  "Change Password": "Passwort ändern",
+  "Files": "Dateien",
+  "I accept the terms of service": "Ich habe die Datenschutzerklärung und TOS gelesen und akzeptiere diese",
+  "New Password": "Neues Passwort",
+  "Registering": "Registrieren...",
+
 }

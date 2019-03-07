@@ -57,7 +57,7 @@ deploy:
 
     - rm -rf ionic-pro/{www,hooks,resources}
     - cp -R www/ hooks/ resources/ ionic-pro/
-    - cp -f config.xml ionic.config.json ionic-pro/
+    - cp -f package-lock.json config.xml ionic.config.json google-services.json GoogleService-Info.plist ionic-pro/
     - node scripts/copy_package_json_to_ionic_pro_folder.js
 
     - cd ionic-pro

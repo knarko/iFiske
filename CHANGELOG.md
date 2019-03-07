@@ -1,3 +1,15 @@
+## [4.9.6](https://gitlab.com/kada-development/ifiske/compare/v4.9.5...v4.9.6) (2019-03-07)
+
+
+### Bug Fixes
+
+* **onboarding:** set intro image size to 90% of width ([a936a49](https://gitlab.com/kada-development/ifiske/commit/a936a49))
+* **tabs:** change tab background to blue ([70bbfd6](https://gitlab.com/kada-development/ifiske/commit/70bbfd6))
+* **translations:** add missing german translations ([093a17b](https://gitlab.com/kada-development/ifiske/commit/093a17b))
+* **user-tracking:** enable asking for reviews in german ([b0c6da6](https://gitlab.com/kada-development/ifiske/commit/b0c6da6))
+
+
+
 ## [4.9.5](https://gitlab.com/kada-development/ifiske/compare/v4.9.4...v4.9.5) (2019-03-07)
 
 

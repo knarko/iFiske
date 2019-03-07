@@ -52,7 +52,7 @@
     "angular-linky": "^1.2.2",
     "autolinker": "^1.8.3",
     "chart.js": "^2.7.2",
-    "cordova-android": "^8.0.0",
+    "cordova-android": "8.0.0",
     "cordova-ios": "^5.0.0",
     "cordova-launch-review": "^3.1.1",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -171,7 +171,8 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-        "OKHTTP_VERSION": "3.+"
+        "OKHTTP_VERSION": "3.+",
+        "GOOGLE_API_KEY_FOR_ANDROID": ""
       },
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"

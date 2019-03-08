@@ -1,3 +1,12 @@
+## [4.9.9](https://gitlab.com/kada-development/ifiske/compare/v4.9.8...v4.9.9) (2019-03-08)
+
+
+### Bug Fixes
+
+* **push:** Initialize push notifications properly ([c103970](https://gitlab.com/kada-development/ifiske/commit/c103970))
+
+
+
 ## [4.9.8](https://gitlab.com/kada-development/ifiske/compare/v4.9.7...v4.9.8) (2019-03-07)
 
 

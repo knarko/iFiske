@@ -94,7 +94,7 @@ app-permit {
       clip-path: polygon(0 #{$corner-size}, 0 100%, 100% 100%, 100% 0, #{$corner-size} 0);
     }
     &.front::after {
-      clip-path: polygon(0 0, 0 100%, 100% 100%, 100% calc(0% + #{$corner-size}), calc(100% - #{$corner-size}) 0);
+      clip-path: polygon(0 0, 0 100%, 100% 100%, 100% #{$corner-size}, calc(100% - #{$corner-size}) 0);
     }
   }
   .back {

@@ -1,3 +1,12 @@
+## [4.9.10](https://gitlab.com/kada-development/ifiske/compare/v4.9.9...v4.9.10) (2019-03-08)
+
+
+### Bug Fixes
+
+* **permit:** set clip-path for front correctly ([5fe6fc7](https://gitlab.com/kada-development/ifiske/commit/5fe6fc7))
+
+
+
 ## [4.9.9](https://gitlab.com/kada-development/ifiske/compare/v4.9.8...v4.9.9) (2019-03-08)
 
 

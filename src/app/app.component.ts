@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { PushProvider } from '../providers/push/push';
 
 @Component({
   templateUrl: 'app.html',
@@ -33,7 +34,10 @@ export class MyApp {
     private network: Network,
     private analytics: FirebaseAnalytics,
     private userTracking: UserTrackingProvider,
+    // Need to import this so that it initializes
+    private push: PushProvider,
   ) {
+    console.log(this.push);
     if (this.settings.firstLaunch) {
       this.rootPage = 'OnboardingPage';
     }

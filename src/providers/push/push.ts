@@ -4,7 +4,7 @@ import { SettingsProvider } from '../settings/settings';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
-import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload } from '@ionic-native/onesignal';
+import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload, OSNotification } from '@ionic-native/onesignal';
 import { oneSignalConfig } from '../../app/config';
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../providers/user/userTypes';
@@ -39,10 +39,10 @@ export class PushProvider {
 
   private pushHandlers: Dictionary<PushHandler[]> = {
     /*
-      * We got a new fishing permit. We will get the Code of the new permit
-      * Payload should contain:
-      * code: fishing permit code
-      */
+     * We got a new fishing permit. We will get the Code of the new permit
+     * Payload should contain:
+     * code: fishing permit code
+     */
     NEW: [
       notification => {
         if (notification.additionalData.code) {
@@ -56,11 +56,11 @@ export class PushProvider {
     ],
 
     /*
-      * We got a request to make a fishing report
-      * Payload should contain:
-      * orgid: organisation id,
-      * code: fishing permit code,
-      */
+     * We got a request to make a fishing report
+     * Payload should contain:
+     * orgid: organisation id,
+     * code: fishing permit code,
+     */
     REP_REQ: [
       notification => {
         if (notification.additionalData.orgid && notification.additionalData.code) {
@@ -88,10 +88,10 @@ export class PushProvider {
     ],
 
     /*
-      * Someone made a report on a area we favorited
-      * Payload should contain:
-      * RepId: ID of the new report
-      */
+     * Someone made a report on a area we favorited
+     * Payload should contain:
+     * RepId: ID of the new report
+     */
     NEW_FAV: [
       notification => {
         if (notification.additionalData.repid) {
@@ -101,10 +101,10 @@ export class PushProvider {
     ],
 
     /*
-      * Display a message
-      * Payload should contain:
-      * message: a string that we should Display
-      */
+     * Display a message
+     * Payload should contain:
+     * message: a string that we should Display
+     */
     NOTE: [
       notification => {
         if (notification.additionalData.message) {
@@ -212,7 +212,9 @@ export class PushProvider {
     });
   }
 
-  private onReceived = () => {};
+  private onReceived = (notification: OSNotification) => {
+    console.log('Received notification', notification);
+  };
 
   private onOpened = ({ notification }: OSNotificationOpenedResult) => {
     const payload = notification.payload;

@@ -1,3 +1,6 @@
+import { UserProduct } from '../user/userTypes';
+import { Diff, Omit } from '../../types';
+
 export interface AdminOrganization {
   ID: number;
   at: number;
@@ -27,27 +30,10 @@ export interface LogEntry {
   action?: string;
 }
 
-export interface AdminPermit {
-  ID: number;
-  at: number;
-  code: string;
-  fr: number;
-  fullname: string;
-  pdf: string;
-  ref1: number;
-  ref2: number;
-  rev: number;
-  suborgid: number;
-  subt: string;
-  t: string;
-  tel: string;
-  to: number;
-
-  info?: string;
-  ctrl?: number;
+export interface AdminPermit extends Omit<UserProduct, 'fine' | 'pid' | 'qr'> {
+  ctrl: string;
   log?: LogEntry[];
-
-  validity?: string;
+  org?: number;
 }
 
 export interface SearchMatch {

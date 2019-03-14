@@ -43,12 +43,17 @@ export class AdminProvider extends BaseModel {
       name: 'Admin_Permits',
       members: {
         ID: 'int',
-        org: 'int',
+        adr: 'text',
         at: 'int',
+        cc: 'text',
+        city: 'text',
         code: 'int',
+        ctrl: 'text',
         fr: 'int',
         fullname: 'text',
+        info: 'text',
         pdf: 'text',
+        price: 'text',
         ref1: 'int',
         ref2: 'int',
         rev: 'int',
@@ -56,7 +61,9 @@ export class AdminProvider extends BaseModel {
         t: 'text',
         tel: 'text',
         to: 'int',
-        info: 'text',
+        zip: 'text',
+
+        org: 'int',
       },
       primary: 'ID',
     },
@@ -155,7 +162,7 @@ export class AdminProvider extends BaseModel {
 
       await organizations.map((org, i) => {
         const permits = orgPermits[i];
-        Object.values(permits).forEach((permit: any) => (permit.org = org.ID));
+        Object.values(permits).forEach(permit => (permit.org = org.ID));
         const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
         deletePermits = false;
         return populated;

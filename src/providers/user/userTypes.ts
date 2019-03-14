@@ -26,24 +26,29 @@ export interface Favorite {
 
 export interface UserProduct {
   ID: number;
+  adr: string;
   at: number;
+  cc: string;
+  city: string;
   code: number;
+  fine: string;
   fr: number;
   fullname: string;
+  info: string;
   ot: string;
+  pdf: string;
+  pid: number;
+  price: string;
+  qr: string;
   ref1: number;
   ref2: number;
-  t: string;
-  subt: string;
-  to: number;
-  pid: number;
-  pdf: string;
-  qr: string;
-  fine: string;
   rev: number;
+  subt: string;
+  t: string;
   tel: string;
+  to: number;
+  zip: string;
 
-  info?: string;
   validity?: string;
 }
 interface PermitRules {

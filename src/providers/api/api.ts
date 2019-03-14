@@ -12,6 +12,7 @@ import { range } from 'rxjs/observable/range';
 import { Dictionary } from '../../types';
 import { TimeoutError } from '../../errors';
 import { CustomQueryEncoder } from './QueryEncoder';
+import { AdminPermit } from '../admin/adminTypes';
 
 interface ApiResponse {
   message?: any;
@@ -314,7 +315,7 @@ export class ApiProvider {
   user_organizations() {
     return this.api_call({ m: 'user_organizations' }, { retry: false, session: true });
   }
-  adm_products(orgid) {
+  adm_products(orgid): Promise<Dictionary<AdminPermit>> {
     return this.api_call({ m: 'adm_products', orgid: orgid }, { retry: false, session: true });
   }
   adm_revoke_prod(code, flag) {

@@ -16,7 +16,7 @@ export class PermitLogComponent {
   async checkLog() {
     const loading = await this.loadingCtrl.show({ content: 'Loading' });
     try {
-      await this.admin.checkLog(this.permit.code);
+      await this.admin.checkLog('' + this.permit.code);
     } finally {
       loading.dismiss();
     }
@@ -24,7 +24,7 @@ export class PermitLogComponent {
   async addLog() {
     const loading = await this.loadingCtrl.show({ content: 'Loading' });
     try {
-      await this.admin.addLog(this.permit.code, this.logText);
+      await this.admin.addLog('' + this.permit.code, this.logText);
       this.logText = '';
     } finally {
       loading.dismiss();

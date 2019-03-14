@@ -7,18 +7,18 @@ import { DBMethod } from '../database/decorators';
 
 export interface Product {
   ID: number;
+  ai: number;
+  ch: number;
+  hl: string;
+  im: string;
+  mod: number;
+  no: string;
+  pf: string;
+  price: number;
+  ri: number;
+  so: number;
   t: string;
   t2: string;
-  no: string;
-  im: string;
-  pf: string;
-  ai: number;
-  ri: number;
-  ch: number;
-  price: number;
-  mod: number;
-  so: number;
-  hl: string;
 
   methods: { name: string }[];
 }

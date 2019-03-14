@@ -277,21 +277,10 @@ export class ApiProvider {
         password: password,
       },
       { retry: false, post: true },
-    ).then(data => {
-      this.sessionData.token = data;
-      // needed for chaining of promises
-      return data;
-    });
+    );
   }
   user_logout() {
-    return (
-      this.api_call({ m: 'user_logout' }, { retry: false, session: true, post: true })
-        // It doesn't matter if this fails or not, we still want to clean up the user on this phone
-        .catch(err => console.warn(err))
-        .then(() => {
-          this.sessionData.token = undefined;
-        })
-    );
+    return this.api_call({ m: 'user_logout' }, { retry: false, session: true, post: true });
   }
   user_products() {
     return this.api_call({ m: 'user_products' }, { retry: false, session: true });

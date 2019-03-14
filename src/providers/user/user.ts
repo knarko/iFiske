@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError, distinctUntilChanged } from 'rxjs/operators';
 
 import { Dictionary } from '../../types';
 import { getPermitValidity } from '../../util';
@@ -100,7 +100,10 @@ export class UserProvider extends BaseModel {
   ) {
     super();
     this.initialize();
-    this.loggedIn = this.session.tokenObservable.pipe(map(token => !!token));
+    this.loggedIn = this.session.tokenObservable.pipe(
+      map(token => !!token),
+      distinctUntilChanged(),
+    );
     this.sessionTransferToken = this.loggedIn.pipe(
       switchMap(loggedIn => {
         if (loggedIn) {
@@ -209,7 +212,13 @@ export class UserProvider extends BaseModel {
   async login({ username, password }) {
     await this.clean();
 
-    const p = this.API.user_login(username, password).then(() => this.update(true));
+    const p = this.API.user_login(username, password).then(data => {
+      this.ready = Promise.resolve().then(() => {
+        this.session.token = data;
+        return this.update(true);
+      });
+      return this.ready;
+    });
 
     p.then(
       u => {
@@ -233,8 +242,10 @@ export class UserProvider extends BaseModel {
 
     const promise = Promise.all([this.clean(), this.API.user_logout()]);
     promise
-      .catch(() => {})
+      // It doesn't matter if this fails or not, we still want to clean up the user on this phone
+      .catch(err => console.warn(err))
       .then(() => {
+        this.session.token = undefined;
         loading.dismiss();
         this.toastCtrl.show({
           message: 'You have been logged out',

@@ -111,6 +111,9 @@ export interface TranslationDefinition {
       "long_text": string,
     }
     "permit": {
+      "validBetween": string
+      "purchased": string
+      "adminFunctions": string
       "validity": {
         "active": string
         "inactive": string
@@ -337,8 +340,6 @@ export interface TranslationDefinition {
   "User phone numbers": string
   "Username or email": string
   "Username": string
-  "Valid from": string
-  "Valid until": string
   "Version": string
   "Youtube": string
   "Verify Account": string

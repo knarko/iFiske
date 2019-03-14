@@ -63,7 +63,7 @@ export class AdminProvider extends BaseModel {
         to: 'int',
         zip: 'text',
 
-        org: 'int',
+        suborgid: 'int',
       },
       primary: 'ID',
     },
@@ -162,7 +162,7 @@ export class AdminProvider extends BaseModel {
 
       await organizations.map((org, i) => {
         const permits = orgPermits[i];
-        Object.values(permits).forEach(permit => (permit.org = org.ID));
+        Object.values(permits).forEach(permit => (permit.suborgid = org.ID));
         const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
         deletePermits = false;
         return populated;
@@ -314,7 +314,7 @@ export class AdminProvider extends BaseModel {
     let permits = await this.DB.getMultiple(
       `
       SELECT * FROM Admin_Permits
-      WHERE org = ?
+      WHERE suborgid = ?
       ORDER BY fullname
     `,
       [this.orgId],

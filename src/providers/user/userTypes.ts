@@ -31,6 +31,7 @@ export interface UserProduct {
   cc: string;
   city: string;
   code: number;
+  email?: string;
   fine: string;
   fr: number;
   fullname: string;

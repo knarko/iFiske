@@ -1,5 +1,5 @@
 import { UserProduct } from '../user/userTypes';
-import { Diff, Omit } from '../../types';
+import { Omit } from '../../types';
 
 export interface AdminOrganization {
   ID: number;
@@ -33,7 +33,7 @@ export interface LogEntry {
 export interface AdminPermit extends Omit<UserProduct, 'fine' | 'pid' | 'qr'> {
   ctrl: string;
   log?: LogEntry[];
-  org?: number;
+  suborgid?: number;
 }
 
 export interface SearchMatch {

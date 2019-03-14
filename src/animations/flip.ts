@@ -29,8 +29,8 @@ export const flipFront = trigger('showFront', [
 ]);
 
 export const flipBack = trigger('showBack', [
-  state('second', style({ transform: `rotateY(0deg)`, display: 'block' })),
   state('first', style({ transform: `rotateY(180deg)`, display: 'none' })),
+  state('second', style({ transform: `rotateY(0deg)`, display: 'block' })),
   transition(':enter', animate(0)),
   transition('* => *', animate(`350ms ease-in-out`)),
   transition(

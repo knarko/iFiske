@@ -130,3 +130,18 @@
     backdrop-filter: blur(4px);
   }
 }
+
+@mixin clip-path-frame($size: 1rem) {
+  clip-path: polygon(
+    0% 0%,
+    0% 100%,
+    $size 100%,
+    $size $size,
+    calc(100% - #{$size}) $size,
+    calc(100% - #{$size}) calc(100% - #{$size}),
+    $size calc(100% - #{$size}),
+    $size 100%,
+    100% 100%,
+    100% 0%
+  );
+}

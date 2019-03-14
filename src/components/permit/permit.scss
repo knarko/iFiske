@@ -8,37 +8,167 @@ app-permit {
   overflow: hidden;
   transform: translateZ(0);
 
+  h2 {
+    margin-top: 0;
+    font-size: 1.6rem;
+  }
+  h3 {
+    margin-top: 0;
+    font-size: 2rem;
+  }
+
   .logo {
     display: block;
-    margin: 0 auto;
+    margin: 1rem auto;
     width: 240px;
     min-width: 120px;
     max-width: 40%;
     border-radius: 1rem;
   }
 
-  .license-active {
-    color: color($colors, secondary);
-  }
-
-  .license-inactive {
-    color: color($colors, gold);
-  }
-
-  .license-revoked,
-  .license-expired {
-    color: color($colors, danger);
-  }
-
   .permit-title {
+    margin-top: 1em;
     max-width: calc(100% - 20px);
   }
 
+  @mixin animated-bg($opacity: 1) {
+    background-image: repeating-linear-gradient(to right, transparent, #14eaec, transparent);
+    background-size: 250%;
+    background-position: inherit;
+    background-attachment: fixed;
+  }
+  .scroll {
+    background-position: inherit;
+  }
+  h3 {
+    font-weight: normal;
+    font-size: 1.4rem;
+    margin: 2rem 0 0 0;
+    color: rgba(black, 0.87);
+    letter-spacing: 0.1ch;
+  }
+  p {
+    margin: 0.125rem 0 0 0;
+  }
+  .value {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: black;
+    letter-spacing: 0.05ch;
+  }
+  .box-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+  }
+  .box:not(.box-from) + .box {
+    margin-left: 1rem;
+  }
+  .box {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    flex: 1;
+    text-align: center;
+
+    &.box-from {
+      position: relative;
+      $width: 1rem;
+      margin-right: $width;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -$width;
+        height: 10px;
+        width: $width;
+        background: inherit;
+      }
+    }
+  }
+  address {
+    .icon {
+      vertical-align: middle;
+    }
+    font-style: inherit;
+    h3 {
+      font-size: inherit;
+    }
+  }
+
+  .permit-info {
+    margin-top: 2rem;
+  }
+
+  .top {
+    background-position: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin: 0;
+      word-break: break-word;
+    }
+  }
   .permit-code {
-    font-size: 3rem;
+    .md & {
+      border-radius: $list-inset-md-border-radius;
+    }
+
+    .ios & {
+      border-radius: $list-inset-ios-border-radius;
+    }
+
+    .wp & {
+      border-radius: $list-inset-wp-border-radius;
+    }
+    border: 2px solid rgba(black, 0.4);
+    padding: 0 0.5rem;
+    line-height: 1.5;
+    font-size: 2.5rem;
     font-weight: bold;
     margin: 0;
     text-align: center;
+    background-position: inherit;
+    background-color: white;
+    font-family: monospace;
+    // @include animated-bg();
+    span {
+      color: rgba(black, 0.8);
+    }
+  }
+
+  @mixin permit-colors($color) {
+    .permit-color {
+      color: $color;
+    }
+    .permit-code {
+      color: $color;
+      border-color: rgba($color, 0.5);
+    }
+    .bg-white::before {
+      background-color: $color;
+    }
+    .box {
+      background-color: rgba($color, 0.25);
+    }
+  }
+
+  .permit-active {
+    $color: color($colors, secondary);
+    @include permit-colors($color);
+  }
+
+  .permit-inactive {
+    $color: color($colors, gold);
+    @include permit-colors($color);
+  }
+
+  .permit-expired,
+  .permit-revoked {
+    $color: color($colors, danger);
+    @include permit-colors($color);
   }
 
   .fineprint {
@@ -66,12 +196,17 @@ app-permit {
   $corner-size: 6rem;
 
   .bg-white {
+    background-position: inherit;
+    $border-width: 0.5rem;
+    padding: $border-width + 1rem;
     .md & {
       border-radius: $list-inset-md-border-radius;
+      box-shadow: $card-md-box-shadow;
     }
 
     .ios & {
       border-radius: $list-inset-ios-border-radius;
+      box-shadow: $card-ios-box-shadow;
     }
 
     .wp & {
@@ -79,7 +214,7 @@ app-permit {
     }
     margin: $content-padding 0;
     overflow: hidden;
-    &::after {
+    &::before {
       content: '';
       display: block;
       position: absolute;
@@ -88,13 +223,20 @@ app-permit {
       width: 100%;
       height: 100%;
       z-index: -1;
+      color: transparent;
+      @include animated-bg();
+      @include clip-path-frame($border-width);
+    }
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: $border-width;
+      left: $border-width;
+      right: $border-width;
+      bottom: $border-width;
+      z-index: -1;
       @include blurred-background(0.9, 0.75);
-    }
-    &.back::after {
-      clip-path: polygon(0 #{$corner-size}, 0 100%, 100% 100%, 100% 0, #{$corner-size} 0);
-    }
-    &.front::after {
-      clip-path: polygon(0 0, 0 100%, 100% 100%, 100% #{$corner-size}, calc(100% - #{$corner-size}) 0);
     }
   }
   .back {
@@ -117,157 +259,74 @@ app-permit {
     }
   }
 
-  .front > .corner {
-    right: 0;
-    &::before {
-      border-top-color: rgba(black, 0.5);
-      border-right-color: rgba(black, 0.5);
-    }
-    .icon {
-      right: 0.25rem;
+  .renew-button {
+    display: block;
+    margin: 0 auto;
+    white-space: normal;
+  }
+
+  .admin-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+    .fab {
+      font-size: 28px;
     }
   }
-  .back > .corner {
-    left: 0;
-    &::before {
-      border-top-color: rgba(black, 0.5);
-      border-left-color: rgba(black, 0.5);
-    }
-    .icon {
-      left: 0.25rem;
-    }
+  .flip-button {
+    float: left;
   }
-  .corner {
-    position: absolute;
+
+  $black-transparent: rgba(0, 0, 0, 0.4);
+  $gradient: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    $black-transparent 10px,
+    $black-transparent 20px
+  );
+
+  .background {
+    height: calc(100% + 60px);
+    width: calc(100% + 60px);
+    z-index: 0;
+    position: fixed;
     top: 0;
-    height: $corner-size;
-    width: $corner-size;
-    padding: 0;
-    margin: 0;
-    background: none;
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-color: transparent;
-      border-style: solid;
-      border-width: $corner-size / 2;
+    left: 0;
+  }
+
+  .bg-active {
+    background-color: color($colors, secondary);
+  }
+
+  .bg-inactive {
+    background-color: color($colors, gold);
+  }
+
+  .bg-expired,
+  .bg-revoked {
+    background-color: color($colors, danger);
+  }
+
+  .bg-active,
+  .bg-expired,
+  .bg-inactive,
+  .bg-revoked {
+    background-image: $gradient;
+    background-position: 0 0;
+    background-size: 100%;
+    animation: 2s linear bg infinite;
+    transition: background 1s linear;
+  }
+
+  @keyframes bg {
+    from {
+      transform: translateY(-28.5px);
     }
-    @supports (clip-path: polygon(0 #{$corner-size}, 0 100%, 100% 100%, 100% 0, #{$corner-size} 0)) {
-      &::before {
-        display: none;
-      }
-    }
-    .icon {
-      color: white;
-      font-weight: bold;
-      position: absolute;
-      font-size: $corner-size / 2;
-      line-height: 1;
-      width: $corner-size / 2;
-      top: 0.25rem;
+
+    to {
+      transform: translateY(0);
     }
   }
-}
-
-$black-transparent: rgba(0, 0, 0, 0.4);
-$gradient: repeating-linear-gradient(
-  45deg,
-  transparent,
-  transparent 10px,
-  $black-transparent 10px,
-  $black-transparent 20px
-);
-.background {
-  height: calc(100% + 60px);
-  width: calc(100% + 60px);
-  z-index: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-.bg-active,
-.bg-expired,
-.bg-inactive,
-.bg-revoked {
-  background: $gradient;
-  background-position: 0 0;
-  background-size: 100%;
-  animation: 2s linear bg infinite;
-  transition: background 1s linear;
-}
-
-.bg-active {
-  background-color: color($colors, secondary);
-}
-
-.bg-inactive {
-  background-color: color($colors, gold);
-}
-
-.bg-expired,
-.bg-revoked {
-  background-color: color($colors, danger);
-}
-
-@keyframes bg {
-  from {
-    transform: translateY(-28.5px);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-.permit-wrapper {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes jello {
-  from,
-  11.1%,
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-
-  22.2% {
-    transform: skewX(6.25deg) skewY(6.25deg);
-  }
-
-  33.3% {
-    transform: skewX(-3.125deg) skewY(-3.125deg);
-  }
-
-  44.4% {
-    transform: skewX(1.5625deg) skewY(1.5625deg);
-  }
-
-  55.5% {
-    transform: skewX(-0.78125deg) skewY(-0.78125deg);
-  }
-
-  66.6% {
-    transform: skewX(0.390625deg) skewY(0.390625deg);
-  }
-
-  77.7% {
-    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
-  }
-
-  88.8% {
-    transform: skewX(0.09765625deg) skewY(0.09765625deg);
-  }
-}
-
-.heartBeat {
-  animation-name: jello;
-  animation-duration: 800ms;
-  animation-timing-function: ease-in-out;
 }

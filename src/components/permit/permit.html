@@ -1,47 +1,76 @@
 <div class="background" [ngClass]="'bg-' + permit.validity"></div>
 <h2 *ngIf="permit === null">{{ 'The permit does not exist' | translate }}</h2>
-<div *ngIf="permit" class="flip">
-  <div class="bg-white front" [@showFront]="show" padding>
-    <button class="corner" (click)="flip()"><ion-icon name="refresh"></ion-icon></button>
+<div *ngIf="permit" class="flip" #backgroundPosWrapper [ngClass]="'permit-' + permit.validity">
+  <div class="bg-white front" [@showFront]="show">
     <div class="scroll">
       <img *ngIf="permit.rev" src="assets/img/makulerad.png" class="revoked" />
 
-      <h2 *ngIf="permit.ot" class="permit-title">{{ permit.ot }}</h2>
+      <div class="top">
+        <h2 *ngIf="permit.t" class="permit-title">{{ permit.t }}</h2>
+        <div class="permit-code">
+          <span>{{ code }}</span>
+        </div>
+      </div>
+
       <img *ngIf="org?.logo" class="logo permit" [icSrc]="org.logo" />
-      <h3 *ngIf="permit.t" class="permit-title">{{ permit.t }}</h3>
+      <ng-container *ngIf="permit.subt">
+        <p class="permit-title value">{{ permit.subt }}</p>
+      </ng-container>
 
       <app-qr
         *ngIf="permit.qr"
         [image]="permit.qr"
         [color]="permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red'"
-        (click)="animateQR()"
-        [ngClass]="animatingQR && 'heartBeat'"
       ></app-qr>
 
-      <p class="permit-code" [ngClass]="'license-' + permit.validity">{{ permit.code }}</p>
-
-      <p *ngIf="permit.subt">{{ permit.subt }}</p>
-
       <ng-container *ngIf="permit.validity === 'expired'">
-        <h3>{{ 'Permit has expired' | translate }}</h3>
-        <button ion-button color="secondary" *ngIf="!admin" (click)="openProductInBrowser()">
-          {{ 'Renew permit' | translate }}
+        <p class="value permit-color">{{ 'Permit has expired' | translate }}</p>
+        <button ion-button class="renew-button" color="secondary" *ngIf="!admin" (click)="openProductInBrowser()">
+          {{ 'Renew permit' | translate }} {{ permit.t }}
         </button>
       </ng-container>
 
       <h3 *ngIf="permit.validity === 'inactive'">{{ 'Permit not yet valid' | translate }}</h3>
 
-      <p [translate]="'Issued to'" [translateParams]="permit.fullname | mkObject: 'name'"></p>
+      <h3>{{ 'ui.permit.validBetween' | translate }}</h3>
+      <p class="box-wrapper">
+        <span class="box box-from">
+          {{ permit.fr * 1000 | date: 'longDate' }}<br />
+          {{ permit.fr * 1000 | date: 'shortTime' }}
+        </span>
+        <span class="box permit-bg">
+          {{ permit.to * 1000 | date: 'longDate' }}<br />
+          {{ permit.to * 1000 | date: 'shortTime' }}
+        </span>
+      </p>
 
-      <p *ngIf="permit.info">{{ permit.info }}</p>
+      <p class="permit-info" *ngIf="permit.info">{{ permit.info }}</p>
 
-      <ng-container *ngIf="admin">
-        <p>{{ 'Phone number' | translate }}: {{ permit.tel }}</p>
-        <p [innerHTML]="'Issued at' | translate: (permit.at * 1000 | date: 'short' | mkObject: 'date')"></p>
-      </ng-container>
+      <address>
+        <h3 class="value">{{ permit.fullname }}</h3>
+        <p *ngIf="permit.adr || permit.city">
+          <span>{{ permit.adr }},</span>
+          <span>{{ permit.zip }}</span>
+          <span>{{ permit.city }}</span>
+        </p>
+        <p *ngIf="permit.tel">
+          <ion-icon name="call"></ion-icon>
+          {{ permit.tel }}
+        </p>
+        <p *ngIf="permit.email">
+          <ion-icon name="mail"></ion-icon>
+          {{ permit.email }}
+        </p>
+      </address>
 
-      <p [innerHTML]="'Valid from' | translate: (permit.fr * 1000 | date: 'short' | mkObject: 'date')"></p>
-      <p [innerHTML]="'Valid until' | translate: (permit.to * 1000 | date: 'short' | mkObject: 'date')"></p>
+      <h3>{{ 'ui.permit.purchased' | translate }}</h3>
+      <p>
+        <span class="box">
+          {{ permit.at * 1000 | date: 'longDate' }}
+          {{ permit.at * 1000 | date: 'shortTime' }}
+        </span>
+        <span class="box">{{ permit.price }} SEK</span>
+      </p>
 
       <p *ngIf="!admin">
         <button ion-button icon-start *ngIf="permit.code" (click)="openCatchReport()">
@@ -53,13 +82,25 @@
           {{ 'PDF' | translate }}
         </a>
       </p>
+
+      <div class="admin-bottom" *ngIf="admin">
+        <button ion-fab>{{ permit.ctrl }}</button>
+        <button ion-button (click)="flip()" icon-end>
+          {{ 'ui.permit.adminFunctions' | translate }}
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="bg-white back" [@showBack]="show" padding>
-    <button class="corner" (click)="flip()"><ion-icon name="refresh"></ion-icon></button>
+  <div class="bg-white back" *ngIf="admin" [@showBack]="show">
     <div class="scroll">
+      <button ion-button class="flip-button" (click)="flip()" icon-start>
+        <ion-icon name="arrow-back"></ion-icon>
+        {{ 'ui.general.back' | translate }}
+      </button>
       <p *ngIf="permit.fine" class="fineprint">{{ permit.fine }}</p>
+
       <ng-container *ngIf="admin">
         <button *ngIf="!permit.rev" (click)="revoke.emit(true)" ion-button icon-left color="danger">
           <ion-icon name="document"></ion-icon>

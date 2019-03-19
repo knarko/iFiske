@@ -1,3 +1,17 @@
+## [4.9.11](https://gitlab.com/kada-development/ifiske/compare/v4.9.10...v4.9.11) (2019-03-19)
+
+
+### Bug Fixes
+
+* **user:** reset user ready on login ([189a713](https://gitlab.com/kada-development/ifiske/commit/189a713))
+
+
+### Features
+
+* **permit:** redesign the permit page ([2a0067d](https://gitlab.com/kada-development/ifiske/commit/2a0067d))
+
+
+
 ## [4.9.10](https://gitlab.com/kada-development/ifiske/compare/v4.9.9...v4.9.10) (2019-03-08)
 
 

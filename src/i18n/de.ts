@@ -250,6 +250,7 @@ export const de: TranslationDefinition | any = {
   "Issued at": "Ausgestellt am <b>{{date}}</b>",
   "Issued to": "Ausgestellt an {{name}}",
   "Last updated": "Letztes Update",
+  "Permit has expired": "Fischerschein ist abgelaufen",
   "Log in": "Anmelden",
   "Logging in": "Anmelden...",
   "Log out": "Abmelden",

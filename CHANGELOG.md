@@ -1,3 +1,13 @@
+## [4.9.12](https://gitlab.com/kada-development/ifiske/compare/v4.9.11...v4.9.12) (2019-03-20)
+
+
+### Bug Fixes
+
+* **map:** show polygon description on tap ([9cee3e3](https://gitlab.com/kada-development/ifiske/commit/9cee3e3))
+* **translations:** add missing german translation ([b5548ef](https://gitlab.com/kada-development/ifiske/commit/b5548ef))
+
+
+
 ## [4.9.11](https://gitlab.com/kada-development/ifiske/compare/v4.9.10...v4.9.11) (2019-03-19)
 
 

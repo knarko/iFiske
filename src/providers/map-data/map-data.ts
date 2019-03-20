@@ -8,22 +8,44 @@ import { DBMethod } from '../database/decorators';
 
 export interface POI {
   ID: Number;
+  /** Organization ID */
   orgid: number;
+  /** POI type ID */
   type: number;
+  /** Price of this POI (HTML) in SEK. */
   price: number;
+  /** Title */
   t: string;
+  /** Description (HTML) */
   d: string;
+  /** Latitude */
   la: number;
+  /** Longitude */
   lo: number;
 }
 
 export interface FiskePolygon {
   ID: number;
   orgid: number;
+  /** Title */
   t: string;
+  /**
+   * The color of the polygon in RRGGBB hexadecimal format.
+   *
+   * The polygon shall be painted in this color with:
+   * - 15% fill color opacity
+   * - 80% stroke color opacity
+   */
   c: string;
+  /** Revision */
   ver: number;
+  /** Last modification date in unix timestamp format */
   mod: number;
+  /**
+   * The actual polygon, formatted as follows:
+   * [57.793227,14.578428],[57.791950,14.568944],[57.799272,14.563578],[57.814701,14.563580],[57.814805,14.569119],[57.800507,14.578258]
+   * These are Longitude,Latitude-points. The last points connects to the first in the list, forming a closed polygon.
+   */
   poly: string;
 }
 

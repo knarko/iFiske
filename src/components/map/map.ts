@@ -252,7 +252,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             title: poi.t,
           },
         );
-        marker.bindPopup('<h4>' + poi.t + '</h4><p>' + poi.d + '</p>', {
+        marker.bindPopup('<h4>' + poi.t + '</h4><div>' + poi.d + '</div>', {
           maxWidth: window.innerWidth - 50,
         });
         this.poiMarkers.addLayer(marker);
@@ -271,14 +271,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     for (var i = 0; i < polys.length; ++i) {
       var poly = polys[i];
-      this.polygons.addLayer(
-        new Polygon(JSON.parse('[' + poly.poly + ']'), {
-          color: poly.c,
-          weight: 2,
-          opacity: 0.5,
-          fillColor: poly.c,
-        }),
-      );
+      const polygon = new Polygon(JSON.parse('[' + poly.poly + ']'), {
+        color: poly.c,
+        weight: 2,
+        fillOpacity: 0.15,
+        opacity: 0.8,
+        stroke: true,
+        fillColor: poly.c,
+      });
+      polygon.bindPopup(poly.t);
+      this.polygons.addLayer(polygon);
     }
   }
 

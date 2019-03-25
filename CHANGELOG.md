@@ -1,3 +1,14 @@
+## [4.9.13](https://gitlab.com/kada-development/ifiske/compare/v4.9.12...v4.9.13) (2019-03-25)
+
+
+### Bug Fixes
+
+* **admin-permit-list:** don't reset scrolling on every view enter ([d74b957](https://gitlab.com/kada-development/ifiske/commit/d74b957))
+* **permit:** change wording of some elements to be more clear, allow logging control by actually cli ([36c0dc6](https://gitlab.com/kada-development/ifiske/commit/36c0dc6))
+* **permit:** fixes intermittently showing backface when flipping ([a635de6](https://gitlab.com/kada-development/ifiske/commit/a635de6))
+
+
+
 ## [4.9.12](https://gitlab.com/kada-development/ifiske/compare/v4.9.11...v4.9.12) (2019-03-20)
 
 

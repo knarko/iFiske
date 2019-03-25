@@ -32,7 +32,8 @@ export interface TranslationDefinition {
     "general": {
       "back": string
       "pull_to_refresh": string
-      "shortAmount": string,
+      "shortAmount": string
+      "undo": string,
     },
     "map": {
       "outdoors": string
@@ -113,7 +114,11 @@ export interface TranslationDefinition {
     "permit": {
       "validBetween": string
       "purchased": string
-      "adminFunctions": string
+      "admin": {
+        "header": string
+        "more": string
+        "toast": string,
+      }
       "validity": {
         "active": string
         "inactive": string

@@ -20,6 +20,10 @@ import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-li
 import { SettingsProvider } from '../../providers/settings/settings';
 import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
+import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
+import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
+import { AdminProvider } from '../../providers/admin/admin';
+import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
 type NotPermitted<T> = { [P in keyof T]?: undefined };
 
@@ -52,6 +56,9 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
     private deepLinks: DeepLinksProvider,
     private settings: SettingsProvider,
     private ngZone: NgZone,
+    private loadingCtrl: TranslateLoadingController,
+    private toastCtrl: TranslateToastController,
+    private adminProvider: AdminProvider,
   ) {}
 
   private animationFrame;
@@ -132,5 +139,23 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
 
   flip() {
     this.show = this.show === 'first' ? 'second' : 'first';
+  }
+
+  async addPermitCheck() {
+    (this.permit as AdminPermit).ctrl += 1;
+    const toast = await this.toastCtrl.show({
+      closeButtonText: 'ui.general.undo',
+      dismissOnPageChange: true,
+      duration: 4000,
+      message: 'ui.permit.admin.toast',
+      showCloseButton: true,
+    });
+    toast.onWillDismiss((data, role) => {
+      if (role === 'close') {
+        (this.permit as AdminPermit).ctrl -= 1;
+      } else {
+        this.adminProvider.checkLog('' + this.permit.code);
+      }
+    });
   }
 }

@@ -84,9 +84,10 @@
       </p>
 
       <div class="admin-bottom" *ngIf="admin">
-        <button ion-fab>{{ permit.ctrl }}</button>
+        <h3>{{ 'ui.permit.admin.header' | translate }}</h3>
+        <button ion-fab (click)="addPermitCheck()" color="light">{{ permit.ctrl }}</button>
         <button ion-button (click)="flip()" icon-end>
-          {{ 'ui.permit.adminFunctions' | translate }}
+          {{ 'ui.permit.admin.more' | translate }}
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </div>

@@ -35,6 +35,7 @@ export const sv: TranslationDefinition = {
       "back": "Tillbaka",
       "pull_to_refresh": "Uppdatera",
       "shortAmount": "st",
+      "undo": "Ångra",
     },
     "map": {
       "outdoors": "Karta",
@@ -115,7 +116,11 @@ export const sv: TranslationDefinition = {
     "permit": {
       "validBetween": "Giltligt mellan",
       "purchased": "Köpt",
-      "adminFunctions": "Tillsynsfunktioner",
+      "admin": {
+        "header": "Antal kontroller",
+        "more": "Tillsynsfunktioner",
+        "toast": "+1 kontroll loggad",
+      },
       "validity": {
         "active": "Giltligt",
         "inactive": "Inaktivt",

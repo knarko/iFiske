@@ -34,6 +34,7 @@ export const en: TranslationDefinition = {
       "back": "Back",
       "pull_to_refresh": "Update",
       "shortAmount": "",
+      "undo": "Undo",
     },
     "map": {
       "outdoors": "Map",
@@ -52,7 +53,7 @@ export const en: TranslationDefinition = {
         "timesChecked-singular:timesChecked": "The permit has been checked once.",
         "timesChecked-plural:timesChecked": "The permit has been checked {{timesChecked}} times.",
         "timesChecked-never": "The permit has never been checked.",
-        "logCheck": "Log permit check",
+        "logCheck": "Log permit verification",
         "sendComment": "Add comment",
       },
       "userLevel": {
@@ -114,7 +115,11 @@ export const en: TranslationDefinition = {
     "permit": {
       "validBetween": "Valid between",
       "purchased": "Purchased at",
-      "adminFunctions": "Admin functionality",
+      "admin": {
+        "header": "Times verified",
+        "more": "Admin functionality",
+        "toast": "Added verification",
+      },
       "validity": {
         "active": "Valid",
         "inactive": "Inactive",

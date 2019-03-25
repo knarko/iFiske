@@ -31,7 +31,7 @@ export interface LogEntry {
 }
 
 export interface AdminPermit extends Omit<UserProduct, 'fine' | 'pid' | 'qr'> {
-  ctrl: string;
+  ctrl: number;
   log?: LogEntry[];
   suborgid?: number;
 }

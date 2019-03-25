@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>{{ failed ? ('Check permit' | translate) : (permit | async)?.t }}</ion-title>
+    <ion-title>{{ failed ? ('Check permit' | translate) : permit?.t }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-bounce>
-  <app-permit *ngIf="(permit | async); let p" [admin]="true" [permit]="p" (revoke)="revoke($event)"></app-permit>
+  <app-permit *ngIf="permit" [admin]="true" [permit]="permit" (revoke)="revoke($event)"></app-permit>
 
   <div padding *ngIf="failed" class="text-center">
     <h3 [innerHtml]="'errors.admin.permit.failedHeader' | translate: (code | mkObject: 'code')"></h3>

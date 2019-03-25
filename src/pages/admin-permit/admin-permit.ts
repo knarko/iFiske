@@ -21,7 +21,8 @@ import { Subscription } from 'rxjs/Subscription';
 export class AdminPermitPage {
   code: string;
 
-  permit: Observable<AdminPermit>;
+  permit$: Observable<AdminPermit>;
+  permit: AdminPermit;
   failed = false;
 
   constructor(
@@ -45,11 +46,12 @@ export class AdminPermitPage {
   }
   ionViewWillLeave() {
     this.subs.forEach(sub => sub.unsubscribe());
+    this.subs = [];
   }
 
   async loadPermit() {
     console.log('loading permit', { code: this.code });
-    this.permit = this.adminProvider.getPermit(this.code);
+    this.permit$ = this.adminProvider.getPermit(this.code);
 
     let loading: Loading;
     let dismissed = false;
@@ -78,8 +80,9 @@ export class AdminPermitPage {
     };
 
     this.subs.push(
-      this.permit.subscribe(
-        () => {
+      this.permit$.subscribe(
+        permit => {
+          this.permit = permit;
           dismissLoading();
         },
         (err: ApiError) => {

@@ -123,8 +123,8 @@ export class AdminPermitListPage {
   }
 
   ionViewDidEnter() {
-    this.refresh();
     if (this.shouldScrollToTop) {
+      this.refresh();
       this.shouldScrollToTop = false;
       this.scrollSubject.next();
     }

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="40090013" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40090013" version="4.9.13"
+<widget android-versionCode="40100000" id="se.iFiske.fiskekort" ios-CFBundleIdentifier="se.iFiske.iFiske" ios-CFBundleVersion="40100000" version="4.10.0"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>iFiske</name>

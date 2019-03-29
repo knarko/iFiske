@@ -81,7 +81,6 @@ export class CreateAccountDetailsPage {
         },
         password: {
           label: 'Password',
-          placeholder: 'ui.placeholder.password',
           type: 'password',
           validators: validators.password,
           errors: {

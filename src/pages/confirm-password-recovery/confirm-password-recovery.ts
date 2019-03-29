@@ -65,7 +65,6 @@ export class ConfirmPasswordRecoveryPage {
         },
         password: {
           label: 'New password',
-          placeholder: 'ui.placeholder.password',
           type: 'password',
           validators: validators.password,
           errors: {

@@ -83,6 +83,7 @@ registerLocaleData(localeSv);
       ios: {
         statusbarPadding: true,
       },
+      scrollPadding: false,
     }),
 
     ImgcacheModule.forRoot({

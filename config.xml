@@ -30,6 +30,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="KeyboardResizeMode" value="native" />
     <config-file parent="ITSAppUsesNonExemptEncryption" platform="ios" target="*-Info.plist">
         <false />
     </config-file>

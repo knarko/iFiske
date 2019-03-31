@@ -8,6 +8,7 @@
     <content src="index.html" />
     <access origin="*" />
     <access origin="cdvfile://*" />
+    <allow-navigation href="http://localhost/*" />
     <allow-navigation href="ifiske://localhost/*" />
     <allow-navigation href="https://www.youtube.com/embed/*" />
     <allow-intent href="http://*/*" />
@@ -32,7 +33,7 @@
     <config-file parent="ITSAppUsesNonExemptEncryption" platform="ios" target="*-Info.plist">
         <false />
     </config-file>
-    <preference name="Scheme" value="ifiske" />
+    <preference name="Scheme" value="http" />
     <preference name="iosScheme" value="ifiske" />
     <platform name="android">
         <resource-file src="google-services.json" target="app/google-services.json" />

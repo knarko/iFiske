@@ -1,3 +1,14 @@
+## [4.10.1](https://gitlab.com/kada-development/ifiske/compare/v4.10.0...v4.10.1) (2019-03-31)
+
+
+### Bug Fixes
+
+* **admin-permit:** fix keyboard entry on android covering the screen with white ([389fa26](https://gitlab.com/kada-development/ifiske/commit/389fa26))
+* **create-account:** remove password placeholders ([67e263e](https://gitlab.com/kada-development/ifiske/commit/67e263e))
+* **map:** change origin on android so geolocation is allowed ([bd91676](https://gitlab.com/kada-development/ifiske/commit/bd91676))
+
+
+
 # [4.10.0](https://gitlab.com/kada-development/ifiske/compare/v4.9.13...v4.10.0) (2019-03-26)
 
 

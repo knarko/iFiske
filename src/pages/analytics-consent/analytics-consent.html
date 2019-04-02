@@ -1,0 +1,4 @@
+<h2>{{ 'ui.analytics.title' | translate }}</h2>
+<div class="content" [innerHTML]="'ui.analytics.description' | translate"></div>
+<button ion-button block clear color="dark" (click)="close('decline')">{{ 'ui.analytics.decline' | translate }}</button>
+<button ion-button block (click)="close('accept')">{{ 'ui.analytics.accept' | translate }}</button>

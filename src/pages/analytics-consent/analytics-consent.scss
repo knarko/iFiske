@@ -1,0 +1,21 @@
+page-analytics-consent {
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+  }
+  .content {
+    ul {
+      padding-left: 1em;
+      list-style-type: circle;
+    }
+  }
+  .button {
+    margin-top: 2rem;
+  }
+}

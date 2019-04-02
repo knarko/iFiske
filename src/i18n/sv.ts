@@ -153,6 +153,19 @@ export const sv: TranslationDefinition = {
       "adr": "Gatuadress",
       "town": "Ort",
     },
+    "analytics": {
+      "title": "Hjälp oss förbättra appen!",
+      "description": `För att förbättra appen skulle vi vilja samla in information om hur du använder den. Informationen vi samlar in innefattar:
+      <ul>
+        <li>Hur du navigerar</li>
+        <li>Dina sökningar</li>
+        <li>Aggregerad demografiinformation</li>
+      </ul>
+
+      För mer information, se vår <a>personuppgiftspolicy</a>`,
+      "accept": "Acceptera",
+      "decline": "Avböj",
+    }
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
@@ -354,4 +367,5 @@ export const sv: TranslationDefinition = {
   "Searching": "Söker...",
   "Change Password": "Byt lösenord",
   "New Password": "Nytt lösenord",
+  "Analytics": "Samla användningsdata"
 }

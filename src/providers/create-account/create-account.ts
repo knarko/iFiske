@@ -7,6 +7,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { ApiProvider } from '../api/api';
 import { UserProvider } from '../user/user';
 import { MonitoringClient } from '../../app/monitoring';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 export interface UserDetails {
   username: string;
@@ -23,7 +24,7 @@ export class CreateAccountProvider {
 
   private static readonly REGISTER_DATA_KEY = 'register_user_details';
 
-  constructor(private API: ApiProvider, private userProvider: UserProvider) {
+  constructor(private API: ApiProvider, private userProvider: UserProvider, private analytics: FirebaseAnalytics) {
     this.timer = this.timerSubject.asObservable();
     this.timerSubject.next(this.createTimer());
   }
@@ -50,6 +51,8 @@ export class CreateAccountProvider {
     await this.API.user_confirm(username, activationCode);
 
     localStorage.removeItem(CreateAccountProvider.REGISTER_DATA_KEY);
+
+    this.analytics.logEvent('sign_up', { method: 'password' });
 
     if (userDetails.password) {
       await this.userProvider.login({
@@ -83,6 +86,9 @@ export class CreateAccountProvider {
     const timerEnd = 3 * 60 * 1000; // 3 minutes
     const stop = timer(timerEnd - 1000);
     const timerStart = Date.now();
-    return timer(0, 1000).pipe(map(() => timerEnd - (Date.now() - timerStart)), takeUntil(stop));
+    return timer(0, 1000).pipe(
+      map(() => timerEnd - (Date.now() - timerStart)),
+      takeUntil(stop),
+    );
   }
 }

@@ -130,6 +130,19 @@ export const de: TranslationDefinition | any = {
       "yes": "Ja",
       "no": "Nein",
     },
+    "analytics": {
+      "title": "Help us improve the app!",
+      "description": `In order to improve the app we would like to collect some information about your usage. This information includes:
+      <ul>
+        <li>How you navigate</li>
+        <li>Your searches</li>
+        <li>Aggregated demographics</li>
+      </ul>
+
+      For more information, se our <a>privacy policy</a>.`,
+      "accept": "Accept",
+      "decline": "Decline",
+    }
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
@@ -332,5 +345,6 @@ export const de: TranslationDefinition | any = {
   "I accept the terms of service": "Ich habe die Datenschutzerklärung und TOS gelesen und akzeptiere diese",
   "New Password": "Neues Passwort",
   "Registering": "Registrieren...",
+  "Analytics": "Analytik sammeln"
 
 }

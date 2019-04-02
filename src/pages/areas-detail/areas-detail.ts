@@ -7,6 +7,7 @@ import { OrganizationProvider, Organization } from '../../providers/organization
 import { ProductProvider, Product } from '../../providers/product/product';
 import { Fish } from '../../providers/fish/fish';
 import { AreaDetailParams } from './areas-detail-params';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage({
   segment: 'area-detail/:ID',
@@ -36,12 +37,14 @@ export class AreasDetailPage {
     private areaProvider: AreaProvider,
     private organizationProvider: OrganizationProvider,
     private productProvider: ProductProvider,
+    private analytics: FirebaseAnalytics,
   ) {
-    this.areaProvider.getOne(this.navParams.get('ID')).then(info => {
-      this.area = info;
-      console.log(info);
+    this.areaProvider.getOne(this.navParams.get('ID')).then(area => {
+      this.area = area;
+      console.log(area);
       this.updateParams();
       this.getOrg();
+      this.analytics.logEvent('select_content', { content_type: 'Area', item_id: area.ID });
     });
 
     this.productProvider

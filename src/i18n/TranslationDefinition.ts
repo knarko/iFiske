@@ -134,23 +134,29 @@ export interface TranslationDefinition {
     }
     "developer": {
       "betaOptIn": string
-      "checkForUpdates": string,
+      "checkForUpdates": string
     }
     "reviews": {
       "title": string
       "message": string
       "yes": string
-      "no": string,
+      "no": string
     }
     "share:area": string
     "changePassword": {
-      "completed": string,
+      "completed": string
     }
     "deliveryAddress": {
       "zip": string
       "adr": string
       "town": string,
-    },
+    }
+    "analytics": {
+      "title": string
+      "description": string
+      "accept": string
+      "decline": string
+    }
   }
   "errors": {
     "unknown": string
@@ -352,4 +358,5 @@ export interface TranslationDefinition {
   "Searching": string
   "Change Password": string
   "New Password": string
+  "Analytics": string
 }

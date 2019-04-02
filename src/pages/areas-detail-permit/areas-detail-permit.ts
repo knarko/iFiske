@@ -7,6 +7,7 @@ import { Area } from '../../providers/area/area';
 import { Permit } from '../../providers/user/userTypes';
 import { MonitoringClient } from '../../app/monitoring';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage()
 @Component({
@@ -22,6 +23,7 @@ export class AreasDetailPermitPage {
     public navParams: NavParams,
     private modalCtrl: ModalController,
     private deepLinks: DeepLinksProvider,
+    private analytics: FirebaseAnalytics,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
@@ -32,8 +34,15 @@ export class AreasDetailPermitPage {
     });
   }
 
+  ionViewDidEnter() {
+    if (this.area) {
+      this.analytics.logEvent('view_item_list', { item_category: this.area.ID });
+    }
+  }
+
   buy(product: Product, method: { name: string }) {
     console.log('buy', product, method);
+    this.analytics.logEvent('begin_checkout', { value: product.price, currency: 'SEK', method, item_id: product.ID });
 
     if (method.name === 'Web') {
       this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });

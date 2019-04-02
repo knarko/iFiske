@@ -100,8 +100,7 @@ export class MyApp {
 
   setupAnalytics() {
     this.app.viewWillEnter.subscribe((view: ViewController) => {
-      // TODO: find a good way to log more info about the page. For example logging what area is looked at.
-      this.analytics.setCurrentScreen(view.name);
+      this.analytics.setCurrentScreen(view.id);
     });
   }
 

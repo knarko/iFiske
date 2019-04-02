@@ -16,6 +16,7 @@ import { Fish } from '../../providers/fish/fish';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { IFISKE_ERRORS } from '../../providers/api/api';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage()
 @Component({
@@ -58,16 +59,19 @@ export class AreasDetailInfoPage {
     private socialSharing: SocialSharing,
     private translate: TranslateService,
     private deepLinks: DeepLinksProvider,
+    private analytics: FirebaseAnalytics,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
 
     params.subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {
-        area.images.then(images => this.getCachedImages(images)).then(images => {
-          console.log(images);
-          this.images = images;
-        });
+        area.images
+          .then(images => this.getCachedImages(images))
+          .then(images => {
+            console.log(images);
+            this.images = images;
+          });
       }
       this.navCtrl = rootNavCtrl;
       this.tabsCtrl = tabsCtrl;
@@ -155,11 +159,12 @@ export class AreasDetailInfoPage {
 
   share = async () => {
     const message = await this.translate.get('ui.share:area', { area: this.area.t }).toPromise();
-    this.socialSharing.share(
+    await this.socialSharing.share(
       message,
       this.area.org,
       undefined,
       this.deepLinks.getUrl(DeepLinks.organization, { orgId: '' + this.area.orgid }, { bringMetadata: false }),
     );
+    this.analytics.logEvent('share', { content_type: 'Area', item_id: this.area.ID });
   };
 }

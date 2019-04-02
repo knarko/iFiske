@@ -12,6 +12,7 @@ import { serverLocation } from '../api/serverLocation';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
 import { SettingsProvider } from '../settings/settings';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 export interface AreaImage {
   h: number;
@@ -185,6 +186,7 @@ export class AreaProvider extends BaseModel<Area> {
     private geo: Geolocation,
     private fishProvider: FishProvider,
     private settings: SettingsProvider,
+    private analytics: FirebaseAnalytics,
   ) {
     super();
     this.initialize();
@@ -390,6 +392,7 @@ export class AreaProvider extends BaseModel<Area> {
    */
   @DBMethod
   search(searchstring: string, countyId: number): Promise<Area[]> {
+    this.analytics.logEvent('search', { search_term: searchstring });
     if (this.searchCache[searchstring + countyId]) {
       return this.searchCache[searchstring + countyId];
     }
@@ -525,12 +528,14 @@ export class AreaProvider extends BaseModel<Area> {
           })
           .map(r => r.item);
       });
-    result.catch(() => {}).then(() => {
-      if (performance && performance.now) {
-        const t1 = performance.now();
-        console.log('Searching took:', t1 - t0, 'ms');
-      }
-    });
+    result
+      .catch(() => {})
+      .then(() => {
+        if (performance && performance.now) {
+          const t1 = performance.now();
+          console.log('Searching took:', t1 - t0, 'ms');
+        }
+      });
     this.searchCache[searchstring + countyId] = result;
     return result;
   }

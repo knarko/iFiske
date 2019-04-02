@@ -10,6 +10,7 @@ interface Settings {
   isDeveloper?: boolean;
   channel: string;
   firstLaunch: boolean;
+  analytics?: boolean;
 }
 
 export interface Language {
@@ -26,6 +27,7 @@ export class SettingsProvider {
       language: this.defaultLanguage,
       channel: 'Production',
       firstLaunch: true,
+      analytics: undefined,
     };
   }
   get defaultLanguage() {
@@ -48,7 +50,10 @@ export class SettingsProvider {
     this.settings = Object.assign({}, this.defaultSettings, this.settings);
     this.language = this.settings.language;
     this.persistSettings();
+
     console.log(this.settings);
+
+    this.analytics.setEnabled(this.settings.analytics);
   }
 
   private persistSettings() {
@@ -115,6 +120,15 @@ export class SettingsProvider {
   }
   set firstLaunch(firstLaunch: boolean) {
     this.settings.firstLaunch = firstLaunch;
+    this.persistSettings();
+  }
+
+  get analyticsEnabled() {
+    return this.settings.analytics;
+  }
+  set analyticsEnabled(enabled: boolean) {
+    this.settings.analytics = enabled;
+    this.analytics.setEnabled(enabled);
     this.persistSettings();
   }
 }

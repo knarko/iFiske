@@ -120,6 +120,43 @@
     }
   }
 }
+.floating-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $content-padding;
+  ion-backdrop {
+    visibility: visible;
+  }
+  > .modal-wrapper {
+    contain: content;
+    .ios & {
+      border-radius: $alert-ios-border-radius;
+    }
+    .md & {
+      border-radius: $alert-md-border-radius;
+    }
+    position: static !important;
+    overflow: hidden;
+    max-width: 80vw;
+    height: auto;
+    background-color: #f8f8f8;
+    > .ion-page {
+      padding: $content-padding;
+
+      position: static;
+
+      width: unset;
+      height: unset;
+      top: unset;
+      left: unset;
+      contain: content !important;
+      background: white;
+      max-height: 100%;
+      overflow-y: auto;
+    }
+  }
+}
 
 @mixin blurred-background($opacity: 0.5, $blurred-opacity: $opacity / 2) {
   background: rgba(white, $opacity);

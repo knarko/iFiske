@@ -152,6 +152,19 @@ export const en: TranslationDefinition = {
       "adr": "Street Address",
       "town": "City",
     },
+    "analytics": {
+      "title": "Help us improve the app!",
+      "description": `In order to improve the app we would like to collect some information about your usage. This information includes:
+      <ul>
+        <li>How you navigate</li>
+        <li>Your searches</li>
+        <li>Aggregated demographics</li>
+      </ul>
+
+      For more information, se our <a>privacy policy</a>.`,
+      "accept": "Accept",
+      "decline": "Decline",
+    }
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",
@@ -354,4 +367,5 @@ export const en: TranslationDefinition = {
   "Searching": "Searching...",
   "Change Password": "Change Password",
   "New Password": "New Password",
+  "Analytics": "Collect Analytics",
 }

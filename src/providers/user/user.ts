@@ -227,9 +227,9 @@ export class UserProvider extends BaseModel {
     });
 
     p.then(
-      u => {
-        // TODO: set userId?
-        this.analytics.logEvent('user_login', {});
+      async u => {
+        this.analytics.logEvent('login', { method: 'password' });
+        const info = await this.getInfo();
       },
       error => {
         this.session.token = undefined;
@@ -240,8 +240,6 @@ export class UserProvider extends BaseModel {
   }
 
   async logout() {
-    // TODO: remove userId?
-    this.analytics.logEvent('user_logout', {});
     const loading = await this.loadingCtrl.show({
       content: 'Logging out',
     });

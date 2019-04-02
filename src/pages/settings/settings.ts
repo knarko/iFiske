@@ -34,6 +34,11 @@ export class SettingsPage {
       toggleState: this.settingsProvider.push,
       toggleColor: 'secondary',
     },
+    {
+      title: 'Analytics',
+      toggle: (state: boolean) => (this.settingsProvider.analyticsEnabled = state),
+      toggleColor: 'secondary',
+    },
     { title: 'Update stored data', click: () => this.updateProvider.update(true) },
     { title: 'Change language', click: () => this.modalCtrl.create('ChangeLanguagePage').present() },
     { title: 'Log out', click: () => this.logout(), show: this.userProvider.loggedIn },

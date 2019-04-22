@@ -72,16 +72,17 @@
         <span class="box">{{ permit.price }} SEK</span>
       </p>
 
-      <p *ngIf="!admin">
-        <button ion-button icon-start *ngIf="permit.code" (click)="openCatchReport()">
-          <ion-icon name="ifiske-fish"></ion-icon>
-          {{ 'Catch report' | translate }}
-        </button>
-        <a ion-button color="dark" icon-start *ngIf="permit.pdf" [href]="serverLocation + permit.pdf" target="_system">
-          <ion-icon name="document"></ion-icon>
-          {{ 'PDF' | translate }}
-        </a>
-      </p>
+      <a
+        ion-button
+        color="dark"
+        icon-start
+        *ngIf="!admin && permit.pdf"
+        [href]="serverLocation + permit.pdf"
+        target="_system"
+      >
+        <ion-icon name="document"></ion-icon>
+        {{ 'PDF' | translate }}
+      </a>
 
       <div class="admin-bottom" *ngIf="admin">
         <h3>{{ 'ui.permit.admin.header' | translate }}</h3>

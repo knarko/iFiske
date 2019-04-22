@@ -13,16 +13,25 @@
   </div>
 </ion-content>
 <ion-footer>
-  <button
-    full
-    ion-button
-    color="secondary"
-    (click)="openRules()"
-    icon-left
-    *ngIf="permit?.rule_t"
-    class="footer-button"
-  >
-    <ion-icon name="document"></ion-icon>
-    {{ 'Rules' | translate }}
-  </button>
+  <ion-toolbar *ngIf="permit && (permit.rule_t || permit.code)">
+    <ion-buttons start>
+      <button
+        full
+        ion-button
+        solid
+        color="secondary"
+        (click)="openRules()"
+        icon-start
+        *ngIf="permit?.rule_t"
+        class="footer-button"
+      >
+        <ion-icon name="document"></ion-icon>
+        {{ 'Rules' | translate }}
+      </button>
+      <button full ion-button solid icon-start *ngIf="permit?.code" (click)="openCatchReport()" class="footer-button">
+        <ion-icon name="ifiske-fish"></ion-icon>
+        {{ 'Catch report' | translate }}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-footer>

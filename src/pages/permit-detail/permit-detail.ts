@@ -4,6 +4,7 @@ import { UserProvider } from '../../providers/user/user';
 import { Permit } from '../../providers/user/userTypes';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { DeepLinksProvider, DeepLinks } from '../../providers/deep-links/deep-links';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'MyPermitsPage'],
@@ -24,6 +25,7 @@ export class PermitDetailPage {
     public navParams: NavParams,
     private userProvider: UserProvider,
     private modalCtrl: ModalController,
+    private deepLinks: DeepLinksProvider,
   ) {}
 
   async ionViewWillEnter() {
@@ -52,5 +54,9 @@ export class PermitDetailPage {
         ver: this.permit.rule_ver,
       })
       .present();
+  }
+
+  openCatchReport() {
+    this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
   }
 }

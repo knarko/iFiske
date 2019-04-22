@@ -127,10 +127,6 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
 
   openCatchReport() {
     this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
-    const url = `${serverLocation}/mobile/index.php?lang=${this.settings.language}&p=5&i=${this.permit.pid}`;
-    window.open(url, '_system');
-    // TODO: analytics
-    // analytics.trackEvent('Purchase', 'Web', id);
   }
 
   log() {

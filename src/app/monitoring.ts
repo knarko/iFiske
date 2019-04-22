@@ -6,7 +6,7 @@ import { APP_VERSION, isProdMode } from './config';
 SentryClient.init({
   dsn: 'https://65d073d56d014385a2aca1276216cb91@sentry.io/300552',
   release: APP_VERSION,
-  beforeSend: (event: SentryClient.SentryEvent & { culprit?: string }) => {
+  beforeSend: (event: SentryClient.Event & { culprit?: string }) => {
     if (event.culprit) {
       event.culprit = event.culprit.substring(event.culprit.lastIndexOf('/'));
     }

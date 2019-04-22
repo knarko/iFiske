@@ -1,3 +1,18 @@
+# [4.11.0](https://gitlab.com/kada-development/ifiske/compare/v4.10.1...v4.11.0) (2019-04-22)
+
+
+### Bug Fixes
+
+* **deeplinks:** catcherport now doesn't start a purchase" ([4184129](https://gitlab.com/kada-development/ifiske/commit/4184129))
+* **permit:** show catch report link in footer ([950aeaf](https://gitlab.com/kada-development/ifiske/commit/950aeaf))
+
+
+### Features
+
+* **analytics:** add GDPR-compatible consent dialogs ([c9bd9bf](https://gitlab.com/kada-development/ifiske/commit/c9bd9bf))
+
+
+
 ## [4.10.1](https://gitlab.com/kada-development/ifiske/compare/v4.10.0...v4.10.1) (2019-03-31)
 
 

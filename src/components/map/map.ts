@@ -117,6 +117,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
       locateOptions: {
         watch: true, // Watch is broken in chrome
         maxZoom: 11,
+        setView: false,
+        enableHighAccuracy: true,
       },
       icon: 'locate-icon icon ion-md-locate',
       iconLoading: 'loader',
@@ -340,7 +342,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       return;
     }
     if (this.options.centerOnMe && this.map && !this.centered) {
-      this.map.locate({ setView: true, maxZoom: 11 });
+      this.map.locate({ setView: true, maxZoom: 11, enableHighAccuracy: true });
       this.centered = true;
     }
     if (this.options.areas) {

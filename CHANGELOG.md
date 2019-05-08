@@ -1,3 +1,12 @@
+## [4.11.7](https://gitlab.com/kada-development/ifiske/compare/v4.11.6...v4.11.7) (2019-05-08)
+
+
+### Bug Fixes
+
+* **sms:** remove SMS sending support from the app, it is no longer used by anyone ([b778c8e](https://gitlab.com/kada-development/ifiske/commit/b778c8e))
+
+
+
 ## [4.11.6](https://gitlab.com/kada-development/ifiske/compare/v4.11.5...v4.11.6) (2019-05-08)
 
 

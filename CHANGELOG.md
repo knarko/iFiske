@@ -1,3 +1,12 @@
+## [4.11.6](https://gitlab.com/kada-development/ifiske/compare/v4.11.5...v4.11.6) (2019-05-08)
+
+
+### Bug Fixes
+
+* **map:** enable high accuracy ([fc1d39e](https://gitlab.com/kada-development/ifiske/commit/fc1d39e))
+
+
+
 ## [4.11.5](https://gitlab.com/kada-development/ifiske/compare/v4.11.4...v4.11.5) (2019-05-07)
 
 

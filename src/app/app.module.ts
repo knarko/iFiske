@@ -18,7 +18,6 @@ import { Network } from '@ionic-native/network';
 import { OneSignal } from '@ionic-native/onesignal';
 import { Pro } from '@ionic-native/pro';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { SMS } from '@ionic-native/sms';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SQLite } from '@ionic-native/sqlite';
@@ -119,7 +118,6 @@ registerLocaleData(localeSv);
     OneSignal,
     Pro,
     ScreenOrientation,
-    SMS,
     SocialSharing,
     SplashScreen,
     SQLite,

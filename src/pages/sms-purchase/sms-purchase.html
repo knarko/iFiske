@@ -1,29 +1,24 @@
 <ion-header>
-
   <ion-navbar color="primary">
-    <ion-title>{{product.t}}</ion-title>
+    <ion-title>{{ 'SMS' | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="close()">{{'Close' | translate}}</button>
+      <button ion-button (click)="close()">{{ 'Close' | translate }}</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <p>{{'Text message instructions' | translate}}</p>
-  <p>{{'Text message format' | translate}}</p>
+  <div class="header">
+    <h2>{{ product.t }}</h2>
+    <span class="right">{{ product.price }} SEK</span>
+  </div>
+  <p>{{ 'Text message format' | translate }}</p>
   <ion-list inset border class="sms-info-list">
-    <ion-item>
-      FISKA {{product.pf}} {{'First name' | translate}} {{'Surname' | translate}}
-    </ion-item>
+    <ion-item> FISKA {{ product.pf }} {{ 'First name' | translate }} {{ 'Surname' | translate }} </ion-item>
   </ion-list>
-  <p>{{'Make sure you have the correct name' | translate}}</p>
-
-  <ion-item no-lines>
-    <ion-label>{{'I approve the text message rules' | translate}}</ion-label>
-    <ion-checkbox [(ngModel)]="approvedRules" (ionChange)="persistApproval()"></ion-checkbox>
-  </ion-item>
-  <button ion-button block color="secondary" [disabled]="!approvedRules" (click)="sendSms()">{{'Send SMS' | translate}}</button>
-
+  <div class="message-recipient">
+    <p>{{ 'to' | translate }}</p>
+    <p class="sms-number">{{ SMS_PURCHASE_NUMBER }}</p>
+  </div>
+  <p>{{ 'Make sure you have the correct name' | translate }}</p>
 </ion-content>

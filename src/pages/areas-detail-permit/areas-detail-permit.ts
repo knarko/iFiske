@@ -47,6 +47,7 @@ export class AreasDetailPermitPage {
     if (method.name === 'Web') {
       this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });
     } else if (method.name === 'SMS') {
+      this.analytics.logEvent('open_sms_purchase', { item_id: product.ID });
       this.modalCtrl
         .create('SmsPurchasePage', {
           product,

@@ -1,7 +1,47 @@
 page-sms-purchase {
+  .header {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    display: flex;
+    line-height: 1.5;
+    font-size: 1.7rem;
+    > h2 {
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0 !important;
+    }
+    > span {
+      font-size: inherit;
+      line-height: inherit;
+    }
+    white-space: nowrap;
+  }
+  .message-recipient {
+    text-align: center;
+  }
+  .sms-number {
+    margin: 0;
+    display: inline-block;
+    border: 1px solid $list-border-color;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.5;
+    font-size: 2rem;
+
+    .md & {
+      border-radius: $list-inset-md-border-radius;
+    }
+    .ios & {
+      border-radius: $list-inset-ios-border-radius;
+    }
+  }
   .sms-info-list {
+    .item .item-inner {
+      padding: 0;
+    }
     margin: 0 !important;
     .label {
+      margin: 0;
       text-align: center;
     }
     .item {

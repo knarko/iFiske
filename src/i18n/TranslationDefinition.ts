@@ -269,7 +269,6 @@ export interface TranslationDefinition {
   "Full name": string
   "Home": string
   "I accept the terms of service": string
-  "I approve the text message rules": string
   "I have a recovery code": string
   "iFiske - Easier Fishing": string
   "in": string
@@ -323,10 +322,8 @@ export interface TranslationDefinition {
   "Search results": string
   "Search": string
   "Send": string
-  "Send SMS": string
   "Settings": string
   "Size and growth": string
-  "SMS Rules": string
   "SMS": string
   "Species": string
   "Surname": string
@@ -335,7 +332,6 @@ export interface TranslationDefinition {
   "Technique gear": string
   "Terms of service": string
   "Text message format": string
-  "Text message instructions": string
   "This will revoke the permit": string
   "This will unrevoke the permit": string
   "to": string

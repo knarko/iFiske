@@ -1,3 +1,7 @@
+## [4.11.8](https://gitlab.com/kada-development/ifiske/compare/v4.11.7...v4.11.8) (2019-05-14)
+
+
+
 ## [4.11.7](https://gitlab.com/kada-development/ifiske/compare/v4.11.6...v4.11.7) (2019-05-08)
 
 

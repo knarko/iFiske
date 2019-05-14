@@ -48,7 +48,7 @@
     "@ionic/storage": "^2.2.0",
     "@mapbox/leaflet-omnivore": "^0.3.4",
     "@ngx-translate/core": "^9.0.1",
-    "@sentry/browser": "^5.1.0",
+    "@sentry/browser": "^5.2.1",
     "angular-linky": "^1.2.2",
     "autolinker": "^1.8.3",
     "chart.js": "^2.8.0",
@@ -61,7 +61,7 @@
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-transfer": "^1.7.1",
-    "cordova-plugin-firebase-analytics": "^1.1.1",
+    "cordova-plugin-firebase-analytics": "^2.0.0",
     "cordova-plugin-firebase-crash": "^1.4.1",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-inappbrowser": "^3.0.0",
@@ -91,7 +91,7 @@
     "leaflet.markercluster": "^1.4.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "ngx-pipes": "^2.4.6",
+    "ngx-pipes": "^2.5.0",
     "onesignal-cordova-plugin": "^2.4.6",
     "phonegap-plugin-barcodescanner": "^8.0.1",
     "reflect-metadata": "^0.1.10",
@@ -112,12 +112,12 @@
     "conventional-changelog-cli": "^2.0.12",
     "cordova": "^9.0.0",
     "cz-conventional-changelog": "^2.1.0",
-    "firebase-tools": "^6.7.0",
+    "firebase-tools": "^6.9.2",
     "inquirer": "^6.3.1",
     "ionic": "^4.12.0",
     "json-diff": "^0.5.4",
     "madge": "^3.4.4",
-    "prettier": "^1.17.0",
+    "prettier": "^1.17.1",
     "prompt": "^1.0.0",
     "sass-lint": "^1.12.1",
     "shelljs": "^0.8.3",
@@ -157,7 +157,7 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "28.+"
       },
       "cordova-plugin-network-information": {},
       "cordova-plugin-screen-orientation": {},
@@ -167,14 +167,14 @@
       "cordova-sqlite-storage": {},
       "onesignal-cordova-plugin": {},
       "phonegap-plugin-barcodescanner": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+        "ANDROID_SUPPORT_V4_VERSION": "28.+"
       },
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "OKHTTP_VERSION": "3.+",
         "GOOGLE_API_KEY_FOR_ANDROID": ""
       },
       "cordova-plugin-x-socialsharing": {
-        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+        "ANDROID_SUPPORT_V4_VERSION": "28.+"
       },
       "cordova-plugin-firebase-analytics": {
         "FIREBASE_CORE_VERSION": "16.0.+"

@@ -1,3 +1,12 @@
+## [4.11.9](https://gitlab.com/kada-development/ifiske/compare/v4.11.8...v4.11.9) (2019-05-17)
+
+
+### Bug Fixes
+
+* **android:** temporary fix crashes related to onesignal on android ([ee98b1c](https://gitlab.com/kada-development/ifiske/commit/ee98b1c))
+
+
+
 ## [4.11.8](https://gitlab.com/kada-development/ifiske/compare/v4.11.7...v4.11.8) (2019-05-14)
 
 

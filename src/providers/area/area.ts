@@ -268,27 +268,28 @@ export class AreaProvider extends BaseModel<Area> {
     return res;
   }
 
+  private readonly fishSeparator = '__-__SEPARATORr__-__';
   @DBMethod
   async getAll(countyId?: number): Promise<Area[]> {
-    function selectFish(id) {
+    const selectFish = (id: number) => {
       return `Fish_${id}.fishes as fish_${id}`;
-    }
+    };
 
-    function joinFish(id) {
+    const joinFish = (id: number) => {
       return `
-        LEFT JOIN (SELECT
+        LEFT JOIN (
+          SELECT
             Area_Fish.amount AS amount,
             Area.ID AS aid,
-            GROUP_CONCAT(Fish.t, " "
-        ) AS fishes
-        FROM Area_Fish
-        JOIN Fish ON Area_Fish.fid = Fish.ID
-        JOIN Area ON Area_Fish.aid = Area.ID
-        WHERE Area_Fish.amount = ${id}
-        GROUP BY Area_Fish.amount, Area.ID
+            GROUP_CONCAT(Fish.t, "${this.fishSeparator}") AS fishes
+          FROM Area_Fish
+          JOIN Fish ON Area_Fish.fid = Fish.ID
+          JOIN Area ON Area_Fish.aid = Area.ID
+          WHERE Area_Fish.amount = ${id}
+          GROUP BY Area_Fish.amount, Area.ID
         ) AS Fish_${id} ON Area.ID = Fish_${id}.aid
       `;
-    }
+    };
 
     const res = await this.DB.getMultiple(
       `
@@ -405,7 +406,7 @@ export class AreaProvider extends BaseModel<Area> {
       .then(data =>
         data.map(d => {
           for (let i = 1; i < 6; ++i) {
-            d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(' ');
+            d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(this.fishSeparator);
           }
           return d;
         }),

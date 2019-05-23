@@ -1,3 +1,14 @@
+## [4.11.10](https://gitlab.com/kada-development/ifiske/compare/v4.11.9...v4.11.10) (2019-05-23)
+
+
+### Bug Fixes
+
+* **permit:** add space inside code on ios ([17f1b3b](https://gitlab.com/kada-development/ifiske/commit/17f1b3b))
+* **permit:** fix bottom buttons size on ios ([9589823](https://gitlab.com/kada-development/ifiske/commit/9589823))
+* **search:** fix search results for fish with a space in the name not showing up correctly ([1d6b319](https://gitlab.com/kada-development/ifiske/commit/1d6b319))
+
+
+
 ## [4.11.9](https://gitlab.com/kada-development/ifiske/compare/v4.11.8...v4.11.9) (2019-05-17)
 
 

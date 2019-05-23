@@ -102,7 +102,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   }
   async ngOnChanges(changes: SimpleChanges) {
     // u202F is a thin non-breaking space
-    this.code = ('' + this.permit.code).substr(0, 4) + '\u202F' + ('' + this.permit.code).substr(4);
+    this.code = ('' + this.permit.code).substr(0, 4) + '\u00A0' + ('' + this.permit.code).substr(4);
     if (changes.permit && changes.permit.currentValue) {
       this.logged = false;
       try {

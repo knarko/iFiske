@@ -63,7 +63,6 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-firebase-analytics": "^2.0.1",
     "cordova-plugin-firebase-crash": "^1.4.1",
-    "cordova-plugin-firebase-messaging": "2.1.2",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic": "^5.3.0",
@@ -182,11 +181,6 @@
       },
       "cordova-plugin-firebase-crash": {
         "FIREBASE_CORE_VERSION": "16.0.+"
-      },
-      "cordova-plugin-firebase-messaging": {
-        "FIREBASE_CORE_VERSION": "16.0.+",
-        "FIREBASE_MESSAGING_VERSION": "18.0.+",
-        "ANDROID_SUPPORT_VERSION": "28.+"
       }
     },
     "platforms": [

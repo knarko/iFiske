@@ -37,6 +37,7 @@ export class SettingsPage {
     {
       title: 'Analytics',
       toggle: (state: boolean) => (this.settingsProvider.analyticsEnabled = state),
+      toggleState: !!this.settingsProvider.analyticsEnabled,
       toggleColor: 'secondary',
     },
     { title: 'Update stored data', click: () => this.updateProvider.update(true) },

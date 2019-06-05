@@ -53,7 +53,7 @@ export class SettingsProvider {
 
     console.log(this.settings);
 
-    this.analytics.setEnabled(this.settings.analytics);
+    this.analytics.setEnabled(!!this.settings.analytics);
   }
 
   private persistSettings() {

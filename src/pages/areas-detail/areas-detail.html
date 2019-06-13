@@ -3,7 +3,7 @@
     <ion-tab
       *ngIf="!tab.hide"
       [root]="tab.page"
-      [tabTitle]="tab.title | translate"
+      [tabTitle]="(tab.titleFn && tab.titleFn()) || (tab.title | translate)"
       [tabIcon]="tab.icon"
       [rootParams]="{ params: tabParams }"
       [tabsHideOnSubPages]="true"

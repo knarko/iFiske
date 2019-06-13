@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 export interface TabItem {
-  title: string;
+  title?: string;
+  titleFn?: () => string;
   icon: string;
   page: string;
   hide?: boolean;

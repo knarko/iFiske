@@ -17,11 +17,8 @@ import { OrganizationProvider, Organization } from '../../providers/organization
 import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
-import { SettingsProvider } from '../../providers/settings/settings';
 import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
-import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
-import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { AdminProvider } from '../../providers/admin/admin';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 
@@ -54,9 +51,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,
     private deepLinks: DeepLinksProvider,
-    private settings: SettingsProvider,
     private ngZone: NgZone,
-    private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
     private adminProvider: AdminProvider,
   ) {}
@@ -146,7 +141,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
       message: 'ui.permit.admin.toast',
       showCloseButton: true,
     });
-    toast.onWillDismiss((data, role) => {
+    toast.onWillDismiss((_data, role) => {
       if (role === 'close') {
         (this.permit as AdminPermit).ctrl -= 1;
       } else {

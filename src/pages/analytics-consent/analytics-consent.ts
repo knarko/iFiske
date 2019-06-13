@@ -1,5 +1,5 @@
 import { Component, ElementRef, AfterViewInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController } from 'ionic-angular';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TermsProvider } from '../../providers/terms/terms';
 
@@ -21,7 +21,6 @@ export class AnalyticsConsentPage implements AfterViewInit {
     private elementRef: ElementRef,
     private alertCtrl: TranslateAlertController,
     private termsProvider: TermsProvider,
-    private modalCtrl: ModalController,
   ) {}
 
   ionViewDidLoad() {
@@ -32,7 +31,7 @@ export class AnalyticsConsentPage implements AfterViewInit {
     link.addEventListener('click', this.openFullTerms);
   }
   openFullTerms = async () => {
-    const alert = await this.alertCtrl.show(
+    await this.alertCtrl.show(
       {
         cssClass: 'alert-large alert-terms',
         message: this.termsProvider.termsOfService,

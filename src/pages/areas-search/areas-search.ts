@@ -45,7 +45,7 @@ export class AreasSearchPage {
     return null;
   };
 
-  trackFn = (index: number, area: Area) => {
+  trackFn = (_index: number, area: Area) => {
     return area.ID;
   };
 

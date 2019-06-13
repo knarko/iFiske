@@ -164,7 +164,7 @@ export const en: TranslationDefinition = {
       For more information, se our <a>privacy policy</a>.`,
       "accept": "Accept",
       "decline": "Decline",
-    }
+    },
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",

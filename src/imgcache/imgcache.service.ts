@@ -85,7 +85,7 @@ export class ImgcacheService {
 
   isCached = async src => {
     await this.ready;
-    return new Promise<boolean>((resolve, reject) => ImgCache.isCached(src, (_, answer) => resolve(answer)));
+    return new Promise<boolean>(resolve => ImgCache.isCached(src, (_, answer) => resolve(answer)));
   };
 
   async getCachedFile(src: string): Promise<string> {

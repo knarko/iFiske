@@ -1,4 +1,4 @@
-export function DBMethod(target, pkey, descriptor) {
+export function DBMethod(_target, _pkey, descriptor) {
   const old = descriptor.value;
   descriptor.value = async function(...args) {
     await this.ready;

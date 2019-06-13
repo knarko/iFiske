@@ -142,7 +142,7 @@ export const de: TranslationDefinition | any = {
       For more information, se our <a>privacy policy</a>.`,
       "accept": "Accept",
       "decline": "Decline",
-    }
+    },
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
@@ -341,6 +341,6 @@ export const de: TranslationDefinition | any = {
   "I accept the terms of service": "Ich habe die Datenschutzerklärung und TOS gelesen und akzeptiere diese",
   "New Password": "Neues Passwort",
   "Registering": "Registrieren...",
-  "Analytics": "Analytik sammeln"
+  "Analytics": "Analytik sammeln",
 
 }

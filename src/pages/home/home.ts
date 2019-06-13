@@ -7,7 +7,6 @@ import { take } from 'rxjs/operators';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AdminProvider } from '../../providers/admin/admin';
 import { SettingsProvider } from '../../providers/settings/settings';
-import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 
 interface Link {
   title: string;

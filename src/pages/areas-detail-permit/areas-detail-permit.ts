@@ -28,7 +28,7 @@ export class AreasDetailPermitPage {
     const params: Observable<any> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
 
-    params.subscribe(({ area, org, products }) => {
+    params.subscribe(({ area, products }) => {
       this.area = area;
       this.products = products;
     });

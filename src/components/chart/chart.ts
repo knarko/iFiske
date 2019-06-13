@@ -131,7 +131,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(_changes: SimpleChanges) {
     const { data, labels } = this.makeData();
 
     if (!this.chart || !this.chart.data.datasets.length) {

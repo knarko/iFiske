@@ -23,7 +23,7 @@ export class FormatInfoPipe implements PipeTransform {
     this.linky = new LinkyPipe().transform;
   }
 
-  transform(value: string, ...args) {
+  transform(value: string) {
     for (let transform of this.transforms) {
       if (!value) {
         break;

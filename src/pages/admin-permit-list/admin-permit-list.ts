@@ -106,7 +106,7 @@ export class AdminPermitListPage {
     displayPermit.folded = !displayPermit.folded;
   }
 
-  permitTrackFn(index: number, item: AdminPermit) {
+  permitTrackFn(_index: number, item: AdminPermit) {
     return item.ID;
   }
 

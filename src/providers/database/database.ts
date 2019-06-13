@@ -28,10 +28,10 @@ export class DatabaseProvider {
                 tx.executeSql(
                   statement,
                   params,
-                  (itx, res) => {
+                  (_itx, res) => {
                     resolve(res);
                   },
-                  (itx, err) => {
+                  (_itx, err) => {
                     reject(err);
                   },
                 );
@@ -142,9 +142,9 @@ export class DatabaseProvider {
         var insertData = [];
         for (var member in table.members) {
           /*
-          * We need to remove some line separators because of a bug in cordova
-          * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
-          */
+           * We need to remove some line separators because of a bug in cordova
+           * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
+           */
           if (singleData[member] != undefined) {
             const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
             insertData.push(escapedData);

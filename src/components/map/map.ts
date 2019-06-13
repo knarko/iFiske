@@ -329,7 +329,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  ngOnChanges(data) {
+  ngOnChanges() {
     if (!this.map) {
       this.shouldRefresh = true;
       return;

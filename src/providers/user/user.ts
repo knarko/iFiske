@@ -227,9 +227,9 @@ export class UserProvider extends BaseModel {
     });
 
     p.then(
-      async u => {
+      async () => {
         this.analytics.logEvent('login', { method: 'password' });
-        const info = await this.getInfo();
+        await this.getInfo();
       },
       error => {
         this.session.token = undefined;

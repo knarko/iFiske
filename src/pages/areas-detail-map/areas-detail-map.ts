@@ -46,7 +46,7 @@ export class AreasDetailMapPage {
   ) {
     const params: Observable<AreaDetailParams> =
       this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
-    params.subscribe(({ area, org, products }) => {
+    params.subscribe(({ area }) => {
       if (this.area !== area && area) {
         this.mapData
           .getPois(area.orgid)
@@ -79,7 +79,7 @@ export class AreasDetailMapPage {
     this.showNavigate = 'show';
   }
 
-  popupClose(evt) {
+  popupClose() {
     this.navigateTo = undefined;
     this.showNavigate = 'hide';
   }

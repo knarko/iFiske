@@ -123,7 +123,7 @@ export class AreasDetailInfoPage {
         showCloseButton: true,
         closeButtonText: 'Log in',
       });
-      toast.onDidDismiss((data, role) => {
+      toast.onDidDismiss((_data, role) => {
         if (role === 'close') {
           this.modalCtrl.create(LoginPage).present();
         }
@@ -139,7 +139,7 @@ export class AreasDetailInfoPage {
     this.navCtrl.push('SpeciesDetailPage', fish);
   }
 
-  imageLoaded(i: number) {
+  imageLoaded(_index: number) {
     this.slides.update();
   }
 

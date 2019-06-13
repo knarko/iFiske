@@ -3,13 +3,28 @@
     "no-duplicate-variable": true,
     "no-unused-variable": [
       true,
-      {"ignore-pattern": "^_"}
+      {
+        "ignore-pattern": "^_"
+      }
     ],
-    "trailing-comma": [true, {
-      "multiline": "always",
-      "singleline": "never"
-    }],
-    "only-arrow-functions": [true, "allow-named-functions"]
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "arrays": "always",
+          "exports": "always",
+          "functions": "ignore",
+          "imports": "always",
+          "objects": "always",
+          "typeLiterals": "never"
+        },
+        "singleline": "never"
+      }
+    ],
+    "only-arrow-functions": [
+      true,
+      "allow-named-functions"
+    ]
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

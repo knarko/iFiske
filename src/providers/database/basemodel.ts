@@ -35,7 +35,7 @@ export class BaseModel<T = {}> {
     });
   }
 
-  protected transform(item: T): void {
+  protected transform(_item: T): void {
     // Don't do anything
     return;
   }

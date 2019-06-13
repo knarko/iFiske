@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
@@ -23,12 +23,9 @@ export class LoginPage {
     private loadingCtrl: TranslateLoadingController,
     private viewCtrl: ViewController,
     private statusBar: StatusBar,
-    fb: FormBuilder,
   ) {
     this.form = new Form({
-      submit: (group: FormGroup) => {
-        this.login(group);
-      },
+      submit: () => this.login(),
       submitMessage: 'Log in',
       errors: {
         network: 'errors.network',
@@ -83,7 +80,8 @@ export class LoginPage {
    * Submit handler for login form. Validates login input.
    * Moves to home view on successful login.
    */
-  async login(group: FormGroup) {
+  async login() {
+    const group = this.form.group;
     if (!group.valid) {
       for (const control of [group, group.controls.username, group.controls.password]) {
         control.markAsDirty();

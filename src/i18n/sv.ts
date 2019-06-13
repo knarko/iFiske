@@ -165,7 +165,7 @@ export const sv: TranslationDefinition = {
       För mer information, se vår <a>personuppgiftspolicy</a>`,
       "accept": "Acceptera",
       "decline": "Avböj",
-    }
+    },
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
@@ -363,5 +363,5 @@ export const sv: TranslationDefinition = {
   "Searching": "Söker...",
   "Change Password": "Byt lösenord",
   "New Password": "Nytt lösenord",
-  "Analytics": "Samla användningsdata"
+  "Analytics": "Samla användningsdata",
 }

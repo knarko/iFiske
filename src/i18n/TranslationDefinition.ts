@@ -33,15 +33,15 @@ export interface TranslationDefinition {
       "back": string
       "pull_to_refresh": string
       "shortAmount": string
-      "undo": string,
-    },
+      "undo": string
+    }
     "map": {
       "outdoors": string
-      "satellite": string,
-    },
+      "satellite": string
+    }
     "about": {
-      "version": string,
-    },
+      "version": string
+    }
     "admin": {
       "since:date": string
       "changeOrgButton": string
@@ -53,17 +53,17 @@ export interface TranslationDefinition {
         "timesChecked-plural:timesChecked": string
         "timesChecked-never": string
         "logCheck": string
-        "sendComment": string,
-      },
+        "sendComment": string
+      }
       "userLevel": {
         "0": string
         "1": string
-        "2": string,
-      },
+        "2": string
+      }
       "stats": {
         "offline": string
-        "noAccess": string,
-      },
+        "noAccess": string
+      }
       "log": {
         "inspected": string
         "addOne": string
@@ -71,29 +71,29 @@ export interface TranslationDefinition {
         "revoked": string
         "unrevoked": string
         "note": string
-        "unknown": string,
-      },
-    },
+        "unknown": string
+      }
+    }
     "onboarding": {
       "welcome": {
         "title": string
-        "subtitle": string,
-      },
+        "subtitle": string
+      }
       "explore": {
         "title": string
-        "content": string,
-      },
+        "content": string
+      }
       "secure": {
         "title": string
-        "subtitle": string,
-      },
+        "subtitle": string
+      }
       "notify": {
         "title": string
-        "subtitle": string,
-      },
+        "subtitle": string
+      }
       "skip": string
       "next": string
-      "continue": string,
+      "continue": string
     }
     "placeholder": {
       "email": string
@@ -106,10 +106,10 @@ export interface TranslationDefinition {
       "permit": string
       "zip": string
       "adr": string
-      "town": string,
+      "town": string
     }
     "issues": {
-      "long_text": string,
+      "long_text": string
     }
     "permit": {
       "validBetween": string
@@ -117,7 +117,7 @@ export interface TranslationDefinition {
       "admin": {
         "header": string
         "more": string
-        "toast": string,
+        "toast": string
       }
       "validity": {
         "active": string
@@ -128,9 +128,9 @@ export interface TranslationDefinition {
           "active": string
           "inactive": string
           "revoked": string
-          "expired": string,
-        },
-      },
+          "expired": string
+        }
+      }
     }
     "developer": {
       "betaOptIn": string
@@ -149,7 +149,7 @@ export interface TranslationDefinition {
     "deliveryAddress": {
       "zip": string
       "adr": string
-      "town": string,
+      "town": string
     }
     "analytics": {
       "title": string
@@ -162,71 +162,71 @@ export interface TranslationDefinition {
     "unknown": string
     "permit": {
       "failedHeader": string
-      "failedBody": string,
-    },
+      "failedBody": string
+    }
     "admin": {
       "noPermits": string
       "permit": {
         "failedHeader": string
-        "failedBody": string,
-      },
+        "failedBody": string
+      }
       "scanQR": {
-        "invalid": string,
-      },
-    },
+        "invalid": string
+      }
+    }
     "network": string
     "area": {
-      "notSelling": string,
-    },
+      "notSelling": string
+    }
     "recovery_code": {
       "required": string
-      "invalid": string,
-    },
+      "invalid": string
+    }
     "register": {
-      "failed": string,
-    },
+      "failed": string
+    }
     "activationCode": {
       "required": string
       "invalid": string
       "invalidRequest": string
-      "pattern": string,
-    },
+      "pattern": string
+    }
     "password": {
       "required": string
       "invalid": string
-      "pattern_mismatch": string,
-    },
+      "pattern_mismatch": string
+    }
     "username": {
       "required": string
       "invalid": string
       "pattern_mismatch": string
-      "taken": string,
-    },
+      "taken": string
+    }
     "fullname": {
       "required": string
-      "pattern_mismatch": string,
-    },
+      "pattern_mismatch": string
+    }
     "email": {
       "required": string
       "taken": string
-      "invalid": string,
-    },
+      "invalid": string
+    }
     "phone": {
       "invalid": string
       "pattern": string
-      "required": string,
-    },
+      "required": string
+    }
     "favorite": {
-      "notification_update": string,
-    },
-  },
+      "notification_update": string
+    }
+  }
   "Statistics": string
   "recovery": {
     "start": string
     "and": string
     "end": string
-    "mail_spam_notice": string,
-  },
+    "mail_spam_notice": string
+  }
   "Create Account": string
   "About the app": string
   "Accept": string

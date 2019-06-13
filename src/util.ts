@@ -23,7 +23,7 @@ export const validators = {
   activationCode: [Validators.required, Validators.pattern(/^\d{4}$/)],
 };
 
-export const resolveOrRejectAllPromises = async (promises: Promise<any>[]) => {
+export const resolveOrRejectAllPromises = async <T>(promises: Promise<T>[]): Promise<T[]> => {
   const results = [];
   const errors = [];
 

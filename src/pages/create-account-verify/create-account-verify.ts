@@ -9,6 +9,7 @@ import { CreateAccountProvider, UserDetails } from '../../providers/create-accou
 import { Observable } from 'rxjs/Observable';
 import { map, last, tap } from 'rxjs/operators';
 import { validators } from '../../util';
+import { IFISKE_ERRORS } from '../../providers/api/api';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'CreateAccountPage'],
@@ -113,12 +114,23 @@ export class CreateAccountVerifyPage {
     } catch (err) {
       console.warn(err);
 
+      const errorCode = err && err.error_code;
       this.form.group.setErrors({
         invalidRequest: true,
       });
 
+      switch (errorCode) {
+        case IFISKE_ERRORS.USER_CONFIRM_INVALID_PIN:
+          this.form.group.controls.activationCode.setErrors({ pattern: true });
+          break;
+        case IFISKE_ERRORS.USER_CONFIRM_NO_SUCH_USERNAME_PIN_COMBO:
+          this.createForm(true);
+          break;
+        default:
+          this.form.setCustomError(err && err.response);
+      }
+
       if (err.message === 'No username') {
-        this.createForm(true);
         return;
       }
     } finally {

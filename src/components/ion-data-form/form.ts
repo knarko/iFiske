@@ -65,4 +65,12 @@ export class Form {
   submit() {
     this.submitHandler(this.group);
   }
+
+  setCustomError(error: string, additionalErrors = {}) {
+    this.errors.custom = error;
+    this.group.setErrors({
+      ...additionalErrors,
+      custom: true,
+    });
+  }
 }

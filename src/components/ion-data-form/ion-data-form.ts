@@ -21,4 +21,10 @@ export class IonDataFormComponent {
   togglePassword(item: FormControl) {
     item.showPassword = !item.showPassword;
   }
+
+  submitIsDisabled() {
+    return this.disableSubmit != undefined
+      ? this.disableSubmit
+      : !(this.form.group && this.form.group.valid) && this.form.group.hasError('custom');
+  }
 }

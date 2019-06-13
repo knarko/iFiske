@@ -128,11 +128,7 @@ export class ConfirmPasswordRecoveryPage {
               });
               break;
             default:
-              console.warn('Unhandled error code from api', error);
-              this.toastCtrl.show({
-                message: 'Unhandled API error',
-                duration: 6000,
-              });
+              this.form.setCustomError(error && error.response);
               break;
           }
         },

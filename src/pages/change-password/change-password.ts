@@ -33,6 +33,7 @@ export class ChangePasswordPage {
                 this.form.group.controls.oldPassword.setErrors({ invalid: true });
                 break;
               default:
+                this.form.setCustomError(err && err.response);
             }
           },
         );

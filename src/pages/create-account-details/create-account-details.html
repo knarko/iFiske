@@ -10,7 +10,12 @@
     <ion-label>{{ 'I accept the terms of service' | translate }}</ion-label>
     <ion-checkbox [(ngModel)]="acceptedTos" (ionChange)="persistApproval()"></ion-checkbox>
   </ion-item>
-  <button ion-button block (click)="form.submit()" [disabled]="!form.group.valid || !acceptedTos">
+  <button
+    ion-button
+    block
+    (click)="form.submit()"
+    [disabled]="(!form.group.valid && !form.group.hasError('custom')) || !acceptedTos"
+  >
     {{ 'Register' | translate }}
   </button>
 </ion-content>

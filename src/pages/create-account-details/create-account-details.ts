@@ -149,6 +149,8 @@ export class CreateAccountDetailsPage {
         case IFISKE_ERRORS.USER_CREATION_INVALID_PHONE:
           phone.setErrors({ invalid: true });
           break;
+        default:
+          this.form.setCustomError(err.response);
       }
     } finally {
       loading.dismiss();

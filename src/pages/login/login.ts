@@ -95,56 +95,53 @@ export class LoginPage {
       content: 'Logging in',
     });
     loading.present();
-    this.userProvider
-      .login({
+    try {
+      await this.userProvider.login({
         username: group.controls.username.value,
         password: group.controls.password.value,
-      })
-      .then(
-        () => {
-          return this.close();
-        },
-        (error: Error | ApiError) => {
-          console.log(this.form);
-          if ((error as Error).name === TimeoutError.name) {
-            return this.form.group.setErrors({
-              network: true,
-            });
-          }
-
-          const errorCode = error && (error as ApiError).error_code;
-
-          if (errorCode == undefined) {
-            return this.form.group.setErrors({
-              unknown: true,
-            });
-          }
-
-          switch (errorCode) {
-            case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_USERNAME:
-            case IFISKE_ERRORS.NO_SUCH_USER:
-              group.controls.username.setErrors({
-                invalid: true,
-              });
-              break;
-            case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_PASSWORD:
-            case IFISKE_ERRORS.USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT:
-              group.controls.password.setErrors({
-                invalid: true,
-              });
-              break;
-            default:
-              this.form.group.setErrors({
-                custom: true,
-              });
-              this.form.errors.custom = error && (error as ApiError).response;
-              break;
-          }
-        },
-      )
-      .catch(() => {})
-      .then(() => {
-        loading.dismiss();
       });
+      return this.close();
+    } catch (error) {
+      this.handleError(error);
+    } finally {
+      loading.dismiss();
+    }
+  }
+
+  handleError(error?: Error | ApiError) {
+    console.log(this.form);
+    if ((error as Error).name === TimeoutError.name) {
+      this.form.group.setErrors({
+        network: true,
+      });
+      return;
+    }
+
+    const errorCode = error && (error as ApiError).error_code;
+
+    switch (errorCode) {
+      case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_USERNAME:
+      case IFISKE_ERRORS.NO_SUCH_USER:
+        this.form.group.controls.username.setErrors({
+          invalid: true,
+        });
+        break;
+      case IFISKE_ERRORS.TOO_SHORT_OR_EMPTY_PASSWORD:
+      case IFISKE_ERRORS.USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT:
+        this.form.group.controls.password.setErrors({
+          invalid: true,
+        });
+        break;
+      default:
+        console.log(error, errorCode);
+        if (errorCode === undefined) {
+          this.form.setCustomError(error && (error as ApiError).response, {
+            unknown: true,
+          });
+        } else {
+          this.form.setCustomError(error && (error as ApiError).response);
+        }
+        break;
+    }
   }
 }

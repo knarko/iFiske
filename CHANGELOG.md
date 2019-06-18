@@ -1,3 +1,14 @@
+# [4.12.0](https://gitlab.com/kada-development/ifiske/compare/v4.11.11...v4.12.0) (2019-06-18)
+
+
+### Bug Fixes
+
+* **analytics:** always set analytics state using a boolean and not undefined ([b6bd3be](https://gitlab.com/kada-development/ifiske/commit/b6bd3be))
+* **forms:** show unknown error responses from API in forms ([aed5f35](https://gitlab.com/kada-development/ifiske/commit/aed5f35))
+* **settings:** update settings UI with analytics consent state ([4d49a28](https://gitlab.com/kada-development/ifiske/commit/4d49a28))
+
+
+
 ## [4.11.11](https://gitlab.com/kada-development/ifiske/compare/v4.11.10...v4.11.11) (2019-05-25)
 
 

@@ -1,3 +1,12 @@
+## [4.12.1](https://gitlab.com/kada-development/ifiske/compare/v4.12.0...v4.12.1) (2019-06-29)
+
+
+### Bug Fixes
+
+* **permit:** improve readability of permit page ([62442ac](https://gitlab.com/kada-development/ifiske/commit/62442ac))
+
+
+
 # [4.12.0](https://gitlab.com/kada-development/ifiske/compare/v4.11.11...v4.12.0) (2019-06-18)
 
 

@@ -19,6 +19,7 @@ import { YoutubeComponent } from './youtube/youtube';
 import { HighlightComponent } from './highlight/highlight';
 import { PermitLogComponent } from './permit-log/permit-log';
 import { QrComponent } from './qr/qr';
+import { PermitCodeComponent } from './permit-code/permit-code';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { QrComponent } from './qr/qr';
     HighlightComponent,
     PermitLogComponent,
     QrComponent,
+    PermitCodeComponent,
   ],
   imports: [IonicModule, TranslateModule, PipesModule, ImgcacheModule],
   exports: [
@@ -55,6 +57,7 @@ import { QrComponent } from './qr/qr';
     HighlightComponent,
     PermitLogComponent,
     QrComponent,
+    PermitCodeComponent,
   ],
 })
 export class ComponentsModule {}

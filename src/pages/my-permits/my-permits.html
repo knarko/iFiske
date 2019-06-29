@@ -24,6 +24,7 @@
     <ion-item *ngFor="let permit of type.permits" [ngClass]="'license-' + permit.validity" (click)="gotoPermit(permit)">
       <h2>{{ permit.ot }}</h2>
       <p>{{ permit.t }}</p>
+      <permit-code item-end [code]="permit.code" [class]="permit.validity"></permit-code>
     </ion-item>
   </ng-container>
 </ion-content>

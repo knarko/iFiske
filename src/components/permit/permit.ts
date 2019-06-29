@@ -95,9 +95,8 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
       window.removeEventListener('deviceorientation', this.handleDeviceOrientation, true);
     });
   }
+
   async ngOnChanges(changes: SimpleChanges) {
-    // u202F is a thin non-breaking space
-    this.code = ('' + this.permit.code).substr(0, 4) + '\u00A0' + ('' + this.permit.code).substr(4);
     if (changes.permit && changes.permit.currentValue) {
       this.logged = false;
       try {
@@ -107,6 +106,8 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
           this.org = await this.areaProvider
             .getOne(this.permit.ai)
             .then(area => this.organizationProvider.getOne(area.orgid));
+        } else if (this.permit.ot === 'Demoföreningen') {
+          this.org = await this.organizationProvider.getOne(1);
         }
       } catch (e) {
         // Don't do anything

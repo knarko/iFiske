@@ -7,12 +7,9 @@
 
       <div class="top">
         <h2 *ngIf="permit.t" class="permit-title">{{ permit.t }}</h2>
-        <div class="permit-code">
-          <span>{{ code }}</span>
-        </div>
+        <permit-code [code]="permit.code" [class]="permit.validity"></permit-code>
       </div>
 
-      <img *ngIf="org?.logo" class="logo permit" [icSrc]="org.logo" />
       <ng-container *ngIf="permit.subt">
         <p class="permit-title value">{{ permit.subt }}</p>
       </ng-container>
@@ -22,6 +19,23 @@
         [image]="permit.qr"
         [color]="permit.validity === 'active' ? 'green' : permit.validity === 'revoked' ? 'gray' : 'red'"
       ></app-qr>
+
+      <address>
+        <h3 class="value">{{ permit.fullname }}</h3>
+        <p *ngIf="permit.adr || permit.city">
+          <span>{{ permit.adr }},</span>
+          <span>{{ permit.zip }}</span>
+          <span>{{ permit.city }}</span>
+        </p>
+        <p *ngIf="permit.tel">
+          <ion-icon name="call"></ion-icon>
+          {{ permit.tel }}
+        </p>
+        <p *ngIf="permit.email">
+          <ion-icon name="mail"></ion-icon>
+          {{ permit.email }}
+        </p>
+      </address>
 
       <ng-container *ngIf="permit.validity === 'expired'">
         <p class="value permit-color">{{ 'Permit has expired' | translate }}</p>
@@ -46,23 +60,6 @@
 
       <p class="permit-info" *ngIf="permit.info">{{ permit.info }}</p>
 
-      <address>
-        <h3 class="value">{{ permit.fullname }}</h3>
-        <p *ngIf="permit.adr || permit.city">
-          <span>{{ permit.adr }},</span>
-          <span>{{ permit.zip }}</span>
-          <span>{{ permit.city }}</span>
-        </p>
-        <p *ngIf="permit.tel">
-          <ion-icon name="call"></ion-icon>
-          {{ permit.tel }}
-        </p>
-        <p *ngIf="permit.email">
-          <ion-icon name="mail"></ion-icon>
-          {{ permit.email }}
-        </p>
-      </address>
-
       <h3>{{ 'ui.permit.purchased' | translate }}</h3>
       <p>
         <span class="box">
@@ -83,6 +80,8 @@
         <ion-icon name="document"></ion-icon>
         {{ 'PDF' | translate }}
       </a>
+
+      <img *ngIf="org?.logo" class="logo permit" [icSrc]="org.logo" />
 
       <div class="admin-bottom" *ngIf="admin">
         <h3>{{ 'ui.permit.admin.header' | translate }}</h3>

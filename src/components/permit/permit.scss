@@ -22,13 +22,15 @@ app-permit {
     margin: 1rem auto;
     width: 240px;
     min-width: 120px;
-    max-width: 40%;
+    max-width: 50%;
     border-radius: 1rem;
   }
 
   .permit-title {
     margin-top: 1em;
-    max-width: calc(100% - 20px);
+  }
+  .permit-title.value {
+    text-align: center;
   }
 
   @mixin animated-bg($opacity: 1) {
@@ -88,6 +90,9 @@ app-permit {
     }
   }
   address {
+    h3 {
+      margin: 0;
+    }
     .icon {
       vertical-align: middle;
     }
@@ -111,41 +116,10 @@ app-permit {
       word-break: break-word;
     }
   }
-  .permit-code {
-    .md & {
-      border-radius: $list-inset-md-border-radius;
-    }
-
-    .ios & {
-      border-radius: $list-inset-ios-border-radius;
-    }
-
-    .wp & {
-      border-radius: $list-inset-wp-border-radius;
-    }
-    border: 2px solid rgba(black, 0.4);
-    padding: 0 0.5rem;
-    line-height: 1.5;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
-    background-position: inherit;
-    background-color: white;
-    font-family: monospace;
-    // @include animated-bg();
-    span {
-      color: rgba(black, 0.8);
-    }
-  }
 
   @mixin permit-colors($color) {
     .permit-color {
       color: $color;
-    }
-    .permit-code {
-      color: $color;
-      border-color: rgba($color, 0.5);
     }
     .bg-white::before {
       background-color: $color;

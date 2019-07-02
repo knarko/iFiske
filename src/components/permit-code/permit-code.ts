@@ -1,11 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-/**
- * Generated class for the PermitCodeComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'permit-code',
   templateUrl: 'permit-code.html',

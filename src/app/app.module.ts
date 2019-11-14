@@ -66,11 +66,12 @@ import { LogMissingTranslationHandler } from './missing-translation-handler';
 import { TranslateBundleLoader } from './translation-loader';
 import { UserTrackingProvider } from '../providers/user-tracking/user-tracking';
 import { DeepLinksProvider } from '../providers/deep-links/deep-links';
+import { FilterModalComponent } from '../components/filter-modal/filter-modal';
 
 registerLocaleData(localeSv);
 
 @NgModule({
-  declarations: [MyApp],
+  declarations: [MyApp, FilterModalComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -99,7 +100,7 @@ registerLocaleData(localeSv);
     }),
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp],
+  entryComponents: [MyApp, FilterModalComponent],
   providers: [
     [{ provide: ErrorHandler, useClass: MonitoringErrorHandler }],
 

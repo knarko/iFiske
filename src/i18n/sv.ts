@@ -30,6 +30,7 @@ export const sv: TranslationDefinition = {
   "Last year": "Senaste året",
   "Close": "Stäng",
   "Continue": "Vidare",
+  "Filter": "Filter",
   "ui": {
     "general": {
       "back": "Tillbaka",
@@ -75,6 +76,9 @@ export const sv: TranslationDefinition = {
         "note": "Anteckning av",
         "unknown": "Okänd handling av",
       },
+      "filter": {
+        "instructions": "Välj de produkter som du vill visa"
+      }
     },
     "onboarding": {
       "welcome": {

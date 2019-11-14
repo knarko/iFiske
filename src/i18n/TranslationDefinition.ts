@@ -28,6 +28,7 @@ export interface TranslationDefinition {
   "Last year": string
   "Close": string
   "Continue": string
+  "Filter": string
   "ui": {
     "general": {
       "back": string
@@ -72,6 +73,9 @@ export interface TranslationDefinition {
         "unrevoked": string
         "note": string
         "unknown": string
+      },
+      "filter": {
+        "instructions": string
       }
     }
     "onboarding": {

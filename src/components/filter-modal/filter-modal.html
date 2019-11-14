@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ 'Filter' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">{{ 'Close' | translate }}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>{{header | translate}}</p>
+  <ion-item *ngFor="let value of values">
+    <ion-label>{{value}}</ion-label>
+    <ion-checkbox [(ngModel)]="selectedValues[value]"></ion-checkbox>
+  </ion-item>
+</ion-content>

@@ -1,8 +1,20 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Keyboard, Content, Refresher, Loading } from 'ionic-angular';
+
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Keyboard,
+  Content,
+  Refresher,
+  Loading,
+  ModalController,
+} from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import debounce from 'lodash/debounce';
@@ -14,6 +26,7 @@ import { TranslateLoadingController } from '../../providers/translate-loading-co
 import { MonitoringClient } from '../../app/monitoring';
 import { TimeoutError } from '../../errors';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { FilterModalComponent } from '../../components/filter-modal/filter-modal';
 
 export interface DisplayPermit {
   key: string;
@@ -46,7 +59,12 @@ export class AdminPermitListPage {
     { key: 'revoked', title: 'ui.permit.validity.plural.revoked', permits: [], icon: 'close-circle', folded: true },
   ];
 
+  private permitTitles: string[];
+  private filteredTitles$ = new BehaviorSubject<Record<string, boolean>>({});
+  hasFilteredTitles$ = this.filteredTitles$.pipe(map(t => Object.values(t).filter(v => v === false).length));
+
   private sub: Subscription;
+  private titlesSub: Subscription;
 
   @ViewChild(Content)
   content: Content;
@@ -58,22 +76,45 @@ export class AdminPermitListPage {
     private keyboard: Keyboard,
     private loadingCtrl: TranslateLoadingController,
     private toastCtrl: TranslateToastController,
+    private modalCtrl: ModalController,
   ) {
+    try {
+      const filteredPermitTitles = JSON.parse(localStorage.getItem('AdminFilteredPermitTitles'));
+      this.filteredTitles$.next(filteredPermitTitles || {});
+    } catch (err) {}
     this.searchSubject = new ReplaySubject<string>(1);
-    this.permits$ = this.searchSubject.pipe(
+
+    const search$ = this.searchSubject.pipe(
       distinctUntilChanged(),
       switchMap(searchTerm => this.adminProvider.search(searchTerm)),
-      map(permits => {
-        return permits.sort((a, b) => {
-          return (
-            a.score - b.score || // Best matching search terms
-            b.at - a.at || // Most recently issued
-            a.fullname.localeCompare(b.fullname, 'sv')
-          );
-        });
+    );
+
+    this.permits$ = combineLatest(search$, this.filteredTitles$).pipe(
+      map(([permits, filteredTitles]) => {
+        const permitTitlesSet = new Set<string>();
+
+        const sortedPermits = permits
+          .filter(permit => {
+            permitTitlesSet.add(permit.t);
+            return filteredTitles[permit.t] !== false;
+          })
+          .sort((a, b) => {
+            return (
+              a.score - b.score || // Best matching search terms
+              b.at - a.at || // Most recently issued
+              a.fullname.localeCompare(b.fullname, 'sv')
+            );
+          });
+
+        this.permitTitles = Array.from(permitTitlesSet).sort();
+
+        return sortedPermits;
       }),
       shareReplay(1),
     );
+    this.titlesSub = this.filteredTitles$.subscribe(titles => {
+      localStorage.setItem('AdminFilteredPermitTitles', JSON.stringify(titles));
+    });
     this.scrollSubject = new Subject();
     this.scrollSub = this.permits$.subscribe(permits => {
       this.pristinePermits = permits;
@@ -88,6 +129,7 @@ export class AdminPermitListPage {
   ionViewWillUnload() {
     this.searchSubject.complete();
     this.scrollSubject.complete();
+    this.titlesSub.unsubscribe();
     this.scrollSub.unsubscribe();
   }
 
@@ -196,5 +238,24 @@ export class AdminPermitListPage {
         (await loading).dismiss();
       }
     }
+  }
+
+  async openFilterModal() {
+    console.log(this.permitTitles);
+    const filteredTitles = { ...this.filteredTitles$.value };
+    this.permitTitles.forEach(title => {
+      if (filteredTitles[title] == undefined) {
+        filteredTitles[title] = true;
+      }
+    });
+    const modalRef = this.modalCtrl.create(FilterModalComponent, {
+      header: 'ui.admin.filter.instructions',
+      values: this.permitTitles,
+      selectedValues: filteredTitles,
+    });
+    modalRef.present();
+    modalRef.onWillDismiss(result => {
+      this.filteredTitles$.next(result);
+    });
   }
 }

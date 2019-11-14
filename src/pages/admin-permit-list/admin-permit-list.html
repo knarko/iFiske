@@ -3,9 +3,26 @@
 
   <ion-toolbar no-border-top color="primary">
     <form action="" class="search-form">
-      <ion-searchbar animated (ionInput)="search($event)" (keypress)="keypress($event)" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}"
-        [placeholder]="'Search' | translate"></ion-searchbar>
-      <button ion-button icon-only class="refresh-button" (click)="refresh()">
+      <ion-searchbar
+        animated
+        (ionInput)="search($event)"
+        (keypress)="keypress($event)"
+        [(ngModel)]="searchTerm"
+        [ngModelOptions]="{standalone: true}"
+        [placeholder]="'Search' | translate"
+      ></ion-searchbar>
+
+      <button ion-button icon-only class="search-extra-button" (click)="openFilterModal()">
+        <ion-icon name="funnel"></ion-icon>
+        <ion-badge
+          *ngIf="hasFilteredTitles$ | async; let numberOfFilteredTitles"
+          color="danger"
+          class="badge-icon-button"
+          >{{numberOfFilteredTitles}}</ion-badge
+        >
+      </button>
+
+      <button ion-button icon-only class="search-extra-button" (click)="refresh()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </form>
@@ -14,7 +31,10 @@
 
 <ion-content class="outer-content">
   <ion-refresher (ionRefresh)="refresh($event)">
-    <ion-refresher-content [pullingText]="'ui.general.pull_to_refresh' | translate" [refreshingText]="'Updating' | translate"></ion-refresher-content>
+    <ion-refresher-content
+      [pullingText]="'ui.general.pull_to_refresh' | translate"
+      [refreshingText]="'Updating' | translate"
+    ></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="permits?.length === 0">
     <ion-item>
@@ -58,6 +78,4 @@
     </p>
     <p>{{adminProvider.lastUpdated | date:'medium'}}</p>
   </div>
-
-
 </ion-content>

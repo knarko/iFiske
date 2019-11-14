@@ -397,3 +397,10 @@ img:not([src]) {
 .item-ios.item-input > .item-inner {
   padding-left: 8px;
 }
+
+// Add styling to put badges in buttons
+.badge-icon-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

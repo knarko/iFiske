@@ -29,6 +29,7 @@ export const en: TranslationDefinition = {
   "Last year": "Last year",
   "Close": "Close",
   "Continue": "Continue",
+  "Filter": "Filter",
   "ui": {
     "general": {
       "back": "Back",
@@ -73,6 +74,9 @@ export const en: TranslationDefinition = {
         "unrevoked": "Unrevoked by",
         "note": "Added note by",
         "unknown": "Unknown action by",
+      },
+      "filter": {
+        "instructions": "Select the permits that you would like to show",
       },
     },
     "onboarding": {

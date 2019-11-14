@@ -1,3 +1,12 @@
+# [4.13.0](https://gitlab.com/kada-development/ifiske/compare/v4.12.2...v4.13.0) (2019-11-14)
+
+
+### Features
+
+* **admin:** add filtering on permits ([3447570](https://gitlab.com/kada-development/ifiske/commit/3447570))
+
+
+
 ## [4.12.2](https://gitlab.com/kada-development/ifiske/compare/v4.12.1...v4.12.2) (2019-07-02)
 
 

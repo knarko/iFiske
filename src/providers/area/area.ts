@@ -26,7 +26,7 @@ export interface Area {
   orgid: number;
   /** Title */
   t: string;
-  kw: string;
+  kw: string[];
   note: string;
   c1: number;
   c2: number;
@@ -98,7 +98,8 @@ export interface AreaFile {
 
 @Injectable()
 export class AreaProvider extends BaseModel<Area> {
-  searchCache: any = {};
+  searchCache: Record<string, Promise<Area[]>> = {};
+  areaGetAllCache: Record<string, Promise<Area[]>> = {};
   watch: Subscription;
 
   protected readonly tables: TableDef[] = [
@@ -200,6 +201,8 @@ export class AreaProvider extends BaseModel<Area> {
     const data = Promise.all([this.API.get_areas(), this.API.get_images()]);
 
     await data.then(this.insert);
+    this.searchCache = {};
+    this.areaGetAllCache = {};
     return true;
   }
 
@@ -238,9 +241,14 @@ export class AreaProvider extends BaseModel<Area> {
 
   transform(area: Area, single: boolean = false) {
     area.photo = area.photo ? serverLocation + area.photo : area.photo;
+    area.kw = area.kw ? ((area.kw as any) as string).split(',') : [];
     if (single) {
       area.images = this.getPhotos(area.ID);
       area.files = this.getFiles(area.ID);
+    } else {
+      for (let i = 1; i < 6; ++i) {
+        area['fish_' + i] = area['fish_' + i] && area['fish_' + i].split(this.fishSeparator);
+      }
     }
   }
 
@@ -402,133 +410,9 @@ export class AreaProvider extends BaseModel<Area> {
       t0 = performance.now();
     }
     this.startWatch();
-    const result = this.getAll(countyId)
-      .then(data =>
-        data.map(d => {
-          for (let i = 1; i < 6; ++i) {
-            d['fish_' + i] = d['fish_' + i] && d['fish_' + i].split(this.fishSeparator);
-          }
-          return d;
-        }),
-      )
-      .then(data => {
-        const options = {
-          keys: [
-            {
-              name: 't',
-              weight: 0.9,
-            },
-            {
-              name: 'd',
-              weight: 0.4,
-            },
-            {
-              name: 'note',
-              weight: 0.4,
-            },
-            {
-              name: 'kw',
-              weight: 0.5,
-            },
-            {
-              name: 'org',
-              weight: 0.7,
-            },
-            {
-              name: 'org_d',
-              weight: 0.4,
-            },
-            {
-              name: 'fish_1',
-              weight: 0.2,
-            },
-            {
-              name: 'fish_2',
-              weight: 0.3,
-            },
-            {
-              name: 'fish_3',
-              weight: 0.5,
-            },
-            {
-              name: 'fish_4',
-              weight: 0.7,
-            },
-            {
-              name: 'fish_5',
-              weight: 0.9,
-            },
-          ],
-          includeScore: true,
-          shouldSort: false,
-          threshold: 0.5,
-          distance: 1000,
-          maxPatternLength: 16,
-        };
-        if (this.settings.isDeveloper) {
-          options.keys.push({ name: 'ID', weight: 0.2 }, { name: 'orgid', weight: 0.2 });
-        }
-        // Populate Fuse search index
-        return new Fuse(data, options);
-      })
-      .then(fuse => {
-        if (searchstring) {
-          return fuse.search(searchstring);
-        }
-        return (fuse as any).list.map(i => {
-          return {
-            item: i,
-            score: 0,
-          };
-        });
-      })
-      .then(res => {
-        return this.fishProvider
-          .search(searchstring)
-          .then(fishes => {
-            return fishes.length ? fishes[0].item.t : undefined;
-          })
-          .then(foundFish => {
-            if (this.currentLocation || foundFish) {
-              res.forEach(r => {
-                if (this.currentLocation) {
-                  const distance = this.calculateDistance(
-                    r.item.lat,
-                    r.item.lng,
-                    this.currentLocation.lat,
-                    this.currentLocation.lng,
-                  );
-                  r.item.distance = distance;
-                  r.score += this.mapDistance(distance);
-                }
-                if (foundFish) {
-                  for (let i = 1; i < 6; ++i) {
-                    const fishArr = r.item['fish_' + i];
-                    if (fishArr && fishArr.some(fish => fish.indexOf(foundFish) !== -1)) {
-                      r.score -= i / 1500;
-                      break;
-                    }
-                  }
-                }
-              });
-            }
-            return res;
-          });
-      })
-      .then(res => {
-        return res
-          .sort((a, b) => {
-            const res = a.score - b.score;
-            if (res) return res;
-            if (a.item.org > b.item.org) {
-              return 1;
-            } else if (a.item.org < b.item.org) {
-              return -1;
-            }
-            return 0;
-          })
-          .map(r => r.item);
-      });
+
+    const result = this.getSearchResult(searchstring, countyId);
+
     result
       .catch(() => {})
       .then(() => {
@@ -540,6 +424,120 @@ export class AreaProvider extends BaseModel<Area> {
     this.searchCache[searchstring + countyId] = result;
     return result;
   }
+
+  private async getSearchResult(searchstring: string, countyId: number) {
+    if (!this.areaGetAllCache[countyId]) {
+      this.areaGetAllCache[countyId] = this.getAll(countyId);
+    }
+    const areas = await this.areaGetAllCache[countyId];
+
+    const fuse = this.getFuse(areas);
+
+    const result = searchstring ? fuse.search(searchstring) : fuse.list.map(i => ({ item: i, score: 0 }));
+
+    const foundFish = await this.fishProvider.search(searchstring).then(fishes => {
+      return fishes.length ? fishes[0].item.t : undefined;
+    });
+
+    if (this.currentLocation || foundFish) {
+      result.forEach(r => {
+        if (this.currentLocation) {
+          const distance = this.calculateDistance(
+            r.item.lat,
+            r.item.lng,
+            this.currentLocation.lat,
+            this.currentLocation.lng,
+          );
+          r.item.distance = distance;
+          r.score += this.mapDistance(distance);
+        }
+        if (foundFish) {
+          for (let i = 1; i < 6; ++i) {
+            const fishArr = r.item['fish_' + i];
+            if (fishArr && fishArr.some(fish => fish.indexOf(foundFish) !== -1)) {
+              r.score -= i / 1500;
+              break;
+            }
+          }
+        }
+      });
+    }
+
+    return result
+      .sort((a, b) => {
+        const res = a.score - b.score;
+        if (res) return res;
+        if (a.item.org > b.item.org) {
+          return 1;
+        } else if (a.item.org < b.item.org) {
+          return -1;
+        }
+        return 0;
+      })
+      .map(r => r.item);
+  }
+
+  private getFuse(areas: Area[]) {
+    const fuseOptions = {
+      keys: [
+        {
+          name: 't',
+          weight: 0.9,
+        },
+        {
+          name: 'd',
+          weight: 0.4,
+        },
+        {
+          name: 'note',
+          weight: 0.4,
+        },
+        {
+          name: 'kw',
+          weight: 0.6,
+        },
+        {
+          name: 'org',
+          weight: 0.7,
+        },
+        {
+          name: 'org_d',
+          weight: 0.4,
+        },
+        {
+          name: 'fish_1',
+          weight: 0.2,
+        },
+        {
+          name: 'fish_2',
+          weight: 0.3,
+        },
+        {
+          name: 'fish_3',
+          weight: 0.5,
+        },
+        {
+          name: 'fish_4',
+          weight: 0.7,
+        },
+        {
+          name: 'fish_5',
+          weight: 0.9,
+        },
+      ],
+      includeScore: true,
+      shouldSort: false,
+      threshold: 0.5,
+      distance: 1000,
+      maxPatternLength: 16,
+    };
+    if (this.settings.isDeveloper) {
+      fuseOptions.keys.push({ name: 'ID', weight: 0.2 }, { name: 'orgid', weight: 0.2 });
+    }
+    // Populate Fuse search index
+    return new Fuse(areas, fuseOptions);
+  }
+
   private startWatch() {
     if (this.watch) {
       return;

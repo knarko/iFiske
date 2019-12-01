@@ -1,3 +1,13 @@
+## [4.13.1](https://gitlab.com/kada-development/ifiske/compare/v4.13.0...v4.13.1) (2019-12-01)
+
+
+### Bug Fixes
+
+* **area-permit:** show full product names with line breaks ([b390819](https://gitlab.com/kada-development/ifiske/commit/b390819))
+* **search:** improve searching for keywords ([612b1d8](https://gitlab.com/kada-development/ifiske/commit/612b1d8))
+
+
+
 # [4.13.0](https://gitlab.com/kada-development/ifiske/compare/v4.12.2...v4.13.0) (2019-11-14)
 
 

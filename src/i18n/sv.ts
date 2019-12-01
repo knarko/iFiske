@@ -77,8 +77,8 @@ export const sv: TranslationDefinition = {
         "unknown": "Okänd handling av",
       },
       "filter": {
-        "instructions": "Välj de produkter som du vill visa"
-      }
+        "instructions": "Välj de produkter som du vill visa",
+      },
     },
     "onboarding": {
       "welcome": {

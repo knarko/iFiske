@@ -15,16 +15,17 @@
 </ion-header>
 
 <ion-content class="background-image" no-bounce>
-  <form (ngSubmit)="search()">
-    <ion-list inset border>
-      <ion-item class="search">
-        <ion-input [placeholder]="'Search' | translate" [(ngModel)]="searchTerm" name="search"></ion-input>
-        <ion-icon name="search" item-left></ion-icon>
+  <form (ngSubmit)="search()" class="search">
+    <button type="button" *ngIf="showSearchCover" (click)="focusSearch(searchInput)" class="search-cover"></button>
+    <ion-list inset>
+      <ion-item>
+        <ion-icon name="search" item-start color="primary"></ion-icon>
+        <ion-input #searchInput [placeholder]="'Search' | translate" [(ngModel)]="searchTerm" name="search"></ion-input>
       </ion-item>
     </ion-list>
     <button type="submit" hidden></button>
   </form>
-  <ion-list inset border>
+  <ion-list inset>
     <ng-container *ngFor="let link of links">
       <button
         ion-item

@@ -29,11 +29,24 @@ page-home {
   .header-logo {
     height: 100%;
   }
- .item .icon {
+  .item .icon {
     width: 28px;
   }
   .item-ios {
     line-height: 1.7em;
+  }
+  .search {
+    position: relative;
+    .search-cover {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      z-index: 1;
+    }
   }
 }
 

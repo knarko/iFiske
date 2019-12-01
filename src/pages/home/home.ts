@@ -83,4 +83,13 @@ export class HomePage {
   search() {
     this.navCtrl.push('AreasSearchPage', { searchTerm: this.searchTerm });
   }
+
+  showSearchCover = true;
+  focusSearch(searchInput: any) {
+    // This piece of code makes sure that the input is focusable, for some reason the first event on the app must be on an A or BUTTON tag...
+    if (this.showSearchCover) {
+      this.showSearchCover = false;
+    }
+    searchInput.setFocus();
+  }
 }

@@ -19,14 +19,14 @@
     <ion-card-content>
       <section *ngIf="product.im">
         <ion-icon name="alert"></ion-icon>
-        <div [innerHtml]="product.im | formatInfo"></div>
+        <span [innerHtml]="product.im | formatInfo"></span>
       </section>
-      <section *ngIf="product.no">
-        <div [innerHtml]="product.no | formatInfo"></div>
-      </section>
+      <section *ngIf="product.no" [innerHtml]="product.no | formatInfo"></section>
       <hr />
       <section class="purchase-buttons">
-        <button ion-button icon-left color="secondary" class="rules-button" (click)="openRules(product)">{{'Rules' | translate}}</button>
+        <button ion-button icon-left color="secondary" class="rules-button" (click)="openRules(product)">
+          {{'Rules' | translate}}
+        </button>
         <button ion-button icon-left color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
           <ion-icon [name]="type.icon"></ion-icon>
           {{(product.methods.length === 1 ? 'Purchase' : type.name) | translate}}

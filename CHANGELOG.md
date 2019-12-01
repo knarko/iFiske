@@ -1,3 +1,12 @@
+## [4.13.2](https://gitlab.com/kada-development/ifiske/compare/v4.13.1...v4.13.2) (2019-12-01)
+
+
+### Bug Fixes
+
+* **home:** make search input focusable ([01bc414](https://gitlab.com/kada-development/ifiske/commit/01bc41433dbe406493909e2cebcd6139643c601f))
+
+
+
 ## [4.13.1](https://gitlab.com/kada-development/ifiske/compare/v4.13.0...v4.13.1) (2019-12-01)
 
 

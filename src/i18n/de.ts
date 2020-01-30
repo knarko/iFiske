@@ -14,8 +14,8 @@ export const de: TranslationDefinition | any = {
   "Updating": "Updating...",
   "What is your name?": "Wie heißen Sie?",
   "Mark favorites": "Behalten Sie anbeißende Fische im Auge! Markieren Sie Ihre Favoriten und heimatlichen Gewässer als Favoriten mit einem Stern, der Sie zu allen neu veröffentlichen Fangprotokollen anmeldet, die uns erreichen. Wenn Sie einen Favoriten entfernen möchten, drücken und halten Sie den Namen des Gewässers.",
-  "Permit": "Fischerschein",
-  "Permits": "Fischerscheinen",
+  "Permit": "Angelkarte",
+  "Permits": "Angelkarten",
   "Loading": "Laden...",
   "New update available": "Neues Update verfügbar",
   "There is a new update available": "Ein neues Update ist verfügbar. Sie können es direkt installieren, es dauert nur wenige Sekunden. Sie können das Update aber auch verschieben, dann wird es beim nächsten Start der App automatisch installiert.",
@@ -131,17 +131,17 @@ export const de: TranslationDefinition | any = {
       "no": "Nein",
     },
     "analytics": {
-      "title": "Help us improve the app!",
-      "description": `In order to improve the app we would like to collect some information about your usage. This information includes:
+      "title": "Helfen Sie uns, die App zu verbessern!",
+      "description": `Um die App zu verbessern, möchten wir einige Informationen über Ihre Nutzung sammeln. Diese Informationen umfassen::
       <ul>
-        <li>How you navigate</li>
-        <li>Your searches</li>
-        <li>Aggregated demographics</li>
+        <li> Wie Sie navigieren </ li>
+        <li> Ihre Suchanfragen </ li>
+        <li> Aggregierte demografische Daten </ li>
       </ul>
 
-      For more information, se our <a>privacy policy</a>.`,
-      "accept": "Accept",
-      "decline": "Decline",
+      Weitere Informationen finden Sie in unseren <a>privacy policy</a>.`,
+      "accept": "OK",
+      "decline": "Ablehnen",
     },
   },
   "errors": {

@@ -1,6 +1,6 @@
-import { TranslationDefinition } from "./TranslationDefinition";
+import { TranslationDefinition, AdminTranslationDefinition } from "./TranslationDefinition";
 
-export const en: TranslationDefinition = {
+export const en: TranslationDefinition & AdminTranslationDefinition = {
   "You are now a developer": "You are now a developer",
   "Save": "Save",
   "Downloadable file": "Downloadable {{type}}",

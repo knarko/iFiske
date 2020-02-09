@@ -4,6 +4,7 @@ import { SettingsProvider, Language } from '../../providers/settings/settings';
 import { UpdateProvider } from '../../providers/update/update';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { LANGUAGES } from '../../app/translation-loader';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,7 @@ export class OnboardingPage {
   ionViewDidLoad() {
     this.language = this.settings.settingsChanged.pipe(
       startWith({ language: this.settings.language }),
-      map(settings => this.settings.availableLanguages[settings.language]),
+      map(settings => LANGUAGES[settings.language]),
     );
     this.extras.direction = 'vertical';
     this.extras.initialSlide = 4;

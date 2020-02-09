@@ -1,3 +1,61 @@
+export interface AdminTranslationDefinition {
+  "ui": {
+    "admin": {
+      "since:date": string
+      "changeOrgButton": string
+      "selectOrg": string
+      "check": {
+        "manualInstructions": string
+        "scanInstructions": string
+        "timesChecked-singular:timesChecked": string
+        "timesChecked-plural:timesChecked": string
+        "timesChecked-never": string
+        "logCheck": string
+        "sendComment": string
+      }
+      "userLevel": {
+        "0": string
+        "1": string
+        "2": string
+      }
+      "stats": {
+        "offline": string
+        "noAccess": string
+      }
+      "log": {
+        "inspected": string
+        "addOne": string
+        "removeOne": string
+        "revoked": string
+        "unrevoked": string
+        "note": string
+        "unknown": string
+      },
+      "filter": {
+        "instructions": string
+      }
+    }
+    "permit": {
+      "admin": {
+        "header": string
+        "more": string
+        "toast": string
+      }
+    }
+  }
+  "errors": {
+    "admin": {
+      "noPermits": string
+      "permit": {
+        "failedHeader": string
+        "failedBody": string
+      }
+      "scanQR": {
+        "invalid": string
+      }
+    }
+  }
+}
 export interface TranslationDefinition {
   "You are now a developer": string
   "Save": string
@@ -43,41 +101,6 @@ export interface TranslationDefinition {
     "about": {
       "version": string
     }
-    "admin": {
-      "since:date": string
-      "changeOrgButton": string
-      "selectOrg": string
-      "check": {
-        "manualInstructions": string
-        "scanInstructions": string
-        "timesChecked-singular:timesChecked": string
-        "timesChecked-plural:timesChecked": string
-        "timesChecked-never": string
-        "logCheck": string
-        "sendComment": string
-      }
-      "userLevel": {
-        "0": string
-        "1": string
-        "2": string
-      }
-      "stats": {
-        "offline": string
-        "noAccess": string
-      }
-      "log": {
-        "inspected": string
-        "addOne": string
-        "removeOne": string
-        "revoked": string
-        "unrevoked": string
-        "note": string
-        "unknown": string
-      },
-      "filter": {
-        "instructions": string
-      }
-    }
     "onboarding": {
       "welcome": {
         "title": string
@@ -118,11 +141,6 @@ export interface TranslationDefinition {
     "permit": {
       "validBetween": string
       "purchased": string
-      "admin": {
-        "header": string
-        "more": string
-        "toast": string
-      }
       "validity": {
         "active": string
         "inactive": string
@@ -167,16 +185,6 @@ export interface TranslationDefinition {
     "permit": {
       "failedHeader": string
       "failedBody": string
-    }
-    "admin": {
-      "noPermits": string
-      "permit": {
-        "failedHeader": string
-        "failedBody": string
-      }
-      "scanQR": {
-        "invalid": string
-      }
     }
     "network": string
     "area": {

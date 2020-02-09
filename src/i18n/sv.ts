@@ -1,6 +1,6 @@
-import { TranslationDefinition } from "./TranslationDefinition";
+import { TranslationDefinition, AdminTranslationDefinition } from "./TranslationDefinition";
 
-export const sv: TranslationDefinition = {
+export const sv: TranslationDefinition & AdminTranslationDefinition = {
   "You are now a developer": "Utvecklarläge aktiverat",
   "Save": "Spara",
   "Language": "Språk",

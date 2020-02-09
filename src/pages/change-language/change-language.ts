@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController } from 'ionic-angular';
-import { SettingsProvider, Language } from '../../providers/settings/settings';
+import { SettingsProvider } from '../../providers/settings/settings';
 import { StatusBar } from '@ionic-native/status-bar';
+import { LANGUAGES } from '../../app/translation-loader';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 })
 export class ChangeLanguagePage {
   currentLanguage: string;
-  languages: Language[];
+  languages = Object.values(LANGUAGES);
 
   constructor(private viewCtrl: ViewController, private settings: SettingsProvider, private statusBar: StatusBar) {}
 
@@ -35,7 +36,6 @@ export class ChangeLanguagePage {
   }
 
   ionViewWillEnter() {
-    this.languages = Object.values(this.settings.availableLanguages);
     this.currentLanguage = this.settings.language;
   }
 }

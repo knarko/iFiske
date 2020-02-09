@@ -1,6 +1,6 @@
-import { TranslationDefinition } from "./TranslationDefinition";
+import { TranslationDefinition, AdminTranslationDefinition } from "./TranslationDefinition";
 
-export const de: TranslationDefinition | any = {
+export const de: TranslationDefinition & Partial<AdminTranslationDefinition> | any = {
   "You are now a developer": "You are now a developer",
   "Save": "Speichern",
   "Downloadable file": "Herunterladbare {{type}}",
@@ -29,6 +29,8 @@ export const de: TranslationDefinition | any = {
   "Last year": "Letztes Jahr",
   "Close": "Schließen",
   "Continue": "Weiter",
+  "Filter": "Filter",
+  "Changing password": "", // TODO: missing
   "ui": {
     "developer": {
       "betaOptIn": "Install beta versions",
@@ -38,6 +40,7 @@ export const de: TranslationDefinition | any = {
       "back": "Zurück",
       "pull_to_refresh": "Update",
       "shortAmount": "",
+      "undo": "", // TODO: missing
     },
     "map": {
       "outdoors": "Karte",
@@ -81,6 +84,8 @@ export const de: TranslationDefinition | any = {
       "long_text": "<p>Haben Sie einen Fehler oder Problem mit der App?</p><p>Sie können gerne jegliche Fehler auf <a href=\"https: //github.com/ifiske/ifiske/issues\">GitHub</a> berichten</p><p>Sie müssen bei GitHub angemeldet sein um einen Bericht schreiben zu können - im Gegenzug erhalten Sie aber auch Feedback sobald das Problem behoben wird! Einen Account auf GitHub zu erstellen ist kostenlos.</p><p>Falls Sie GitHub nicht nutzen können, nehmen wir Berichte auch unter <a href=\"mailto:app@ifiske.se\">app@ifiske.se</a> entgegen. Stellen Sie sicher, den Fehler sorgfältig zu beschreiben und teilen Sie uns bitte mit was für ein Telefon Sie verwenden. Fehlerberichte wie “Es funktioniert nicht” sind nicht sehr nützlich.</p>",
     },
     "permit": {
+      "validBetween": "", // TODO: missing
+      "purchased": "", // TODO: missing
       "validity": {
         "active": "Gültig",
         "inactive": "Inaktiv",

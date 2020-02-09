@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Dictionary } from '../../types';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { LANGUAGES } from '../../app/translation-loader';
 
 interface Settings {
   push: boolean;
@@ -11,11 +11,6 @@ interface Settings {
   channel: string;
   firstLaunch: boolean;
   analytics?: boolean;
-}
-
-export interface Language {
-  short: string;
-  long: string;
 }
 
 @Injectable()
@@ -33,7 +28,7 @@ export class SettingsProvider {
   get defaultLanguage() {
     const languages = navigator.languages || [navigator.language];
     for (const lang of languages) {
-      if (this.availableLanguages[lang]) {
+      if (LANGUAGES[lang]) {
         return lang;
       }
     }
@@ -60,21 +55,6 @@ export class SettingsProvider {
     localStorage.setItem(SettingsProvider.STORAGE_LOCATION, JSON.stringify(this.settings));
     this.settingsChanged.next(this.settings);
   }
-
-  availableLanguages: Dictionary<Language> = {
-    sv: {
-      short: 'sv',
-      long: 'Svenska',
-    },
-    en: {
-      short: 'en',
-      long: 'English',
-    },
-    de: {
-      short: 'de',
-      long: 'Deutsch',
-    },
-  };
 
   get language() {
     return this.settings.language;

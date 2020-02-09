@@ -1,17 +1,39 @@
 import { TranslateLoader } from '@ngx-translate/core';
 import { of } from 'rxjs/observable/of';
 
-import { sv } from '../i18n/sv';
 import { de } from '../i18n/de';
 import { en } from '../i18n/en';
+import { fi } from '../i18n/fi';
+import { sv } from '../i18n/sv';
+
 import { MonitoringClient } from './monitoring';
+
+export const LANGUAGES = {
+  sv: {
+    short: 'sv',
+    long: 'Svenska',
+  },
+  de: {
+    short: 'de',
+    long: 'Deutsch',
+  },
+  en: {
+    short: 'en',
+    long: 'English',
+  },
+  fi: {
+    short: 'fi',
+    long: 'Suomi',
+  },
+};
 
 export class TranslateBundleLoader implements TranslateLoader {
   private languages = {
+    de,
+    en,
+    fi,
     se: sv,
     sv,
-    en,
-    de,
   };
 
   getTranslation(lang: string): any {
@@ -25,6 +47,7 @@ export class TranslateBundleLoader implements TranslateLoader {
     if (typeof lang !== 'string' || lang.match(/^s[ev]/i)) {
       return of(this.languages.sv);
     }
+
     return of(this.languages.en);
   }
 }

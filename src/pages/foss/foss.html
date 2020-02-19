@@ -1,15 +1,12 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{'Open Source Licenses' | translate}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
+  <a href="https://github.com/ifiske/ifiske" target="_blank">https://github.com/ifiske/ifiske</a>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="open(item)">{{item.title}}</button>
   </ion-list>
-
 </ion-content>

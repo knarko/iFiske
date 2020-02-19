@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { merge } from 'rxjs/observable/merge';
 import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Generated class for the YoutubeComponent component.
@@ -18,10 +18,11 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 })
 export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
   ytUrl: SafeResourceUrl;
-  sub: Subscription;
-  fullscreen: Observable<{}>;
   @Input() url: string;
   @ViewChild('player') player: ElementRef;
+
+  private fullscreen: Observable<{}>;
+  private destroyed$ = new Subject<void>();
 
   constructor(private sanitizer: DomSanitizer, private orientation: ScreenOrientation) {
     this.fullscreen = merge(
@@ -43,21 +44,26 @@ export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.fullscreen.subscribe(e => {
-      const fullScreenElement =
-        document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
-      console.log('Changing fullscreen mode', e, fullScreenElement);
-      if (fullScreenElement) {
-        this.orientation.lock(this.orientation.ORIENTATIONS.LANDSCAPE);
-      } else {
-        this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-      }
-    });
+    this.fullscreen.takeUntil(this.destroyed$).subscribe(
+      e => {
+        const fullScreenElement =
+          document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
+        console.log('Changing fullscreen mode', e, fullScreenElement);
+        if (fullScreenElement) {
+          this.orientation.lock(this.orientation.ORIENTATIONS.LANDSCAPE).catch(console.warn);
+        } else {
+          this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY).catch(console.warn);
+        }
+      },
+      undefined,
+      () => {
+        this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY).catch(console.warn);
+      },
+    );
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
-    this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    this.destroyed$.next();
     this.sendMessage('pauseVideo');
   }
 

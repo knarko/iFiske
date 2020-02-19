@@ -1,3 +1,21 @@
+# [4.14.0](https://gitlab.com/kada-development/ifiske/compare/v4.13.2...v4.14.0) (2020-02-19)
+
+
+### Bug Fixes
+
+* recreate interface for Language definition ([3e9168f](https://gitlab.com/kada-development/ifiske/commit/3e9168fa7db7b06c4201b9850db314ae6abef9b3))
+* **foss:** add link to github page ([49003c0](https://gitlab.com/kada-development/ifiske/commit/49003c07c9433b10fd5a726e2e33af877e40a8b1))
+* **species-detail:** hide headers for sections without content ([b41283a](https://gitlab.com/kada-development/ifiske/commit/b41283ad6d7c842b71db2fe42aa9893e469b1337))
+* **youtube:** catch errors thrown when locking orientation ([0dc880b](https://gitlab.com/kada-development/ifiske/commit/0dc880b2e0bee7c0c2120813ae50e557beb494d0))
+
+
+### Features
+
+* **language:** add support for Finnish language ([94a3144](https://gitlab.com/kada-development/ifiske/commit/94a31448a3b83656f9101482387230d839ca0c7e))
+* **reports:** add reports page under areas-detail ([b125371](https://gitlab.com/kada-development/ifiske/commit/b125371fda4e2cf40c1b6f201c30c931e364192f))
+
+
+
 ## [4.13.2](https://gitlab.com/kada-development/ifiske/compare/v4.13.1...v4.13.2) (2019-12-01)
 
 

@@ -8,7 +8,11 @@ import { sv } from '../i18n/sv';
 
 import { MonitoringClient } from './monitoring';
 
-export const LANGUAGES = {
+export interface Language {
+  short: string;
+  long: string;
+}
+export const LANGUAGES: Record<string, Language> = {
   sv: {
     short: 'sv',
     long: 'Svenska',

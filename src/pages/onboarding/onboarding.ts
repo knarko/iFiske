@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Slides, ModalController } from 'ionic-angular';
-import { SettingsProvider, Language } from '../../providers/settings/settings';
+import { SettingsProvider } from '../../providers/settings/settings';
 import { UpdateProvider } from '../../providers/update/update';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { LANGUAGES } from '../../app/translation-loader';
+import { LANGUAGES, Language } from '../../app/translation-loader';
 
 @IonicPage()
 @Component({

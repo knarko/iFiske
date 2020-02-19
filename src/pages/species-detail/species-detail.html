@@ -1,27 +1,26 @@
-<!--
-  Generated template for the SpeciesDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>{{fish?.t}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content class="information-page" padding>
-  <h2>{{fish?.t}}<br><span>{{fish?.lat}}</span></h2>
-  <img class="full-width" [icSrc]="fish?.img">
-  <h3>{{'Description' | translate}}</h3>
-  <p [innerHtml]="fish?.d"></p>
-  <h3>{{'Prevalence' | translate}}</h3>
-  <p [innerHtml]="fish?.geo"></p>
-  <h3>{{'Size and growth' | translate}}</h3>
-  <p [innerHtml]="fish?.size"></p>
-  <h3>{{'Angler record' | translate}}</h3>
-  <p [innerHtml]="fish?.rec"></p>
+  <h2>{{fish?.t}}<br /><span>{{fish?.lat}}</span></h2>
+  <img class="full-width" [icSrc]="fish?.img" />
+  <ng-container *ngIf="fish?.d">
+    <h3>{{'Description' | translate}}</h3>
+    <p [innerHtml]="fish?.d"></p>
+  </ng-container>
+  <ng-container *ngIf="fish?.geo">
+    <h3>{{'Prevalence' | translate}}</h3>
+    <p [innerHtml]="fish?.geo"></p>
+  </ng-container>
+  <ng-container *ngIf="fish?.size">
+    <h3>{{'Size and growth' | translate}}</h3>
+    <p [innerHtml]="fish?.size"></p>
+  </ng-container>
+  <ng-container *ngIf="fish?.rec">
+    <h3>{{'Angler record' | translate}}</h3>
+    <p [innerHtml]="fish?.rec"></p>
+  </ng-container>
 </ion-content>

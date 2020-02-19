@@ -5,10 +5,11 @@ import { FormatInfoPipe } from './format-info/format-info';
 import { LinkyPipe } from './linky/linky';
 import { KeysPipe } from './keys/keys';
 import { MkObjectPipe } from './mk-object/mk-object';
+import { WeightPipe } from './weight/weight.pipe';
 
 @NgModule({
-  declarations: [DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe],
+  declarations: [DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe, WeightPipe],
   imports: [NgStringPipesModule],
-  exports: [NgStringPipesModule, DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe],
+  exports: [NgStringPipesModule, DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe, WeightPipe],
 })
 export class PipesModule {}

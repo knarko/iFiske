@@ -17,6 +17,7 @@ import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { IFISKE_ERRORS } from '../../providers/api/api';
 import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { AreaDetailParams } from '../areas-detail/areas-detail-params';
 
 @IonicPage()
 @Component({
@@ -61,7 +62,7 @@ export class AreasDetailInfoPage {
     private deepLinks: DeepLinksProvider,
     private analytics: FirebaseAnalytics,
   ) {
-    const params: Observable<any> =
+    const params: Observable<AreaDetailParams> =
       this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
 
     params.subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {

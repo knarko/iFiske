@@ -179,6 +179,12 @@ export interface TranslationDefinition {
       "accept": string
       "decline": string
     }
+    "reports": {
+      "technique": string
+      "bait": string
+      "empty": string
+      "no_catch": string
+    }
   }
   "errors": {
     "unknown": string
@@ -367,4 +373,5 @@ export interface TranslationDefinition {
   "Change Password": string
   "New Password": string
   "Analytics": string
+  "Reports": string
 }

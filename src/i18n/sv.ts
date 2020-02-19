@@ -170,6 +170,12 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
       "accept": "Acceptera",
       "decline": "Avböj",
     },
+    "reports": {
+      "technique": "Metod",
+      "bait": "Bete",
+      "empty": "Det finns inga fiskerapporter för det här området",
+      "no_catch": "Ingen fisk",
+    },
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",
@@ -368,4 +374,5 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
   "Change Password": "Byt lösenord",
   "New Password": "Nytt lösenord",
   "Analytics": "Samla användningsdata",
+  "Reports": "Fiskerapporter",
 }

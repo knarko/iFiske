@@ -1,0 +1,100 @@
+page-areas-detail-report {
+  .report {
+    padding: $content-padding;
+    & + & {
+      margin-top: 1rem;
+    }
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    font-weight: 500;
+    padding: 0 0.5rem;
+    align-items: center;
+    .report-day {
+      flex-shrink: 0;
+    }
+  }
+  img {
+    display: block;
+  }
+  .box {
+    .md & {
+      border-radius: $list-inset-md-border-radius;
+      box-shadow: $card-md-box-shadow;
+    }
+
+    .ios & {
+      border-radius: $list-inset-ios-border-radius;
+      box-shadow: $card-ios-box-shadow;
+    }
+    background: white;
+    padding: 1rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+  }
+  .tech-bait .box {
+    flex-basis: calc(50% - 0.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    span {
+      display: block;
+      &:first-child {
+        font-size: 18px;
+        line-height: 1.35;
+        padding: 4px 0;
+      }
+      &:last-child {
+        color: map-get($colors, dark);
+      }
+    }
+  }
+
+  .catch-image {
+    width: 100%;
+    @extend .box;
+    padding: 0;
+    margin: 1rem 0;
+    max-height: 40vh;
+    object-fit: cover;
+  }
+
+  .catches-list {
+    padding: 0;
+    list-style-type: none;
+    .list-wrap {
+      display: flex;
+      img {
+        max-width: 20vw;
+        margin-right: 1rem;
+      }
+    }
+    .box + .box {
+      margin-top: 1rem;
+    }
+    .box {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .catch-info {
+    flex-grow: 1;
+    .catch-info-part {
+      span:first-child {
+        font-size: 22px;
+        line-height: 1;
+      }
+    }
+  }
+
+  .comment {
+    margin: 1rem 0 0 0;
+  }
+}

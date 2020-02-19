@@ -1,0 +1,58 @@
+<ion-header>
+  <tab-navbar [largeTitle]="true" [button]="{icon: 'share', click: share}">
+    {{area?.t}}
+  </tab-navbar>
+</ion-header>
+
+<ion-content class="background-abstract">
+  <ng-container *ngIf="reports$ | async as reports">
+    <section class="no-reports" *ngIf="reports.length === 0">
+      {{'ui.reports.empty' | translate}}
+    </section>
+    <section class="report" *ngFor="let report of reports">
+      <div class="report-header">
+        <div class="report-name">
+          {{report.name}}
+        </div>
+        <div class="report-day">
+          {{report.day | date:'mediumDate'}}
+        </div>
+      </div>
+
+      <img *ngIf="report.img1" class="catch-image" [src]="report.img1" [imageViewer]="report.img2" />
+
+      <p *ngIf="report.obs" class="box">{{report.obs}}</p>
+
+      <div class="row tech-bait">
+        <a class="box" (click)="openTechnique(report)">
+          <span>{{(report.technique$ | async)?.t}}</span>
+          <span>{{'ui.reports.technique' | translate}}</span>
+        </a>
+
+        <div class="box">
+          <span>{{(report.bait$ | async)?.t}}</span>
+          <span>{{'ui.reports.bait' | translate}}</span>
+        </div>
+      </div>
+
+      <ul class="catches-list">
+        <li *ngIf="!report.catches?.length" class="box">{{'ui.reports.no_catch' | translate}}</li>
+        <li *ngFor="let catch of report?.catches" class="box">
+          <div class="list-wrap">
+            <img [icSrc]="(catch.fish$ | async)?.img" />
+
+            <div class="row catch-info">
+              <div class="catch-info-part">
+                <span>{{catch.num}}</span><span>{{'ui.general.shortAmount' | translate}}</span>
+              </div>
+              <div class="catch-info-part"><span *ngFor="let str of catch.wei | weight">{{str}}</span></div>
+              <div class="catch-info-part"><span>{{catch.cm}}</span><span>cm</span></div>
+            </div>
+          </div>
+
+          <p *ngIf="catch.cmt" class="comment">{{catch.cmt}}</p>
+        </li>
+      </ul>
+    </section>
+  </ng-container>
+</ion-content>

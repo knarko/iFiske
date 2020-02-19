@@ -169,6 +169,12 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
       "accept": "Accept",
       "decline": "Decline",
     },
+    "reports": {
+      "technique": "Method",
+      "bait": "Bait",
+      "empty": "There are no reports available in this area",
+      "no_catch": "No catch",
+    },
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",
@@ -368,4 +374,5 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
   "Change Password": "Change Password",
   "New Password": "New Password",
   "Analytics": "Collect Analytics",
+  "Reports": "Reports",
 }

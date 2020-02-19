@@ -27,7 +27,7 @@ page-areas-detail-info {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
     color: white;
   }
   .logo {
@@ -44,7 +44,7 @@ page-areas-detail-info {
   }
   .species-list {
     $padding: 8px;
-    button {
+    .item {
       padding-left: $padding;
     }
     ion-thumbnail[item-start] {

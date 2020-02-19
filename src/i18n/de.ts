@@ -1,6 +1,6 @@
-import { TranslationDefinition, AdminTranslationDefinition } from "./TranslationDefinition";
+import { TranslationDefinition } from "./TranslationDefinition";
 
-export const de: TranslationDefinition & Partial<AdminTranslationDefinition> | any = {
+export const de: TranslationDefinition & { ui: { admin: any } }= {
   "You are now a developer": "You are now a developer",
   "Save": "Speichern",
   "Downloadable file": "Herunterladbare {{type}}",
@@ -148,6 +148,13 @@ export const de: TranslationDefinition & Partial<AdminTranslationDefinition> | a
       "accept": "OK",
       "decline": "Ablehnen",
     },
+    "reports":  {
+      "technique": "", // TODO: missing
+      "bait": "", // TODO: missing
+      "empty": "", // TODO: missing
+      "no_catch": "", // TODO: missing
+    },
+
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",
@@ -347,5 +354,5 @@ export const de: TranslationDefinition & Partial<AdminTranslationDefinition> | a
   "New Password": "Neues Passwort",
   "Registering": "Registrieren...",
   "Analytics": "Analytik sammeln",
-
+  "Reports": "", // TODO: missing
 }

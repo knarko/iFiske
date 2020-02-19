@@ -24,6 +24,7 @@ export class AreasDetailPage {
   area: Area;
   tabs: TabItem[] = [
     { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
+    { page: 'AreasDetailReportPage', title: 'Reports', icon: 'ifiske-hook' },
     { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
   ];

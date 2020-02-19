@@ -22,6 +22,7 @@ import { Dictionary } from '../../types';
 import { MonitoringClient } from '../../app/monitoring';
 
 import { UpdateStrategy } from './updateTypes';
+import { BaitProvider } from '../baits/baits';
 
 @Injectable()
 export class UpdateProvider {
@@ -59,6 +60,7 @@ export class UpdateProvider {
     private translate: TranslateService,
     private settings: SettingsProvider,
     area: AreaProvider,
+    bait: BaitProvider,
     county: CountyProvider,
     fish: FishProvider,
     information: InformationProvider,
@@ -78,7 +80,20 @@ export class UpdateProvider {
       }
     });
 
-    this.updates = { area, county, fish, information, mapData, organization, product, rule, technique, terms, user };
+    this.updates = {
+      area,
+      bait,
+      county,
+      fish,
+      information,
+      mapData,
+      organization,
+      product,
+      rule,
+      technique,
+      terms,
+      user,
+    };
   }
 
   private timedUpdate(currentTime: number) {
@@ -157,11 +172,13 @@ export class UpdateProvider {
       },
     );
 
-    this.updating.catch(() => {}).then(() => {
-      localStorage.setItem(UpdateProvider.LAST_UPDATE, '' + currentTime);
-      this.updating = undefined;
-      this.hideLoading();
-    });
+    this.updating
+      .catch(() => {})
+      .then(() => {
+        localStorage.setItem(UpdateProvider.LAST_UPDATE, '' + currentTime);
+        this.updating = undefined;
+        this.hideLoading();
+      });
     return this.updating;
   }
 

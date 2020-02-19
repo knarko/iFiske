@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { IonicImageViewerModule, ImageViewerComponent } from 'ionic-img-viewer';
 
 import { IonicApp, IonicModule } from 'ionic-angular';
 
@@ -33,6 +34,7 @@ import { MonitoringErrorHandler } from './monitoring';
 import { AdsProvider } from '../providers/ads/ads';
 import { ApiProvider } from '../providers/api/api';
 import { AreaProvider } from '../providers/area/area';
+import { BaitProvider } from '../providers/baits/baits';
 import { CountyProvider } from '../providers/county/county';
 import { DatabaseProvider } from '../providers/database/database';
 import { FishProvider } from '../providers/fish/fish';
@@ -41,6 +43,7 @@ import { MapDataProvider } from '../providers/map-data/map-data';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { ProductProvider } from '../providers/product/product';
 import { PushProvider } from '../providers/push/push';
+import { ReportsProvider } from '../providers/reports/reports';
 import { RuleProvider } from '../providers/rule/rule';
 import { SessionProvider } from '../providers/session/session';
 import { SettingsProvider } from '../providers/settings/settings';
@@ -98,9 +101,10 @@ registerLocaleData(localeSv);
       useDefaultLang: false,
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: LogMissingTranslationHandler },
     }),
+    IonicImageViewerModule,
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, FilterModalComponent],
+  entryComponents: [MyApp, FilterModalComponent, ImageViewerComponent],
   providers: [
     [{ provide: ErrorHandler, useClass: MonitoringErrorHandler }],
 
@@ -129,6 +133,7 @@ registerLocaleData(localeSv);
     AdsProvider,
     ApiProvider,
     AreaProvider,
+    BaitProvider,
     CountyProvider,
     CreateAccountProvider,
     DatabaseProvider,
@@ -140,6 +145,7 @@ registerLocaleData(localeSv);
     PlatformProvider,
     ProductProvider,
     PushProvider,
+    ReportsProvider,
     RuleProvider,
     SessionProvider,
     SettingsProvider,

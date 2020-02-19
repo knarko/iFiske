@@ -482,4 +482,7 @@ export class ApiProvider {
   getAdsMain = () => this.getObservable({ m: 'get_ads_main' }, { cacheTime: 60000 });
 
   getSessionToken = () => this.getObservable({ m: 'user_get_session_token' }, { session: true, retry: false });
+
+  getReports = ({ filter, orgId, items }: { filter?: 1; orgId?: number; items?: number } = {}) =>
+    this.getObservable({ m: 'get_reports', orgid: orgId, items, filter });
 }

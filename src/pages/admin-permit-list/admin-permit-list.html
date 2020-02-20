@@ -15,7 +15,7 @@
       <button ion-button icon-only class="search-extra-button" (click)="openFilterModal()">
         <ion-icon name="funnel"></ion-icon>
         <ion-badge
-          *ngIf="hasFilteredTitles$ | async; let numberOfFilteredTitles"
+          *ngIf="numberOfFilteredTitles$ | async; let numberOfFilteredTitles"
           color="danger"
           class="badge-icon-button"
           >{{numberOfFilteredTitles}}</ion-badge

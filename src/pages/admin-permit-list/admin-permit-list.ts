@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
 
 import {
   IonicPage,
@@ -27,6 +27,7 @@ import { MonitoringClient } from '../../app/monitoring';
 import { TimeoutError } from '../../errors';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { FilterModalComponent } from '../../components/filter-modal/filter-modal';
+import { takeUntil } from 'rxjs/operators';
 
 export interface DisplayPermit {
   key: string;
@@ -41,7 +42,7 @@ export interface DisplayPermit {
   selector: 'page-admin-permit-list',
   templateUrl: 'admin-permit-list.html',
 })
-export class AdminPermitListPage {
+export class AdminPermitListPage implements OnDestroy {
   pristinePermits: AdminPermitSearchResult[];
   scrollSub: Subscription;
   shouldScrollToTop: boolean;
@@ -61,10 +62,11 @@ export class AdminPermitListPage {
 
   private permitTitles: string[];
   private filteredTitles$ = new BehaviorSubject<Record<string, boolean>>({});
-  hasFilteredTitles$ = this.filteredTitles$.pipe(map(t => Object.values(t).filter(v => v === false).length));
+  numberOfFilteredTitles$ = this.filteredTitles$.pipe(map(t => Object.values(t).filter(v => v === false).length));
 
-  private sub: Subscription;
-  private titlesSub: Subscription;
+  private scrollSubscription: Subscription;
+  private destroyed$ = new Subject<void>();
+  private allFilteredPermitTitles: Record<string, Record<string, boolean>> = {};
 
   @ViewChild(Content)
   content: Content;
@@ -78,10 +80,9 @@ export class AdminPermitListPage {
     private toastCtrl: TranslateToastController,
     private modalCtrl: ModalController,
   ) {
-    try {
-      const filteredPermitTitles = JSON.parse(localStorage.getItem('AdminFilteredPermitTitles'));
-      this.filteredTitles$.next(filteredPermitTitles || {});
-    } catch (err) {}
+    this.currentOrganization = this.adminProvider.currentOrganization;
+
+    this.setupFiltering();
     this.searchSubject = new ReplaySubject<string>(1);
 
     const search$ = this.searchSubject.pipe(
@@ -112,9 +113,6 @@ export class AdminPermitListPage {
       }),
       shareReplay(1),
     );
-    this.titlesSub = this.filteredTitles$.subscribe(titles => {
-      localStorage.setItem('AdminFilteredPermitTitles', JSON.stringify(titles));
-    });
     this.scrollSubject = new Subject();
     this.scrollSub = this.permits$.subscribe(permits => {
       this.pristinePermits = permits;
@@ -126,11 +124,34 @@ export class AdminPermitListPage {
     });
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+  }
+
   ionViewWillUnload() {
     this.searchSubject.complete();
     this.scrollSubject.complete();
-    this.titlesSub.unsubscribe();
     this.scrollSub.unsubscribe();
+  }
+
+  private setupFiltering() {
+    try {
+      const savedFilters = JSON.parse(localStorage.getItem('AllAdminFilteredPermitTitles'));
+      if (savedFilters) {
+        this.allFilteredPermitTitles = savedFilters;
+      }
+    } catch (err) {}
+
+    let currentOrganization: number;
+    this.adminProvider.currentOrganization.pipe(takeUntil(this.destroyed$)).subscribe(org => {
+      currentOrganization = org.ID;
+      this.filteredTitles$.next(this.allFilteredPermitTitles[org.ID] || {});
+    });
+
+    this.filteredTitles$.pipe(takeUntil(this.destroyed$)).subscribe(titles => {
+      this.allFilteredPermitTitles[currentOrganization] = titles;
+      localStorage.setItem('AllAdminFilteredPermitTitles', JSON.stringify(this.allFilteredPermitTitles));
+    });
   }
 
   private updatePermits() {
@@ -158,9 +179,9 @@ export class AdminPermitListPage {
 
   ionViewWillLeave() {
     this.navParams.data.searchTerm = this.searchTerm;
-    if (this.sub) {
-      this.sub.unsubscribe();
-      this.sub = undefined;
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+      this.scrollSubscription = undefined;
     }
   }
 
@@ -173,15 +194,14 @@ export class AdminPermitListPage {
   }
 
   ionViewWillEnter() {
-    this.sub = this.scrollSubject.subscribe(() => {
+    this.scrollSubscription = this.scrollSubject.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       try {
         this.content.scrollToTop();
       } catch (err) {
-        this.sub.unsubscribe();
-        this.sub = undefined;
+        this.scrollSubscription.unsubscribe();
+        this.scrollSubscription = undefined;
       }
     });
-    this.currentOrganization = this.adminProvider.currentOrganization;
 
     this.searchTerm = this.navParams.get('searchTerm') || '';
 

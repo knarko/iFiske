@@ -153,6 +153,10 @@ export const de: TranslationDefinition & { ui: { admin: any } }= {
       "bait": "", // TODO: missing
       "empty": "", // TODO: missing
       "no_catch": "", // TODO: missing
+      "amount": {
+        "single": "Fisch",
+        "multiple": "Fische",
+      },
     },
 
   },

@@ -35,7 +35,7 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
     "general": {
       "back": "Takaisin",
       "pull_to_refresh": "Päivitä",
-      "shortAmount": "",
+      "shortAmount": "kpl",
       "undo": "Peruuta",
     },
     "map": {
@@ -174,6 +174,10 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
       "bait": "", // TODO: missing
       "empty": "", // TODO: missing
       "no_catch": "", // TODO: missing
+      "amount": {
+        "single": "kpl",
+        "multiple": "kpl",
+      },
     },
   },
   "errors": {

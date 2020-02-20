@@ -175,6 +175,10 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
       "bait": "Bete",
       "empty": "Det finns inga fiskerapporter för det här området",
       "no_catch": "Ingen fisk",
+      "amount": {
+        "single": "st",
+        "multiple": "st",
+      },
     },
   },
   "errors": {

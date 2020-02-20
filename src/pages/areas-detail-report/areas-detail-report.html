@@ -24,7 +24,7 @@
       <p *ngIf="report.obs" class="box">{{report.obs}}</p>
 
       <div class="row tech-bait">
-        <a class="box" (click)="openTechnique(report)">
+        <a class="box" (click)="openTechnique(report)" tappable>
           <span>{{(report.technique$ | async)?.t}}</span>
           <span>{{'ui.reports.technique' | translate}}</span>
         </a>
@@ -37,16 +37,26 @@
 
       <ul class="catches-list">
         <li *ngIf="!report.catches?.length" class="box">{{'ui.reports.no_catch' | translate}}</li>
-        <li *ngFor="let catch of report?.catches" class="box">
+        <li *ngFor="let catch of report?.catches" class="box" (click)="openFish(catch)" tappable>
           <div class="list-wrap">
-            <img [icSrc]="(catch.fish$ | async)?.img" />
+            <div class="catch-fish">
+              <img [icSrc]="(catch.fish$ | async)?.img" />
+              <span>{{ (catch.fish$ | async)?.t }}</span>
+            </div>
 
             <div class="row catch-info">
               <div class="catch-info-part">
-                <span>{{catch.num}}</span><span>{{'ui.general.shortAmount' | translate}}</span>
+                <span *ngIf="catch.num > 0">{{ catch.num }}</span>
+                <span>{{('ui.reports.amount.' + (catch.num === 1 ? 'single' : 'multiple')) | translate}}</span>
               </div>
-              <div class="catch-info-part"><span *ngFor="let str of catch.wei | weight">{{str}}</span></div>
-              <div class="catch-info-part"><span>{{catch.cm}}</span><span>cm</span></div>
+              <div class="catch-info-part">
+                <ng-container *ngIf="catch.wei">
+                  <span *ngFor="let str of catch.wei | weight">{{str}}</span>
+                </ng-container>
+              </div>
+              <div class="catch-info-part">
+                <ng-container *ngIf="catch.cm"><span>{{catch.cm}}</span><span>cm</span></ng-container>
+              </div>
             </div>
           </div>
 

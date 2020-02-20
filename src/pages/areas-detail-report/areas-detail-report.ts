@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams, NavController, Tabs, Content } from 'ionic-angular';
-import { ReportsProvider, Report } from '../../providers/reports/reports';
+import { ReportsProvider, Report, Catch } from '../../providers/reports/reports';
 import { Observable } from 'rxjs/Observable';
 import { Area } from '../../providers/area/area';
 import { AreaDetailParams } from '../areas-detail/areas-detail-params';
@@ -49,5 +49,8 @@ export class AreasDetailReportPage {
 
   openTechnique(report: Report) {
     this.navCtrl.push('FishingMethodsDetailPage', { ID: report.tech });
+  }
+  openFish(catched: Catch) {
+    this.navCtrl.push('SpeciesDetailPage', { ID: catched.type });
   }
 }

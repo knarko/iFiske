@@ -174,6 +174,10 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
       "bait": "Bait",
       "empty": "There are no reports available in this area",
       "no_catch": "No catch",
+      "amount": {
+        "single": "fish",
+        "multiple": "fish",
+      },
     },
   },
   "errors": {

@@ -378,5 +378,5 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
   "Change Password": "Byt lösenord",
   "New Password": "Nytt lösenord",
   "Analytics": "Samla användningsdata",
-  "Reports": "Fiskerapporter",
+  "Reports": "Rapporter",
 }

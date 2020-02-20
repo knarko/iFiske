@@ -1,3 +1,13 @@
+## [4.14.1](https://gitlab.com/kada-development/ifiske/compare/v4.14.0...v4.14.1) (2020-02-20)
+
+
+### Bug Fixes
+
+* **admin:** Save filtered permits per organization ([e6f4754](https://gitlab.com/kada-development/ifiske/commit/e6f4754eecf23f3421671ec3f31ff889b0d8527b))
+* **reports:** set a max height on the catch image, redo some translations ([786b69e](https://gitlab.com/kada-development/ifiske/commit/786b69e1664b5d57a2c71173788a4e969eeb321c))
+
+
+
 # [4.14.0](https://gitlab.com/kada-development/ifiske/compare/v4.13.2...v4.14.0) (2020-02-19)
 
 

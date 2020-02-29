@@ -170,10 +170,10 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
       "decline": "Kieltäydy",
     },
     "reports": {
-      "technique": "", // TODO: missing
-      "bait": "", // TODO: missing
-      "empty": "", // TODO: missing
-      "no_catch": "", // TODO: missing
+      "technique": "Kalastustekniikat", 
+      "bait": "Paras syötti", 
+      "empty": "Tyhjentää",
+      "no_catch": "Ei yhtään", 
       "amount": {
         "single": "kpl",
         "multiple": "kpl",
@@ -377,5 +377,7 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
   "Change Password": "Vaihda salasana",
   "New Password": "Uusi salasana",
   "Analytics": "Kerää analytiikkaa",
-  "Reports": "", // TODO: missing
+  "Reports": "Saalisilmoitukset", 
+  
+  
 }

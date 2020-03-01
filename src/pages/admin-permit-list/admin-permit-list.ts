@@ -261,13 +261,22 @@ export class AdminPermitListPage implements OnDestroy {
   }
 
   async openFilterModal() {
-    console.log(this.permitTitles);
     const filteredTitles = { ...this.filteredTitles$.value };
+
+    // Remove any permit titles that no longer exist in the list of titles
+    Object.keys(filteredTitles).forEach(key => {
+      if (this.permitTitles.indexOf(key) === -1) {
+        delete filteredTitles[key];
+      }
+    });
+
+    // Set the default values
     this.permitTitles.forEach(title => {
       if (filteredTitles[title] == undefined) {
         filteredTitles[title] = true;
       }
     });
+
     const modalRef = this.modalCtrl.create(FilterModalComponent, {
       header: 'ui.admin.filter.instructions',
       values: this.permitTitles,

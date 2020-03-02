@@ -3,17 +3,14 @@
 
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
-$font-path: "../assets/fonts";
-
+$font-path: '../assets/fonts';
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-
-@import "ionic.globals";
-
+@import 'ionic.globals';
 
 // Shared Variables
 // --------------------------------------------------
@@ -22,9 +19,6 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -32,17 +26,18 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-$calm:       #52c8ff !default;
+$calm: #52c8ff !default;
 $colors: (
-  primary:    #003852,
-  secondary:  #669600,
-  danger:     #ff580a,
-  light:      #e4e4e4,
-  dark:       #222,
+  primary: #003852,
+  secondary: #669600,
+  danger: #ff580a,
+  light: #e4e4e4,
+  dark: #222,
   gold: #edce07,
 );
 
 $primary-text-color: rgba(black, 0.87);
+$secondary-text-color: rgba(black, 0.7);
 $text-input-highlight-color-invalid: #ed0c0c;
 
 // App iOS Variables
@@ -50,20 +45,13 @@ $text-input-highlight-color-invalid: #ed0c0c;
 // iOS only Sass variables can go here
 $text-input-ios-show-focus-highlight: true;
 
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
-
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
 
 // App Theme
 // --------------------------------------------------
@@ -72,22 +60,20 @@ $text-input-ios-show-focus-highlight: true;
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
-
+@import 'ionic.theme.default';
 
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 
-@import "ionic.ionicons";
+@import 'ionic.ionicons';
 
 $fa-font-path: $font-path;
-@import "font-awesome/scss/font-awesome";
-
+@import 'font-awesome/scss/font-awesome';
 
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+@import 'roboto';
+@import 'noto-sans';

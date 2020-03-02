@@ -4,23 +4,24 @@ import { ApiProvider } from '../api/api';
 import { Observable } from 'rxjs/Observable';
 import { map, share } from 'rxjs/operators';
 import { FishProvider } from '../fish/fish';
-import { TechniqueProvider } from '../technique/technique';
-import { BaitProvider } from '../baits/baits';
+import { TechniqueProvider, Technique } from '../technique/technique';
+import { BaitProvider, Bait } from '../baits/baits';
 import { serverLocation } from '../api/serverLocation';
+import { BaseModel } from '../database/basemodel';
 
 export interface Catch {
   /** Catch type (species) */
-  type: string;
+  type: number;
   /** Number of animals catched */
-  num: string;
+  num: number;
   /** Weight, total in gram */
-  wei: string;
+  wei: number;
   /** Comment (text) */
   cmt: string;
   /** Length in centimeter */
-  cm: string;
+  cm: number;
   /** Flag if the animal was kept or put back */
-  kept: string;
+  kept: number;
   /**
    * How the animal was spawned?
    * Enum
@@ -28,21 +29,21 @@ export interface Catch {
    * 1: Spawned
    * 2: Not spawned
    */
-  spa: string;
+  spa: number;
   /**
    * Fin type enum
    * 0: Unclear/unknown
    * 1: Without adipose fin ("Fettfena" in Swedish)
    * 2: Has adipose fin
    */
-  fin: string;
+  fin: number;
   /**
    * Gender enum
    * 0: Unclear/unknown
    * 1: Female
    * 2: Male
    */
-  gen: string;
+  gen: number;
 }
 
 export interface Report {
@@ -82,17 +83,29 @@ export interface Report {
   ctrl: string;
   /** Array of catches */
   catches: Catch[];
+
+  /** Promise with technique data */
+  technique$: Promise<Technique | undefined>;
+  /** Promise with bait data */
+  bait$: Promise<Bait | undefined>;
+  numberOfCatches: number;
 }
 
 @Injectable()
 export class ReportsProvider {
+  techniqueCache = new Map<number, Promise<Technique | undefined>>();
+  baitCache = new Map<number, Promise<Bait | undefined>>();
   constructor(
     private api: ApiProvider,
     private fish: FishProvider,
     private technique: TechniqueProvider,
     private bait: BaitProvider,
   ) {}
-  getReports({ filter, orgId, items }: { filter?: 1; orgId?: number; items?: number } = {}): Observable<Report[]> {
+  getReports({
+    filter,
+    orgId,
+    items,
+  }: { filter?: 1; orgId?: number; items?: number } = {}): Observable<Report[]> {
     return this.api.getReports({ filter, orgId, items }).pipe(
       map(x => {
         return Object.values(x).map((report: Report & { day: number; c: number }) => {
@@ -100,8 +113,8 @@ export class ReportsProvider {
             ...report,
             day: new Date(report.day * 1000),
             c: new Date(report.c * 1000),
-            technique$: this.technique.getOne(report.tech),
-            bait$: this.bait.getOne(report.bait),
+            technique$: this.getTechnique(report.tech),
+            bait$: this.getBait(report.bait),
             img1: report.img1 ? `${serverLocation}${report.img1}` : undefined,
             img2: report.img2 ? `${serverLocation}${report.img2}` : undefined,
             catches: report.catches.map(c => {
@@ -110,10 +123,38 @@ export class ReportsProvider {
                 fish$: this.fish.getOne(c.type),
               };
             }),
+            numberOfCatches: report.catches.reduce((acc, curr) => acc + curr.num, 0),
           };
         });
       }),
       share(),
     );
+  }
+
+  private getTechnique(techniqueId: number): Promise<Technique | undefined> {
+    return this.getFromCache(techniqueId, this.techniqueCache, this.technique);
+  }
+
+  private getBait(baitId: number): Promise<Bait | undefined> {
+    return this.getFromCache(baitId, this.baitCache, this.bait);
+  }
+
+  private getFromCache<T>(
+    id: number,
+    cache: Map<number, Promise<T | undefined>>,
+    model: BaseModel,
+  ): Promise<T | undefined> {
+    if (cache.has(id)) {
+      return cache.get(id);
+    }
+
+    const value$ = model.getOne(id).catch(() => {
+      cache.delete(id);
+      return undefined;
+    });
+
+    cache.set(id, value$);
+
+    return value$;
   }
 }

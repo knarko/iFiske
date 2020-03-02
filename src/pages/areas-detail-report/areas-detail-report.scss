@@ -1,110 +1,56 @@
 page-areas-detail-report {
-  .report {
-    padding: $content-padding;
-    & + & {
-      margin-top: 1rem;
-    }
-  }
-  .report-header {
+  .no-reports {
     display: flex;
-    justify-content: space-between;
-    font-size: 1.8rem;
-    font-weight: 500;
-    padding: 0 0.5rem;
+    height: 100%;
+    justify-content: center;
     align-items: center;
-    .report-day {
-      flex-shrink: 0;
-    }
+    font-size: 16px;
   }
-  img {
-    display: block;
-  }
-  .box {
-    .md & {
-      border-radius: $list-inset-md-border-radius;
-      box-shadow: $card-md-box-shadow;
-    }
-
-    .ios & {
-      border-radius: $list-inset-ios-border-radius;
-      box-shadow: $card-ios-box-shadow;
-    }
-    background: white;
-    padding: 1rem;
-  }
-  .row {
-    display: flex;
-    justify-content: space-between;
-    margin: 0.5rem 0;
-  }
-  .tech-bait .box {
-    flex-basis: calc(50% - 0.5rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    span {
-      display: block;
-      &:first-child {
-        font-size: 18px;
-        line-height: 1.35;
-        padding: 4px 0;
-      }
-      &:last-child {
-        color: map-get($colors, dark);
-      }
-    }
-  }
-
-  .catch-image {
-    width: 100%;
-    @extend .box;
-    padding: 0;
-    margin: 1rem 0;
-    max-height: 40vh;
+  .card img {
+    max-height: 60vh;
     object-fit: cover;
   }
 
-  .catches-list {
-    padding: 0;
-    list-style-type: none;
-    .list-wrap {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    .box + .box {
-      margin-top: 1rem;
-    }
-    .box {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  .catch-fish {
-    display: flex;
-    img {
-      max-height: 4rem;
-    }
-    color: map-get($colors, dark);
-    flex-direction: column;
-    align-items: center;
-    max-width: 20vw;
-    margin-right: 1rem;
+  .card .card-content p {
+    color: inherit;
   }
 
   .catch-info {
-    flex-grow: 1;
-    .catch-info-part {
-      span:first-child {
-        font-size: 22px;
-        line-height: 1;
-      }
+    display: flex;
+
+    .amount,
+    .technique {
+      margin: 0;
+      padding: 0 4px;
+    }
+    .amount {
+      flex-basis: 40%;
+      white-space: nowrap;
+    }
+    .technique {
+      flex-basis: 60%;
+    }
+
+    ion-icon {
+      font-size: 28px;
+      vertical-align: middle;
+    }
+  }
+
+  ion-item + ion-card-content .catch-info,
+  p + .catch-info {
+    border-top: $hairlines-width solid $list-ios-border-color;
+
+    .ios & {
+      padding-top: $card-ios-padding-bottom;
+    }
+    .md & {
+      padding-top: $card-md-padding-bottom;
     }
   }
 
   .comment {
-    margin: 1rem 0 0 0;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
   }
 }

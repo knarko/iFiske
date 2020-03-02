@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{report.area || ('Reports' | translate)}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="background-abstract">
+  <div class="report-header">
+    <div class="report-name">
+      <ion-icon color="primary" name="contact"></ion-icon>
+      {{report.name}}
+    </div>
+    <div class="report-day">
+      <ion-icon color="primary" name="calendar" ios="ios-calendar-outline"></ion-icon>
+      {{report.day | date:'mediumDate'}}
+    </div>
+  </div>
+
+  <img *ngIf="report.img2" class="catch-image" [src]="report.img2" [imageViewer]="report.img2" />
+
+  <p *ngIf="report.obs" class="box comment">{{report.obs}}</p>
+
+  <ul class="catches-list">
+    <li *ngIf="!report.catches?.length" class="box">{{'ui.reports.no_catch' | translate}}</li>
+    <li *ngFor="let catch of report?.catches" class="box" (click)="openFish(catch)" tappable>
+      <div class="list-wrap">
+        <div class="catch-fish" *ngIf="catch.fish$ | async as fish">
+          <img [icSrc]="fish?.img" />
+          <span>{{ fish?.t }}</span>
+        </div>
+
+        <div class="row catch-info">
+          <div class="catch-info-part">
+            <span *ngIf="catch.num > 0">{{ catch.num }}</span>
+            <span
+              >{{('ui.reports.amount.' + (catch.num === 1 ? 'single' : 'multiple')) |
+              translate}}</span
+            >
+          </div>
+          <div class="catch-info-part">
+            <ng-container *ngIf="catch.wei">
+              <span *ngFor="let str of catch.wei | weight">{{str}}</span>
+            </ng-container>
+          </div>
+          <div class="catch-info-part">
+            <ng-container *ngIf="catch.cm"><span>{{catch.cm}}</span><span>cm</span></ng-container>
+          </div>
+        </div>
+      </div>
+
+      <p *ngIf="catch.cmt" class="comment">{{catch.cmt}}</p>
+    </li>
+  </ul>
+
+  <div class="row tech-bait">
+    <a
+      class="box"
+      (click)="openTechnique(report)"
+      tappable
+      *ngIf="report.technique$ | async as tech"
+    >
+      <span>{{tech?.t}}</span>
+      <span>{{'ui.reports.technique' | translate}}</span>
+    </a>
+
+    <div class="box" *ngIf="report.bait$ | async as bait">
+      <span>{{bait?.t}}</span>
+      <span>{{'ui.reports.bait' | translate}}</span>
+    </div>
+  </div>
+</ion-content>

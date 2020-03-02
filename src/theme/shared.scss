@@ -57,7 +57,8 @@
     right: 0;
     bottom: 0;
     display: block;
-    background-image: url('../assets/img/bg-new.jpg'), linear-gradient(to bottom, #0a5085 50%, #000000 50%);
+    background-image: url('../assets/img/bg-new.jpg'),
+      linear-gradient(to bottom, #0a5085 50%, #000000 50%);
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -65,10 +66,15 @@
 }
 
 .background-abstract {
-  background-image: url('../assets/img/bg-abstract.jpg');
-  background-size: cover;
-  background-position: bottom;
-  background-repeat: no-repeat;
+  &,
+  &.has-refresher {
+    .scroll-content {
+      background: url('../assets/img/bg-abstract.jpg');
+      background-size: cover;
+      background-position: bottom;
+      background-repeat: no-repeat;
+    }
+  }
 }
 
 .content.transparent {

@@ -5,64 +5,54 @@
 </ion-header>
 
 <ion-content class="background-abstract">
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      [pullingText]="'ui.general.pull_to_refresh' | translate"
+      [refreshingText]="'Updating' | translate"
+    ></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="reports$ | async as reports">
     <section class="no-reports" *ngIf="reports.length === 0">
       {{'ui.reports.empty' | translate}}
     </section>
-    <section class="report" *ngFor="let report of reports">
-      <div class="report-header">
-        <div class="report-name">
-          {{report.name}}
-        </div>
-        <div class="report-day">
+    <ion-card *ngFor="let report of reports" [navPush]="'ReportDetailPage'" [navParams]="report">
+      <ion-item>
+        <ion-icon item-start color="primary" name="contact"></ion-icon>
+        <h2>{{report.name}}</h2>
+        <p>
+          <ng-container *ngIf="report.area">
+            {{report.area}} -
+          </ng-container>
           {{report.day | date:'mediumDate'}}
+        </p>
+      </ion-item>
+      <img *ngIf="report.img2" [src]="report.img2" />
+      <ion-card-content>
+        <p class="comment" *ngIf="report.obs">{{report.obs}}</p>
+
+        <div class="catch-info">
+          <p class="technique">
+            <ion-icon color="primary" name="ifiske-hook"></ion-icon>
+            {{(report.technique$ |async)?.t}}
+          </p>
+
+          <p class="amount">
+            <ion-icon color="primary" name="ifiske-fish"></ion-icon>
+
+            <ng-container *ngIf="!report.numberOfCatches"
+              >{{'ui.reports.no_catch' | translate}}</ng-container
+            >
+
+            <ng-container *ngIf="report.numberOfCatches">
+              <span>{{ report.numberOfCatches }}</span>
+              <span
+                >{{('ui.reports.amount.' + (report.numberOfCatches === 1 ? 'single' : 'multiple')) |
+                translate}}</span
+              >
+            </ng-container>
+          </p>
         </div>
-      </div>
-
-      <img *ngIf="report.img1" class="catch-image" [src]="report.img1" [imageViewer]="report.img2" />
-
-      <p *ngIf="report.obs" class="box">{{report.obs}}</p>
-
-      <div class="row tech-bait">
-        <a class="box" (click)="openTechnique(report)" tappable>
-          <span>{{(report.technique$ | async)?.t}}</span>
-          <span>{{'ui.reports.technique' | translate}}</span>
-        </a>
-
-        <div class="box">
-          <span>{{(report.bait$ | async)?.t}}</span>
-          <span>{{'ui.reports.bait' | translate}}</span>
-        </div>
-      </div>
-
-      <ul class="catches-list">
-        <li *ngIf="!report.catches?.length" class="box">{{'ui.reports.no_catch' | translate}}</li>
-        <li *ngFor="let catch of report?.catches" class="box" (click)="openFish(catch)" tappable>
-          <div class="list-wrap">
-            <div class="catch-fish">
-              <img [icSrc]="(catch.fish$ | async)?.img" />
-              <span>{{ (catch.fish$ | async)?.t }}</span>
-            </div>
-
-            <div class="row catch-info">
-              <div class="catch-info-part">
-                <span *ngIf="catch.num > 0">{{ catch.num }}</span>
-                <span>{{('ui.reports.amount.' + (catch.num === 1 ? 'single' : 'multiple')) | translate}}</span>
-              </div>
-              <div class="catch-info-part">
-                <ng-container *ngIf="catch.wei">
-                  <span *ngFor="let str of catch.wei | weight">{{str}}</span>
-                </ng-container>
-              </div>
-              <div class="catch-info-part">
-                <ng-container *ngIf="catch.cm"><span>{{catch.cm}}</span><span>cm</span></ng-container>
-              </div>
-            </div>
-          </div>
-
-          <p *ngIf="catch.cmt" class="comment">{{catch.cmt}}</p>
-        </li>
-      </ul>
-    </section>
+      </ion-card-content>
+    </ion-card>
   </ng-container>
 </ion-content>

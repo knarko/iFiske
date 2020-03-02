@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams, NavController, Tabs, Content } from 'ionic-angular';
-import { ReportsProvider, Report, Catch } from '../../providers/reports/reports';
+import { IonicPage, NavParams, NavController, Tabs, Content, Refresher } from 'ionic-angular';
+import { ReportsProvider, Report } from '../../providers/reports/reports';
 import { Observable } from 'rxjs/Observable';
 import { Area } from '../../providers/area/area';
 import { AreaDetailParams } from '../areas-detail/areas-detail-params';
 import { Organization } from '../../providers/organization/organization';
+import { take, switchMap, share } from 'rxjs/operators';
+import { MonitoringClient } from '../../app/monitoring';
+import { Subject } from 'rxjs/Subject';
 
 @IonicPage()
 @Component({
@@ -22,20 +25,26 @@ export class AreasDetailReportPage {
   @ViewChild(Content)
   contentRef: Content;
 
-  constructor(private reportsProvider: ReportsProvider, private _navCtrl: NavController, private navParams: NavParams) {
+  private fetchReports$ = new Subject<Area>();
+
+  constructor(
+    private reportsProvider: ReportsProvider,
+    private _navCtrl: NavController,
+    private navParams: NavParams,
+  ) {
+    this.reports$ = this.fetchReports$.pipe(
+      switchMap(area => this.reportsProvider.getReports({ orgId: area.orgid })),
+      share(),
+    );
+    this.reports$.subscribe(console.log, console.error);
+
     const params: Observable<AreaDetailParams> =
-      this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+      this.navParams.get('params') ||
+      ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+
     params.subscribe(({ area, org, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {
-        this.reports$ = this.reportsProvider.getReports({ orgId: area.orgid });
-        this.reports$.subscribe(
-          res => {
-            console.log(res);
-          },
-          err => {
-            console.error(err);
-          },
-        );
+        this.fetchReports$.next(area);
       }
       this.navCtrl = rootNavCtrl;
       this.tabsCtrl = tabsCtrl;
@@ -47,10 +56,14 @@ export class AreasDetailReportPage {
     });
   }
 
-  openTechnique(report: Report) {
-    this.navCtrl.push('FishingMethodsDetailPage', { ID: report.tech });
-  }
-  openFish(catched: Catch) {
-    this.navCtrl.push('SpeciesDetailPage', { ID: catched.type });
+  async refresh(refresher: Refresher) {
+    try {
+      this.fetchReports$.next(this.area);
+      await this.reports$.pipe(take(1)).toPromise();
+    } catch (error) {
+      MonitoringClient.captureException(error);
+    } finally {
+      refresher.complete();
+    }
   }
 }

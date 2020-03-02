@@ -1,3 +1,14 @@
+## [4.14.2](https://gitlab.com/kada-development/ifiske/compare/v4.14.1...v4.14.2) (2020-03-02)
+
+
+### Bug Fixes
+
+* **admin:** remove non-existing permits from the filter list when opening the modal ([a58ac68](https://gitlab.com/kada-development/ifiske/commit/a58ac6807c7fecc5b46d6314f5ae8181391172e8))
+* **reports:** redesign list, move details into separate page ([110b5f6](https://gitlab.com/kada-development/ifiske/commit/110b5f6d6ba801f8b2db79680c8902c74ad67fb5))
+* **translations:** rename Fiskerapporter->Rapporter ([febca3b](https://gitlab.com/kada-development/ifiske/commit/febca3bc5ce0bb6e31d990087e78e727ba94056b))
+
+
+
 ## [4.14.1](https://gitlab.com/kada-development/ifiske/compare/v4.14.0...v4.14.1) (2020-02-20)
 
 

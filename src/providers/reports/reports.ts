@@ -8,6 +8,7 @@ import { TechniqueProvider, Technique } from '../technique/technique';
 import { BaitProvider, Bait } from '../baits/baits';
 import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Catch {
   /** Catch type (species) */
@@ -100,7 +101,15 @@ export class ReportsProvider {
     private fish: FishProvider,
     private technique: TechniqueProvider,
     private bait: BaitProvider,
-  ) {}
+    private translate: TranslateService,
+  ) {
+    this.translate.onLangChange.subscribe(() => {
+      // Clear the cache when the language changes
+      this.techniqueCache = new Map();
+      this.baitCache = new Map();
+    });
+  }
+
   getReports({
     filter,
     orgId,

@@ -1,3 +1,13 @@
+## [4.14.3](https://gitlab.com/kada-development/ifiske/compare/v4.14.2...v4.14.3) (2020-03-03)
+
+
+### Bug Fixes
+
+* **area-reports:** remove share button from reports view ([0e2b32a](https://gitlab.com/kada-development/ifiske/commit/0e2b32a7c84d07053e85f22d6d54447fbfaf275c))
+* **reports:** refresh the technique/bait cache when the language changes ([e87cc5a](https://gitlab.com/kada-development/ifiske/commit/e87cc5a8da170ae304378b99cabc970b064d9ead))
+
+
+
 ## [4.14.2](https://gitlab.com/kada-development/ifiske/compare/v4.14.1...v4.14.2) (2020-03-02)
 
 

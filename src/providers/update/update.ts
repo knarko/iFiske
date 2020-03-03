@@ -7,6 +7,7 @@ import { CountyProvider } from '../county/county';
 import { FishProvider } from '../fish/fish';
 import { InformationProvider } from '../information/information';
 import { MapDataProvider } from '../map-data/map-data';
+import { MunicipalityProvider } from '../municipality/municipality';
 import { OrganizationProvider } from '../organization/organization';
 import { ProductProvider } from '../product/product';
 import { RuleProvider } from '../rule/rule';
@@ -65,6 +66,7 @@ export class UpdateProvider {
     fish: FishProvider,
     information: InformationProvider,
     mapData: MapDataProvider,
+    municipality: MunicipalityProvider,
     organization: OrganizationProvider,
     product: ProductProvider,
     rule: RuleProvider,
@@ -87,6 +89,7 @@ export class UpdateProvider {
       fish,
       information,
       mapData,
+      municipality,
       organization,
       product,
       rule,

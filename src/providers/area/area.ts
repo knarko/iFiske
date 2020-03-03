@@ -278,7 +278,13 @@ export class AreaProvider extends BaseModel<Area> {
 
   private readonly fishSeparator = '__-__SEPARATORr__-__';
   @DBMethod
-  async getAll(countyId?: number): Promise<Area[]> {
+  async getAll({
+    countyId,
+    municipalityId,
+  }: {
+    countyId?: number;
+    municipalityId?: number;
+  }): Promise<Area[]> {
     const selectFish = (id: number) => {
       return `Fish_${id}.fishes as fish_${id}`;
     };
@@ -329,10 +335,14 @@ export class AreaProvider extends BaseModel<Area> {
         GROUP BY area
           ORDER BY rowid ASC
       ) AS Area_Photos ON Area.ID = Area_Photos.area
-      ${countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
+      ${countyId != undefined ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
+      ${municipalityId != undefined ? 'WHERE Area.m1 = ? OR Area.m2 = ? OR Area.m3 = ?' : ''}
       GROUP BY Area.ID
     `,
-      countyId ? [countyId, countyId, countyId] : [],
+      [
+        ...(countyId ? [countyId, countyId, countyId] : []),
+        ...(municipalityId ? [municipalityId, municipalityId, municipalityId] : []),
+      ],
     );
     res.forEach(a => this.transform(a));
     return res;
@@ -340,29 +350,29 @@ export class AreaProvider extends BaseModel<Area> {
 
   @DBMethod
   async getPhotos(areaId): Promise<AreaImage[]> {
-    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId]).then(
-      images => {
-        for (let i = 0; i < images.length; ++i) {
-          images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
-          images[i].file = serverLocation + images[i].file;
-        }
-        return images;
-      },
-    );
+    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [
+      areaId,
+    ]).then(images => {
+      for (let i = 0; i < images.length; ++i) {
+        images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
+        images[i].file = serverLocation + images[i].file;
+      }
+      return images;
+    });
   }
 
   @DBMethod
   async getFiles(areaId): Promise<AreaFile[]> {
-    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId]).then(
-      (files: AreaFile[]) => {
-        files.forEach(file => {
-          file.thumb = serverLocation + file.thumb;
-          file.url = serverLocation + file.f;
-          file.filename = file.f.split('/').slice(-1)[0];
-        });
-        return files;
-      },
-    );
+    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [
+      areaId,
+    ]).then((files: AreaFile[]) => {
+      files.forEach(file => {
+        file.thumb = serverLocation + file.thumb;
+        file.url = serverLocation + file.f;
+        file.filename = file.f.split('/').slice(-1)[0];
+      });
+      return files;
+    });
   }
 
   @DBMethod
@@ -433,7 +443,9 @@ export class AreaProvider extends BaseModel<Area> {
 
     const fuse = this.getFuse(areas);
 
-    const result = searchstring ? fuse.search(searchstring) : fuse.list.map(i => ({ item: i, score: 0 }));
+    const result = searchstring
+      ? fuse.search(searchstring)
+      : fuse.list.map(i => ({ item: i, score: 0 }));
 
     const foundFish = await this.fishProvider.search(searchstring).then(fishes => {
       return fishes.length ? fishes[0].item.t : undefined;
@@ -571,7 +583,9 @@ export class AreaProvider extends BaseModel<Area> {
     const Δφ = (lat2 - lat1) * (Math.PI / 180);
     const Δλ = (lon2 - lon1) * (Math.PI / 180);
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;

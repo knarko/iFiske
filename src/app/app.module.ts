@@ -40,6 +40,7 @@ import { DatabaseProvider } from '../providers/database/database';
 import { FishProvider } from '../providers/fish/fish';
 import { InformationProvider } from '../providers/information/information';
 import { MapDataProvider } from '../providers/map-data/map-data';
+import { MunicipalityProvider } from '../providers/municipality/municipality';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { ProductProvider } from '../providers/product/product';
 import { PushProvider } from '../providers/push/push';
@@ -99,7 +100,10 @@ registerLocaleData(localeSv);
         useClass: TranslateBundleLoader,
       },
       useDefaultLang: false,
-      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: LogMissingTranslationHandler },
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: LogMissingTranslationHandler,
+      },
     }),
     IonicImageViewerModule,
   ],
@@ -141,6 +145,7 @@ registerLocaleData(localeSv);
     FishProvider,
     InformationProvider,
     MapDataProvider,
+    MunicipalityProvider,
     OrganizationProvider,
     PlatformProvider,
     ProductProvider,

@@ -9,7 +9,12 @@
       [refreshingText]="'Updating' | translate"
     ></ion-refresher-content>
   </ion-refresher>
-  <ng-container *ngIf="reports$ | async as reports">
+
+  <div class="spinner-wrapper" *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <ng-container *ngIf="reports">
     <section class="no-reports" *ngIf="reports.length === 0">
       {{'ui.reports.empty' | translate}}
     </section>

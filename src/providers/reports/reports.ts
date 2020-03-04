@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { ApiProvider } from '../api/api';
 import { Observable } from 'rxjs/Observable';
-import { map, share } from 'rxjs/operators';
+import { map, share, tap } from 'rxjs/operators';
 import { FishProvider } from '../fish/fish';
 import { TechniqueProvider, Technique } from '../technique/technique';
 import { BaitProvider, Bait } from '../baits/baits';
 import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
 import { TranslateService } from '@ngx-translate/core';
+import { Omit } from '../../types';
 
 export interface Catch {
   /** Catch type (species) */
@@ -92,6 +93,8 @@ export interface Report {
   numberOfCatches: number;
 }
 
+type ApiReport = Omit<Report, 'day' | 'c'> & { day: number; c: number };
+
 @Injectable()
 export class ReportsProvider {
   techniqueCache = new Map<number, Promise<Technique | undefined>>();
@@ -116,26 +119,33 @@ export class ReportsProvider {
     items,
   }: { filter?: 1; orgId?: number; items?: number } = {}): Observable<Report[]> {
     return this.api.getReports({ filter, orgId, items }).pipe(
-      map(x => {
-        return Object.values(x).map((report: Report & { day: number; c: number }) => {
-          return {
-            ...report,
-            day: new Date(report.day * 1000),
-            c: new Date(report.c * 1000),
-            technique$: this.getTechnique(report.tech),
-            bait$: this.getBait(report.bait),
-            img1: report.img1 ? `${serverLocation}${report.img1}` : undefined,
-            img2: report.img2 ? `${serverLocation}${report.img2}` : undefined,
-            catches: report.catches.map(c => {
+      map((reportsObj): ApiReport[] => Object.values(reportsObj)),
+      map(reports =>
+        reports
+          // Sort most recently created first
+          .sort((a, b) => b.day - a.day)
+          .map(
+            (report): Report => {
               return {
-                ...c,
-                fish$: this.fish.getOne(c.type),
+                ...report,
+                day: new Date(report.day * 1000),
+                c: new Date(report.c * 1000),
+                technique$: this.getTechnique(report.tech),
+                bait$: this.getBait(report.bait),
+                img1: report.img1 ? `${serverLocation}${report.img1}` : undefined,
+                img2: report.img2 ? `${serverLocation}${report.img2}` : undefined,
+                catches: report.catches.map(c => {
+                  return {
+                    ...c,
+                    fish$: this.fish.getOne(c.type),
+                  };
+                }),
+                numberOfCatches: report.catches.reduce((acc, curr) => acc + curr.num, 0),
               };
-            }),
-            numberOfCatches: report.catches.reduce((acc, curr) => acc + curr.num, 0),
-          };
-        });
-      }),
+            },
+          ),
+      ),
+      tap(reports => console.log(`Reports for ${orgId}:`, reports)),
       share(),
     );
   }

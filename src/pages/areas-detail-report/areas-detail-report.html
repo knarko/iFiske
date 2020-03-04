@@ -18,7 +18,7 @@
     <section class="no-reports" *ngIf="reports.length === 0">
       {{'ui.reports.empty' | translate}}
     </section>
-    <ion-card *ngFor="let report of reports" [navPush]="'ReportDetailPage'" [navParams]="report">
+    <ion-card *ngFor="let report of reports">
       <ion-item>
         <ion-icon item-start color="primary" name="contact"></ion-icon>
         <h2>{{report.name}}</h2>
@@ -29,32 +29,29 @@
           {{report.day | date:'mediumDate'}}
         </p>
       </ion-item>
-      <img *ngIf="report.img2" [src]="report.img2" />
-      <ion-card-content>
-        <p class="comment" *ngIf="report.obs">{{report.obs}}</p>
 
-        <div class="catch-info">
-          <p class="technique">
-            <ion-icon color="primary" name="ifiske-hook"></ion-icon>
-            {{(report.technique$ |async)?.t}}
-          </p>
+      <div class="img-wrapper">
+        <img *ngIf="report.img2" [src]="report.img2" [imageViewer]="report.img2" />
+        <div class="img-shadow"></div>
+      </div>
 
-          <p class="amount">
-            <ion-icon color="primary" name="ifiske-fish"></ion-icon>
+      <ion-card-content class="comment" *ngIf="report.obs">{{report.obs}}</ion-card-content>
 
-            <ng-container *ngIf="!report.numberOfCatches"
-              >{{'ui.reports.no_catch' | translate}}</ng-container
-            >
+      <catches-list *ngIf="report.catches" [catches]="report.catches"></catches-list>
 
-            <ng-container *ngIf="report.numberOfCatches">
-              <span>{{ report.numberOfCatches }}</span>
-              <span
-                >{{('ui.reports.amount.' + (report.numberOfCatches === 1 ? 'single' : 'multiple')) |
-                translate}}</span
-              >
-            </ng-container>
-          </p>
-        </div>
+      <ion-card-content class="catch-info">
+        <p
+          class="technique"
+          *ngIf="(report.technique$ | async) as tech"
+          [navPush]="'FishingMethodsDetailPage'"
+          [navParams]="tech"
+        >
+          {{tech.t}}
+        </p>
+
+        <p class="bait" *ngIf="report.bait$ | async as bait">
+          {{bait?.t}}
+        </p>
       </ion-card-content>
     </ion-card>
   </ng-container>

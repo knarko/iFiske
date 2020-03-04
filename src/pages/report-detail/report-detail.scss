@@ -66,63 +66,6 @@ page-report-detail {
     object-fit: cover;
   }
 
-  .catches-list {
-    padding: 0;
-    list-style-type: none;
-    .list-wrap {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    .box + .box {
-      margin-top: 1rem;
-    }
-    .box {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  .catch-fish {
-    display: flex;
-    img {
-      max-height: 4rem;
-    }
-    color: $secondary-text-color;
-    flex-direction: column;
-    align-items: center;
-    max-width: 20vw;
-    margin-right: 1rem;
-  }
-
-  .catch-info {
-    flex-grow: 1;
-    .catch-info-part {
-      span:first-child {
-        font-size: 22px;
-        line-height: 1;
-      }
-    }
-  }
-
-  li .comment {
-    display: flex;
-    &::before {
-      content: '“';
-      font-size: 28px;
-      margin-right: 4px;
-      align-self: flex-start;
-    }
-    &::after {
-      content: '”';
-      margin-left: 4px;
-      font-size: 28px;
-      line-height: 1.6rem;
-      align-self: flex-end;
-    }
-    margin: 1.5rem 0 0 0;
-    font-size: 1.6rem;
-  }
   .box.comment {
     padding: $content-padding;
     font-size: 1.6rem;

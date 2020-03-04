@@ -1,6 +1,6 @@
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Report, Catch } from '../../providers/reports/reports';
+import { Report } from '../../providers/reports/reports';
 
 @IonicPage({
   segment: 'report-detail/:ID',
@@ -19,9 +19,5 @@ export class ReportDetailPage {
 
   openTechnique(report: Report) {
     this.navCtrl.push('FishingMethodsDetailPage', { ID: report.tech });
-  }
-
-  openFish(catched: Catch) {
-    this.navCtrl.push('SpeciesDetailPage', { ID: catched.type });
   }
 }

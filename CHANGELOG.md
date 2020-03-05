@@ -1,3 +1,15 @@
+## [4.14.4](https://gitlab.com/kada-development/ifiske/compare/v4.14.3...v4.14.4) (2020-03-05)
+
+
+### Bug Fixes
+
+* **area-reports:** add a loading spinner before reports are fetched ([a0c5348](https://gitlab.com/kada-development/ifiske/commit/a0c53481996f46d218017f5da31ad5ec642ad876))
+* **area-reports:** redesign the reports list, no sub-reports any more ([537c9bc](https://gitlab.com/kada-development/ifiske/commit/537c9bcce14dad84bcb4b60b89aed4432a934560))
+* **area-reports:** reduce visual weight of comments in catch list ([dfa403b](https://gitlab.com/kada-development/ifiske/commit/dfa403b7595b31d366dcae31100bd4aac9ff40c6))
+* **reports:** sort reports in reverse chronological order ([ef67f28](https://gitlab.com/kada-development/ifiske/commit/ef67f289a635f74f58ccf662fdee1ba8e2354935))
+
+
+
 ## [4.14.3](https://gitlab.com/kada-development/ifiske/compare/v4.14.2...v4.14.3) (2020-03-03)
 
 

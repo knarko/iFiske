@@ -15,6 +15,7 @@ catches-list {
     img {
       max-height: 4rem;
       display: block;
+      width: auto;
     }
     color: $secondary-text-color;
     flex-direction: column;
@@ -36,11 +37,12 @@ catches-list {
   }
 
   .comment {
-    margin-top: 8px;
+    margin-top: 4px;
     display: flex;
     align-items: center;
     .icon {
-      color: #aaa;
+      // These colors need to be different to make the visual weight about the same
+      color: hsl(0, 0%, 80%);
       flex-shrink: 0;
       margin-right: 8px;
       font-size: 24px;
@@ -48,9 +50,9 @@ catches-list {
     p {
       color: inherit;
       white-space: normal;
-      padding: 12px;
+      padding: 8px 12px;
       border-radius: 8px;
-      background: map-get($colors, light);
+      background: hsl(0, 0%, 93%);
     }
   }
 }

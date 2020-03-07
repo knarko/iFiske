@@ -344,7 +344,7 @@ export const de: TranslationDefinition & { ui: { admin: any } }= {
   "User does not exist": "Der Benutzer existiert nicht",
   "User information": "Benutzerinformation",
   "User phone numbers": "Verbundene Telefonnummern (On iFiske.se)",
-  "Username or email": "Benutzername oder E-mail:",
+  "Username or email": "Benutzername oder E-mail",
   "Username": "Benutzername",
   "Version": "Version",
   "Youtube": "YouTube",

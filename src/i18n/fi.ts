@@ -367,7 +367,7 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
   "User does not exist": "Käyttäjää ei ole olemassa",
   "User information": "Käyttäjätiedot",
   "User phone numbers": "Yhdistetyt puhelinnumerot",
-  "Username or email": "Käyttäjänimi tai sähköposti:",
+  "Username or email": "Käyttäjänimi tai sähköposti",
   "Username": "Käyttäjänimi",
   "Version": "Version numero",
   "Youtube": "YouTube",

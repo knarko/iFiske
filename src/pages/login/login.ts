@@ -34,7 +34,7 @@ export class LoginPage {
       },
       controls: {
         username: {
-          placeholder: 'Username',
+          placeholder: 'Username or email',
           type: 'text',
           validators: [Validators.required],
           errors: {

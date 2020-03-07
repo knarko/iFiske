@@ -368,7 +368,7 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
   "User does not exist": "The user does not exist",
   "User information": "User Information",
   "User phone numbers": "Connected phone numbers",
-  "Username or email": "Username or e-mail:",
+  "Username or email": "Username or e-mail",
   "Username": "Username",
   "Version": "Version mumber",
   "Youtube": "YouTube",

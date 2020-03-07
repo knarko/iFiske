@@ -368,7 +368,7 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
   "User does not exist": "Användaren finns ej",
   "User information": "Användarinformation",
   "User phone numbers": "Anslutna mobilnummer (På iFiske.se)",
-  "Username or email": "Användarnamn eller e-post:",
+  "Username or email": "Användarnamn eller e-post",
   "Username": "Användarnamn",
   "Version": "Versionsnummer",
   "Youtube": "YouTube",

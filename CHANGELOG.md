@@ -1,3 +1,12 @@
+## [4.14.5](https://gitlab.com/kada-development/ifiske/compare/v4.14.4...v4.14.5) (2020-03-07)
+
+
+### Bug Fixes
+
+* **login:** inform user that email is also possible ([992558c](https://gitlab.com/kada-development/ifiske/commit/992558c0bcca955592c85eea3a6e4568cee88f12))
+
+
+
 ## [4.14.4](https://gitlab.com/kada-development/ifiske/compare/v4.14.3...v4.14.4) (2020-03-05)
 
 

@@ -133,7 +133,9 @@ export class AreasDetailInfoPage {
   }
 
   gotoPermits() {
-    this.tabsCtrl.select(1);
+    // Getting the index in this way so that if we ever add more tabs or change the order it will still work
+    const index = this.tabsCtrl._tabs.findIndex(t => t.tabUrlPath === 'AreasDetailPermitPage');
+    this.tabsCtrl.select(index);
   }
 
   gotoSpecies(fish: Fish) {

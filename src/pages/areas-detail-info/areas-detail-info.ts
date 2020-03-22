@@ -1,5 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, ModalController, Tabs, Content } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Slides,
+  ModalController,
+  Tabs,
+  Content,
+} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -63,7 +71,8 @@ export class AreasDetailInfoPage {
     private analytics: FirebaseAnalytics,
   ) {
     const params: Observable<AreaDetailParams> =
-      this.navParams.get('params') || ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+      this.navParams.get('params') ||
+      ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
 
     params.subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {
@@ -166,7 +175,11 @@ export class AreasDetailInfoPage {
       message,
       this.area.org,
       undefined,
-      this.deepLinks.getUrl(DeepLinks.organization, { orgId: '' + this.area.orgid }, { bringMetadata: false }),
+      this.deepLinks.getUrl(
+        DeepLinks.organization,
+        { orgId: '' + this.area.orgid },
+        { bringMetadata: false },
+      ),
     );
     this.analytics.logEvent('share', { content_type: 'Area', item_id: this.area.ID });
   };

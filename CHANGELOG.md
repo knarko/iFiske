@@ -1,3 +1,12 @@
+## [4.14.6](https://gitlab.com/kada-development/ifiske/compare/v4.14.5...v4.14.6) (2020-03-22)
+
+
+### Bug Fixes
+
+* **areas-detail:** navigate to the correct tab from the info-page button ([4b18acc](https://gitlab.com/kada-development/ifiske/commit/4b18acc1cae6bc794f19d98653bd882f889f919d))
+
+
+
 ## [4.14.5](https://gitlab.com/kada-development/ifiske/compare/v4.14.4...v4.14.5) (2020-03-07)
 
 

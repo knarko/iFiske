@@ -178,6 +178,7 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
         "single": "kpl",
         "multiple": "kpl",
       },
+      "released": "", // TODO: missing
     },
   },
   "errors": {

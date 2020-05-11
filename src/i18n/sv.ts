@@ -179,6 +179,7 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
         "single": "st",
         "multiple": "st",
       },
+      "released": "Återutsatt",
     },
   },
   "errors": {

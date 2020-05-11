@@ -23,9 +23,9 @@
           </ng-container>
         </div>
         <div class="catch-info-part">
-          <ng-container *ngIf="catch.cm"
-            ><span>{{catch.cm}}</span><span>cm</span></ng-container
-          >
+          <ng-container *ngIf="catch.cm">
+            <span>{{catch.cm}}</span><span>cm</span>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -33,6 +33,11 @@
     <div class="comment" *ngIf="catch.cmt">
       <ion-icon name="contact"></ion-icon>
       <p>{{catch.cmt}}</p>
+    </div>
+
+    <div class="released" *ngIf="catch.kept">
+      <ion-icon name="refresh" color="secondary"></ion-icon>
+      <span>{{'ui.reports.released'|translate}}</span>
     </div>
   </ion-item>
 </ion-list>

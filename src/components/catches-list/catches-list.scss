@@ -36,6 +36,19 @@ catches-list {
     line-height: 1;
   }
 
+  .released {
+    margin-top: 4px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    .icon {
+      font-size: 24px;
+    }
+    > span {
+      margin-left: 8px;
+    }
+  }
+
   .comment {
     margin-top: 4px;
     display: flex;

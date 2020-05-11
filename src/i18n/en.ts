@@ -178,6 +178,7 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
         "single": "fish",
         "multiple": "fish",
       },
+      "released": "Released",
     },
   },
   "errors": {

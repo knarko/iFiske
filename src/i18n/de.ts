@@ -157,6 +157,7 @@ export const de: TranslationDefinition & { ui: { admin: any } }= {
         "single": "Fisch",
         "multiple": "Fische",
       },
+      "released": "", // TODO: missing
     },
 
   },

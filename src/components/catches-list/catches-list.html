@@ -4,9 +4,9 @@
   >
   <ion-item *ngFor="let catch of catches" (click)="openFish(catch)" tappable>
     <div class="list-wrap">
-      <div class="catch-fish" *ngIf="catch.fish$ | async as fish">
-        <img [icSrc]="fish?.img" />
-        <span>{{ fish?.t }}</span>
+      <div class="catch-fish" *ngIf="catch.fish">
+        <img [icSrc]="catch.fish.img" />
+        <span>{{ catch.fish.t }}</span>
       </div>
 
       <div class="catch-info">

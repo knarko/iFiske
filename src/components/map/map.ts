@@ -87,8 +87,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
   ngAfterViewInit() {
     const IFISKE_MAP =
       'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
-    const MAPBOX_MAP = 'https://api.tiles.mapbox.com/v4/mapbox.satellite';
-    const tilesUrl = `{maptype}/{z}/{x}/{y}.png{apikey}`;
+    const MAPBOX_MAP =
+      'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles';
+    const tilesUrl = `{maptype}/{z}/{x}/{y}{ext}{apikey}`;
     const apikey = localStorage.getItem('mapbox_api');
 
     this.map = new Map(this.mapElement.nativeElement).setView([62.0, 15.0], 4);
@@ -97,11 +98,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
       maxZoom: 18,
       maptype: IFISKE_MAP,
       apikey: '',
+      ext: '.png',
       detectRetina: true,
     } as any);
+
     const satellite = new TileLayer(tilesUrl, {
       maxZoom: 16,
       maptype: MAPBOX_MAP,
+      tileSize: 512,
+      zoomOffset: -1,
+      ext: '',
       apikey: `?access_token=${apikey}`,
     } as any);
 

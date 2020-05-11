@@ -6,6 +6,10 @@ import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
   declarations: [FishingMethodsPage],
-  imports: [IonicPageModule.forChild(FishingMethodsPage), TranslateModule.forChild(), ImgcacheModule],
+  imports: [
+    IonicPageModule.forChild(FishingMethodsPage),
+    TranslateModule.forChild(),
+    ImgcacheModule,
+  ],
 })
 export class FishingMethodsPageModule {}

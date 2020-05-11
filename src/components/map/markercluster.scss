@@ -7,10 +7,9 @@
     }
     span {
       @if (lightness($color) > 50) {
-        color: rgba(black, .95);
-      }
-      @else {
-        color: rgba(white, .95);
+        color: rgba(black, 0.95);
+      } @else {
+        color: rgba(white, 0.95);
       }
     }
   }
@@ -39,6 +38,3 @@
     line-height: $size;
   }
 }
-
-
-

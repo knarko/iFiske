@@ -117,10 +117,12 @@ export class ReportsProvider {
     filter,
     orgId,
     items,
-  }: { filter?: 1; orgId?: number; items?: number } = {}): Observable<Report[]> {
+  }: { filter?: 1; orgId?: number; items?: number } = {}): Observable<
+    Report[]
+  > {
     return this.api.getReports({ filter, orgId, items }).pipe(
       map((reportsObj): ApiReport[] => Object.values(reportsObj)),
-      map(reports =>
+      map((reports) =>
         reports
           // Sort most recently created first
           .sort((a, b) => b.day - a.day)
@@ -132,20 +134,27 @@ export class ReportsProvider {
                 c: new Date(report.c * 1000),
                 technique$: this.getTechnique(report.tech),
                 bait$: this.getBait(report.bait),
-                img1: report.img1 ? `${serverLocation}${report.img1}` : undefined,
-                img2: report.img2 ? `${serverLocation}${report.img2}` : undefined,
-                catches: report.catches.map(c => {
+                img1: report.img1
+                  ? `${serverLocation}${report.img1}`
+                  : undefined,
+                img2: report.img2
+                  ? `${serverLocation}${report.img2}`
+                  : undefined,
+                catches: report.catches.map((c) => {
                   return {
                     ...c,
                     fish$: this.fish.getOne(c.type),
                   };
                 }),
-                numberOfCatches: report.catches.reduce((acc, curr) => acc + curr.num, 0),
+                numberOfCatches: report.catches.reduce(
+                  (acc, curr) => acc + curr.num,
+                  0,
+                ),
               };
             },
           ),
       ),
-      tap(reports => console.log(`Reports for ${orgId}:`, reports)),
+      tap((reports) => console.log(`Reports for ${orgId}:`, reports)),
       share(),
     );
   }

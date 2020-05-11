@@ -6,6 +6,10 @@ import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [CreateAccountDetailsPage],
-  imports: [IonicPageModule.forChild(CreateAccountDetailsPage), TranslateModule, ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(CreateAccountDetailsPage),
+    TranslateModule,
+    ComponentsModule,
+  ],
 })
 export class CreateAccountDetailsPageModule {}

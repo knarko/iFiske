@@ -1,6 +1,8 @@
 <ng-container *ngIf="control && control.invalid && control.dirty && errors">
   <p *ngFor="let e of control.errors|keys" @errors>
-    <ng-container *ngIf="errors && errors[e]">{{errors[e] | translate}}</ng-container>
+    <ng-container *ngIf="errors && errors[e]"
+      >{{errors[e] | translate}}</ng-container
+    >
     <ng-container *ngIf="!errors">Error: {{e}}</ng-container>
   </p>
 </ng-container>

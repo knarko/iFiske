@@ -8,7 +8,9 @@
     <div [innerHtml]="area.note | formatInfo"></div>
   </section>
 
-  <h2 padding-horizontal class="empty" *ngIf="!products?.length">{{'errors.area.notSelling' | translate}}</h2>
+  <h2 padding-horizontal class="empty" *ngIf="!products?.length">
+    {{'errors.area.notSelling' | translate}}
+  </h2>
 
   <ion-card *ngFor="let product of products">
     <ion-card-header>
@@ -21,15 +23,31 @@
         <ion-icon name="alert"></ion-icon>
         <span [innerHtml]="product.im | formatInfo"></span>
       </section>
-      <section *ngIf="product.no" [innerHtml]="product.no | formatInfo"></section>
+      <section
+        *ngIf="product.no"
+        [innerHtml]="product.no | formatInfo"
+      ></section>
       <hr />
       <section class="purchase-buttons">
-        <button ion-button icon-left color="secondary" class="rules-button" (click)="openRules(product)">
+        <button
+          ion-button
+          icon-left
+          color="secondary"
+          class="rules-button"
+          (click)="openRules(product)"
+        >
           {{'Rules' | translate}}
         </button>
-        <button ion-button icon-left color="primary" *ngFor="let type of product.methods" (click)="buy(product, type)">
+        <button
+          ion-button
+          icon-left
+          color="primary"
+          *ngFor="let type of product.methods"
+          (click)="buy(product, type)"
+        >
           <ion-icon [name]="type.icon"></ion-icon>
-          {{(product.methods.length === 1 ? 'Purchase' : type.name) | translate}}
+          {{(product.methods.length === 1 ? 'Purchase' : type.name) |
+          translate}}
         </button>
       </section>
     </ion-card-content>

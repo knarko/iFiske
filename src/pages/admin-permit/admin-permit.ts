@@ -45,7 +45,7 @@ export class AdminPermitPage {
     }
   }
   ionViewWillLeave() {
-    this.subs.forEach(sub => sub.unsubscribe());
+    this.subs.forEach((sub) => sub.unsubscribe());
     this.subs = [];
   }
 
@@ -81,7 +81,7 @@ export class AdminPermitPage {
 
     this.subs.push(
       this.permit$.subscribe(
-        permit => {
+        (permit) => {
           this.permit = permit;
           dismissLoading();
         },
@@ -116,7 +116,7 @@ export class AdminPermitPage {
         },
       ],
     });
-    const role = await new Promise(resolve => {
+    const role = await new Promise((resolve) => {
       alert.onDidDismiss((_, role) => resolve(role));
     });
     if (role !== 'confirm') {

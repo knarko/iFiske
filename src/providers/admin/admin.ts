@@ -18,7 +18,12 @@ import { catchError } from 'rxjs/operators/catchError';
 import { SessionProvider } from '../session/session';
 import { getPermitValidity } from '../../util';
 
-import { AdminOrganization, AdminPermit, AdminPermitSearchResult, LogEntry } from './adminTypes';
+import {
+  AdminOrganization,
+  AdminPermit,
+  AdminPermitSearchResult,
+  LogEntry,
+} from './adminTypes';
 type PermitCache = {
   observable: Observable<AdminPermit>;
   subject: ReplaySubject<{ permit: AdminPermit; prio: number }>;
@@ -81,7 +86,9 @@ export class AdminProvider extends BaseModel {
 
   private _orgId: number;
 
-  lastUpdated?: number = JSON.parse(localStorage.getItem(AdminProvider.LAST_UPDATED));
+  lastUpdated?: number = JSON.parse(
+    localStorage.getItem(AdminProvider.LAST_UPDATED),
+  );
 
   get orgId() {
     return this._orgId;
@@ -93,7 +100,7 @@ export class AdminProvider extends BaseModel {
       return;
     }
     this.getOrganization(orgId).then(
-      org => {
+      (org) => {
         this.currentOrganization.next(org);
         localStorage.setItem(AdminProvider.CURRENT_ORGANIZATION, '' + orgId);
       },
@@ -115,21 +122,21 @@ export class AdminProvider extends BaseModel {
     this.initialize();
 
     this.isAdmin = this.userProvider.loggedIn.pipe(
-      switchMap(loggedIn => {
+      switchMap((loggedIn) => {
         if (!loggedIn) {
           return of(false);
         }
-        return this.currentOrganization.pipe(map(org => !!org));
+        return this.currentOrganization.pipe(map((org) => !!org));
       }),
     );
 
     this.userProvider.loggedIn.subscribe(() => this.update(true));
 
-    this.isAdmin.subscribe(admin => {
+    this.isAdmin.subscribe((admin) => {
       if (!admin) {
         this.orgId = undefined;
       } else {
-        this.getOrganizations().then(orgs => {
+        this.getOrganizations().then((orgs) => {
           this.numberOfOrganizations = orgs.length;
         });
       }
@@ -138,7 +145,10 @@ export class AdminProvider extends BaseModel {
 
   setLastUpdated() {
     this.lastUpdated = Date.now();
-    localStorage.setItem(AdminProvider.LAST_UPDATED, JSON.stringify(this.lastUpdated));
+    localStorage.setItem(
+      AdminProvider.LAST_UPDATED,
+      JSON.stringify(this.lastUpdated),
+    );
   }
 
   async update(skipWait?: boolean): Promise<boolean> {
@@ -154,16 +164,22 @@ export class AdminProvider extends BaseModel {
       let deletePermits = true;
       const orgs: Dictionary<AdminOrganization> = await this.API.user_organizations();
       const organizations = Object.values(orgs);
-      organizations.forEach(org => (org.ID = (org as any).orgid));
+      organizations.forEach((org) => (org.ID = (org as any).orgid));
 
       await this.DB.populateTable(this.tables.organizations, orgs);
 
-      const orgPermits = await Promise.all(organizations.map(async org => this.API.adm_products(org.ID)));
+      const orgPermits = await Promise.all(
+        organizations.map(async (org) => this.API.adm_products(org.ID)),
+      );
 
       await organizations.map((org, i) => {
         const permits = orgPermits[i];
-        Object.values(permits).forEach(permit => (permit.suborgid = org.ID));
-        const populated = this.DB.populateTable(this.tables.permits, permits, deletePermits);
+        Object.values(permits).forEach((permit) => (permit.suborgid = org.ID));
+        const populated = this.DB.populateTable(
+          this.tables.permits,
+          permits,
+          deletePermits,
+        );
         deletePermits = false;
         return populated;
       });
@@ -207,8 +223,10 @@ export class AdminProvider extends BaseModel {
   private async setDefaultOrgId() {
     const organizations = await this.getOrganizations();
     if (organizations.length) {
-      const orgId = Number(localStorage.getItem(AdminProvider.CURRENT_ORGANIZATION));
-      if (organizations.find(org => org.ID === orgId)) {
+      const orgId = Number(
+        localStorage.getItem(AdminProvider.CURRENT_ORGANIZATION),
+      );
+      if (organizations.find((org) => org.ID === orgId)) {
         this.orgId = orgId;
       } else {
         this.orgId = organizations[0].ID;
@@ -218,10 +236,10 @@ export class AdminProvider extends BaseModel {
 
   stats() {
     return this.currentOrganization.pipe(
-      filter(org => !!org),
-      switchMap(org => {
+      filter((org) => !!org),
+      switchMap((org) => {
         return this.API.admGetStats(org.ID).pipe(
-          map(stats => stats[org.ID]),
+          map((stats) => stats[org.ID]),
           catchError(() => of(undefined)),
         );
       }),
@@ -230,7 +248,9 @@ export class AdminProvider extends BaseModel {
 
   @DBMethod
   async getOrganization(orgID: number) {
-    return this.DB.getSingle(`SELECT * FROM Admin_Organizations WHERE ID = ?`, [orgID]);
+    return this.DB.getSingle(`SELECT * FROM Admin_Organizations WHERE ID = ?`, [
+      orgID,
+    ]);
   }
 
   @DBMethod
@@ -280,7 +300,9 @@ export class AdminProvider extends BaseModel {
     } else {
       subject = new ReplaySubject<{ permit: AdminPermit; prio: number }>(1);
       observable = subject.asObservable().pipe(
-        filter(({ permit, prio }) => permit && (!foundPermit || prio >= savedPrio)),
+        filter(
+          ({ permit, prio }) => permit && (!foundPermit || prio >= savedPrio),
+        ),
         tap(({ prio }) => {
           savedPrio = prio;
           foundPermit = true;
@@ -289,14 +311,14 @@ export class AdminProvider extends BaseModel {
           return this.transformPermit(permit);
         }),
         shareReplay(1),
-        tap(permit => console.log(permit)),
+        tap((permit) => console.log(permit)),
       );
 
       this.permits.set(code, { subject, observable });
     }
 
-    this.getDBPermit(code).catch(err => console.warn(err));
-    this.getApiPermit(code).catch(err => {
+    this.getDBPermit(code).catch((err) => console.warn(err));
+    this.getApiPermit(code).catch((err) => {
       if (!foundPermit) {
         subject.error(err);
       } else {
@@ -370,7 +392,7 @@ export class AdminProvider extends BaseModel {
     }
     const validity = getPermitValidity(permit);
     const log = Array.isArray(permit.log)
-      ? permit.log.map(log => ({
+      ? permit.log.map((log) => ({
           ...log,
           action: getLogAction(log),
           t: log.t *= 1000,

@@ -1,4 +1,12 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -24,7 +32,10 @@ export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
   private fullscreen: Observable<{}>;
   private destroyed$ = new Subject<void>();
 
-  constructor(private sanitizer: DomSanitizer, private orientation: ScreenOrientation) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private orientation: ScreenOrientation,
+  ) {
     this.fullscreen = merge(
       fromEvent(document, 'fullscreenchange'),
       fromEvent(document, 'webkitfullscreenchange'),
@@ -45,19 +56,27 @@ export class YoutubeComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.fullscreen.takeUntil(this.destroyed$).subscribe(
-      e => {
+      (e) => {
         const fullScreenElement =
-          document.fullscreenElement || document.webkitFullscreenElement || (document as any).mozFullscreenElement;
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          (document as any).mozFullscreenElement;
         console.log('Changing fullscreen mode', e, fullScreenElement);
         if (fullScreenElement) {
-          this.orientation.lock(this.orientation.ORIENTATIONS.LANDSCAPE).catch(console.warn);
+          this.orientation
+            .lock(this.orientation.ORIENTATIONS.LANDSCAPE)
+            .catch(console.warn);
         } else {
-          this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY).catch(console.warn);
+          this.orientation
+            .lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY)
+            .catch(console.warn);
         }
       },
       undefined,
       () => {
-        this.orientation.lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY).catch(console.warn);
+        this.orientation
+          .lock(this.orientation.ORIENTATIONS.PORTRAIT_PRIMARY)
+          .catch(console.warn);
       },
     );
   }

@@ -1,5 +1,7 @@
 <ion-list class="catches-list" *ngIf="catches">
-  <ion-item *ngIf="!catches.length">{{'ui.reports.no_catch' | translate}}</ion-item>
+  <ion-item *ngIf="!catches.length"
+    >{{'ui.reports.no_catch' | translate}}</ion-item
+  >
   <ion-item *ngFor="let catch of catches" (click)="openFish(catch)" tappable>
     <div class="list-wrap">
       <div class="catch-fish" *ngIf="catch.fish$ | async as fish">
@@ -11,8 +13,8 @@
         <div class="catch-info-part">
           <span *ngIf="catch.num > 0">{{ catch.num }}</span>
           <span
-            >{{('ui.reports.amount.' + (catch.num === 1 ? 'single' : 'multiple')) |
-            translate}}</span
+            >{{('ui.reports.amount.' + (catch.num === 1 ? 'single' :
+            'multiple')) | translate}}</span
           >
         </div>
         <div class="catch-info-part">
@@ -21,7 +23,9 @@
           </ng-container>
         </div>
         <div class="catch-info-part">
-          <ng-container *ngIf="catch.cm"><span>{{catch.cm}}</span><span>cm</span></ng-container>
+          <ng-container *ngIf="catch.cm"
+            ><span>{{catch.cm}}</span><span>cm</span></ng-container
+          >
         </div>
       </div>
     </div>

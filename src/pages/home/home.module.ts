@@ -6,6 +6,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [HomePage],
-  imports: [IonicPageModule.forChild(HomePage), TranslateModule.forChild(), ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(HomePage),
+    TranslateModule.forChild(),
+    ComponentsModule,
+  ],
 })
 export class HomePageModule {}

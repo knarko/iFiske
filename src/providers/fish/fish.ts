@@ -53,7 +53,11 @@ export class FishProvider extends BaseModel<Fish> {
     },
   ];
 
-  constructor(protected API: ApiProvider, protected DB: DatabaseProvider, private imgcache: ImgcacheService) {
+  constructor(
+    protected API: ApiProvider,
+    protected DB: DatabaseProvider,
+    private imgcache: ImgcacheService,
+  ) {
     super();
     this.initialize();
   }

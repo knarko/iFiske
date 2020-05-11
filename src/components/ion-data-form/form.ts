@@ -1,5 +1,12 @@
 import { ReflectiveInjector } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  AsyncValidatorFn,
+} from '@angular/forms';
 import { Dictionary } from '../../types';
 
 export interface FormControl {
@@ -40,7 +47,9 @@ export class Form {
   private builder: FormBuilder;
 
   constructor(form: FormOptions) {
-    this.builder = ReflectiveInjector.resolveAndCreate([FormBuilder]).get(FormBuilder);
+    this.builder = ReflectiveInjector.resolveAndCreate([FormBuilder]).get(
+      FormBuilder,
+    );
 
     this.submitHandler = form.submit;
     this.submitMessage = form.submitMessage;
@@ -48,14 +57,21 @@ export class Form {
     this.errors = form.errors;
     const groupOptions = {};
     for (let id in this.controls) {
-      groupOptions[id] = ['', this.controls[id].validators || [], this.controls[id].asyncValidators || []];
+      groupOptions[id] = [
+        '',
+        this.controls[id].validators || [],
+        this.controls[id].asyncValidators || [],
+      ];
       this.controlArray.push(this.controls[id]);
     }
     this.group = this.builder.group(groupOptions);
     for (let id in this.controls) {
       this.controls[id].control = this.group.controls[id];
       const validators = this.controls[id].validators;
-      if (validators && validators.some(validator => validator === Validators.required)) {
+      if (
+        validators &&
+        validators.some((validator) => validator === Validators.required)
+      ) {
         this.controls[id].required = true;
       }
     }

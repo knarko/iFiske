@@ -11,7 +11,10 @@ export class PermitLogComponent {
   @Input() permit: AdminPermit;
 
   logText = '';
-  constructor(private admin: AdminProvider, private loadingCtrl: TranslateLoadingController) {}
+  constructor(
+    private admin: AdminProvider,
+    private loadingCtrl: TranslateLoadingController,
+  ) {}
 
   async checkLog() {
     const loading = await this.loadingCtrl.show({ content: 'Loading' });

@@ -18,13 +18,18 @@ export class DatabaseProvider {
           location: 'default',
         });
       })
-      .catch(err => {
+      .catch((err) => {
         if ((window as any).openDatabase) {
-          let db = (window as any).openDatabase('fiskebasen.db', '', 'fiskebasen', 10 * 1024 * 1024);
+          let db = (window as any).openDatabase(
+            'fiskebasen.db',
+            '',
+            'fiskebasen',
+            10 * 1024 * 1024,
+          );
           // tslint:disable-next-line:only-arrow-functions
           db.executeSql = function executeSql(statement, params) {
             return new Promise((resolve, reject) => {
-              db.transaction(tx => {
+              db.transaction((tx) => {
                 tx.executeSql(
                   statement,
                   params,
@@ -50,7 +55,7 @@ export class DatabaseProvider {
           return Promise.reject(err);
         }
       })
-      .then(db => {
+      .then((db) => {
         this.db = db;
         return db;
       });
@@ -94,7 +99,7 @@ export class DatabaseProvider {
    */
   @DBMethod
   async getMultiple(sql: string, args?): Promise<any[]> {
-    return this.db.executeSql(sql, args).then(result => {
+    return this.db.executeSql(sql, args).then((result) => {
       if (result.rows.length) {
         return Promise.resolve(this.createObject(result));
       } else {
@@ -117,7 +122,7 @@ export class DatabaseProvider {
    */
   @DBMethod
   async getSingle(sql: string, args?: any[]) {
-    return this.getMultiple(sql, args).then(result => {
+    return this.getMultiple(sql, args).then((result) => {
       if (!result || !result.length) {
         throw new Error(`Could not find any objects for '${sql}'`);
       }
@@ -133,30 +138,37 @@ export class DatabaseProvider {
    */
   @DBMethod
   async populateTable(table: TableDef, data, shouldDelete = true) {
-    return this.db.transaction(tx => {
+    return this.db.transaction((tx) => {
       if (shouldDelete) {
         tx.executeSql('DELETE FROM ' + table.name + ';');
       }
 
-      (Array.isArray(data) ? data : Object.values(data)).forEach(singleData => {
-        var insertData = [];
-        for (var member in table.members) {
-          /*
-           * We need to remove some line separators because of a bug in cordova
-           * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
-           */
-          if (singleData[member] != undefined) {
-            const escapedData = ('' + singleData[member]).replace(/[\u2028\u2029]/g, '\n');
-            insertData.push(escapedData);
-          } else {
-            insertData.push(null);
+      (Array.isArray(data) ? data : Object.values(data)).forEach(
+        (singleData) => {
+          var insertData = [];
+          for (var member in table.members) {
+            /*
+             * We need to remove some line separators because of a bug in cordova
+             * See https://github.com/litehelpers/Cordova-sqlite-storage/issues/147
+             */
+            if (singleData[member] != undefined) {
+              const escapedData = ('' + singleData[member]).replace(
+                /[\u2028\u2029]/g,
+                '\n',
+              );
+              insertData.push(escapedData);
+            } else {
+              insertData.push(null);
+            }
           }
-        }
-        var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(insertData.length)
-          .fill('?')
-          .join(',')})`;
-        tx.executeSql(query, insertData);
-      });
+          var query = `INSERT OR IGNORE INTO ${table.name} VALUES(${Array(
+            insertData.length,
+          )
+            .fill('?')
+            .join(',')})`;
+          tx.executeSql(query, insertData);
+        },
+      );
     });
   }
 
@@ -169,7 +181,8 @@ export class DatabaseProvider {
      */
     var tableMembers = [];
     for (var member in table.members) {
-      if (table.members.hasOwnProperty(member)) tableMembers.push('"' + member + '" ' + table.members[member]);
+      if (table.members.hasOwnProperty(member))
+        tableMembers.push('"' + member + '" ' + table.members[member]);
     }
 
     var query = `
@@ -179,7 +192,9 @@ export class DatabaseProvider {
         );`;
 
     /* Remake the table if the schema has changed */
-    return this.runSql('SELECT sql from sqlite_master where name is "' + table.name + '"').then(result => {
+    return this.runSql(
+      'SELECT sql from sqlite_master where name is "' + table.name + '"',
+    ).then((result) => {
       if (!result.rows.length) {
         // There is no table, make it
         return this.runSql(query);
@@ -190,10 +205,14 @@ export class DatabaseProvider {
       while ((regexResult = re.exec(result.rows.item(0).sql))) {
         oldTable[regexResult[1]] = regexResult[2];
       }
-      const matched = result.rows.item(0).sql.match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
+      const matched = result.rows
+        .item(0)
+        .sql.match(/PRIMARY KEY\(\s*"?(\w+)"?\s*\)/i);
       const primaryKey = matched && matched.length > 1 ? matched[1] : undefined;
       if (!isEqual(table.members, oldTable) || table.primary !== primaryKey) {
-        console.log(table.name + ' needs to update since the schema has changed.');
+        console.log(
+          table.name + ' needs to update since the schema has changed.',
+        );
         return this.clean(table.name).then(() => {
           return this.runSql(query);
         });
@@ -203,7 +222,7 @@ export class DatabaseProvider {
 
   @DBMethod
   async cleanTable(table: string) {
-    return this.db.transaction(tx => {
+    return this.db.transaction((tx) => {
       tx.executeSql('DELETE FROM ' + table + ';');
     });
   }

@@ -75,8 +75,10 @@ export class TechniqueProvider extends BaseModel<Technique> {
   }
 
   private getCachedImages(images: string[]): Promise<string[]> {
-    return Promise.all(images.map(img => this.imgcache.getCachedFile(img))).then(imgs =>
-      imgs.map(img => this.sanitizer.bypassSecurityTrustUrl(img) as string),
+    return Promise.all(
+      images.map((img) => this.imgcache.getCachedFile(img)),
+    ).then((imgs) =>
+      imgs.map((img) => this.sanitizer.bypassSecurityTrustUrl(img) as string),
     );
   }
 }

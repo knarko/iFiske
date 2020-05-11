@@ -19,7 +19,11 @@ import { Fish, FishProvider } from '../../providers/fish/fish';
 export class SpeciesPage {
   items: Fish[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fish: FishProvider) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private fish: FishProvider,
+  ) {}
 
   async ngOnInit() {
     this.items = await this.fish.getAll();

@@ -25,6 +25,7 @@ export class IonDataFormComponent {
   submitIsDisabled() {
     return this.disableSubmit != undefined
       ? this.disableSubmit
-      : !(this.form.group && this.form.group.valid) && this.form.group.hasError('custom');
+      : !(this.form.group && this.form.group.valid) &&
+          this.form.group.hasError('custom');
   }
 }

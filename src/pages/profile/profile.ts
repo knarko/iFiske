@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../providers/user/userTypes';
-import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import {
+  DeepLinks,
+  DeepLinksProvider,
+} from '../../providers/deep-links/deep-links';
 
 @IonicPage()
 @Component({
@@ -24,8 +27,8 @@ export class ProfilePage {
   ) {}
 
   ionViewWillEnter() {
-    this.userProvider.getInfo().then(user => (this.user = user));
-    this.userProvider.getNumbers().then(numbers => (this.numbers = numbers));
+    this.userProvider.getInfo().then((user) => (this.user = user));
+    this.userProvider.getNumbers().then((numbers) => (this.numbers = numbers));
   }
 
   close() {

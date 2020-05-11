@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, OnChanges, Renderer, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  Renderer,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import { Config, Ion } from 'ionic-angular';
 
 @Component({

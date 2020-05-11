@@ -12,7 +12,12 @@
         [placeholder]="'Search' | translate"
       ></ion-searchbar>
 
-      <button ion-button icon-only class="search-extra-button" (click)="openFilterModal()">
+      <button
+        ion-button
+        icon-only
+        class="search-extra-button"
+        (click)="openFilterModal()"
+      >
         <ion-icon name="funnel"></ion-icon>
         <ion-badge
           *ngIf="numberOfFilteredTitles$ | async; let numberOfFilteredTitles"
@@ -22,7 +27,12 @@
         >
       </button>
 
-      <button ion-button icon-only class="search-extra-button" (click)="refresh()">
+      <button
+        ion-button
+        icon-only
+        class="search-extra-button"
+        (click)="refresh()"
+      >
         <ion-icon name="refresh"></ion-icon>
       </button>
     </form>
@@ -43,10 +53,19 @@
   </ion-list>
   <ion-list>
     <ng-container *ngFor="let item of permits">
-      <ion-list-header (click)="fold(item)" [ngClass]="'list-header-' + item.key">
+      <ion-list-header
+        (click)="fold(item)"
+        [ngClass]="'list-header-' + item.key"
+      >
         <ion-icon item-start [name]="item.icon"></ion-icon>
-        <span>{{item.title | translate}}: {{item.permits.length}} {{'ui.general.shortAmount' | translate}}</span>
-        <ion-icon item-end [name]="item.folded ? 'arrow-dropright' : 'arrow-dropdown'"></ion-icon>
+        <span
+          >{{item.title | translate}}: {{item.permits.length}}
+          {{'ui.general.shortAmount' | translate}}</span
+        >
+        <ion-icon
+          item-end
+          [name]="item.folded ? 'arrow-dropright' : 'arrow-dropdown'"
+        ></ion-icon>
       </ion-list-header>
       <ng-container *ngIf="!item.folded">
         <ng-container *ngIf="!hasResults; else highlightResults">

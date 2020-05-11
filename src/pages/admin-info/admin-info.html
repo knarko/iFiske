@@ -9,9 +9,18 @@
       <span>{{'ui.admin.userLevel.' + org.level | translate}}</span>
     </div>
 
-    <p>{{'ui.admin.since:date' | translate : (org.at * 1000 | date: 'longDate' | mkObject: 'date')}}</p>
+    <p>
+      {{'ui.admin.since:date' | translate : (org.at * 1000 | date: 'longDate' |
+      mkObject: 'date')}}
+    </p>
 
-    <button *ngIf="admin.numberOfOrganizations > 1" ion-button icon-left block (click)="admin.pickOrganization()">
+    <button
+      *ngIf="admin.numberOfOrganizations > 1"
+      ion-button
+      icon-left
+      block
+      (click)="admin.pickOrganization()"
+    >
       <ion-icon name="contact"></ion-icon>
       {{'ui.admin.changeOrgButton' | translate}}
     </button>
@@ -28,7 +37,8 @@
 
   <p padding>
     {{'More in control panel' | translate}}
-    <button ion-button block (click)="openControlPanel()">{{'Open control panel' | translate}}</button>
+    <button ion-button block (click)="openControlPanel()">
+      {{'Open control panel' | translate}}
+    </button>
   </p>
-
 </ion-content>

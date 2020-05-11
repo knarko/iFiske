@@ -43,4 +43,7 @@ export interface SearchMatch {
   value: string;
 }
 
-export type AdminPermitSearchResult = AdminPermit & { score?: number; matches?: SearchMatch[] };
+export type AdminPermitSearchResult = AdminPermit & {
+  score?: number;
+  matches?: SearchMatch[];
+};

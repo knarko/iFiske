@@ -3,7 +3,10 @@
 </ion-header>
 
 <ion-content>
-  <p class="text-center" *ngIf="(organization | async)?.level === 0; else stats">
+  <p
+    class="text-center"
+    *ngIf="(organization | async)?.level === 0; else stats"
+  >
     {{'ui.admin.stats.noAccess' | translate}}
   </p>
   <ng-template #stats>

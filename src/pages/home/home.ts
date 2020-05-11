@@ -29,7 +29,12 @@ export class HomePage {
   showAdmin = this.adminProvider.isAdmin;
 
   links: Link[] = [
-    { title: 'Control panel', icon: 'unlock', uri: 'AdminPage', show: this.showAdmin },
+    {
+      title: 'Control panel',
+      icon: 'unlock',
+      uri: 'AdminPage',
+      show: this.showAdmin,
+    },
     { title: 'Fishing Areas', icon: 'ifiske-fishing', uri: 'AreasPage' },
     { title: 'Map', icon: 'map', uri: 'MapPage' },
     {
@@ -43,7 +48,11 @@ export class HomePage {
         }
       },
     },
-    { title: 'Information', icon: 'information-circle', uri: 'InformationPage' },
+    {
+      title: 'Information',
+      icon: 'information-circle',
+      uri: 'InformationPage',
+    },
   ];
 
   constructor(

@@ -4,7 +4,12 @@ import { SettingsProvider } from '../settings/settings';
 import { TranslateAlertController } from '../translate-alert-controller/translate-alert-controller';
 import { Dictionary, Overwrite } from '../../types';
 import { ApiProvider } from '../api/api';
-import { OneSignal, OSNotificationOpenedResult, OSNotificationPayload, OSNotification } from '@ionic-native/onesignal';
+import {
+  OneSignal,
+  OSNotificationOpenedResult,
+  OSNotificationPayload,
+  OSNotification,
+} from '@ionic-native/onesignal';
 import { oneSignalConfig } from '../../app/config';
 import { UserProvider } from '../../providers/user/user';
 import { User } from '../../providers/user/userTypes';
@@ -19,16 +24,27 @@ interface IfiskeNotification {
 }
 
 export interface PushHandler {
-  (notification: Overwrite<OSNotificationPayload, { additionalData: IfiskeNotification }>): Promise<void> | void;
+  (
+    notification: Overwrite<
+      OSNotificationPayload,
+      { additionalData: IfiskeNotification }
+    >,
+  ): Promise<void> | void;
 }
 
 @Injectable()
 export class PushProvider {
   private user: User;
-  private static readonly TAGS = ['marketing', 'developer', 'user_id', 'username', 'email'];
+  private static readonly TAGS = [
+    'marketing',
+    'developer',
+    'user_id',
+    'username',
+    'email',
+  ];
 
   token: string;
-  private defaultHandler: PushHandler = notification => {
+  private defaultHandler: PushHandler = (notification) => {
     this.alertCtrl.show(
       {
         message: notification.additionalData.message,
@@ -44,13 +60,15 @@ export class PushProvider {
      * code: fishing permit code
      */
     NEW: [
-      notification => {
+      (notification) => {
         if (notification.additionalData.code) {
           const navCtrl = this.app.getRootNavs()[0];
           if (!navCtrl) {
             return;
           }
-          navCtrl.push('PermitDetailPage', { ID: notification.additionalData.code });
+          navCtrl.push('PermitDetailPage', {
+            ID: notification.additionalData.code,
+          });
         }
       },
     ],
@@ -62,8 +80,11 @@ export class PushProvider {
      * code: fishing permit code,
      */
     REP_REQ: [
-      notification => {
-        if (notification.additionalData.orgid && notification.additionalData.code) {
+      (notification) => {
+        if (
+          notification.additionalData.orgid &&
+          notification.additionalData.code
+        ) {
           this.alertCtrl.show({
             title: 'Do you want to create a catch report?',
             buttons: [
@@ -93,7 +114,7 @@ export class PushProvider {
      * RepId: ID of the new report
      */
     NEW_FAV: [
-      notification => {
+      (notification) => {
         if (notification.additionalData.repid) {
           // this.navCtrl.push('app.report', {id: notification.repid});
         }
@@ -106,7 +127,7 @@ export class PushProvider {
      * message: a string that we should Display
      */
     NOTE: [
-      notification => {
+      (notification) => {
         if (notification.additionalData.message) {
           this.alertCtrl.show(
             {
@@ -131,28 +152,33 @@ export class PushProvider {
     private userProvider: UserProvider,
   ) {
     this.plt.ready().then(() => {
-      this.oneSignal.startInit(oneSignalConfig.appId, oneSignalConfig.googleProjectNumber);
+      this.oneSignal.startInit(
+        oneSignalConfig.appId,
+        oneSignalConfig.googleProjectNumber,
+      );
 
       this.oneSignal.iOSSettings({
         kOSSettingsKeyAutoPrompt: false,
         kOSSettingsKeyInAppLaunchURL: false,
       });
 
-      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+      this.oneSignal.inFocusDisplaying(
+        this.oneSignal.OSInFocusDisplayOption.Notification,
+      );
 
       this.oneSignal.handleNotificationReceived().subscribe(this.onReceived);
       this.oneSignal.handleNotificationOpened().subscribe(this.onOpened);
 
       this.oneSignal.endInit();
 
-      this.settings.settingsChanged.subscribe(settings => {
+      this.settings.settingsChanged.subscribe((settings) => {
         this.oneSignal.setSubscription(settings.push);
       });
     });
-    this.userProvider.loggedIn.subscribe(loggedIn => {
+    this.userProvider.loggedIn.subscribe((loggedIn) => {
       if (loggedIn) {
         this.register();
-        this.userProvider.getInfo().then(data => {
+        this.userProvider.getInfo().then((data) => {
           this.setUserDetails(data);
         });
       } else {
@@ -166,7 +192,9 @@ export class PushProvider {
       this.unregister();
     }
 
-    const { permissionStatus } = await this.oneSignal.getPermissionSubscriptionState();
+    const {
+      permissionStatus,
+    } = await this.oneSignal.getPermissionSubscriptionState();
     if (!permissionStatus.hasPrompted || permissionStatus.status === 0) {
       const accepted = await this.oneSignal.promptForPushNotificationsWithUserResponse();
       if (!accepted) {

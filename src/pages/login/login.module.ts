@@ -7,6 +7,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [LoginPage],
-  imports: [IonicPageModule.forChild(LoginPage), TranslateModule.forChild(), ReactiveFormsModule, ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(LoginPage),
+    TranslateModule.forChild(),
+    ReactiveFormsModule,
+    ComponentsModule,
+  ],
 })
 export class LoginPageModule {}

@@ -111,11 +111,11 @@ export class DeployProvider {
         .deploy()
         .download()
         .pipe(
-          tap(status => console.log('Download status:', status)),
-          filter(status => status === 'true' || status === 'done'),
+          tap((status) => console.log('Download status:', status)),
+          filter((status) => status === 'true' || status === 'done'),
           switchMap(() => this.pro.deploy().extract()),
-          tap(status => console.log('Extract status:', status)),
-          filter(status => status === 'true' || status === 'done'),
+          tap((status) => console.log('Extract status:', status)),
+          filter((status) => status === 'true' || status === 'done'),
           take(1),
           timeout(30 * 1000),
         )
@@ -137,7 +137,7 @@ export class DeployProvider {
           ],
         });
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           alert.onDidDismiss((_, role) => {
             if (role === 'install') {
               this.pro.deploy().redirect();

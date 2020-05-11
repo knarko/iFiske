@@ -113,6 +113,6 @@ export class ProductProvider extends BaseModel<Product> {
         'ORDER BY so',
       ].join(' '),
       [areaID],
-    ).then(products => products.map(this.transform));
+    ).then((products) => products.map(this.transform));
   }
 }

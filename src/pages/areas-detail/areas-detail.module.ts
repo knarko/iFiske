@@ -5,6 +5,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AreasDetailPage],
-  imports: [IonicPageModule.forChild(AreasDetailPage), TranslateModule.forChild()],
+  imports: [
+    IonicPageModule.forChild(AreasDetailPage),
+    TranslateModule.forChild(),
+  ],
 })
 export class AreasDetailPageModule {}

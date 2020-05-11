@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  AsyncValidatorFn,
+  AbstractControl,
+} from '@angular/forms';
 import { timer } from 'rxjs/observable/timer';
 import { switchMap } from 'rxjs/operators';
 
 import { ApiProvider, IFISKE_ERRORS } from '../../providers/api/api';
 import { Form } from '../../components/ion-data-form/form';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
-import { UserDetails, CreateAccountProvider } from '../../providers/create-account/create-account';
+import {
+  UserDetails,
+  CreateAccountProvider,
+} from '../../providers/create-account/create-account';
 import { TranslateAlertController } from '../../providers/translate-alert-controller/translate-alert-controller';
 import { TermsProvider } from '../../providers/terms/terms';
 import { validators } from '../../util';
@@ -27,7 +35,7 @@ export class CreateAccountDetailsPage {
     return timer(500).pipe(
       switchMap(() => {
         return this.API.user_exists(c.value)
-          .then(res => {
+          .then((res) => {
             return res ? { taken: true } : null;
           })
           .catch(() => ({ network: true }));
@@ -38,7 +46,7 @@ export class CreateAccountDetailsPage {
     return timer(500).pipe(
       switchMap(() => {
         return this.API.user_exists(undefined, c.value)
-          .then(res => {
+          .then((res) => {
             return res ? { taken: true } : null;
           })
           .catch(() => ({ network: true }));
@@ -134,7 +142,9 @@ export class CreateAccountDetailsPage {
     });
     try {
       await this.createAccountProvider.register(userDetails);
-      return this.navCtrl.push('CreateAccountVerifyPage', { username: userDetails.username });
+      return this.navCtrl.push('CreateAccountVerifyPage', {
+        username: userDetails.username,
+      });
     } catch (err) {
       this.form.group.setErrors({ register: true });
       const { email, username, phone } = this.form.group.controls;
@@ -176,7 +186,7 @@ export class CreateAccountDetailsPage {
         },
         ['title'],
       );
-      const role = await new Promise(resolve => {
+      const role = await new Promise((resolve) => {
         alert.onDidDismiss((_, role) => resolve(role));
       });
       if (role !== 'accept') {

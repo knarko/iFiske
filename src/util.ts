@@ -16,24 +16,38 @@ export function getPermitValidity(product: Permit | AdminPermit) {
 }
 
 export const validators = {
-  password: [Validators.required, Validators.minLength(6), Validators.maxLength(16)],
-  fullname: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
+  password: [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.maxLength(16),
+  ],
+  fullname: [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(50),
+  ],
   phone: [Validators.required, Validators.pattern(/^\+?[\d\-\s\(\)]{5,25}$/)],
-  username: [Validators.required, Validators.minLength(5), Validators.maxLength(25)],
+  username: [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(25),
+  ],
   activationCode: [Validators.required, Validators.pattern(/^\d{4}$/)],
 };
 
-export const resolveOrRejectAllPromises = async <T>(promises: Promise<T>[]): Promise<T[]> => {
+export const resolveOrRejectAllPromises = async <T>(
+  promises: Promise<T>[],
+): Promise<T[]> => {
   const results = [];
   const errors = [];
 
   await Promise.all(
-    promises.map(promise => {
+    promises.map((promise) => {
       return promise.then(
-        result => {
+        (result) => {
           results.push(result);
         },
-        error => {
+        (error) => {
           errors.push(error);
         },
       );

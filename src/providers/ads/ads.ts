@@ -14,23 +14,29 @@ interface Ad {
 
 @Injectable()
 export class AdsProvider {
-  constructor(public API: ApiProvider, private imgcache: ImgcacheService, private sanitizer: DomSanitizer) {}
+  constructor(
+    public API: ApiProvider,
+    private imgcache: ImgcacheService,
+    private sanitizer: DomSanitizer,
+  ) {}
 
   getAdsForHome(): Observable<any[]> {
     return this.API.getAdsMain().pipe(
       map((ads: Ad[]) => {
-        return ads.filter(ad => {
+        return ads.filter((ad) => {
           const start = new Date(ad.start).getTime();
           const end = new Date(ad.end).getTime();
           const now = new Date().getTime();
           return start < now && now < end;
         });
       }),
-      switchMap(ads => {
+      switchMap((ads) => {
         return Promise.all(
-          ads.map(async ad => {
+          ads.map(async (ad) => {
             const img = await this.imgcache.getCachedFile(ad.app_imageurl);
-            ad.app_imageurl = this.sanitizer.bypassSecurityTrustUrl(img) as string;
+            ad.app_imageurl = this.sanitizer.bypassSecurityTrustUrl(
+              img,
+            ) as string;
             return ad;
           }),
         );

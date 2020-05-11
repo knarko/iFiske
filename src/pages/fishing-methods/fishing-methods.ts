@@ -12,8 +12,12 @@ import { TechniqueProvider } from '../../providers/technique/technique';
 export class FishingMethodsPage {
   items: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tech: TechniqueProvider) {
-    this.tech.getAll().then(tech => (this.items = tech));
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private tech: TechniqueProvider,
+  ) {
+    this.tech.getAll().then((tech) => (this.items = tech));
   }
 
   goto(item) {

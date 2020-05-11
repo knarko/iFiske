@@ -6,6 +6,10 @@ import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [AreasDetailMapPage],
-  imports: [IonicPageModule.forChild(AreasDetailMapPage), TranslateModule.forChild(), ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(AreasDetailMapPage),
+    TranslateModule.forChild(),
+    ComponentsModule,
+  ],
 })
 export class AreasDetailMapPageModule {}

@@ -1,4 +1,10 @@
-import { Component, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { NavController, Navbar } from 'ionic-angular';
 
 @Component({

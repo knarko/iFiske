@@ -1,13 +1,21 @@
 <div class="background" [ngClass]="'bg-' + permit.validity"></div>
 <h2 *ngIf="permit === null">{{ 'The permit does not exist' | translate }}</h2>
-<div *ngIf="permit" class="flip" #backgroundPosWrapper [ngClass]="'permit-' + permit.validity">
+<div
+  *ngIf="permit"
+  class="flip"
+  #backgroundPosWrapper
+  [ngClass]="'permit-' + permit.validity"
+>
   <div class="bg-white front" [@showFront]="show">
     <div class="scroll">
       <img *ngIf="permit.rev" src="assets/img/makulerad.png" class="revoked" />
 
       <div class="top">
         <h2 *ngIf="permit.t" class="permit-title">{{ permit.t }}</h2>
-        <permit-code [code]="permit.code" [class]="permit.validity"></permit-code>
+        <permit-code
+          [code]="permit.code"
+          [class]="permit.validity"
+        ></permit-code>
       </div>
 
       <ng-container *ngIf="permit.subt">
@@ -39,12 +47,20 @@
 
       <ng-container *ngIf="permit.validity === 'expired'">
         <p class="value permit-color">{{ 'Permit has expired' | translate }}</p>
-        <button ion-button class="renew-button" color="secondary" *ngIf="!admin" (click)="openProductInBrowser()">
+        <button
+          ion-button
+          class="renew-button"
+          color="secondary"
+          *ngIf="!admin"
+          (click)="openProductInBrowser()"
+        >
           {{ 'Renew permit' | translate }} {{ permit.t }}
         </button>
       </ng-container>
 
-      <h3 *ngIf="permit.validity === 'inactive'">{{ 'Permit not yet valid' | translate }}</h3>
+      <h3 *ngIf="permit.validity === 'inactive'">
+        {{ 'Permit not yet valid' | translate }}
+      </h3>
 
       <h3>{{ 'ui.permit.validBetween' | translate }}</h3>
       <p class="box-wrapper">
@@ -63,8 +79,8 @@
       <h3>{{ 'ui.permit.purchased' | translate }}</h3>
       <p>
         <span class="box">
-          {{ permit.at * 1000 | date: 'longDate' }}
-          {{ permit.at * 1000 | date: 'shortTime' }}
+          {{ permit.at * 1000 | date: 'longDate' }} {{ permit.at * 1000 | date:
+          'shortTime' }}
         </span>
         <span class="box">{{ permit.price }} SEK</span>
       </p>
@@ -85,7 +101,9 @@
 
       <div class="admin-bottom" *ngIf="admin">
         <h3>{{ 'ui.permit.admin.header' | translate }}</h3>
-        <button ion-fab (click)="addPermitCheck()" color="light">{{ permit.ctrl }}</button>
+        <button ion-fab (click)="addPermitCheck()" color="light">
+          {{ permit.ctrl }}
+        </button>
         <button ion-button (click)="flip()" icon-end>
           {{ 'ui.permit.admin.more' | translate }}
           <ion-icon name="arrow-forward"></ion-icon>
@@ -103,11 +121,23 @@
       <p *ngIf="permit.fine" class="fineprint">{{ permit.fine }}</p>
 
       <ng-container *ngIf="admin">
-        <button *ngIf="!permit.rev" (click)="revoke.emit(true)" ion-button icon-left color="danger">
+        <button
+          *ngIf="!permit.rev"
+          (click)="revoke.emit(true)"
+          ion-button
+          icon-left
+          color="danger"
+        >
           <ion-icon name="document"></ion-icon>
           {{ 'Revoke' | translate }}
         </button>
-        <button *ngIf="permit.rev" (click)="revoke.emit(false)" ion-button icon-left color="secondary">
+        <button
+          *ngIf="permit.rev"
+          (click)="revoke.emit(false)"
+          ion-button
+          icon-left
+          color="secondary"
+        >
           <ion-icon name="document"></ion-icon>
           {{ 'Unrevoke' | translate }}
         </button>

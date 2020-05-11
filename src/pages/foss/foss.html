@@ -5,8 +5,12 @@
 </ion-header>
 
 <ion-content>
-  <a href="https://github.com/ifiske/ifiske" target="_blank">https://github.com/ifiske/ifiske</a>
+  <a href="https://github.com/ifiske/ifiske" target="_blank"
+    >https://github.com/ifiske/ifiske</a
+  >
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="open(item)">{{item.title}}</button>
+    <button ion-item *ngFor="let item of items" (click)="open(item)">
+      {{item.title}}
+    </button>
   </ion-list>
 </ion-content>

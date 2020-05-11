@@ -1,4 +1,12 @@
-import { Component, ViewChild, ElementRef, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Input,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 
@@ -35,7 +43,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
     }
 
     const data = Object.keys(this.data)
-      .map(key => {
+      .map((key) => {
         let [year, week]: any[] = key.split(':');
         year = Number(year);
         week = Number(week);
@@ -54,20 +62,22 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       })
       .filter(({ x }) => moment(x).isValid());
 
-    const labels = data.map(d => d.x);
+    const labels = data.map((d) => d.x);
 
     console.log(data, labels);
 
     if (this.options.accumulate) {
       let acc = 0;
-      data.forEach(d => (d.y = acc = d.y + acc));
+      data.forEach((d) => (d.y = acc = d.y + acc));
     }
 
     return { data, labels };
   }
 
   ngAfterViewInit() {
-    this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
+    this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext(
+      '2d',
+    );
 
     const { data, labels } = this.makeData();
 
@@ -138,7 +148,7 @@ export class ChartComponent implements AfterViewInit, OnChanges {
       return;
     }
 
-    this.chart.data.datasets.forEach(dataset => {
+    this.chart.data.datasets.forEach((dataset) => {
       dataset.data = data;
       if (dataset.type !== this.options.type) {
         dataset.hidden = true;
@@ -157,7 +167,10 @@ export class ChartComponent implements AfterViewInit, OnChanges {
 
     this.chart.data.labels = labels;
 
-    console.log(this.timeSettings, this.chart.config.options.scales.xAxes[0].time);
+    console.log(
+      this.timeSettings,
+      this.chart.config.options.scales.xAxes[0].time,
+    );
 
     this.chart.update();
   }

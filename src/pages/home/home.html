@@ -1,26 +1,41 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      <span class="hidden">{{ 'Home' | translate }}</span> <img class="header-logo" src="assets/img/logo.png" />
+      <span class="hidden">{{ 'Home' | translate }}</span>
+      <img class="header-logo" src="assets/img/logo.png" />
     </ion-title>
 
     <ion-buttons first>
-      <button ion-button icon-only (click)="gotoProfile()"><ion-icon name="person"></ion-icon></button>
+      <button ion-button icon-only (click)="gotoProfile()">
+        <ion-icon name="person"></ion-icon>
+      </button>
     </ion-buttons>
 
     <ion-buttons end>
-      <button ion-button icon-only [navPush]="'SettingsPage'"><ion-icon name="settings"></ion-icon></button>
+      <button ion-button icon-only [navPush]="'SettingsPage'">
+        <ion-icon name="settings"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="background-image" no-bounce>
   <form (ngSubmit)="search()" class="search">
-    <button type="button" *ngIf="showSearchCover" (click)="focusSearch(searchInput)" class="search-cover"></button>
+    <button
+      type="button"
+      *ngIf="showSearchCover"
+      (click)="focusSearch(searchInput)"
+      class="search-cover"
+    ></button>
     <ion-list inset>
       <ion-item>
         <ion-icon name="search" item-start color="primary"></ion-icon>
-        <ion-input #searchInput [placeholder]="'Search' | translate" [(ngModel)]="searchTerm" name="search"></ion-input>
+        <ion-input
+          #searchInput
+          [placeholder]="'Search' | translate"
+          [(ngModel)]="searchTerm"
+          name="search"
+        ></ion-input>
       </ion-item>
     </ion-list>
     <button type="submit" hidden></button>
@@ -33,7 +48,8 @@
         [navPush]="link.uri"
         (click)="link.action && link.action($event)"
       >
-        <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{ link.title | translate }}
+        <ion-icon [name]="link.icon" item-start color="primary"></ion-icon>{{
+        link.title | translate }}
       </button>
     </ng-container>
   </ion-list>

@@ -35,6 +35,8 @@ export class RuleProvider extends BaseModel<Rule> {
 
   linky = new LinkyPipe();
   transform(rule: Rule) {
-    rule.d = this.linky.transform(striptags(rule.d, ['br', 'p', 'h2', 'h3', 'a']));
+    rule.d = this.linky.transform(
+      striptags(rule.d, ['br', 'p', 'h2', 'h3', 'a']),
+    );
   }
 }

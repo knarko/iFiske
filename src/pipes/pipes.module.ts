@@ -8,8 +8,23 @@ import { MkObjectPipe } from './mk-object/mk-object';
 import { WeightPipe } from './weight/weight.pipe';
 
 @NgModule({
-  declarations: [DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe, WeightPipe],
+  declarations: [
+    DistancePipe,
+    FormatInfoPipe,
+    LinkyPipe,
+    KeysPipe,
+    MkObjectPipe,
+    WeightPipe,
+  ],
   imports: [NgStringPipesModule],
-  exports: [NgStringPipesModule, DistancePipe, FormatInfoPipe, LinkyPipe, KeysPipe, MkObjectPipe, WeightPipe],
+  exports: [
+    NgStringPipesModule,
+    DistancePipe,
+    FormatInfoPipe,
+    LinkyPipe,
+    KeysPipe,
+    MkObjectPipe,
+    WeightPipe,
+  ],
 })
 export class PipesModule {}

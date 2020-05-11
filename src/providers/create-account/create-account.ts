@@ -24,7 +24,11 @@ export class CreateAccountProvider {
 
   private static readonly REGISTER_DATA_KEY = 'register_user_details';
 
-  constructor(private API: ApiProvider, private userProvider: UserProvider, private analytics: FirebaseAnalytics) {
+  constructor(
+    private API: ApiProvider,
+    private userProvider: UserProvider,
+    private analytics: FirebaseAnalytics,
+  ) {
     this.timer = this.timerSubject.asObservable();
     this.timerSubject.next(this.createTimer());
   }
@@ -33,11 +37,20 @@ export class CreateAccountProvider {
     userDetails.phone = userDetails.phone.replace(/^\+/, '00');
     const res = await this.API.user_register(userDetails);
     console.log(res);
-    localStorage.setItem(CreateAccountProvider.REGISTER_DATA_KEY, JSON.stringify(userDetails));
+    localStorage.setItem(
+      CreateAccountProvider.REGISTER_DATA_KEY,
+      JSON.stringify(userDetails),
+    );
     this.timerSubject.next(this.createTimer());
   }
 
-  async activate({ username, activationCode }: { username?: string; activationCode: string }) {
+  async activate({
+    username,
+    activationCode,
+  }: {
+    username?: string;
+    activationCode: string;
+  }) {
     const userDetails = this.getSavedUserDetails();
 
     if (!username) {
@@ -74,7 +87,11 @@ export class CreateAccountProvider {
 
   getSavedUserDetails() {
     try {
-      return JSON.parse(localStorage.getItem(CreateAccountProvider.REGISTER_DATA_KEY)) || {};
+      return (
+        JSON.parse(
+          localStorage.getItem(CreateAccountProvider.REGISTER_DATA_KEY),
+        ) || {}
+      );
     } catch (err) {
       console.error(err);
       MonitoringClient.captureException(err);

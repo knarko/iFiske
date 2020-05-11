@@ -43,7 +43,7 @@ export class AreasFavoritesPage {
           duration: 4000,
         });
       },
-      err => {
+      (err) => {
         console.warn(err);
         MonitoringClient.captureException(err);
         this.toastCtrl.show({

@@ -20,9 +20,15 @@ import { InformationProvider } from '../../providers/information/information';
 export class InformationDetailPage {
   item: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private info: InformationProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private info: InformationProvider,
+  ) {
     if (!this.navParams.get('t')) {
-      this.info.getOne(this.navParams.get('ID')).then(info => (this.item = info));
+      this.info
+        .getOne(this.navParams.get('ID'))
+        .then((info) => (this.item = info));
     } else {
       this.item = this.navParams.data;
     }

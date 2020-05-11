@@ -14,9 +14,15 @@ export class FishingMethodsDetailPage {
   entered: boolean = false;
   tech: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private techProvider: TechniqueProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private techProvider: TechniqueProvider,
+  ) {
     if (!this.navParams.get('t')) {
-      this.techProvider.getOne(this.navParams.get('ID')).then(tech => (this.tech = tech));
+      this.techProvider
+        .getOne(this.navParams.get('ID'))
+        .then((tech) => (this.tech = tech));
     } else {
       this.tech = this.navParams.data;
     }

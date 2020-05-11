@@ -24,14 +24,18 @@ export class MapPage {
     centerOnMe: true,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private area: AreaProvider) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private area: AreaProvider,
+  ) {}
 
   ionViewWillEnter() {
     this.areas = this.area.getAll();
   }
 
   ionViewDidEnter() {
-    this.areas.then(areas => {
+    this.areas.then((areas) => {
       this.mapOptions = { ...this.mapOptions, areas };
     });
   }

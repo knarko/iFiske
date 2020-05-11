@@ -10,7 +10,10 @@
 <ion-content>
   <ion-list radio-group [(ngModel)]="currentLanguage" (ionChange)="changed()">
     <ion-item *ngFor="let language of languages">
-      <ion-label> <img [src]="'assets/img/flags/' + language.short + '.png'" /> {{ language.long }} </ion-label>
+      <ion-label>
+        <img [src]="'assets/img/flags/' + language.short + '.png'" /> {{
+        language.long }}
+      </ion-label>
       <ion-radio [value]="language.short"></ion-radio>
     </ion-item>
   </ion-list>

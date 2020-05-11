@@ -84,7 +84,10 @@ export class ConfirmPasswordRecoveryPage {
       this.codeSentVia = {
         mailed: !!methods.mailed,
         texted: !!methods.texted,
-        methods: [methods.mailed ? 'Email' : '', methods.texted ? 'SMS' : ''].filter(x => !!x),
+        methods: [
+          methods.mailed ? 'Email' : '',
+          methods.texted ? 'SMS' : '',
+        ].filter((x) => !!x),
       };
     } else {
       this.codeSentVia = undefined;
@@ -110,7 +113,7 @@ export class ConfirmPasswordRecoveryPage {
           this.navCtrl.popToRoot();
           this.navCtrl.first().dismiss();
         },
-        async error => {
+        async (error) => {
           switch (error.error_code) {
             case IFISKE_ERRORS.NO_SUCH_USER:
               this.form.controls.username.control.setErrors({

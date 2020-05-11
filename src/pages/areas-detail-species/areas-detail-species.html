@@ -1,8 +1,14 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col col-6 tappable *ngFor="let item of items" class="list-item" (click)="goto(item)">
-        <img [icSrc]="item.img">
+      <ion-col
+        col-6
+        tappable
+        *ngFor="let item of items"
+        class="list-item"
+        (click)="goto(item)"
+      >
+        <img [icSrc]="item.img" />
         <p>{{item.t}}</p>
         <fish-level [level]="item.amount"></fish-level>
       </ion-col>

@@ -5,7 +5,10 @@ import { FormGroup } from '@angular/forms';
 import { Form, FormOptions } from '../../components/ion-data-form/form';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
-import { CreateAccountProvider, UserDetails } from '../../providers/create-account/create-account';
+import {
+  CreateAccountProvider,
+  UserDetails,
+} from '../../providers/create-account/create-account';
 import { Observable } from 'rxjs/Observable';
 import { map, last, tap } from 'rxjs/operators';
 import { validators } from '../../util';
@@ -31,7 +34,7 @@ export class CreateAccountVerifyPage {
     private loadingCtrl: TranslateLoadingController,
     private createAccountProvider: CreateAccountProvider,
   ) {
-    this.createAccountProvider.timer.subscribe(timer => {
+    this.createAccountProvider.timer.subscribe((timer) => {
       this.timer = timer;
       this.timerCompleted = timer.pipe(
         last(),
@@ -93,7 +96,9 @@ export class CreateAccountVerifyPage {
     this.form = new Form(formOptions);
 
     if (username) {
-      this.form.controls.username.control.setValue(this.userDetails.username || '');
+      this.form.controls.username.control.setValue(
+        this.userDetails.username || '',
+      );
     }
   }
 

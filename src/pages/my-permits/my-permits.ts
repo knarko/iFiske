@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Refresher, Loading } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Refresher,
+  Loading,
+} from 'ionic-angular';
 import { Product } from '../../providers/product/product';
 import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
@@ -70,7 +76,9 @@ export class MyPermitsPage {
     }
 
     for (const permit of permits) {
-      this.permits.find(p => p.title === permit.validity).permits.push(permit);
+      this.permits
+        .find((p) => p.title === permit.validity)
+        .permits.push(permit);
     }
     this.allPermits = permits;
   };

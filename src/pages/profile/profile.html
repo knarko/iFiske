@@ -1,14 +1,11 @@
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>{{'Profile' | translate}}</ion-title>
     <ion-buttons start>
       <button ion-button (click)="close()">{{'Close' | translate}}</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content class="outer-content">
   <ion-list>
@@ -25,14 +22,26 @@
     <ng-container *ngIf="user">
       <ion-list-header>
         {{'Delivery Address' | translate}}
-        <button ion-button outline item-end *ngIf="addressHasChanged" (click)="saveAddress()">{{'Save' | translate}}</button>
+        <button
+          ion-button
+          outline
+          item-end
+          *ngIf="addressHasChanged"
+          (click)="saveAddress()"
+        >
+          {{'Save' | translate}}
+        </button>
       </ion-list-header>
       <ion-item *ngFor="let key of ['adr', 'zip', 'town']" class="novalidate">
         <ion-label stacked>
           <h2>{{'ui.deliveryAddress.' + key | translate}}</h2>
         </ion-label>
-        <ion-input [ngModel]="user[key]" (ngModelChange)="addressChanged(key, $event)" [placeholder]="'ui.placeholder.' + key | translate"
-          novalidate></ion-input>
+        <ion-input
+          [ngModel]="user[key]"
+          (ngModelChange)="addressChanged(key, $event)"
+          [placeholder]="'ui.placeholder.' + key | translate"
+          novalidate
+        ></ion-input>
       </ion-item>
     </ng-container>
 
@@ -47,12 +56,15 @@
 
     <ng-container *ngIf="user">
       <ion-list-header>{{'Settings' | translate}}</ion-list-header>
-      <button ion-item (click)="changePassword()">{{'Change Password' | translate}}</button>
-      <button ion-item (click)="openProfilePage()">{{'Profile' | translate}}</button>
+      <button ion-item (click)="changePassword()">
+        {{'Change Password' | translate}}
+      </button>
+      <button ion-item (click)="openProfilePage()">
+        {{'Profile' | translate}}
+      </button>
       <button ion-item (click)="logout()">{{'Log out' | translate}}</button>
     </ng-container>
   </ion-list>
   <div [innerHTML]="'Change user info' | translate" padding></div>
   <!--&#8505; {{'Change user info' | translate}}-->
-
 </ion-content>

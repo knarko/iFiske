@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { transition, style, animate, state, trigger } from '@angular/animations';
+import {
+  transition,
+  style,
+  animate,
+  state,
+  trigger,
+} from '@angular/animations';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MapOptions } from '../../components/map/map';
 import { MapDataProvider } from '../../providers/map-data/map-data';
@@ -19,8 +25,14 @@ import { AreaDetailParams } from '../areas-detail/areas-detail-params';
     trigger('showNavigate', [
       state('show', style({ transform: 'rotate(45deg) scale(1)' })),
       state('hide', style({ transform: 'rotate(-120deg) scale(0)' })),
-      transition('show => hide', animate('.3s cubic-bezier(0.68, -0.55, 0.27, 1)')),
-      transition('hide => show', animate('.3s cubic-bezier(0.68, 0, 0.27, 1.55)')),
+      transition(
+        'show => hide',
+        animate('.3s cubic-bezier(0.68, -0.55, 0.27, 1)'),
+      ),
+      transition(
+        'hide => show',
+        animate('.3s cubic-bezier(0.68, 0, 0.27, 1.55)'),
+      ),
     ]),
   ],
 })
@@ -45,24 +57,26 @@ export class AreasDetailMapPage {
     private areaProvider: AreaProvider,
   ) {
     const params: Observable<AreaDetailParams> =
-      this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
+      this.navParams.get('params') ||
+      ((this.navCtrl as any).rootParams &&
+        (this.navCtrl as any).rootParams.params);
     params.subscribe(({ area }) => {
       if (this.area !== area && area) {
         this.mapData
           .getPois(area.orgid)
-          .then(pois => (this.options.pois = pois))
+          .then((pois) => (this.options.pois = pois))
           .catch(() => (this.options.pois = []))
           .then(() => (this.options = Object.assign({}, this.options)));
 
         this.mapData
           .getPolygons(area.orgid)
-          .then(polygons => (this.options.polygons = polygons))
+          .then((polygons) => (this.options.polygons = polygons))
           .catch(() => (this.options.polygons = []))
           .then(() => (this.options = Object.assign({}, this.options)));
 
         this.areaProvider
           .getLayers(area.ID)
-          .then(layers => (this.options.layers = layers))
+          .then((layers) => (this.options.layers = layers))
           .catch(() => (this.options.layers = []))
           .then(() => (this.options = Object.assign({}, this.options)));
 
@@ -86,12 +100,14 @@ export class AreasDetailMapPage {
 
   navigate() {
     this.navigator
-      .navigate([this.navigateTo.lat, this.navigateTo.lng], { destinationName: this.navigateTo.title })
+      .navigate([this.navigateTo.lat, this.navigateTo.lng], {
+        destinationName: this.navigateTo.title,
+      })
       .then(
         () => {
           console.log('Opening navigator');
         },
-        error => {
+        (error) => {
           if (isProdMode()) {
             MonitoringClient.captureException(error);
           }

@@ -32,16 +32,24 @@ export class SettingsProvider {
         return lang;
       }
     }
-    if (typeof navigator.language !== 'string' || navigator.language.match(/^s[ev]/i)) {
+    if (
+      typeof navigator.language !== 'string' ||
+      navigator.language.match(/^s[ev]/i)
+    ) {
       return 'sv';
     }
     return 'en';
   }
-  private settings: Settings = JSON.parse(localStorage.getItem(SettingsProvider.STORAGE_LOCATION));
+  private settings: Settings = JSON.parse(
+    localStorage.getItem(SettingsProvider.STORAGE_LOCATION),
+  );
 
   settingsChanged = new ReplaySubject<Settings>(1);
 
-  constructor(private translate: TranslateService, private analytics: FirebaseAnalytics) {
+  constructor(
+    private translate: TranslateService,
+    private analytics: FirebaseAnalytics,
+  ) {
     this.settings = Object.assign({}, this.defaultSettings, this.settings);
     this.language = this.settings.language;
     this.persistSettings();
@@ -52,7 +60,10 @@ export class SettingsProvider {
   }
 
   private persistSettings() {
-    localStorage.setItem(SettingsProvider.STORAGE_LOCATION, JSON.stringify(this.settings));
+    localStorage.setItem(
+      SettingsProvider.STORAGE_LOCATION,
+      JSON.stringify(this.settings),
+    );
     this.settingsChanged.next(this.settings);
   }
 
@@ -66,7 +77,9 @@ export class SettingsProvider {
     this.translate.use(this.settings.language);
     document.getElementsByTagName('html').item(0).lang = lang;
 
-    this.analytics.logEvent('language_change', { language: this.settings.language });
+    this.analytics.logEvent('language_change', {
+      language: this.settings.language,
+    });
   }
 
   get push() {

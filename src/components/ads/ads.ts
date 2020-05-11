@@ -9,7 +9,7 @@ export class AdsComponent {
   ads: any[];
 
   constructor(private adsProvider: AdsProvider) {
-    this.adsProvider.getAdsForHome().subscribe(async ads => {
+    this.adsProvider.getAdsForHome().subscribe(async (ads) => {
       this.ads = ads;
     });
   }

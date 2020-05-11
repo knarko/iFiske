@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { map, switchMap, catchError, distinctUntilChanged } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  catchError,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 
 import { Dictionary } from '../../types';
 import { getPermitValidity } from '../../util';
@@ -107,17 +112,17 @@ export class UserProvider extends BaseModel {
     super();
     this.initialize();
     this.loggedIn = this.session.tokenObservable.pipe(
-      map(token => !!token),
+      map((token) => !!token),
       distinctUntilChanged(),
     );
     this.sessionTransferToken = this.loggedIn.pipe(
-      switchMap(loggedIn => {
+      switchMap((loggedIn) => {
         if (loggedIn) {
-          return this.API.getSessionToken().pipe(map(res => res.token));
+          return this.API.getSessionToken().pipe(map((res) => res.token));
         }
         return of(undefined);
       }),
-      catchError(err => {
+      catchError((err) => {
         console.log(err);
         return of(undefined);
       }),
@@ -129,16 +134,16 @@ export class UserProvider extends BaseModel {
    * @return {Promise}  Promise when done
    */
   clean() {
-    const p = Object.values(this.tables).map(t => this.DB.cleanTable(t.name));
+    const p = Object.values(this.tables).map((t) => this.DB.cleanTable(t.name));
 
-    MonitoringClient.configureScope(scope => {
+    MonitoringClient.configureScope((scope) => {
       scope.clear();
     });
     return Promise.all(p).then(
       () => {
         console.log('Removed user info from database');
       },
-      err => {
+      (err) => {
         console.log('Could not remove user data from database!', err);
       },
     );
@@ -155,7 +160,7 @@ export class UserProvider extends BaseModel {
 
     try {
       await Promise.all([
-        this.API.user_get_favorites().then(favorites => {
+        this.API.user_get_favorites().then((favorites) => {
           this.DB.populateTable(this.tables.favorite, favorites);
         }),
         Promise.all([this.API.user_info(), this.API.user_get_del_adr()]).then(
@@ -166,7 +171,7 @@ export class UserProvider extends BaseModel {
               numArr.push({ number: numbers[i] });
             }
 
-            MonitoringClient.configureScope(scope => {
+            MonitoringClient.configureScope((scope) => {
               scope.setUser({
                 id: '' + data.ID,
               });
@@ -179,7 +184,7 @@ export class UserProvider extends BaseModel {
                 () => {
                   return 'User_Info';
                 },
-                err => {
+                (err) => {
                   console.log(data);
                   console.log(err);
                   return Promise.reject(err);
@@ -189,7 +194,7 @@ export class UserProvider extends BaseModel {
                 () => {
                   return 'User_Numbers';
                 },
-                err => {
+                (err) => {
                   console.log(err);
                   return Promise.reject(err);
                 },
@@ -197,7 +202,7 @@ export class UserProvider extends BaseModel {
             ]);
           },
         ),
-        this.API.user_products().then(products => {
+        this.API.user_products().then((products) => {
           this.DB.populateTable(this.tables.product, products);
         }),
       ]);
@@ -218,7 +223,7 @@ export class UserProvider extends BaseModel {
   async login({ username, password }) {
     await this.clean();
 
-    const p = this.API.user_login(username, password).then(data => {
+    const p = this.API.user_login(username, password).then((data) => {
       this.ready = Promise.resolve().then(() => {
         this.session.token = data;
         return this.update(true);
@@ -231,7 +236,7 @@ export class UserProvider extends BaseModel {
         this.analytics.logEvent('login', { method: 'password' });
         await this.getInfo();
       },
-      error => {
+      (error) => {
         this.session.token = undefined;
         return error;
       },
@@ -247,7 +252,7 @@ export class UserProvider extends BaseModel {
     const promise = Promise.all([this.clean(), this.API.user_logout()]);
     promise
       // It doesn't matter if this fails or not, we still want to clean up the user on this phone
-      .catch(err => console.warn(err))
+      .catch((err) => console.warn(err))
       .then(() => {
         this.session.token = undefined;
         loading.dismiss();
@@ -274,7 +279,7 @@ export class UserProvider extends BaseModel {
   }
 
   getProduct(id) {
-    const getter = id => {
+    const getter = (id) => {
       return this.ready.then(() => {
         return this.DB.getSingle(
           `
@@ -298,10 +303,10 @@ export class UserProvider extends BaseModel {
       });
     };
 
-    return getter(id).catch(err => {
+    return getter(id).catch((err) => {
       console.warn(err);
       return this.API.user_products()
-        .then(products => {
+        .then((products) => {
           return this.DB.populateTable(this.tables.product, products);
         })
         .then(() => {
@@ -322,8 +327,8 @@ export class UserProvider extends BaseModel {
         'LEFT JOIN Product ON Product.ID = User_Product.pid',
         'LEFT JOIN Rule ON Rule.ID = Product.ri',
       ].join(' '),
-    ).then(products => {
-      products.forEach(product => {
+    ).then((products) => {
+      products.forEach((product) => {
         console.log(product);
         product.validity = getPermitValidity(product);
       });
@@ -333,23 +338,38 @@ export class UserProvider extends BaseModel {
 
   @DBMethod
   async getFavorites(): Promise<(Favorite & Area)[]> {
-    return this.DB.getMultiple(['SELECT *', 'FROM User_Favorite', 'JOIN Area ON User_Favorite.a = Area.ID'].join(' '));
+    return this.DB.getMultiple(
+      [
+        'SELECT *',
+        'FROM User_Favorite',
+        'JOIN Area ON User_Favorite.a = Area.ID',
+      ].join(' '),
+    );
   }
 
   @DBMethod
   async removeFavorite(id) {
-    return this.DB.runSql(['DELETE FROM User_Favorite', 'WHERE a = ?'].join(' '), [id]);
+    return this.DB.runSql(
+      ['DELETE FROM User_Favorite', 'WHERE a = ?'].join(' '),
+      [id],
+    );
   }
 
   @DBMethod
   async addFavorite(id) {
-    return this.DB.runSql(['INSERT INTO User_Favorite', '(a, "not") VALUES (?, 0)'].join(' '), [id]);
+    return this.DB.runSql(
+      ['INSERT INTO User_Favorite', '(a, "not") VALUES (?, 0)'].join(' '),
+      [id],
+    );
   }
 
   @DBMethod
   async setFavoriteNotification(id, not) {
     await this.API.user_set_favorite_notification(id, not);
-    return this.DB.runSql(['UPDATE User_Favorite', 'SET "not" = ? WHERE a = ?'].join(' '), [not, id]);
+    return this.DB.runSql(
+      ['UPDATE User_Favorite', 'SET "not" = ? WHERE a = ?'].join(' '),
+      [not, id],
+    );
   }
 
   async toggleFavorite(area: Area) {
@@ -373,7 +393,11 @@ export class UserProvider extends BaseModel {
     return this.login({ username, password });
   }
 
-  async setDeliveryAddress(opts: { zip?: string; town?: string; adr?: string }) {
+  async setDeliveryAddress(opts: {
+    zip?: string;
+    town?: string;
+    adr?: string;
+  }) {
     await this.API.user_set_del_adr(opts);
     await this.update();
   }

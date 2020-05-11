@@ -48,7 +48,7 @@ export class DeepLinksProvider {
     if (this.sub) {
       this.sub.unsubscribe();
     }
-    this.sub = this.userProvider.sessionTransferToken.subscribe(token => {
+    this.sub = this.userProvider.sessionTransferToken.subscribe((token) => {
       console.log('Saving token:', token);
       this.token = token;
     });
@@ -57,7 +57,11 @@ export class DeepLinksProvider {
     }
     this.timeout = setTimeout(() => this.getToken(), 50 * 60 * 1000);
   }
-  open(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {
+  open(
+    link: DeepLinks,
+    params?: Dictionary<string>,
+    options?: DeepLinkOptions,
+  ) {
     const url = this.getUrl(link, params, options);
     if (link === DeepLinks.buy) {
       this.analytics.logEvent('open_web_store', params);
@@ -65,8 +69,15 @@ export class DeepLinksProvider {
     window.open(url, '_system');
   }
 
-  getUrl(link: DeepLinks, params?: Dictionary<string>, options?: DeepLinkOptions) {
-    const { bringMetadata, bringSession } = Object.assign({ bringSession: false, bringMetadata: true }, options);
+  getUrl(
+    link: DeepLinks,
+    params?: Dictionary<string>,
+    options?: DeepLinkOptions,
+  ) {
+    const { bringMetadata, bringSession } = Object.assign(
+      { bringSession: false, bringMetadata: true },
+      options,
+    );
     let query = new HttpParams({
       encoder: new CustomQueryEncoder(),
       fromObject: bringMetadata

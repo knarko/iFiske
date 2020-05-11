@@ -6,7 +6,7 @@ page-fishing-methods {
     width: 100%;
     min-height: 55px;
 
-    img[src=""] {
+    img[src=''] {
       padding-top: 25%;
 
       & + h2 {
@@ -24,8 +24,7 @@ page-fishing-methods {
       padding: 8px;
       margin: 0;
       color: white;
-      background-color: rgba(black, .5);
+      background-color: rgba(black, 0.5);
     }
   }
-
 }

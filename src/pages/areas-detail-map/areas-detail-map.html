@@ -3,10 +3,18 @@
 </ion-header>
 
 <ion-content scrollX="false" scrollY="false">
-  <map ion-fixed [options]="options" (popupClose)="popupClose($event)" (popupOpen)="popupOpen($event)"></map>
+  <map
+    ion-fixed
+    [options]="options"
+    (popupClose)="popupClose($event)"
+    (popupOpen)="popupOpen($event)"
+  ></map>
   <ion-fab bottom left>
     <button ion-fab [@showNavigate]="showNavigate" (click)="navigate()">
-      <ion-icon name="md-navigate" style="height: 56px; line-height: 50px"></ion-icon>
+      <ion-icon
+        name="md-navigate"
+        style="height: 56px; line-height: 50px;"
+      ></ion-icon>
     </button>
   </ion-fab>
 </ion-content>

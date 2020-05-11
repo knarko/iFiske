@@ -35,7 +35,11 @@ export class InformationProvider extends BaseModel<InformationArticle> {
 
   readonly updateStrategy = 'always';
 
-  constructor(protected API: ApiProvider, protected DB: DatabaseProvider, private imgcache: ImgcacheService) {
+  constructor(
+    protected API: ApiProvider,
+    protected DB: DatabaseProvider,
+    private imgcache: ImgcacheService,
+  ) {
     super();
     this.initialize();
   }

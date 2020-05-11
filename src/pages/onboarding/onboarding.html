@@ -4,7 +4,9 @@
       <button ion-button (click)="changeLanguage()" class="language">
         <span class="desc">{{ 'Language' | translate }}</span>
         <ng-container *ngIf="(language | async); let lang">
-          <div class="flag"><img [src]="'assets/img/flags/' + lang.short + '.png'" /></div>
+          <div class="flag">
+            <img [src]="'assets/img/flags/' + lang.short + '.png'" />
+          </div>
         </ng-container>
       </button>
     </ion-buttons>
@@ -13,10 +15,14 @@
 <ion-content>
   <ion-slides ion-fixed #extras class="extras">
     <ion-slide padding class="notify">
-      <div class="slider-content"><img src="assets/onboarding/favorites.png" /></div>
+      <div class="slider-content">
+        <img src="assets/onboarding/favorites.png" />
+      </div>
     </ion-slide>
     <ion-slide padding class="secure">
-      <div class="slider-content"><img src="assets/onboarding/permit.png" /></div>
+      <div class="slider-content">
+        <img src="assets/onboarding/permit.png" />
+      </div>
     </ion-slide>
     <ion-slide padding class="explore">
       <div class="slider-content"><img src="assets/onboarding/map.png" /></div>
@@ -51,10 +57,19 @@
     <ion-slide padding class="notify">
       <h2>{{ 'ui.onboarding.notify.title' | translate }}</h2>
       <p>{{ 'ui.onboarding.notify.subtitle' | translate }}</p>
-      <button ion-button block color="secondary" (click)="skip()">{{ 'ui.onboarding.continue' | translate }}</button>
+      <button ion-button block color="secondary" (click)="skip()">
+        {{ 'ui.onboarding.continue' | translate }}
+      </button>
     </ion-slide>
   </ion-slides>
-  <button ion-button ion-fixed clear (click)="skip()" class="left" [ngClass]="hideSkip ? 'hide-button' : ''">
+  <button
+    ion-button
+    ion-fixed
+    clear
+    (click)="skip()"
+    class="left"
+    [ngClass]="hideSkip ? 'hide-button' : ''"
+  >
     {{ 'ui.onboarding.skip' | translate }}
   </button>
 

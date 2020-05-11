@@ -23,7 +23,10 @@ import { LoginPage } from '../login/login';
 import { Fish } from '../../providers/fish/fish';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { IFISKE_ERRORS } from '../../providers/api/api';
-import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import {
+  DeepLinks,
+  DeepLinksProvider,
+} from '../../providers/deep-links/deep-links';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 import { AreaDetailParams } from '../areas-detail/areas-detail-params';
 
@@ -72,40 +75,45 @@ export class AreasDetailInfoPage {
   ) {
     const params: Observable<AreaDetailParams> =
       this.navParams.get('params') ||
-      ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+      ((this._navCtrl as any).rootParams &&
+        (this._navCtrl as any).rootParams.params);
 
-    params.subscribe(({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
-      if (this.area !== area && area) {
-        area.images
-          .then(images => this.getCachedImages(images))
-          .then(images => {
-            console.log(images);
-            this.images = images;
-          });
-      }
-      this.navCtrl = rootNavCtrl;
-      this.tabsCtrl = tabsCtrl;
-      this.species = species;
-      this.org = org;
-      this.products = products;
-      this.area = area;
-      if (this.contentRef) {
-        this.contentRef.resize();
-      }
-    });
+    params.subscribe(
+      ({ area, org, products, species, tabsCtrl, rootNavCtrl }) => {
+        if (this.area !== area && area) {
+          area.images
+            .then((images) => this.getCachedImages(images))
+            .then((images) => {
+              console.log(images);
+              this.images = images;
+            });
+        }
+        this.navCtrl = rootNavCtrl;
+        this.tabsCtrl = tabsCtrl;
+        this.species = species;
+        this.org = org;
+        this.products = products;
+        this.area = area;
+        if (this.contentRef) {
+          this.contentRef.resize();
+        }
+      },
+    );
   }
 
   private getCachedImages(images: AreaImage[]): Promise<AreaImage[]> {
     return Promise.all(
-      images.map(async img => {
+      images.map(async (img) => {
         const cachedImg = await this.imgcache.getCachedFile(img.file);
         console.log(img.file, cachedImg);
-        img.file = cachedImg && (this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string);
+        img.file =
+          cachedImg &&
+          (this.sanitizer.bypassSecurityTrustUrl(cachedImg) as string);
         return img;
       }),
-    ).then(imgs => {
+    ).then((imgs) => {
       console.log(imgs);
-      return imgs.filter(img => !!img.file);
+      return imgs.filter((img) => !!img.file);
     });
   }
 
@@ -122,7 +130,9 @@ export class AreasDetailInfoPage {
         }
       }
       this.toastCtrl.show({
-        message: this.area.favorite ? 'Area added to favorites' : 'Area removed from favorites',
+        message: this.area.favorite
+          ? 'Area added to favorites'
+          : 'Area removed from favorites',
         duration: 4000,
       });
     } else {
@@ -143,7 +153,9 @@ export class AreasDetailInfoPage {
 
   gotoPermits() {
     // Getting the index in this way so that if we ever add more tabs or change the order it will still work
-    const index = this.tabsCtrl._tabs.findIndex(t => t.tabUrlPath === 'AreasDetailPermitPage');
+    const index = this.tabsCtrl._tabs.findIndex(
+      (t) => t.tabUrlPath === 'AreasDetailPermitPage',
+    );
     this.tabsCtrl.select(index);
   }
 
@@ -170,7 +182,9 @@ export class AreasDetailInfoPage {
   }
 
   share = async () => {
-    const message = await this.translate.get('ui.share:area', { area: this.area.t }).toPromise();
+    const message = await this.translate
+      .get('ui.share:area', { area: this.area.t })
+      .toPromise();
     await this.socialSharing.share(
       message,
       this.area.org,
@@ -181,6 +195,9 @@ export class AreasDetailInfoPage {
         { bringMetadata: false },
       ),
     );
-    this.analytics.logEvent('share', { content_type: 'Area', item_id: this.area.ID });
+    this.analytics.logEvent('share', {
+      content_type: 'Area',
+      item_id: this.area.ID,
+    });
   };
 }

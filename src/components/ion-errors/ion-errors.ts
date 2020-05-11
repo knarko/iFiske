@@ -11,11 +11,17 @@ import { trigger, style, transition, animate } from '@angular/animations';
     trigger('errors', [
       transition(':enter', [
         style({ transform: 'scaleY(0)', opacity: 0, height: 0 }),
-        animate('150ms ease-in-out', style({ transform: 'scaleY(1)', opacity: 1, height: '*' })),
+        animate(
+          '150ms ease-in-out',
+          style({ transform: 'scaleY(1)', opacity: 1, height: '*' }),
+        ),
       ]),
       transition(':leave', [
         style({ transform: 'scaleY(1)', opacity: 1, height: '*' }),
-        animate('150ms ease-in-out', style({ transform: 'scaleY(0)', opacity: 0, height: 0 })),
+        animate(
+          '150ms ease-in-out',
+          style({ transform: 'scaleY(0)', opacity: 0, height: 0 }),
+        ),
       ]),
     ]),
   ],
@@ -25,7 +31,13 @@ export class IonErrorsComponent {
   @Input() control: AbstractControl;
   @HostBinding('class.empty')
   get empty() {
-    if (this.control && this.control.invalid && this.control.dirty && this.errors && this.control.errors) {
+    if (
+      this.control &&
+      this.control.invalid &&
+      this.control.dirty &&
+      this.errors &&
+      this.control.errors
+    ) {
       return false;
     }
     return true;

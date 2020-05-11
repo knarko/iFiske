@@ -34,7 +34,12 @@ app-permit {
   }
 
   @mixin animated-bg($opacity: 1) {
-    background-image: repeating-linear-gradient(to right, transparent, #14eaec, transparent);
+    background-image: repeating-linear-gradient(
+      to right,
+      transparent,
+      #14eaec,
+      transparent
+    );
     background-size: 250%;
     background-position: inherit;
     background-attachment: fixed;

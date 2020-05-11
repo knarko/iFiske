@@ -1,5 +1,23 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
-import { Map, TileLayer, Control, LayerGroup, Popup, Icon, Marker, Polygon } from 'leaflet';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  EventEmitter,
+  Output,
+  Input,
+  OnChanges,
+} from '@angular/core';
+import {
+  Map,
+  TileLayer,
+  Control,
+  LayerGroup,
+  Popup,
+  Icon,
+  Marker,
+  Polygon,
+} from 'leaflet';
 import * as LocateControl from 'leaflet.locatecontrol';
 import * as omnivore from '@mapbox/leaflet-omnivore';
 console.log(omnivore);
@@ -67,7 +85,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
   ) {}
 
   ngAfterViewInit() {
-    const IFISKE_MAP = 'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
+    const IFISKE_MAP =
+      'https://maps.ifiske.se/topo/wmts/sweden/GLOBAL_WEBMERCATOR';
     const MAPBOX_MAP = 'https://api.tiles.mapbox.com/v4/mapbox.satellite';
     const tilesUrl = `{maptype}/{z}/{x}/{y}.png{apikey}`;
     const apikey = localStorage.getItem('mapbox_api');
@@ -91,15 +110,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
     let baseLayers = new Control.Layers({ outdoors, satellite });
     this.map.addControl(baseLayers);
     this.map.addControl(new L.control.scale());
-    this.translate.stream(['ui.map.outdoors', 'ui.map.satellite']).subscribe(stuff => {
-      this.map.removeControl(baseLayers);
-      const newControlLayers = {};
-      newControlLayers[stuff['ui.map.outdoors']] = outdoors;
-      newControlLayers[stuff['ui.map.satellite']] = satellite;
-      baseLayers = new Control.Layers(newControlLayers);
-      this.map.addControl(baseLayers);
-      console.log(stuff);
-    });
+    this.translate
+      .stream(['ui.map.outdoors', 'ui.map.satellite'])
+      .subscribe((stuff) => {
+        this.map.removeControl(baseLayers);
+        const newControlLayers = {};
+        newControlLayers[stuff['ui.map.outdoors']] = outdoors;
+        newControlLayers[stuff['ui.map.satellite']] = satellite;
+        baseLayers = new Control.Layers(newControlLayers);
+        this.map.addControl(baseLayers);
+        console.log(stuff);
+      });
 
     this.lc = new LocateControl({
       follow: false,
@@ -107,11 +128,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
       keepCurrentZoomLevel: false,
       stopFollowingOnDrag: true,
       remainActive: true,
-      onLocationError: err => {
+      onLocationError: (err) => {
         console.error(err);
         MonitoringClient.captureException(err);
       },
-      onLocationOutsideMapBounds: context => {
+      onLocationOutsideMapBounds: (context) => {
         console.log(context);
       },
       locateOptions: {
@@ -141,11 +162,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
     };
     L.DomEvent.on(this.map, 'locationfound', locateControlTrigger);
 
-    this.map.on('popupopen', e => {
+    this.map.on('popupopen', (e) => {
       this.map.getContainer().classList.add('popup-open');
       this.popupOpen.emit(e);
     });
-    this.map.on('popupclose', e => {
+    this.map.on('popupclose', (e) => {
       this.map.getContainer().classList.remove('popup-open');
       this.popupClose.emit(e);
     });
@@ -177,7 +198,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     if (this.icons) {
       return Promise.resolve(this.icons);
     }
-    return this.mapData.getPoiTypes().then(poiTypes => {
+    return this.mapData.getPoiTypes().then((poiTypes) => {
       this.icons = {};
       for (var i = 0; i < poiTypes.length; ++i) {
         var type = poiTypes[i];
@@ -221,7 +242,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
           icon: L.AwesomeMarkers.icon({
             icon: a.favorite ? 'star' : '',
             // eslint-disable-next-line no-nested-ternary
-            markerColor: a.wsc ? (a.favorite ? 'orange' : 'darkblue') : 'lightgray',
+            markerColor: a.wsc
+              ? a.favorite
+                ? 'orange'
+                : 'darkblue'
+              : 'lightgray',
             prefix: `ion-${this.platform.cssClass}`,
             extraClasses: 'ion-icon',
           }),
@@ -240,7 +265,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       this.poiMarkers = new LayerGroup();
       this.map.addLayer(this.poiMarkers);
     }
-    this.createIcons().then(icons => {
+    this.createIcons().then((icons) => {
       for (var i = 0; i < pois.length; ++i) {
         var poi = pois[i];
 
@@ -320,7 +345,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       this.areaLayers = new LayerGroup();
       this.map.addLayer(this.areaLayers);
     }
-    layers.forEach(layer => {
+    layers.forEach((layer) => {
       if (layer.match(/\.kml$/)) {
         omnivore.kml(layer).addTo(this.areaLayers);
       } else if (layer.match(/\.(geo)?json$/)) {

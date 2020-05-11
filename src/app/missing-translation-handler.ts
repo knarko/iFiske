@@ -1,4 +1,7 @@
-import { MissingTranslationHandler, MissingTranslationHandlerParams } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  MissingTranslationHandlerParams,
+} from '@ngx-translate/core';
 import { MonitoringClient } from './monitoring';
 import { take, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -26,7 +29,11 @@ function fallbackLanguage(lang: string) {
 export class LogMissingTranslationHandler implements MissingTranslationHandler {
   currentLang?: string;
   loops = 0;
-  handle({ key, translateService, interpolateParams }: MissingTranslationHandlerParams) {
+  handle({
+    key,
+    translateService,
+    interpolateParams,
+  }: MissingTranslationHandlerParams) {
     this.loops++;
     MonitoringClient.captureException(new MissingTranslationError(key));
     const currentLang = this.currentLang || translateService.currentLang;
@@ -41,9 +48,13 @@ export class LogMissingTranslationHandler implements MissingTranslationHandler {
     }
     return translateService.getTranslation(lang).pipe(
       take(1),
-      switchMap(translations => {
+      switchMap((translations) => {
         if (translations) {
-          const res = translateService.getParsedResult(translations, key, interpolateParams);
+          const res = translateService.getParsedResult(
+            translations,
+            key,
+            interpolateParams,
+          );
           if (typeof res.subscribe === 'function') {
             this.currentLang = lang;
             return res;
@@ -52,7 +63,7 @@ export class LogMissingTranslationHandler implements MissingTranslationHandler {
         }
         return key;
       }),
-      map(value => {
+      map((value) => {
         delete this.currentLang;
         this.loops = 0;
         if (!value) {

@@ -35,7 +35,7 @@ page-areas-search {
       top: 50%;
       transform: translateY(-50%);
     }
-    &>img:first-child {
+    & > img:first-child {
       border-radius: 10%;
     }
   }
@@ -76,4 +76,3 @@ page-areas-search {
     font-size: 11px;
   }
 }
-

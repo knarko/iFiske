@@ -4,7 +4,15 @@ import { serverLocation } from './serverLocation';
 
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
-import { timeout, map, catchError, retryWhen, zip, switchAll, shareReplay } from 'rxjs/operators';
+import {
+  timeout,
+  map,
+  catchError,
+  retryWhen,
+  zip,
+  switchAll,
+  shareReplay,
+} from 'rxjs/operators';
 import { TranslateToastController } from '../translate-toast-controller/translate-toast-controller';
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
@@ -93,10 +101,13 @@ export class ApiProvider {
     }, 10 * 1000);
   }
 
-  private getObservable(inputParams: Dictionary<string | number>, options?: ApiOptions): Observable<any> {
+  private getObservable(
+    inputParams: Dictionary<string | number>,
+    options?: ApiOptions,
+  ): Observable<any> {
     options = Object.assign({}, ApiProvider.DefaultOptions, options);
 
-    Object.keys(inputParams).forEach(key => {
+    Object.keys(inputParams).forEach((key) => {
       if (inputParams[key] == undefined) {
         delete inputParams[key];
       }
@@ -107,7 +118,7 @@ export class ApiProvider {
       key: 'ox07xh8aaypwvq7a',
     });
 
-    Object.keys(inputParams).forEach(key => {
+    Object.keys(inputParams).forEach((key) => {
       inputParams[key] = '' + inputParams[key];
     });
 
@@ -143,12 +154,16 @@ export class ApiProvider {
     const result$ = httpResult.pipe(
       timeout(10000),
       map((response: ApiResponse) => {
-        if (response.status !== 'error' && response.data != undefined && response.data.response != undefined) {
+        if (
+          response.status !== 'error' &&
+          response.data != undefined &&
+          response.data.response != undefined
+        ) {
           return response.data.response;
         }
         throw response;
       }),
-      retryWhen(attempts =>
+      retryWhen((attempts) =>
         attempts.pipe(
           zip(range(1, this.maxRetries + 1), (err, i) => {
             if (!options.retry || i > this.maxRetries) {
@@ -160,7 +175,7 @@ export class ApiProvider {
           switchAll(),
         ),
       ),
-      catchError(err => {
+      catchError((err) => {
         if (!err) {
           throw new Error('Unknown network failure');
         } else if (err.status === 0 || err.name === 'TimeoutError') {
@@ -225,7 +240,10 @@ export class ApiProvider {
     return this.api_call(args, { retry: false });
   }
   user_register(userDetails) {
-    return this.api_call(Object.assign({ m: 'user_register' }, userDetails), { retry: false, post: true });
+    return this.api_call(Object.assign({ m: 'user_register' }, userDetails), {
+      retry: false,
+      post: true,
+    });
   }
   user_confirm(username, pin) {
     return this.api_call(
@@ -281,10 +299,16 @@ export class ApiProvider {
     );
   }
   user_logout() {
-    return this.api_call({ m: 'user_logout' }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'user_logout' },
+      { retry: false, session: true, post: true },
+    );
   }
   user_products() {
-    return this.api_call({ m: 'user_products' }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'user_products' },
+      { retry: false, session: true },
+    );
   }
   user_set_pushtoken(token: string) {
     return this.api_call(
@@ -306,45 +330,72 @@ export class ApiProvider {
    * Sets the users default delivery address
    */
   user_set_del_adr({ adr = '', town = '', zip = '' }) {
-    return this.api_call({ m: 'user_set_del_adr', adr, town, zip }, { session: true, post: true, retry: false });
+    return this.api_call(
+      { m: 'user_set_del_adr', adr, town, zip },
+      { session: true, post: true, retry: false },
+    );
   }
 
   /*
    * Administration endpoints
    */
   user_organizations() {
-    return this.api_call({ m: 'user_organizations' }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'user_organizations' },
+      { retry: false, session: true },
+    );
   }
   adm_products(orgid): Promise<Dictionary<AdminPermit>> {
-    return this.api_call({ m: 'adm_products', orgid: orgid }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'adm_products', orgid: orgid },
+      { retry: false, session: true },
+    );
   }
   adm_revoke_prod(code, flag) {
-    return this.api_call({ m: 'adm_revoke_prod', code: code, flag: flag }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'adm_revoke_prod', code: code, flag: flag },
+      { retry: false, session: true, post: true },
+    );
   }
   adm_check_prod(code) {
-    return this.api_call({ m: 'adm_check_prod', code: code }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'adm_check_prod', code: code },
+      { retry: false, session: true },
+    );
   }
   adm_get_stats(orgid) {
-    return this.api_call({ m: 'adm_get_stats', orgid: orgid }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'adm_get_stats', orgid: orgid },
+      { retry: false, session: true },
+    );
   }
 
   /**
    * Adds a manually written comment to the product log
    */
   adm_prod_log(code: string, comment: string) {
-    return this.api_call({ m: 'adm_prod_log', code, comment }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'adm_prod_log', code, comment },
+      { retry: false, session: true, post: true },
+    );
   }
   /**
    * Adds 1 to the check counter on the product
    */
   adm_add_check(code: string) {
-    return this.api_call({ m: 'adm_add_check', code }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'adm_add_check', code },
+      { retry: false, session: true, post: true },
+    );
   }
   /**
    * Subtracts 1 from the check counter on the product
    */
   adm_sub_check(code: string) {
-    return this.api_call({ m: 'adm_sub_check', code }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'adm_sub_check', code },
+      { retry: false, session: true, post: true },
+    );
   }
 
   admGetStats(orgid?: number | string) {
@@ -436,7 +487,10 @@ export class ApiProvider {
     });
   }
   user_get_favorites() {
-    return this.api_call({ m: 'user_get_favorites' }, { retry: false, session: true });
+    return this.api_call(
+      { m: 'user_get_favorites' },
+      { retry: false, session: true },
+    );
   }
   user_add_favorite(area) {
     // Flag 0 means to not get notifications on catch reports
@@ -457,7 +511,10 @@ export class ApiProvider {
     );
   }
   user_remove_favorite(area) {
-    return this.api_call({ m: 'user_remove_favorite', areaid: area }, { retry: false, session: true, post: true });
+    return this.api_call(
+      { m: 'user_remove_favorite', areaid: area },
+      { retry: false, session: true, post: true },
+    );
   }
   get_terms_of_service() {
     return this.api_call({ m: 'get_terms_of_service' });
@@ -479,10 +536,19 @@ export class ApiProvider {
     return this.api_call({ m: 'get_content_menu' });
   };
 
-  getAdsMain = () => this.getObservable({ m: 'get_ads_main' }, { cacheTime: 60000 });
+  getAdsMain = () =>
+    this.getObservable({ m: 'get_ads_main' }, { cacheTime: 60000 });
 
-  getSessionToken = () => this.getObservable({ m: 'user_get_session_token' }, { session: true, retry: false });
+  getSessionToken = () =>
+    this.getObservable(
+      { m: 'user_get_session_token' },
+      { session: true, retry: false },
+    );
 
-  getReports = ({ filter, orgId, items }: { filter?: 1; orgId?: number; items?: number } = {}) =>
+  getReports = ({
+    filter,
+    orgId,
+    items,
+  }: { filter?: 1; orgId?: number; items?: number } = {}) =>
     this.getObservable({ m: 'get_reports', orgid: orgId, items, filter });
 }

@@ -11,6 +11,7 @@ export class PermitCodeComponent {
 
   ngOnChanges() {
     // u00A0 is a non-breaking space
-    this.displayCode = ('' + this.code).substr(0, 4) + '\u00A0' + ('' + this.code).substr(4);
+    this.displayCode =
+      ('' + this.code).substr(0, 4) + '\u00A0' + ('' + this.code).substr(4);
   }
 }

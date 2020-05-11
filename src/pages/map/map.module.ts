@@ -6,6 +6,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [MapPage],
-  imports: [ComponentsModule, IonicPageModule.forChild(MapPage), TranslateModule.forChild()],
+  imports: [
+    ComponentsModule,
+    IonicPageModule.forChild(MapPage),
+    TranslateModule.forChild(),
+  ],
 })
 export class MapPageModule {}

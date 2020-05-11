@@ -20,7 +20,9 @@ export class BaseModel<T = {}> {
   initialize() {
     let tables: TableDef[];
     if (this.tables) {
-      tables = Array.isArray(this.tables) ? this.tables : Object.values(this.tables);
+      tables = Array.isArray(this.tables)
+        ? this.tables
+        : Object.values(this.tables);
     } else {
       this.ready = new Promise(() => {
         throw new Error(`No table definitions found for ${this.toString()}`);
@@ -28,7 +30,9 @@ export class BaseModel<T = {}> {
       return;
     }
 
-    this.ready = Promise.all(tables.map(table => this.DB.initializeTable(table))).then(changed => {
+    this.ready = Promise.all(
+      tables.map((table) => this.DB.initializeTable(table)),
+    ).then((changed) => {
       for (let i = 0; i < changed.length; ++i) {
         if (changed[i]) return this.update(true);
       }
@@ -48,9 +52,11 @@ export class BaseModel<T = {}> {
    * @return {Promise}    A promise for when the update is finished. Resolves with true if an update took place.
    */
   async update(skipReady?: boolean): Promise<boolean> {
-    const tables = Array.isArray(this.tables) ? this.tables : Object.values(this.tables);
+    const tables = Array.isArray(this.tables)
+      ? this.tables
+      : Object.values(this.tables);
     return Promise.all(
-      tables.map(async table => {
+      tables.map(async (table) => {
         if (!table.apiMethod) {
           return Promise.reject(`${table.name} does not have an apiMethod`);
         }
@@ -61,13 +67,15 @@ export class BaseModel<T = {}> {
         await this.DB.populateTable(table, data);
         return true;
       }),
-    ).then(changed => changed.reduce((acc, curr) => acc || curr, false));
+    ).then((changed) => changed.reduce((acc, curr) => acc || curr, false));
   }
 
   @DBMethod
   async getAll(): Promise<T[]> {
-    const res = await this.DB.getMultiple(`SELECT * FROM ${this.tables[0].name}`);
-    res.forEach(a => this.transform(a));
+    const res = await this.DB.getMultiple(
+      `SELECT * FROM ${this.tables[0].name}`,
+    );
+    res.forEach((a) => this.transform(a));
     return res;
   }
 

@@ -4,7 +4,10 @@ import { UserProvider } from '../../providers/user/user';
 import { Permit } from '../../providers/user/userTypes';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { DeepLinksProvider, DeepLinks } from '../../providers/deep-links/deep-links';
+import {
+  DeepLinksProvider,
+  DeepLinks,
+} from '../../providers/deep-links/deep-links';
 
 @IonicPage({
   defaultHistory: ['HomePage', 'MyPermitsPage'],
@@ -35,7 +38,9 @@ export class PermitDetailPage {
     if (this.navParams.get('ID') != undefined) {
       try {
         // Det finns ett ID, hämta data från DB
-        this.permit = await this.userProvider.getProduct(this.navParams.get('ID'));
+        this.permit = await this.userProvider.getProduct(
+          this.navParams.get('ID'),
+        );
       } catch (err) {
         console.warn(err);
       }
@@ -57,6 +62,10 @@ export class PermitDetailPage {
   }
 
   openCatchReport() {
-    this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
+    this.deepLinks.open(
+      DeepLinks.catchReport,
+      { ID: '' + this.permit.code },
+      { bringSession: true },
+    );
   }
 }

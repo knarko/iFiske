@@ -5,7 +5,9 @@ import { MonitoringClient } from '../app/monitoring';
 import { isProdMode } from '../app/config';
 import get from 'lodash/get';
 
-export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>('IMGCACHE_CONFIG');
+export const IMGCACHE_CONFIG = new InjectionToken<ImgcacheConfig>(
+  'IMGCACHE_CONFIG',
+);
 
 export interface ImgcacheConfig {
   /**
@@ -66,11 +68,16 @@ export class ImgcacheService {
 
   private cache = {};
 
-  constructor(private plt: Platform, @Inject(IMGCACHE_CONFIG) private config: ImgcacheConfig = {}) {
+  constructor(
+    private plt: Platform,
+    @Inject(IMGCACHE_CONFIG) private config: ImgcacheConfig = {},
+  ) {
     Object.assign(ImgCache.options, config);
 
     this.ready = this.plt.ready().then(() => {
-      return new Promise<void>((resolve, reject) => ImgCache.init(resolve, reject));
+      return new Promise<void>((resolve, reject) =>
+        ImgCache.init(resolve, reject),
+      );
     });
   }
 
@@ -79,13 +86,17 @@ export class ImgcacheService {
 
     const isCached = await this.isCached(src);
     if (!isCached) {
-      return new Promise<void>((resolve, reject) => ImgCache.cacheFile(src, resolve, reject));
+      return new Promise<void>((resolve, reject) =>
+        ImgCache.cacheFile(src, resolve, reject),
+      );
     }
   }
 
-  isCached = async src => {
+  isCached = async (src) => {
     await this.ready;
-    return new Promise<boolean>(resolve => ImgCache.isCached(src, (_, answer) => resolve(answer)));
+    return new Promise<boolean>((resolve) =>
+      ImgCache.isCached(src, (_, answer) => resolve(answer)),
+    );
   };
 
   async getCachedFile(src: string): Promise<string> {
@@ -107,8 +118,12 @@ export class ImgcacheService {
           src,
           (_, img) => {
             const url = img.toURL();
-            const ionicConvertFileSrc: any = get(window, 'Ionic.WebView.convertFileSrc');
-            const normalizedUrl = (ionicConvertFileSrc && ionicConvertFileSrc(url)) || url;
+            const ionicConvertFileSrc: any = get(
+              window,
+              'Ionic.WebView.convertFileSrc',
+            );
+            const normalizedUrl =
+              (ionicConvertFileSrc && ionicConvertFileSrc(url)) || url;
             this.cache[src] = normalizedUrl;
             resolve(normalizedUrl);
           },
@@ -121,7 +136,9 @@ export class ImgcacheService {
         if (err) {
           MonitoringClient.captureException(err);
         } else {
-          MonitoringClient.captureMessage(`There was an error caching '${src}'`);
+          MonitoringClient.captureMessage(
+            `There was an error caching '${src}'`,
+          );
         }
       }
       return this.config.fallback ? src : '';

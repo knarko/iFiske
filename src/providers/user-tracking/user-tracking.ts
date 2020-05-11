@@ -13,14 +13,24 @@ export class UserTrackingProvider {
   private data: TrackingData = this.getTrackingData();
   getTrackingData() {
     try {
-      return JSON.parse(localStorage.getItem(UserTrackingProvider.STORAGE_LOCATION)) || {};
+      return (
+        JSON.parse(
+          localStorage.getItem(UserTrackingProvider.STORAGE_LOCATION),
+        ) || {}
+      );
     } catch (err) {}
     return {};
   }
-  constructor(private launchReview: LaunchReview, private alertCtrl: TranslateAlertController) {}
+  constructor(
+    private launchReview: LaunchReview,
+    private alertCtrl: TranslateAlertController,
+  ) {}
 
   private persist() {
-    localStorage.setItem(UserTrackingProvider.STORAGE_LOCATION, JSON.stringify(this.data));
+    localStorage.setItem(
+      UserTrackingProvider.STORAGE_LOCATION,
+      JSON.stringify(this.data),
+    );
   }
 
   track(key: keyof TrackingData, value: any = 1) {
@@ -68,9 +78,9 @@ export class UserTrackingProvider {
           text: 'ui.reviews.yes',
           handler: () => {
             if (this.launchReview.isRatingSupported()) {
-              this.launchReview.rating().catch(err => console.warn(err));
+              this.launchReview.rating().catch((err) => console.warn(err));
             } else {
-              this.launchReview.launch().catch(err => console.warn(err));
+              this.launchReview.launch().catch((err) => console.warn(err));
             }
           },
         },

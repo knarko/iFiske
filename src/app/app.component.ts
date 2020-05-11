@@ -1,5 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Config, App, ViewController, ToolbarTitle, NavController } from 'ionic-angular';
+import {
+  Platform,
+  Config,
+  App,
+  ViewController,
+  ToolbarTitle,
+  NavController,
+} from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -44,13 +51,13 @@ export class MyApp {
     this.config.setTransition('md-transition', MDTransition);
     this.translate.setDefaultLang('sv');
     this.translate.use(this.settings.language);
-    this.deploy.initialize().catch(err => {
+    this.deploy.initialize().catch((err) => {
       console.warn(err);
     });
 
     this.update
       .update(false, this.settings.firstLaunch)
-      .catch(e => console.warn(e))
+      .catch((e) => console.warn(e))
       .then(() => {
         this.userTracking.track('appOpened');
       });
@@ -71,11 +78,15 @@ export class MyApp {
   async setupBackButtonText() {
     const backButtonText = this.translate.stream('ui.general.back');
 
-    this.config.set('ios', 'backButtonText', await backButtonText.pipe(take(1)).toPromise());
+    this.config.set(
+      'ios',
+      'backButtonText',
+      await backButtonText.pipe(take(1)).toPromise(),
+    );
     if (this.platform.is('ios')) {
       const subs = new Map<ViewController, Subscription>();
 
-      this.app.viewWillLeave.subscribe(view => {
+      this.app.viewWillLeave.subscribe((view) => {
         if (subs.has(view)) {
           subs.get(view).unsubscribe();
           subs.delete(view);
@@ -83,7 +94,7 @@ export class MyApp {
       });
 
       this.app.viewWillEnter.subscribe((view: ViewController) => {
-        const sub = backButtonText.subscribe(backButtonText => {
+        const sub = backButtonText.subscribe((backButtonText) => {
           // Bug with width of back button on ios
           //const previousViewTitle = this.getPreviousViewTitle(view);
           //view.setBackButtonText(previousViewTitle || backButtonText);

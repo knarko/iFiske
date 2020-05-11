@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ModalController,
+} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { Product } from '../../providers/product/product';
 import { Area } from '../../providers/area/area';
 import { Permit } from '../../providers/user/userTypes';
 import { MonitoringClient } from '../../app/monitoring';
-import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import {
+  DeepLinks,
+  DeepLinksProvider,
+} from '../../providers/deep-links/deep-links';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 @IonicPage()
@@ -26,7 +34,9 @@ export class AreasDetailPermitPage {
     private analytics: FirebaseAnalytics,
   ) {
     const params: Observable<any> =
-      this.navParams.get('params') || ((this.navCtrl as any).rootParams && (this.navCtrl as any).rootParams.params);
+      this.navParams.get('params') ||
+      ((this.navCtrl as any).rootParams &&
+        (this.navCtrl as any).rootParams.params);
 
     params.subscribe(({ area, products }) => {
       this.area = area;
@@ -36,16 +46,27 @@ export class AreasDetailPermitPage {
 
   ionViewDidEnter() {
     if (this.area) {
-      this.analytics.logEvent('view_item_list', { item_category: this.area.ID });
+      this.analytics.logEvent('view_item_list', {
+        item_category: this.area.ID,
+      });
     }
   }
 
   buy(product: Product, method: { name: string }) {
     console.log('buy', product, method);
-    this.analytics.logEvent('begin_checkout', { value: product.price, currency: 'SEK', method, item_id: product.ID });
+    this.analytics.logEvent('begin_checkout', {
+      value: product.price,
+      currency: 'SEK',
+      method,
+      item_id: product.ID,
+    });
 
     if (method.name === 'Web') {
-      this.deepLinks.open(DeepLinks.buy, { productId: '' + product.ID }, { bringSession: true });
+      this.deepLinks.open(
+        DeepLinks.buy,
+        { productId: '' + product.ID },
+        { bringSession: true },
+      );
     } else if (method.name === 'SMS') {
       this.analytics.logEvent('open_sms_purchase', { item_id: product.ID });
       this.modalCtrl
@@ -55,7 +76,9 @@ export class AreasDetailPermitPage {
         .present();
     } else {
       MonitoringClient.captureException(
-        new Error(`There was no valid method: ${method} for product ${product.ID}
+        new Error(`There was no valid method: ${method} for product ${
+          product.ID
+        }
         ${JSON.stringify(product.methods)}
       `),
       );

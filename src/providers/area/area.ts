@@ -222,11 +222,11 @@ export class AreaProvider extends BaseModel<Area> {
         });
       }
 
-      areas[key].files.forEach(file => {
+      areas[key].files.forEach((file) => {
         filesArr.push({ ...file, area: key });
       });
 
-      areas[key].layers.forEach(layer => {
+      areas[key].layers.forEach((layer) => {
         layersArr.push({ area: key, layer });
       });
     }
@@ -247,7 +247,8 @@ export class AreaProvider extends BaseModel<Area> {
       area.files = this.getFiles(area.ID);
     } else {
       for (let i = 1; i < 6; ++i) {
-        area['fish_' + i] = area['fish_' + i] && area['fish_' + i].split(this.fishSeparator);
+        area['fish_' + i] =
+          area['fish_' + i] && area['fish_' + i].split(this.fishSeparator);
       }
     }
   }
@@ -334,15 +335,16 @@ export class AreaProvider extends BaseModel<Area> {
     `,
       countyId ? [countyId, countyId, countyId] : [],
     );
-    res.forEach(a => this.transform(a));
+    res.forEach((a) => this.transform(a));
     return res;
   }
 
   @DBMethod
   async getPhotos(areaId): Promise<AreaImage[]> {
-    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [
-      areaId,
-    ]).then(images => {
+    return this.DB.getMultiple(
+      `SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`,
+      [areaId],
+    ).then((images) => {
       for (let i = 0; i < images.length; ++i) {
         images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
         images[i].file = serverLocation + images[i].file;
@@ -353,10 +355,11 @@ export class AreaProvider extends BaseModel<Area> {
 
   @DBMethod
   async getFiles(areaId): Promise<AreaFile[]> {
-    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [
-      areaId,
-    ]).then((files: AreaFile[]) => {
-      files.forEach(file => {
+    return this.DB.getMultiple(
+      `SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`,
+      [areaId],
+    ).then((files: AreaFile[]) => {
+      files.forEach((file) => {
         file.thumb = serverLocation + file.thumb;
         file.url = serverLocation + file.f;
         file.filename = file.f.split('/').slice(-1)[0];
@@ -435,14 +438,16 @@ export class AreaProvider extends BaseModel<Area> {
 
     const result = searchstring
       ? fuse.search(searchstring)
-      : fuse._docs.map(i => ({ item: i, score: 0 }));
+      : fuse._docs.map((i) => ({ item: i, score: 0 }));
 
-    const foundFish = await this.fishProvider.search(searchstring).then(fishes => {
-      return fishes.length ? fishes[0].item.t : undefined;
-    });
+    const foundFish = await this.fishProvider
+      .search(searchstring)
+      .then((fishes) => {
+        return fishes.length ? fishes[0].item.t : undefined;
+      });
 
     if (this.currentLocation || foundFish) {
-      result.forEach(r => {
+      result.forEach((r) => {
         if (this.currentLocation) {
           const distance = this.calculateDistance(
             r.item.lat,
@@ -456,7 +461,10 @@ export class AreaProvider extends BaseModel<Area> {
         if (foundFish) {
           for (let i = 1; i < 6; ++i) {
             const fishArr = r.item['fish_' + i];
-            if (fishArr && fishArr.some(fish => fish.indexOf(foundFish) !== -1)) {
+            if (
+              fishArr &&
+              fishArr.some((fish) => fish.indexOf(foundFish) !== -1)
+            ) {
               r.score -= i / 1500;
               break;
             }
@@ -476,7 +484,7 @@ export class AreaProvider extends BaseModel<Area> {
         }
         return 0;
       })
-      .map(r => r.item);
+      .map((r) => r.item);
   }
 
   private getFuse(areas: Area[]) {
@@ -534,7 +542,10 @@ export class AreaProvider extends BaseModel<Area> {
       maxPatternLength: 16,
     };
     if (this.settings.isDeveloper) {
-      fuseOptions.keys.push({ name: 'ID', weight: 10 }, { name: 'orgid', weight: 10 });
+      fuseOptions.keys.push(
+        { name: 'ID', weight: 10 },
+        { name: 'orgid', weight: 10 },
+      );
     }
     // Populate Fuse search index
     return new Fuse(areas, fuseOptions);
@@ -549,8 +560,8 @@ export class AreaProvider extends BaseModel<Area> {
         timeout: 10000,
         enableHighAccuracy: false,
       })
-      .pipe(filter(geo => !!geo.coords))
-      .subscribe(position => {
+      .pipe(filter((geo) => !!geo.coords))
+      .subscribe((position) => {
         if (!this.currentLocation) {
           this.searchCache = {};
         }

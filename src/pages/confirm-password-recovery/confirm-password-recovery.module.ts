@@ -6,6 +6,10 @@ import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [ConfirmPasswordRecoveryPage],
-  imports: [IonicPageModule.forChild(ConfirmPasswordRecoveryPage), TranslateModule, ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(ConfirmPasswordRecoveryPage),
+    TranslateModule,
+    ComponentsModule,
+  ],
 })
 export class ConfirmPasswordRecoveryPageModule {}

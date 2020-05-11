@@ -13,14 +13,21 @@ export class ChangeLanguagePage {
   currentLanguage: string;
   languages = Object.values(LANGUAGES);
 
-  constructor(private viewCtrl: ViewController, private settings: SettingsProvider, private statusBar: StatusBar) {}
+  constructor(
+    private viewCtrl: ViewController,
+    private settings: SettingsProvider,
+    private statusBar: StatusBar,
+  ) {}
 
   close() {
     this.viewCtrl.dismiss();
   }
 
   changed() {
-    if (this.settings.language === this.currentLanguage || !this.currentLanguage) {
+    if (
+      this.settings.language === this.currentLanguage ||
+      !this.currentLanguage
+    ) {
       return;
     }
     this.settings.language = this.currentLanguage;

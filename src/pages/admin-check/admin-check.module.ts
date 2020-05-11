@@ -6,6 +6,10 @@ import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [AdminCheckPage],
-  imports: [IonicPageModule.forChild(AdminCheckPage), TranslateModule, ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(AdminCheckPage),
+    TranslateModule,
+    ComponentsModule,
+  ],
 })
 export class AdminCheckPageModule {}

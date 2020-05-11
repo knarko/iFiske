@@ -8,7 +8,10 @@
   <ion-data-form [form]="form" [hideSubmit]="true"></ion-data-form>
   <ion-item no-lines class="terms">
     <ion-label>{{ 'I accept the terms of service' | translate }}</ion-label>
-    <ion-checkbox [(ngModel)]="acceptedTos" (ionChange)="persistApproval()"></ion-checkbox>
+    <ion-checkbox
+      [(ngModel)]="acceptedTos"
+      (ionChange)="persistApproval()"
+    ></ion-checkbox>
   </ion-item>
   <button
     ion-button

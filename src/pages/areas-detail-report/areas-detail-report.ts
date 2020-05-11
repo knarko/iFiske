@@ -1,5 +1,12 @@
 import { Component, ViewChild, OnDestroy } from '@angular/core';
-import { IonicPage, NavParams, NavController, Tabs, Content, Refresher } from 'ionic-angular';
+import {
+  IonicPage,
+  NavParams,
+  NavController,
+  Tabs,
+  Content,
+  Refresher,
+} from 'ionic-angular';
 import { ReportsProvider, Report } from '../../providers/reports/reports';
 import { Observable } from 'rxjs/Observable';
 import { Area } from '../../providers/area/area';
@@ -36,18 +43,21 @@ export class AreasDetailReportPage implements OnDestroy {
     private navParams: NavParams,
   ) {
     this.reports$ = this.fetchReports$.pipe(
-      switchMap(area => this.reportsProvider.getReports({ orgId: area.orgid })),
+      switchMap((area) =>
+        this.reportsProvider.getReports({ orgId: area.orgid }),
+      ),
       share(),
     );
 
-    this.reports$.pipe(takeUntil(this.destroyed$)).subscribe(reports => {
+    this.reports$.pipe(takeUntil(this.destroyed$)).subscribe((reports) => {
       this.isLoading = false;
       this.reports = reports;
     });
 
     const params: Observable<AreaDetailParams> =
       this.navParams.get('params') ||
-      ((this._navCtrl as any).rootParams && (this._navCtrl as any).rootParams.params);
+      ((this._navCtrl as any).rootParams &&
+        (this._navCtrl as any).rootParams.params);
 
     params.subscribe(({ area, org, tabsCtrl, rootNavCtrl }) => {
       if (this.area !== area && area) {

@@ -21,7 +21,9 @@ export class HighlightComponent implements OnChanges {
 
   updateParts() {
     let result: string = String(this.permit[this.key]);
-    const match = this.permit.matches && this.permit.matches.find(m => m.key === this.key);
+    const match =
+      this.permit.matches &&
+      this.permit.matches.find((m) => m.key === this.key);
     if (match) {
       this.parts = [];
       let location = 0;

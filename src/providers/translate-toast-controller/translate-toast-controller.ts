@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ToastController, ToastOptions as OriginalToastOptions, Toast } from 'ionic-angular';
+import {
+  ToastController,
+  ToastOptions as OriginalToastOptions,
+  Toast,
+} from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 interface BetterToastOptions {
@@ -10,7 +14,10 @@ export type ToastOptions = OriginalToastOptions & BetterToastOptions;
 
 @Injectable()
 export class TranslateToastController {
-  constructor(private translate: TranslateService, private toastCtrl: ToastController) {}
+  constructor(
+    private translate: TranslateService,
+    private toastCtrl: ToastController,
+  ) {}
 
   async create(opts?: ToastOptions): Promise<Toast> {
     const toTranslate = ['message', 'closeButtonText'];

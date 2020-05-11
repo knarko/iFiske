@@ -20,9 +20,13 @@ import { Fish, FishProvider } from '../../providers/fish/fish';
 export class SpeciesDetailPage {
   fish: Fish;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fishProvider: FishProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private fishProvider: FishProvider,
+  ) {
     if (!this.navParams.get('t')) {
-      this.fishProvider.getOne(this.navParams.get('ID')).then(fish => {
+      this.fishProvider.getOne(this.navParams.get('ID')).then((fish) => {
         this.fish = fish;
       });
     } else {

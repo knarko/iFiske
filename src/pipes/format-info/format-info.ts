@@ -10,13 +10,23 @@ import striptags from 'striptags';
 })
 export class FormatInfoPipe implements PipeTransform {
   linky: (value: string, options?: any) => string;
-  private allowedTags = ['p', 'a', 'br', ...Array(6).map((_, i) => `h${i + 1}`), 'strong', 'em', 'i', 'b'];
+  private allowedTags = [
+    'p',
+    'a',
+    'br',
+    ...Array(6).map((_, i) => `h${i + 1}`),
+    'strong',
+    'em',
+    'i',
+    'b',
+  ];
 
   private transforms = [
-    value => striptags(value, this.allowedTags),
-    value => value.replace(/<p>(?:\s|&nbsp;)*<\/p>/gi, ''),
-    value => value.replace(/(?:<br\s*\/?>(?:\s|&nbsp;)*<br\s*\/?>)+/gi, '<br>'),
-    value => this.linky(value),
+    (value) => striptags(value, this.allowedTags),
+    (value) => value.replace(/<p>(?:\s|&nbsp;)*<\/p>/gi, ''),
+    (value) =>
+      value.replace(/(?:<br\s*\/?>(?:\s|&nbsp;)*<br\s*\/?>)+/gi, '<br>'),
+    (value) => this.linky(value),
   ];
 
   constructor() {

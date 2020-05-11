@@ -27,7 +27,9 @@ export class AnalyticsConsentPage implements AfterViewInit {
     console.log('ionViewDidLoad AnalyticsConsentPage');
   }
   ngAfterViewInit() {
-    const link: HTMLAnchorElement = this.elementRef.nativeElement.querySelector('.content a');
+    const link: HTMLAnchorElement = this.elementRef.nativeElement.querySelector(
+      '.content a',
+    );
     link.addEventListener('click', this.openFullTerms);
   }
   openFullTerms = async () => {

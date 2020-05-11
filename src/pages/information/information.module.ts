@@ -7,6 +7,11 @@ import { ImgcacheModule } from '../../imgcache/imgcache.module';
 
 @NgModule({
   declarations: [InformationPage],
-  imports: [IonicPageModule.forChild(InformationPage), TranslateModule.forChild(), PipesModule, ImgcacheModule],
+  imports: [
+    IonicPageModule.forChild(InformationPage),
+    TranslateModule.forChild(),
+    PipesModule,
+    ImgcacheModule,
+  ],
 })
 export class InformationPageModule {}

@@ -11,7 +11,13 @@ import {
   ModalController,
 } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { switchMap, map, distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  distinctUntilChanged,
+  shareReplay,
+  take,
+} from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { combineLatest } from 'rxjs/observable/combineLatest';
@@ -20,7 +26,11 @@ import { Subject } from 'rxjs/Subject';
 import debounce from 'lodash/debounce';
 
 import { AdminProvider } from '../../providers/admin/admin';
-import { AdminOrganization, AdminPermit, AdminPermitSearchResult } from '../../providers/admin/adminTypes';
+import {
+  AdminOrganization,
+  AdminPermit,
+  AdminPermitSearchResult,
+} from '../../providers/admin/adminTypes';
 import { Permit } from '../../providers/user/userTypes';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { MonitoringClient } from '../../app/monitoring';
@@ -54,15 +64,41 @@ export class AdminPermitListPage implements OnDestroy {
   hasResults: boolean;
 
   permits: DisplayPermit[] = [
-    { key: 'active', title: 'ui.permit.validity.plural.active', permits: [], icon: 'ifiske-permit', folded: false },
-    { key: 'inactive', title: 'ui.permit.validity.plural.inactive', permits: [], icon: 'time', folded: true },
-    { key: 'expired', title: 'ui.permit.validity.plural.expired', permits: [], icon: 'close-circle', folded: true },
-    { key: 'revoked', title: 'ui.permit.validity.plural.revoked', permits: [], icon: 'close-circle', folded: true },
+    {
+      key: 'active',
+      title: 'ui.permit.validity.plural.active',
+      permits: [],
+      icon: 'ifiske-permit',
+      folded: false,
+    },
+    {
+      key: 'inactive',
+      title: 'ui.permit.validity.plural.inactive',
+      permits: [],
+      icon: 'time',
+      folded: true,
+    },
+    {
+      key: 'expired',
+      title: 'ui.permit.validity.plural.expired',
+      permits: [],
+      icon: 'close-circle',
+      folded: true,
+    },
+    {
+      key: 'revoked',
+      title: 'ui.permit.validity.plural.revoked',
+      permits: [],
+      icon: 'close-circle',
+      folded: true,
+    },
   ];
 
   private permitTitles: string[];
   private filteredTitles$ = new BehaviorSubject<Record<string, boolean>>({});
-  numberOfFilteredTitles$ = this.filteredTitles$.pipe(map(t => Object.values(t).filter(v => v === false).length));
+  numberOfFilteredTitles$ = this.filteredTitles$.pipe(
+    map((t) => Object.values(t).filter((v) => v === false).length),
+  );
 
   private scrollSubscription: Subscription;
   private destroyed$ = new Subject<void>();
@@ -87,7 +123,7 @@ export class AdminPermitListPage implements OnDestroy {
 
     const search$ = this.searchSubject.pipe(
       distinctUntilChanged(),
-      switchMap(searchTerm => this.adminProvider.search(searchTerm)),
+      switchMap((searchTerm) => this.adminProvider.search(searchTerm)),
     );
 
     this.permits$ = combineLatest(search$, this.filteredTitles$).pipe(
@@ -95,7 +131,7 @@ export class AdminPermitListPage implements OnDestroy {
         const permitTitlesSet = new Set<string>();
 
         const sortedPermits = permits
-          .filter(permit => {
+          .filter((permit) => {
             permitTitlesSet.add(permit.t);
             return filteredTitles[permit.t] !== false;
           })
@@ -114,7 +150,7 @@ export class AdminPermitListPage implements OnDestroy {
       shareReplay(1),
     );
     this.scrollSubject = new Subject();
-    this.scrollSub = this.permits$.subscribe(permits => {
+    this.scrollSub = this.permits$.subscribe((permits) => {
       this.pristinePermits = permits;
       this.updatePermits();
       if (!this.scrollSubject.observers.length) {
@@ -136,32 +172,43 @@ export class AdminPermitListPage implements OnDestroy {
 
   private setupFiltering() {
     try {
-      const savedFilters = JSON.parse(localStorage.getItem('AllAdminFilteredPermitTitles'));
+      const savedFilters = JSON.parse(
+        localStorage.getItem('AllAdminFilteredPermitTitles'),
+      );
       if (savedFilters) {
         this.allFilteredPermitTitles = savedFilters;
       }
     } catch (err) {}
 
     let currentOrganization: number;
-    this.adminProvider.currentOrganization.pipe(takeUntil(this.destroyed$)).subscribe(org => {
-      currentOrganization = org.ID;
-      this.filteredTitles$.next(this.allFilteredPermitTitles[org.ID] || {});
-    });
+    this.adminProvider.currentOrganization
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((org) => {
+        currentOrganization = org.ID;
+        this.filteredTitles$.next(this.allFilteredPermitTitles[org.ID] || {});
+      });
 
-    this.filteredTitles$.pipe(takeUntil(this.destroyed$)).subscribe(titles => {
-      this.allFilteredPermitTitles[currentOrganization] = titles;
-      localStorage.setItem('AllAdminFilteredPermitTitles', JSON.stringify(this.allFilteredPermitTitles));
-    });
+    this.filteredTitles$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((titles) => {
+        this.allFilteredPermitTitles[currentOrganization] = titles;
+        localStorage.setItem(
+          'AllAdminFilteredPermitTitles',
+          JSON.stringify(this.allFilteredPermitTitles),
+        );
+      });
   }
 
   private updatePermits() {
-    this.permits.forEach(p => {
+    this.permits.forEach((p) => {
       p.permits = [];
     });
 
-    this.hasResults = this.pristinePermits.some(permit => !!permit.matches);
-    this.pristinePermits.forEach(permit => {
-      this.permits.find(item => item.key === permit.validity).permits.push(permit);
+    this.hasResults = this.pristinePermits.some((permit) => !!permit.matches);
+    this.pristinePermits.forEach((permit) => {
+      this.permits
+        .find((item) => item.key === permit.validity)
+        .permits.push(permit);
     });
   }
 
@@ -194,14 +241,16 @@ export class AdminPermitListPage implements OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.scrollSubscription = this.scrollSubject.pipe(takeUntil(this.destroyed$)).subscribe(() => {
-      try {
-        this.content.scrollToTop();
-      } catch (err) {
-        this.scrollSubscription.unsubscribe();
-        this.scrollSubscription = undefined;
-      }
-    });
+    this.scrollSubscription = this.scrollSubject
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        try {
+          this.content.scrollToTop();
+        } catch (err) {
+          this.scrollSubscription.unsubscribe();
+          this.scrollSubscription = undefined;
+        }
+      });
 
     this.searchTerm = this.navParams.get('searchTerm') || '';
 
@@ -264,14 +313,14 @@ export class AdminPermitListPage implements OnDestroy {
     const filteredTitles = { ...this.filteredTitles$.value };
 
     // Remove any permit titles that no longer exist in the list of titles
-    Object.keys(filteredTitles).forEach(key => {
+    Object.keys(filteredTitles).forEach((key) => {
       if (this.permitTitles.indexOf(key) === -1) {
         delete filteredTitles[key];
       }
     });
 
     // Set the default values
-    this.permitTitles.forEach(title => {
+    this.permitTitles.forEach((title) => {
       if (filteredTitles[title] == undefined) {
         filteredTitles[title] = true;
       }
@@ -283,7 +332,7 @@ export class AdminPermitListPage implements OnDestroy {
       selectedValues: filteredTitles,
     });
     modalRef.present();
-    modalRef.onWillDismiss(result => {
+    modalRef.onWillDismiss((result) => {
       this.filteredTitles$.next(result);
     });
   }

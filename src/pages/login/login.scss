@@ -6,12 +6,12 @@ page-login {
     justify-content: center;
     padding-bottom: 40px;
 
-    &>img,
-    &>*:last-child {
+    & > img,
+    & > *:last-child {
       margin-bottom: auto;
     }
 
-    &>* {
+    & > * {
       flex-grow: 0;
       flex-shrink: 0;
       width: 100%;

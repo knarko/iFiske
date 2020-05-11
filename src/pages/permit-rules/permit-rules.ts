@@ -14,7 +14,11 @@ export class PermitRulesPage {
     t: string;
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private viewCtrl: ViewController,
+  ) {
     this.rules = this.navParams.data;
   }
 

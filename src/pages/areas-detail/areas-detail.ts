@@ -3,7 +3,10 @@ import { IonicPage, NavController, NavParams, Tabs } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { TabItem } from '../areas/areas';
 import { Area, AreaProvider } from '../../providers/area/area';
-import { OrganizationProvider, Organization } from '../../providers/organization/organization';
+import {
+  OrganizationProvider,
+  Organization,
+} from '../../providers/organization/organization';
 import { ProductProvider, Product } from '../../providers/product/product';
 import { Fish } from '../../providers/fish/fish';
 import { AreaDetailParams } from './areas-detail-params';
@@ -23,7 +26,11 @@ export class AreasDetailPage {
   org: Organization;
   area: Area;
   tabs: TabItem[] = [
-    { page: 'AreasDetailInfoPage', title: 'Information', icon: 'information-circle' },
+    {
+      page: 'AreasDetailInfoPage',
+      title: 'Information',
+      icon: 'information-circle',
+    },
     { page: 'AreasDetailReportPage', title: 'Reports', icon: 'ifiske-hook' },
     { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
     { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
@@ -40,29 +47,32 @@ export class AreasDetailPage {
     private productProvider: ProductProvider,
     private analytics: FirebaseAnalytics,
   ) {
-    this.areaProvider.getOne(this.navParams.get('ID')).then(area => {
+    this.areaProvider.getOne(this.navParams.get('ID')).then((area) => {
       this.area = area;
       console.log(area);
       this.updateParams();
       this.getOrg();
-      this.analytics.logEvent('select_content', { content_type: 'Area', item_id: area.ID });
+      this.analytics.logEvent('select_content', {
+        content_type: 'Area',
+        item_id: area.ID,
+      });
     });
 
     this.productProvider
       .getByArea(this.navParams.get('ID'))
-      .then(products => {
+      .then((products) => {
         this.products = products;
         this.updateParams();
       })
-      .catch(e => console.warn(e));
+      .catch((e) => console.warn(e));
 
     this.areaProvider
       .getFishes(this.navParams.get('ID'))
-      .then(species => {
+      .then((species) => {
         this.species = species;
         this.updateParams();
       })
-      .catch(e => console.warn(e));
+      .catch((e) => console.warn(e));
   }
 
   ngAfterViewInit() {
@@ -70,7 +80,7 @@ export class AreasDetailPage {
   }
 
   private getOrg() {
-    this.organizationProvider.getOne(this.area.orgid).then(org => {
+    this.organizationProvider.getOne(this.area.orgid).then((org) => {
       this.org = org;
       this.updateParams();
     });

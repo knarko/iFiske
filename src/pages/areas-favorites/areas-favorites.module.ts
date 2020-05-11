@@ -6,6 +6,10 @@ import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [AreasFavoritesPage],
-  imports: [IonicPageModule.forChild(AreasFavoritesPage), TranslateModule.forChild(), ComponentsModule],
+  imports: [
+    IonicPageModule.forChild(AreasFavoritesPage),
+    TranslateModule.forChild(),
+    ComponentsModule,
+  ],
 })
 export class AreasFavoritesPageModule {}

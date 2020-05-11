@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [OnboardingPage],
-  imports: [CommonModule, IonicPageModule.forChild(OnboardingPage), TranslateModule],
+  imports: [
+    CommonModule,
+    IonicPageModule.forChild(OnboardingPage),
+    TranslateModule,
+  ],
 })
 export class OnboardingPageModule {}

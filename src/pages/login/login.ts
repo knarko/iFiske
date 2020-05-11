@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ViewController,
+} from 'ionic-angular';
 import { Form } from '../../components/ion-data-form/form';
 import { Validators } from '@angular/forms';
 import { ApiError, IFISKE_ERRORS } from '../../providers/api/api';
@@ -83,7 +88,11 @@ export class LoginPage {
   async login() {
     const group = this.form.group;
     if (!group.valid) {
-      for (const control of [group, group.controls.username, group.controls.password]) {
+      for (const control of [
+        group,
+        group.controls.username,
+        group.controls.password,
+      ]) {
         control.markAsDirty();
         control.markAsTouched();
       }

@@ -13,10 +13,16 @@ import {
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 import { Permit } from '../../providers/user/userTypes';
-import { OrganizationProvider, Organization } from '../../providers/organization/organization';
+import {
+  OrganizationProvider,
+  Organization,
+} from '../../providers/organization/organization';
 import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
-import { DeepLinks, DeepLinksProvider } from '../../providers/deep-links/deep-links';
+import {
+  DeepLinks,
+  DeepLinksProvider,
+} from '../../providers/deep-links/deep-links';
 import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
 import { AdminProvider } from '../../providers/admin/admin';
@@ -36,7 +42,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   admin: boolean = false;
   @Input()
-  permit: Permit | AdminPermit & NotPermitted<Permit>;
+  permit: Permit | (AdminPermit & NotPermitted<Permit>);
   @Output()
   revoke = new EventEmitter<boolean>();
   org?: Organization;
@@ -74,7 +80,11 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
     cancelAnimationFrame(this.animationFrame);
     this.animationFrame = requestAnimationFrame(() => {
       if (this.backgroundPosWrapper.nativeElement) {
-        let { alpha, beta, gamma } = usefulOrientation(event.alpha, event.beta, event.gamma);
+        let { alpha, beta, gamma } = usefulOrientation(
+          event.alpha,
+          event.beta,
+          event.gamma,
+        );
         const value = (1000 * (alpha + beta + gamma)) / 180;
 
         const nextValue = `${value.toFixed(7)}px center`;
@@ -87,12 +97,20 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   };
   ngOnInit() {
     this.ngZone.runOutsideAngular(() => {
-      window.addEventListener('deviceorientation', this.handleDeviceOrientation, true);
+      window.addEventListener(
+        'deviceorientation',
+        this.handleDeviceOrientation,
+        true,
+      );
     });
   }
   ngOnDestroy() {
     this.ngZone.runOutsideAngular(() => {
-      window.removeEventListener('deviceorientation', this.handleDeviceOrientation, true);
+      window.removeEventListener(
+        'deviceorientation',
+        this.handleDeviceOrientation,
+        true,
+      );
     });
   }
 
@@ -101,11 +119,13 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
       this.logged = false;
       try {
         if ((this.permit as AdminPermit).suborgid != undefined) {
-          this.org = await this.organizationProvider.getOne((this.permit as AdminPermit).suborgid);
+          this.org = await this.organizationProvider.getOne(
+            (this.permit as AdminPermit).suborgid,
+          );
         } else if (this.permit.ai != undefined) {
           this.org = await this.areaProvider
             .getOne(this.permit.ai)
-            .then(area => this.organizationProvider.getOne(area.orgid));
+            .then((area) => this.organizationProvider.getOne(area.orgid));
         } else if (this.permit.ot === 'Demoföreningen') {
           this.org = await this.organizationProvider.getOne(1);
         }
@@ -118,11 +138,19 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   openProductInBrowser() {
     console.log('Opening product!', this.permit.pid);
 
-    this.deepLinks.open(DeepLinks.buy, { productId: '' + this.permit.pid }, { bringSession: true });
+    this.deepLinks.open(
+      DeepLinks.buy,
+      { productId: '' + this.permit.pid },
+      { bringSession: true },
+    );
   }
 
   openCatchReport() {
-    this.deepLinks.open(DeepLinks.catchReport, { ID: '' + this.permit.code }, { bringSession: true });
+    this.deepLinks.open(
+      DeepLinks.catchReport,
+      { ID: '' + this.permit.code },
+      { bringSession: true },
+    );
   }
 
   log() {

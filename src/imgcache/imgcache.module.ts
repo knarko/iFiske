@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 
-import { ImgcacheService, IMGCACHE_CONFIG, ImgcacheConfig } from './imgcache.service';
+import {
+  ImgcacheService,
+  IMGCACHE_CONFIG,
+  ImgcacheConfig,
+} from './imgcache.service';
 import { ImgcacheDirective } from './imgcache.directive';
 import { ModuleWithProviders } from '@angular/core/src/metadata/ng_module';
 
@@ -13,7 +17,10 @@ export class ImgcacheModule {
   static forRoot(config: ImgcacheConfig = {}): ModuleWithProviders {
     return {
       ngModule: ImgcacheModule,
-      providers: [{ provide: IMGCACHE_CONFIG, useValue: config }, ImgcacheService],
+      providers: [
+        { provide: IMGCACHE_CONFIG, useValue: config },
+        ImgcacheService,
+      ],
     };
   }
 }

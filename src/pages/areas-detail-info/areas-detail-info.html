@@ -8,35 +8,48 @@
   <ion-slides #slides *ngIf="images?.length > 1" autoplay="10000" loop>
     <ion-slide *ngFor="let img of images; let i = index">
       <div class="slider-image">
-        <img [src]="img.file" (load)="imageLoaded(i)">
-        <p *ngIf="img.t || img.d" class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
+        <img [src]="img.file" (load)="imageLoaded(i)" />
+        <p *ngIf="img.t || img.d" class="image-text">
+          {{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}
+        </p>
       </div>
     </ion-slide>
   </ion-slides>
   <div class="slider-image" *ngIf="images?.length === 1 && images[0]; let img">
-    <img [src]="img.file">
-    <p *ngIf="img.t || img.d" class="image-text">{{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}</p>
+    <img [src]="img.file" />
+    <p *ngIf="img.t || img.d" class="image-text">
+      {{img.t}} {{img.t && img.d ? '-' : ''}} {{img.d}}
+    </p>
   </div>
 
   <ion-toolbar>
     <h2>{{area?.t}}</h2>
     <ion-buttons right>
       <button ion-button icon-only (click)="toggleFavorite()">
-        <ion-icon [name]="area?.favorite ? 'star' : 'star-outline'" [color]="area?.favorite ? 'gold' : 'dark'"></ion-icon>
+        <ion-icon
+          [name]="area?.favorite ? 'star' : 'star-outline'"
+          [color]="area?.favorite ? 'gold' : 'dark'"
+        ></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
 
-
   <section *ngIf="products?.length || area?.d">
-    <button ion-button class="right" *ngIf="products?.length" (click)="gotoPermits()">{{'Purchase permit' | translate}}</button>
+    <button
+      ion-button
+      class="right"
+      *ngIf="products?.length"
+      (click)="gotoPermits()"
+    >
+      {{'Purchase permit' | translate}}
+    </button>
     <div [innerHTML]="area?.d | formatInfo"></div>
   </section>
 
   <ng-container *ngIf="org?.t && org?.d">
     <h3 *ngIf="area?.t !== org.t">{{org?.t}}</h3>
     <section>
-      <img *ngIf="org?.logo" class="center logo" [icSrc]="org?.logo">
+      <img *ngIf="org?.logo" class="center logo" [icSrc]="org?.logo" />
       <div [innerHTML]="org?.d | formatInfo"></div>
     </section>
   </ng-container>
@@ -44,9 +57,14 @@
   <ng-container *ngIf="species?.length">
     <h3>{{'Species' | translate}}</h3>
     <ion-list class="species-list">
-      <button ion-item detail-none *ngFor="let item of species" (click)="gotoSpecies(item)">
+      <button
+        ion-item
+        detail-none
+        *ngFor="let item of species"
+        (click)="gotoSpecies(item)"
+      >
         <ion-thumbnail item-start>
-          <img [icSrc]="item.img">
+          <img [icSrc]="item.img" />
         </ion-thumbnail>
         <ion-label>
           {{item.t}}
@@ -64,13 +82,17 @@
     <ion-list *ngIf="files?.length">
       <a ion-item *ngFor="let file of files" [href]="file.url" target="_system">
         <ion-avatar item-start>
-          <img *ngIf="file.thumb" [icSrc]="file.thumb">
+          <img *ngIf="file.thumb" [icSrc]="file.thumb" />
         </ion-avatar>
 
-        <h3 *ngIf="file.t || file.filename; else placeholderFilename">{{(file.t || file.filename) | translate}}</h3>
+        <h3 *ngIf="file.t || file.filename; else placeholderFilename">
+          {{(file.t || file.filename) | translate}}
+        </h3>
 
         <ng-template #placeholderFilename>
-          <h3>{{'Downloadable file' | translate : (file.typ | mkObject : 'type')}}</h3>
+          <h3>
+            {{'Downloadable file' | translate : (file.typ | mkObject : 'type')}}
+          </h3>
         </ng-template>
       </a>
     </ion-list>

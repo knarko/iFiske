@@ -1,14 +1,19 @@
-<button ion-button (click)="checkLog()">{{ 'ui.admin.check.logCheck' | translate }}</button>
+<button ion-button (click)="checkLog()">
+  {{ 'ui.admin.check.logCheck' | translate }}
+</button>
 <p>
-  {{
-    'ui.admin.check.timesChecked-' +
-      (permit.ctrl < 1 ? 'never' : (permit.ctrl < 2 ? 'singular' : 'plural') + ':timesChecked')
-      | translate: { timesChecked: permit.ctrl }
-  }}
+  {{ 'ui.admin.check.timesChecked-' + (permit.ctrl < 1 ? 'never' : (permit.ctrl
+  < 2 ? 'singular' : 'plural') + ':timesChecked') | translate: { timesChecked:
+  permit.ctrl } }}
 </p>
 <form (submit)="addLog()">
   <ion-item>
-    <ion-textarea #input="ngModel" name="logText" [(ngModel)]="logText" required></ion-textarea>
+    <ion-textarea
+      #input="ngModel"
+      name="logText"
+      [(ngModel)]="logText"
+      required
+    ></ion-textarea>
   </ion-item>
   <button ion-button [disabled]="input.invalid" type="submit">
     {{ 'ui.admin.check.sendComment' | translate }}
@@ -17,7 +22,8 @@
 <div class="log-entry" *ngFor="let l of permit.log">
   <span class="date">{{ l.t | date: 'd MMM y H:mm' }}</span>
   <p>
-    <span class="action">{{ l.action | translate }}</span> <span *ngIf="l.u" class="user">{{ l.u }}</span>
+    <span class="action">{{ l.action | translate }}</span>
+    <span *ngIf="l.u" class="user">{{ l.u }}</span>
   </p>
   <p class="comment" *ngIf="l.c">{{ l.c }}</p>
 </div>

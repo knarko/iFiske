@@ -11,9 +11,15 @@ export interface TranslateOptions {
 
 @Injectable()
 export class TranslateActionSheetController {
-  constructor(private translate: TranslateService, private actionSheetCtrl: ActionSheetController) {}
+  constructor(
+    private translate: TranslateService,
+    private actionSheetCtrl: ActionSheetController,
+  ) {}
 
-  async create(opts?: ActionSheetOptions, translateOptions?: TranslateOptions): Promise<ActionSheet> {
+  async create(
+    opts?: ActionSheetOptions,
+    translateOptions?: TranslateOptions,
+  ): Promise<ActionSheet> {
     const toTranslate = ['title', 'subTitle'];
     if (opts) {
       for (const key of toTranslate) {
@@ -32,7 +38,10 @@ export class TranslateActionSheetController {
     return this.actionSheetCtrl.create(opts);
   }
 
-  async show(opts?: ActionSheetOptions, translateOptions?: TranslateOptions): Promise<ActionSheet> {
+  async show(
+    opts?: ActionSheetOptions,
+    translateOptions?: TranslateOptions,
+  ): Promise<ActionSheet> {
     const alert = await this.create(opts, translateOptions);
     await alert.present();
     return alert;

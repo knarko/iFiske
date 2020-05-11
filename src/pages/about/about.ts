@@ -50,16 +50,19 @@ export class AboutPage {
       if ((window as any).cordova) {
         this.appVersion
           .getVersionNumber()
-          .then(version => (this.version = version))
+          .then((version) => (this.version = version))
           .catch(() => {});
         this.appVersion
           .getVersionCode()
-          .then(buildId => (this.buildId = `${buildId}`))
+          .then((buildId) => (this.buildId = `${buildId}`))
           .catch(() => {});
         console.log(this.pro);
-        Promise.race([this.pro.deploy().info(), new Promise<any>((_, reject) => setTimeout(reject, 8000))])
-          .then(info => (this.proInfo = info))
-          .catch(err => {
+        Promise.race([
+          this.pro.deploy().info(),
+          new Promise<any>((_, reject) => setTimeout(reject, 8000)),
+        ])
+          .then((info) => (this.proInfo = info))
+          .catch((err) => {
             console.warn(err);
             if (err) {
               MonitoringClient.captureException(err);
@@ -81,8 +84,8 @@ export class AboutPage {
     this.pro
       .deploy()
       .info()
-      .then(info => (this.proInfo = info))
-      .catch(err => console.warn(err));
+      .then((info) => (this.proInfo = info))
+      .catch((err) => console.warn(err));
   }
 
   async activateDeveloperMode() {
@@ -102,7 +105,9 @@ export class AboutPage {
   }
 
   async checkForUpdates() {
-    const loading = await this.loadingCtrl.show({ content: 'Checking for updates' });
+    const loading = await this.loadingCtrl.show({
+      content: 'Checking for updates',
+    });
     try {
       const updated = await this.deploy.checkForUpdates();
       if (updated) {

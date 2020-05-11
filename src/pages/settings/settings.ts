@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ModalController,
+} from 'ionic-angular';
 import { UpdateProvider } from '../../providers/update/update';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UserProvider } from '../../providers/user/user';
@@ -36,13 +41,24 @@ export class SettingsPage {
     },
     {
       title: 'Analytics',
-      toggle: (state: boolean) => (this.settingsProvider.analyticsEnabled = state),
+      toggle: (state: boolean) =>
+        (this.settingsProvider.analyticsEnabled = state),
       toggleState: !!this.settingsProvider.analyticsEnabled,
       toggleColor: 'secondary',
     },
-    { title: 'Update stored data', click: () => this.updateProvider.update(true) },
-    { title: 'Change language', click: () => this.modalCtrl.create('ChangeLanguagePage').present() },
-    { title: 'Log out', click: () => this.logout(), show: this.userProvider.loggedIn },
+    {
+      title: 'Update stored data',
+      click: () => this.updateProvider.update(true),
+    },
+    {
+      title: 'Change language',
+      click: () => this.modalCtrl.create('ChangeLanguagePage').present(),
+    },
+    {
+      title: 'Log out',
+      click: () => this.logout(),
+      show: this.userProvider.loggedIn,
+    },
     { title: 'Information', isHeader: true },
     { title: 'Contact', page: 'ContactPage' },
     { title: 'Report issue', page: 'ReportIssuePage' },

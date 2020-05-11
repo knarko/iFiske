@@ -11,10 +11,13 @@ SentryClient.init({
       event.culprit = event.culprit.substring(event.culprit.lastIndexOf('/'));
     }
     const st: SentryClient.Stacktrace =
-      event.stacktrace || (event.exception && event.exception[0] && event.exception[0].stacktrace);
+      event.stacktrace ||
+      (event.exception && event.exception[0] && event.exception[0].stacktrace);
     if (st) {
-      st.frames.forEach(frame => {
-        frame.filename = frame.filename.substring(frame.filename.lastIndexOf('/'));
+      st.frames.forEach((frame) => {
+        frame.filename = frame.filename.substring(
+          frame.filename.lastIndexOf('/'),
+        );
       });
     }
 
@@ -27,7 +30,12 @@ export const MonitoringClient = SentryClient;
 @Injectable()
 export class MonitoringErrorHandler extends IonicErrorHandler {
   public handleError(err: any): void {
-    if (!isProdMode() && err && err.message && err.message.indexOf('cordova_not_available') !== -1) {
+    if (
+      !isProdMode() &&
+      err &&
+      err.message &&
+      err.message.indexOf('cordova_not_available') !== -1
+    ) {
       return;
     }
 

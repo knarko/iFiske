@@ -9,7 +9,10 @@ import { TermsProvider } from '../../providers/terms/terms';
 })
 export class EulaPage {
   terms: string;
-  constructor(private termsProvider: TermsProvider, private viewCtrl: ViewController) {}
+  constructor(
+    private termsProvider: TermsProvider,
+    private viewCtrl: ViewController,
+  ) {}
 
   ionViewWillEnter() {
     this.terms = this.termsProvider.termsOfService;

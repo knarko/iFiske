@@ -16,7 +16,10 @@ export class QrComponent {
   @Input() color: 'green' | 'red' | 'gray';
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.image.firstChange || changes.image.currentValue !== changes.image.previousValue) {
+    if (
+      changes.image.firstChange ||
+      changes.image.currentValue !== changes.image.previousValue
+    ) {
       this.qr = `data:image/png;base64,${this.image}`;
     }
   }

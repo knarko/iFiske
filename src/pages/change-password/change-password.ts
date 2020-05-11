@@ -24,13 +24,18 @@ export class ChangePasswordPage {
         this.userProvider.changePassword(group.value).then(
           () => {
             this.viewCtrl.dismiss();
-            this.toastCtrl.show({ duration: 4000, message: 'ui.changePassword.completed' });
+            this.toastCtrl.show({
+              duration: 4000,
+              message: 'ui.changePassword.completed',
+            });
           },
-          err => {
+          (err) => {
             const errorCode = err && err.error_code;
             switch (errorCode) {
               case IFISKE_ERRORS.USER_EXISTS_BUT_USERNAME_OR_PASSWORD_INCORRECT:
-                this.form.group.controls.oldPassword.setErrors({ invalid: true });
+                this.form.group.controls.oldPassword.setErrors({
+                  invalid: true,
+                });
                 break;
               default:
                 this.form.setCustomError(err && err.response);

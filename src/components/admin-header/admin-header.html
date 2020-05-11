@@ -1,12 +1,18 @@
 <ion-navbar color="primary" class="force-back-button large-title">
   <ion-title>
-    <span (click)="admin.pickOrganization()">{{(admin.currentOrganization | async)?.ot}}</span>
+    <span (click)="admin.pickOrganization()"
+      >{{(admin.currentOrganization | async)?.ot}}</span
+    >
   </ion-title>
 
   <ion-buttons end>
-    <button *ngIf="admin.numberOfOrganizations > 1" ion-button icon-only (click)="admin.pickOrganization()">
+    <button
+      *ngIf="admin.numberOfOrganizations > 1"
+      ion-button
+      icon-only
+      (click)="admin.pickOrganization()"
+    >
       <ion-icon name="contact"></ion-icon>
     </button>
   </ion-buttons>
 </ion-navbar>
-

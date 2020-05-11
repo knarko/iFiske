@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="sv" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>iFiske Fiskekort</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost:* data: gap:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' localhost:*; connect-src 'self' ws://localhost:* *.ifiske.se https://api.ionicjs.com; img-src 'self' *.ifiske.se data: filesystem:"-->
 
-<head>
-  <meta charset="UTF-8">
-  <title>iFiske Fiskekort</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
-  <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost:* data: gap:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' localhost:*; connect-src 'self' ws://localhost:* *.ifiske.se https://api.ionicjs.com; img-src 'self' *.ifiske.se data: filesystem:"-->
+    <link rel="icon" type="image/png" href="assets/icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#003852" />
 
+    <script src="cordova.js"></script>
 
-  <link rel="icon" type="image/png" href="assets/icon.png">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#003852">
-
-  <script src="cordova.js"></script>
-
-
-  <!-- Service Workers -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      /*
+    <!-- Service Workers -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        /*
 
       // Add service worker
       navigator.serviceWorker.register('service-worker.js')
@@ -29,35 +29,37 @@
 
       /*/
 
-      // Remove all service workers
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        registrations.forEach(function (registration) { registration.unregister() });
-      }).catch(function (err) { console.warn('Error removing service workers:', err) });
+        // Remove all service workers
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            registrations.forEach(function (registration) {
+              registration.unregister();
+            });
+          })
+          .catch(function (err) {
+            console.warn('Error removing service workers:', err);
+          });
 
-      //*/
-    }
-  </script>
+        //*/
+      }
+    </script>
 
+    <link href="build/main.css" rel="stylesheet" />
+  </head>
 
-  <link href="build/main.css" rel="stylesheet">
+  <body>
+    <!-- Ionic's root component and where the app will load -->
+    <ion-app></ion-app>
 
-</head>
+    <!-- The polyfills js is generated during the build process -->
+    <script src="build/polyfills.js"></script>
 
-<body>
-
-  <!-- Ionic's root component and where the app will load -->
-  <ion-app></ion-app>
-
-  <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
-
-  <!-- The vendor js is generated during the build process
+    <!-- The vendor js is generated during the build process
        It contains all of the dependencies in node_modules -->
-  <script src="build/vendor.js"></script>
+    <script src="build/vendor.js"></script>
 
-  <!-- The main bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
-
-</body>
-
+    <!-- The main bundle js is generated during the build process -->
+    <script src="build/main.js"></script>
+  </body>
 </html>

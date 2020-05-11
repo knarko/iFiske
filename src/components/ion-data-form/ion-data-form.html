@@ -1,4 +1,9 @@
-<form *ngIf="form && form.group" [formGroup]="form.group" (ngSubmit)="submit()" novalidate>
+<form
+  *ngIf="form && form.group"
+  [formGroup]="form.group"
+  (ngSubmit)="submit()"
+  novalidate
+>
   <div class="ion-data-form-inputs">
     <ng-container *ngFor="let item of form.controlArray; let i = index">
       <ng-container [ngSwitch]="item.type">
@@ -7,7 +12,9 @@
           [class.ng-invalid]="item.control.invalid"
           [class.ng-valid]="item.control.valid"
         >
-          <ion-label *ngIf="item.label" floating>{{ item.label | translate }}</ion-label>
+          <ion-label *ngIf="item.label" floating
+            >{{ item.label | translate }}</ion-label
+          >
 
           <ion-textarea
             [formControl]="item.control"
@@ -21,7 +28,9 @@
           [class.ng-invalid]="item.control.invalid"
           [class.ng-valid]="item.control.valid"
         >
-          <ion-label *ngIf="item.label" floating>{{ item.label | translate }}</ion-label>
+          <ion-label *ngIf="item.label" floating
+            >{{ item.label | translate }}</ion-label
+          >
           <ion-input
             [clearOnEdit]="false"
             [placeholder]="(item.placeholder | translate) || ''"
@@ -30,7 +39,14 @@
             autocomplete="off"
             [required]="item.required"
           ></ion-input>
-          <button type="button" ion-button icon-only item-right clear (click)="togglePassword(item)">
+          <button
+            type="button"
+            ion-button
+            icon-only
+            item-right
+            clear
+            (click)="togglePassword(item)"
+          >
             <ion-icon [name]="item.showPassword ? 'eye' : 'eye-off'"></ion-icon>
           </button>
         </ion-item>
@@ -40,18 +56,28 @@
           [class.ng-invalid]="item.control.invalid"
           [class.ng-valid]="item.control.valid"
         >
-          <ion-label *ngIf="item.label" floating>{{ item.label | translate }}</ion-label>
+          <ion-label *ngIf="item.label" floating
+            >{{ item.label | translate }}</ion-label
+          >
           <ion-select
             [placeholder]="(item.placeholder | translate) || ''"
             [formControl]="item.control"
             [required]="item.required"
           >
-            <ion-option *ngFor="let option of item.options" [value]="option">{{ option }}</ion-option>
+            <ion-option *ngFor="let option of item.options" [value]="option"
+              >{{ option }}</ion-option
+            >
           </ion-select>
         </ion-item>
 
-        <ion-item *ngSwitchDefault [class.ng-invalid]="item.control.invalid" [class.ng-valid]="item.control.valid">
-          <ion-label *ngIf="item.label" floating>{{ item.label | translate }}</ion-label>
+        <ion-item
+          *ngSwitchDefault
+          [class.ng-invalid]="item.control.invalid"
+          [class.ng-valid]="item.control.valid"
+        >
+          <ion-label *ngIf="item.label" floating
+            >{{ item.label | translate }}</ion-label
+          >
           <ion-input
             [placeholder]="(item.placeholder | translate) || ''"
             [type]="item.type"
@@ -64,7 +90,15 @@
     </ng-container>
     <ion-errors [control]="form.group" [errors]="form.errors"></ion-errors>
   </div>
-  <button ion-button block icon-right *ngIf="!hideSubmit" type="submit" name="action" [disabled]="submitIsDisabled()">
+  <button
+    ion-button
+    block
+    icon-right
+    *ngIf="!hideSubmit"
+    type="submit"
+    name="action"
+    [disabled]="submitIsDisabled()"
+  >
     {{ form.submitMessage | translate }}
     <ion-icon name="send"></ion-icon>
   </button>

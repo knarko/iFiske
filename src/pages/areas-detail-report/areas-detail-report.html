@@ -31,13 +31,22 @@
       </ion-item>
 
       <div class="img-wrapper">
-        <img *ngIf="report.img2" [src]="report.img2" [imageViewer]="report.img2" />
+        <img
+          *ngIf="report.img2"
+          [src]="report.img2"
+          [imageViewer]="report.img2"
+        />
         <div class="img-shadow"></div>
       </div>
 
-      <ion-card-content class="comment" *ngIf="report.obs">{{report.obs}}</ion-card-content>
+      <ion-card-content class="comment" *ngIf="report.obs"
+        >{{report.obs}}</ion-card-content
+      >
 
-      <catches-list *ngIf="report.catches" [catches]="report.catches"></catches-list>
+      <catches-list
+        *ngIf="report.catches"
+        [catches]="report.catches"
+      ></catches-list>
 
       <ion-card-content class="catch-info">
         <p

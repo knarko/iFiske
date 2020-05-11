@@ -8,7 +8,10 @@ export class TranslateLoadingController {
 
   private queue: Loading[] = [];
 
-  constructor(private loadingCtrl: LoadingController, private translate: TranslateService) {}
+  constructor(
+    private loadingCtrl: LoadingController,
+    private translate: TranslateService,
+  ) {}
 
   async create(opts?: LoadingOptions): Promise<Loading> {
     if (opts && opts.content) {

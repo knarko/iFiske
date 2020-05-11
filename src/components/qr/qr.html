@@ -6,7 +6,10 @@
         <feFuncG type="discrete" tableValues="0 1" />
         <feFuncB type="discrete" tableValues="0 1" />
       </feComponentTransfer>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.4, 0 0 0 0 0.59, 0 0 0 0 0, -1 -1 -1 1 0" />
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 0.4, 0 0 0 0 0.59, 0 0 0 0 0, -1 -1 -1 1 0"
+      />
     </filter>
     <filter id="filter-red">
       <feComponentTransfer>
@@ -14,7 +17,10 @@
         <feFuncG type="discrete" tableValues="0 1" />
         <feFuncB type="discrete" tableValues="0 1" />
       </feComponentTransfer>
-      <feColorMatrix type="matrix" values="0 0 0 0 1, 0 0 0 0 0.345, 0 0 0 0 0.039, -1 -1 -1 1 0" />
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 1, 0 0 0 0 0.345, 0 0 0 0 0.039, -1 -1 -1 1 0"
+      />
     </filter>
     <filter id="filter-gray">
       <feComponentTransfer>
@@ -22,8 +28,16 @@
         <feFuncG type="discrete" tableValues="0 1" />
         <feFuncB type="discrete" tableValues="0 1" />
       </feComponentTransfer>
-      <feColorMatrix type="matrix" values="0 0 0 0 .6, 0 0 0 0 .6, 0 0 0 0 0.6, -1 -1 -1 1 0" />
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 .6, 0 0 0 0 .6, 0 0 0 0 0.6, -1 -1 -1 1 0"
+      />
     </filter>
   </defs>
-  <image [attr.xlink:href]="qr" width="100%" height="100%" [attr.filter]="'url(#filter-' + (color || 'red') + ')'" />
+  <image
+    [attr.xlink:href]="qr"
+    width="100%"
+    height="100%"
+    [attr.filter]="'url(#filter-' + (color || 'red') + ')'"
+  />
 </svg>

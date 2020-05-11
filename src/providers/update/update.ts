@@ -37,7 +37,9 @@ export class UpdateProvider {
   loading: Loading;
   get errors() {
     try {
-      return JSON.parse(localStorage.getItem(UpdateProvider.UPDATE_ERRORS)) || [];
+      return (
+        JSON.parse(localStorage.getItem(UpdateProvider.UPDATE_ERRORS)) || []
+      );
     } catch (err) {
       // Do nothing
     }
@@ -50,7 +52,10 @@ export class UpdateProvider {
     } else if (!Array.isArray(errors)) {
       console.warn(`${errors} is not an array!`);
     } else {
-      localStorage.setItem(UpdateProvider.UPDATE_ERRORS, JSON.stringify(errors));
+      localStorage.setItem(
+        UpdateProvider.UPDATE_ERRORS,
+        JSON.stringify(errors),
+      );
     }
   }
 
@@ -137,23 +142,26 @@ export class UpdateProvider {
     const timeHasPassed = this.timedUpdate(currentTime);
 
     const errors = this.errors;
-    var promises = Object.entries(this.updates).map(([providerKey, provider]) => {
-      if (
-        forced ||
-        errors.indexOf(providerKey) !== -1 ||
-        provider.updateStrategy === 'always' ||
-        (provider.updateStrategy === 'timed' && timeHasPassed) ||
-        (typeof provider.updateStrategy === 'function' && provider.updateStrategy())
-      ) {
-        return provider.update().catch(error => {
-          if (error.name !== 'TimeoutError') {
-            MonitoringClient.captureException(error);
-          }
-          return Promise.reject(providerKey);
-        });
-      }
-      return Promise.resolve(false);
-    });
+    var promises = Object.entries(this.updates).map(
+      ([providerKey, provider]) => {
+        if (
+          forced ||
+          errors.indexOf(providerKey) !== -1 ||
+          provider.updateStrategy === 'always' ||
+          (provider.updateStrategy === 'timed' && timeHasPassed) ||
+          (typeof provider.updateStrategy === 'function' &&
+            provider.updateStrategy())
+        ) {
+          return provider.update().catch((error) => {
+            if (error.name !== 'TimeoutError') {
+              MonitoringClient.captureException(error);
+            }
+            return Promise.reject(providerKey);
+          });
+        }
+        return Promise.resolve(false);
+      },
+    );
 
     this.updating = resolveOrRejectAllPromises(promises).then(
       () => {

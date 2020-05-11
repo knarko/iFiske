@@ -9,7 +9,10 @@
 
   <div padding *ngIf="failed" class="text-center">
     <h3 [innerHtml]="'errors.permit.failedHeader' | translate"></h3>
-    <p class="preserve-newlines" [innerHtml]="'errors.permit.failedBody' | translate"></p>
+    <p
+      class="preserve-newlines"
+      [innerHtml]="'errors.permit.failedBody' | translate"
+    ></p>
   </div>
 </ion-content>
 <ion-footer>
@@ -28,7 +31,15 @@
         <ion-icon name="document"></ion-icon>
         {{ 'Rules' | translate }}
       </button>
-      <button full ion-button solid icon-start *ngIf="permit?.code" (click)="openCatchReport()" class="footer-button">
+      <button
+        full
+        ion-button
+        solid
+        icon-start
+        *ngIf="permit?.code"
+        (click)="openCatchReport()"
+        class="footer-button"
+      >
         <ion-icon name="ifiske-fish"></ion-icon>
         {{ 'Catch report' | translate }}
       </button>

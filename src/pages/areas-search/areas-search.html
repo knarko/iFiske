@@ -39,7 +39,12 @@
     [headerFn]="scrollHeaders"
     [virtualTrackBy]="trackFn"
   >
-    <ion-item class="fish" *virtualHeader="let fish" [navPush]="'SpeciesDetailPage'" [navParams]="fish">
+    <ion-item
+      class="fish"
+      *virtualHeader="let fish"
+      [navPush]="'SpeciesDetailPage'"
+      [navParams]="fish"
+    >
       <img class="fish-image" [icSrc]="fish.img" />
       <h2>{{ fish.t }}</h2>
       <p>{{ fish.snippet }}</p>
@@ -52,11 +57,18 @@
 
       <h2>{{ area.org }}</h2>
       <span class="right distance-indicator" *ngIf="(area.distance | distance)">
-        <fa-icon name="map-marker"></fa-icon> {{ area.distance | distance }}</span
+        <fa-icon name="map-marker"></fa-icon> {{ area.distance | distance
+        }}</span
       >
       <p [innerText]="area.t" *ngIf="area.org !== area.t" class="wrap"></p>
-      <p *ngIf="settings.isDeveloper" class="developer-info">ID: {{ area.ID }} orgID: {{ area.orgid }}</p>
-      <fish-level [level]="area.level" icon="true" *ngIf="foundFish"></fish-level>
+      <p *ngIf="settings.isDeveloper" class="developer-info">
+        ID: {{ area.ID }} orgID: {{ area.orgid }}
+      </p>
+      <fish-level
+        [level]="area.level"
+        icon="true"
+        *ngIf="foundFish"
+      ></fish-level>
     </ion-item>
   </ion-list>
 </ion-content>

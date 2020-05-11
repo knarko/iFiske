@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Slides, ModalController } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  Slides,
+  ModalController,
+} from 'ionic-angular';
 import { SettingsProvider } from '../../providers/settings/settings';
 import { UpdateProvider } from '../../providers/update/update';
 import { map, startWith } from 'rxjs/operators';
@@ -29,7 +34,7 @@ export class OnboardingPage {
   ionViewDidLoad() {
     this.language = this.settings.settingsChanged.pipe(
       startWith({ language: this.settings.language }),
-      map(settings => LANGUAGES[settings.language]),
+      map((settings) => LANGUAGES[settings.language]),
     );
     this.extras.direction = 'vertical';
     this.extras.initialSlide = 4;

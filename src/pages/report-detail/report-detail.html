@@ -11,12 +11,21 @@
       {{report.name}}
     </div>
     <div class="report-day">
-      <ion-icon color="primary" name="calendar" ios="ios-calendar-outline"></ion-icon>
+      <ion-icon
+        color="primary"
+        name="calendar"
+        ios="ios-calendar-outline"
+      ></ion-icon>
       {{report.day | date:'mediumDate'}}
     </div>
   </div>
 
-  <img *ngIf="report.img2" class="catch-image" [src]="report.img2" [imageViewer]="report.img2" />
+  <img
+    *ngIf="report.img2"
+    class="catch-image"
+    [src]="report.img2"
+    [imageViewer]="report.img2"
+  />
 
   <p *ngIf="report.obs" class="box comment">{{report.obs}}</p>
 

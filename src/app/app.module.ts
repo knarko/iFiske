@@ -6,7 +6,11 @@ import { IonicImageViewerModule, ImageViewerComponent } from 'ionic-img-viewer';
 
 import { IonicApp, IonicModule } from 'ionic-angular';
 
-import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateLoader,
+  MissingTranslationHandler,
+} from '@ngx-translate/core';
 
 // Ionic Native
 import { AppVersion } from '@ionic-native/app-version';
@@ -99,7 +103,10 @@ registerLocaleData(localeSv);
         useClass: TranslateBundleLoader,
       },
       useDefaultLang: false,
-      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: LogMissingTranslationHandler },
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: LogMissingTranslationHandler,
+      },
     }),
     IonicImageViewerModule,
   ],

@@ -10,7 +10,11 @@ import { StatusBar } from '@ionic-native/status-bar';
   templateUrl: 'foss.html',
 })
 export class FossPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar: StatusBar) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private statusBar: StatusBar,
+  ) {
     // TODO: load them somehow
   }
 

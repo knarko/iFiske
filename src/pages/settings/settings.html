@@ -1,39 +1,63 @@
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>{{'Settings' | translate}}</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content class="outer-content">
   <ion-list>
     <ng-container *ngFor="let item of items">
       <ng-container *ngIf="!item.show || (item.show | async)">
-        <ion-list-header *ngIf="item.isHeader">{{item.title | translate}}</ion-list-header>
+        <ion-list-header *ngIf="item.isHeader"
+          >{{item.title | translate}}</ion-list-header
+        >
 
         <a ion-item *ngIf="!item.isHeader && item.page" [navPush]="item.page">
-          <ion-label (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)">
+          <ion-label
+            (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)"
+          >
             {{item.title | translate}}
           </ion-label>
-          <ion-toggle *ngIf="item.toggle" [(ngModel)]="item.toggleState" (ionChange)="toggleItem(item)" [color]="item.toggleColor"></ion-toggle>
+          <ion-toggle
+            *ngIf="item.toggle"
+            [(ngModel)]="item.toggleState"
+            (ionChange)="toggleItem(item)"
+            [color]="item.toggleColor"
+          ></ion-toggle>
         </a>
 
-        <button ion-item *ngIf="!item.isHeader && !item.page && item.click" (click)="item.click && item.click()" detail-none>
-          <ion-label (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)">
+        <button
+          ion-item
+          *ngIf="!item.isHeader && !item.page && item.click"
+          (click)="item.click && item.click()"
+          detail-none
+        >
+          <ion-label
+            (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)"
+          >
             {{item.title | translate}}
           </ion-label>
-          <ion-toggle *ngIf="item.toggle" [(ngModel)]="item.toggleState" (ionChange)="toggleItem(item)" [color]="item.toggleColor"></ion-toggle>
+          <ion-toggle
+            *ngIf="item.toggle"
+            [(ngModel)]="item.toggleState"
+            (ionChange)="toggleItem(item)"
+            [color]="item.toggleColor"
+          ></ion-toggle>
         </button>
         <ion-item *ngIf="!item.isHeader && !item.page && !item.click">
-          <ion-label (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)">
+          <ion-label
+            (click)="item.toggle && !item.page && !item.click && toggleItem(item, true)"
+          >
             {{item.title | translate}}
           </ion-label>
-          <ion-toggle *ngIf="item.toggle" [(ngModel)]="item.toggleState" (ionChange)="toggleItem(item)" [color]="item.toggleColor"></ion-toggle>
+          <ion-toggle
+            *ngIf="item.toggle"
+            [(ngModel)]="item.toggleState"
+            (ionChange)="toggleItem(item)"
+            [color]="item.toggleColor"
+          ></ion-toggle>
         </ion-item>
       </ng-container>
     </ng-container>
   </ion-list>
-
 </ion-content>

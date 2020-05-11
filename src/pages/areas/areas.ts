@@ -5,7 +5,6 @@ export interface TabItem {
   title: string;
   icon: string;
   page: string;
-  hide?: boolean;
 }
 
 @IonicPage({

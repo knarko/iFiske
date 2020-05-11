@@ -25,19 +25,30 @@ export class AreasDetailPage {
   products: Product[];
   org: Organization;
   area: Area;
-  tabs: TabItem[] = [
-    {
+  tabParams = new ReplaySubject<AreaDetailParams>(1);
+  @ViewChild(Tabs)
+  tabsCtrl: Tabs;
+
+  private baseTabs = {
+    information: {
       page: 'AreasDetailInfoPage',
       title: 'Information',
       icon: 'information-circle',
     },
-    { page: 'AreasDetailReportPage', title: 'Reports', icon: 'ifiske-hook' },
-    { page: 'AreasDetailPermitPage', title: 'Permits', icon: 'ifiske-permit' },
-    { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
-  ];
-  tabParams = new ReplaySubject<AreaDetailParams>(1);
-  @ViewChild(Tabs)
-  tabsCtrl: Tabs;
+    reports: {
+      page: 'AreasDetailReportPage',
+      title: 'Reports',
+      icon: 'ifiske-hook',
+    },
+    permits: {
+      page: 'AreasDetailPermitPage',
+      title: 'Permits',
+      icon: 'ifiske-permit',
+    },
+    map: { page: 'AreasDetailMapPage', title: 'Map', icon: 'map' },
+  };
+
+  tabs?: TabItem[];
 
   constructor(
     public navCtrl: NavController,
@@ -83,6 +94,20 @@ export class AreasDetailPage {
     this.organizationProvider.getOne(this.area.orgid).then((org) => {
       this.org = org;
       this.updateParams();
+      if (this.org.crp === 2) {
+        this.tabs = [
+          this.baseTabs.information,
+          this.baseTabs.permits,
+          this.baseTabs.map,
+        ];
+      } else {
+        this.tabs = [
+          this.baseTabs.information,
+          this.baseTabs.reports,
+          this.baseTabs.permits,
+          this.baseTabs.map,
+        ];
+      }
     });
   }
 

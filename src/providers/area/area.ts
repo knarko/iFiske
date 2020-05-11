@@ -340,29 +340,29 @@ export class AreaProvider extends BaseModel<Area> {
 
   @DBMethod
   async getPhotos(areaId): Promise<AreaImage[]> {
-    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [areaId]).then(
-      images => {
-        for (let i = 0; i < images.length; ++i) {
-          images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
-          images[i].file = serverLocation + images[i].file;
-        }
-        return images;
-      },
-    );
+    return this.DB.getMultiple(`SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`, [
+      areaId,
+    ]).then(images => {
+      for (let i = 0; i < images.length; ++i) {
+        images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
+        images[i].file = serverLocation + images[i].file;
+      }
+      return images;
+    });
   }
 
   @DBMethod
   async getFiles(areaId): Promise<AreaFile[]> {
-    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [areaId]).then(
-      (files: AreaFile[]) => {
-        files.forEach(file => {
-          file.thumb = serverLocation + file.thumb;
-          file.url = serverLocation + file.f;
-          file.filename = file.f.split('/').slice(-1)[0];
-        });
-        return files;
-      },
-    );
+    return this.DB.getMultiple(`SELECT Area_Files.* FROM Area_Files WHERE Area_Files.area = ?`, [
+      areaId,
+    ]).then((files: AreaFile[]) => {
+      files.forEach(file => {
+        file.thumb = serverLocation + file.thumb;
+        file.url = serverLocation + file.f;
+        file.filename = file.f.split('/').slice(-1)[0];
+      });
+      return files;
+    });
   }
 
   @DBMethod
@@ -433,7 +433,9 @@ export class AreaProvider extends BaseModel<Area> {
 
     const fuse = this.getFuse(areas);
 
-    const result = searchstring ? fuse.search(searchstring) : fuse.list.map(i => ({ item: i, score: 0 }));
+    const result = searchstring
+      ? fuse.search(searchstring)
+      : fuse._docs.map(i => ({ item: i, score: 0 }));
 
     const foundFish = await this.fishProvider.search(searchstring).then(fishes => {
       return fishes.length ? fishes[0].item.t : undefined;
@@ -482,47 +484,47 @@ export class AreaProvider extends BaseModel<Area> {
       keys: [
         {
           name: 't',
-          weight: 0.9,
+          weight: 20,
         },
         {
           name: 'd',
-          weight: 0.4,
+          weight: 8,
         },
         {
           name: 'note',
-          weight: 0.4,
+          weight: 4,
         },
         {
           name: 'kw',
-          weight: 0.6,
+          weight: 10,
         },
         {
           name: 'org',
-          weight: 0.7,
+          weight: 12,
         },
         {
           name: 'org_d',
-          weight: 0.4,
+          weight: 5,
         },
         {
           name: 'fish_1',
-          weight: 0.2,
+          weight: 3,
         },
         {
           name: 'fish_2',
-          weight: 0.3,
+          weight: 5,
         },
         {
           name: 'fish_3',
-          weight: 0.5,
+          weight: 8,
         },
         {
           name: 'fish_4',
-          weight: 0.7,
+          weight: 10,
         },
         {
           name: 'fish_5',
-          weight: 0.9,
+          weight: 15,
         },
       ],
       includeScore: true,
@@ -532,7 +534,7 @@ export class AreaProvider extends BaseModel<Area> {
       maxPatternLength: 16,
     };
     if (this.settings.isDeveloper) {
-      fuseOptions.keys.push({ name: 'ID', weight: 0.2 }, { name: 'orgid', weight: 0.2 });
+      fuseOptions.keys.push({ name: 'ID', weight: 10 }, { name: 'orgid', weight: 10 });
     }
     // Populate Fuse search index
     return new Fuse(areas, fuseOptions);
@@ -571,7 +573,9 @@ export class AreaProvider extends BaseModel<Area> {
     const Δφ = (lat2 - lat1) * (Math.PI / 180);
     const Δλ = (lon2 - lon1) * (Math.PI / 180);
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;

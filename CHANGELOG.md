@@ -1,3 +1,21 @@
+# [4.15.0](https://gitlab.com/kada-development/ifiske/compare/v4.14.6...v4.15.0) (2020-05-23)
+
+
+### Bug Fixes
+
+* **area:** update weights ([cc3132f](https://gitlab.com/kada-development/ifiske/commit/cc3132f998d1bace5a000df9f5a39ac95c822cc0))
+* **map:** update to latest version of mapbox satellite tiles ([753fd4a](https://gitlab.com/kada-development/ifiske/commit/753fd4abf2cbf8148c7eea70d61d7a5719b26a69))
+* **reports:** stop fishes from flickering when refreshing ([7fe6aac](https://gitlab.com/kada-development/ifiske/commit/7fe6aacd84a5e73b09219fab1fe786419fea2a5f))
+* **sentry:** fix sentry browser version, newer version have incompatible typescript typings ([92f5ae6](https://gitlab.com/kada-development/ifiske/commit/92f5ae6d2a3cee590c0397a70a8e4c70623677b6))
+
+
+### Features
+
+* **areas:** hide the reports tab if the organisation has disabled reports ([4ec1eac](https://gitlab.com/kada-development/ifiske/commit/4ec1eacfda417ae86bc894692c023e29f7451519))
+* **reports:** show if catch was released again ([930af35](https://gitlab.com/kada-development/ifiske/commit/930af3596c7ac7c88420672c757d9894a4df0c53))
+
+
+
 ## [4.14.6](https://gitlab.com/kada-development/ifiske/compare/v4.14.5...v4.14.6) (2020-03-22)
 
 

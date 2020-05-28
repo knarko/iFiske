@@ -1,3 +1,12 @@
+## [4.15.2](https://gitlab.com/kada-development/ifiske/compare/v4.15.1...v4.15.2) (2020-05-28)
+
+
+### Bug Fixes
+
+* **area:** fix the tabController not being passed down ([88a0437](https://gitlab.com/kada-development/ifiske/commit/88a0437b34a9840be3acb0a6284acb665131e34d))
+
+
+
 ## [4.15.1](https://gitlab.com/kada-development/ifiske/compare/v4.15.0...v4.15.1) (2020-05-24)
 
 

@@ -108,6 +108,8 @@ export class AreasDetailPage {
           this.baseTabs.map,
         ];
       }
+      // Need to update the params after angular has rendered again so that the tabController is set
+      setTimeout(() => this.updateParams());
     });
   }
 

@@ -27,7 +27,10 @@ export class TranslateActionSheetController {
           opts[key] = await this.translate.get(opts[key]).toPromise();
         }
       }
-      if (opts.buttons && translateOptions.buttons !== false) {
+      if (
+        opts.buttons &&
+        !(translateOptions && translateOptions.buttons === false)
+      ) {
         for (const button of opts.buttons as ActionSheetButton[]) {
           if (button.text) {
             button.text = await this.translate.get(button.text).toPromise();

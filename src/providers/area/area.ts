@@ -8,11 +8,11 @@ import { BaseModel } from '../database/basemodel';
 import { FishProvider, Fish } from '../fish/fish';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
-import { serverLocation } from '../api/serverLocation';
 import { TableDef } from '../database/table';
 import { DBMethod } from '../database/decorators';
 import { SettingsProvider } from '../settings/settings';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { RegionProvider } from '../region/region';
 
 export interface AreaImage {
   h: number;
@@ -188,6 +188,7 @@ export class AreaProvider extends BaseModel<Area> {
     private fishProvider: FishProvider,
     private settings: SettingsProvider,
     private analytics: FirebaseAnalytics,
+    private region: RegionProvider,
   ) {
     super();
     this.initialize();
@@ -240,7 +241,9 @@ export class AreaProvider extends BaseModel<Area> {
   };
 
   transform(area: Area, single: boolean = false) {
-    area.photo = area.photo ? serverLocation + area.photo : area.photo;
+    area.photo = area.photo
+      ? this.region.serverLocation$.value + area.photo
+      : area.photo;
     area.kw = area.kw ? ((area.kw as any) as string).split(',') : [];
     if (single) {
       area.images = this.getPhotos(area.ID);
@@ -347,7 +350,7 @@ export class AreaProvider extends BaseModel<Area> {
     ).then((images) => {
       for (let i = 0; i < images.length; ++i) {
         images[i].ratio = (images[i].h / images[i].w) * 100 + '%';
-        images[i].file = serverLocation + images[i].file;
+        images[i].file = this.region.serverLocation$.value + images[i].file;
       }
       return images;
     });
@@ -360,8 +363,8 @@ export class AreaProvider extends BaseModel<Area> {
       [areaId],
     ).then((files: AreaFile[]) => {
       files.forEach((file) => {
-        file.thumb = serverLocation + file.thumb;
-        file.url = serverLocation + file.f;
+        file.thumb = this.region.serverLocation$.value + file.thumb;
+        file.url = this.region.serverLocation$.value + file.f;
         file.filename = file.f.split('/').slice(-1)[0];
       });
       return files;

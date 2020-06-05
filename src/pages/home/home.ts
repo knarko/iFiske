@@ -3,10 +3,11 @@ import { NavController, IonicPage } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 import { UserProvider } from '../../providers/user/user';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AdminProvider } from '../../providers/admin/admin';
 import { SettingsProvider } from '../../providers/settings/settings';
+import { RegionProvider } from '../../providers/region/region';
 
 interface Link {
   title: string;
@@ -27,6 +28,10 @@ export class HomePage {
   searchTerm: string;
   profileColor: Observable<string>;
   showAdmin = this.adminProvider.isAdmin;
+
+  logo$ = this.region.currentRegion$.pipe(
+    map((region) => `assets/img/logos/${region}.png`),
+  );
 
   links: Link[] = [
     {
@@ -61,6 +66,7 @@ export class HomePage {
     private modalCtrl: ModalController,
     private adminProvider: AdminProvider,
     private settings: SettingsProvider,
+    private region: RegionProvider,
   ) {}
 
   async ionViewDidEnter() {

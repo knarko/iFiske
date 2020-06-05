@@ -185,6 +185,15 @@ export interface TranslationDefinition {
       "empty": string
       "no_catch": string
     }
+    "settings": {
+      "change_region": string
+      "change_region_warning_title": string
+      "change_region_warning_message": string
+      "regions": {
+        "se": string
+        "ax": string
+      }
+    }
   }
   "errors": {
     "unknown": string

@@ -1,6 +1,16 @@
 <ion-header transparent>
   <ion-navbar transparent>
-    <ion-buttons end>
+    <ion-buttons left>
+      <button
+        ion-button
+        (click)="region.selectRegion()"
+        class="region"
+        *ngIf="region.currentRegion$ | async as r"
+      >
+        <span class="desc">{{ 'ui.settings.regions.' + r | translate }}</span>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
       <button ion-button (click)="changeLanguage()" class="language">
         <span class="desc">{{ 'Language' | translate }}</span>
         <ng-container *ngIf="(language | async); let lang">

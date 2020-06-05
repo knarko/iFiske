@@ -12,6 +12,8 @@ import { UserProvider } from '../../providers/user/user';
 import { TranslateLoadingController } from '../../providers/translate-loading-controller/translate-loading-controller';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TimeoutError } from '../../errors';
+import { map } from 'rxjs/operators';
+import { RegionProvider } from '../../providers/region/region';
 
 @IonicPage()
 @Component({
@@ -21,6 +23,10 @@ import { TimeoutError } from '../../errors';
 export class LoginPage {
   form: Form;
 
+  logo$ = this.region.currentRegion$.pipe(
+    map((region) => `assets/img/logos/${region}_large.png`),
+  );
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,6 +34,7 @@ export class LoginPage {
     private loadingCtrl: TranslateLoadingController,
     private viewCtrl: ViewController,
     private statusBar: StatusBar,
+    private region: RegionProvider,
   ) {
     this.form = new Form({
       submit: () => this.login(),

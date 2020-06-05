@@ -13,6 +13,7 @@ export class DatabaseProvider {
     this.ready = this.plt
       .ready()
       .then(() => {
+        // TODO: split databases on current region observable
         return this.sqlite.create({
           name: 'fiskebasen.db',
           location: 'default',

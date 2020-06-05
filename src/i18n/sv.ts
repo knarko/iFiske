@@ -181,6 +181,15 @@ export const sv: TranslationDefinition & AdminTranslationDefinition = {
       },
       "released": "Återutsatt",
     },
+    "settings": {
+      "change_region": "Byt region",
+      "change_region_warning_title": "Byter region",
+      "change_region_warning_message": "Du kommer loggas ut från ditt nuvarande konto och behöver logga in igen",
+      "regions": {
+        "se": "Sverige",
+        "ax": "Åland",
+      },
+    },
   },
   "errors": {
     "unknown": "Ett oväntat fel uppstod. Var god försök igen senare.",

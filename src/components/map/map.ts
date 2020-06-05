@@ -22,7 +22,6 @@ import * as LocateControl from 'leaflet.locatecontrol';
 import * as omnivore from '@mapbox/leaflet-omnivore';
 console.log(omnivore);
 import { MapDataProvider } from '../../providers/map-data/map-data';
-import { serverLocation } from '../../providers/api/serverLocation';
 import { Area } from '../../providers/area/area';
 import { POI, FiskePolygon } from '../../providers/map-data/map-data';
 
@@ -32,6 +31,7 @@ import { NavController } from 'ionic-angular';
 import { PlatformProvider } from '../../providers/platform/platform';
 import { TranslateService } from '@ngx-translate/core';
 import { MonitoringClient } from '../../app/monitoring';
+import { RegionProvider } from '../../providers/region/region';
 declare var L: any;
 
 export interface MapOptions {
@@ -82,6 +82,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private navCtrl: NavController,
     private platform: PlatformProvider,
     private translate: TranslateService,
+    private region: RegionProvider,
   ) {}
 
   ngAfterViewInit() {
@@ -209,7 +210,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       for (var i = 0; i < poiTypes.length; ++i) {
         var type = poiTypes[i];
         this.icons[type.ID] = new Icon({
-          iconUrl: serverLocation + type.icon,
+          iconUrl: this.region.serverLocation$.value + type.icon,
           iconAnchor: [16, 37], // point of the icon which will correspond to marker's location
           popupAnchor: [0, -35],
         });

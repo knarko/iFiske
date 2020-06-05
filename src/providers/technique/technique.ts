@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { BaseModel } from '../database/basemodel';
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
-import { serverLocation } from '../api/serverLocation';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RegionProvider } from '../region/region';
 
 export interface Technique {
   ID: number;
@@ -53,6 +53,7 @@ export class TechniqueProvider extends BaseModel<Technique> {
     protected DB: DatabaseProvider,
     private imgcache: ImgcacheService,
     private sanitizer: DomSanitizer,
+    private region: RegionProvider,
   ) {
     super();
     this.initialize();
@@ -62,12 +63,12 @@ export class TechniqueProvider extends BaseModel<Technique> {
   }
 
   protected transform(tech: Technique) {
-    tech.icon = serverLocation + tech.icon;
+    tech.icon = this.region.serverLocation$.value + tech.icon;
     tech.images = [];
     for (const i of ['img1', 'img2', 'img3']) {
       let img = tech[i];
       if (img && img[img.length - 1] !== '/') {
-        tech[i] = img = serverLocation + img;
+        tech[i] = img = this.region.serverLocation$.value + img;
         tech.images.push(img);
       }
     }

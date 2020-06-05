@@ -6,10 +6,10 @@ import { map, share, tap, switchMap } from 'rxjs/operators';
 import { FishProvider } from '../fish/fish';
 import { TechniqueProvider, Technique } from '../technique/technique';
 import { BaitProvider, Bait } from '../baits/baits';
-import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
 import { TranslateService } from '@ngx-translate/core';
 import { Omit } from '../../types';
+import { RegionProvider } from '../region/region';
 
 export interface Catch {
   /** Catch type (species) */
@@ -105,6 +105,7 @@ export class ReportsProvider {
     private technique: TechniqueProvider,
     private bait: BaitProvider,
     private translate: TranslateService,
+    private region: RegionProvider,
   ) {
     this.translate.onLangChange.subscribe(() => {
       // Clear the cache when the language changes
@@ -137,10 +138,10 @@ export class ReportsProvider {
                   technique$: this.getTechnique(report.tech),
                   bait$: this.getBait(report.bait),
                   img1: report.img1
-                    ? `${serverLocation}${report.img1}`
+                    ? `${this.region.serverLocation$.value}${report.img1}`
                     : undefined,
                   img2: report.img2
-                    ? `${serverLocation}${report.img2}`
+                    ? `${this.region.serverLocation$.value}${report.img2}`
                     : undefined,
                   catches: report.catches.map((c) => {
                     return {

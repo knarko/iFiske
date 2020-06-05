@@ -47,6 +47,7 @@ import { MapDataProvider } from '../providers/map-data/map-data';
 import { OrganizationProvider } from '../providers/organization/organization';
 import { ProductProvider } from '../providers/product/product';
 import { PushProvider } from '../providers/push/push';
+import { RegionProvider } from '../providers/region/region';
 import { ReportsProvider } from '../providers/reports/reports';
 import { RuleProvider } from '../providers/rule/rule';
 import { SessionProvider } from '../providers/session/session';
@@ -152,6 +153,7 @@ registerLocaleData(localeSv);
     PlatformProvider,
     ProductProvider,
     PushProvider,
+    RegionProvider,
     ReportsProvider,
     RuleProvider,
     SessionProvider,

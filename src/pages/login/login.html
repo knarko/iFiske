@@ -10,7 +10,7 @@
 
 <ion-content class="background-image" padding no-bounce>
   <div class="centered-content">
-    <img src="assets/img/logo-vit-skuggad.png" width="100%" />
+    <img class="logo" [src]="logo$ | async" />
     <ion-data-form
       [form]="form"
       [disableSubmit]="!form.group?.controls.username.valid || !form.group?.controls.password.valid"

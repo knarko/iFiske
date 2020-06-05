@@ -180,6 +180,15 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
       },
       "released": "", // TODO: missing
     },
+    "settings": {
+      "change_region": "", // TODO: missing
+      "change_region_warning_title": "", // TODO: missing
+      "change_region_warning_message": "", // TODO: missing
+      "regions": {
+        "se": "Ruotsi",
+        "ax": "Ahvenanmaa",
+      },
+    },
   },
   "errors": {
     "unknown": "Tapahtui tunnistamaton virhe. Kokeile uudestaan, kiitos.",

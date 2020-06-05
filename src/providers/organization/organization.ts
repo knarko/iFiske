@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { DatabaseProvider } from '../database/database';
 import { ApiProvider } from '../api/api';
 import { BaseModel } from '../database/basemodel';
-import { serverLocation } from '../api/serverLocation';
 import { TableDef } from '../database/table';
+import { RegionProvider } from '../region/region';
 
 export interface Organization {
   /** Organization ID at iFiske */
@@ -108,12 +108,18 @@ export class OrganizationProvider extends BaseModel<Organization> {
     },
   ];
 
-  constructor(protected DB: DatabaseProvider, protected API: ApiProvider) {
+  constructor(
+    protected DB: DatabaseProvider,
+    protected API: ApiProvider,
+    private region: RegionProvider,
+  ) {
     super();
     this.initialize();
   }
 
   protected transform(org: Organization) {
-    org.logo = org.logo ? serverLocation + '/' + org.logo : org.logo;
+    org.logo = org.logo
+      ? this.region.serverLocation$.value + '/' + org.logo
+      : org.logo;
   }
 }

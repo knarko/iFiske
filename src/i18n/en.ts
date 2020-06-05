@@ -180,6 +180,15 @@ export const en: TranslationDefinition & AdminTranslationDefinition = {
       },
       "released": "Released",
     },
+    "settings": {
+      "change_region": "Change Region",
+      "change_region_warning_title": "Changing regions",
+      "change_region_warning_message": "You will be signed out your current account and need to sign in again",
+      "regions": {
+        "se": "Sweden",
+        "ax": "Åland",
+      },
+    },
   },
   "errors": {
     "unknown": "An unknown error has occurred. Please try again later.",

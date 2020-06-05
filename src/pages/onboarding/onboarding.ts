@@ -10,6 +10,7 @@ import { UpdateProvider } from '../../providers/update/update';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { LANGUAGES, Language } from '../../app/translation-loader';
+import { RegionProvider } from '../../providers/region/region';
 
 @IonicPage()
 @Component({
@@ -29,6 +30,7 @@ export class OnboardingPage {
     private settings: SettingsProvider,
     private update: UpdateProvider,
     private modalCtrl: ModalController,
+    public region: RegionProvider,
   ) {}
 
   ionViewDidLoad() {
@@ -44,6 +46,7 @@ export class OnboardingPage {
       this.hideSkip = this.slides.getActiveIndex() >= 3;
     });
   }
+
   changeLanguage() {
     this.modalCtrl.create('ChangeLanguagePage').present();
   }

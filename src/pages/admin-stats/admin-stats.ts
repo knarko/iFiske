@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
-import { serverLocation } from '../../providers/api/serverLocation';
 import { AdminProvider } from '../../providers/admin/admin';
 import { AdminOrganization } from '../../providers/admin/adminTypes';
 
@@ -14,7 +13,6 @@ import { AdminOrganization } from '../../providers/admin/adminTypes';
 export class AdminStatsPage {
   organization: Observable<AdminOrganization>;
   stats$: Observable<any>;
-  serverLocation = serverLocation;
 
   constructor(private adminProvider: AdminProvider) {
     this.stats$ = this.adminProvider.stats();

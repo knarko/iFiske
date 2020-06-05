@@ -17,7 +17,6 @@ import {
   OrganizationProvider,
   Organization,
 } from '../../providers/organization/organization';
-import { serverLocation } from '../../providers/api/serverLocation';
 import { AreaProvider } from '../../providers/area/area';
 import {
   DeepLinks,
@@ -27,6 +26,7 @@ import { flipFront, flipBack } from '../../animations/flip';
 import { AdminPermit } from '../../providers/admin/adminTypes';
 import { AdminProvider } from '../../providers/admin/admin';
 import { TranslateToastController } from '../../providers/translate-toast-controller/translate-toast-controller';
+import { RegionProvider } from '../../providers/region/region';
 
 type NotPermitted<T> = { [P in keyof T]?: undefined };
 
@@ -46,7 +46,8 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   @Output()
   revoke = new EventEmitter<boolean>();
   org?: Organization;
-  serverLocation = serverLocation;
+
+  permitPdf?: string;
 
   @ViewChild('backgroundPosWrapper') backgroundPosWrapper: ElementRef;
 
@@ -60,6 +61,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
     private ngZone: NgZone,
     private toastCtrl: TranslateToastController,
     private adminProvider: AdminProvider,
+    private region: RegionProvider,
   ) {}
 
   private animationFrame;
@@ -118,6 +120,7 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
     if (changes.permit && changes.permit.currentValue) {
       this.logged = false;
       try {
+        this.permitPdf = this.region.serverLocation$.value + this.permit.pdf;
         if ((this.permit as AdminPermit).suborgid != undefined) {
           this.org = await this.organizationProvider.getOne(
             (this.permit as AdminPermit).suborgid,

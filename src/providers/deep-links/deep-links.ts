@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 
-import { serverLocation } from '../api/serverLocation';
 import { CustomQueryEncoder } from '../api/QueryEncoder';
 import { UserProvider } from '../user/user';
 import { SettingsProvider } from '../settings/settings';
 import { Dictionary } from '../../types';
 import { PlatformProvider } from '../platform/platform';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { RegionProvider } from '../region/region';
 
 export enum DeepLinks {
   buy,
@@ -40,6 +40,7 @@ export class DeepLinksProvider {
     private settings: SettingsProvider,
     private platform: PlatformProvider,
     private analytics: FirebaseAnalytics,
+    private region: RegionProvider,
   ) {
     this.getToken();
   }
@@ -104,32 +105,32 @@ export class DeepLinksProvider {
           throw new Error('You need to add the ID of the permit.');
         }
 
-        url = `${serverLocation}/buy/${params.productId}`;
+        url = `${this.region.serverLocation$.value}/buy/${params.productId}`;
         break;
 
       case DeepLinks.catchReport:
         if (params.ID == undefined) {
           throw new Error('You need to specify an ID for the catch report');
         }
-        url = `${serverLocation}/r/${params.ID}`;
+        url = `${this.region.serverLocation$.value}/r/${params.ID}`;
         break;
 
       case DeepLinks.controlPanel:
         if (params.orgId != undefined) {
           query = query.append('org', params.orgId);
         }
-        url = `${serverLocation}/kontrollpanel`;
+        url = `${this.region.serverLocation$.value}/kontrollpanel`;
         break;
 
       case DeepLinks.organization:
         if (params.orgId == undefined) {
           throw new Error('You need to give an orgId');
         }
-        url = `${serverLocation}/o/${params.orgId}`;
+        url = `${this.region.serverLocation$.value}/o/${params.orgId}`;
         break;
 
       case DeepLinks.userProfile:
-        url = `${serverLocation}/user-profile`;
+        url = `${this.region.serverLocation$.value}/user-profile`;
         break;
 
       default:

@@ -3,12 +3,12 @@ import * as Fuse from 'fuse.js';
 
 import { ApiProvider } from '../api/api';
 import { DatabaseProvider } from '../database/database';
-import { serverLocation } from '../api/serverLocation';
 import { BaseModel } from '../database/basemodel';
 import { TableDef } from '../database/table';
 import { ImgcacheService } from '../../imgcache/imgcache.service';
 import { Dictionary } from '../../types';
 import { generateSnippet } from '../../util';
+import { RegionProvider } from '../region/region';
 
 export interface Fish {
   ID: number;
@@ -57,6 +57,7 @@ export class FishProvider extends BaseModel<Fish> {
     protected API: ApiProvider,
     protected DB: DatabaseProvider,
     private imgcache: ImgcacheService,
+    private region: RegionProvider,
   ) {
     super();
     this.initialize();
@@ -70,8 +71,8 @@ export class FishProvider extends BaseModel<Fish> {
     const data: Dictionary<Fish> = await this.API.get_fishes();
 
     for (const fish of Object.values(data)) {
-      fish.icon = serverLocation + fish.icon;
-      fish.img = serverLocation + fish.img;
+      fish.icon = this.region.serverLocation$.value + fish.icon;
+      fish.img = this.region.serverLocation$.value + fish.img;
       fish.snippet = generateSnippet(fish.d);
       this.imgcache.cacheFile(fish.img).catch(() => {});
     }

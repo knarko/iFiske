@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { serverLocation } from './serverLocation';
 
 import { SettingsProvider } from '../settings/settings';
 import { SessionProvider } from '../session/session';
@@ -21,6 +20,7 @@ import { Dictionary } from '../../types';
 import { TimeoutError } from '../../errors';
 import { CustomQueryEncoder } from './QueryEncoder';
 import { AdminPermit } from '../admin/adminTypes';
+import { RegionProvider } from '../region/region';
 
 interface ApiResponse {
   message?: any;
@@ -79,7 +79,10 @@ export class ApiProvider {
     session: false,
   };
 
-  private static readonly BASE_URL = serverLocation + '/api/v2/api.php';
+  private get BASE_URL() {
+    return this.region.serverLocation$.value + '/api/v2/api.php';
+  }
+
   private readonly maxRetries = 2;
 
   private cache = new Map<string, CachedResult>();
@@ -89,6 +92,7 @@ export class ApiProvider {
     private sessionData: SessionProvider,
     private settings: SettingsProvider,
     private toastCtrl: TranslateToastController,
+    private region: RegionProvider,
   ) {
     /* Clear cache periodically */
     setInterval(() => {
@@ -147,9 +151,9 @@ export class ApiProvider {
 
     let httpResult;
     if (options.post) {
-      httpResult = this.http.post(ApiProvider.BASE_URL, params, { headers });
+      httpResult = this.http.post(this.BASE_URL, params, { headers });
     } else {
-      httpResult = this.http.get(ApiProvider.BASE_URL, { params, headers });
+      httpResult = this.http.get(this.BASE_URL, { params, headers });
     }
     const result$ = httpResult.pipe(
       timeout(10000),
@@ -201,7 +205,7 @@ export class ApiProvider {
     );
 
     if (options.cacheTime) {
-      this.cache.set(params.toString(), {
+      this.cache.set(this.region.serverLocation$ + params.toString(), {
         result: result$.pipe(shareReplay(1)),
         cacheTime: options.cacheTime,
         removeAt: Date.now() + options.cacheTime,

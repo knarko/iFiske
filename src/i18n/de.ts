@@ -159,7 +159,15 @@ export const de: TranslationDefinition & { ui: { admin: any } }= {
       },
       "released": "", // TODO: missing
     },
-
+    "settings": {
+      "change_region": "", // TODO: missing
+      "change_region_warning_title": "", // TODO: missing
+      "change_region_warning_message": "", // TODO: missing
+      "regions": {
+        "se": "Schweden",
+        "ax": "Åland",
+      },
+    },
   },
   "errors": {
     "unknown": "Es gab einen Fehler, bitte später noch einmal versuchen",

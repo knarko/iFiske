@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { Permit } from '../../providers/user/userTypes';
-import { serverLocation } from '../../providers/api/serverLocation';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import {
   DeepLinksProvider,
@@ -18,8 +17,6 @@ import {
   templateUrl: 'permit-detail.html',
 })
 export class PermitDetailPage {
-  serverLocation = serverLocation;
-
   permit: Permit;
   failed = false;
 

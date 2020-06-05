@@ -37,6 +37,9 @@
           >
             {{item.title | translate}}
           </ion-label>
+          <ion-note *ngIf="item.note" item-end
+            >{{item.note | translate}}</ion-note
+          >
           <ion-toggle
             *ngIf="item.toggle"
             [(ngModel)]="item.toggleState"

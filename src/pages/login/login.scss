@@ -17,6 +17,9 @@ page-login {
       width: 100%;
     }
   }
+  .logo {
+    filter: drop-shadow(1vw 1vw 2px black);
+  }
 
   .md & ion-data-form {
     border-radius: $list-inset-md-border-radius;

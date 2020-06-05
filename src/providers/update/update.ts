@@ -23,6 +23,8 @@ import { MonitoringClient } from '../../app/monitoring';
 
 import { UpdateStrategy } from './updateTypes';
 import { BaitProvider } from '../baits/baits';
+import { skip } from 'rxjs/operators';
+import { RegionProvider } from '../region/region';
 
 @Injectable()
 export class UpdateProvider {
@@ -64,6 +66,7 @@ export class UpdateProvider {
     private toastCtrl: TranslateToastController,
     private translate: TranslateService,
     private settings: SettingsProvider,
+    private region: RegionProvider,
     area: AreaProvider,
     bait: BaitProvider,
     county: CountyProvider,
@@ -83,6 +86,10 @@ export class UpdateProvider {
         savedLanguage = this.settings.language;
         this.update(true);
       }
+    });
+
+    this.region.serverLocation$.pipe(skip(1)).subscribe(() => {
+      this.update(true);
     });
 
     this.updates = {

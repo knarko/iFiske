@@ -1,3 +1,12 @@
+# [4.16.0](https://gitlab.com/kada-development/ifiske/compare/v4.15.2...v4.16.0) (2020-06-05)
+
+
+### Features
+
+* add support for switching between ifiske.se and ifiske.ax ([74981fa](https://gitlab.com/kada-development/ifiske/commit/74981fa8becc55c361f2d830574a14de5ea0fead))
+
+
+
 ## [4.15.2](https://gitlab.com/kada-development/ifiske/compare/v4.15.1...v4.15.2) (2020-05-28)
 
 

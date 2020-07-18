@@ -148,7 +148,7 @@ export class AreaProvider extends BaseModel<Area> {
       members: {
         ID: 'int',
         area: 'int', // Area ID
-        file: 'int', // File name
+        file: 'text', // File name
         t: 'text', // Title
         d: 'text', // Description
         h: 'int', // Height in pixels
@@ -329,9 +329,9 @@ export class AreaProvider extends BaseModel<Area> {
       LEFT JOIN User_Favorite ON User_Favorite.a = Area.ID
       LEFT JOIN Organization ON Area.orgid = Organization.ID
       LEFT JOIN (
-        SELECT MIN(rowid), area, file FROM Area_Photos
+        SELECT MIN(file), area, file FROM Area_Photos
         GROUP BY area
-          ORDER BY rowid ASC
+        ORDER BY Area_Photos.file ASC
       ) AS Area_Photos ON Area.ID = Area_Photos.area
       ${countyId ? 'WHERE Area.c1 = ? OR Area.c2 = ? OR Area.c3 = ?' : ''}
       GROUP BY Area.ID
@@ -345,7 +345,11 @@ export class AreaProvider extends BaseModel<Area> {
   @DBMethod
   async getPhotos(areaId): Promise<AreaImage[]> {
     return this.DB.getMultiple(
-      `SELECT Area_Photos.* FROM Area_Photos WHERE Area_Photos.area = ?`,
+      `
+      SELECT Area_Photos.* FROM Area_Photos
+      WHERE Area_Photos.area = ?
+      ORDER BY Area_Photos.file ASC
+      `,
       [areaId],
     ).then((images) => {
       for (let i = 0; i < images.length; ++i) {

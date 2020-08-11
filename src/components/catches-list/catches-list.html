@@ -35,7 +35,7 @@
       <p>{{catch.cmt}}</p>
     </div>
 
-    <div class="released" *ngIf="catch.kept">
+    <div class="released" *ngIf="catch.kept === 0">
       <ion-icon name="refresh" color="secondary"></ion-icon>
       <span>{{'ui.reports.released'|translate}}</span>
     </div>

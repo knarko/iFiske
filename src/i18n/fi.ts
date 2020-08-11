@@ -178,12 +178,12 @@ export const fi: TranslationDefinition & AdminTranslationDefinition = {
         "single": "kpl",
         "multiple": "kpl",
       },
-      "released": "", // TODO: missing
+      "released": "Takaisin julkaistu", 
     },
     "settings": {
-      "change_region": "", // TODO: missing
-      "change_region_warning_title": "", // TODO: missing
-      "change_region_warning_message": "", // TODO: missing
+      "change_region": "Vaihda maata", 
+      "change_region_warning_title": "Vaihtuva maa", 
+      "change_region_warning_message": "sinut kirjataan ulos nykyisestä käyttäjätilistäsi ja sinun on kirjauduttava sisään uudelleen", 
       "regions": {
         "se": "Ruotsi",
         "ax": "Ahvenanmaa",

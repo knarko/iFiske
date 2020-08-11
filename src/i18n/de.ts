@@ -157,15 +157,15 @@ export const de: TranslationDefinition & { ui: { admin: any } }= {
         "single": "Fisch",
         "multiple": "Fische",
       },
-      "released": "", // TODO: missing
+      "released": "Fangen und Freilassen", 
     },
     "settings": {
-      "change_region": "", // TODO: missing
-      "change_region_warning_title": "", // TODO: missing
-      "change_region_warning_message": "", // TODO: missing
+      "change_region": "Land wählen", 
+      "change_region_warning_title": "Jetzt wird das ausgewählte Land geändert", 
+      "change_region_warning_message": "Sie werden von Ihrem aktuellen Benutzerkonto abgemeldet und müssen sich erneut anmelden.", 
       "regions": {
         "se": "Schweden",
-        "ax": "Åland",
+        "ax": "Åland (Finnland)",
       },
     },
   },

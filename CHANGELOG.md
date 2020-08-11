@@ -1,3 +1,13 @@
+# [4.17.0](https://gitlab.com/kada-development/ifiske/compare/v4.16.0...v4.17.0) (2020-08-11)
+
+
+### Bug Fixes
+
+* **area:** order area images on file name ([b655c9d](https://gitlab.com/kada-development/ifiske/commit/b655c9dd98f5680149a80db7a45323e446aaaec4))
+* **reports:** invert kept flag ([ac2ae47](https://gitlab.com/kada-development/ifiske/commit/ac2ae47e178a6211b4aa370728b7163341bd391f))
+
+
+
 # [4.16.0](https://gitlab.com/kada-development/ifiske/compare/v4.15.2...v4.16.0) (2020-06-05)
 
 

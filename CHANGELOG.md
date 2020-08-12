@@ -1,3 +1,12 @@
+## [4.17.1](https://gitlab.com/kada-development/ifiske/compare/v4.17.0...v4.17.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* **settings:** use translations keys ([fbb45ac](https://gitlab.com/kada-development/ifiske/commit/fbb45ac8679d69afb40067f62173350804c3c332))
+
+
+
 # [4.17.0](https://gitlab.com/kada-development/ifiske/compare/v4.16.0...v4.17.0) (2020-08-11)
 
 

@@ -67,7 +67,7 @@ export class SettingsPage {
         click: () => this.updateProvider.update(true),
       },
       {
-        title: 'Change region',
+        title: 'ui.settings.change_region',
         get note() {
           return 'ui.settings.regions.' + self.region.currentRegion$.value;
         },

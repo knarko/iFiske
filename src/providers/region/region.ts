@@ -70,7 +70,7 @@ export class RegionProvider {
     );
     buttons.push({ text: 'Cancel' });
     const sheet = await this.actionSheetCtrl.show({
-      title: 'Select region',
+      title: 'ui.settings.change_region',
       buttons: buttons,
     });
 

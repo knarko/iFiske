@@ -16,6 +16,7 @@ import {
   DeepLinksProvider,
 } from '../../providers/deep-links/deep-links';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
+import { RegionProvider } from "../../providers/region/region";
 
 @IonicPage()
 @Component({
@@ -26,12 +27,14 @@ export class AreasDetailPermitPage {
   area: Area;
   products: Product[];
 
+  currency$ = this.region.currency$;
   constructor(
     private navCtrl: NavController,
     public navParams: NavParams,
     private modalCtrl: ModalController,
     private deepLinks: DeepLinksProvider,
     private analytics: FirebaseAnalytics,
+    private region: RegionProvider,
   ) {
     const params: Observable<any> =
       this.navParams.get('params') ||
@@ -56,7 +59,7 @@ export class AreasDetailPermitPage {
     console.log('buy', product, method);
     this.analytics.logEvent('begin_checkout', {
       value: product.price,
-      currency: 'SEK',
+      currency: this.region.currency$.value,
       method,
       item_id: product.ID,
     });

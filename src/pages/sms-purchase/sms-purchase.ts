@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { Product } from '../../providers/product/product';
+import { RegionProvider } from '../../providers/region/region';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,12 @@ export class SmsPurchasePage {
 
   SMS_PURCHASE_NUMBER = '72456';
 
-  constructor(private viewCtrl: ViewController, private navParams: NavParams) {
+  currency$ = this.region.currency$;
+  constructor(
+    private viewCtrl: ViewController,
+    private navParams: NavParams,
+    private region: RegionProvider,
+  ) {
     this.product = this.navParams.get('product');
   }
 

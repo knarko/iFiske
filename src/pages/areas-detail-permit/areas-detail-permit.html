@@ -16,7 +16,7 @@
     <ion-card-header>
       <ion-icon name="ifiske-permit" class="large"></ion-icon>
       <h2>{{product.t}}</h2>
-      <span class="right">{{product.price}} SEK</span>
+      <span class="right">{{product.price}} {{currency$ | async}}</span>
     </ion-card-header>
     <ion-card-content>
       <section *ngIf="product.im">

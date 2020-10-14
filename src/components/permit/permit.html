@@ -82,7 +82,7 @@
           {{ permit.at * 1000 | date: 'longDate' }} {{ permit.at * 1000 | date:
           'shortTime' }}
         </span>
-        <span class="box">{{ permit.price }} SEK</span>
+        <span class="box">{{ permit.price }} {{currency$ | async}}</span>
       </p>
 
       <a

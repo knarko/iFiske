@@ -12,7 +12,7 @@ export interface POI {
   orgid: number;
   /** POI type ID */
   type: number;
-  /** Price of this POI (HTML) in SEK. */
+  /** Price of this POI (HTML) in local currency (usually SEK) */
   price: number;
   /** Title */
   t: string;

@@ -10,7 +10,7 @@
 <ion-content padding>
   <div class="header">
     <h2>{{ product.t }}</h2>
-    <span class="right">{{ product.price }} SEK</span>
+    <span class="right">{{ product.price }} {{currency$ | async}}</span>
   </div>
   <p>{{ 'Text message format' | translate }}</p>
   <ion-list inset border class="sms-info-list">

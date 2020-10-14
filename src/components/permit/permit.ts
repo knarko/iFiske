@@ -54,6 +54,8 @@ export class PermitComponent implements OnInit, OnDestroy, OnChanges {
   code: string;
 
   show = 'first';
+
+  currency$ = this.region.currency$;
   constructor(
     private organizationProvider: OrganizationProvider,
     private areaProvider: AreaProvider,

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { skip } from 'rxjs/operators';
 import { MonitoringClient } from '../../app/monitoring';
 import { ActionSheetButton } from 'ionic-angular';
 import { TranslateActionSheetController } from '../translate-action-sheet-controller/translate-action-sheet-controller';
@@ -17,6 +16,11 @@ export const serverLocations = {
   [Regions.ax]: 'https://www.ifiske.ax',
 } as Record<Regions, string>;
 
+export const currencies = {
+  [Regions.se]: 'SEK',
+  [Regions.ax]: 'EUR',
+}
+
 export const REGION_SAVE_KEY = 'IFISKE_SELECTED_REGION';
 
 @Injectable()
@@ -24,6 +28,7 @@ export class RegionProvider {
   currentRegion$ = new BehaviorSubject<Regions>(undefined);
 
   serverLocation$ = new BehaviorSubject<string>(undefined);
+  currency$ = new BehaviorSubject<string>(undefined);
 
   constructor(
     private httpClient: HttpClient,
@@ -33,7 +38,6 @@ export class RegionProvider {
     const savedRegion = localStorage.getItem(REGION_SAVE_KEY);
     if (savedRegion) {
       this.currentRegion$.next(savedRegion as Regions);
-      this.serverLocation$.next(serverLocations[savedRegion]);
     } else {
       this.httpClient.get('https://ipapi.co/json').subscribe(
         (response: any) => {
@@ -55,8 +59,9 @@ export class RegionProvider {
       );
     }
 
-    this.currentRegion$.pipe(skip(1)).subscribe((region) => {
+    this.currentRegion$.subscribe((region) => {
       this.serverLocation$.next(serverLocations[region]);
+      this.currency$.next(currencies[region]);
       localStorage.setItem(REGION_SAVE_KEY, region);
     });
   }

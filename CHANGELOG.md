@@ -1,3 +1,12 @@
+# [4.18.0](https://gitlab.com/kada-development/ifiske/compare/v4.17.1...v4.18.0) (2020-10-14)
+
+
+### Features
+
+* add correct currency based on current region ([1fb0f3e](https://gitlab.com/kada-development/ifiske/commit/1fb0f3eeda53f125b3586b21d8bd3fea9493db61))
+
+
+
 ## [4.17.1](https://gitlab.com/kada-development/ifiske/compare/v4.17.0...v4.17.1) (2020-08-12)
 
 

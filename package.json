@@ -119,7 +119,7 @@
     "inquirer": "^6.5.2",
     "ionic": "^5.4.16",
     "json-diff": "^0.5.4",
-    "madge": "^3.9.0",
+    "madge": "^4.0.1",
     "prettier": "^2.0.5",
     "prompt": "^1.0.0",
     "sass-lint": "^1.12.1",
